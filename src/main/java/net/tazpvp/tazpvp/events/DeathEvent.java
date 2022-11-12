@@ -32,5 +32,50 @@
 
 package net.tazpvp.tazpvp.events;
 
-public class DeathEvent {
+import net.tazpvp.tazpvp.utils.Death;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+
+import javax.annotation.Nullable;
+
+public class DeathEvent implements Listener {
+
+    @EventHandler
+    public void onEntityDamage(EntityDamageEvent e) {
+        if (e.getEntity() instanceof Player victim) {
+            double fd = e.getFinalDamage();
+            if ((victim.getHealth() - fd) <= 0) {
+                e.setCancelled(true);
+                if (e instanceof EntityDamageByEntityEvent ee) {
+                    if (ee.getDamager() instanceof Player killer) {
+                        deathFunction(victim, killer);
+                    }
+                }
+            }
+        }
+    }
+
+    private void deathFunction(Player victim, @Nullable Player killer) {
+        Death death = new Death(victim, killer);
+
+        if (killer != null) {
+            if (Bukkit.getOnlinePlayers().size() < 10) {
+                if (killer == victim) {
+                    death.MessageAll("death");
+                } else {
+                    death.MessageAll("kill");
+                }
+            } else {
+                if (killer == victim) {
+                    death.deathMessage(victim);
+                } else {
+                    death.killMessage(killer);
+                }
+            }
+        }
+    }
 }

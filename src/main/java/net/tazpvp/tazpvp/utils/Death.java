@@ -32,21 +32,44 @@
 
 package net.tazpvp.tazpvp.utils;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
 
-public class DeathUtils {
+public class Death {
 
+    final String prefix = CC.GRAY + "[" + CC.DARK_RED + "☠" + CC.GRAY + "] " + CC.DARK_GRAY;
     private final Player victim;
     private final Player killer;
 
-    public DeathUtils(final Player victim, @Nullable final Player killer) {
+    public Death(final Player victim, @Nullable final Player killer) {
         this.victim = victim;
         this.killer = killer;
     }
 
-    public void deathMessage(final Player reciever) {
+    public void killMessage(final Player p) {
+        final String who = (p == killer) ? "You" : CC.GRAY + killer.getName();
+        final String what = CC.DARK_GRAY + " killed " + CC.GRAY + victim.getName();
+        String msg = prefix + who + what;
 
+        p.sendMessage(msg);
+    }
+
+    public void deathMessage(final Player p) {
+        final String who = (p == victim) ? "You" : CC.GRAY + victim.getName();
+        String msg = prefix + who + " died.";
+
+        p.sendMessage(msg);
+    }
+
+    public void MessageAll(String which) {
+        for (Player op : Bukkit.getOnlinePlayers()) {
+            if (which.equals("kill")) {
+                killMessage(op);
+            } else if (which.equals("death")) {
+                deathMessage(op);
+            }
+        }
     }
 }
