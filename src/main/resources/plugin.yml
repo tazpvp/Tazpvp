@@ -6,3 +6,5 @@ prefix: Tazpvp
 authors: [ Ntdi, Rownox ]
 description: The logical plugin of Tazpvp
 website: tazpvp.net
+depend:
+  - NRCore
