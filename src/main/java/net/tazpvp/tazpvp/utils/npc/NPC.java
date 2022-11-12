@@ -33,17 +33,84 @@
 
 package net.tazpvp.tazpvp.utils.npc;
 
-import org.bukkit.ChatColor;
+import lombok.Getter;
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.CC;
 import org.bukkit.Location;
+import org.bukkit.Sound;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 
+import javax.annotation.Nonnull;
+
+/**
+ * A simple utility class for creating Villager NPCs
+ */
 public abstract class NPC implements Listener {
+    @Getter
     private final String NAME;
+    @Getter
     private final Location SPAWN;
+    @Getter
     private final Villager.Profession PROFESSION;
+    @Getter
     private final Villager.Type TYPE;
+    @Getter
+    private final Sound SOUND;
+    @Getter
+    private final Villager V;
 
+    /**
+     * Generate a villager NPC
+     * @param NAME Name of the villager
+     * @param SPAWN Spawn of the villager
+     * @param PROFESSION Profession of the villager, see {@code Villager.Profession}
+     * @param TYPE Type of the villager, see {@code Villager.Type}
+     */
+    public NPC(@Nonnull final String NAME, @Nonnull final Location SPAWN, @Nonnull final Villager.Profession PROFESSION, @Nonnull final Villager.Type TYPE, @Nonnull final Sound SOUND) {
+        this.NAME = NAME;
+        this.SPAWN = SPAWN;
+        this.PROFESSION = PROFESSION;
+        this.TYPE = TYPE;
+        this.SOUND = SOUND;
 
+        this.V = (Villager) SPAWN.getWorld().spawnEntity(SPAWN, EntityType.VILLAGER);
+        V.setCustomName(CC.trans(NAME));
+        V.setInvulnerable(true);
+        V.setProfession(PROFESSION);
+        V.setVillagerType(TYPE);
+        V.setGravity(false);
 
+        Tazpvp.getInstance().getServer().getPluginManager().registerEvents(this, Tazpvp.getInstance());
+    }
+
+    /**
+     * Remove the villager from existence. (To meet your dad)
+     */
+    public void remove() {
+        V.remove();
+    }
+
+    /**
+     * Handle what should happen when a player interacts with the NPC
+     * @param e The PlayerInteractAtEntityEvent
+     * @param p The player who interacted with the NPC
+     */
+    public abstract void interact(@Nonnull final PlayerInteractAtEntityEvent e, @Nonnull final Player p);
+
+    @EventHandler
+    public void onInteract(PlayerInteractAtEntityEvent e) {
+        if (e.getRightClicked().getType().equals(EntityType.VILLAGER)) {
+            Villager v = (Villager) e.getRightClicked();
+            if (e.getRightClicked().getCustomName() != null && e.getRightClicked().getCustomName().equals(CC.trans(NAME))) {
+                if (v.getProfession().equals(PROFESSION)) {
+                    e.getPlayer().playSound(e.getPlayer(), SOUND, 1, 1);
+                }
+            }
+        }
+    }
 }

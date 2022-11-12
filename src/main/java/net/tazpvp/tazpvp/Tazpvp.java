@@ -55,6 +55,6 @@ public final class Tazpvp extends JavaPlugin {
     }
 
     public static Tazpvp getInstance() {
-        Bukkit.getPluginManager().getPlugin("Tazpvp");
+        return (Tazpvp) Bukkit.getPluginManager().getPlugin("Tazpvp");
     }
 }

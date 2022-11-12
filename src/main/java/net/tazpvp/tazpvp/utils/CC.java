@@ -390,6 +390,11 @@ public enum CC {
         return new String(b);
     }
 
+    @Nonnull
+    public static String trans(@Nonnull String textToTranslate) {
+        return translateAlternateColorCodes('&', textToTranslate);
+    }
+
     /**
      * Gets the ChatColors used at the end of the given input string.
      *
