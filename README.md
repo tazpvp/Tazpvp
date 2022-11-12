@@ -1,2 +1,2 @@
-# Tazpvp-Rebron
+# Tazpvp
  The new Tazpvp plugin
