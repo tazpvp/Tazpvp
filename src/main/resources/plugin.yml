@@ -1,0 +1,8 @@
+name: Tazpvp
+version: '${project.version}'
+main: net.tazpvp.tazpvp.Tazpvp
+api-version: 1.19
+prefix: Tazpvp
+authors: [ Ntdi, Rownox ]
+description: The logical plugin of Tazpvp
+website: tazpvp.net
