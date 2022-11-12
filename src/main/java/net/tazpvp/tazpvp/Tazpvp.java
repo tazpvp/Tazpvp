@@ -33,6 +33,10 @@
 
 package net.tazpvp.tazpvp;
 
+import me.rownox.nrcore.utils.item.builders.ItemBuilder;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Tazpvp extends JavaPlugin {
@@ -40,7 +44,7 @@ public final class Tazpvp extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-
+        ItemStack item = ItemBuilder.of(Material.DIRT, 10, ChatColor.GOLD + "SHINY!").unbreakable(true).build();
     }
 
     @Override
