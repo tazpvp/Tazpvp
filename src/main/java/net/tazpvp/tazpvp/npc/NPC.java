@@ -31,11 +31,11 @@
  *
  */
 
-package net.tazpvp.tazpvp.utils.npc;
+package net.tazpvp.tazpvp.npc;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.utils.CC;
+import net.tazpvp.tazpvp.utils.extra.CC;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;

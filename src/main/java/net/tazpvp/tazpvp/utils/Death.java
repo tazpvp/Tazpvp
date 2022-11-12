@@ -32,6 +32,7 @@
 
 package net.tazpvp.tazpvp.utils;
 
+import net.tazpvp.tazpvp.utils.extra.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

@@ -28,10 +28,9 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
  */
 
-package net.tazpvp.tazpvp.utils;
+package net.tazpvp.tazpvp.utils.extra;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
