@@ -34,7 +34,16 @@
 package net.tazpvp.tazpvp.utils.npc;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.entity.Villager;
+import org.bukkit.event.Listener;
 
-public abstract class NPC {
+public abstract class NPC implements Listener {
+    private final String NAME;
+    private final Location SPAWN;
+    private final Villager.Profession PROFESSION;
+    private final Villager.Type TYPE;
+
+
 
 }

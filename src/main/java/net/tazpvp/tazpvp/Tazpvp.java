@@ -34,6 +34,7 @@
 package net.tazpvp.tazpvp;
 
 import me.rownox.nrcore.utils.item.builders.ItemBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -51,5 +52,9 @@ public final class Tazpvp extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+    }
+
+    public static Tazpvp getInstance() {
+        Bukkit.getPluginManager().getPlugin("Tazpvp");
     }
 }
