@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.Utils;
+package net.tazpvp.tazpvp.utils;
 
 import org.bukkit.entity.Player;
 
@@ -46,7 +46,7 @@ public class DeathUtils {
         this.killer = killer;
     }
 
-    public void deathMessage(final Player killer) {
+    public void deathMessage(final Player reciever) {
 
     }
 }

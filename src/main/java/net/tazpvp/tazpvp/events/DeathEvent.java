@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.Events;
+package net.tazpvp.tazpvp.events;
 
 public class DeathEvent {
 }
