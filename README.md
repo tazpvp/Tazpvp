@@ -1,2 +1,2 @@
-# Tazpvp-Rebron
- The new Tazpvp plugin
+# Tazpvp
+Tazpvp 5. Coming Soon.
