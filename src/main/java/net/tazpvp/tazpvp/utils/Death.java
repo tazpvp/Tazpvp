@@ -32,11 +32,22 @@
 
 package net.tazpvp.tazpvp.utils;
 
+import me.rownox.nrcore.utils.item.builders.ItemBuilder;
 import net.tazpvp.tazpvp.utils.extra.CC;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Death {
 
@@ -47,6 +58,39 @@ public class Death {
     public Death(final Player victim, @Nullable final Player killer) {
         this.victim = victim;
         this.killer = killer;
+    }
+
+    public void coffin() {
+        Location loc = victim.getLocation();
+        Material chest = new ItemStack(Material.CHEST).getType();
+        int chance = new Random().nextInt(100);
+
+        if (chance < 50) {
+            Block block = loc.getBlock();
+            block.setType(chest);
+
+            Chest coffin = (Chest) block.getState();
+            Inventory inv = coffin.getInventory();
+
+            ItemStack enchantment = ItemBuilder.of(Material.ENCHANTED_BOOK, 1).build();
+            enchantment.addEnchantment(coffinEnchant(), coffinEnchantLevel());
+
+            inv.setItem(13, enchantment);
+        }
+    }
+
+    public Enchantment coffinEnchant() {
+        List<Enchantment> list = new ArrayList<>();
+
+        list.add(Enchantment.DAMAGE_ALL);
+        list.add(Enchantment.ARROW_DAMAGE);
+        list.add(Enchantment.PROTECTION_ENVIRONMENTAL);
+
+        return list.get(new Random().nextInt(list.size()));
+    }
+
+    public int coffinEnchantLevel() {
+        return new Random().nextInt(3 - 1) + 1;
     }
 
     public void killMessage(final Player p) {

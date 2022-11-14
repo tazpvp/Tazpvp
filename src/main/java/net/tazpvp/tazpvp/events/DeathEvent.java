@@ -34,6 +34,7 @@ package net.tazpvp.tazpvp.events;
 
 import net.tazpvp.tazpvp.utils.Death;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -77,5 +78,8 @@ public class DeathEvent implements Listener {
                 }
             }
         }
+
+        death.coffin();
+        victim.teleport(new Location(Bukkit.getWorld("spawn"), 0, 60, 0, 0, 0));
     }
 }
