@@ -44,6 +44,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -61,11 +62,22 @@ public class Death {
         this.killer = killer;
     }
 
+    /**
+     * Replenishes the maximum health of the player and removes potion effects.
+     */
+
     public void heal() {
-        victim.setHealth(20); //TODO: set max player health to a stat
-        killer.setHealth(killer.getHealth() + 5); //TODO: balancing
+        victim.setHealth(20); //TODO: reference
+        killer.setHealth(killer.getHealth() + 5);
+
+        for (PotionEffect effect : victim.getActivePotionEffects()) {
+            victim.removePotionEffect(effect.getType());
+        }
     }
 
+    /**
+     * Creates a small chance of a chest spawning in the location of the death with enchantments inside.
+     */
     public void coffin() {
         Location loc = victim.getLocation();
         Material chest = new ItemStack(Material.CHEST).getType();
@@ -78,19 +90,23 @@ public class Death {
             Chest coffin = (Chest) block.getState();
             Inventory inv = coffin.getInventory();
 
-            ItemStack enchantment = ItemBuilder.of(Material.ENCHANTED_BOOK, 1).build();
-            enchantment.addEnchantment(coffinEnchant(), coffinEnchantLevel());
+            ItemStack enchantment = ItemBuilder.of(Material.ENCHANTED_BOOK, 1).enchantment(coffinEnchant(), coffinEnchantLevel()).build();
 
             inv.setItem(13, enchantment);
         }
     }
 
-    public Enchantment coffinEnchant() {
-        List<Enchantment> list = new ArrayList<>();
+    /**
+     * List of all possible enchantments that appear in the coffin.
+     * @return Returns a random enchantment out of the list.
+     */
 
-        list.add(Enchantment.DAMAGE_ALL);
-        list.add(Enchantment.ARROW_DAMAGE);
-        list.add(Enchantment.PROTECTION_ENVIRONMENTAL);
+    public Enchantment coffinEnchant() {
+        List<Enchantment> list = List.of(
+            Enchantment.DAMAGE_ALL,
+            Enchantment.ARROW_DAMAGE,
+            Enchantment.PROTECTION_ENVIRONMENTAL
+        );
 
         return list.get(new Random().nextInt(list.size()));
     }
@@ -98,6 +114,11 @@ public class Death {
     public int coffinEnchantLevel() {
         return new Random().nextInt(3 - 1) + 1;
     }
+
+    /**
+     * Send personal and broadcast public kill messages.
+     * @param p The user that the message is sent to.
+     */
 
     public void killMessage(final Player p) {
         final String who = (p == killer) ? "You" : CC.GRAY + killer.getName();
@@ -107,12 +128,22 @@ public class Death {
         p.sendMessage(msg);
     }
 
+    /**
+     * Used to send personal death messages or broadcasting suicide messages.
+     * @param p The user that the message is sent to.
+     */
+
     public void deathMessage(final Player p) {
         final String who = (p == victim) ? "You" : CC.GRAY + victim.getName();
         String msg = prefix + who + " died.";
 
         p.sendMessage(msg);
     }
+
+    /**
+     * Broadcast a death message for either a suicide or kill.
+     * @param which Suicide or kill?
+     */
 
     public void MessageAll(String which) {
         for (Player op : Bukkit.getOnlinePlayers()) {
