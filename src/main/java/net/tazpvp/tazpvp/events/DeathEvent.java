@@ -80,6 +80,7 @@ public class DeathEvent implements Listener {
         }
 
         death.coffin();
-        victim.teleport(new Location(Bukkit.getWorld("spawn"), 0, 60, 0, 0, 0));
+        victim.teleport(new Location(Bukkit.getWorld("spawn"), 0, 60, 0, 0, 0)); //TODO: reference the spawn location from rowcore config
+        death.heal();
     }
 }

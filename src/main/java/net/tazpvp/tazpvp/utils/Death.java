@@ -37,6 +37,7 @@ import net.tazpvp.tazpvp.utils.extra.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.enchantments.Enchantment;
@@ -58,6 +59,11 @@ public class Death {
     public Death(final Player victim, @Nullable final Player killer) {
         this.victim = victim;
         this.killer = killer;
+    }
+
+    public void heal() {
+        victim.setHealth(20); //TODO: set max player health to a stat
+        killer.setHealth(killer.getHealth() + 5); //TODO: balancing
     }
 
     public void coffin() {
