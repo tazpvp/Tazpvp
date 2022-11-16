@@ -76,7 +76,14 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.24</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>me.rownox</groupId>
+            <artifactId>NRCore</artifactId>
+            <version>1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}\NRCore.jar</systemPath>
         </dependency>
     </dependencies>
 </project>
