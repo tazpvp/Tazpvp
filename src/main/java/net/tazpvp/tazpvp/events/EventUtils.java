@@ -28,26 +28,12 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
  */
 
-package net.tazpvp.tazpvp;
+package net.tazpvp.tazpvp.events;
 
-import net.tazpvp.tazpvp.listeners.DeathEvent;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
+public class EventUtils {
 
-public final class Tazpvp extends JavaPlugin {
-
-    @Override
-    public void onEnable() {
-        getServer().getPluginManager().registerEvents(new DeathEvent(), this);
-    }
-
-    @Override
-    public void onDisable() {}
-
-    public static Tazpvp getInstance() {
-        return (Tazpvp) Bukkit.getPluginManager().getPlugin("Tazpvp");
+    public static Event getEvent(String name) {
     }
 }

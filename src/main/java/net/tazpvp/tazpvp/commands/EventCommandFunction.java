@@ -28,26 +28,23 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
  */
 
-package net.tazpvp.tazpvp;
+package net.tazpvp.tazpvp.commands;
 
-import net.tazpvp.tazpvp.listeners.DeathEvent;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
+import lombok.NonNull;
+import me.rownox.nrcore.utils.command.CommandCore;
+import me.rownox.nrcore.utils.command.CommandFunction;
+import org.bukkit.command.CommandSender;
 
-public final class Tazpvp extends JavaPlugin {
+public class EventCommandFunction extends CommandCore implements CommandFunction {
 
-    @Override
-    public void onEnable() {
-        getServer().getPluginManager().registerEvents(new DeathEvent(), this);
+    public EventCommandFunction(@NonNull String name, String permission, @NonNull String... alias) {
+        super(name, permission, alias);
     }
 
     @Override
-    public void onDisable() {}
-
-    public static Tazpvp getInstance() {
-        return (Tazpvp) Bukkit.getPluginManager().getPlugin("Tazpvp");
+    public void execute(CommandSender sender, String[] strings) {
+        //figure out what event to run and send that to the event main class
     }
 }

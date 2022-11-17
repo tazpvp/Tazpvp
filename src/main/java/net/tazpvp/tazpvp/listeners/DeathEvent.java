@@ -28,26 +28,59 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
  */
 
-package net.tazpvp.tazpvp;
+package net.tazpvp.tazpvp.listeners;
 
-import net.tazpvp.tazpvp.listeners.DeathEvent;
+import me.rownox.nrcore.utils.ConfigUtils;
+import net.tazpvp.tazpvp.utils.Death;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 
-public final class Tazpvp extends JavaPlugin {
+import javax.annotation.Nullable;
 
-    @Override
-    public void onEnable() {
-        getServer().getPluginManager().registerEvents(new DeathEvent(), this);
+public class DeathEvent implements Listener {
+
+    @EventHandler
+    public void onEntityDamage(EntityDamageEvent e) {
+        if (e.getEntity() instanceof Player victim) {
+            double fd = e.getFinalDamage();
+            if ((victim.getHealth() - fd) <= 0) {
+                e.setCancelled(true);
+                if (e instanceof EntityDamageByEntityEvent ee) {
+                    if (ee.getDamager() instanceof Player killer) {
+                        deathFunction(victim, killer);
+                    }
+                }
+            }
+        }
     }
 
-    @Override
-    public void onDisable() {}
+    private void deathFunction(Player victim, @Nullable Player killer) {
+        Death death = new Death(victim, killer);
 
-    public static Tazpvp getInstance() {
-        return (Tazpvp) Bukkit.getPluginManager().getPlugin("Tazpvp");
+        if (killer != null) {
+            if (Bukkit.getOnlinePlayers().size() < 10) {
+                if (killer == victim) {
+                    death.MessageAll("death");
+                } else {
+                    death.MessageAll("kill");
+                }
+            } else {
+                if (killer == victim) {
+                    death.deathMessage(victim);
+                } else {
+                    death.killMessage(killer);
+                }
+            }
+        }
+
+        death.coffin();
+        victim.teleport(ConfigUtils.spawn);
+        death.heal();
     }
 }
