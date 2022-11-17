@@ -48,7 +48,7 @@ public abstract class Event {
     public Event(@Nonnull final String NAME, @Nonnull List<UUID> list) {
         this.NAME = NAME;
         playerList = list;
-        EventUtils.events.add(this);
+        begin();
     }
 
     protected abstract void begin();

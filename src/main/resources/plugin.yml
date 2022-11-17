@@ -8,3 +8,6 @@ description: The logical plugin of Tazpvp
 website: tazpvp.net
 depend:
   - NRCore
+commands:
+  event:
+    usage: "/event <usage> (<type>)"

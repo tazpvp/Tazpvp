@@ -32,17 +32,17 @@
 
 package net.tazpvp.tazpvp.events;
 
+import net.tazpvp.tazpvp.events.types.FFA;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public final class EventUtils {
-    public static List<Event> events = new ArrayList<>();
 
-    public static Event getEvent(String name) {
-        for (Event e : events) {
-            if (e.getNAME().equalsIgnoreCase(name))
-                return e;
-        }
+    public static Event getEvent(String name, List<UUID> playerList) {
+        if (name.equals("FFA"))
+            return new FFA(playerList);
         return null;
     }
 }

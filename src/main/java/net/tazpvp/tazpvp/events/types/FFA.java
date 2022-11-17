@@ -32,6 +32,8 @@
 
 package net.tazpvp.tazpvp.events.types;
 
+import me.rownox.nrcore.NRCore;
+import me.rownox.nrcore.utils.ConfigUtils;
 import net.tazpvp.tazpvp.events.Event;
 import org.bukkit.Bukkit;
 
@@ -49,9 +51,7 @@ public class FFA extends Event{
     protected void begin() {
         List<UUID> list = super.playerList;
         for (UUID uuid : list) {
-            Bukkit.getPlayer(uuid);
+            Bukkit.getPlayer(uuid).teleport(ConfigUtils.spawn);
         }
     }
 }
-
-

@@ -33,15 +33,31 @@
 
 package net.tazpvp.tazpvp;
 
+import net.tazpvp.tazpvp.commands.EventCommandFunction;
 import net.tazpvp.tazpvp.listeners.DeathEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import java.util.WeakHashMap;
+
 public final class Tazpvp extends JavaPlugin {
+
+    public static List<String> events = new ArrayList<>();
+    public static String eventKey;
+    public static List<UUID> playerList = new ArrayList<>();
+
+    public static String prefix = "tazpvp.";
 
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(new DeathEvent(), this);
+
+        events.add("FFA");
+
+        getCommand("event").setExecutor(new EventCommandFunction());
     }
 
     @Override

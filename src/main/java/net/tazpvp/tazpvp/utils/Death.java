@@ -60,6 +60,8 @@ public class Death {
         this.killer = killer;
     }
 
+    //TODO: put death rewards in player action bar
+
     /**
      * Replenishes the maximum health of the player and removes potion effects.
      */
