@@ -83,7 +83,7 @@
             <artifactId>NRCore</artifactId>
             <version>1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}\NRCore.jar</systemPath>
+            <systemPath>${project.basedir}${file.separator}NRCore.jar</systemPath>
         </dependency>
     </dependencies>
 </project>
