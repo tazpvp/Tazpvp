@@ -35,13 +35,14 @@ package net.tazpvp.tazpvp.events.types;
 import net.tazpvp.tazpvp.events.Event;
 import org.bukkit.Bukkit;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.UUID;
 
 public class FFA extends Event{
 
-    public FFA(List list) {
-        super(list);
+    public FFA(@Nonnull List<UUID> list) {
+        super("FFA", list);
     }
 
     @Override

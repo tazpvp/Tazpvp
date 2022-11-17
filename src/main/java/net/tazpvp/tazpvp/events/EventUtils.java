@@ -32,8 +32,17 @@
 
 package net.tazpvp.tazpvp.events;
 
-public class EventUtils {
+import java.util.ArrayList;
+import java.util.List;
+
+public final class EventUtils {
+    public static List<Event> events = new ArrayList<>();
 
     public static Event getEvent(String name) {
+        for (Event e : events) {
+            if (e.getNAME().equalsIgnoreCase(name))
+                return e;
+        }
+        return null;
     }
 }

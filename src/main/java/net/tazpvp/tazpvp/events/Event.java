@@ -32,18 +32,23 @@
 
 package net.tazpvp.tazpvp.events;
 
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
+import lombok.Getter;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.UUID;
 
 public abstract class Event {
 
-    public List<UUID> playerList;
+    @Getter
+    protected List<UUID> playerList;
+    @Getter
+    private final String NAME;
 
-    public Event(List list) {
+    public Event(@Nonnull final String NAME, @Nonnull List<UUID> list) {
+        this.NAME = NAME;
         playerList = list;
+        EventUtils.events.add(this);
     }
 
     protected abstract void begin();
