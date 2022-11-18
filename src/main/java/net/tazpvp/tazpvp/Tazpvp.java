@@ -41,7 +41,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.WeakHashMap;
 
 public final class Tazpvp extends JavaPlugin {
 
@@ -54,10 +53,9 @@ public final class Tazpvp extends JavaPlugin {
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(new DeathEvent(), this);
+        new EventCommandFunction();
 
         events.add("FFA");
-
-        getCommand("event").setExecutor(new EventCommandFunction());
     }
 
     @Override

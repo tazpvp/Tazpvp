@@ -33,46 +33,51 @@
 package net.tazpvp.tazpvp.commands;
 
 import me.rownox.nrcore.utils.PlayerUtils;
+import me.rownox.nrcore.utils.command.CommandCore;
+import me.rownox.nrcore.utils.command.CommandFunction;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.events.EventUtils;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class EventCommandFunction implements CommandExecutor {
+public class EventCommandFunction extends CommandCore implements CommandFunction {
+
+    public EventCommandFunction() {
+        super("event", null, "ev");
+        setDefaultFunction(this);
+    }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-        if (sender instanceof Player p) {
+    public void execute(CommandSender commandSender, String[] args) {
+        if (commandSender instanceof Player p) {
             if (args[0].equalsIgnoreCase("create")) {
-                if (!PlayerUtils.checkPerms(p, Tazpvp.prefix + "event.host")) return false;
+                if (!PlayerUtils.checkPerms(p, Tazpvp.prefix + "event.host")) return;
                 for (String event : Tazpvp.events) {
                     if (args[1].equalsIgnoreCase(event)) {
                         if (Tazpvp.eventKey == null) Tazpvp.eventKey = args[1].toUpperCase();
-                        return true;
+                        return;
                     }
                 }
             }
             else if (args[0].equalsIgnoreCase("list")) {
                 for (String event : Tazpvp.events) {
                     p.sendMessage(event);
-                    return true;
+                    return;
                 }
             }
             else if (args[0].equalsIgnoreCase("begin")) {
                 if (Tazpvp.eventKey != null) {
                     EventUtils.getEvent(Tazpvp.eventKey, Tazpvp.playerList);
-                    return true;
+                    return;
                 }
             }
             else if (args[0].equalsIgnoreCase("join")) {
                 if (Tazpvp.eventKey != null) {
                     Tazpvp.playerList.add(p.getUniqueId());
-                    return true;
+                    return;
                 }
             }
         }
-        return false;
+        return;
     }
 }
