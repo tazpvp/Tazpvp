@@ -5,7 +5,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 
-public class Perks implements Serializable {
+public class Talents implements Serializable {
     @Getter
     @Setter
     private boolean Perk1 = false;
