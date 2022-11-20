@@ -1,5 +1,7 @@
 package net.tazpvp.tazpvp.utils;
 
+import net.tazpvp.tazpvp.utils.data.PlayerData;
+import net.tazpvp.tazpvp.utils.data.QuantitativeData;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nonnull;
@@ -14,9 +16,9 @@ public class PlaytimeUtil {
     }
 
     public static void playerLeft(@Nonnull final Player p) {
-        Long currentTime = System.currentTimeMillis();
-        Long timePlayed = currentTime - playtime.get(p.getUniqueId());
-        // Add timeplayed to player's current time stat
+        long currentTime = System.currentTimeMillis();
+        long timePlayed = currentTime - playtime.get(p.getUniqueId());
+        PlayerData.set(p, QuantitativeData.PLAYTIMEUNIX, PlayerData.get(p, QuantitativeData.PLAYTIMEUNIX) + timePlayed);
     }
 
     public static String secondsToDDHHMMSS(long seconds) {
