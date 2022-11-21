@@ -33,22 +33,27 @@
 package net.tazpvp.tazpvp.utils.functions;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.objects.PlayerAssistData;
 import org.bukkit.entity.Player;
 
+import java.util.Map;
 import java.util.UUID;
 
 public class CombatFunctions {
 
-
-
     public static void tag(Player attacker, Player victim) {
-        Tazpvp.combatTag.get(victim.getUniqueId()).add(attacker.getUniqueId());
+//        Tazpvp.combatTag.get(victim.getUniqueId()).add(attacker.getUniqueId());
+        Tazpvp.combatAssist.get(victim.getUniqueId()).addAttacker(attacker.getUniqueId());
     }
 
     public static void check() {
-        for (UUID p : Tazpvp.combatTag.keySet()) {
-            if (Tazpvp.combatTag.get(p) - 1 > 0) {
-
+        for (Map.Entry<UUID, PlayerAssistData> entrySet : Tazpvp.combatAssist.entrySet()) {
+            PlayerAssistData playerAssistData = entrySet.getValue();
+            if (playerAssistData.overCheck()) {
+                // out of combat lol
+            } else {
+                // still in combat
+                playerAssistData.decreaseCountdown();
             }
         }
     }

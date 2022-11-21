@@ -36,10 +36,10 @@ package net.tazpvp.tazpvp;
 import net.tazpvp.tazpvp.commands.EventCommandFunction;
 import net.tazpvp.tazpvp.listeners.Damage;
 import net.tazpvp.tazpvp.utils.functions.CombatFunctions;
+import net.tazpvp.tazpvp.utils.objects.PlayerAssistData;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.javatuples.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +54,7 @@ public final class Tazpvp extends JavaPlugin {
 
     public static String prefix = "tazpvp.";
 
-    public static WeakHashMap<UUID, Pair<List<UUID>, Integer>> combatTag = new WeakHashMap<>();
+    public static WeakHashMap<UUID, PlayerAssistData> combatAssist = new WeakHashMap<>();
 
     @Override
     public void onEnable() {
@@ -68,7 +68,7 @@ public final class Tazpvp extends JavaPlugin {
             public void run() {
                 CombatFunctions.check();
             }
-        }.runTaskTimer(this, 1, 1);
+        }.runTaskTimerAsynchronously(this, 16L, 16L);
     }
 
     @Override

@@ -33,18 +33,17 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.objects.PlayerAssistData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-
-import java.util.ArrayList;
 
 public class Join implements Listener {
 
     private void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
 
-        Tazpvp.combatTag.put(p.getUniqueId(), new ArrayList<>());
+        Tazpvp.combatAssist.put(p.getUniqueId(), new PlayerAssistData());
 
     }
 }
