@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.utils.extra;
+package net.tazpvp.tazpvp.utils.enums;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;

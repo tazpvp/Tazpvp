@@ -30,10 +30,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.utils;
+package net.tazpvp.tazpvp.utils.objects;
 
 import me.rownox.nrcore.utils.item.builders.ItemBuilder;
-import net.tazpvp.tazpvp.utils.extra.CC;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;

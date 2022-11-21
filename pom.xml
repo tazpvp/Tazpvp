@@ -86,5 +86,10 @@
             <scope>system</scope>
             <systemPath>${project.basedir}${file.separator}NRCore.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>org.javatuples</groupId>
+            <artifactId>javatuples</artifactId>
+            <version>1.2</version>
+        </dependency>
     </dependencies>
 </project>

@@ -28,53 +28,31 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
  */
 
-package net.tazpvp.tazpvp;
+package net.tazpvp.tazpvp.listeners;
 
-import net.tazpvp.tazpvp.commands.EventCommandFunction;
-import net.tazpvp.tazpvp.listeners.Damage;
-import net.tazpvp.tazpvp.utils.functions.CombatFunctions;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.javatuples.Pair;
+import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import java.util.WeakHashMap;
+public class Damage implements Listener {
 
-public final class Tazpvp extends JavaPlugin {
-
-    public static List<String> events = new ArrayList<>();
-    public static String eventKey;
-    public static List<UUID> playerList = new ArrayList<>();
-
-    public static String prefix = "tazpvp.";
-
-    public static WeakHashMap<UUID, Pair<List<UUID>, Integer>> combatTag = new WeakHashMap<>();
-
-    @Override
-    public void onEnable() {
-        getServer().getPluginManager().registerEvents(new Damage(), this);
-        new EventCommandFunction();
-
-        events.add("FFA");
-
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                CombatFunctions.check();
+    @EventHandler
+    public void onEntityDamage(EntityDamageEvent e) {
+        if (e.getEntity() instanceof Player victim) {
+            double fd = e.getFinalDamage();
+            if ((victim.getHealth() - fd) <= 0) {
+                e.setCancelled(true);
+                if (e instanceof EntityDamageByEntityEvent ee) {
+                    if (ee.getDamager() instanceof Player killer) {
+                        DeathFunctions.death(victim, killer);
+                    }
+                }
             }
-        }.runTaskTimer(this, 1, 1);
-    }
-
-    @Override
-    public void onDisable() {}
-
-    public static Tazpvp getInstance() {
-        return (Tazpvp) Bukkit.getPluginManager().getPlugin("Tazpvp");
+        }
     }
 }

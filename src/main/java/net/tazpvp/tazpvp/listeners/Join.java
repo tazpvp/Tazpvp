@@ -32,55 +32,19 @@
 
 package net.tazpvp.tazpvp.listeners;
 
-import me.rownox.nrcore.utils.ConfigUtils;
-import net.tazpvp.tazpvp.utils.Death;
-import org.bukkit.Bukkit;
+import net.tazpvp.tazpvp.Tazpvp;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 
-import javax.annotation.Nullable;
+import java.util.ArrayList;
 
-public class DeathEvent implements Listener {
+public class Join implements Listener {
 
-    @EventHandler
-    public void onEntityDamage(EntityDamageEvent e) {
-        if (e.getEntity() instanceof Player victim) {
-            double fd = e.getFinalDamage();
-            if ((victim.getHealth() - fd) <= 0) {
-                e.setCancelled(true);
-                if (e instanceof EntityDamageByEntityEvent ee) {
-                    if (ee.getDamager() instanceof Player killer) {
-                        deathFunction(victim, killer);
-                    }
-                }
-            }
-        }
-    }
+    private void onJoin(PlayerJoinEvent e) {
+        Player p = e.getPlayer();
 
-    private void deathFunction(Player victim, @Nullable Player killer) {
-        Death death = new Death(victim, killer);
+        Tazpvp.combatTag.put(p.getUniqueId(), new ArrayList<>());
 
-        if (killer != null) {
-            if (Bukkit.getOnlinePlayers().size() < 10) {
-                if (killer == victim) {
-                    death.MessageAll("death");
-                } else {
-                    death.MessageAll("kill");
-                }
-            } else {
-                if (killer == victim) {
-                    death.deathMessage(victim);
-                } else {
-                    death.killMessage(killer);
-                }
-            }
-        }
-
-        death.coffin();
-        victim.teleport(ConfigUtils.spawn);
-        death.heal();
     }
 }

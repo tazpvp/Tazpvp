@@ -28,53 +28,40 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
  */
 
-package net.tazpvp.tazpvp;
+package net.tazpvp.tazpvp.utils.functions;
 
-import net.tazpvp.tazpvp.commands.EventCommandFunction;
-import net.tazpvp.tazpvp.listeners.Damage;
-import net.tazpvp.tazpvp.utils.functions.CombatFunctions;
+import me.rownox.nrcore.utils.ConfigUtils;
+import net.tazpvp.tazpvp.utils.objects.Death;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.javatuples.Pair;
+import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import java.util.WeakHashMap;
+import javax.annotation.Nullable;
 
-public final class Tazpvp extends JavaPlugin {
+public class DeathFunctions {
 
-    public static List<String> events = new ArrayList<>();
-    public static String eventKey;
-    public static List<UUID> playerList = new ArrayList<>();
+    public static void death(Player victim, @Nullable Player killer) {
+        Death death = new Death(victim, killer);
 
-    public static String prefix = "tazpvp.";
-
-    public static WeakHashMap<UUID, Pair<List<UUID>, Integer>> combatTag = new WeakHashMap<>();
-
-    @Override
-    public void onEnable() {
-        getServer().getPluginManager().registerEvents(new Damage(), this);
-        new EventCommandFunction();
-
-        events.add("FFA");
-
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                CombatFunctions.check();
+        if (killer != null) {
+            if (Bukkit.getOnlinePlayers().size() < 10) {
+                if (killer == victim) {
+                    death.MessageAll("death");
+                } else {
+                    death.MessageAll("kill");
+                }
+            } else {
+                if (killer == victim) {
+                    death.deathMessage(victim);
+                } else {
+                    death.killMessage(killer);
+                }
             }
-        }.runTaskTimer(this, 1, 1);
-    }
+        }
 
-    @Override
-    public void onDisable() {}
-
-    public static Tazpvp getInstance() {
-        return (Tazpvp) Bukkit.getPluginManager().getPlugin("Tazpvp");
+        death.coffin();
+        victim.teleport(ConfigUtils.spawn);
+        death.heal();
     }
 }
