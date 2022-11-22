@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.utils.data;
+package net.tazpvp.tazpvp.talents;
 
 import lombok.Getter;
 import lombok.Setter;

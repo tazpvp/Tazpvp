@@ -33,6 +33,7 @@
 package net.tazpvp.tazpvp.utils.objects;
 
 import me.rownox.nrcore.utils.item.builders.ItemBuilder;
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -58,6 +59,7 @@ public class Death {
     public Death(final Player victim, @Nullable final Player killer) {
         this.victim = victim;
         this.killer = killer;
+        Tazpvp.getObservers().forEach(observer -> observer.death(victim, killer));
     }
 
     //TODO: put death rewards in player action bar

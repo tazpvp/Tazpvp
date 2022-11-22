@@ -33,12 +33,13 @@
 
 package net.tazpvp.tazpvp;
 
-import net.tazpvp.tazpvp.commands.DuelCommandFunction;
+import lombok.Getter;
 import net.tazpvp.tazpvp.commands.EventCommandFunction;
 import net.tazpvp.tazpvp.listeners.Damage;
 import net.tazpvp.tazpvp.listeners.Join;
 import net.tazpvp.tazpvp.listeners.Leave;
 import net.tazpvp.tazpvp.utils.functions.CombatFunctions;
+import net.tazpvp.tazpvp.talents.Observer;
 import net.tazpvp.tazpvp.utils.objects.AssistKill;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -50,7 +51,8 @@ import java.util.UUID;
 import java.util.WeakHashMap;
 
 public final class Tazpvp extends JavaPlugin {
-
+    @Getter
+    private static List<Observer> observers = new ArrayList<>();
     public static List<String> events = new ArrayList<>();
     public static String eventKey;
     public static List<UUID> playerList = new ArrayList<>();
@@ -65,7 +67,6 @@ public final class Tazpvp extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Join(), this);
         getServer().getPluginManager().registerEvents(new Leave(), this);
         new EventCommandFunction();
-        new DuelCommandFunction();
 
         events.add("FFA");
 
@@ -75,6 +76,10 @@ public final class Tazpvp extends JavaPlugin {
                 CombatFunctions.check();
             }
         }.runTaskTimerAsynchronously(this, 16L, 16L);
+    }
+
+    public static void register(Observer observer) {
+        observers.add(observer);
     }
 
     @Override
