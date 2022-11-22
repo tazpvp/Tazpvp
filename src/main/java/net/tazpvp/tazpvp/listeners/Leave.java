@@ -30,44 +30,21 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.events;
+package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.events.types.FFA;
-import org.bukkit.Bukkit;
+import net.tazpvp.tazpvp.events.EventUtils;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerQuitEvent;
 
-import javax.annotation.Nullable;
-import java.util.List;
-import java.util.UUID;
+public class Leave implements Listener {
 
-public final class EventUtils {
+    private void onLeave(PlayerQuitEvent e) {
+        Player p = e.getPlayer();
 
-    public static Event begin(String name, List<UUID> playerList) {
-        if (name.equals("FFA"))
-            return new FFA(playerList);
-        return null;
-    }
+        Tazpvp.playerList.remove(p.getUniqueId());
 
-    public static void check() {
-        if (Tazpvp.playerList.size() == 1) {
-            end(getWinner());
-        }
-    }
-
-    public static Player getWinner() {
-        for (UUID uuid : Tazpvp.playerList) {
-            return Bukkit.getPlayer(uuid);
-        }
-        return null;
-    }
-
-    public static void end(@Nullable Player winner) {
-        Tazpvp.eventKey = "";
-        Tazpvp.playerList.clear();
-        if (winner != null)
-            Bukkit.broadcastMessage(winner.getName() + " won");
-        else
-            Bukkit.broadcastMessage("Nobody won");
+        EventUtils.check();
     }
 }

@@ -33,7 +33,7 @@
 package net.tazpvp.tazpvp.utils.functions;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.utils.objects.PlayerAssistData;
+import net.tazpvp.tazpvp.utils.objects.AssistKill;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
@@ -47,8 +47,8 @@ public class CombatFunctions {
     }
 
     public static void check() {
-        for (Map.Entry<UUID, PlayerAssistData> entrySet : Tazpvp.combatAssist.entrySet()) {
-            PlayerAssistData playerAssistData = entrySet.getValue();
+        for (Map.Entry<UUID, AssistKill> entrySet : Tazpvp.combatAssist.entrySet()) {
+            AssistKill playerAssistData = entrySet.getValue();
             if (playerAssistData.overCheck()) {
                 // out of combat lol
             } else {

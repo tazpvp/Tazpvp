@@ -33,6 +33,8 @@
 package net.tazpvp.tazpvp.utils.functions;
 
 import me.rownox.nrcore.utils.ConfigUtils;
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.events.EventUtils;
 import net.tazpvp.tazpvp.utils.objects.Death;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -46,18 +48,22 @@ public class DeathFunctions {
 
         if (killer != null) {
             if (Bukkit.getOnlinePlayers().size() < 10) {
-                if (killer == victim) {
+                if (killer == victim)
                     death.MessageAll("death");
-                } else {
+                else
                     death.MessageAll("kill");
-                }
             } else {
-                if (killer == victim) {
+                if (killer == victim)
                     death.deathMessage(victim);
-                } else {
+                else
                     death.killMessage(killer);
-                }
             }
+        }
+
+        if (Tazpvp.playerList.contains(victim.getUniqueId())) {
+
+            Tazpvp.playerList.remove(victim.getUniqueId());
+            EventUtils.check();
         }
 
         death.coffin();

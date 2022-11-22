@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.UUID;
 
-public class PlayerAssistData {
+public class AssistKill {
     private Queue<UUID> attackers = new LinkedList<>();
     private int countdown = 0; // sets to 15 - should get from config - cough rownox cough -
 

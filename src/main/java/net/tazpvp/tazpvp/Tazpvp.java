@@ -33,10 +33,13 @@
 
 package net.tazpvp.tazpvp;
 
+import net.tazpvp.tazpvp.commands.DuelCommandFunction;
 import net.tazpvp.tazpvp.commands.EventCommandFunction;
 import net.tazpvp.tazpvp.listeners.Damage;
+import net.tazpvp.tazpvp.listeners.Join;
+import net.tazpvp.tazpvp.listeners.Leave;
 import net.tazpvp.tazpvp.utils.functions.CombatFunctions;
-import net.tazpvp.tazpvp.utils.objects.PlayerAssistData;
+import net.tazpvp.tazpvp.utils.objects.AssistKill;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -54,12 +57,15 @@ public final class Tazpvp extends JavaPlugin {
 
     public static String prefix = "tazpvp.";
 
-    public static WeakHashMap<UUID, PlayerAssistData> combatAssist = new WeakHashMap<>();
+    public static WeakHashMap<UUID, AssistKill> combatAssist = new WeakHashMap<>();
 
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(new Damage(), this);
+        getServer().getPluginManager().registerEvents(new Join(), this);
+        getServer().getPluginManager().registerEvents(new Leave(), this);
         new EventCommandFunction();
+        new DuelCommandFunction();
 
         events.add("FFA");
 
