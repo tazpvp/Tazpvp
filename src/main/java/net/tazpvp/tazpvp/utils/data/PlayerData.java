@@ -97,13 +97,20 @@ public final class PlayerData {
      * @param value the new value for the datatype
      */
     public static void set(@Nonnull final UUID ID, @Nonnull final QuantitativeData dataType, final float value) {
-        if (dataType.equals(QuantitativeData.TALENTS)) {
+        if (dataType.equals(QuantitativeData.TALENTS) || dataType.equals(QuantitativeData.ACHIEVEMENTS)) {
             Bukkit.getLogger().severe("CANNOT STORE INT AS JAVA CLASS IDIOT");
             return;
         } else if (dataType.equals(QuantitativeData.PLAYTIMEUNIX)) {
             setValueF(ID, dataType.getColumnName(), value);
         } else {
             setValue(ID, dataType.getColumnName(), (int) value);
+            if (dataType.equals(QuantitativeData.XP)) {
+                if (get(ID, QuantitativeData.XP) >= levelFormula((int) get(ID, QuantitativeData.LEVEL))) {
+                    add(ID, QuantitativeData.LEVEL);
+                    set(ID, QuantitativeData.XP, 0);
+                    // TODO: Add level up messages/functions
+                }
+            }
         }
     }
 
@@ -166,6 +173,25 @@ public final class PlayerData {
 
     /**
      * Add 1 to a quantitative datatype
+     * @param p the targeted player
+     * @param dataType the Datatype
+     */
+    public static void add(@Nonnull final OfflinePlayer p, @Nonnull final QuantitativeData dataType) {
+        add(p.getUniqueId(), dataType, 1);
+    }
+
+    /**
+     * Add a custom amount to a quantitative datatype
+     * @param p the targeted player
+     * @param dataType the Datatype
+     * @param amount the desired amount to add
+     */
+    public static void add(@Nonnull final OfflinePlayer p, @Nonnull final QuantitativeData dataType, final int amount) {
+        add(p.getUniqueId(), dataType, amount);
+    }
+
+    /**
+     * Add 1 to a quantitative datatype
      * @param ID the targeted UUID
      * @param dataType the Datatype
      */
@@ -180,10 +206,29 @@ public final class PlayerData {
      * @param amount the desired amount to add
      */
     public static void add(@Nonnull final UUID ID, @Nonnull final QuantitativeData dataType, final int amount) {
-        if (dataType.equals(QuantitativeData.TALENTS)) {
+        if (dataType.equals(QuantitativeData.TALENTS) || dataType.equals(QuantitativeData.ACHIEVEMENTS)) {
             Bukkit.getLogger().severe("CANNOT ADD TO NON INT COLUMNS");
         }
         set(ID, dataType, get(ID, dataType) + amount);
+    }
+
+    /**
+     * Remove 1 from a quantitative datatype
+     * @param p the targeted player
+     * @param dataType the Datatype
+     */
+    public static void remove(@Nonnull final OfflinePlayer p, @Nonnull final QuantitativeData dataType) {
+        remove(p.getUniqueId(), dataType, 1);
+    }
+
+    /**
+     * remove a custom amount from a quantitative datatype
+     * @param p the targeted player
+     * @param dataType the Datatype
+     * @param amount the desired amount to remove
+     */
+    public static void remove(@Nonnull final OfflinePlayer p, @Nonnull final QuantitativeData dataType, final int amount) {
+        remove(p.getUniqueId(), dataType, amount);
     }
 
     /**
@@ -202,10 +247,14 @@ public final class PlayerData {
      * @param amount the desired amount to remove
      */
     public static void remove(@Nonnull final UUID ID, @Nonnull final QuantitativeData dataType, final int amount) {
-        if (dataType.equals(QuantitativeData.TALENTS) || dataType.equals(QuantitativeData.PLAYTIMEUNIX)) {
+        if (dataType.equals(QuantitativeData.TALENTS) || dataType.equals(QuantitativeData.ACHIEVEMENTS) || dataType.equals(QuantitativeData.PLAYTIMEUNIX)) {
             Bukkit.getLogger().severe("CANNOT MINUS TO NON INT COLUMNS");
         }
         set(ID, dataType, get(ID, dataType) - amount);
+    }
+
+    private static int levelFormula(final int level) {
+        return Math.divideExact(Math.multiplyExact(level, 5), 3);
     }
 }
 
