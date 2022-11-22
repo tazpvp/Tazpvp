@@ -1,6 +1,7 @@
 package net.tazpvp.tazpvp.talent.talents;
 
 import net.tazpvp.tazpvp.talent.Observable;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 public class Revenge extends Observable {
@@ -10,7 +11,7 @@ public class Revenge extends Observable {
     }
 
     @Override
-    public void mine(Player p) {
+    public void mine(Player p, Material material) {
 
     }
 

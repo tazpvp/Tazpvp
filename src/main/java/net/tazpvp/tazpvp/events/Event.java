@@ -40,16 +40,30 @@ import java.util.UUID;
 
 public abstract class Event {
 
+    /**
+     * List of all the Players in the event
+     */
     @Getter
     protected List<UUID> playerList;
+    /**
+     * The Name of the Event
+     */
     @Getter
     private final String NAME;
 
+    /**
+     * Initalize an Event
+     * @param NAME The name of the event
+     * @param list List of all the players
+     */
     public Event(@Nonnull final String NAME, @Nonnull List<UUID> list) {
         this.NAME = NAME;
         playerList = list;
         begin();
     }
 
+    /**
+     * Begin's the event
+     */
     protected abstract void begin();
 }

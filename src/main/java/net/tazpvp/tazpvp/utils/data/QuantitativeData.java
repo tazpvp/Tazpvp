@@ -21,10 +21,18 @@ public enum QuantitativeData {
         this.columnIndex = columnIndex;
     }
 
+    /**
+     * Get the column name
+     * @return the column's name
+     */
     public String getColumnName() {
         return this.columnName;
     }
 
+    /**
+     * Get the index of a column
+     * @return The column's index
+     */
     public int getColumnIndex() {
         return this.columnIndex;
     }

@@ -41,11 +41,19 @@ import java.util.UUID;
 
 public class CombatFunctions {
 
+    /**
+     * Add a player to another player's combat tag
+     * @param attacker the attacker to add to the combat tag
+     * @param victim the victim's combat tag to add to
+     */
     public static void tag(Player attacker, Player victim) {
 //        Tazpvp.combatTag.get(victim.getUniqueId()).add(attacker.getUniqueId());
         Tazpvp.combatAssist.get(victim.getUniqueId()).addAttacker(attacker.getUniqueId());
     }
 
+    /**
+     * Check if a person is in the combat tag still
+     */
     public static void check() {
         for (Map.Entry<UUID, AssistKill> entrySet : Tazpvp.combatAssist.entrySet()) {
             AssistKill playerAssistData = entrySet.getValue();

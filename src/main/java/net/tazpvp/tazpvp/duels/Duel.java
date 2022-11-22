@@ -36,13 +36,22 @@ import org.bukkit.entity.Player;
 
 public abstract class Duel {
 
+    /**
+     * A Player
+     */
     private Player p1;
+    /**
+     * Another Player
+     */
     private Player p2;
 
     public Duel(Player p1, Player p2) {
 
     }
 
+    /**
+     * Begins the duel
+     */
     public abstract void begin();
 
 }

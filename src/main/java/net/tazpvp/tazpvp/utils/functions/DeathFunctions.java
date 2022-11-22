@@ -43,6 +43,11 @@ import javax.annotation.Nullable;
 
 public class DeathFunctions {
 
+    /**
+     * Initalize a death
+     * @param victim the victim
+     * @param killer the killer
+     */
     public static void death(Player victim, @Nullable Player killer) {
         Death death = new Death(victim, killer);
 

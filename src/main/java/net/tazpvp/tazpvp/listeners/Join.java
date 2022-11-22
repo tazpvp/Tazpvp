@@ -40,6 +40,10 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class Join implements Listener {
 
+    /**
+     * Called when a player joins
+     * @param e The PlayerJoinEvent
+     */
     private void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
 

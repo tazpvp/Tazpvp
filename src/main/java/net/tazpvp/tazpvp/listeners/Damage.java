@@ -41,6 +41,10 @@ import org.bukkit.event.entity.EntityDamageEvent;
 
 public class Damage implements Listener {
 
+    /**
+     * Called when an entity is damaged
+     * @param e the EntityDamageEvent
+     */
     @EventHandler
     public void onEntityDamage(EntityDamageEvent e) {
         if (e.getEntity() instanceof Player victim) {

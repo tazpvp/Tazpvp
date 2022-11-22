@@ -54,6 +54,9 @@ import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+/*
+    A plugin for tazpvp beacuse we love tazpvp! <3 I love tazpvp <3 <3 <3 Rownxo smells like tazpvp stinky tazpvp
+ */
 public final class Tazpvp extends JavaPlugin {
     @Getter
     private static List<Observer> observers = new ArrayList<>();

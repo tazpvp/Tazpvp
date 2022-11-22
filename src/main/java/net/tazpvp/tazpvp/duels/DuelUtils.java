@@ -32,6 +32,6 @@
 
 package net.tazpvp.tazpvp.duels;
 
-public class DuelUtils {
+public final class DuelUtils {
 
 }

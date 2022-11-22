@@ -43,18 +43,31 @@ import java.util.UUID;
 
 public final class EventUtils {
 
+    /**
+     * Begin an event
+     * @param name the Name of the event
+     * @param playerList the list of participating players
+     * @return a new event object
+     */
     public static Event begin(String name, List<UUID> playerList) {
         if (name.equals("FFA"))
             return new FFA(playerList);
         return null;
     }
 
+    /**
+     * Check if the event is of decent size
+     */
     public static void check() {
         if (Tazpvp.playerList.size() == 1) {
             end(getWinner());
         }
     }
 
+    /**
+     * Get the winner of the event
+     * @return The winning Player
+     */
     public static Player getWinner() {
         for (UUID uuid : Tazpvp.playerList) {
             return Bukkit.getPlayer(uuid);
@@ -62,6 +75,10 @@ public final class EventUtils {
         return null;
     }
 
+    /**
+     * End an event
+     * @param winner winner of the event
+     */
     public static void end(@Nullable Player winner) {
         Tazpvp.eventKey = "";
         Tazpvp.playerList.clear();

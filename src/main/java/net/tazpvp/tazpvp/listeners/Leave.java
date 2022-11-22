@@ -40,6 +40,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class Leave implements Listener {
 
+    /**
+     * Called when a player leaves
+     * @param e the PlayerQuitEvent
+     */
     private void onLeave(PlayerQuitEvent e) {
         Player p = e.getPlayer();
 
