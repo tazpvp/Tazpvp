@@ -35,15 +35,13 @@ package net.tazpvp.tazpvp.listeners;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.events.EventUtils;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class Leave implements Listener {
 
-    /**
-     * Called when a player leaves
-     * @param e the PlayerQuitEvent
-     */
+    @EventHandler
     private void onLeave(PlayerQuitEvent e) {
         Player p = e.getPlayer();
 

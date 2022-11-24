@@ -40,14 +40,9 @@ import java.util.UUID;
 
 public abstract class Event {
 
-    /**
-     * List of all the Players in the event
-     */
     @Getter
     protected List<UUID> playerList;
-    /**
-     * The Name of the Event
-     */
+
     @Getter
     private final String NAME;
 
@@ -62,8 +57,5 @@ public abstract class Event {
         begin();
     }
 
-    /**
-     * Begin's the event
-     */
     protected abstract void begin();
 }
