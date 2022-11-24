@@ -33,19 +33,26 @@
 package net.tazpvp.tazpvp.utils.objects;
 
 import me.rownox.nrcore.utils.item.builders.ItemBuilder;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.data.PlayerData;
+import net.tazpvp.tazpvp.utils.data.QuantitativeData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
@@ -55,9 +62,12 @@ public class Death {
     final String prefix = CC.GRAY + "[" + CC.DARK_RED + "☠" + CC.GRAY + "] " + CC.DARK_GRAY;
     private final Player victim;
     private final Player killer;
+    private final Location deathLocation;
+    private final Random r = new Random();
 
     public Death(final Player victim, @Nullable final Player killer) {
         this.victim = victim;
+        this.deathLocation = victim.getLocation();
         this.killer = killer;
         Tazpvp.getObservers().forEach(observer -> observer.death(victim, killer));
     }
@@ -67,7 +77,6 @@ public class Death {
     /**
      * Replenishes the maximum health of the player and removes potion effects.
      */
-
     public void heal() {
         victim.setHealth(20); //TODO: reference
         killer.setHealth(killer.getHealth() + 5);
@@ -102,7 +111,6 @@ public class Death {
      * List of all possible enchantments that appear in the coffin.
      * @return Returns a random enchantment out of the list.
      */
-
     public Enchantment coffinEnchant() {
         List<Enchantment> list = List.of(
             Enchantment.DAMAGE_ALL,
@@ -110,18 +118,49 @@ public class Death {
             Enchantment.PROTECTION_ENVIRONMENTAL
         );
 
-        return list.get(new Random().nextInt(list.size()));
+        return list.get(r.nextInt(list.size()));
     }
 
     public int coffinEnchantLevel() {
-        return new Random().nextInt(3 - 1) + 1;
+        return r.nextInt(3 - 1) + 1;
+    }
+
+    /**
+     * Run functionality of dropping the victim's head at their death location
+     */
+    public void dropHead() {
+        if (skullDropChange()) {
+            World w = deathLocation.getWorld();
+            w.dropItemNaturally(deathLocation.add(0, 1, 0), makeSkull(victim));
+        }
+    }
+
+    /**
+     * 25% chance of returning true
+     * @return true or false
+     */
+    private boolean skullDropChange() {
+        Random r = new Random();
+        return r.nextInt(4) == 3;
+    }
+
+    /**
+     * Make a skull ItemStack with a given player
+     * @param p The Player you want to make the skull of
+     * @return the ItemStack with the Player's skull
+     */
+    private ItemStack makeSkull(@Nonnull final Player p) {
+        ItemStack stack = new ItemStack(Material.SKELETON_SKULL);
+        SkullMeta meta = (SkullMeta) stack.getItemMeta();
+        meta.setOwningPlayer(p);
+        stack.setItemMeta(meta);
+        return stack;
     }
 
     /**
      * Send personal and broadcast public kill messages.
      * @param p The user that the message is sent to.
      */
-
     public void killMessage(final Player p) {
         final String who = (p == killer) ? "You" : CC.GRAY + killer.getName();
         final String what = CC.DARK_GRAY + " killed " + CC.GRAY + victim.getName();
@@ -134,7 +173,6 @@ public class Death {
      * Used to send personal death messages or broadcasting suicide messages.
      * @param p The user that the message is sent to.
      */
-
     public void deathMessage(final Player p) {
         final String who = (p == victim) ? "You" : CC.GRAY + victim.getName();
         String msg = prefix + who + " died.";
@@ -146,7 +184,6 @@ public class Death {
      * Broadcast a death message for either a suicide or kill.
      * @param which Suicide or kill?
      */
-
     public void MessageAll(String which) {
         for (Player op : Bukkit.getOnlinePlayers()) {
             if (which.equals("kill")) {
@@ -155,5 +192,19 @@ public class Death {
                 deathMessage(op);
             }
         }
+    }
+
+    public void rewards() {
+        final int xp = 35;
+        final int coins = 26;
+
+        sendActionbar(xp, coins);
+        PlayerData.add(victim, QuantitativeData.XP, xp);
+        PlayerData.add(victim, QuantitativeData.COINS, coins);
+    }
+
+    @SuppressWarnings("all")
+    private void sendActionbar(final int xp, final int coins) {
+        killer.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(CC.AQUA + "EXP: " + xp + CC.GOLD + " Coins: " + coins));
     }
 }

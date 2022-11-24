@@ -33,6 +33,7 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.PlaytimeUtil;
 import net.tazpvp.tazpvp.utils.objects.AssistKill;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -46,5 +47,6 @@ public class Join implements Listener {
         Player p = e.getPlayer();
 
         Tazpvp.combatAssist.put(p.getUniqueId(), new AssistKill());
+        PlaytimeUtil.playerJoined(p);
     }
 }

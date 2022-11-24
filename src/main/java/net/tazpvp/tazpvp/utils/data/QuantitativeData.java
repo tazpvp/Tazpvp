@@ -4,14 +4,16 @@ import javax.annotation.Nonnull;
 
 public enum QuantitativeData {
     COINS("coins", 1),
-    LEVEL("level", 2),
-    KILLS("kills", 3),
-    DEATHS("deaths", 4),
-    TOPKILLSTREAK("top_ks", 5),
-    PRESTIGE("prestige", 6),
-    REBIRTH("rebirth", 7),
-    PLAYTIMEUNIX("playtime", 8),
-    TALENTS("talents", 9);
+    XP("xp", 2),
+    LEVEL("level", 3),
+    KILLS("kills", 4),
+    DEATHS("deaths", 5),
+    TOPKILLSTREAK("top_ks", 6),
+    PRESTIGE("prestige", 7),
+    REBIRTH("rebirth", 8),
+    PLAYTIMEUNIX("playtime", 9),
+    TALENTS("talents", 10),
+    ACHIEVEMENTS("achievements", 11);
 
     private final String columnName;
     private final int columnIndex;

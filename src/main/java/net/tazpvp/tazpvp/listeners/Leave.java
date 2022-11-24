@@ -34,6 +34,7 @@ package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.events.EventUtils;
+import net.tazpvp.tazpvp.utils.PlaytimeUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -46,7 +47,7 @@ public class Leave implements Listener {
         Player p = e.getPlayer();
 
         Tazpvp.playerList.remove(p.getUniqueId());
-
         EventUtils.check();
+        PlaytimeUtil.playerLeft(p);
     }
 }
