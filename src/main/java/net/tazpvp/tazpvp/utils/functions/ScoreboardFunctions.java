@@ -32,55 +32,59 @@
 
 package net.tazpvp.tazpvp.utils.functions;
 
-import me.rownox.nrcore.utils.ConfigUtils;
-import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.events.EventUtils;
 import net.tazpvp.tazpvp.utils.data.PlayerData;
 import net.tazpvp.tazpvp.utils.data.QuantitativeData;
-import net.tazpvp.tazpvp.utils.objects.Death;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.*;
 
-import javax.annotation.Nullable;
+import java.util.UUID;
 
-public class DeathFunctions {
+public class ScoreboardFunctions {
 
-    /**
-     * Initalize a death
-     * @param victim the victim
-     * @param killer the killer
-     */
-    public static void death(Player victim, @Nullable Player killer) {
-        Death death = new Death(victim, killer);
+    private static Scoreboard board = null;
+    private static Objective objective = null;
 
-        if (killer != null) {
-            PlayerData.add(killer, QuantitativeData.KILLS);
-            if (Bukkit.getOnlinePlayers().size() < 10) {
-                if (killer == victim)
-                    death.MessageAll("death");
-                else
-                    death.MessageAll("kill");
-            } else {
-                if (killer == victim)
-                    death.deathMessage(victim);
-                else
-                    death.killMessage(killer);
-            }
-        }
+    @SuppressWarnings("all")
+    public static void initScoreboard(Player p) {
 
-        if (Tazpvp.playerList.contains(victim.getUniqueId())) {
+        board = Bukkit.getScoreboardManager().getNewScoreboard();
+        objective = board.registerNewObjective("sb", "dummy", "tazpvp");
 
-            Tazpvp.playerList.remove(victim.getUniqueId());
-            EventUtils.check();
-        }
+        objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-        PlayerData.add(victim, QuantitativeData.DEATHS);
+        newLine(QuantitativeData.LEVEL, p, "Level:").setScore(6);
+        newLine(QuantitativeData.COINS, p, "Coins:").setScore(5);
+        newLine(QuantitativeData.XP, p, "Exp:").setScore(4);
+        objective.getScore(" ").setScore(3);
+        KDRScore(p, "KDR:").setScore(2);
+        newLine(QuantitativeData.KILLS, p, "Kills:").setScore(1);
+        newLine(QuantitativeData.DEATHS, p, "Deaths:").setScore(0);
 
-        death.dropHead();
-        death.rewards();
-        death.coffin();
-        death.heal();
+        p.setScoreboard(board);
+    }
 
-        victim.teleport(ConfigUtils.spawn);
+    private static Score newLine(QuantitativeData q, Player p, String prefix) {
+
+        String ID = UUID.randomUUID().toString();
+
+        Team team = board.registerNewTeam(q.getColumnName());
+
+        team.addEntry(ID);
+        team.setPrefix(prefix + " ");
+        team.setSuffix(PlayerData.get(p, q) + "");
+
+        return objective.getScore(ID);
+    }
+
+    private static Score KDRScore(Player p, String prefix) {
+        String ID = UUID.randomUUID().toString();
+        Team team = board.registerNewTeam("kdr");
+
+        team.addEntry(ID);
+        team.setPrefix(prefix + " ");
+        team.setSuffix(PlayerData.kdrFormula((int) PlayerData.get(p, QuantitativeData.KILLS), (int) PlayerData.get(p, QuantitativeData.DEATHS)) + "");
+
+        return objective.getScore(ID);
     }
 }

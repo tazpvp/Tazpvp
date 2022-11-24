@@ -4,6 +4,7 @@ import me.rownox.nrcore.utils.sql.SQLHelper;
 import net.tazpvp.tazpvp.talent.Talents;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
 
@@ -109,6 +110,13 @@ public final class PlayerData {
                     add(ID, QuantitativeData.LEVEL);
                     set(ID, QuantitativeData.XP, 0);
                     // TODO: Add level up messages/functions
+                }
+            }
+            Player p = Bukkit.getPlayer(ID);
+            if (p != null) {
+                p.getScoreboard().getTeam(dataType.getColumnName()).setSuffix(value + "");
+                if (dataType.equals(QuantitativeData.KILLS) || dataType.equals(QuantitativeData.DEATHS)) {
+                    p.getScoreboard().getTeam("kdr").setSuffix(kdrFormula((int) get(p, QuantitativeData.KILLS), (int) get(p, QuantitativeData.DEATHS)) + "");
                 }
             }
         }
@@ -255,6 +263,10 @@ public final class PlayerData {
 
     private static int levelFormula(final int level) {
         return Math.divideExact(Math.multiplyExact(level, 5), 3);
+    }
+
+    public static float kdrFormula(final int kills, final int deaths) {
+        return kills/deaths;
     }
 }
 
