@@ -262,7 +262,7 @@ public final class PlayerData {
     }
 
     private static int levelFormula(final int level) {
-        return Math.divideExact(Math.multiplyExact(level, 5), 3);
+        return (int) ((level * 5) / 3);
     }
 
     public static float kdrFormula(final int kills, final int deaths) {
