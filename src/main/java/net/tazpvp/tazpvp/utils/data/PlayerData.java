@@ -129,7 +129,7 @@ public final class PlayerData {
      * @param columnIndex the index of the column
      * @return the Object value of the requested column
      */
-    private static String getString(@Nonnull final UUID ID, final int columnIndex) {
+    public static String getString(@Nonnull final UUID ID, final int columnIndex) {
         return SQLHelper.getString(NAME, ID_COLUMN, "'" + ID.toString() + "'", columnIndex);
     }
 
@@ -139,18 +139,28 @@ public final class PlayerData {
      * @param columnIndex the index of the column
      * @return the Object value of the requested column
      */
-    private static int getInt(@Nonnull final UUID ID, final int columnIndex) {
+    public static int getInt(@Nonnull final UUID ID, final int columnIndex) {
         return SQLHelper.getInt(NAME, ID_COLUMN, "'" + ID.toString() + "'", columnIndex);
     }
 
     /**
      * Get an Object value of a sql column
      * @param ID the targeted UUID
-     * @param columnIndex the index of the column
+     * @param quantitativeData the index of the column
      * @return the Object value of the requested column
      */
-    private static float getFloat(@Nonnull final UUID ID, final int columnIndex) {
-        return SQLHelper.getFloat(NAME, ID_COLUMN, "'" + ID.toString() + "'", columnIndex);
+    public static float getFloat(@Nonnull final UUID ID, final QuantitativeData quantitativeData) {
+        return SQLHelper.getFloat(NAME, ID_COLUMN, "'" + ID.toString() + "'", quantitativeData.getColumnIndex());
+    }
+
+    /**
+     * Get an Object value of a sql column
+     * @param p the targeted Player
+     * @param quantitativeData the index of the column
+     * @return the Object value of the requested column
+     */
+    public static float getFloat(@Nonnull final OfflinePlayer p, final QuantitativeData quantitativeData) {
+        return getFloat(p.getUniqueId(), quantitativeData);
     }
 
     /**
@@ -186,9 +196,9 @@ public final class PlayerData {
             }
             Player p = Bukkit.getPlayer(ID);
             if (p != null) {
-                p.getScoreboard().getTeam(dataType.getColumnName()).setSuffix(value + "");
+                p.getScoreboard().getTeam(dataType.getColumnName()).setSuffix((int) value + "");
                 if (dataType.equals(QuantitativeData.KILLS) || dataType.equals(QuantitativeData.DEATHS)) {
-                    p.getScoreboard().getTeam("kdr").setSuffix(kdrFormula((int) getInt(p, QuantitativeData.KILLS), (int) getInt(p, QuantitativeData.DEATHS)) + "");
+                    p.getScoreboard().getTeam("kdr").setSuffix(kdrFormula(getFloat(p, QuantitativeData.KILLS), getFloat(p, QuantitativeData.DEATHS)) + "");
                 }
             }
         }
@@ -337,9 +347,9 @@ public final class PlayerData {
         return (int) ((level * 5) / 3);
     }
 
-    public static float kdrFormula(final int kills, final int deaths) {
+    public static float kdrFormula(final float kills, final float deaths) {
         if (kills != 0 && deaths != 0)
-            return kills/deaths;
+            return kills /deaths;
         return 0F;
     }
 }
