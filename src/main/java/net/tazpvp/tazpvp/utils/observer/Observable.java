@@ -33,7 +33,6 @@
 package net.tazpvp.tazpvp.utils.observer;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.utils.observer.Observer;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -57,6 +56,16 @@ public class Observable implements Observer {
 
     @Override
     public void launch(Player p) {
+
+    }
+
+    @Override
+    public void buyTalent(Player p) {
+
+    }
+
+    @Override
+    public void interactWithNpc(Player p, String name) {
 
     }
 }

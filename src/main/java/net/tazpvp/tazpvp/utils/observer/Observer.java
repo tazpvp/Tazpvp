@@ -45,4 +45,6 @@ public interface Observer {
 
     void buyTalent(Player p);
 
+    void interactWithNpc(Player p, String name);
+
 }

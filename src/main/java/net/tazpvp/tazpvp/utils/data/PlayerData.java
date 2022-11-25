@@ -1,6 +1,7 @@
 package net.tazpvp.tazpvp.utils.data;
 
 import me.rownox.nrcore.utils.sql.SQLHelper;
+import net.tazpvp.tazpvp.achievements.Achievements;
 import net.tazpvp.tazpvp.talents.Talents;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -39,7 +40,7 @@ public final class PlayerData {
      */
     public static void initPlayer(UUID uuid) {
         if (!SQLHelper.ifRowExists(NAME, ID_COLUMN, uuid.toString())) {
-            SQLHelper.initializeValues(NAME, "ID, COINS, XP, LEVEL, KILLS, DEATHS, TOP_KS, PRESTIGE, REBIRTH, PLAYTIME, TALENTS, ACHIEVEMENTS", "'" + uuid.toString() + "'", "0", "0", "0", "0", "0", "0", "0", "0", "0", "'abc'", "'def'");
+            SQLHelper.initializeValues(NAME, "ID, COINS, XP, LEVEL, KILLS, DEATHS, TOP_KS, PRESTIGE, REBIRTH, PLAYTIME, TALENTS, ACHIEVEMENTS", "'" + uuid.toString() + "'", "0", "0", "0", "0", "0", "0", "0", "0", "0", "'set'", "'set'");
             setTalents(uuid, new Talents());
             //set achiefvements when rownox decides to push liek
         }
@@ -98,20 +99,33 @@ public final class PlayerData {
      * @return The Talents object stored in the column
      */
     public static Talents getTalents(@Nonnull final UUID uuid) {
-        if (getObject(uuid, QuantitativeData.TALENTS.getColumnIndex()) == null) {
-            return new Talents();
+        return (Talents) getSerializeObject(uuid, QuantitativeData.TALENTS);
+    }
+
+    public static Achievements getAchievements(@Nonnull final UUID uuid) {
+        return (Achievements) getSerializeObject(uuid, QuantitativeData.ACHIEVEMENTS);
+    }
+
+    private static Object getSerializeObject(@Nonnull final UUID uuid, @Nonnull final QuantitativeData quantitativeData) {
+        if (getString(uuid, quantitativeData.getColumnIndex()).equals("set")) {
+            if (quantitativeData.equals(QuantitativeData.TALENTS)) {
+                return new Talents();
+            } else {
+                return new Achievements();
+            }
         }
-        ByteArrayInputStream stream = new ByteArrayInputStream(Base64.getDecoder().decode((String) getObject(uuid, QuantitativeData.TALENTS.getColumnIndex())));
+        ByteArrayInputStream stream = new ByteArrayInputStream(Base64.getDecoder().decode(getString(uuid, quantitativeData.getColumnIndex())));
         BukkitObjectInputStream data = null;
         try {
             data = new BukkitObjectInputStream(stream);
-            Talents talents = (Talents) data.readObject();
+            Object obj = data.readObject();
             data.close();
-            return talents;
+            return obj;
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
+
 
     /**
      * Get an Object value of a sql column
@@ -219,13 +233,35 @@ public final class PlayerData {
      * @param talents the talents object
      */
     public static void setTalents(@Nonnull final UUID uuid, @Nonnull final Talents talents) {
+        setSerializedObject(uuid, talents, QuantitativeData.TALENTS);
+    }
+
+    /**
+     * Set the talents object to the column
+     * @param p the targeted player
+     * @param achievements the talents object
+     */
+    public static void setAchievements(@Nonnull final OfflinePlayer p, @Nonnull final Achievements achievements) {
+        setAchievements(p.getUniqueId(), achievements);
+    }
+
+    /**
+     * Set the talents object to the column
+     * @param uuid the targeted uuid
+     * @param achievements the talents object
+     */
+    public static void setAchievements(@Nonnull final UUID uuid, @Nonnull final Achievements achievements) {
+        setSerializedObject(uuid, achievements, QuantitativeData.ACHIEVEMENTS);
+    }
+
+    private static void setSerializedObject(@Nonnull final UUID uuid, @Nonnull final Object object, @Nonnull final QuantitativeData quantitativeData) {
         ByteArrayOutputStream str = new ByteArrayOutputStream();
         BukkitObjectOutputStream data = null;
         try {
             data = new BukkitObjectOutputStream(str);
-            data.writeObject(talents);
+            data.writeObject(object);
             data.close();
-            setValueS(uuid, QuantitativeData.TALENTS.getColumnName(), Base64.getEncoder().encodeToString(str.toByteArray()));
+            setValueS(uuid, quantitativeData.getColumnName(), Base64.getEncoder().encodeToString(str.toByteArray()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

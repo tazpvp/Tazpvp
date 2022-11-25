@@ -109,6 +109,8 @@ public abstract class NPC implements Listener {
             if (e.getRightClicked().getCustomName() != null && e.getRightClicked().getCustomName().equals(CC.trans(NAME))) {
                 if (v.getProfession().equals(PROFESSION)) {
                     e.getPlayer().playSound(e.getPlayer(), SOUND, 1, 1);
+                    interact(e, e.getPlayer());
+                    Tazpvp.getObservers().forEach(observer -> observer.interactWithNpc(e.getPlayer(), NAME));
                 }
             }
         }
