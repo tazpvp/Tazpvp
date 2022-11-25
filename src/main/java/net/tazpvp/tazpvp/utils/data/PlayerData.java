@@ -39,7 +39,7 @@ public final class PlayerData {
      */
     public static void initPlayer(UUID uuid) {
         if (!SQLHelper.ifRowExists(NAME, ID_COLUMN, uuid.toString())) {
-            SQLHelper.initializeValues(NAME, "ID, COINS, XP, LEVEL, KILLS, DEATHS, TOP_KS, PRESTIGE, REBIRTH, PLAYTIME, TALENTS, ACHIEVEMENTS", "'" + uuid.toString() + "'", "0", "0", "0", "0", "0", "0", "0", "0", "0", "abc", "abc");
+            SQLHelper.initializeValues(NAME, "ID, COINS, XP, LEVEL, KILLS, DEATHS, TOP_KS, PRESTIGE, REBIRTH, PLAYTIME, TALENTS, ACHIEVEMENTS", "'" + uuid.toString() + "'", "0", "0", "0", "0", "0", "0", "0", "0", "0", "'abc'", "'def'");
             setTalents(uuid, new Talents());
             //set achiefvements when rownox decides to push liek
         }
@@ -51,7 +51,7 @@ public final class PlayerData {
      * @param dataType The type of data you want to access
      * @return The value of the requested data
      */
-    public static float get(OfflinePlayer p, QuantitativeData dataType) {
+    public static int get(OfflinePlayer p, QuantitativeData dataType) {
         return get(p.getUniqueId(), dataType);
     }
     /**
@@ -60,8 +60,8 @@ public final class PlayerData {
      * @param dataType The type of data you want to access
      * @return The value of the requested data
      */
-    public static float get(UUID uuid, QuantitativeData dataType) {
-        return (float) getObject(uuid, dataType.getColumnIndex());
+    public static int get(UUID uuid, QuantitativeData dataType) {
+        return (int) getObject(uuid, dataType.getColumnIndex());
     }
 
     /**
