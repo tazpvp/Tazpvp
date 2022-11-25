@@ -32,5 +32,18 @@
 
 package net.tazpvp.tazpvp.achievements.achievement;
 
-public class Bowling {
+import net.tazpvp.tazpvp.achievements.Achievements;
+import net.tazpvp.tazpvp.utils.data.PlayerData;
+import net.tazpvp.tazpvp.utils.observer.Observable;
+import org.bukkit.entity.Player;
+
+public class Bowling extends Observable {
+    @Override
+    public void death(Player victim, Player killer) {
+        if (PlayerData.getKs(killer.getUniqueId()) == 100) {
+            Achievements ach = PlayerData.getAchievements(killer.getUniqueId());
+            ach.setBowling(true);
+            PlayerData.setAchievements(killer, ach);
+        }
+    }
 }

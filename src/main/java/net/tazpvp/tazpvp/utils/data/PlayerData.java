@@ -15,6 +15,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.UUID;
+import java.util.WeakHashMap;
 
 public final class PlayerData {
     /**
@@ -25,6 +26,30 @@ public final class PlayerData {
      * Name of the ID Column
      */
     private static final String ID_COLUMN = "ID";
+
+    private static final WeakHashMap<UUID, Integer> ks = new WeakHashMap<>();
+
+    public static int getKs(UUID uuid) {
+        return ks.get(uuid);
+    }
+
+    public static void addKs(UUID uuid) {
+        if (ks.containsKey(uuid)) {
+            ks.put(uuid, getKs(uuid) + 1);
+        } else {
+            ks.put(uuid, 1);
+        }
+    }
+
+    public static void resetKs(UUID uuid) {
+        ks.put(uuid, 0);
+    }
+
+    public void topKs(UUID uuid) {
+        if (getInt(uuid, QuantitativeData.TOPKILLSTREAK) < getKs(uuid)) {
+            set(uuid, QuantitativeData.TOPKILLSTREAK, getKs(uuid));
+        }
+    }
 
     /**
      * Initialize a player into the database by first checking if they are already inside the db
