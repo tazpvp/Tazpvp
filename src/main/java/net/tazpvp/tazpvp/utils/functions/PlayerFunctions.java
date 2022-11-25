@@ -32,57 +32,22 @@
 
 package net.tazpvp.tazpvp.utils.functions;
 
-import me.rownox.nrcore.utils.ConfigUtils;
-import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.events.EventUtils;
 import net.tazpvp.tazpvp.utils.data.PlayerData;
 import net.tazpvp.tazpvp.utils.data.QuantitativeData;
-import net.tazpvp.tazpvp.utils.objects.Death;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import javax.annotation.Nullable;
-
-public class DeathFunctions {
-
+public class PlayerFunctions {
 
     /**
-     * Runs for every death and runs all the checks for the victim and killer.
-     * @param victim The person who died.
-     * @param killer The person who killed.
+     * Returns the maximum health of the player based on rebirth level.
+     * @param p The player in question.
+     * @return The maximum health.
      */
 
-    public static void death(Player victim, @Nullable Player killer) {
-        Death death = new Death(victim, killer);
-
-        if (killer != null) {
-            PlayerData.add(killer, QuantitativeData.KILLS);
-            if (Bukkit.getOnlinePlayers().size() < 10) {
-                if (killer == victim)
-                    death.MessageAll("death");
-                else
-                    death.MessageAll("kill");
-            } else {
-                if (killer == victim)
-                    death.deathMessage(victim);
-                else
-                    death.killMessage(killer);
-            }
-        }
-
-        if (Tazpvp.playerList.contains(victim.getUniqueId())) {
-
-            Tazpvp.playerList.remove(victim.getUniqueId());
-            EventUtils.check();
-        }
-
-        PlayerData.add(victim, QuantitativeData.DEATHS);
-
-        death.dropHead();
-        death.rewards();
-        death.coffin();
-        death.heal();
-
-        victim.teleport(ConfigUtils.spawn);
+    public static Integer getMaxHealth(Player p) {
+        if (PlayerData.getInt(p, QuantitativeData.REBIRTH) >= 1)
+            return 22;
+        else
+            return 20;
     }
 }

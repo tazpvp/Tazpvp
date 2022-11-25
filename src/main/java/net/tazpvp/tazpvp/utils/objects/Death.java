@@ -39,10 +39,12 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.data.PlayerData;
 import net.tazpvp.tazpvp.utils.data.QuantitativeData;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.enchantments.Enchantment;
@@ -72,14 +74,17 @@ public class Death {
         Tazpvp.getObservers().forEach(observer -> observer.death(victim, killer));
     }
 
-    //TODO: put death rewards in player action bar
-
     /**
      * Replenishes the maximum health of the player and removes potion effects.
      */
     public void heal() {
-        victim.setHealth(20); //TODO: reference
-        killer.setHealth(killer.getHealth() + 5);
+        victim.setHealth(PlayerFunctions.getMaxHealth(victim));
+
+        if ((killer.getHealth() + 5) >= PlayerFunctions.getMaxHealth(killer)) {
+            killer.setHealth(PlayerFunctions.getMaxHealth(killer));
+        } else {
+            killer.setHealth(killer.getHealth() + 5);
+        }
 
         for (PotionEffect effect : victim.getActivePotionEffects()) {
             victim.removePotionEffect(effect.getType());

@@ -51,6 +51,7 @@ public class CombatFunctions {
         Tazpvp.combatAssist.get(victim.getUniqueId()).addAttacker(attacker.getUniqueId());
     }
 
+
     /**
      * Check if a person is in the combat tag still
      */

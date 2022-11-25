@@ -45,6 +45,11 @@ public class ScoreboardFunctions {
     private static Scoreboard board = null;
     private static Objective objective = null;
 
+    /**
+     * Initialize all the scoreboard values for a player.
+     * @param p The player in question.
+     */
+
     @SuppressWarnings("all")
     public static void initScoreboard(Player p) {
 
@@ -64,6 +69,14 @@ public class ScoreboardFunctions {
         p.setScoreboard(board);
     }
 
+    /**
+     * Create a new line with a value to insert into the scoreboard.
+     * @param q The data type.
+     * @param p The player.
+     * @param prefix The text to go with the value.
+     * @return The score.
+     */
+
     private static Score newLine(QuantitativeData q, Player p, String prefix) {
 
         String ID = UUID.randomUUID().toString();
@@ -76,6 +89,13 @@ public class ScoreboardFunctions {
 
         return objective.getScore(ID);
     }
+
+    /**
+     * Insert a new line just for the KDR.
+     * @param p The player.
+     * @param prefix The text to go with the kdr value.
+     * @return The score.
+     */
 
     private static Score KDRScore(Player p, String prefix) {
         String ID = UUID.randomUUID().toString();
