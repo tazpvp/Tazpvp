@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.talent;
+package net.tazpvp.tazpvp.talents;
 
 import net.tazpvp.tazpvp.Tazpvp;
 
