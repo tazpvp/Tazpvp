@@ -32,5 +32,13 @@
 
 package net.tazpvp.tazpvp.achievements.achievement;
 
-public class Adept {
+import net.tazpvp.tazpvp.utils.observer.Observable;
+import org.bukkit.entity.Player;
+
+public class Adept extends Observable {
+
+    @Override
+    public void buyTalent(Player p) {
+
+    }
 }

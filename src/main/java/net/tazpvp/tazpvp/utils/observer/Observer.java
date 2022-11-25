@@ -30,15 +30,19 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.achievements;
+package net.tazpvp.tazpvp.utils.observer;
 
-import lombok.Getter;
-import lombok.Setter;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
 
-import java.io.Serializable;
+public interface Observer {
 
-public class Achievements implements Serializable {
-    @Getter
-    @Setter
-    private boolean Adept, Merchant, Bowling, Legend, Gamble, Superior, Craftsman, Rehab = false;
+    void death(Player victim, Player killer);
+
+    void mine(Player p, Material material); // TODO: Add events to implement to
+
+    void launch(Player p); // TODO: Add events to implement to
+
+    void buyTalent(Player p);
+
 }
