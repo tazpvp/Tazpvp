@@ -26,6 +26,26 @@ public final class PlayerData {
     private static final String ID_COLUMN = "ID";
 
     /**
+     * Initialize a player into the database by first checking if they are already inside the db
+     * @param p The targeted player
+     */
+    public static void initPlayer(OfflinePlayer p) {
+        initPlayer(p.getUniqueId());
+    }
+
+    /**
+     * Initialize a player into the database by first checking if they are already inside the db
+     * @param uuid The UUID of the player
+     */
+    public static void initPlayer(UUID uuid) {
+        if (!SQLHelper.ifRowExists(NAME, ID_COLUMN, uuid.toString())) {
+            SQLHelper.initializeValues(NAME, "ID, COINS, XP, LEVEL, KILLS, DEATHS, TOP_KS, PRESTIGE, REBIRTH, PLAYTIME, TALENTS, ACHIEVEMENTS", "'" + uuid.toString() + "'", "0", "0", "0", "0", "0", "0", "0", "0", "0", "abc", "abc");
+            setTalents(uuid, new Talents());
+            //set achiefvements when rownox decides to push liek
+        }
+    }
+
+    /**
      * Get quantitative data (ints) from the database
      * @param p The targeted player
      * @param dataType The type of data you want to access
@@ -59,6 +79,9 @@ public final class PlayerData {
      * @return The Talents object stored in the column
      */
     public static Talents getTalents(@Nonnull final UUID uuid) {
+        if (getObject(uuid, QuantitativeData.TALENTS.getColumnIndex()) == null) {
+            return new Talents();
+        }
         ByteArrayInputStream stream = new ByteArrayInputStream(Base64.getDecoder().decode((String) getObject(uuid, QuantitativeData.TALENTS.getColumnIndex())));
         BukkitObjectInputStream data = null;
         try {
