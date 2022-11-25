@@ -30,18 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.achievements;
+package net.tazpvp.tazpvp.achievements.achievement;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import java.io.Serializable;
-
-public class Achievements implements Serializable {
-    @Getter
-    @Setter
-    private boolean Adept, Merchant, Bowling, Legend, Gamble, Superior, Craftsman = false;
-    @Getter
-    @Setter
-    private boolean Rehab = false;
+public class Rehab {
 }
