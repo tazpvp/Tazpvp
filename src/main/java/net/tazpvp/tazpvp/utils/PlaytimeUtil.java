@@ -26,7 +26,7 @@ public class PlaytimeUtil {
     public static void playerLeft(@Nonnull final Player p) {
         long currentTime = System.currentTimeMillis();
         long timePlayed = currentTime - playtime.get(p.getUniqueId());
-        PlayerData.set(p, QuantitativeData.PLAYTIMEUNIX, PlayerData.get(p, QuantitativeData.PLAYTIMEUNIX) + timePlayed);
+        PlayerData.set(p, QuantitativeData.PLAYTIMEUNIX, PlayerData.getInt(p, QuantitativeData.PLAYTIMEUNIX) + timePlayed);
     }
 
     /**

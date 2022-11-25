@@ -72,7 +72,7 @@ public class ScoreboardFunctions {
 
         team.addEntry(ID);
         team.setPrefix(prefix + " ");
-        team.setSuffix(String.valueOf(PlayerData.get(p, q)));
+        team.setSuffix(String.valueOf(PlayerData.getInt(p, q)));
 
         return objective.getScore(ID);
     }
@@ -83,7 +83,7 @@ public class ScoreboardFunctions {
 
         team.addEntry(ID);
         team.setPrefix(prefix + " ");
-        team.setSuffix(String.valueOf(PlayerData.kdrFormula((int) PlayerData.get(p, QuantitativeData.KILLS), (int) PlayerData.get(p, QuantitativeData.DEATHS))));
+        team.setSuffix(String.valueOf(PlayerData.kdrFormula((int) PlayerData.getInt(p, QuantitativeData.KILLS), (int) PlayerData.getInt(p, QuantitativeData.DEATHS))));
 
         return objective.getScore(ID);
     }

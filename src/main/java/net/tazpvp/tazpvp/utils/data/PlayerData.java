@@ -51,8 +51,8 @@ public final class PlayerData {
      * @param dataType The type of data you want to access
      * @return The value of the requested data
      */
-    public static int get(OfflinePlayer p, QuantitativeData dataType) {
-        return get(p.getUniqueId(), dataType);
+    public static int getInt(OfflinePlayer p, QuantitativeData dataType) {
+        return getInt(p.getUniqueId(), dataType);
     }
     /**
      * Get quantitative data (ints) from the database
@@ -60,8 +60,27 @@ public final class PlayerData {
      * @param dataType The type of data you want to access
      * @return The value of the requested data
      */
-    public static int get(UUID uuid, QuantitativeData dataType) {
-        return (int) getObject(uuid, dataType.getColumnIndex());
+    public static int getInt(UUID uuid, QuantitativeData dataType) {
+        return getInt(uuid, dataType.getColumnIndex());
+    }
+
+    /**
+     * Get quantitative data (String) from the database
+     * @param p The targeted player
+     * @param dataType The type of data you want to access
+     * @return The value of the requested data
+     */
+    public static String getString(OfflinePlayer p, QuantitativeData dataType) {
+        return getString(p.getUniqueId(), dataType);
+    }
+    /**
+     * Get quantitative data (String) from the database
+     * @param uuid The targeted UUID
+     * @param dataType The type of data you want to access
+     * @return The value of the requested data
+     */
+    public static String getString(UUID uuid, QuantitativeData dataType) {
+        return getString(uuid, dataType.getColumnIndex());
     }
 
     /**
@@ -105,6 +124,36 @@ public final class PlayerData {
     }
 
     /**
+     * Get an Object value of a sql column
+     * @param ID the targeted UUID
+     * @param columnIndex the index of the column
+     * @return the Object value of the requested column
+     */
+    private static String getString(@Nonnull final UUID ID, final int columnIndex) {
+        return SQLHelper.getString(NAME, ID_COLUMN, "'" + ID.toString() + "'", columnIndex);
+    }
+
+    /**
+     * Get an Object value of a sql column
+     * @param ID the targeted UUID
+     * @param columnIndex the index of the column
+     * @return the Object value of the requested column
+     */
+    private static int getInt(@Nonnull final UUID ID, final int columnIndex) {
+        return SQLHelper.getInt(NAME, ID_COLUMN, "'" + ID.toString() + "'", columnIndex);
+    }
+
+    /**
+     * Get an Object value of a sql column
+     * @param ID the targeted UUID
+     * @param columnIndex the index of the column
+     * @return the Object value of the requested column
+     */
+    private static float getFloat(@Nonnull final UUID ID, final int columnIndex) {
+        return SQLHelper.getFloat(NAME, ID_COLUMN, "'" + ID.toString() + "'", columnIndex);
+    }
+
+    /**
      * Set a quantitative datatype to a new value
      * @param p The targeted Player
      * @param dataType the datatype
@@ -129,7 +178,7 @@ public final class PlayerData {
         } else {
             setValue(ID, dataType.getColumnName(), (int) value);
             if (dataType.equals(QuantitativeData.XP)) {
-                if (get(ID, QuantitativeData.XP) >= levelFormula((int) get(ID, QuantitativeData.LEVEL))) {
+                if (getInt(ID, QuantitativeData.XP) >= levelFormula((int) getInt(ID, QuantitativeData.LEVEL))) {
                     add(ID, QuantitativeData.LEVEL);
                     set(ID, QuantitativeData.XP, 0);
                     // TODO: Add level up messages/functions
@@ -139,7 +188,7 @@ public final class PlayerData {
             if (p != null) {
                 p.getScoreboard().getTeam(dataType.getColumnName()).setSuffix(value + "");
                 if (dataType.equals(QuantitativeData.KILLS) || dataType.equals(QuantitativeData.DEATHS)) {
-                    p.getScoreboard().getTeam("kdr").setSuffix(kdrFormula((int) get(p, QuantitativeData.KILLS), (int) get(p, QuantitativeData.DEATHS)) + "");
+                    p.getScoreboard().getTeam("kdr").setSuffix(kdrFormula((int) getInt(p, QuantitativeData.KILLS), (int) getInt(p, QuantitativeData.DEATHS)) + "");
                 }
             }
         }
@@ -240,7 +289,7 @@ public final class PlayerData {
         if (dataType.equals(QuantitativeData.TALENTS) || dataType.equals(QuantitativeData.ACHIEVEMENTS)) {
             Bukkit.getLogger().severe("CANNOT ADD TO NON INT COLUMNS");
         }
-        set(ID, dataType, get(ID, dataType) + amount);
+        set(ID, dataType, getInt(ID, dataType) + amount);
     }
 
     /**
@@ -281,7 +330,7 @@ public final class PlayerData {
         if (dataType.equals(QuantitativeData.TALENTS) || dataType.equals(QuantitativeData.ACHIEVEMENTS) || dataType.equals(QuantitativeData.PLAYTIMEUNIX)) {
             Bukkit.getLogger().severe("CANNOT MINUS TO NON INT COLUMNS");
         }
-        set(ID, dataType, get(ID, dataType) - amount);
+        set(ID, dataType, getInt(ID, dataType) - amount);
     }
 
     private static int levelFormula(final int level) {
@@ -289,7 +338,9 @@ public final class PlayerData {
     }
 
     public static float kdrFormula(final int kills, final int deaths) {
-        return kills/deaths;
+        if (kills != 0 && deaths != 0)
+            return kills/deaths;
+        return 0F;
     }
 }
 

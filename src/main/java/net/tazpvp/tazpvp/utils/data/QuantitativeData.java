@@ -3,17 +3,17 @@ package net.tazpvp.tazpvp.utils.data;
 import javax.annotation.Nonnull;
 
 public enum QuantitativeData {
-    COINS("coins", 1),
-    XP("xp", 2),
-    LEVEL("level", 3),
-    KILLS("kills", 4),
-    DEATHS("deaths", 5),
-    TOPKILLSTREAK("top_ks", 6),
-    PRESTIGE("prestige", 7),
-    REBIRTH("rebirth", 8),
-    PLAYTIMEUNIX("playtime", 9),
-    TALENTS("talents", 10),
-    ACHIEVEMENTS("achievements", 11);
+    COINS("coins", 2),
+    XP("xp", 3),
+    LEVEL("level", 4),
+    KILLS("kills", 5),
+    DEATHS("deaths", 6),
+    TOPKILLSTREAK("top_ks", 7),
+    PRESTIGE("prestige", 8),
+    REBIRTH("rebirth", 9),
+    PLAYTIMEUNIX("playtime", 10),
+    TALENTS("talents", 11),
+    ACHIEVEMENTS("achievements", 12);
 
     private final String columnName;
     private final int columnIndex;
