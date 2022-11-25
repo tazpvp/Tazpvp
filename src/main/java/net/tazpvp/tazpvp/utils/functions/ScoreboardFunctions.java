@@ -96,7 +96,6 @@ public class ScoreboardFunctions {
      * @param prefix The text to go with the kdr value.
      * @return The score.
      */
-
     private static Score KDRScore(Player p, String prefix) {
         String ID = ChatColor.UNDERLINE.toString();
         Team team = board.registerNewTeam("kdr");
