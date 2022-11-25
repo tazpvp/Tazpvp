@@ -1,6 +1,6 @@
-package net.tazpvp.tazpvp.talent.talents;
+package net.tazpvp.tazpvp.talents.talent;
 
-import net.tazpvp.tazpvp.talent.Observable;
+import net.tazpvp.tazpvp.talents.Observable;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
