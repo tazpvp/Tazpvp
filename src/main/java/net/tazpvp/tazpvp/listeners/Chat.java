@@ -30,43 +30,21 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.achievements.achievement;
+package net.tazpvp.tazpvp.listeners;
 
-import net.tazpvp.tazpvp.achievements.Achievements;
-import net.tazpvp.tazpvp.talents.Talents;
-import net.tazpvp.tazpvp.utils.data.PlayerData;
-import net.tazpvp.tazpvp.utils.data.QuantitativeData;
-import net.tazpvp.tazpvp.utils.observer.Observable;
+import net.tazpvp.tazpvp.Tazpvp;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-public class Adept extends Observable {
+public class Chat implements Listener {
 
-    @Override
-    public void talent(Player p) {
-        if (allTalents(p)) {
-            Achievements ach = PlayerData.getAchievements(p.getUniqueId());
-            ach.setAdept(true);
-            PlayerData.setAchievements(p, ach);
-        }
+    public void onChat(AsyncPlayerChatEvent e) {
+        Player p = e.getPlayer();
+
+        Tazpvp.getObservers().forEach(observer -> observer.chat(p, e.getMessage()));
+
     }
 
-    private Boolean allTalents(Player p) {
-        Talents talents = PlayerData.getTalents(p.getUniqueId());
-        if (talents.isAgile()
-                && talents.isArchitect()
-                && talents.isBlessed()
-                && talents.isCannibal()
-                && talents.isExcavator()
-                && talents.isGlider()
-                && talents.isHarvester()
-                && talents.isHunter()
-                && talents.isMedic()
-                && talents.isMoist()
-                && talents.isNecromancer()
-                && talents.isProficient()
-                && talents.isResilient()
-                && talents.isRevenge()
-        ) return true;
-        return false;
-    }
+
 }

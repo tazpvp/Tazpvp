@@ -40,7 +40,7 @@ import org.bukkit.entity.Player;
 public class Craftsman extends Observable {
 
     @Override
-    public void enchantObserve(Player p) {
+    public void enchant(Player p) {
         //TODO: Check if it's the first time that the player combined two enchantments.
         Achievements ach = PlayerData.getAchievements(p.getUniqueId());
         ach.setCraftsman(true);

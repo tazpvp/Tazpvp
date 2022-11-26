@@ -39,7 +39,7 @@ import org.bukkit.entity.Player;
 
 public class Legend extends Observable {
     @Override
-    public void rebirthObserve(Player p) {
+    public void rebirth(Player p) {
         Achievements ach = PlayerData.getAchievements(p.getUniqueId());
         ach.setLegend(true);
         PlayerData.setAchievements(p, ach);

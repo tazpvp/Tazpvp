@@ -40,7 +40,7 @@ import org.bukkit.entity.Player;
 public class Charm extends Observable {
 
     @Override
-    public void chatObserve(Player p) {
+    public void chat(Player p, String chat) {
         if (PlayerData.getChatCount(p.getUniqueId()) >= 100) {
             Achievements ach = PlayerData.getAchievements(p.getUniqueId());
             ach.setCharm(true);

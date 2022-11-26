@@ -45,57 +45,52 @@ public class Observable implements Observer {
     }
 
     @Override
-    public void deathObserve(Player victim, Player killer) {
+    public void death(Player victim, Player killer) {
 
     }
 
     @Override
-    public void mineObserve(Player p, Material material) {
+    public void mine(Player p, Material material) {
 
     }
 
     @Override
-    public void launchObserve(Player p) {
+    public void launch(Player p) {
 
     }
 
     @Override
-    public void talentObserve(Player p) {
+    public void talent(Player p) {
 
     }
 
     @Override
-    public void guiObserve(Player p, String name) {
+    public void gui(Player p, String name) {
 
     }
 
     @Override
-    public void rebirthObserve(Player p) {
+    public void rebirth(Player p) {
 
     }
 
     @Override
-    public void duelObserve(Player p) {
+    public void duel(Player p) {
 
     }
 
     @Override
-    public void eventObserve(Player p) {
+    public void event(Player p) {
 
     }
 
     @Override
-    public void enchantObserve(Player p) {
+    public void enchant(Player p) {
 
     }
 
     @Override
-    public void chatObserve(Player p) {
-
-    }
-
-    @Override
-    public void killObserve(Player p) {
+    public void chat(Player p, String chat) {
 
     }
 }

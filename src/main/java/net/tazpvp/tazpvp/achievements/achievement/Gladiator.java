@@ -37,7 +37,7 @@ import org.bukkit.entity.Player;
 
 public class Gladiator extends Observable {
     @Override
-    public void duelObserve(Player p) {
+    public void duel(Player p) {
         // TODO: Duels stats
     }
 }

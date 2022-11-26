@@ -40,11 +40,11 @@ import org.bukkit.entity.Player;
 public class Gamble extends Observable {
 
     @Override
-    public void killObserve(Player p) {
-        if (p.getHealth() <= 1) {
-            Achievements ach = PlayerData.getAchievements(p.getUniqueId());
+    public void death(Player victim, Player killer) {
+        if (killer.getHealth() <= 1) {
+            Achievements ach = PlayerData.getAchievements(killer.getUniqueId());
             ach.setGamble(true);
-            PlayerData.setAchievements(p, ach);
+            PlayerData.setAchievements(killer, ach);
         }
     }
 }

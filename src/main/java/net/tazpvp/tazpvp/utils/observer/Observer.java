@@ -37,25 +37,22 @@ import org.bukkit.entity.Player;
 
 public interface Observer {
 
-    void deathObserve(Player victim, Player killer);
+    void death(Player victim, Player killer);
+    void mine(Player p, Material material); // TODO: Add events to implement to
 
-    void killObserve(Player killer);
+    void launch(Player p); // TODO: Add events to implement to
 
-    void mineObserve(Player p, Material material); // TODO: Add events to implement to
+    void talent(Player p); // TODO: Add event to implement to
 
-    void launchObserve(Player p); // TODO: Add events to implement to
+    void gui(Player p, String name); // TODO: Add event to implement to
 
-    void talentObserve(Player p); // TODO: Add event to implement to
+    void rebirth(Player p); // TODO: Add event to implement to
 
-    void guiObserve(Player p, String name);
+    void duel(Player p); // TODO: Add event to implement to
 
-    void rebirthObserve(Player p); // TODO: Add event to implement to
+    void event(Player p);
 
-    void duelObserve(Player p); // TODO: Add event to implement to
+    void enchant(Player p); // TODO: Add event to implement to
 
-    void eventObserve(Player p); // TODO: Add event to implement to
-
-    void enchantObserve(Player p);
-
-    void chatObserve(Player p);
+    void chat(Player p, String chat);
 }

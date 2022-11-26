@@ -73,6 +73,7 @@ public class EventCommandFunction extends CommandCore implements CommandFunction
             }
             else if (args[0].equalsIgnoreCase("join")) {
                 if (Tazpvp.eventKey != null) {
+                    Tazpvp.getObservers().forEach(observer -> observer.event(p));
                     Tazpvp.playerList.add(p.getUniqueId());
                     return;
                 }
