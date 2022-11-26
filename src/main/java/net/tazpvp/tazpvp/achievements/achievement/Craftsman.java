@@ -32,5 +32,18 @@
 
 package net.tazpvp.tazpvp.achievements.achievement;
 
-public class Craftsman {
+import net.tazpvp.tazpvp.achievements.Achievements;
+import net.tazpvp.tazpvp.utils.data.PlayerData;
+import net.tazpvp.tazpvp.utils.observer.Observable;
+import org.bukkit.entity.Player;
+
+public class Craftsman extends Observable {
+
+    @Override
+    public void enchantObserve(Player p) {
+        //TODO: Check if it's the first time that the player combined two enchantments.
+        Achievements ach = PlayerData.getAchievements(p.getUniqueId());
+        ach.setCraftsman(true);
+        PlayerData.setAchievements(p, ach);
+    }
 }

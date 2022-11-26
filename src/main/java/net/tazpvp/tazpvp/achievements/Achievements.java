@@ -43,5 +43,5 @@ public class Achievements implements Serializable {
     private boolean Adept, Merchant, Bowling, Legend, Gamble, Superior, Craftsman = false;
     @Getter
     @Setter
-    private boolean Rehab = false;
+    private boolean Gladiator, Charm, Rehab = false;
 }

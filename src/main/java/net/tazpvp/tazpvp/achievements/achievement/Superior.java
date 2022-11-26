@@ -40,7 +40,7 @@ import org.bukkit.entity.Player;
 public class Superior extends Observable {
 
     @Override
-    public void winEvent(Player p) {
+    public void eventObserve(Player p) {
         Achievements ach = PlayerData.getAchievements(p.getUniqueId());
         ach.setLegend(true);
         PlayerData.setAchievements(p, ach);

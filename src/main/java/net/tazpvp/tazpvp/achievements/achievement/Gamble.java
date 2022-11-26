@@ -32,5 +32,19 @@
 
 package net.tazpvp.tazpvp.achievements.achievement;
 
-public class Gamble {
+import net.tazpvp.tazpvp.achievements.Achievements;
+import net.tazpvp.tazpvp.utils.data.PlayerData;
+import net.tazpvp.tazpvp.utils.observer.Observable;
+import org.bukkit.entity.Player;
+
+public class Gamble extends Observable {
+
+    @Override
+    public void killObserve(Player p) {
+        if (p.getHealth() <= 1) {
+            Achievements ach = PlayerData.getAchievements(p.getUniqueId());
+            ach.setGamble(true);
+            PlayerData.setAchievements(p, ach);
+        }
+    }
 }

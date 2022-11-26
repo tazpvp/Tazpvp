@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 
 public class Merchant extends Observable {
     @Override
-    public void interactWithNpc(Player p, String name) {
+    public void guiObserve(Player p, String name) {
         if (name.equalsIgnoreCase("caesar")) { // TODO: Add proper name
             Achievements ach = PlayerData.getAchievements(p.getUniqueId());
             ach.setMerchant(true);

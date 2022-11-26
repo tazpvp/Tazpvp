@@ -1,5 +1,6 @@
 package net.tazpvp.tazpvp.utils.data;
 
+import com.google.j2objc.annotations.Weak;
 import me.rownox.nrcore.utils.sql.SQLHelper;
 import net.tazpvp.tazpvp.achievements.Achievements;
 import net.tazpvp.tazpvp.talents.Talents;
@@ -29,6 +30,8 @@ public final class PlayerData {
 
     private static final WeakHashMap<UUID, Integer> ks = new WeakHashMap<>();
 
+    private static final WeakHashMap<UUID, Integer> chatCount = new WeakHashMap<>();
+
     public static int getKs(UUID uuid) {
         return ks.get(uuid);
     }
@@ -39,6 +42,14 @@ public final class PlayerData {
         } else {
             ks.put(uuid, 1);
         }
+    }
+
+    public static void setChatCount(UUID p, int val) {
+        chatCount.put(p, val);
+    }
+
+    public static Integer getChatCount(UUID p) {
+        return chatCount.get(p);
     }
 
     public static void resetKs(UUID uuid) {

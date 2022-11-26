@@ -32,13 +32,41 @@
 
 package net.tazpvp.tazpvp.achievements.achievement;
 
+import net.tazpvp.tazpvp.achievements.Achievements;
+import net.tazpvp.tazpvp.talents.Talents;
+import net.tazpvp.tazpvp.utils.data.PlayerData;
+import net.tazpvp.tazpvp.utils.data.QuantitativeData;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import org.bukkit.entity.Player;
 
 public class Adept extends Observable {
 
     @Override
-    public void buyTalent(Player p) {
+    public void talentObserve(Player p) {
+        if (allTalents(p)) {
+            Achievements ach = PlayerData.getAchievements(p.getUniqueId());
+            ach.setAdept(true);
+            PlayerData.setAchievements(p, ach);
+        }
+    }
 
+    private Boolean allTalents(Player p) {
+        Talents talents = PlayerData.getTalents(p.getUniqueId());
+        if (talents.isAgile()
+                && talents.isArchitect()
+                && talents.isBlessed()
+                && talents.isCannibal()
+                && talents.isExcavator()
+                && talents.isGlider()
+                && talents.isHarvester()
+                && talents.isHunter()
+                && talents.isMedic()
+                && talents.isMoist()
+                && talents.isNecromancer()
+                && talents.isProficient()
+                && talents.isResilient()
+                && talents.isRevenge()
+        ) return true;
+        return false;
     }
 }
