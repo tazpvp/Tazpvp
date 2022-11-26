@@ -68,4 +68,19 @@ public class Observable implements Observer {
     public void interactWithNpc(Player p, String name) {
 
     }
+
+    @Override
+    public void rebirth(Player p) {
+
+    }
+
+    @Override
+    public void winDuel(Player p) {
+
+    }
+
+    @Override
+    public void winEvent(Player p) {
+
+    }
 }

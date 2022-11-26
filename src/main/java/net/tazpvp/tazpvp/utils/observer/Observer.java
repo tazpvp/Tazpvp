@@ -43,8 +43,14 @@ public interface Observer {
 
     void launch(Player p); // TODO: Add events to implement to
 
-    void buyTalent(Player p);
+    void buyTalent(Player p); // TODO: Add event to implement to
 
     void interactWithNpc(Player p, String name);
+
+    void rebirth(Player p); // TODO: Add event to implement to
+
+    void winDuel(Player p); // TODO: Add event to implement to
+
+    void winEvent(Player p); // TODO: Add event to implement to
 
 }

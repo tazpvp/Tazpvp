@@ -32,5 +32,17 @@
 
 package net.tazpvp.tazpvp.achievements.achievement;
 
-public class Superior {
+import net.tazpvp.tazpvp.achievements.Achievements;
+import net.tazpvp.tazpvp.utils.data.PlayerData;
+import net.tazpvp.tazpvp.utils.observer.Observable;
+import org.bukkit.entity.Player;
+
+public class Superior extends Observable {
+
+    @Override
+    public void winEvent(Player p) {
+        Achievements ach = PlayerData.getAchievements(p.getUniqueId());
+        ach.setLegend(true);
+        PlayerData.setAchievements(p, ach);
+    }
 }

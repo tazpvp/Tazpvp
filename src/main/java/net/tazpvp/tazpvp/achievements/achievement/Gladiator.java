@@ -32,5 +32,12 @@
 
 package net.tazpvp.tazpvp.achievements.achievement;
 
-public class Gladiator {
+import net.tazpvp.tazpvp.utils.observer.Observable;
+import org.bukkit.entity.Player;
+
+public class Gladiator extends Observable {
+    @Override
+    public void winDuel(Player p) {
+        // TODO: Duels stats
+    }
 }
