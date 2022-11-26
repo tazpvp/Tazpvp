@@ -1,6 +1,5 @@
 package net.tazpvp.tazpvp.utils.data;
 
-import com.google.j2objc.annotations.Weak;
 import me.rownox.nrcore.utils.sql.SQLHelper;
 import net.tazpvp.tazpvp.achievements.Achievements;
 import net.tazpvp.tazpvp.talents.Talents;
@@ -16,9 +15,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.UUID;
-import java.util.WeakHashMap;
 
-public final class PlayerData {
+public final class PersistentData {
     /**
      * Name of the stats table
      */
@@ -28,37 +26,10 @@ public final class PlayerData {
      */
     private static final String ID_COLUMN = "ID";
 
-    private static final WeakHashMap<UUID, Integer> ks = new WeakHashMap<>();
-
-    private static final WeakHashMap<UUID, Integer> chatCount = new WeakHashMap<>();
-
-    public static int getKs(UUID uuid) {
-        return ks.get(uuid);
-    }
-
-    public static void addKs(UUID uuid) {
-        if (ks.containsKey(uuid)) {
-            ks.put(uuid, getKs(uuid) + 1);
-        } else {
-            ks.put(uuid, 1);
-        }
-    }
-
-    public static void setChatCount(UUID p, int val) {
-        chatCount.put(p, val);
-    }
-
-    public static Integer getChatCount(UUID p) {
-        return chatCount.get(p);
-    }
-
-    public static void resetKs(UUID uuid) {
-        ks.put(uuid, 0);
-    }
 
     public void topKs(UUID uuid) {
-        if (getInt(uuid, QuantitativeData.TOPKILLSTREAK) < getKs(uuid)) {
-            set(uuid, QuantitativeData.TOPKILLSTREAK, getKs(uuid));
+        if (getInt(uuid, DataTypes.TOPKILLSTREAK) < LooseData.getKs(uuid)) {
+            set(uuid, DataTypes.TOPKILLSTREAK, LooseData.getKs(uuid));
         }
     }
 
@@ -78,7 +49,7 @@ public final class PlayerData {
         if (!SQLHelper.ifRowExists(NAME, ID_COLUMN, uuid.toString())) {
             SQLHelper.initializeValues(NAME, "ID, COINS, XP, LEVEL, KILLS, DEATHS, TOP_KS, PRESTIGE, REBIRTH, PLAYTIME, TALENTS, ACHIEVEMENTS", "'" + uuid.toString() + "'", "0", "0", "0", "0", "0", "0", "0", "0", "0", "'set'", "'set'");
             setTalents(uuid, new Talents());
-            //set achiefvements when rownox decides to push liek
+            setAchievements(uuid, new Achievements());
         }
     }
 
@@ -88,7 +59,7 @@ public final class PlayerData {
      * @param dataType The type of data you want to access
      * @return The value of the requested data
      */
-    public static int getInt(OfflinePlayer p, QuantitativeData dataType) {
+    public static int getInt(OfflinePlayer p, DataTypes dataType) {
         return getInt(p.getUniqueId(), dataType);
     }
     /**
@@ -97,7 +68,7 @@ public final class PlayerData {
      * @param dataType The type of data you want to access
      * @return The value of the requested data
      */
-    public static int getInt(UUID uuid, QuantitativeData dataType) {
+    public static int getInt(UUID uuid, DataTypes dataType) {
         return getInt(uuid, dataType.getColumnIndex());
     }
 
@@ -107,7 +78,7 @@ public final class PlayerData {
      * @param dataType The type of data you want to access
      * @return The value of the requested data
      */
-    public static String getString(OfflinePlayer p, QuantitativeData dataType) {
+    public static String getString(OfflinePlayer p, DataTypes dataType) {
         return getString(p.getUniqueId(), dataType);
     }
     /**
@@ -116,7 +87,7 @@ public final class PlayerData {
      * @param dataType The type of data you want to access
      * @return The value of the requested data
      */
-    public static String getString(UUID uuid, QuantitativeData dataType) {
+    public static String getString(UUID uuid, DataTypes dataType) {
         return getString(uuid, dataType.getColumnIndex());
     }
 
@@ -135,22 +106,22 @@ public final class PlayerData {
      * @return The Talents object stored in the column
      */
     public static Talents getTalents(@Nonnull final UUID uuid) {
-        return (Talents) getSerializeObject(uuid, QuantitativeData.TALENTS);
+        return (Talents) getSerializeObject(uuid, DataTypes.TALENTS);
     }
 
     public static Achievements getAchievements(@Nonnull final UUID uuid) {
-        return (Achievements) getSerializeObject(uuid, QuantitativeData.ACHIEVEMENTS);
+        return (Achievements) getSerializeObject(uuid, DataTypes.ACHIEVEMENTS);
     }
 
-    private static Object getSerializeObject(@Nonnull final UUID uuid, @Nonnull final QuantitativeData quantitativeData) {
-        if (getString(uuid, quantitativeData.getColumnIndex()).equals("set")) {
-            if (quantitativeData.equals(QuantitativeData.TALENTS)) {
+    private static Object getSerializeObject(@Nonnull final UUID uuid, @Nonnull final DataTypes dataTypes) {
+        if (getString(uuid, dataTypes.getColumnIndex()).equals("set")) {
+            if (dataTypes.equals(DataTypes.TALENTS)) {
                 return new Talents();
             } else {
                 return new Achievements();
             }
         }
-        ByteArrayInputStream stream = new ByteArrayInputStream(Base64.getDecoder().decode(getString(uuid, quantitativeData.getColumnIndex())));
+        ByteArrayInputStream stream = new ByteArrayInputStream(Base64.getDecoder().decode(getString(uuid, dataTypes.getColumnIndex())));
         BukkitObjectInputStream data = null;
         try {
             data = new BukkitObjectInputStream(stream);
@@ -196,22 +167,25 @@ public final class PlayerData {
     /**
      * Get an Object value of a sql column
      * @param ID the targeted UUID
-     * @param quantitativeData the index of the column
+     * @param dataTypes the index of the column
      * @return the Object value of the requested column
      */
-    public static float getFloat(@Nonnull final UUID ID, final QuantitativeData quantitativeData) {
-        return SQLHelper.getFloat(NAME, ID_COLUMN, "'" + ID.toString() + "'", quantitativeData.getColumnIndex());
+    public static float getFloat(@Nonnull final UUID ID, final DataTypes dataTypes) {
+        return SQLHelper.getFloat(NAME, ID_COLUMN, "'" + ID.toString() + "'", dataTypes.getColumnIndex());
     }
 
     /**
      * Get an Object value of a sql column
      * @param p the targeted Player
-     * @param quantitativeData the index of the column
+     * @param dataTypes the index of the column
      * @return the Object value of the requested column
      */
-    public static float getFloat(@Nonnull final OfflinePlayer p, final QuantitativeData quantitativeData) {
-        return getFloat(p.getUniqueId(), quantitativeData);
+    public static float getFloat(@Nonnull final OfflinePlayer p, final DataTypes dataTypes) {
+        return getFloat(p.getUniqueId(), dataTypes);
     }
+    /*
+        ====================== End GET ====================== Start SET ======================
+     */
 
     /**
      * Set a quantitative datatype to a new value
@@ -219,7 +193,7 @@ public final class PlayerData {
      * @param dataType the datatype
      * @param value the new value for the datatype
      */
-    public static void set(@Nonnull final OfflinePlayer p, @Nonnull final QuantitativeData dataType, final float value) {
+    public static void set(@Nonnull final OfflinePlayer p, @Nonnull final DataTypes dataType, final float value) {
         set(p.getUniqueId(), dataType, value);
     }
 
@@ -229,26 +203,25 @@ public final class PlayerData {
      * @param dataType the datatype
      * @param value the new value for the datatype
      */
-    public static void set(@Nonnull final UUID ID, @Nonnull final QuantitativeData dataType, final float value) {
-        if (dataType.equals(QuantitativeData.TALENTS) || dataType.equals(QuantitativeData.ACHIEVEMENTS)) {
-            Bukkit.getLogger().severe("CANNOT STORE INT AS JAVA CLASS IDIOT");
-            return;
-        } else if (dataType.equals(QuantitativeData.PLAYTIMEUNIX)) {
+    public static void set(@Nonnull final UUID ID, @Nonnull final DataTypes dataType, final float value) {
+        if (!dataType.isQuantitative()) {
+            Bukkit.getLogger().severe("Data not quantitative in integer form");
+        } else if (dataType.equals(DataTypes.PLAYTIMEUNIX)) {
             setValueF(ID, dataType.getColumnName(), value);
         } else {
             setValue(ID, dataType.getColumnName(), (int) value);
-            if (dataType.equals(QuantitativeData.XP)) {
-                if (getInt(ID, QuantitativeData.XP) >= levelFormula((int) getInt(ID, QuantitativeData.LEVEL))) {
-                    add(ID, QuantitativeData.LEVEL);
-                    set(ID, QuantitativeData.XP, 0);
+            if (dataType.equals(DataTypes.XP)) {
+                if (getInt(ID, DataTypes.XP) >= levelFormula((int) getInt(ID, DataTypes.LEVEL))) {
+                    add(ID, DataTypes.LEVEL);
+                    set(ID, DataTypes.XP, 0);
                     // TODO: Add level up messages/functions
                 }
             }
             Player p = Bukkit.getPlayer(ID);
             if (p != null) {
                 p.getScoreboard().getTeam(dataType.getColumnName()).setSuffix((int) value + "");
-                if (dataType.equals(QuantitativeData.KILLS) || dataType.equals(QuantitativeData.DEATHS)) {
-                    p.getScoreboard().getTeam("kdr").setSuffix(kdrFormula(getFloat(p, QuantitativeData.KILLS), getFloat(p, QuantitativeData.DEATHS)) + "");
+                if (dataType.equals(DataTypes.KILLS) || dataType.equals(DataTypes.DEATHS)) {
+                    p.getScoreboard().getTeam("kdr").setSuffix(kdrFormula(getFloat(p, DataTypes.KILLS), getFloat(p, DataTypes.DEATHS)) + "");
                 }
             }
         }
@@ -269,7 +242,7 @@ public final class PlayerData {
      * @param talents the talents object
      */
     public static void setTalents(@Nonnull final UUID uuid, @Nonnull final Talents talents) {
-        setSerializedObject(uuid, talents, QuantitativeData.TALENTS);
+        setSerializedObject(uuid, talents, DataTypes.TALENTS);
     }
 
     /**
@@ -287,17 +260,17 @@ public final class PlayerData {
      * @param achievements the talents object
      */
     public static void setAchievements(@Nonnull final UUID uuid, @Nonnull final Achievements achievements) {
-        setSerializedObject(uuid, achievements, QuantitativeData.ACHIEVEMENTS);
+        setSerializedObject(uuid, achievements, DataTypes.ACHIEVEMENTS);
     }
 
-    private static void setSerializedObject(@Nonnull final UUID uuid, @Nonnull final Object object, @Nonnull final QuantitativeData quantitativeData) {
+    private static void setSerializedObject(@Nonnull final UUID uuid, @Nonnull final Object object, @Nonnull final DataTypes dataTypes) {
         ByteArrayOutputStream str = new ByteArrayOutputStream();
         BukkitObjectOutputStream data = null;
         try {
             data = new BukkitObjectOutputStream(str);
             data.writeObject(object);
             data.close();
-            setValueS(uuid, quantitativeData.getColumnName(), Base64.getEncoder().encodeToString(str.toByteArray()));
+            setValueS(uuid, dataTypes.getColumnName(), Base64.getEncoder().encodeToString(str.toByteArray()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -333,12 +306,16 @@ public final class PlayerData {
         SQLHelper.updateValue(NAME, ID_COLUMN, "'" + ID.toString() + "'", columnName, "'" + value + "'");
     }
 
+    /*
+        ====================== End SET ====================== Start ADD/REMOVE ======================
+     */
+
     /**
      * Add 1 to a quantitative datatype
      * @param p the targeted player
      * @param dataType the Datatype
      */
-    public static void add(@Nonnull final OfflinePlayer p, @Nonnull final QuantitativeData dataType) {
+    public static void add(@Nonnull final OfflinePlayer p, @Nonnull final DataTypes dataType) {
         add(p.getUniqueId(), dataType, 1);
     }
 
@@ -348,7 +325,7 @@ public final class PlayerData {
      * @param dataType the Datatype
      * @param amount the desired amount to add
      */
-    public static void add(@Nonnull final OfflinePlayer p, @Nonnull final QuantitativeData dataType, final int amount) {
+    public static void add(@Nonnull final OfflinePlayer p, @Nonnull final DataTypes dataType, final int amount) {
         add(p.getUniqueId(), dataType, amount);
     }
 
@@ -357,7 +334,7 @@ public final class PlayerData {
      * @param ID the targeted UUID
      * @param dataType the Datatype
      */
-    public static void add(@Nonnull final UUID ID, @Nonnull final QuantitativeData dataType) {
+    public static void add(@Nonnull final UUID ID, @Nonnull final DataTypes dataType) {
         add(ID, dataType, 1);
     }
 
@@ -367,8 +344,8 @@ public final class PlayerData {
      * @param dataType the Datatype
      * @param amount the desired amount to add
      */
-    public static void add(@Nonnull final UUID ID, @Nonnull final QuantitativeData dataType, final int amount) {
-        if (dataType.equals(QuantitativeData.TALENTS) || dataType.equals(QuantitativeData.ACHIEVEMENTS)) {
+    public static void add(@Nonnull final UUID ID, @Nonnull final DataTypes dataType, final int amount) {
+        if (dataType.equals(DataTypes.TALENTS) || dataType.equals(DataTypes.ACHIEVEMENTS)) {
             Bukkit.getLogger().severe("CANNOT ADD TO NON INT COLUMNS");
         }
         set(ID, dataType, getInt(ID, dataType) + amount);
@@ -379,7 +356,7 @@ public final class PlayerData {
      * @param p the targeted player
      * @param dataType the Datatype
      */
-    public static void remove(@Nonnull final OfflinePlayer p, @Nonnull final QuantitativeData dataType) {
+    public static void remove(@Nonnull final OfflinePlayer p, @Nonnull final DataTypes dataType) {
         remove(p.getUniqueId(), dataType, 1);
     }
 
@@ -389,7 +366,7 @@ public final class PlayerData {
      * @param dataType the Datatype
      * @param amount the desired amount to remove
      */
-    public static void remove(@Nonnull final OfflinePlayer p, @Nonnull final QuantitativeData dataType, final int amount) {
+    public static void remove(@Nonnull final OfflinePlayer p, @Nonnull final DataTypes dataType, final int amount) {
         remove(p.getUniqueId(), dataType, amount);
     }
 
@@ -398,7 +375,7 @@ public final class PlayerData {
      * @param ID the targeted UUID
      * @param dataType the Datatype
      */
-    public static void remove(@Nonnull final UUID ID, @Nonnull final QuantitativeData dataType) {
+    public static void remove(@Nonnull final UUID ID, @Nonnull final DataTypes dataType) {
         remove(ID, dataType, 1);
     }
 
@@ -408,12 +385,16 @@ public final class PlayerData {
      * @param dataType the Datatype
      * @param amount the desired amount to remove
      */
-    public static void remove(@Nonnull final UUID ID, @Nonnull final QuantitativeData dataType, final int amount) {
-        if (dataType.equals(QuantitativeData.TALENTS) || dataType.equals(QuantitativeData.ACHIEVEMENTS) || dataType.equals(QuantitativeData.PLAYTIMEUNIX)) {
+    public static void remove(@Nonnull final UUID ID, @Nonnull final DataTypes dataType, final int amount) {
+        if (dataType.equals(DataTypes.TALENTS) || dataType.equals(DataTypes.ACHIEVEMENTS) || dataType.equals(DataTypes.PLAYTIMEUNIX)) {
             Bukkit.getLogger().severe("CANNOT MINUS TO NON INT COLUMNS");
         }
         set(ID, dataType, getInt(ID, dataType) - amount);
     }
+
+    /*
+        ====================== End ADD/REMOVE ====================== Start Formula ======================
+     */
 
     private static int levelFormula(final int level) {
         return (int) ((level * 5) / 3);

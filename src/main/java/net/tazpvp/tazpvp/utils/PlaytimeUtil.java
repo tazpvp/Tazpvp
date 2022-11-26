@@ -1,7 +1,7 @@
 package net.tazpvp.tazpvp.utils;
 
-import net.tazpvp.tazpvp.utils.data.PlayerData;
-import net.tazpvp.tazpvp.utils.data.QuantitativeData;
+import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.DataTypes;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nonnull;
@@ -26,7 +26,7 @@ public class PlaytimeUtil {
     public static void playerLeft(@Nonnull final Player p) {
         long currentTime = System.currentTimeMillis();
         long timePlayed = currentTime - playtime.get(p.getUniqueId());
-        PlayerData.set(p, QuantitativeData.PLAYTIMEUNIX, PlayerData.getInt(p, QuantitativeData.PLAYTIMEUNIX) + timePlayed);
+        PersistentData.set(p, DataTypes.PLAYTIMEUNIX, PersistentData.getInt(p, DataTypes.PLAYTIMEUNIX) + timePlayed);
     }
 
     /**

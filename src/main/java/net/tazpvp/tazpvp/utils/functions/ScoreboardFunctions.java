@@ -32,8 +32,8 @@
 
 package net.tazpvp.tazpvp.utils.functions;
 
-import net.tazpvp.tazpvp.utils.data.PlayerData;
-import net.tazpvp.tazpvp.utils.data.QuantitativeData;
+import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.DataTypes;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -57,13 +57,13 @@ public class ScoreboardFunctions {
 
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-        newLine(QuantitativeData.LEVEL, p, "Level:", ChatColor.AQUA).setScore(6);
-        newLine(QuantitativeData.COINS, p, "Coins:", ChatColor.GOLD).setScore(5);
-        newLine(QuantitativeData.XP, p, "Exp:", ChatColor.BLACK).setScore(4);
+        newLine(DataTypes.LEVEL, p, "Level:", ChatColor.AQUA).setScore(6);
+        newLine(DataTypes.COINS, p, "Coins:", ChatColor.GOLD).setScore(5);
+        newLine(DataTypes.XP, p, "Exp:", ChatColor.BLACK).setScore(4);
         objective.getScore(" ").setScore(3);
         KDRScore(p, "KDR:").setScore(2);
-        newLine(QuantitativeData.KILLS, p, "Kills:", ChatColor.YELLOW).setScore(1);
-        newLine(QuantitativeData.DEATHS, p, "Deaths:", ChatColor.DARK_PURPLE).setScore(0);
+        newLine(DataTypes.KILLS, p, "Kills:", ChatColor.YELLOW).setScore(1);
+        newLine(DataTypes.DEATHS, p, "Deaths:", ChatColor.DARK_PURPLE).setScore(0);
 
         p.setScoreboard(board);
     }
@@ -77,7 +77,7 @@ public class ScoreboardFunctions {
      * @return The score.
      */
 
-    private static Score newLine(QuantitativeData q, Player p, String prefix, ChatColor chatColor) {
+    private static Score newLine(DataTypes q, Player p, String prefix, ChatColor chatColor) {
 
         String ID = chatColor.toString();
 
@@ -85,7 +85,7 @@ public class ScoreboardFunctions {
 
         team.addEntry(ID);
         team.setPrefix(prefix + " ");
-        team.setSuffix(PlayerData.getInt(p, q) + "");
+        team.setSuffix(PersistentData.getInt(p, q) + "");
 
         return objective.getScore(ID);
     }
@@ -102,7 +102,7 @@ public class ScoreboardFunctions {
 
         team.addEntry(ID);
         team.setPrefix(prefix + " ");
-        team.setSuffix(String.valueOf(PlayerData.kdrFormula(PlayerData.getFloat(p, QuantitativeData.KILLS), PlayerData.getFloat(p, QuantitativeData.DEATHS))));
+        team.setSuffix(String.valueOf(PersistentData.kdrFormula(PersistentData.getFloat(p, DataTypes.KILLS), PersistentData.getFloat(p, DataTypes.DEATHS))));
 
         return objective.getScore(ID);
     }

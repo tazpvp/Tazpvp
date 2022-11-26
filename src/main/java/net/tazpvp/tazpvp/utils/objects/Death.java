@@ -36,15 +36,14 @@ import me.rownox.nrcore.utils.item.builders.ItemBuilder;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.utils.data.PlayerData;
-import net.tazpvp.tazpvp.utils.data.QuantitativeData;
+import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.enchantments.Enchantment;
@@ -204,8 +203,8 @@ public class Death {
         final int coins = 26;
 
         sendActionbar(xp, coins);
-        PlayerData.add(victim, QuantitativeData.XP, xp);
-        PlayerData.add(victim, QuantitativeData.COINS, coins);
+        PersistentData.add(victim, DataTypes.XP, xp);
+        PersistentData.add(victim, DataTypes.COINS, coins);
     }
 
     @SuppressWarnings("all")

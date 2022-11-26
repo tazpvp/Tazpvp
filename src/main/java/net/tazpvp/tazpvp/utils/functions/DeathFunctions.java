@@ -35,8 +35,8 @@ package net.tazpvp.tazpvp.utils.functions;
 import me.rownox.nrcore.utils.ConfigUtils;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.events.EventUtils;
-import net.tazpvp.tazpvp.utils.data.PlayerData;
-import net.tazpvp.tazpvp.utils.data.QuantitativeData;
+import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.objects.Death;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -56,7 +56,7 @@ public class DeathFunctions {
         Death death = new Death(victim, killer);
 
         if (killer != null) {
-            PlayerData.add(killer, QuantitativeData.KILLS);
+            PersistentData.add(killer, DataTypes.KILLS);
             if (Bukkit.getOnlinePlayers().size() < 10) {
                 if (killer == victim)
                     death.MessageAll("death");
@@ -76,7 +76,7 @@ public class DeathFunctions {
             EventUtils.check();
         }
 
-        PlayerData.add(victim, QuantitativeData.DEATHS);
+        PersistentData.add(victim, DataTypes.DEATHS);
 
         death.dropHead();
         death.rewards();

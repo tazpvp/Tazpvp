@@ -33,7 +33,7 @@
 package net.tazpvp.tazpvp.achievements.achievement;
 
 import net.tazpvp.tazpvp.achievements.Achievements;
-import net.tazpvp.tazpvp.utils.data.PlayerData;
+import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import org.bukkit.entity.Player;
 
@@ -41,10 +41,10 @@ public class Charm extends Observable {
 
     @Override
     public void chat(Player p, String chat) {
-        if (PlayerData.getChatCount(p.getUniqueId()) >= 100) {
-            Achievements ach = PlayerData.getAchievements(p.getUniqueId());
+        if (PersistentData.getChatCount(p.getUniqueId()) >= 100) {
+            Achievements ach = PersistentData.getAchievements(p.getUniqueId());
             ach.setCharm(true);
-            PlayerData.setAchievements(p, ach);
+            PersistentData.setAchievements(p, ach);
         }
     }
 }

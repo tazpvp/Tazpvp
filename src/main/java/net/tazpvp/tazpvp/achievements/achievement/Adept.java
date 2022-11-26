@@ -34,8 +34,7 @@ package net.tazpvp.tazpvp.achievements.achievement;
 
 import net.tazpvp.tazpvp.achievements.Achievements;
 import net.tazpvp.tazpvp.talents.Talents;
-import net.tazpvp.tazpvp.utils.data.PlayerData;
-import net.tazpvp.tazpvp.utils.data.QuantitativeData;
+import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import org.bukkit.entity.Player;
 
@@ -44,14 +43,14 @@ public class Adept extends Observable {
     @Override
     public void talent(Player p) {
         if (allTalents(p)) {
-            Achievements ach = PlayerData.getAchievements(p.getUniqueId());
+            Achievements ach = PersistentData.getAchievements(p.getUniqueId());
             ach.setAdept(true);
-            PlayerData.setAchievements(p, ach);
+            PersistentData.setAchievements(p, ach);
         }
     }
 
     private Boolean allTalents(Player p) {
-        Talents talents = PlayerData.getTalents(p.getUniqueId());
+        Talents talents = PersistentData.getTalents(p.getUniqueId());
         if (talents.isAgile()
                 && talents.isArchitect()
                 && talents.isBlessed()

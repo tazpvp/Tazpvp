@@ -33,7 +33,7 @@
 package net.tazpvp.tazpvp.achievements.achievement;
 
 import net.tazpvp.tazpvp.achievements.Achievements;
-import net.tazpvp.tazpvp.utils.data.PlayerData;
+import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import org.bukkit.entity.Player;
 
@@ -42,9 +42,9 @@ public class Gamble extends Observable {
     @Override
     public void death(Player victim, Player killer) {
         if (killer.getHealth() <= 1) {
-            Achievements ach = PlayerData.getAchievements(killer.getUniqueId());
+            Achievements ach = PersistentData.getAchievements(killer.getUniqueId());
             ach.setGamble(true);
-            PlayerData.setAchievements(killer, ach);
+            PersistentData.setAchievements(killer, ach);
         }
     }
 }

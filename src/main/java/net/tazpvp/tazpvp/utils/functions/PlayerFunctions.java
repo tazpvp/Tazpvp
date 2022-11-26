@@ -32,8 +32,8 @@
 
 package net.tazpvp.tazpvp.utils.functions;
 
-import net.tazpvp.tazpvp.utils.data.PlayerData;
-import net.tazpvp.tazpvp.utils.data.QuantitativeData;
+import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.DataTypes;
 import org.bukkit.entity.Player;
 
 public class PlayerFunctions {
@@ -45,7 +45,7 @@ public class PlayerFunctions {
      */
 
     public static Integer getMaxHealth(Player p) {
-        if (PlayerData.getInt(p, QuantitativeData.REBIRTH) >= 1)
+        if (PersistentData.getInt(p, DataTypes.REBIRTH) >= 1)
             return 22;
         else
             return 20;
