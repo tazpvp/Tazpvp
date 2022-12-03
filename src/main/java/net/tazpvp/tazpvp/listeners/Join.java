@@ -34,6 +34,7 @@ package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.PlaytimeUtil;
+import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.functions.ScoreboardFunctions;
 import net.tazpvp.tazpvp.utils.objects.AssistKill;
@@ -54,5 +55,6 @@ public class Join implements Listener {
         PlaytimeUtil.playerJoined(p);
 
         ScoreboardFunctions.initScoreboard(p);
+        LooseData.resetKs(p.getUniqueId());
     }
 }

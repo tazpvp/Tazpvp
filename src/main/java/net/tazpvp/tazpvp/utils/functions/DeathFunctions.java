@@ -35,6 +35,7 @@ package net.tazpvp.tazpvp.utils.functions;
 import me.rownox.nrcore.utils.ConfigUtils;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.events.EventUtils;
+import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.objects.Death;
@@ -68,6 +69,7 @@ public class DeathFunctions {
                 else
                     death.killMessage(killer);
             }
+            LooseData.addKs(killer.getUniqueId());
         }
 
         if (Tazpvp.playerList.contains(victim.getUniqueId())) {
