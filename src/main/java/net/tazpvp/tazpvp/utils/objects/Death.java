@@ -113,7 +113,7 @@ public class Death {
 
             inv.setItem(13, enchantment);
 
-            Hologram hologram = new Hologram(new String[]{"&6" + ench.getKey().getKey() + " &c" + lvl}, loc.getBlock().getLocation().add(0.5, 0, 0.5));
+            Hologram hologram = new Hologram(new String[]{"&6" + ench.getKey().getKey() + " &c" + lvl}, loc.getBlock().getLocation().add(0.5, 0, 0.5), true);
         }
     }
 
