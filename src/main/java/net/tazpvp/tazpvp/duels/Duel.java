@@ -32,26 +32,38 @@
 
 package net.tazpvp.tazpvp.duels;
 
+import lombok.Getter;
 import org.bukkit.entity.Player;
+import org.javatuples.Tuple;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public abstract class Duel {
 
-    /**
-     * A Player
-     */
-    private Player p1;
-    /**
-     * Another Player
-     */
-    private Player p2;
+    @Getter
+    private final UUID P1;
+    @Getter
+    private final UUID P2;
+    @Getter
+    private final String NAME;
+    @Getter
+    private final List<UUID> DUELERS;
 
-    public Duel(Player p1, Player p2) {
+    public Duel(@Nonnull final UUID P1, @Nonnull final UUID P2, @Nonnull final String NAME) {
+        this.P1 = P1;
+        this.P2 = P2;
+        this.NAME = NAME;
 
+        this.DUELERS = new ArrayList<>();
+        this.DUELERS.add(P1);
+        this.DUELERS.add(P2);
+
+        begin();
     }
 
-    /**
-     * Begins the duel
-     */
-    public abstract void begin();
+    protected abstract void begin();
 
 }

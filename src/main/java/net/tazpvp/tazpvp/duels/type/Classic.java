@@ -32,16 +32,37 @@
 
 package net.tazpvp.tazpvp.duels.type;
 
+import lombok.Getter;
 import net.tazpvp.tazpvp.duels.Duel;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import javax.annotation.Nonnull;
+import java.util.List;
+import java.util.UUID;
+
 public class Classic extends Duel {
-    public Classic(Player p1, Player p2) {
-        super(p1, p2);
+
+    public Classic(@Nonnull UUID P1, @Nonnull UUID P2, @Nonnull String NAME) {
+        super(P1, P2, NAME);
     }
 
     @Override
     public void begin() {
 
+        if (super.getDUELERS().size() == 2) {
+            Player p1 = Bukkit.getPlayer(super.getP1());
+            Player p2 = Bukkit.getPlayer(super.getP2());
+
+
+        }
+
+        for (UUID id : super.getDUELERS()) {
+            Player p = Bukkit.getPlayer(id);
+
+            p.sendMessage("The duel hath begun.");
+        }
+
     }
+
 }
