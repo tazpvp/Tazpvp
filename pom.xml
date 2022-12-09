@@ -64,6 +64,10 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
+        <repository>
+            <id>maven-group</id>
+            <url>http://3.138.106.70:8081/repository/maven-group/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -79,12 +83,17 @@
             <version>1.18.24</version>
             <scope>compile</scope>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>me.rownox</groupId>-->
+<!--            <artifactId>NRCore</artifactId>-->
+<!--            <version>1</version>-->
+<!--            <scope>system</scope>-->
+<!--            <systemPath>${project.basedir}${file.separator}NRCore.jar</systemPath>-->
+<!--        </dependency>-->
         <dependency>
-            <groupId>me.rownox</groupId>
-            <artifactId>NRCore</artifactId>
-            <version>1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}${file.separator}NRCore.jar</systemPath>
+            <groupId>world.ntdi.nrcore</groupId>
+            <artifactId>NRCORE</artifactId>
+            <version>1.0.2</version>
         </dependency>
         <dependency>
             <groupId>org.javatuples</groupId>
