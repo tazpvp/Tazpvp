@@ -32,6 +32,18 @@
 
 package net.tazpvp.tazpvp.duels;
 
+import net.tazpvp.tazpvp.duels.type.Classic;
+import net.tazpvp.tazpvp.events.Event;
+
+import java.util.List;
+import java.util.UUID;
+
 public final class DuelUtils {
+
+    public static Duel begin(String name, List<UUID> playerList) {
+        if (name.equals("Classic"))
+            return new Classic(playerList);
+        return null;
+    }
 
 }

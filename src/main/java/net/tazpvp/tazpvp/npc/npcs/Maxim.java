@@ -30,40 +30,35 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.duels;
+package net.tazpvp.tazpvp.npc.npcs;
 
-import lombok.Getter;
+import net.tazpvp.tazpvp.gui.ShopGui;
+import net.tazpvp.tazpvp.npc.NPC;
+import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.javatuples.Tuple;
+import org.bukkit.entity.Villager;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
-public abstract class Duel {
+public class Maxim extends NPC {
 
-    @Getter
-    private final UUID P1;
-    @Getter
-    private final UUID P2;
-    @Getter
-    private final String NAME;
-    @Getter
-    private final List<UUID> DUELERS;
-
-    public Duel(@Nonnull final UUID P1, @Nonnull final UUID P2, @Nonnull final String NAME) {
-        this.P1 = P1;
-        this.P2 = P2;
-        this.NAME = NAME;
-
-        this.DUELERS = new ArrayList<>();
-        this.DUELERS.add(P1);
-        this.DUELERS.add(P2);
-
-        begin();
+    /**
+     * Generate a villager NPC
+     *
+     * @param NAME       Name of the villager
+     * @param SPAWN      Spawn of the villager
+     * @param PROFESSION Profession of the villager, see {@code Villager.Profession}
+     * @param TYPE       Type of the villager, see {@code Villager.Type}
+     * @param SOUND
+     */
+    public Maxim(@Nonnull String NAME, @Nonnull Location SPAWN, @Nonnull Villager.Profession PROFESSION, @Nonnull Villager.Type TYPE, @Nonnull Sound SOUND) {
+        super(NAME, SPAWN, PROFESSION, TYPE, SOUND);
     }
 
-    protected abstract void begin();
-
+    @Override
+    public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
+        new ShopGui(p);
+    }
 }

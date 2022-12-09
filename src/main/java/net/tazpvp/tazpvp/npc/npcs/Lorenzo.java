@@ -30,40 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.duels;
+package net.tazpvp.tazpvp.npc.npcs;
 
-import lombok.Getter;
-import org.bukkit.entity.Player;
-import org.javatuples.Tuple;
-
-import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-public abstract class Duel {
-
-    @Getter
-    private final UUID P1;
-    @Getter
-    private final UUID P2;
-    @Getter
-    private final String NAME;
-    @Getter
-    private final List<UUID> DUELERS;
-
-    public Duel(@Nonnull final UUID P1, @Nonnull final UUID P2, @Nonnull final String NAME) {
-        this.P1 = P1;
-        this.P2 = P2;
-        this.NAME = NAME;
-
-        this.DUELERS = new ArrayList<>();
-        this.DUELERS.add(P1);
-        this.DUELERS.add(P2);
-
-        begin();
-    }
-
-    protected abstract void begin();
-
+public class Lorenzo {
 }

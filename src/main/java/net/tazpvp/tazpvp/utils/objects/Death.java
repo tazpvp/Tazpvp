@@ -32,6 +32,7 @@
 
 package net.tazpvp.tazpvp.utils.objects;
 
+import me.rownox.nrcore.utils.holograms.Hologram;
 import me.rownox.nrcore.utils.item.builders.ItemBuilder;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -105,9 +106,14 @@ public class Death {
             Chest coffin = (Chest) block.getState();
             Inventory inv = coffin.getInventory();
 
-            ItemStack enchantment = ItemBuilder.of(Material.ENCHANTED_BOOK, 1).enchantment(coffinEnchant(), coffinEnchantLevel()).build();
+            Enchantment ench = coffinEnchant();
+            int lvl = coffinEnchantLevel();
+
+            ItemStack enchantment = ItemBuilder.of(Material.ENCHANTED_BOOK, 1).enchantment(ench, lvl).build();
 
             inv.setItem(13, enchantment);
+
+            Hologram hologram = new Hologram(new String[]{"&6" + ench.getKey().getKey() + " &c" + lvl}, loc.getBlock().getLocation().add(0.5, 0, 0.5).subtract(0, 0.5, 0), true);
         }
     }
 

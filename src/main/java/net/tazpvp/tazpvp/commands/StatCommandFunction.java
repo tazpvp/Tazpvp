@@ -30,40 +30,40 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.duels;
+package net.tazpvp.tazpvp.commands;
 
-import lombok.Getter;
+import lombok.NonNull;
+import me.rownox.nrcore.utils.command.CommandCore;
+import me.rownox.nrcore.utils.command.CommandFunction;
+import net.tazpvp.tazpvp.utils.data.DataTypes;
+import net.tazpvp.tazpvp.utils.data.PersistentData;
+import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.javatuples.Tuple;
 
-import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-public abstract class Duel {
-
-    @Getter
-    private final UUID P1;
-    @Getter
-    private final UUID P2;
-    @Getter
-    private final String NAME;
-    @Getter
-    private final List<UUID> DUELERS;
-
-    public Duel(@Nonnull final UUID P1, @Nonnull final UUID P2, @Nonnull final String NAME) {
-        this.P1 = P1;
-        this.P2 = P2;
-        this.NAME = NAME;
-
-        this.DUELERS = new ArrayList<>();
-        this.DUELERS.add(P1);
-        this.DUELERS.add(P2);
-
-        begin();
+public class StatCommandFunction extends CommandCore implements CommandFunction{
+    public StatCommandFunction(@NonNull String name, String permission, @NonNull String... alias) {
+        super("stats", "stats", "stat");
     }
 
-    protected abstract void begin();
+    @Override
+    public void execute(CommandSender sender, String[] args) {
 
+        if (args.length >= 4) {
+            Player target = Bukkit.getPlayer(args[3]);
+            stats(args, target);
+        } else if (sender instanceof Player p) {
+            stats(args, p);
+        }
+    }
+
+    private void stats(String[] args, Player p) {
+        if (args[0].equalsIgnoreCase("give")) {
+            if (args[1].equalsIgnoreCase("coins")) {
+                PersistentData.add(p.getUniqueId(), DataTypes.COINS, Integer.parseInt(args[2]));
+            }
+        } else if (args[0].equalsIgnoreCase("reset")) {
+
+        }
+    }
 }

@@ -30,40 +30,45 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.duels;
+package net.tazpvp.tazpvp.gui;
 
-import lombok.Getter;
+import me.rownox.nrcore.utils.gui.Button;
+import me.rownox.nrcore.utils.gui.GUI;
+import me.rownox.nrcore.utils.item.builders.ItemBuilder;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.javatuples.Tuple;
+import org.bukkit.inventory.ItemStack;
 
-import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+public class ShopGui extends GUI {
 
-public abstract class Duel {
+    private int slotNum = 10;
 
-    @Getter
-    private final UUID P1;
-    @Getter
-    private final UUID P2;
-    @Getter
-    private final String NAME;
-    @Getter
-    private final List<UUID> DUELERS;
+    public ShopGui(Player p) {
+        super("Shop", 4);
 
-    public Duel(@Nonnull final UUID P1, @Nonnull final UUID P2, @Nonnull final String NAME) {
-        this.P1 = P1;
-        this.P2 = P2;
-        this.NAME = NAME;
+        setButton("test", makeLore("test", "test 2"), Material.STONE, 1, p);
 
-        this.DUELERS = new ArrayList<>();
-        this.DUELERS.add(P1);
-        this.DUELERS.add(P2);
-
-        begin();
+        open(p);
     }
 
-    protected abstract void begin();
+    private void setButton(String name, String[] lore, Material mat, int amount, Player p) {
+        addButton(Button.create(ItemBuilder.of(mat, amount).name(name).lore(lore).build(), (e) -> {
+            p.getInventory().addItem(new ItemStack(mat, amount));
+        }), slotNum);
+        calcSlot();
+    }
 
+    private void calcSlot() {
+        if ((slotNum + 1) % 7 == 0) {
+            slotNum += 2;
+        }
+        slotNum ++;
+    }
+
+    private String[] makeLore(String text, String cost) {
+        String[] list = {
+                text, cost
+        };
+        return list;
+    }
 }
