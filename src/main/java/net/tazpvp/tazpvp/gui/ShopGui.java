@@ -32,12 +32,12 @@
 
 package net.tazpvp.tazpvp.gui;
 
-import me.rownox.nrcore.utils.gui.Button;
-import me.rownox.nrcore.utils.gui.GUI;
-import me.rownox.nrcore.utils.item.builders.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import world.ntdi.nrcore.utils.gui.Button;
+import world.ntdi.nrcore.utils.gui.GUI;
+import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 public class ShopGui extends GUI {
 

@@ -1,6 +1,5 @@
 package net.tazpvp.tazpvp.utils.data;
 
-import me.rownox.nrcore.utils.sql.SQLHelper;
 import net.tazpvp.tazpvp.achievements.Achievements;
 import net.tazpvp.tazpvp.talents.Talents;
 import org.bukkit.Bukkit;
@@ -8,6 +7,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
+import world.ntdi.nrcore.utils.sql.SQLHelper;
 
 import javax.annotation.Nonnull;
 import java.io.ByteArrayInputStream;

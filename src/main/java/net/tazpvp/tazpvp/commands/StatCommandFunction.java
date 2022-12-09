@@ -33,15 +33,15 @@
 package net.tazpvp.tazpvp.commands;
 
 import lombok.NonNull;
-import me.rownox.nrcore.utils.command.CommandCore;
-import me.rownox.nrcore.utils.command.CommandFunction;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import world.ntdi.nrcore.utils.command.CommandCore;
+import world.ntdi.nrcore.utils.command.CommandFunction;
 
-public class StatCommandFunction extends CommandCore implements CommandFunction{
+public class StatCommandFunction extends CommandCore implements CommandFunction {
     public StatCommandFunction(@NonNull String name, String permission, @NonNull String... alias) {
         super("stats", "stats", "stat");
     }

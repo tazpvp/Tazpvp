@@ -32,10 +32,9 @@
 
 package net.tazpvp.tazpvp.events.types;
 
-import me.rownox.nrcore.NRCore;
-import me.rownox.nrcore.utils.ConfigUtils;
 import net.tazpvp.tazpvp.events.Event;
 import org.bukkit.Bukkit;
+import world.ntdi.nrcore.utils.ConfigUtils;
 
 import javax.annotation.Nonnull;
 import java.util.List;

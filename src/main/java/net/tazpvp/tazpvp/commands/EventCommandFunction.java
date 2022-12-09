@@ -32,13 +32,13 @@
 
 package net.tazpvp.tazpvp.commands;
 
-import me.rownox.nrcore.utils.PlayerUtils;
-import me.rownox.nrcore.utils.command.CommandCore;
-import me.rownox.nrcore.utils.command.CommandFunction;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.events.EventUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import world.ntdi.nrcore.utils.PlayerUtils;
+import world.ntdi.nrcore.utils.command.CommandCore;
+import world.ntdi.nrcore.utils.command.CommandFunction;
 
 public class EventCommandFunction extends CommandCore implements CommandFunction {
 

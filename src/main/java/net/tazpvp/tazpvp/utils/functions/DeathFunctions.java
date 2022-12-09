@@ -32,7 +32,6 @@
 
 package net.tazpvp.tazpvp.utils.functions;
 
-import me.rownox.nrcore.utils.ConfigUtils;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.events.EventUtils;
 import net.tazpvp.tazpvp.utils.data.LooseData;
@@ -41,6 +40,7 @@ import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.objects.Death;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import world.ntdi.nrcore.utils.ConfigUtils;
 
 import javax.annotation.Nullable;
 

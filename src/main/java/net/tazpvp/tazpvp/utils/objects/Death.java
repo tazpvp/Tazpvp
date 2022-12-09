@@ -32,8 +32,6 @@
 
 package net.tazpvp.tazpvp.utils.objects;
 
-import me.rownox.nrcore.utils.holograms.Hologram;
-import me.rownox.nrcore.utils.item.builders.ItemBuilder;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.tazpvp.tazpvp.Tazpvp;
@@ -53,6 +51,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
+import world.ntdi.nrcore.utils.holograms.Hologram;
+import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
