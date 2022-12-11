@@ -53,7 +53,7 @@ public class Shop extends GUI {
     private void setButton(String name, String[] lore, Material mat, int amount, Player p) {
         addButton(Button.create(ItemBuilder.of(mat, amount).name(name).lore(lore).build(), (e) -> {
             p.getInventory().addItem(new ItemStack(mat, amount));
-        }), 10);
+        }), GuiUtils.slotNum);
         GuiUtils.calcSlot();
     }
 }
