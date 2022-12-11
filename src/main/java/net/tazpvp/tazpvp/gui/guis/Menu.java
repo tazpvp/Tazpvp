@@ -30,23 +30,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.gui;
+package net.tazpvp.tazpvp.gui.guis;
 
+import net.tazpvp.tazpvp.gui.GuiUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import world.ntdi.nrcore.utils.gui.Button;
-import world.ntdi.nrcore.utils.gui.GUI;
-import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
-public class ShopGui extends GUI {
+public class Menu extends GUI {
 
-    private int slotNum = 10;
+    public menuGui(Player p) {
+        super("Menu", 3);
 
-    public ShopGui(Player p) {
-        super("Shop", 4);
-
-        setButton("test", makeLore("test", "test 2"), Material.STONE, 1, p);
+        setButton("test", GuiUtils.makeLore("test", "test 2"), Material.STONE, 1, p);
 
         open(p);
     }
@@ -54,21 +49,7 @@ public class ShopGui extends GUI {
     private void setButton(String name, String[] lore, Material mat, int amount, Player p) {
         addButton(Button.create(ItemBuilder.of(mat, amount).name(name).lore(lore).build(), (e) -> {
             p.getInventory().addItem(new ItemStack(mat, amount));
-        }), slotNum);
-        calcSlot();
-    }
-
-    private void calcSlot() {
-        if ((slotNum + 1) % 7 == 0) {
-            slotNum += 2;
-        }
-        slotNum ++;
-    }
-
-    private String[] makeLore(String text, String cost) {
-        String[] list = {
-                text, cost
-        };
-        return list;
+        }), 10);
+        GuiUtils.calcSlot();
     }
 }

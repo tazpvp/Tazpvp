@@ -32,5 +32,31 @@
 
 package net.tazpvp.tazpvp.npc.npcs;
 
-public class Lorenzo {
+import net.tazpvp.tazpvp.npc.NPC;
+import org.bukkit.Location;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+
+import javax.annotation.Nonnull;
+
+public class Lorenzo extends NPC {
+    /**
+     * Generate a villager NPC
+     *
+     * @param NAME       Name of the villager
+     * @param SPAWN      Spawn of the villager
+     * @param PROFESSION Profession of the villager, see {@code Villager.Profession}
+     * @param TYPE       Type of the villager, see {@code Villager.Type}
+     * @param SOUND
+     */
+    public Lorenzo(@Nonnull String NAME, @Nonnull Location SPAWN, @Nonnull Villager.Profession PROFESSION, @Nonnull Villager.Type TYPE, @Nonnull Sound SOUND) {
+        super(NAME, SPAWN, PROFESSION, TYPE, SOUND);
+    }
+
+    @Override
+    public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
+
+    }
 }
