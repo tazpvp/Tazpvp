@@ -30,28 +30,23 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.npc.npcs;
+package net.tazpvp.tazpvp.gui;
 
-import net.tazpvp.tazpvp.gui.guis.Shop;
-import net.tazpvp.tazpvp.npc.NPC;
-import net.tazpvp.tazpvp.utils.enums.CC;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Sound;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
-import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+public class GuiUtils {
 
-import javax.annotation.Nonnull;
+    private static int slotNum = 10;
 
-public class Maxim extends NPC {
-
-    public Maxim() {
-        super(CC.GOLD + "Maxim", new Location(Bukkit.getWorld("world"), 0, 0, 0), Villager.Profession.ARMORER, Villager.Type.JUNGLE, Sound.ITEM_GOAT_HORN_SOUND_0);
+    public static void calcSlot() {
+        if ((slotNum + 1) % 7 == 0) {
+            slotNum += 2;
+        }
+        slotNum ++;
     }
 
-    @Override
-    public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
-        new Shop(p);
+    public static String[] makeLore(String text, String cost) {
+        String[] list = {
+                text, cost
+        };
+        return list;
     }
 }

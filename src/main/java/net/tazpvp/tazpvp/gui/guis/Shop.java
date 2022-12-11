@@ -30,28 +30,30 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.npc.npcs;
+package net.tazpvp.tazpvp.gui.guis;
 
-import net.tazpvp.tazpvp.gui.guis.Shop;
-import net.tazpvp.tazpvp.npc.NPC;
-import net.tazpvp.tazpvp.utils.enums.CC;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Sound;
+import net.tazpvp.tazpvp.gui.GuiUtils;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
-import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.inventory.ItemStack;
+import world.ntdi.nrcore.utils.gui.Button;
+import world.ntdi.nrcore.utils.gui.GUI;
+import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
-import javax.annotation.Nonnull;
+public class Shop extends GUI {
 
-public class Maxim extends NPC {
+    public Shop(Player p) {
+        super("Shop", 4);
 
-    public Maxim() {
-        super(CC.GOLD + "Maxim", new Location(Bukkit.getWorld("world"), 0, 0, 0), Villager.Profession.ARMORER, Villager.Type.JUNGLE, Sound.ITEM_GOAT_HORN_SOUND_0);
+        setButton("test", GuiUtils.makeLore("test", "test 2"), Material.STONE, 1, p);
+
+        open(p);
     }
 
-    @Override
-    public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
-        new Shop(p);
+    private void setButton(String name, String[] lore, Material mat, int amount, Player p) {
+        addButton(Button.create(ItemBuilder.of(mat, amount).name(name).lore(lore).build(), (e) -> {
+            p.getInventory().addItem(new ItemStack(mat, amount));
+        }), 10);
+        GuiUtils.calcSlot();
     }
 }
