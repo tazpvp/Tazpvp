@@ -32,5 +32,23 @@
 
 package net.tazpvp.tazpvp.npc.npcs;
 
-public class Lorenzo {
+import net.tazpvp.tazpvp.gui.MainGui;
+import net.tazpvp.tazpvp.npc.NPC;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import world.ntdi.nrcore.utils.ConfigUtils;
+
+import javax.annotation.Nonnull;
+
+public class Lorenzo extends NPC {
+    public Lorenzo() {
+        super("Lorence", ConfigUtils.spawn, Villager.Profession.ARMORER, Villager.Type.JUNGLE, Sound.ITEM_GOAT_HORN_SOUND_1);
+    }
+
+    @Override
+    public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
+        new MainGui(p);
+    }
 }
