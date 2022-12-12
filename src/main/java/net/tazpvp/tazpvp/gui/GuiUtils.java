@@ -34,7 +34,7 @@ package net.tazpvp.tazpvp.gui;
 
 public class GuiUtils {
 
-    private static int slotNum = 10;
+    public static int slotNum = 10;
 
     public static void calcSlot() {
         if ((slotNum + 1) % 7 == 0) {

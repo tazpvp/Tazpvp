@@ -35,21 +35,24 @@ package net.tazpvp.tazpvp.gui.guis;
 import net.tazpvp.tazpvp.gui.GuiUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import world.ntdi.nrcore.utils.gui.Button;
+import world.ntdi.nrcore.utils.gui.GUI;
+import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 public class Menu extends GUI {
 
-    public menuGui(Player p) {
+    public Menu(Player p) {
         super("Menu", 3);
 
-        setButton("test", GuiUtils.makeLore("test", "test 2"), Material.STONE, 1, p);
+        setButton("test", GuiUtils.makeLore("test", "test 2"), Material.STONE, 1, p, 10);
 
         open(p);
     }
 
-    private void setButton(String name, String[] lore, Material mat, int amount, Player p) {
+    private void setButton(String name, String[] lore, Material mat, int amount, Player p, int slot) {
         addButton(Button.create(ItemBuilder.of(mat, amount).name(name).lore(lore).build(), (e) -> {
             p.getInventory().addItem(new ItemStack(mat, amount));
-        }), 10);
-        GuiUtils.calcSlot();
+        }), slot);
     }
 }
