@@ -12,9 +12,10 @@ public enum DataTypes {
     PRESTIGE("prestige", 8, true),
     REBIRTH("rebirth", 9, true),
     DUELWINS("duel_wins", 10, true),
-    PLAYTIMEUNIX("playtime", 11, false),
-    TALENTS("talents", 12, false),
-    ACHIEVEMENTS("achievements", 13, false);
+    DIVISION("division", 11, true),
+    PLAYTIMEUNIX("playtime", 12, false),
+    TALENTS("talents", 13, false),
+    ACHIEVEMENTS("achievements", 14, false);
 
     private final String columnName;
     private final int columnIndex;
