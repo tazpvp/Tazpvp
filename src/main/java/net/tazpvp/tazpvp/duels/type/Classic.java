@@ -45,6 +45,7 @@ public class Classic extends Duel {
 
     public Classic(@Nonnull UUID P1, @Nonnull UUID P2, @Nonnull String NAME) {
         super(P1, P2, NAME);
+        begin();
     }
 
     @Override

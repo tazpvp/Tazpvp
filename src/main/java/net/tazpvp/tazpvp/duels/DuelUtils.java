@@ -34,15 +34,16 @@ package net.tazpvp.tazpvp.duels;
 
 import net.tazpvp.tazpvp.duels.type.Classic;
 import net.tazpvp.tazpvp.events.Event;
+import org.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.UUID;
 
 public final class DuelUtils {
 
-    public static Duel begin(String name, List<UUID> playerList) {
+    public static Duel begin(String name, List<UUID> playerList, UUID p1, UUID p2) {
         if (name.equals("Classic"))
-            return new Classic(playerList);
+            return new Classic(p1, p2, name);
         return null;
     }
 

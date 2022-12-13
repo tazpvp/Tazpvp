@@ -67,6 +67,7 @@ public final class Tazpvp extends JavaPlugin {
     public static String prefix = "tazpvp.";
 
     public static WeakHashMap<UUID, AssistKill> combatAssist = new WeakHashMap<>();
+    public static WeakHashMap<UUID, UUID> duelers = new WeakHashMap<>();
 
     @Override
     public void onEnable() {
