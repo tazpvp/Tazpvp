@@ -35,6 +35,7 @@ package net.tazpvp.tazpvp.duels.type;
 import lombok.Getter;
 import net.tazpvp.tazpvp.duels.Duel;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nonnull;
@@ -45,7 +46,6 @@ public class Classic extends Duel {
 
     public Classic(@Nonnull UUID P1, @Nonnull UUID P2, @Nonnull String NAME) {
         super(P1, P2, NAME);
-        begin();
     }
 
     @Override
@@ -55,7 +55,8 @@ public class Classic extends Duel {
             Player p1 = Bukkit.getPlayer(super.getP1());
             Player p2 = Bukkit.getPlayer(super.getP2());
 
-
+            p1.teleport(new Location(Bukkit.getWorld("world"), -5, 60, 0, 0, 0));
+            p2.teleport(new Location(Bukkit.getWorld("world"), 5, 60, 0, 0, 0));
         }
 
         for (UUID id : super.getDUELERS()) {

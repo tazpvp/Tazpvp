@@ -32,13 +32,15 @@
 
 package net.tazpvp.tazpvp.commands;
 
-import lombok.NonNull;
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.duels.DuelUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.CommandCore;
 import world.ntdi.nrcore.utils.command.CommandFunction;
+
+import java.util.UUID;
 
 public class DuelCommandFunction extends CommandCore implements CommandFunction {
 
@@ -48,16 +50,25 @@ public class DuelCommandFunction extends CommandCore implements CommandFunction 
 
     @Override
     public void execute(CommandSender sender, String[] args) {
+        String type = "";
         if (sender instanceof Player p) {
 
             if (args.length == 2) {
                 if (Bukkit.getPlayer(args[0]) != null) {
                     Player target = Bukkit.getPlayer(args[0]);
+                    type = args[1];
                     target.sendMessage(p.getName() + " sent you a duel request ");
                     Tazpvp.duelers.put(p.getUniqueId(), target.getUniqueId());
+
                 } else if (args[0].equalsIgnoreCase("accept")) {
                     if (Tazpvp.duelers.containsValue(p.getUniqueId())) {
+                        UUID requester = Tazpvp.duelers.get(p.getUniqueId());
+                        DuelUtils.begin(type, requester, p.getUniqueId());
 
+                        p.sendMessage("Duel commencing");
+                        Bukkit.getPlayer(requester).sendMessage("Duel commencing");
+
+                        Tazpvp.duelers.remove(requester);
                     } else {
                         p.sendMessage("No one sent you a duel request");
                     }
