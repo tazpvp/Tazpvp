@@ -30,28 +30,30 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.npc.npcs;
+package net.tazpvp.tazpvp.commands;
 
-import net.tazpvp.tazpvp.gui.guis.Shop;
-import net.tazpvp.tazpvp.npc.NPC;
-import net.tazpvp.tazpvp.utils.enums.CC;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Sound;
+import lombok.NonNull;
+import net.tazpvp.tazpvp.npc.npcs.Lorenzo;
+import net.tazpvp.tazpvp.npc.npcs.Maxim;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
-import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import world.ntdi.nrcore.utils.command.CommandCore;
+import world.ntdi.nrcore.utils.command.CommandFunction;
 
-import javax.annotation.Nonnull;
+public class NpcCommandFunction extends CommandCore implements CommandFunction {
 
-public class Maxim extends NPC {
-
-    public Maxim() {
-        super(CC.GOLD + "Maxim", new Location(Bukkit.getWorld("world"), 0, 60, 0), Villager.Profession.ARMORER, Villager.Type.JUNGLE, Sound.ITEM_GOAT_HORN_SOUND_0);
+    public NpcCommandFunction() {
+        super("npc", "npc", "npc");
     }
 
     @Override
-    public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
-        new Shop(p);
+    public void execute(CommandSender sender, String[] args) {
+        if (sender instanceof Player p) {
+            if (args[0].equalsIgnoreCase("maxim")) {
+                new Maxim();
+            } else if (args[0].equalsIgnoreCase("lorenzo")) {
+                new Lorenzo();
+            }
+        }
     }
 }
