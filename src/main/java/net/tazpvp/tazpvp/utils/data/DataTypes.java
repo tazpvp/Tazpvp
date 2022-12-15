@@ -13,7 +13,7 @@ public enum DataTypes {
     REBIRTH("rebirth", 9, true),
     DUELWINS("duel_wins", 10, true),
     DIVISION("division", 11, true),
-    PLAYTIMEUNIX("playtime", 12, false),
+    PLAYTIMEUNIX("playtime", 12, true),
     TALENTS("talents", 13, false),
     ACHIEVEMENTS("achievements", 14, false);
 
