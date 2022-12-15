@@ -37,6 +37,8 @@ import lombok.Getter;
 import net.tazpvp.tazpvp.achievements.achievement.*;
 import net.tazpvp.tazpvp.commands.DuelCommandFunction;
 import net.tazpvp.tazpvp.commands.EventCommandFunction;
+import net.tazpvp.tazpvp.commands.NpcCommandFunction;
+import net.tazpvp.tazpvp.commands.StatCommandFunction;
 import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.listeners.Damage;
 import net.tazpvp.tazpvp.listeners.Join;
@@ -76,6 +78,8 @@ public final class Tazpvp extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Leave(), this);
         new EventCommandFunction();
         new DuelCommandFunction();
+        new NpcCommandFunction();
+        new StatCommandFunction();
 
         events.add("FFA");
 

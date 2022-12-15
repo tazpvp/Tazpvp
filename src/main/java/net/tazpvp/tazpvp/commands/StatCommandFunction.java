@@ -42,7 +42,7 @@ import world.ntdi.nrcore.utils.command.CommandCore;
 import world.ntdi.nrcore.utils.command.CommandFunction;
 
 public class StatCommandFunction extends CommandCore implements CommandFunction {
-    public StatCommandFunction(@NonNull String name, String permission, @NonNull String... alias) {
+    public StatCommandFunction() {
         super("stats", "stats", "stat");
         setDefaultFunction(this);
     }
