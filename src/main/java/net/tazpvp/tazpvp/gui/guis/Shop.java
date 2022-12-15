@@ -79,13 +79,13 @@ public class Shop extends GUI {
         setButton("Ink Splash", "Blind your enemies.", Material.INK_SAC, p, 30, 3);
         setButton("Lighter", "Set things afire.", Material.FLINT_AND_STEEL, p, 30, 1);
         setButton("Rusty Shield", "One-time-use shield.", Material.SHIELD, p, 30, 1);
+        setButton("sex", "Extinguish flames.", Material.STONE, p, 30, 1);
         setChangingButton("Wooden Planks", "Placeable Blocks", wood, p, 30, 64);
         setButton("Hatchet", "Break wooden blocks.", Material.GOLDEN_AXE, p, 30, 1);
         setButton("Shears", "Break wool blocks.", Material.SHEARS, p, 30, 1);
         setButton("Arrows", "Extinguish flames.", Material.ARROW, p, 30, 5);
         setButton("Steak", "Extinguish flames.", Material.COOKED_BEEF, p, 30, 5);
         setButton("Gold Carrots", "Extinguish flames.", Material.GOLDEN_CARROT, p, 30, 5);
-        setButton("sex", "Extinguish flames.", Material.STONE, p, 30, 1);
         setButton("sex2", "Extinguish flames.", Material.STONE, p, 30, 1);
         setChangingButton("RGB Blocks", "RGB Placeable Blocks", wool, p, 30, 64);
 
