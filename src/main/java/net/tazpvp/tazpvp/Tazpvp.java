@@ -37,6 +37,7 @@ import lombok.Getter;
 import net.tazpvp.tazpvp.achievements.achievement.*;
 import net.tazpvp.tazpvp.commands.DuelCommandFunction;
 import net.tazpvp.tazpvp.commands.EventCommandFunction;
+import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.listeners.Damage;
 import net.tazpvp.tazpvp.listeners.Join;
 import net.tazpvp.tazpvp.listeners.Leave;
@@ -66,7 +67,7 @@ public final class Tazpvp extends JavaPlugin {
     public static String prefix = "tazpvp.";
 
     public static WeakHashMap<UUID, AssistKill> combatAssist = new WeakHashMap<>();
-    public static WeakHashMap<UUID, UUID> duelers = new WeakHashMap<>();
+    public static WeakHashMap<UUID, Duel> duels = new WeakHashMap<>();
 
     @Override
     public void onEnable() {

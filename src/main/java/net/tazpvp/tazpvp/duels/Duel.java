@@ -33,8 +33,6 @@
 package net.tazpvp.tazpvp.duels;
 
 import lombok.Getter;
-import org.bukkit.entity.Player;
-import org.javatuples.Tuple;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -61,9 +59,8 @@ public abstract class Duel {
         this.DUELERS.add(P1);
         this.DUELERS.add(P2);
 
-        begin();
     }
 
-    protected abstract void begin();
+    public abstract void begin();
 
 }

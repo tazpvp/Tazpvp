@@ -33,14 +33,14 @@
 package net.tazpvp.tazpvp.commands;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.duels.DuelUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.javatuples.Pair;
 import world.ntdi.nrcore.utils.command.CommandCore;
 import world.ntdi.nrcore.utils.command.CommandFunction;
-
-import java.util.UUID;
 
 public class DuelCommandFunction extends CommandCore implements CommandFunction {
 
@@ -51,29 +51,27 @@ public class DuelCommandFunction extends CommandCore implements CommandFunction 
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        String type = "";
         if (sender instanceof Player p) {
 
             if (args.length == 2) {
-                if (Bukkit.getPlayer(args[0]) != null) {
-                    Player target = Bukkit.getPlayer(args[0]);
-                    type = args[1];
+                Player target = Bukkit.getPlayer(args[0]);
+                if (target != null) {
+                    String type = args[1];
                     target.sendMessage(p.getName() + " sent you a duel request ");
-                    Tazpvp.duelers.put(p.getUniqueId(), target.getUniqueId());
+                    Tazpvp.duels.put(p.getUniqueId(), DuelUtils.begin(type, p.getUniqueId(), target.getUniqueId()));
 
                 }
             } else if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("accept")) {
-                    if (Tazpvp.duelers.containsValue(p.getUniqueId())) {
-                        UUID requester = Tazpvp.duelers.get(p.getUniqueId());
-                        DuelUtils.begin(type, requester, p.getUniqueId());
+                    Pair<Boolean, Duel> duelPair = requested(p);
 
-                        p.sendMessage("Duel commencing");
-                        Bukkit.broadcastMessage(Bukkit.getPlayer(requester).getName());
-                        Bukkit.getPlayer(requester).sendMessage("Duel commencing");
+                    if (duelPair.getValue0()) {
+                        Duel duel = duelPair.getValue1();
 
-
-                        Tazpvp.duelers.remove(requester);
+                        duel.begin();
+                        duel.getDUELERS().forEach(d -> {
+                            Bukkit.getPlayer(d).sendMessage("Duel Commencing!");
+                        });
                     } else {
                         p.sendMessage("No one sent you a duel request");
                     }
@@ -86,5 +84,14 @@ public class DuelCommandFunction extends CommandCore implements CommandFunction 
                 );
             }
         }
+    }
+
+    private Pair<Boolean, Duel> requested(Player p) {
+        for (Duel duel : Tazpvp.duels.values()) {
+            if (duel.getP2().equals(p.getUniqueId())) {
+                return Pair.with(true, duel);
+            }
+        }
+        return Pair.with(false, null);
     }
 }
