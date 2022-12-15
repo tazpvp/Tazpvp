@@ -50,6 +50,7 @@ import java.util.Random;
 public class Shop extends GUI {
 
     public Shop(Player p) {
+
         super("Shop", 4);
         List<Material> wool = List.of(
                 Material.ORANGE_WOOL,
@@ -88,6 +89,7 @@ public class Shop extends GUI {
         setChangingButton("RGB Blocks", "RGB Placeable Blocks", wool, p, 30, 64);
 
         open(p);
+        GuiUtils.slotNum = 0;
     }
 
     private void setButton(String name, String text, Material mat, Player p, int cost, int amount) {
