@@ -32,7 +32,6 @@
 
 package net.tazpvp.tazpvp.gui.guis;
 
-import net.tazpvp.tazpvp.gui.GuiUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
