@@ -44,7 +44,7 @@ import java.util.UUID;
 
 public class Classic extends Duel {
 
-    public Classic(@Nonnull UUID P1, @Nonnull UUID P2, @Nonnull String NAME) {
+    public Classic(UUID P1, UUID P2, String NAME) {
         super(P1, P2, NAME);
     }
 

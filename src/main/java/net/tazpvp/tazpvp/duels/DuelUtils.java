@@ -42,5 +42,4 @@ public final class DuelUtils {
             return new Classic(p1, p2, name);
         return null;
     }
-
 }
