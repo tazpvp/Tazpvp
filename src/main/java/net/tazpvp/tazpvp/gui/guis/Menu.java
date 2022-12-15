@@ -45,12 +45,12 @@ public class Menu extends GUI {
     public Menu(Player p) {
         super("Menu", 3);
 
-        setButton("test", GuiUtils.makeLore("test", "test 2"), Material.STONE, 1, p, 10);
+        setButton("test", "h", Material.STONE, 1, p, 10);
 
         open(p);
     }
 
-    private void setButton(String name, String[] lore, Material mat, int amount, Player p, int slot) {
+    private void setButton(String name, String lore, Material mat, int amount, Player p, int slot) {
         addButton(Button.create(ItemBuilder.of(mat, amount).name(name).lore(lore).build(), (e) -> {
             p.getInventory().addItem(new ItemStack(mat, amount));
         }), slot);
