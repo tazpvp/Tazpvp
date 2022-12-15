@@ -61,7 +61,9 @@ public class DuelCommandFunction extends CommandCore implements CommandFunction 
                     target.sendMessage(p.getName() + " sent you a duel request ");
                     Tazpvp.duelers.put(p.getUniqueId(), target.getUniqueId());
 
-                } else if (args[0].equalsIgnoreCase("accept")) {
+                }
+            } else if (args.length == 1) {
+                if (args[0].equalsIgnoreCase("accept")) {
                     if (Tazpvp.duelers.containsValue(p.getUniqueId())) {
                         UUID requester = Tazpvp.duelers.get(p.getUniqueId());
                         DuelUtils.begin(type, requester, p.getUniqueId());
@@ -75,7 +77,11 @@ public class DuelCommandFunction extends CommandCore implements CommandFunction 
                     }
                 }
             } else {
-                p.sendMessage("Usage: /duel <player> <type>");
+                p.sendMessage(
+                        "Commands:\n" +
+                        "/duel <player> <type>\n" +
+                        "/duel accept"
+                );
             }
         }
     }
