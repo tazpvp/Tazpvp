@@ -34,7 +34,7 @@ package net.tazpvp.tazpvp.commands;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.duels.Duel;
-import net.tazpvp.tazpvp.duels.DuelUtils;
+import net.tazpvp.tazpvp.duels.type.Classic;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -58,7 +58,7 @@ public class DuelCommandFunction extends CommandCore implements CommandFunction 
                 if (target != null) {
                     String type = args[1];
                     target.sendMessage(p.getName() + " sent you a duel request ");
-                    Tazpvp.duels.put(p.getUniqueId(), DuelUtils.begin(type, p.getUniqueId(), target.getUniqueId()));
+                    Tazpvp.duels.put(p.getUniqueId(), new Classic(p.getUniqueId(), target.getUniqueId()));
 
                 }
             } else if (args.length == 1) {

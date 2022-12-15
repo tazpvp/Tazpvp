@@ -32,20 +32,17 @@
 
 package net.tazpvp.tazpvp.duels.type;
 
-import lombok.Getter;
 import net.tazpvp.tazpvp.duels.Duel;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import javax.annotation.Nonnull;
-import java.util.List;
 import java.util.UUID;
 
 public class Classic extends Duel {
 
-    public Classic(UUID P1, UUID P2, String NAME) {
-        super(P1, P2, NAME);
+    public Classic(UUID P1, UUID P2) {
+        super(P1, P2, "classic");
     }
 
     @Override

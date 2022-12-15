@@ -39,7 +39,7 @@ public final class DuelUtils {
 
     public static Duel begin(String name, UUID p1, UUID p2) {
         if (name.equals("Classic"))
-            return new Classic(p1, p2, name);
+            return new Classic(p1, p2);
         return null;
     }
 }
