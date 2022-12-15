@@ -35,6 +35,7 @@ package net.tazpvp.tazpvp.npc;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.PDCUtil;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -44,8 +45,10 @@ import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.javatuples.Pair;
 
 import javax.annotation.Nonnull;
+import java.util.UUID;
 
 /**
  * A simple utility class for creating Villager NPCs
@@ -63,6 +66,8 @@ public abstract class NPC implements Listener {
     private final Sound SOUND;
     @Getter
     private final Villager V;
+    @Getter
+    private final UUID ID;
 
     /**
      * Generate a villager NPC
@@ -77,13 +82,15 @@ public abstract class NPC implements Listener {
         this.PROFESSION = PROFESSION;
         this.TYPE = TYPE;
         this.SOUND = SOUND;
+        this.ID = UUID.randomUUID();
 
         this.V = (Villager) SPAWN.getWorld().spawnEntity(SPAWN, EntityType.VILLAGER);
         V.setCustomName(CC.trans(NAME));
         V.setInvulnerable(true);
         V.setProfession(PROFESSION);
-        V.setVillagerType(TYPE);
+        V.setVillagerType(TYPE);w
         V.setGravity(false);
+        PDCUtil.setPDC(V, PDCUtil.getNpcKey(), UUID.randomUUID());
 
         Tazpvp.getInstance().getServer().getPluginManager().registerEvents(this, Tazpvp.getInstance());
     }
@@ -106,8 +113,10 @@ public abstract class NPC implements Listener {
     public void onInteract(PlayerInteractAtEntityEvent e) {
         if (e.getRightClicked().getType().equals(EntityType.VILLAGER)) {
             Villager v = (Villager) e.getRightClicked();
-            if (e.getRightClicked().getCustomName() != null && e.getRightClicked().getCustomName().equals(CC.trans(NAME))) {
-                if (v.getProfession().equals(PROFESSION)) {
+            Pair<Boolean, UUID> pair = PDCUtil.hasPDC(v, PDCUtil.getNpcKey());
+
+            if (pair.getValue0()) {
+                if (pair.getValue1().equals(ID)) {
                     e.getPlayer().playSound(e.getPlayer(), SOUND, 1, 1);
                     interact(e, e.getPlayer());
 //                    Tazpvp.getObservers().forEach(observer -> observer.(e.getPlayer(), NAME));
