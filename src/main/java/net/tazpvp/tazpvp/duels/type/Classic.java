@@ -51,13 +51,11 @@ public class Classic extends Duel {
     @Override
     public void begin() {
 
-        if (super.getDUELERS().size() == 2) {
-            Player p1 = Bukkit.getPlayer(super.getP1());
-            Player p2 = Bukkit.getPlayer(super.getP2());
+        Player p1 = Bukkit.getPlayer(super.getP1());
+        Player p2 = Bukkit.getPlayer(super.getP2());
 
-            p1.teleport(new Location(Bukkit.getWorld("world"), -5, 60, 0, 0, 0));
-            p2.teleport(new Location(Bukkit.getWorld("world"), 5, 60, 0, 0, 0));
-        }
+        p1.teleport(new Location(Bukkit.getWorld("arena"), -5, 60, 0, 0, 0));
+        p2.teleport(new Location(Bukkit.getWorld("arena"), 5, 60, 0, 0, 0));
 
         for (UUID id : super.getDUELERS()) {
             Player p = Bukkit.getPlayer(id);

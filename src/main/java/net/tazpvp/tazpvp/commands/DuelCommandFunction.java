@@ -69,7 +69,9 @@ public class DuelCommandFunction extends CommandCore implements CommandFunction 
                         DuelUtils.begin(type, requester, p.getUniqueId());
 
                         p.sendMessage("Duel commencing");
+                        Bukkit.broadcastMessage(Bukkit.getPlayer(requester).getName());
                         Bukkit.getPlayer(requester).sendMessage("Duel commencing");
+
 
                         Tazpvp.duelers.remove(requester);
                     } else {
