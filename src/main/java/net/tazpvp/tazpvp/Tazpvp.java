@@ -41,6 +41,7 @@ import net.tazpvp.tazpvp.commands.NpcCommandFunction;
 import net.tazpvp.tazpvp.commands.StatCommandFunction;
 import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.listeners.Damage;
+import net.tazpvp.tazpvp.listeners.InventoryClick;
 import net.tazpvp.tazpvp.listeners.Join;
 import net.tazpvp.tazpvp.listeners.Leave;
 import net.tazpvp.tazpvp.npc.NPC;
@@ -78,6 +79,7 @@ public final class Tazpvp extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Damage(), this);
         getServer().getPluginManager().registerEvents(new Join(), this);
         getServer().getPluginManager().registerEvents(new Leave(), this);
+        getServer().getPluginManager().registerEvents(new InventoryClick(), this);
         new EventCommandFunction();
         new DuelCommandFunction();
         new NpcCommandFunction();
