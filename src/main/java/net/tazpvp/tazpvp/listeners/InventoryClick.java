@@ -1,6 +1,5 @@
 package net.tazpvp.tazpvp.listeners;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
@@ -8,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 
 public class InventoryClick implements Listener {
     @EventHandler
@@ -26,7 +26,12 @@ public class InventoryClick implements Listener {
                             applyTo.removeEnchantment(enchantment);
                         }
 
-                        Bukkit.getLogger().info("Applying enchant " + enchant.getType() + " to the item " + applyTo.getType());
+                        if(enchant.getItemMeta() instanceof EnchantmentStorageMeta) {
+                            EnchantmentStorageMeta meta = (EnchantmentStorageMeta) enchant.getItemMeta();
+                            meta.getStoredEnchants().forEach(applyTo::addUnsafeEnchantment);
+                        }
+                        enchant.setType(Material.AIR);
+
                     }
                 }
             }
