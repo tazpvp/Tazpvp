@@ -51,6 +51,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.utils.holograms.Hologram;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
@@ -114,6 +115,14 @@ public class Death {
             inv.setItem(13, enchantment);
 
             Hologram hologram = new Hologram(new String[]{"&6" + ench.getKey().getKey() + " &c" + lvl}, loc.getBlock().getLocation().add(0.5, 0, 0.5).subtract(0, 0.5, 0), true);
+
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    hologram.deleteHologram();
+                    block.setType(Material.AIR);
+                }
+            }.runTaskLater(Tazpvp.getInstance(), 20 * 10);
         }
     }
 
