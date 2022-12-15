@@ -32,6 +32,7 @@
 
 package net.tazpvp.tazpvp.utils.functions;
 
+import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import org.bukkit.Bukkit;
@@ -57,13 +58,14 @@ public class ScoreboardFunctions {
 
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-        newLine(DataTypes.LEVEL, p, "Level:", ChatColor.AQUA).setScore(6);
-        newLine(DataTypes.COINS, p, "Coins:", ChatColor.GOLD).setScore(5);
-        newLine(DataTypes.XP, p, "Exp:", ChatColor.BLACK).setScore(4);
-        objective.getScore(" ").setScore(3);
-        KDRScore(p, "KDR:").setScore(2);
-        newLine(DataTypes.KILLS, p, "Kills:", ChatColor.YELLOW).setScore(1);
-        newLine(DataTypes.DEATHS, p, "Deaths:", ChatColor.DARK_PURPLE).setScore(0);
+        newLine(DataTypes.LEVEL, p, "Level:", ChatColor.AQUA).setScore(7);
+        newLine(DataTypes.COINS, p, "Coins:", ChatColor.GOLD).setScore(6);
+        newLine(DataTypes.XP, p, "Exp:", ChatColor.BLACK).setScore(5);
+        objective.getScore(" ").setScore(4);
+        StreakScore(p).setScore(3);
+        newLine(DataTypes.KILLS, p, "Kills:", ChatColor.YELLOW).setScore(2);
+        newLine(DataTypes.DEATHS, p, "Deaths:", ChatColor.DARK_PURPLE).setScore(1);
+        KDRScore(p).setScore(0);
 
         p.setScoreboard(board);
     }
@@ -90,18 +92,28 @@ public class ScoreboardFunctions {
         return objective.getScore(ID);
     }
 
+    private static Score StreakScore(Player p) {
+        String ID = ChatColor.BOLD.toString();
+        Team team = board.registerNewTeam("streak");
+
+        team.addEntry(ID);
+        team.setPrefix("Streak: ");
+        team.setSuffix(String.valueOf(LooseData.getKs(p.getUniqueId())));
+
+        return objective.getScore(ID);
+    }
+
     /**
      * Insert a new line just for the KDR.
      * @param p The player.
-     * @param prefix The text to go with the kdr value.
      * @return The score.
      */
-    private static Score KDRScore(Player p, String prefix) {
+    private static Score KDRScore(Player p) {
         String ID = ChatColor.UNDERLINE.toString();
         Team team = board.registerNewTeam("kdr");
 
         team.addEntry(ID);
-        team.setPrefix(prefix + " ");
+        team.setPrefix("KDR: ");
         team.setSuffix(String.valueOf(PersistentData.kdrFormula(PersistentData.getFloat(p, DataTypes.KILLS), PersistentData.getFloat(p, DataTypes.DEATHS))));
 
         return objective.getScore(ID);

@@ -1,5 +1,7 @@
 package net.tazpvp.tazpvp.utils.data;
 
+import org.bukkit.Bukkit;
+
 import java.util.UUID;
 import java.util.WeakHashMap;
 
@@ -18,6 +20,7 @@ public final class LooseData {
         } else {
             ks.put(uuid, 1);
         }
+        Bukkit.getPlayer(uuid).getScoreboard().getTeam("streak").setSuffix(getKs(uuid) + "");
     }
 
     public static void setChatCount(UUID p, int val) {
