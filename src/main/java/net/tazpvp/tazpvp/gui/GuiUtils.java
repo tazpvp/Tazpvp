@@ -42,11 +42,4 @@ public class GuiUtils {
         }
         slotNum ++;
     }
-
-    public static String[] makeLore(String text, String cost) {
-        String[] list = {
-                text, cost
-        };
-        return list;
-    }
 }

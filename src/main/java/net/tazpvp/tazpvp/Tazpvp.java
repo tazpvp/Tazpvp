@@ -43,6 +43,9 @@ import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.listeners.Damage;
 import net.tazpvp.tazpvp.listeners.Join;
 import net.tazpvp.tazpvp.listeners.Leave;
+import net.tazpvp.tazpvp.npc.NPC;
+import net.tazpvp.tazpvp.npc.npcs.Lorenzo;
+import net.tazpvp.tazpvp.npc.npcs.Maxim;
 import net.tazpvp.tazpvp.talents.talent.Revenge;
 import net.tazpvp.tazpvp.utils.functions.CombatFunctions;
 import net.tazpvp.tazpvp.utils.objects.AssistKill;
@@ -51,10 +54,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import java.util.WeakHashMap;
+import java.util.*;
 
 /*
     A plugin for tazpvp beacuse we love tazpvp! <3 I love tazpvp <3 <3 <3 Rownxo smells like tazpvp stinky tazpvp
@@ -71,6 +71,8 @@ public final class Tazpvp extends JavaPlugin {
     public static WeakHashMap<UUID, AssistKill> combatAssist = new WeakHashMap<>();
     public static WeakHashMap<UUID, Duel> duels = new WeakHashMap<>();
 
+    private List<NPC> npcs = new LinkedList<>();
+
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(new Damage(), this);
@@ -85,6 +87,8 @@ public final class Tazpvp extends JavaPlugin {
 
         registerTalents();
 
+        spawnNpcs();
+
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -98,7 +102,10 @@ public final class Tazpvp extends JavaPlugin {
     }
 
     @Override
-    public void onDisable() {}
+    public void onDisable() {
+
+        despawnNpcs();
+    }
 
     public static Tazpvp getInstance() {
         return (Tazpvp) Bukkit.getPluginManager().getPlugin("Tazpvp");
@@ -115,6 +122,16 @@ public final class Tazpvp extends JavaPlugin {
         new Legend();
         new Merchant();
         new Superior();
+    }
+
+    private void spawnNpcs() {
+        npcs.add(new Maxim());
+        npcs.add(new Lorenzo());
+    }
+
+    private void despawnNpcs() {
+        npcs.forEach(NPC::remove);
+        npcs.clear();
     }
 
 }
