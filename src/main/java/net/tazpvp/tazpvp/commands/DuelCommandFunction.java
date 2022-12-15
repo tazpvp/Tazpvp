@@ -46,6 +46,7 @@ public class DuelCommandFunction extends CommandCore implements CommandFunction 
 
     public DuelCommandFunction() {
         super("duel", null, "duel");
+        setDefaultFunction(this);
     }
 
     @Override

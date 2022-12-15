@@ -44,6 +44,7 @@ import world.ntdi.nrcore.utils.command.CommandFunction;
 public class StatCommandFunction extends CommandCore implements CommandFunction {
     public StatCommandFunction(@NonNull String name, String permission, @NonNull String... alias) {
         super("stats", "stats", "stat");
+        setDefaultFunction(this);
     }
 
     @Override

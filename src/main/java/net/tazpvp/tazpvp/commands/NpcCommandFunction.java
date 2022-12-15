@@ -32,7 +32,6 @@
 
 package net.tazpvp.tazpvp.commands;
 
-import lombok.NonNull;
 import net.tazpvp.tazpvp.npc.npcs.Lorenzo;
 import net.tazpvp.tazpvp.npc.npcs.Maxim;
 import org.bukkit.command.CommandSender;
@@ -44,6 +43,7 @@ public class NpcCommandFunction extends CommandCore implements CommandFunction {
 
     public NpcCommandFunction() {
         super("npc", "npc", "npc");
+        setDefaultFunction(this);
     }
 
     @Override
