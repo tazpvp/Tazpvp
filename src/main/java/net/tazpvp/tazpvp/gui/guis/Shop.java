@@ -33,7 +33,6 @@
 package net.tazpvp.tazpvp.gui.guis;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.gui.GuiUtils;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import org.bukkit.Material;
@@ -48,6 +47,8 @@ import java.util.List;
 import java.util.Random;
 
 public class Shop extends GUI {
+
+    public static int slotNum = 10;
 
     public Shop(Player p) {
 
@@ -85,22 +86,22 @@ public class Shop extends GUI {
         setButton("Steak", "Extinguish flames.", Material.COOKED_BEEF, p, 30, 5);
         setButton("Gold Carrots", "Extinguish flames.", Material.GOLDEN_CARROT, p, 30, 5);
         setButton("sex", "Extinguish flames.", Material.STONE, p, 30, 1);
-        setButton("sex", "Extinguish flames.", Material.STONE, p, 30, 1);
+        setButton("sex2", "Extinguish flames.", Material.STONE, p, 30, 1);
         setChangingButton("RGB Blocks", "RGB Placeable Blocks", wool, p, 30, 64);
 
         open(p);
-        GuiUtils.slotNum = 0;
+        slotNum = 0;
     }
 
     private void setButton(String name, String text, Material mat, Player p, int cost, int amount) {
         addButton(Button.create(ItemBuilder.of(mat, amount).name(name).lore(text, "Cost: " + cost).build(), (e) -> {
             checkMoney(p, cost, name, mat, amount);
-        }), GuiUtils.slotNum);
-        GuiUtils.calcSlot();
+        }), slotNum);
+        calcSlot();
     }
 
     private void setChangingButton(String name, String text, List<Material> list, Player p, int cost, int amount) {
-        int slot = GuiUtils.slotNum;
+        int slot = slotNum;
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -115,7 +116,7 @@ public class Shop extends GUI {
                 }
             }
         }.runTaskTimer(Tazpvp.getInstance(), 1, 20);
-        GuiUtils.calcSlot();
+        calcSlot();
     }
 
     private void checkMoney(Player p, int cost, String name, Material mat, int amount) {
@@ -126,5 +127,12 @@ public class Shop extends GUI {
         } else {
             p.sendMessage("You don't have enough money");
         }
+    }
+
+    public static void calcSlot() {
+        if ((slotNum + 1) % 7 == 0) {
+            slotNum += 2;
+        }
+        slotNum ++;
     }
 }
