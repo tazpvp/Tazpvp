@@ -88,7 +88,7 @@ public abstract class NPC implements Listener {
         V.setCustomName(CC.trans(NAME));
         V.setInvulnerable(true);
         V.setProfession(PROFESSION);
-        V.setVillagerType(TYPE);w
+        V.setVillagerType(TYPE);
         V.setGravity(false);
         PDCUtil.setPDC(V, PDCUtil.getNpcKey(), UUID.randomUUID());
 
