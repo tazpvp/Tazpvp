@@ -37,6 +37,7 @@ import lombok.Getter;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.PDCUtil;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
@@ -90,7 +91,7 @@ public abstract class NPC implements Listener {
         V.setProfession(PROFESSION);
         V.setVillagerType(TYPE);
         V.setGravity(false);
-        PDCUtil.setPDC(V, PDCUtil.getNpcKey(), UUID.randomUUID());
+        PDCUtil.setPDC(V, PDCUtil.getNpcKey(), this.ID.toString());
 
         Tazpvp.getInstance().getServer().getPluginManager().registerEvents(this, Tazpvp.getInstance());
     }
@@ -111,12 +112,13 @@ public abstract class NPC implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractAtEntityEvent e) {
+        Bukkit.getLogger().info("1");
         if (e.getRightClicked().getType().equals(EntityType.VILLAGER)) {
             Villager v = (Villager) e.getRightClicked();
-            Pair<Boolean, UUID> pair = PDCUtil.hasPDC(v, PDCUtil.getNpcKey());
+            Pair<Boolean, String> pair = PDCUtil.hasPDC(v, PDCUtil.getNpcKey());
 
             if (pair.getValue0()) {
-                if (pair.getValue1().equals(ID)) {
+                if (pair.getValue1().equals(ID.toString())) {
                     e.getPlayer().playSound(e.getPlayer(), SOUND, 1, 1);
                     interact(e, e.getPlayer());
 //                    Tazpvp.getObservers().forEach(observer -> observer.(e.getPlayer(), NAME));
