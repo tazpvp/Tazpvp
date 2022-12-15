@@ -11,7 +11,8 @@ public final class LooseData {
     private static final WeakHashMap<UUID, Integer> chatCount = new WeakHashMap<>();
 
     public static int getKs(UUID uuid) {
-        return ks.get(uuid);
+        if (ks.containsKey(uuid)) return ks.get(uuid);
+        return 0;
     }
 
     public static void addKs(UUID uuid) {
