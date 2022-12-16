@@ -66,10 +66,7 @@
         </repository>
         <repository>
             <id>github</id>
-            <url>https://maven.pkg.github.com/tazpvp/NR-Core</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
+            <url>https://maven.pkg.github.com/tazpvp/NR-Core/</url>
         </repository>
     </repositories>
 
@@ -89,7 +86,7 @@
         <dependency>
             <groupId>world.ntdi</groupId>
             <artifactId>nrcore</artifactId>
-            <version>1.0.6</version>
+            <version>1.0.9</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
