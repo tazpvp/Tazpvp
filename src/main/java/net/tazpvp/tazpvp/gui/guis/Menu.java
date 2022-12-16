@@ -44,16 +44,16 @@ public class Menu extends GUI {
     public Menu(Player p) {
         super("Menu", 3);
 
-        setButton("test", "h", Material.STONE, 1, p, 10);
+        addButton(Button.create(ItemBuilder.of(Material.BOOK, 1).name("Achievements").lore("Check your achievements").build(), (e) -> {
+            new Achievements(p);
+        }), 11);
+
+        addButton(Button.create(ItemBuilder.of(Material.LECTERN, 1).name("Talents").lore("Check your talents").build(), (e) -> {
+            new Talents(p);
+        }), 13);
 
         fill(0, 4*9-1, ItemBuilder.of(Material.BLACK_STAINED_GLASS, 1).name(" ").build());
 
         open(p);
-    }
-
-    private void setButton(String name, String lore, Material mat, int amount, Player p, int slot) {
-        addButton(Button.create(ItemBuilder.of(mat, amount).name(name).lore(lore).build(), (e) -> {
-            p.getInventory().addItem(new ItemStack(mat, amount));
-        }), slot);
     }
 }

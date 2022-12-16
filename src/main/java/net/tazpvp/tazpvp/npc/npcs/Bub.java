@@ -33,6 +33,8 @@
 package net.tazpvp.tazpvp.npc.npcs;
 
 import net.tazpvp.tazpvp.npc.NPC;
+import net.tazpvp.tazpvp.utils.enums.CC;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -44,17 +46,9 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 
 public class Bub extends NPC {
-    /**
-     * Generate a villager NPC
-     *
-     * @param NAME       Name of the villager
-     * @param SPAWN      Spawn of the villager
-     * @param PROFESSION Profession of the villager, see {@code Villager.Profession}
-     * @param TYPE       Type of the villager, see {@code Villager.Type}
-     * @param SOUND
-     */
-    public Bub(@Nonnull String NAME, @Nonnull Location SPAWN, @Nonnull Villager.Profession PROFESSION, @Nonnull Villager.Type TYPE, @Nonnull Sound SOUND) {
-        super(NAME, SPAWN, PROFESSION, TYPE, SOUND);
+
+    public Bub() {
+        super(CC.GOLD + "Bub", new Location(Bukkit.getWorld("world"), 2, 60, 2), Villager.Profession.ARMORER, Villager.Type.JUNGLE, Sound.ITEM_GOAT_HORN_SOUND_0);
     }
 
     @Override
