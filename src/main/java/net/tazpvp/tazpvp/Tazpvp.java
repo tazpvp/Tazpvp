@@ -39,6 +39,7 @@ import net.tazpvp.tazpvp.commands.*;
 import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.listeners.*;
 import net.tazpvp.tazpvp.npc.NPC;
+import net.tazpvp.tazpvp.npc.npcs.Bub;
 import net.tazpvp.tazpvp.npc.npcs.Lorenzo;
 import net.tazpvp.tazpvp.npc.npcs.Maxim;
 import net.tazpvp.tazpvp.talents.talent.Moist;
@@ -137,6 +138,7 @@ public final class Tazpvp extends JavaPlugin {
     private void spawnNpcs() {
         npcs.add(new Maxim());
         npcs.add(new Lorenzo());
+        npcs.add(new Bub());
     }
 
     private void despawnNpcs() {
