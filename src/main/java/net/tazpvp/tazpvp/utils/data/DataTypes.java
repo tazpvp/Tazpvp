@@ -14,8 +14,9 @@ public enum DataTypes {
     DUELWINS("duel_wins", 10, true),
     DIVISION("division", 11, true),
     PLAYTIMEUNIX("playtime", 12, true),
-    TALENTS("talents", 13, false),
-    ACHIEVEMENTS("achievements", 14, false);
+    GUILD_ID("guild_id", 13, false),
+    TALENTS("talents", 14, false),
+    ACHIEVEMENTS("achievements", 15, false);
 
     private final String columnName;
     private final int columnIndex;
