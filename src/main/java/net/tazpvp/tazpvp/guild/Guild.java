@@ -6,11 +6,12 @@ import net.tazpvp.tazpvp.utils.data.PersistentData;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Guild {
+public class Guild implements Serializable {
     @Getter
     private final UUID ID;
     @Getter
