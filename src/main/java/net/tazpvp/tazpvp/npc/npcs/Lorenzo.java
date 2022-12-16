@@ -32,6 +32,7 @@
 
 package net.tazpvp.tazpvp.npc.npcs;
 
+import net.tazpvp.tazpvp.gui.guis.Menu;
 import net.tazpvp.tazpvp.npc.NPC;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Bukkit;
@@ -46,11 +47,11 @@ import javax.annotation.Nonnull;
 public class Lorenzo extends NPC {
 
     public Lorenzo() {
-        super(CC.GOLD + "Maxim", new Location(Bukkit.getWorld("world"), 2, 60, 2), Villager.Profession.ARMORER, Villager.Type.JUNGLE, Sound.ITEM_GOAT_HORN_SOUND_0);
+        super(CC.GOLD + "Lorenzo", new Location(Bukkit.getWorld("world"), 2, 60, 2), Villager.Profession.ARMORER, Villager.Type.JUNGLE, Sound.ITEM_GOAT_HORN_SOUND_0);
     }
 
     @Override
     public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
-
+        new Menu(p);
     }
 }
