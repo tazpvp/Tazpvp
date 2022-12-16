@@ -27,7 +27,7 @@ public final class PersistentData {
     private static final String ID_COLUMN = "ID";
 
 
-    public void topKs(UUID uuid) {
+    public static void topKs(UUID uuid) {
         if (getInt(uuid, DataTypes.TOPKILLSTREAK) < LooseData.getKs(uuid)) {
             set(uuid, DataTypes.TOPKILLSTREAK, LooseData.getKs(uuid));
         }
@@ -47,7 +47,7 @@ public final class PersistentData {
      */
     public static void initPlayer(UUID uuid) {
         if (!SQLHelper.ifRowExists(NAME, ID_COLUMN, uuid.toString())) {
-            SQLHelper.initializeValues(NAME, "ID, COINS, XP, LEVEL, KILLS, DEATHS, TOP_KS, PRESTIGE, REBIRTH, DUEL_WINS, DIVISION, PLAYTIME, TALENTS, ACHIEVEMENTS", "'" + uuid + "'", "0", "0", "0", "0", "0", "0", "0", "0", "0", "1", "0", "'set'", "'set'");
+            SQLHelper.initializeValues(NAME, "ID, COINS, XP, LEVEL, KILLS, DEATHS, TOP_KS, PRESTIGE, REBIRTH, DUEL_WINS, DIVISION, PLAYTIME, GUILD_ID, TALENTS, ACHIEVEMENTS", "'" + uuid + "'", "0", "0", "0", "0", "0", "0", "0", "0", "0", "1", "0", "'a'", "'set'", "'set'");
             setTalents(uuid, new Talents());
             setAchievements(uuid, new Achievements());
         }
@@ -113,7 +113,7 @@ public final class PersistentData {
         return (Achievements) getSerializeObject(uuid, DataTypes.ACHIEVEMENTS);
     }
 
-    private static Object getSerializeObject(@Nonnull final UUID uuid, @Nonnull final DataTypes dataTypes) {
+    public static Object getSerializeObject(@Nonnull final UUID uuid, @Nonnull final DataTypes dataTypes) {
         if (getString(uuid, dataTypes.getColumnIndex()).equals("set")) {
             if (dataTypes.equals(DataTypes.TALENTS)) {
                 return new Talents();
@@ -302,7 +302,7 @@ public final class PersistentData {
      * @param columnName the column name
      * @param value the new value
      */
-    private static void setValueS(@Nonnull final UUID ID, final String columnName, final String value) {
+    public static void setValueS(@Nonnull final UUID ID, final String columnName, final String value) {
         SQLHelper.updateValue(NAME, ID_COLUMN, "'" + ID.toString() + "'", columnName, "'" + value + "'");
     }
 

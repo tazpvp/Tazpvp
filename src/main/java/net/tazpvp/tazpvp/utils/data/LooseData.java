@@ -33,6 +33,7 @@ public final class LooseData {
     }
 
     public static void resetKs(UUID uuid) {
+        PersistentData.topKs(uuid);
         ks.put(uuid, 0);
     }
 
