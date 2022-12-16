@@ -42,6 +42,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import world.ntdi.nrcore.utils.ConfigUtils;
 
 public class Join implements Listener {
 
@@ -56,5 +57,7 @@ public class Join implements Listener {
 
         ScoreboardFunctions.initScoreboard(p);
         LooseData.resetKs(p.getUniqueId());
+
+        p.teleport(ConfigUtils.spawn);
     }
 }
