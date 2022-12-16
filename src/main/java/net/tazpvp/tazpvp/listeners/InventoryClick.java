@@ -2,7 +2,7 @@ package net.tazpvp.tazpvp.listeners;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -31,7 +31,7 @@ public class InventoryClick implements Listener {
                             EnchantmentStorageMeta meta = (EnchantmentStorageMeta) enchant.getItemMeta();
                             meta.getStoredEnchants().forEach(applyTo::addUnsafeEnchantment);
                         }
-                        Player p = (Player) e.getWhoClicked();
+                        HumanEntity p = e.getWhoClicked();
                         p.setItemOnCursor(new ItemStack(Material.AIR));
 
                     }
