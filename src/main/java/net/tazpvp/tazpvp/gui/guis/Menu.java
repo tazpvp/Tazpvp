@@ -46,6 +46,8 @@ public class Menu extends GUI {
 
         setButton("test", "h", Material.STONE, 1, p, 10);
 
+        fill(0, 4*9-1, ItemBuilder.of(Material.BLACK_STAINED_GLASS, 1).name(" ").build());
+
         open(p);
     }
 

@@ -30,26 +30,38 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.utils.functions;
+package net.tazpvp.tazpvp.gui.guis;
 
 import net.tazpvp.tazpvp.utils.data.PersistentData;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import world.ntdi.nrcore.utils.gui.Button;
+import world.ntdi.nrcore.utils.gui.GUI;
+import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
-public class PlayerFunctions {
+public class Talents extends GUI {
 
-    /**
-     * Returns the maximum health of the player based on rebirth level.
-     * @param p The player in question.
-     * @return The maximum health.
-     */
+    public Talents(Player p) {
+        super("Talents", 4);
 
-    public static Integer getMaxHealth(Player p) {
-        if (PersistentData.getInt(p, DataTypes.REBIRTH) >= 1)
-            return 22;
-        else
-            return 20;
+        net.tazpvp.tazpvp.talents.Talents TALENT = PersistentData.getTalents(p.getUniqueId());
+
+        fill(0, 4*9-1, ItemBuilder.of(Material.BLACK_STAINED_GLASS, 1).name(" ").build());
+
+        open(p);
     }
+
+    private void setButton(Player p, int slot, int cost, String name, String lore, boolean completed) {
+
+        String complete = completed ? "Active" : "Inactive";
+        Material mat = completed ? Material.ENCHANTED_BOOK : Material.WRITTEN_BOOK;
+
+        addButton(Button.create(ItemBuilder.of(mat, 1).name(name).lore(lore, " ", "Cost: " + cost, " ", complete).build(), (e) -> {
+            p.getInventory().addItem(new ItemStack(mat, 1));
+        }), slot);
+    }
+
+
 }
