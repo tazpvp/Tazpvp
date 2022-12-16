@@ -30,26 +30,46 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.utils.functions;
+package net.tazpvp.tazpvp.gui.guis;
 
 import net.tazpvp.tazpvp.utils.data.PersistentData;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import world.ntdi.nrcore.utils.gui.Button;
+import world.ntdi.nrcore.utils.gui.GUI;
+import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
-public class PlayerFunctions {
+public class Achievements extends GUI {
 
-    /**
-     * Returns the maximum health of the player based on rebirth level.
-     * @param p The player in question.
-     * @return The maximum health.
-     */
+    public Achievements(Player p) {
+        super("Achievements", 4);
 
-    public static Integer getMaxHealth(Player p) {
-        if (PersistentData.getInt(p, DataTypes.REBIRTH) >= 1)
-            return 22;
-        else
-            return 20;
+        net.tazpvp.tazpvp.achievements.Achievements ACH = PersistentData.getAchievements(p.getUniqueId());
+
+        setButton(p,  10, "Adept", "kys", ACH.isAdept());
+        setButton(p,  11, "Bowling", "kys", ACH.isBowling());
+        setButton(p,  12, "Charm", "kys", ACH.isCharm());
+        setButton(p,  13, "Craftsman", "kys", ACH.isCraftsman());
+        setButton(p,  14, "Gamble", "kys", ACH.isGamble());
+        setButton(p,  15, "Gladiator", "kys", ACH.isGladiator());
+        setButton(p,  16, "Legend", "kys", ACH.isLegend());
+
+        setButton(p,  19, "Merchant", "kys", ACH.isMerchant());
+        setButton(p,  20, "Superior", "kys", ACH.isSuperior());
+
+        fill(0, 4*9-1, ItemBuilder.of(Material.BLACK_STAINED_GLASS, 1).name(" ").build());
+
+        open(p);
+    }
+
+    private void setButton(Player p, int slot, String name, String lore, boolean completed) {
+
+        String complete = completed ? "Complete" : "Incomplete";
+        Material mat = completed ? Material.ENCHANTED_BOOK : Material.WRITTEN_BOOK;
+
+        addButton(Button.create(ItemBuilder.of(mat, 1).name(name).lore(lore, complete).build(), (e) -> {
+            p.getInventory().addItem(new ItemStack(mat, 1));
+        }), slot);
     }
 }

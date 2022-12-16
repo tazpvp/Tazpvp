@@ -30,26 +30,44 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.utils.functions;
+package net.tazpvp.tazpvp.npc.npcs;
 
-import net.tazpvp.tazpvp.utils.data.PersistentData;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
+import net.tazpvp.tazpvp.npc.NPC;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class PlayerFunctions {
+import javax.annotation.Nonnull;
 
+public class Bub extends NPC {
     /**
-     * Returns the maximum health of the player based on rebirth level.
-     * @param p The player in question.
-     * @return The maximum health.
+     * Generate a villager NPC
+     *
+     * @param NAME       Name of the villager
+     * @param SPAWN      Spawn of the villager
+     * @param PROFESSION Profession of the villager, see {@code Villager.Profession}
+     * @param TYPE       Type of the villager, see {@code Villager.Type}
+     * @param SOUND
      */
+    public Bub(@Nonnull String NAME, @Nonnull Location SPAWN, @Nonnull Villager.Profession PROFESSION, @Nonnull Villager.Type TYPE, @Nonnull Sound SOUND) {
+        super(NAME, SPAWN, PROFESSION, TYPE, SOUND);
+    }
 
-    public static Integer getMaxHealth(Player p) {
-        if (PersistentData.getInt(p, DataTypes.REBIRTH) >= 1)
-            return 22;
-        else
-            return 20;
+    @Override
+    public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
+        sellHead(p);
+    }
+
+    public static void sellHead(Player p) {
+        ItemStack item = p.getInventory().getItemInMainHand();
+        if (item.equals(Material.PLAYER_HEAD)) {
+            int num = item.getAmount();
+            item.setType(Material.AIR);
+            p.getInventory().addItem(new ItemStack(Material.AMETHYST_SHARD, num));
+        }
     }
 }
