@@ -32,14 +32,14 @@ public class Guild {
     @Getter
     private int kills, deaths;
 
-    public Guild(String name, UUID guild_leader, int kills, int deaths) {
+    public Guild(String name, UUID guild_leader) {
         this.ID = UUID.randomUUID();
         this.name = name;
         this.guild_leader = guild_leader;
         this.guild_generals = new ArrayList<>();
         this.guild_members = new ArrayList<>();
-        this.kills = kills;
-        this.deaths = deaths;
+        this.kills = 0;
+        this.deaths = 0;
 
         setPlayersGuild(getGuild_leader());
     }
