@@ -2,6 +2,7 @@ package net.tazpvp.tazpvp.listeners;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -30,13 +31,13 @@ public class InventoryClick implements Listener {
                             EnchantmentStorageMeta meta = (EnchantmentStorageMeta) enchant.getItemMeta();
                             meta.getStoredEnchants().forEach(applyTo::addUnsafeEnchantment);
                         }
-                        enchant.setType(Material.AIR);
+                        Player p = (Player) e.getWhoClicked();
+                        p.setItemOnCursor(new ItemStack(Material.AIR));
 
                     }
                 }
             }
         }
-
     }
 
     private boolean ableToApplyEnchantTo(ItemStack i) {
@@ -51,6 +52,6 @@ public class InventoryClick implements Listener {
 
         if (name.endsWith("PICKAXE")) return true;
 
-         return false;
+        return false;
     }
 }
