@@ -33,6 +33,7 @@
 package net.tazpvp.tazpvp.gui.guis;
 
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -48,6 +49,22 @@ public class Talents extends GUI {
 
         net.tazpvp.tazpvp.talents.Talents TALENT = PersistentData.getTalents(p.getUniqueId());
 
+        setButton(p, 10, 10, "Revenge", "Set the player who killed you on fire.", TALENT.isRevenge());
+        setButton(p, 10, 10, "Moist", "You can no longer be set on fire.", TALENT.isRevenge());
+        setButton(p, 10, 10, "Resilient", "Gain 2 absorption hearts on kill.", TALENT.isRevenge());
+        setButton(p, 10, 10, "Excavator", "Mining gives you experience.", TALENT.isRevenge());
+        setButton(p, 10, 10, "Architect", "A chance to reclaim the block you placed.", TALENT.isRevenge());
+        setButton(p, 10, 10, "Hunter", "A chance to reclaim the arrow you shot.", TALENT.isRevenge());
+        setButton(p, 10, 10, "Cannibal", "Replenish your hunger on kill.", TALENT.isRevenge());
+
+        setButton(p, 10, 10, "Agile", "Gain a speed boost on kill.", TALENT.isRevenge());
+        setButton(p, 10, 10, "Harvester", "Better chance that players drop heads.", TALENT.isRevenge());
+        setButton(p, 10, 10, "Necromancer", "Gain more from player coffins.", TALENT.isRevenge());
+        setButton(p, 10, 10, "Blessed", "A chance of getting a gold apple from a kill.", TALENT.isRevenge());
+        setButton(p, 10, 10, "Glider", "The launch pad pushes you further.", TALENT.isRevenge());
+        setButton(p, 10, 10, "Proficient", "Gain experience from duels.", TALENT.isRevenge());
+        setButton(p, 10, 10, "Medic", "Heal nearby guild mates on kill.", TALENT.isRevenge());
+
         fill(0, 4*9-1, ItemBuilder.of(Material.BLACK_STAINED_GLASS, 1).name(" ").build());
 
         open(p);
@@ -55,10 +72,10 @@ public class Talents extends GUI {
 
     private void setButton(Player p, int slot, int cost, String name, String lore, boolean completed) {
 
-        String complete = completed ? "Active" : "Inactive";
+        String complete = completed ? CC.GREEN + "Active" : CC.RED + "Inactive";
         Material mat = completed ? Material.ENCHANTED_BOOK : Material.WRITTEN_BOOK;
 
-        addButton(Button.create(ItemBuilder.of(mat, 1).name(name).lore(lore, " ", "Cost: " + cost, " ", complete).build(), (e) -> {
+        addButton(Button.create(ItemBuilder.of(mat, 1).name(CC.AQUA + name).lore(CC.GRAY + lore, " ",CC.DARK_AQUA + "Cost: " + cost, " ", complete).build(), (e) -> {
             p.getInventory().addItem(new ItemStack(mat, 1));
         }), slot);
     }

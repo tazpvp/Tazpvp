@@ -33,6 +33,7 @@
 package net.tazpvp.tazpvp.gui.guis;
 
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -65,10 +66,10 @@ public class Achievements extends GUI {
 
     private void setButton(Player p, int slot, String name, String lore, boolean completed) {
 
-        String complete = completed ? "Complete" : "Incomplete";
+        String complete = completed ? CC.GREEN + "Complete" : CC.RED + "Incomplete";
         Material mat = completed ? Material.ENCHANTED_BOOK : Material.WRITTEN_BOOK;
 
-        addButton(Button.create(ItemBuilder.of(mat, 1).name(name).lore(lore, complete).build(), (e) -> {
+        addButton(Button.create(ItemBuilder.of(mat, 1).name(CC.AQUA + name).lore(CC.GRAY + lore, " ", complete).build(), (e) -> {
             p.getInventory().addItem(new ItemStack(mat, 1));
         }), slot);
     }

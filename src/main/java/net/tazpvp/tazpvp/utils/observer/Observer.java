@@ -55,4 +55,6 @@ public interface Observer {
     void enchant(Player p); // TODO: Add event to implement to
 
     void chat(Player p, String chat);
+
+    void burn(Player p);
 }

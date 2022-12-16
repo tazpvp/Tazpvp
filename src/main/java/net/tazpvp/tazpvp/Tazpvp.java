@@ -40,13 +40,11 @@ import net.tazpvp.tazpvp.commands.EventCommandFunction;
 import net.tazpvp.tazpvp.commands.NpcCommandFunction;
 import net.tazpvp.tazpvp.commands.StatCommandFunction;
 import net.tazpvp.tazpvp.duels.Duel;
-import net.tazpvp.tazpvp.listeners.Damage;
-import net.tazpvp.tazpvp.listeners.InventoryClick;
-import net.tazpvp.tazpvp.listeners.Join;
-import net.tazpvp.tazpvp.listeners.Leave;
+import net.tazpvp.tazpvp.listeners.*;
 import net.tazpvp.tazpvp.npc.NPC;
 import net.tazpvp.tazpvp.npc.npcs.Lorenzo;
 import net.tazpvp.tazpvp.npc.npcs.Maxim;
+import net.tazpvp.tazpvp.talents.talent.Moist;
 import net.tazpvp.tazpvp.talents.talent.Revenge;
 import net.tazpvp.tazpvp.utils.functions.CombatFunctions;
 import net.tazpvp.tazpvp.utils.objects.AssistKill;
@@ -76,18 +74,13 @@ public final class Tazpvp extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        getServer().getPluginManager().registerEvents(new Damage(), this);
-        getServer().getPluginManager().registerEvents(new Join(), this);
-        getServer().getPluginManager().registerEvents(new Leave(), this);
-        getServer().getPluginManager().registerEvents(new InventoryClick(), this);
-        new EventCommandFunction();
-        new DuelCommandFunction();
-        new NpcCommandFunction();
-        new StatCommandFunction();
+
+        registerEvents();
+        registerCommands();
 
         events.add("FFA");
 
-        registerTalents();
+        registerObservable();
 
         spawnNpcs();
 
@@ -113,8 +106,7 @@ public final class Tazpvp extends JavaPlugin {
         return (Tazpvp) Bukkit.getPluginManager().getPlugin("Tazpvp");
     }
 
-    public void registerTalents() {
-        new Revenge();
+    public void registerObservable() {
         new Adept();
         new Bowling();
         new Charm();
@@ -124,6 +116,24 @@ public final class Tazpvp extends JavaPlugin {
         new Legend();
         new Merchant();
         new Superior();
+
+        new Revenge();
+        new Moist();
+    }
+
+    public void registerCommands() {
+        new EventCommandFunction();
+        new DuelCommandFunction();
+        new NpcCommandFunction();
+        new StatCommandFunction();
+    }
+
+    public void registerEvents() {
+        getServer().getPluginManager().registerEvents(new Damage(), this);
+        getServer().getPluginManager().registerEvents(new Join(), this);
+        getServer().getPluginManager().registerEvents(new Leave(), this);
+        getServer().getPluginManager().registerEvents(new InventoryClick(), this);
+        getServer().getPluginManager().registerEvents(new Mine(), this);
     }
 
     private void spawnNpcs() {

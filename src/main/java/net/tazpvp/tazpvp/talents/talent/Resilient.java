@@ -30,72 +30,15 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.utils.observer;
+package net.tazpvp.tazpvp.talents.talent;
 
-import net.tazpvp.tazpvp.Tazpvp;
-import org.bukkit.Material;
+import net.tazpvp.tazpvp.utils.observer.Observable;
 import org.bukkit.entity.Player;
 
-public class Observable implements Observer {
-    /**
-     * Register the observer to the list
-     */
-    public Observable() {
-        Tazpvp.registerObserver(this);
-    }
+public class Resilient extends Observable {
 
     @Override
     public void death(Player victim, Player killer) {
-
-    }
-
-    @Override
-    public void mine(Player p, Material material) {
-
-    }
-
-    @Override
-    public void launch(Player p) {
-
-    }
-
-    @Override
-    public void talent(Player p) {
-
-    }
-
-    @Override
-    public void gui(Player p, String name) {
-
-    }
-
-    @Override
-    public void rebirth(Player p) {
-
-    }
-
-    @Override
-    public void duel(Player p) {
-
-    }
-
-    @Override
-    public void event(Player p) {
-
-    }
-
-    @Override
-    public void enchant(Player p) {
-
-    }
-
-    @Override
-    public void chat(Player p, String chat) {
-
-    }
-
-    @Override
-    public void burn(Player p) {
-
+        killer.setAbsorptionAmount(4);
     }
 }
