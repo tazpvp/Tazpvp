@@ -56,6 +56,7 @@ import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.holograms.Hologram;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
+import world.ntdi.nrcore.utils.item.builders.SkullBuilder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -188,10 +189,8 @@ public class Death {
      * @return the ItemStack with the Player's skull
      */
     private ItemStack makeSkull(@Nonnull final Player p) {
-        ItemStack stack = new ItemStack(Material.SKELETON_SKULL);
-        SkullMeta meta = (SkullMeta) stack.getItemMeta();
-        meta.setOwningPlayer(p);
-        stack.setItemMeta(meta);
+        ItemStack stack = SkullBuilder.of(1, p.getName()).setHeadTexture(p).build();
+        p.sendMessage("kys");
         return stack;
     }
 

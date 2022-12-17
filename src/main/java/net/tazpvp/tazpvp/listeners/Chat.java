@@ -57,6 +57,5 @@ public class Chat implements Listener {
         }
 
         Tazpvp.getObservers().forEach(observer -> observer.chat(p, e.getMessage()));
-
     }
 }
