@@ -48,7 +48,7 @@ import javax.annotation.Nonnull;
 public class Bub extends NPC {
 
     public Bub() {
-        super(CC.GOLD + "Bub", new Location(Bukkit.getWorld("arena"), 2, 60, 2), Villager.Profession.ARMORER, Villager.Type.JUNGLE, Sound.ITEM_GOAT_HORN_SOUND_0);
+        super(CC.GOLD + "Bub", new Location(Bukkit.getWorld("arena"), -6.5, 100, -4.5), Villager.Profession.ARMORER, Villager.Type.JUNGLE, Sound.ITEM_GOAT_HORN_SOUND_0);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class Bub extends NPC {
 
     public static void sellHead(Player p) {
         ItemStack item = p.getInventory().getItemInMainHand();
-        if (item.equals(Material.PLAYER_HEAD)) {
+        if (item.getType().equals(Material.PLAYER_HEAD)) {
             int num = item.getAmount();
             item.setType(Material.AIR);
             p.getInventory().addItem(new ItemStack(Material.AMETHYST_SHARD, num));
