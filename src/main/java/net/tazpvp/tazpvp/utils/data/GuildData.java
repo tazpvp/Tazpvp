@@ -23,7 +23,7 @@ public class GuildData {
     private static final String ID_COLUMN = "ID";
 
     public static Guild getGuild(@Nonnull final UUID uuid) {
-        ByteArrayInputStream stream = new ByteArrayInputStream(Base64.getDecoder().decode(SQLHelper.getString(NAME, ID_COLUMN, "'" + uuid.toString() + "'", 2)));
+        ByteArrayInputStream stream = new ByteArrayInputStream(Base64.getDecoder().decode(SQLHelper.getString(NAME, ID_COLUMN, "'" + uuid + "'", 2)));
         BukkitObjectInputStream data = null;
         try {
             data = new BukkitObjectInputStream(stream);
@@ -42,9 +42,13 @@ public class GuildData {
             data = new BukkitObjectOutputStream(str);
             data.writeObject(guild);
             data.close();
-            SQLHelper.updateValue(NAME, ID_COLUMN, "'" + uuid + "'", "guild", "'" + Base64.getEncoder().encodeToString(str.toByteArray()) + "'");
+            setValueS(uuid, Base64.getEncoder().encodeToString(str.toByteArray()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static void setValueS(@Nonnull final UUID ID, final String value) {
+        SQLHelper.updateValue(NAME, ID_COLUMN, "'" + ID.toString() + "'", "guild", "'" + value + "'");
     }
 }
