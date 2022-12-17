@@ -47,7 +47,7 @@ import javax.annotation.Nonnull;
 public class Maxim extends NPC {
 
     public Maxim() {
-        super(CC.GOLD + "Maxim", new Location(Bukkit.getWorld("world"), 0, 60, 0), Villager.Profession.ARMORER, Villager.Type.JUNGLE, Sound.ITEM_GOAT_HORN_SOUND_0);
+        super(CC.GOLD + "Maxim", new Location(Bukkit.getWorld("arena"), 0, 60, 0), Villager.Profession.ARMORER, Villager.Type.JUNGLE, Sound.ITEM_GOAT_HORN_SOUND_0);
     }
 
     @Override
