@@ -49,6 +49,7 @@ import java.util.Random;
 public class Shop extends GUI {
 
     private int slotNum;
+    private int num;
 
     public Shop(Player p) {
 
@@ -75,8 +76,9 @@ public class Shop extends GUI {
         );
 
         slotNum = 10;
+        num = 0;
 
-        fill(1, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS, 1).name(" ").build());
+        fill(0, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
         setButton("Azure Vapor", "Extinguish flames.", Material.BLUE_ORCHID, p, 30, 1);
         setButton("Sticky Web", "Slow down your enemies.", Material.COBWEB, p, 30, 5);
@@ -133,9 +135,11 @@ public class Shop extends GUI {
     }
 
     public void calcSlot() {
-        if ((slotNum - 9) % 7 == 0) {
+        if ((num + 1) % 7 == 0) {
             slotNum += 2;
+            num = 0;
         }
         slotNum ++;
+        num ++;
     }
 }

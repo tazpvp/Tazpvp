@@ -44,7 +44,7 @@ public class Menu extends GUI {
     public Menu(Player p) {
         super("Menu", 3);
 
-        fill(1, 3*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS, 1).name(" ").build());
+        fill(0, 3*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
         addButton(Button.create(ItemBuilder.of(Material.BOOK, 1).name("Achievements").lore("Check your achievements").build(), (e) -> {
             new Achievements(p);

@@ -49,23 +49,23 @@ public class Talents extends GUI {
 
         net.tazpvp.tazpvp.talents.Talents TALENT = PersistentData.getTalents(p.getUniqueId());
 
-        fill(1, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS, 1).name(" ").build());
+        fill(0, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
         setButton(p, 10, 10, "Revenge", "Set the player who killed you on fire.", TALENT.isRevenge());
-        setButton(p, 10, 10, "Moist", "You can no longer be set on fire.", TALENT.isRevenge());
-        setButton(p, 10, 10, "Resilient", "Gain 2 absorption hearts on kill.", TALENT.isRevenge());
-        setButton(p, 10, 10, "Excavator", "Mining gives you experience.", TALENT.isRevenge());
-        setButton(p, 10, 10, "Architect", "A chance to reclaim the block you placed.", TALENT.isRevenge());
-        setButton(p, 10, 10, "Hunter", "A chance to reclaim the arrow you shot.", TALENT.isRevenge());
-        setButton(p, 10, 10, "Cannibal", "Replenish your hunger on kill.", TALENT.isRevenge());
+        setButton(p, 11, 10, "Moist", "You can no longer be set on fire.", TALENT.isRevenge());
+        setButton(p, 12, 10, "Resilient", "Gain 2 absorption hearts on kill.", TALENT.isRevenge());
+        setButton(p, 13, 10, "Excavator", "Mining gives you experience.", TALENT.isRevenge());
+        setButton(p, 14, 10, "Architect", "A chance to reclaim the block you placed.", TALENT.isRevenge());
+        setButton(p, 15, 10, "Hunter", "A chance to reclaim the arrow you shot.", TALENT.isRevenge());
+        setButton(p, 16, 10, "Cannibal", "Replenish your hunger on kill.", TALENT.isRevenge());
 
-        setButton(p, 10, 10, "Agile", "Gain a speed boost on kill.", TALENT.isRevenge());
-        setButton(p, 10, 10, "Harvester", "Better chance that players drop heads.", TALENT.isRevenge());
-        setButton(p, 10, 10, "Necromancer", "Gain more from player coffins.", TALENT.isRevenge());
-        setButton(p, 10, 10, "Blessed", "A chance of getting a gold apple from a kill.", TALENT.isRevenge());
-        setButton(p, 10, 10, "Glider", "The launch pad pushes you further.", TALENT.isRevenge());
-        setButton(p, 10, 10, "Proficient", "Gain experience from duels.", TALENT.isRevenge());
-        setButton(p, 10, 10, "Medic", "Heal nearby guild mates on kill.", TALENT.isRevenge());
+        setButton(p, 19, 10, "Agile", "Gain a speed boost on kill.", TALENT.isRevenge());
+        setButton(p, 20, 10, "Harvester", "Better chance that players drop heads.", TALENT.isRevenge());
+        setButton(p, 21, 10, "Necromancer", "Gain more from player coffins.", TALENT.isRevenge());
+        setButton(p, 22, 10, "Blessed", "A chance of getting a gold apple from a kill.", TALENT.isRevenge());
+        setButton(p, 23, 10, "Glider", "The launch pad pushes you further.", TALENT.isRevenge());
+        setButton(p, 24, 10, "Proficient", "Gain experience from duels.", TALENT.isRevenge());
+        setButton(p, 25, 10, "Medic", "Heal nearby guild mates on kill.", TALENT.isRevenge());
 
         open(p);
     }

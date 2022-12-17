@@ -48,7 +48,7 @@ public class Achievements extends GUI {
 
         net.tazpvp.tazpvp.achievements.Achievements ACH = PersistentData.getAchievements(p.getUniqueId());
 
-        fill(1, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS, 1).name(" ").build());
+        fill(0, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
         setButton(p,  10, "Adept", "kys", ACH.isAdept());
         setButton(p,  11, "Bowling", "kys", ACH.isBowling());
