@@ -42,7 +42,7 @@ public class GuildData {
             data = new BukkitObjectOutputStream(str);
             data.writeObject(guild);
             data.close();
-            SQLHelper.updateValue(NAME, ID_COLUMN, "'" + uuid.toString() + "'", "guild", "'" + Base64.getEncoder().encodeToString(str.toByteArray()) + "'");
+            SQLHelper.updateValue(NAME, ID_COLUMN, "'" + uuid + "'", "guild", "'" + Base64.getEncoder().encodeToString(str.toByteArray()) + "'");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

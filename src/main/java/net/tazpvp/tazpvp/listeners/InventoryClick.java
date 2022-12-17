@@ -15,6 +15,7 @@ public class InventoryClick implements Listener {
     public void onInventoryClick(InventoryClickEvent e) {
         ItemStack applyTo = e.getCurrentItem();
         ItemStack enchant = e.getCursor();
+        if (applyTo == null || enchant == null) return;
 
         if (e.getInventory().getType() == InventoryType.CRAFTING) {
             if (!applyTo.getType().equals(Material.AIR) && !enchant.getType().equals(Material.AIR)) {
