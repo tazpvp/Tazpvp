@@ -36,6 +36,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.PlaytimeUtil;
 import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.functions.ScoreboardFunctions;
 import net.tazpvp.tazpvp.utils.objects.AssistKill;
 import org.bukkit.entity.Player;
@@ -57,6 +58,8 @@ public class Join implements Listener {
 
         ScoreboardFunctions.initScoreboard(p);
         LooseData.resetKs(p.getUniqueId());
+
+        PlayerFunctions.setMaxHealth(p);
 
         p.teleport(ConfigUtils.spawn);
     }

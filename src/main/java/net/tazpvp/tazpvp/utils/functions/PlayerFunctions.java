@@ -59,6 +59,13 @@ public class PlayerFunctions {
             return 20;
     }
 
+    public static void setMaxHealth(Player p) {
+        if (PersistentData.getInt(p, DataTypes.REBIRTH) >= 1)
+            p.setHealthScale(1.1);
+        else
+            p.setHealthScale(1.0);
+    }
+
     public static void kitPlayer(Player p) {
         Inventory inv = p.getInventory();
 

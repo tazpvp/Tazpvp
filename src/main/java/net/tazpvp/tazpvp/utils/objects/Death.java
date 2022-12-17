@@ -84,6 +84,7 @@ public class Death {
         victim.setHealth(PlayerFunctions.getMaxHealth(victim));
 
         if ((killer.getHealth() + 5) >= PlayerFunctions.getMaxHealth(killer)) {
+            PlayerFunctions.setMaxHealth(killer);
             killer.setHealth(PlayerFunctions.getMaxHealth(killer));
         } else {
             killer.setHealth(killer.getHealth() + 5);
