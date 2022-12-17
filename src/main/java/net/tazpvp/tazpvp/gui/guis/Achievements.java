@@ -48,6 +48,8 @@ public class Achievements extends GUI {
 
         net.tazpvp.tazpvp.achievements.Achievements ACH = PersistentData.getAchievements(p.getUniqueId());
 
+        fill(0, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
+
         setButton(p,  10, "Adept", "kys", ACH.isAdept());
         setButton(p,  11, "Bowling", "kys", ACH.isBowling());
         setButton(p,  12, "Charm", "kys", ACH.isCharm());
@@ -59,18 +61,14 @@ public class Achievements extends GUI {
         setButton(p,  19, "Merchant", "kys", ACH.isMerchant());
         setButton(p,  20, "Superior", "kys", ACH.isSuperior());
 
-        fill(0, 4*9-1, ItemBuilder.of(Material.BLACK_STAINED_GLASS, 1).name(" ").build());
-
         open(p);
     }
 
     private void setButton(Player p, int slot, String name, String lore, boolean completed) {
 
         String complete = completed ? CC.GREEN + "Complete" : CC.RED + "Incomplete";
-        Material mat = completed ? Material.ENCHANTED_BOOK : Material.WRITTEN_BOOK;
+        Material mat = completed ? Material.ENCHANTED_BOOK : Material.WRITABLE_BOOK;
 
-        addButton(Button.create(ItemBuilder.of(mat, 1).name(CC.AQUA + name).lore(CC.GRAY + lore, " ", complete).build(), (e) -> {
-            p.getInventory().addItem(new ItemStack(mat, 1));
-        }), slot);
+        addButton(Button.createBasic(ItemBuilder.of(mat, 1).name(CC.RED + "" + CC.BOLD + name).lore(CC.GRAY + lore, " ", complete).build()), slot);
     }
 }

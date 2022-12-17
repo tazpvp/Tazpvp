@@ -35,7 +35,9 @@ package net.tazpvp.tazpvp.gui.guis;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Material;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import world.ntdi.nrcore.utils.gui.Button;
@@ -44,28 +46,30 @@ import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 public class Talents extends GUI {
 
+    int shardCount;
+
     public Talents(Player p) {
         super("Talents", 4);
 
         net.tazpvp.tazpvp.talents.Talents TALENT = PersistentData.getTalents(p.getUniqueId());
 
-        setButton(p, 10, 10, "Revenge", "Set the player who killed you on fire.", TALENT.isRevenge());
-        setButton(p, 10, 10, "Moist", "You can no longer be set on fire.", TALENT.isRevenge());
-        setButton(p, 10, 10, "Resilient", "Gain 2 absorption hearts on kill.", TALENT.isRevenge());
-        setButton(p, 10, 10, "Excavator", "Mining gives you experience.", TALENT.isRevenge());
-        setButton(p, 10, 10, "Architect", "A chance to reclaim the block you placed.", TALENT.isRevenge());
-        setButton(p, 10, 10, "Hunter", "A chance to reclaim the arrow you shot.", TALENT.isRevenge());
-        setButton(p, 10, 10, "Cannibal", "Replenish your hunger on kill.", TALENT.isRevenge());
+        fill(0, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
-        setButton(p, 10, 10, "Agile", "Gain a speed boost on kill.", TALENT.isRevenge());
-        setButton(p, 10, 10, "Harvester", "Better chance that players drop heads.", TALENT.isRevenge());
-        setButton(p, 10, 10, "Necromancer", "Gain more from player coffins.", TALENT.isRevenge());
-        setButton(p, 10, 10, "Blessed", "A chance of getting a gold apple from a kill.", TALENT.isRevenge());
-        setButton(p, 10, 10, "Glider", "The launch pad pushes you further.", TALENT.isRevenge());
-        setButton(p, 10, 10, "Proficient", "Gain experience from duels.", TALENT.isRevenge());
-        setButton(p, 10, 10, "Medic", "Heal nearby guild mates on kill.", TALENT.isRevenge());
+        setButton(p, 10, 8, "Revenge", "Set the player who killed you on fire.", TALENT.isRevenge());
+        setButton(p, 11, 9, "Moist", "You can no longer be set on fire.", TALENT.isRevenge());
+        setButton(p, 12, 12, "Resilient", "Gain 2 absorption hearts on kill.", TALENT.isRevenge());
+        setButton(p, 13, 8, "Excavator", "Mining gives you experience.", TALENT.isRevenge());
+        setButton(p, 14, 6, "Architect", "A chance to reclaim the block you placed.", TALENT.isRevenge());
+        setButton(p, 15, 8, "Hunter", "A chance to reclaim the arrow you shot.", TALENT.isRevenge());
+        setButton(p, 16, 9, "Cannibal", "Replenish your hunger on kill.", TALENT.isRevenge());
 
-        fill(0, 4*9-1, ItemBuilder.of(Material.BLACK_STAINED_GLASS, 1).name(" ").build());
+        setButton(p, 19, 14, "Agile", "Gain a speed boost on kill.", TALENT.isRevenge());
+        setButton(p, 20, 11, "Harvester", "Better chance that players drop heads.", TALENT.isRevenge());
+        setButton(p, 21, 15, "Necromancer", "Gain more from player coffins.", TALENT.isRevenge());
+        setButton(p, 22, 20, "Blessed", "A chance of getting a gold apple from a kill.", TALENT.isRevenge());
+        setButton(p, 23, 6, "Glider", "The launch pad pushes you further.", TALENT.isRevenge());
+        setButton(p, 24, 9, "Proficient", "Gain experience from duels.", TALENT.isRevenge());
+        setButton(p, 25, 10, "Medic", "Heal nearby guild mates on kill.", TALENT.isRevenge());
 
         open(p);
     }
@@ -73,10 +77,29 @@ public class Talents extends GUI {
     private void setButton(Player p, int slot, int cost, String name, String lore, boolean completed) {
 
         String complete = completed ? CC.GREEN + "Active" : CC.RED + "Inactive";
-        Material mat = completed ? Material.ENCHANTED_BOOK : Material.WRITTEN_BOOK;
+        Material mat = completed ? Material.ENCHANTED_BOOK : Material.WRITABLE_BOOK;
 
-        addButton(Button.create(ItemBuilder.of(mat, 1).name(CC.AQUA + name).lore(CC.GRAY + lore, " ",CC.DARK_AQUA + "Cost: " + cost, " ", complete).build(), (e) -> {
-            p.getInventory().addItem(new ItemStack(mat, 1));
+        addButton(Button.create(ItemBuilder.of(mat, 1).name(CC.AQUA + name).lore(CC.DARK_AQUA + "" + CC.BOLD + lore, " ",CC.GRAY + "Cost: " + cost + " Shards", " ", complete).build(), (e) -> {
+            for (ItemStack i : p.getInventory()) {
+                if (i.getType() == Material.AMETHYST_SHARD) {
+                    shardCount = shardCount + i.getAmount();
+                }
+            }
+            if (shardCount >= cost) {
+                for (int n = 0 ; n < cost ; n++) {
+                    for (ItemStack i : p.getInventory()) {
+                        if (i.getType() == Material.AMETHYST_SHARD) {
+                            if (i.getAmount() >= 2) {
+                                i.setAmount(i.getAmount() - 1);
+                            } else {
+                                p.getInventory().remove(i);
+                            }
+                        }
+                    }
+                }
+            } else {
+                p.sendMessage("You do not have enough shards.");
+            }
         }), slot);
     }
 

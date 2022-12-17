@@ -35,6 +35,7 @@ package net.tazpvp.tazpvp.gui.guis;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -49,6 +50,7 @@ import java.util.Random;
 public class Shop extends GUI {
 
     private int slotNum;
+    private int num;
 
     public Shop(Player p) {
 
@@ -75,6 +77,9 @@ public class Shop extends GUI {
         );
 
         slotNum = 10;
+        num = 1;
+
+        fill(0, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
         setButton("Azure Vapor", "Extinguish flames.", Material.BLUE_ORCHID, p, 30, 1);
         setButton("Sticky Web", "Slow down your enemies.", Material.COBWEB, p, 30, 5);
@@ -91,13 +96,11 @@ public class Shop extends GUI {
         setButton("sex2", "Extinguish flames.", Material.STONE, p, 30, 1);
         setChangingButton("RGB Blocks", "RGB Placeable Blocks", wool, p, 30, 64);
 
-        fill(0, 4*9-1, ItemBuilder.of(Material.BLACK_STAINED_GLASS, 1).name(" ").build());
-
         open(p);
     }
 
     private void setButton(String name, String text, Material mat, Player p, int cost, int amount) {
-        addButton(Button.create(ItemBuilder.of(mat, amount).name(name).lore(text, "Cost: " + cost).build(), (e) -> {
+        addButton(Button.create(ItemBuilder.of(mat, amount).name(CC.YELLOW + "" + CC.BOLD + name).lore(CC.GOLD + text, CC.GRAY + "Cost: $" + cost).build(), (e) -> {
             checkMoney(p, cost, name, mat, amount);
         }), slotNum);
         calcSlot();
@@ -113,7 +116,7 @@ public class Shop extends GUI {
                 } else {
                     clearSlot(25);
                     int num = new Random().nextInt(list.size());
-                    addButton(Button.create(ItemBuilder.of(list.get(num), 1).name(name).lore(text, "Cost: " + cost).build(), (e) -> {
+                    addButton(Button.create(ItemBuilder.of(list.get(num), 1).name(CC.YELLOW + "" + CC.BOLD + name).lore(CC.GOLD + text, " ", CC.GRAY + "Cost: " + cost).build(), (e) -> {
                         checkMoney(p, cost, name, list.get(num), amount);
                     }), slot);
                 }
@@ -133,9 +136,11 @@ public class Shop extends GUI {
     }
 
     public void calcSlot() {
-        if ((slotNum - 9) % 7 == 0) {
+        if (num % 7 == 0) {
             slotNum += 2;
+            num = 0;
         }
         slotNum ++;
+        num ++;
     }
 }
