@@ -49,6 +49,8 @@ public class Talents extends GUI {
 
         net.tazpvp.tazpvp.talents.Talents TALENT = PersistentData.getTalents(p.getUniqueId());
 
+        fill(1, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS, 1).name(" ").build());
+
         setButton(p, 10, 10, "Revenge", "Set the player who killed you on fire.", TALENT.isRevenge());
         setButton(p, 10, 10, "Moist", "You can no longer be set on fire.", TALENT.isRevenge());
         setButton(p, 10, 10, "Resilient", "Gain 2 absorption hearts on kill.", TALENT.isRevenge());
@@ -64,8 +66,6 @@ public class Talents extends GUI {
         setButton(p, 10, 10, "Glider", "The launch pad pushes you further.", TALENT.isRevenge());
         setButton(p, 10, 10, "Proficient", "Gain experience from duels.", TALENT.isRevenge());
         setButton(p, 10, 10, "Medic", "Heal nearby guild mates on kill.", TALENT.isRevenge());
-
-        fill(0, 4*9-1, ItemBuilder.of(Material.BLACK_STAINED_GLASS, 1).name(" ").build());
 
         open(p);
     }

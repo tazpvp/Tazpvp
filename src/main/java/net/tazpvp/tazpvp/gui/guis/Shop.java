@@ -76,6 +76,8 @@ public class Shop extends GUI {
 
         slotNum = 10;
 
+        fill(1, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS, 1).name(" ").build());
+
         setButton("Azure Vapor", "Extinguish flames.", Material.BLUE_ORCHID, p, 30, 1);
         setButton("Sticky Web", "Slow down your enemies.", Material.COBWEB, p, 30, 5);
         setButton("Ink Splash", "Blind your enemies.", Material.INK_SAC, p, 30, 3);
@@ -90,8 +92,6 @@ public class Shop extends GUI {
         setButton("Gold Carrots", "Extinguish flames.", Material.GOLDEN_CARROT, p, 30, 5);
         setButton("sex2", "Extinguish flames.", Material.STONE, p, 30, 1);
         setChangingButton("RGB Blocks", "RGB Placeable Blocks", wool, p, 30, 64);
-
-        fill(0, 4*9-1, ItemBuilder.of(Material.BLACK_STAINED_GLASS, 1).name(" ").build());
 
         open(p);
     }
