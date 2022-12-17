@@ -67,10 +67,8 @@ public class Achievements extends GUI {
     private void setButton(Player p, int slot, String name, String lore, boolean completed) {
 
         String complete = completed ? CC.GREEN + "Complete" : CC.RED + "Incomplete";
-        Material mat = completed ? Material.ENCHANTED_BOOK : Material.WRITTEN_BOOK;
+        Material mat = completed ? Material.ENCHANTED_BOOK : Material.WRITABLE_BOOK;
 
-        addButton(Button.create(ItemBuilder.of(mat, 1).name(CC.AQUA + name).lore(CC.GRAY + lore, " ", complete).build(), (e) -> {
-            p.getInventory().addItem(new ItemStack(mat, 1));
-        }), slot);
+        addButton(Button.createBasic(ItemBuilder.of(mat, 1).name(CC.RED + "" + CC.BOLD + name).lore(CC.GRAY + lore, " ", complete).build()), slot);
     }
 }

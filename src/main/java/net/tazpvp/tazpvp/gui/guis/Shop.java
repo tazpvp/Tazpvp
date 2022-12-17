@@ -35,6 +35,7 @@ package net.tazpvp.tazpvp.gui.guis;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -99,7 +100,7 @@ public class Shop extends GUI {
     }
 
     private void setButton(String name, String text, Material mat, Player p, int cost, int amount) {
-        addButton(Button.create(ItemBuilder.of(mat, amount).name(name).lore(text, "Cost: " + cost).build(), (e) -> {
+        addButton(Button.create(ItemBuilder.of(mat, amount).name(CC.YELLOW + "" + CC.BOLD + name).lore(CC.GOLD + text, CC.GRAY + "Cost: $" + cost).build(), (e) -> {
             checkMoney(p, cost, name, mat, amount);
         }), slotNum);
         calcSlot();
@@ -115,7 +116,7 @@ public class Shop extends GUI {
                 } else {
                     clearSlot(25);
                     int num = new Random().nextInt(list.size());
-                    addButton(Button.create(ItemBuilder.of(list.get(num), 1).name(name).lore(text, "Cost: " + cost).build(), (e) -> {
+                    addButton(Button.create(ItemBuilder.of(list.get(num), 1).name(CC.YELLOW + "" + CC.BOLD + name).lore(CC.GOLD + text, " ", CC.GRAY + "Cost: " + cost).build(), (e) -> {
                         checkMoney(p, cost, name, list.get(num), amount);
                     }), slot);
                 }
@@ -137,7 +138,7 @@ public class Shop extends GUI {
     public void calcSlot() {
         if (num % 7 == 0) {
             slotNum += 2;
-            num = 1;
+            num = 0;
         }
         slotNum ++;
         num ++;
