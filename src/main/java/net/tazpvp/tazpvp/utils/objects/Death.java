@@ -115,20 +115,24 @@ public class Death {
 
             ItemStack enchantment = ItemBuilder.of(Material.ENCHANTED_BOOK, 1).enchantment(ench, lvl).build();
 
+            Hologram hologram = new Hologram(new String[]{"&6" + ench.getKey().getKey() + " &c" + lvl}, loc.getBlock().getLocation().add(0.5, 0, 0.5).subtract(0, 0.5, 0), true);
+
             gui.addButton(Button.create(enchantment, (e) -> {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
                         gui.setReturnsItems(true);
                         e.getWhoClicked().closeInventory();
+                        e.getWhoClicked().getInventory().addItem(enchantment);
                         gui.destroy();
+                        block.setType(Material.AIR);
+                        hologram.deleteHologram();
                     }
-                }.runTaskLater(Tazpvp.getInstance(), 2);
-            }), 23);
+                }.runTaskLater(Tazpvp.getInstance(), 1);
+            }), 13);
 
             gui.update();
 
-            Hologram hologram = new Hologram(new String[]{"&6" + ench.getKey().getKey() + " &c" + lvl}, loc.getBlock().getLocation().add(0.5, 0, 0.5).subtract(0, 0.5, 0), true);
 
             new BukkitRunnable() {
                 @Override
