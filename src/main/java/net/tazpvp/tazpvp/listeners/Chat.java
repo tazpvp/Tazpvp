@@ -33,6 +33,9 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.enums.CC;
+import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -41,10 +44,19 @@ public class Chat implements Listener {
 
     public void onChat(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
+        String message = e.getMessage();
+        String[] words = message.split(" ");
+
+        for (String word : words) {
+            for (Player plr : Bukkit.getOnlinePlayers()) {
+                if (word.equalsIgnoreCase(plr.getName())) {
+                    word = CC.YELLOW + word;
+                    plr.playSound(plr.getLocation(), Sound.BLOCK_BELL_USE, 1, 1);
+                }
+            }
+        }
 
         Tazpvp.getObservers().forEach(observer -> observer.chat(p, e.getMessage()));
 
     }
-
-
 }
