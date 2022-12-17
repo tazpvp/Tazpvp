@@ -32,6 +32,7 @@
 
 package net.tazpvp.tazpvp.gui.guis;
 
+import net.tazpvp.tazpvp.talents.talent.Revenge;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Color;
@@ -56,25 +57,25 @@ public class Talents extends GUI {
     public Talents(Player p) {
         super("Talents", 4);
 
-        net.tazpvp.tazpvp.talents.Talents TALENT = PersistentData.getTalents(p.getUniqueId());
+        net.tazpvp.tazpvp.talents.Talents talents = PersistentData.getTalents(p.getUniqueId());
 
         fill(0, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
-        setButton(p, 10, Material.NETHERITE_SWORD, 8, "Revenge", "Set the player who killed you on fire.", TALENT.isRevenge());
-        setButton(p, 11, Material.WATER_BUCKET, 9, "Moist", "You can no longer be set on fire.", TALENT.isRevenge());
-        setButton(p, 12, Material.SHIELD, 12, "Resilient", "Gain 2 absorption hearts on kill.", TALENT.isRevenge());
-        setButton(p, 13, Material.GOLDEN_PICKAXE,8, "Excavator", "Mining gives you experience.", TALENT.isRevenge());
-        setButton(p, 14, Material.CRAFTING_TABLE,6, "Architect", "A chance to reclaim the block you placed.", TALENT.isRevenge());
-        setButton(p, 15, Material.BOW,8, "Hunter", "A chance to reclaim the arrow you shot.", TALENT.isRevenge());
-        setButton(p, 16, Material.ROTTEN_FLESH,9, "Cannibal", "Replenish your hunger on kill.", TALENT.isRevenge());
+        setButton(p, 10, Material.NETHERITE_SWORD, 8, "Revenge", "Set the player who killed you on fire.", talents.isRevenge());
+        setButton(p, 11, Material.WATER_BUCKET, 9, "Moist", "You can no longer be set on fire.", talents.isRevenge());
+        setButton(p, 12, Material.SHIELD, 12, "Resilient", "Gain 2 absorption hearts on kill.", talents.isRevenge());
+        setButton(p, 13, Material.GOLDEN_PICKAXE,8, "Excavator", "Mining gives you experience.", talents.isRevenge());
+        setButton(p, 14, Material.CRAFTING_TABLE,6, "Architect", "A chance to reclaim the block you placed.", talents.isRevenge());
+        setButton(p, 15, Material.BOW,8, "Hunter", "A chance to reclaim the arrow you shot.", talents.isRevenge());
+        setButton(p, 16, Material.ROTTEN_FLESH,9, "Cannibal", "Replenish your hunger on kill.", talents.isRevenge());
 
-        setButton(p, 19, Material.FEATHER,14, "Agile", "Gain a speed boost on kill.", TALENT.isRevenge());
-        setButton(p, 20, Material.SHEARS,11, "Harvester", "Better chance that players drop heads.", TALENT.isRevenge());
-        setButton(p, 21, Material.NETHERITE_HOE,15, "Necromancer", "Gain more from player coffins.", TALENT.isRevenge());
-        setButton(p, 22, Material.GOLDEN_APPLE,20, "Blessed", "A chance of getting a golden apple from a kill.", TALENT.isRevenge());
-        setButton(p, 23, Material.ELYTRA,6, "Glider", "The launch pad pushes you further.", TALENT.isRevenge());
-        setButton(p, 24, Material.EXPERIENCE_BOTTLE,9, "Proficient", "Gain experience from duels.", TALENT.isRevenge());
-        setButton(p, 25, PotionBuilder.of(PotionBuilder.PotionType.SPLASH).setColor(Color.PURPLE).build().getType(),10, "Medic", "Heal nearby guild mates on kill.", TALENT.isRevenge());
+        setButton(p, 19, Material.FEATHER,14, "Agile", "Gain a speed boost on kill.", talents.isRevenge());
+        setButton(p, 20, Material.SHEARS,11, "Harvester", "Better chance that players drop heads.", talents.isRevenge());
+        setButton(p, 21, Material.NETHERITE_HOE,15, "Necromancer", "Gain more from player coffins.", talents.isRevenge());
+        setButton(p, 22, Material.GOLDEN_APPLE,20, "Blessed", "A chance of getting a golden apple from a kill.", talents.isRevenge());
+        setButton(p, 23, Material.ELYTRA,6, "Glider", "The launch pad pushes you further.", talents.isRevenge());
+        setButton(p, 24, Material.EXPERIENCE_BOTTLE,9, "Proficient", "Gain experience from duels.", talents.isRevenge());
+        setButton(p, 25, PotionBuilder.of(PotionBuilder.PotionType.SPLASH).setColor(Color.PURPLE).build().getType(),10, "Medic", "Heal nearby guild mates on kill.", talents.isRevenge());
 
         open(p);
     }
@@ -84,30 +85,69 @@ public class Talents extends GUI {
         String complete = completed ? CC.GREEN + "Active" : CC.RED + "Inactive";
 
         addButton(Button.create(ItemBuilder.of(mat, 1).name(CC.AQUA + name).lore(CC.DARK_AQUA + "" + CC.BOLD + lore, " ",CC.GRAY + "Cost: " + cost + " Shards", " ", complete).flag(ItemFlag.HIDE_POTION_EFFECTS).flag(ItemFlag.HIDE_ATTRIBUTES).build(), (e) -> {
-            for (ItemStack i : p.getInventory()) {
-                if (i == null) continue;
-                if (i.getType() == Material.AMETHYST_SHARD) {
-                    shardCount = shardCount + i.getAmount();
+            if (!completed) {
+                for (ItemStack i : p.getInventory()) {
+                    if (i == null) continue;
+                    if (i.getType() == Material.AMETHYST_SHARD) {
+                        shardCount = shardCount + i.getAmount();
+                    }
                 }
-            }
-            if (shardCount >= cost) {
-                for (int n = 0 ; n < cost ; n++) {
-                    for (ItemStack i : p.getInventory()) {
-                        if (i == null) continue;
-                        if (i.getType() == Material.AMETHYST_SHARD) {
-                            if (i.getAmount() >= 2) {
-                                i.setAmount(i.getAmount() - 1);
-                            } else {
-                                p.getInventory().remove(i);
+                if (shardCount >= cost) {
+                    for (int n = 0 ; n < cost ; n++) {
+                        for (ItemStack i : p.getInventory()) {
+                            if (i == null) continue;
+                            if (i.getType() == Material.AMETHYST_SHARD) {
+                                if (i.getAmount() >= 2) {
+                                    i.setAmount(i.getAmount() - 1);
+                                } else {
+                                    p.getInventory().remove(i);
+                                }
                             }
                         }
                     }
+
+                    net.tazpvp.tazpvp.talents.Talents talents = PersistentData.getTalents(p);
+
+                    if (name.equalsIgnoreCase("Revenge")) {
+                        talents.setRevenge(true); }
+                    if (name.equalsIgnoreCase("Moist")) {
+                        talents.setMoist(true); }
+                    if (name.equalsIgnoreCase("Resilient")) {
+                        talents.setResilient(true); }
+                    if (name.equalsIgnoreCase("Excavator")) {
+                        talents.setExcavator(true); }
+                    if (name.equalsIgnoreCase("Architect")) {
+                        talents.setArchitect(true); }
+                    if (name.equalsIgnoreCase("Hunter")) {
+                        talents.setHunter(true); }
+                    if (name.equalsIgnoreCase("Cannibal")) {
+                        talents.setCannibal(true); }
+
+                    if (name.equalsIgnoreCase("Agile")) {
+                        talents.setAgile(true); }
+                    if (name.equalsIgnoreCase("Harvester")) {
+                        talents.setHarvester(true); }
+                    if (name.equalsIgnoreCase("Necromancer")) {
+                        talents.setNecromancer(true); }
+                    if (name.equalsIgnoreCase("Blessed")) {
+                        talents.setBlessed(true); }
+                    if (name.equalsIgnoreCase("Glider")) {
+                        talents.setGlider(true); }
+                    if (name.equalsIgnoreCase("Proficient")) {
+                        talents.setProficient(true); }
+                    if (name.equalsIgnoreCase("Medic")) {
+                        talents.setMedic(true); }
+
+                    PersistentData.setTalents(p, talents);
+
+                    p.sendMessage("You learned a new talent: " + name);
+                } else {
+                    p.sendMessage("You do not have enough shards.");
                 }
             } else {
-                p.sendMessage("You do not have enough shards.");
+                p.sendMessage("You already own this talent");
             }
+
         }), slot);
     }
-
-
 }
