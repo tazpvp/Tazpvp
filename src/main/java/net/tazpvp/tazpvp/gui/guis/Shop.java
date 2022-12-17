@@ -76,7 +76,7 @@ public class Shop extends GUI {
         );
 
         slotNum = 10;
-        num = 0;
+        num = 1;
 
         fill(0, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
@@ -135,9 +135,9 @@ public class Shop extends GUI {
     }
 
     public void calcSlot() {
-        if ((num + 1) % 7 == 0) {
+        if (num % 7 == 0) {
             slotNum += 2;
-            num = 0;
+            num = 1;
         }
         slotNum ++;
         num ++;
