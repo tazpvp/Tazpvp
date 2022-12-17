@@ -160,7 +160,7 @@ public class Death {
     }
 
     public int coffinEnchantLevel() {
-        return r.nextInt(3 - 1) + 1;
+        return r.nextInt(2) + 1;
     }
 
     /**

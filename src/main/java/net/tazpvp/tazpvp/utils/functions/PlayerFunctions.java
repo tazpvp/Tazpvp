@@ -42,15 +42,20 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
+import java.util.List;
 import java.util.UUID;
 
 public class PlayerFunctions {
 
-    /**
-     * Returns the maximum health of the player based on rebirth level.
-     * @param p The player in question.
-     * @return The maximum health.
-     */
+    public static List<Material> kitItems = List.of(
+            Material.DIAMOND_HELMET,
+            Material.DIAMOND_CHESTPLATE,
+            Material.DIAMOND_LEGGINGS,
+            Material.DIAMOND_BOOTS,
+            Material.DIAMOND_SWORD,
+            Material.BOW,
+            Material.IRON_PICKAXE
+    );
 
     public static Integer getMaxHealth(Player p) {
         if (PersistentData.getInt(p, DataTypes.REBIRTH) >= 1)
@@ -61,14 +66,26 @@ public class PlayerFunctions {
 
     public static void setMaxHealth(Player p) {
         if (PersistentData.getInt(p, DataTypes.REBIRTH) >= 1)
-            p.setHealthScale(1.1);
+            p.setHealthScale(22.0);
         else
-            p.setHealthScale(1.0);
+            p.setHealthScale(20.0);
     }
 
     public static void kitPlayer(Player p) {
         Inventory inv = p.getInventory();
 
-        inv.addItem(ItemBuilder.of(Material.IRON_SWORD, 1, "Pickaxe").enchantment(Enchantment.DAMAGE_ALL, 3).build());
+        p.getEquipment().setHelmet(ItemBuilder.of(Material.DIAMOND_HELMET, 1, "Helmet").build());
+        p.getEquipment().setChestplate(ItemBuilder.of(Material.DIAMOND_CHESTPLATE, 1, "Chestplate").build());
+        p.getEquipment().setLeggings(ItemBuilder.of(Material.DIAMOND_LEGGINGS, 1, "Leggings").build());
+        p.getEquipment().setBoots(ItemBuilder.of(Material.DIAMOND_BOOTS, 1, "Boots").build());
+
+        inv.addItem(ItemBuilder.of(Material.DIAMOND_SWORD, 1, "Sword").enchantment(Enchantment.DAMAGE_ALL, 3).build());
+        inv.addItem(ItemBuilder.of(Material.BOW, 1, "Bow").build());
+        inv.addItem(ItemBuilder.of(Material.IRON_PICKAXE, 1, "Pickaxe").build());
+
+        inv.addItem(new ItemStack(Material.COOKED_BEEF, 20));
+        inv.addItem(new ItemStack(Material.OAK_PLANKS, 64));
+
+        inv.setItem(8, new ItemStack(Material.ARROW, 32));
     }
 }

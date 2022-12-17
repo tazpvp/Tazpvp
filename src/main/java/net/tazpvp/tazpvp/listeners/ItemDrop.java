@@ -30,51 +30,28 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.duels.type;
+package net.tazpvp.tazpvp.listeners;
 
-import net.tazpvp.tazpvp.duels.Duel;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
+import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
-import world.ntdi.nrcore.utils.ArmorManager;
 
-import java.util.List;
-import java.util.UUID;
+public class ItemDrop implements Listener {
 
-public class Classic extends Duel {
+    @EventHandler
+    public void onItemDrop(PlayerDropItemEvent e) {
+        ItemStack i = e.getItemDrop().getItemStack();
+        Player p = e.getPlayer();
 
-    public Classic(UUID P1, UUID P2) {
-        super(P1, P2, "classic");
-    }
-
-    @Override
-    public void begin() {
-
-        Player p1 = Bukkit.getPlayer(super.getP1());
-        Player p2 = Bukkit.getPlayer(super.getP2());
-
-        ArmorManager.storeAndClearInventory(p1);
-        ArmorManager.storeAndClearInventory(p2);
-
-        p1.teleport(new Location(Bukkit.getWorld("arena"), -5, 60, 0, 0, 0));
-        p2.teleport(new Location(Bukkit.getWorld("arena"), 5, 60, 0, 0, 0));
-
-        for (UUID id : super.getDUELERS()) {
-            Player p = Bukkit.getPlayer(id);
-            Inventory inv = p.getInventory();
-
-            p.getEquipment().setHelmet(new ItemStack(Material.DIAMOND_HELMET));
-            p.getEquipment().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
-            p.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
-            p.getEquipment().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
-
-            inv.addItem(new ItemStack(Material.DIAMOND_SWORD));
-            inv.addItem(new ItemStack(Material.GOLDEN_APPLE, 6));
-
-            p.sendMessage("The duel hath begun.");
+        for (Material m : PlayerFunctions.kitItems) {
+            if (i.getType().equals(m)){
+                e.setCancelled(true);
+                p.sendMessage("You cannot drop kit items.");
+            }
         }
     }
 }

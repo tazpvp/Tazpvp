@@ -61,6 +61,10 @@ public class Join implements Listener {
 
         PlayerFunctions.setMaxHealth(p);
 
+        if (!p.hasPlayedBefore()) {
+            PlayerFunctions.kitPlayer(p);
+        }
+
         p.teleport(ConfigUtils.spawn);
     }
 }
