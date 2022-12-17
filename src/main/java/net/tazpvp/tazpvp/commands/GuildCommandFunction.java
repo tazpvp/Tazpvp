@@ -23,7 +23,7 @@ public class GuildCommandFunction extends CommandCore implements CommandFunction
     public void execute(CommandSender commandSender, String[] strings) {
         if (commandSender instanceof Player p) {
             Guild g = new Guild("my favoiret guild", p.getUniqueId());
-            GuildData.setGuild(g.getID(), g);
+            GuildData.initializeGuild(g.getID(), g);
 
             Bukkit.getLogger().info(GuildData.getGuild(UUID.fromString(PersistentData.getString(p, DataTypes.GUILD_ID))).getName());
         }

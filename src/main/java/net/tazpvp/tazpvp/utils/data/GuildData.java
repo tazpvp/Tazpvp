@@ -35,14 +35,22 @@ public class GuildData {
         }
     }
 
+    public static void initializeGuild(@Nonnull final UUID uuid, @Nonnull final Guild guild) {
+        SQLHelper.initializeValues(NAME, "ID, GUILD", "'" + uuid + "', '" + guildToString(guild) + "'");
+    }
+
     public static void setGuild(@Nonnull final UUID uuid, @Nonnull final Guild guild) {
+        setValueS(uuid, guildToString(guild));
+    }
+
+    private static String guildToString(@Nonnull final Guild g) {
         ByteArrayOutputStream str = new ByteArrayOutputStream();
         BukkitObjectOutputStream data = null;
         try {
             data = new BukkitObjectOutputStream(str);
-            data.writeObject(guild);
+            data.writeObject(g);
             data.close();
-            setValueS(uuid, Base64.getEncoder().encodeToString(str.toByteArray()));
+            return Base64.getEncoder().encodeToString(str.toByteArray());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
