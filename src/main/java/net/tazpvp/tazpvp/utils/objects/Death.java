@@ -52,6 +52,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
+import world.ntdi.nrcore.utils.gui.Button;
+import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.holograms.Hologram;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
@@ -106,13 +108,25 @@ public class Death {
 
             Chest coffin = (Chest) block.getState();
             Inventory inv = coffin.getInventory();
+            GUI gui = new GUI(inv);
 
             Enchantment ench = coffinEnchant();
             int lvl = coffinEnchantLevel();
 
             ItemStack enchantment = ItemBuilder.of(Material.ENCHANTED_BOOK, 1).enchantment(ench, lvl).build();
 
-            inv.setItem(13, enchantment);
+            gui.addButton(Button.create(enchantment, (e) -> {
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        gui.setReturnsItems(true);
+                        e.getWhoClicked().closeInventory();
+                        gui.destroy();
+                    }
+                }.runTaskLater(Tazpvp.getInstance(), 2);
+            }), 23);
+
+            gui.update();
 
             Hologram hologram = new Hologram(new String[]{"&6" + ench.getKey().getKey() + " &c" + lvl}, loc.getBlock().getLocation().add(0.5, 0, 0.5).subtract(0, 0.5, 0), true);
 
