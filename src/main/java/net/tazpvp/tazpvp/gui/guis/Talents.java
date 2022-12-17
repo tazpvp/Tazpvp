@@ -84,7 +84,7 @@ public class Talents extends GUI {
 
         String complete = completed ? CC.GREEN + "Active" : CC.RED + "Inactive";
 
-        addButton(Button.create(ItemBuilder.of(mat, 1).name(CC.AQUA + name).lore(CC.DARK_AQUA + "" + CC.BOLD + lore, " ",CC.GRAY + "Cost: " + cost + " Shards", " ", complete).flag(ItemFlag.HIDE_POTION_EFFECTS).flag(ItemFlag.HIDE_ATTRIBUTES).build(), (e) -> {
+        addButton(Button.create(ItemBuilder.of(mat, 1).name(CC.AQUA +  "" + CC.BOLD +name).lore(CC.DARK_AQUA + lore, " ",CC.GRAY + "Cost: " + cost + " Shards", " ", complete).flag(ItemFlag.HIDE_POTION_EFFECTS).flag(ItemFlag.HIDE_ATTRIBUTES).build(), (e) -> {
             if (!completed) {
                 for (ItemStack i : p.getInventory()) {
                     if (i == null) continue;

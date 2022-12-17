@@ -32,6 +32,7 @@
 
 package net.tazpvp.tazpvp.gui.guis;
 
+import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -46,11 +47,11 @@ public class Menu extends GUI {
 
         fill(0, 3*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
-        addButton(Button.create(ItemBuilder.of(Material.BOOK, 1).name("Achievements").lore("Check your achievements").build(), (e) -> {
+        addButton(Button.create(ItemBuilder.of(Material.BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Achievements").lore(CC.GRAY + "Check your achievements").build(), (e) -> {
             new Achievements(p);
         }), 11);
 
-        addButton(Button.create(ItemBuilder.of(Material.LECTERN, 1).name("Talents").lore("Check your talents").build(), (e) -> {
+        addButton(Button.create(ItemBuilder.of(Material.LECTERN, 1).name(CC.GREEN + "" + CC.BOLD + "Talents").lore(CC.GRAY + "Check your talents").build(), (e) -> {
             new Talents(p);
         }), 13);
 
