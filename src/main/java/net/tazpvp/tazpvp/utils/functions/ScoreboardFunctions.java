@@ -58,11 +58,10 @@ public class ScoreboardFunctions {
 
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-        newLine(DataTypes.LEVEL, p, "Level:", ChatColor.AQUA).setScore(7);
-        newLine(DataTypes.COINS, p, "Coins:", ChatColor.GOLD).setScore(6);
-        newLine(DataTypes.XP, p, "Exp:", ChatColor.BLACK).setScore(5);
-        objective.getScore(" ").setScore(4);
-        StreakScore(p).setScore(3);
+        newLine(DataTypes.LEVEL, p, "Level:", ChatColor.AQUA).setScore(6);
+        newLine(DataTypes.COINS, p, "Coins:", ChatColor.GOLD).setScore(5);
+        newLine(DataTypes.XP, p, "Exp:", ChatColor.BLACK).setScore(4);
+        objective.getScore(" ").setScore(3);
         newLine(DataTypes.KILLS, p, "Kills:", ChatColor.YELLOW).setScore(2);
         newLine(DataTypes.DEATHS, p, "Deaths:", ChatColor.DARK_PURPLE).setScore(1);
         KDRScore(p).setScore(0);
@@ -92,16 +91,16 @@ public class ScoreboardFunctions {
         return objective.getScore(ID);
     }
 
-    private static Score StreakScore(Player p) {
-        String ID = ChatColor.BOLD.toString();
-        Team team = board.registerNewTeam("streak");
-
-        team.addEntry(ID);
-        team.setPrefix("Streak: ");
-        team.setSuffix(String.valueOf(LooseData.getKs(p.getUniqueId())));
-
-        return objective.getScore(ID);
-    }
+//    private static Score StreakScore(Player p) {
+//        String ID = ChatColor.BOLD.toString();
+//        Team team = board.registerNewTeam("streak");
+//
+//        team.addEntry(ID);
+//        team.setPrefix("Streak: ");
+//        team.setSuffix(String.valueOf(LooseData.getKs(p.getUniqueId())));
+//
+//        return objective.getScore(ID);
+//    }
 
     /**
      * Insert a new line just for the KDR.

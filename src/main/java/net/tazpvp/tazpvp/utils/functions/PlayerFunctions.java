@@ -32,11 +32,17 @@
 
 package net.tazpvp.tazpvp.utils.functions;
 
+import net.tazpvp.tazpvp.utils.PDCUtil;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
+
+import java.util.UUID;
 
 public class PlayerFunctions {
 
@@ -51,5 +57,11 @@ public class PlayerFunctions {
             return 22;
         else
             return 20;
+    }
+
+    public static void kitPlayer(Player p) {
+        Inventory inv = p.getInventory();
+
+        inv.addItem(ItemBuilder.of(Material.IRON_SWORD, 1, "Pickaxe").enchantment(Enchantment.DAMAGE_ALL, 3).build());
     }
 }
