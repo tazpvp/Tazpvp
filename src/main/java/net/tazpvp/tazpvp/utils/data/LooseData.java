@@ -21,7 +21,6 @@ public final class LooseData {
         } else {
             ks.put(uuid, 1);
         }
-        Bukkit.getPlayer(uuid).getScoreboard().getTeam("streak").setSuffix(getKs(uuid) + "");
     }
 
     public static void setChatCount(UUID p, int val) {
