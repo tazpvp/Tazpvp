@@ -49,6 +49,8 @@ public class InventoryClick implements Listener {
                                 if (val > 3) return;
                             });
 
+                            e.setCancelled(true);
+
                             Map<Enchantment, Integer> enchantMap = applyTo.getEnchantments();
                             Map<Enchantment, Integer> newMap = new HashMap<>();
 
