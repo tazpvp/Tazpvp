@@ -56,12 +56,7 @@ public class Generator {
                     Item i = (Bukkit.getWorld("arena")).dropItem(new Location(Bukkit.getWorld("arena"), 0.5, 81, 70.5), shard);
                     i.setVelocity(new Vector(0, 0, 0));
 
-                    for (Player p : Bukkit.getOnlinePlayers()) {
-
-                        ChatFunctions.sendSurround(p, ChatColor.LIGHT_PURPLE + " A shard has generated underground.");;
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1, 1);
-
-                    }
+                    ChatFunctions.announce(ChatColor.LIGHT_PURPLE + " A shard has generated underground.", Sound.BLOCK_NOTE_BLOCK_BELL);;
 
                 }
             }

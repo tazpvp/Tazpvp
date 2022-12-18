@@ -32,10 +32,22 @@
 
 package net.tazpvp.tazpvp.utils.functions;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 public class ChatFunctions {
-    public static void sendSurround(Player p, String msg){
-        p.sendMessage(" ", msg, " ");
+
+    public static void announce(String msg) {
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            p.sendMessage(" ", msg, " ");
+        }
+    }
+
+    public static void announce(String msg, Sound sound) {
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            p.sendMessage(" ", msg, " ");
+            p.playSound(p.getLocation(), sound, 1, 1);
+        }
     }
 }

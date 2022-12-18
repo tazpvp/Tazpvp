@@ -130,7 +130,7 @@ public class Shop extends GUI {
         if (PersistentData.getInt(p, DataTypes.COINS) >= cost) {
             PersistentData.remove(p, DataTypes.COINS, cost);
             p.getInventory().addItem(new ItemStack(mat, amount));
-            p.sendMessage("you purchased" + name);
+            p.sendMessage("you purchased " + name);
             p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
         } else {
             p.sendMessage("You don't have enough money");
