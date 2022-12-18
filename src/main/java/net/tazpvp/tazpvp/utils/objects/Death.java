@@ -117,7 +117,7 @@ public class Death {
 
             ItemStack enchantment = ItemBuilder.of(Material.ENCHANTED_BOOK, 1).enchantment(ench, lvl).build();
 
-            Hologram hologram = new Hologram(new String[]{"&6" + ench.getKey().getKey() + " &c" + lvl}, loc.getBlock().getLocation().add(0.5, 0, 0.5).subtract(0, 0.5, 0), true);
+            Hologram hologram = new Hologram(new String[]{"&6" + ench.getKey().getKey() + " &c" + lvl}, loc.getBlock().getLocation().add(0.5, 0, 0.5).subtract(0, 0.5, 0), false);
 
             gui.addButton(Button.create(enchantment, (e) -> {
                 new BukkitRunnable() {
