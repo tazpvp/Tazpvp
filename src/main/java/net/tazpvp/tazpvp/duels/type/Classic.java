@@ -41,7 +41,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import world.ntdi.nrcore.utils.ArmorManager;
 
-import java.util.List;
 import java.util.UUID;
 
 public class Classic extends Duel {

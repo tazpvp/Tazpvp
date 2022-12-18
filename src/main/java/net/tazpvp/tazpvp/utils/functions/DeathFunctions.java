@@ -36,13 +36,13 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.duels.DuelUtils;
 import net.tazpvp.tazpvp.events.EventUtils;
+import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.objects.Death;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import world.ntdi.nrcore.utils.ConfigUtils;
+import world.ntdi.nrcore.utils.config.ConfigUtils;
 
 import javax.annotation.Nullable;
 
@@ -75,7 +75,7 @@ public class DeathFunctions {
 
             for (Duel duel : DuelUtils.ACTIVE_DUELS) {
                 if (duel.getDUELERS().contains(killer.getUniqueId())) {
-                    DuelUtils.end(victim, killer, duel.getDUELERS());
+                    DuelUtils.end(victim, killer, duel.getDUELERS(), duel);
                 }
             }
 

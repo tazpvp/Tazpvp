@@ -1,7 +1,5 @@
 package net.tazpvp.tazpvp.utils.data;
 
-import org.bukkit.Bukkit;
-
 import java.util.UUID;
 import java.util.WeakHashMap;
 
