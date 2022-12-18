@@ -10,6 +10,8 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 
+import java.util.Map;
+
 public class InventoryClick implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
@@ -23,6 +25,7 @@ public class InventoryClick implements Listener {
                 if (enchant.getType().equals(Material.ENCHANTED_BOOK)) {
 
                     if (ableToApplyEnchantTo(applyTo)) {
+
                         e.setCancelled(true);
                         for (Enchantment enchantment : applyTo.getEnchantments().keySet()) {
                             applyTo.removeEnchantment(enchantment);
@@ -31,10 +34,35 @@ public class InventoryClick implements Listener {
                         if(enchant.getItemMeta() instanceof EnchantmentStorageMeta) {
                             EnchantmentStorageMeta meta = (EnchantmentStorageMeta) enchant.getItemMeta();
                             meta.getStoredEnchants().forEach(applyTo::addUnsafeEnchantment);
+                        } else {
+                            enchant.getEnchantments().forEach(applyTo::addUnsafeEnchantment);
                         }
+
+
                         HumanEntity p = e.getWhoClicked();
                         p.setItemOnCursor(new ItemStack(Material.AIR));
 
+                    } else if (applyTo.getType() == Material.ENCHANTED_BOOK) {
+                        if (enchant.getEnchantments().equals(applyTo.getEnchantments())) {
+                            enchant.getEnchantments().values().forEach(val -> {
+                                if (val > 3) return;
+                            });
+
+                            Map<Enchantment, Integer> enchantMap = applyTo.getEnchantments();
+
+                            enchantMap.forEach((ech, i) -> {
+                                enchantMap.put(ech, i++);
+                            });
+
+                            for (Enchantment enchantment : applyTo.getEnchantments().keySet()) {
+                                applyTo.removeEnchantment(enchantment);
+                            }
+
+                            applyTo.addUnsafeEnchantments(enchantMap);
+
+                            HumanEntity p = e.getWhoClicked();
+                            p.setItemOnCursor(new ItemStack(Material.AIR));
+                        }
                     }
                 }
             }
