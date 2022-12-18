@@ -32,8 +32,6 @@
 
 package net.tazpvp.tazpvp.duels;
 
-import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.duels.type.Classic;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.ArmorManager;
@@ -46,13 +44,12 @@ public final class DuelUtils {
 
     public final static List<Duel> ACTIVE_DUELS = new ArrayList<>();
 
-    public static void end(Player loser, Player winner, List<UUID> both) {
-        ChatFunctions.announce(winner + " won the duel against " + loser);
+    public static void end(Player loser, Player winner, List<UUID> both, Duel duel) {
+        ChatFunctions.announce(winner.getName() + " won the duel against " + loser.getName());
 
         ArmorManager.setPlayerContents(loser, true);
         ArmorManager.setPlayerContents(winner, true);
 
-
-
+        ACTIVE_DUELS.remove(duel);
     }
 }

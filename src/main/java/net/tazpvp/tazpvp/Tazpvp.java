@@ -45,10 +45,12 @@ import net.tazpvp.tazpvp.npc.npcs.Lorenzo;
 import net.tazpvp.tazpvp.npc.npcs.Maxim;
 import net.tazpvp.tazpvp.talents.talent.Moist;
 import net.tazpvp.tazpvp.talents.talent.Revenge;
+import net.tazpvp.tazpvp.utils.functions.BlockFunctions;
 import net.tazpvp.tazpvp.utils.functions.CombatFunctions;
 import net.tazpvp.tazpvp.utils.objects.AssistKill;
 import net.tazpvp.tazpvp.utils.observer.Observer;
 import org.bukkit.Bukkit;
+import org.bukkit.block.Block;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -77,11 +79,12 @@ public final class Tazpvp extends JavaPlugin {
         registerEvents();
         registerCommands();
 
-        new Generator();
+        Generator.generate();
 
         events.add("FFA");
 
         registerObservable();
+        BlockFunctions.registerOres();
 
         spawnNpcs();
 
@@ -135,10 +138,11 @@ public final class Tazpvp extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Join(), this);
         getServer().getPluginManager().registerEvents(new Leave(), this);
         getServer().getPluginManager().registerEvents(new InventoryClick(), this);
-        getServer().getPluginManager().registerEvents(new BlockBreak(), this);
+        getServer().getPluginManager().registerEvents(new Break(), this);
         getServer().getPluginManager().registerEvents(new ItemDrop(), this);
         getServer().getPluginManager().registerEvents(new Move(), this);
         getServer().getPluginManager().registerEvents(new Place(), this);
+        getServer().getPluginManager().registerEvents(new Chat(), this);
 
     }
 

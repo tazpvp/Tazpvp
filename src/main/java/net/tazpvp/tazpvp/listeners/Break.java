@@ -33,6 +33,7 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.functions.BlockFunctions;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -41,7 +42,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
-public class BlockBreak implements Listener {
+public class Break implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
@@ -50,7 +51,14 @@ public class BlockBreak implements Listener {
         Material mat = b.getType();
 
         if (!p.getGameMode().equals(GameMode.CREATIVE)) {
-            if (!b.hasMetadata("PlayerPlaced")) {
+            if (BlockFunctions.ores.containsKey(mat)) {
+
+                Material smelted = BlockFunctions.getSmelted(mat);
+                int time = BlockFunctions.ores.get(mat);
+
+                BlockFunctions.respawnOre(p, b, mat, smelted, time);
+
+            } else if (!b.hasMetadata("PlayerPlaced")) {
                 e.setCancelled(true);
             }
         }

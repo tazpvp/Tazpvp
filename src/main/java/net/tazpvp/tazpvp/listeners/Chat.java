@@ -33,15 +33,18 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class Chat implements Listener {
 
+    @EventHandler
     public void onChat(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
         String message = e.getMessage();
@@ -55,6 +58,8 @@ public class Chat implements Listener {
                 }
             }
         }
+
+        LooseData.setChatCount(p.getUniqueId(), LooseData.getChatCount(p.getUniqueId()) + 1);
 
         Tazpvp.getObservers().forEach(observer -> observer.chat(p, e.getMessage()));
     }

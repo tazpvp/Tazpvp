@@ -1,7 +1,6 @@
 package net.tazpvp.tazpvp.talents.talent;
 
 import net.tazpvp.tazpvp.utils.observer.Observable;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 public class Revenge extends Observable {

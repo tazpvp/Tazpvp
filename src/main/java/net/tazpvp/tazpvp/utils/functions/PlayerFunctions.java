@@ -32,9 +32,8 @@
 
 package net.tazpvp.tazpvp.utils.functions;
 
-import net.tazpvp.tazpvp.utils.PDCUtil;
-import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
+import net.tazpvp.tazpvp.utils.data.PersistentData;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -43,7 +42,6 @@ import org.bukkit.inventory.ItemStack;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import java.util.List;
-import java.util.UUID;
 
 public class PlayerFunctions {
 
@@ -65,10 +63,12 @@ public class PlayerFunctions {
     }
 
     public static void healPlr(Player p) {
-        if (PersistentData.getInt(p, DataTypes.REBIRTH) >= 1)
+        if (PersistentData.getInt(p, DataTypes.REBIRTH) >= 1) {
             p.setHealthScale(22.0);
-        else
+        } else {
             p.setHealthScale(20.0);
+        }
+        p.setHealth(getMaxHealth(p));
     }
 
     public static void feedPlr(Player p) {
