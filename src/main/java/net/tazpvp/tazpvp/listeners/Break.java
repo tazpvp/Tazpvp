@@ -33,6 +33,7 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.functions.BlockFunctions;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -50,7 +51,9 @@ public class Break implements Listener {
         Material mat = b.getType();
 
         if (!p.getGameMode().equals(GameMode.CREATIVE)) {
-            if (!b.hasMetadata("PlayerPlaced")) {
+            if (BlockFunctions.ores.contains(mat)) {
+
+            } else if (!b.hasMetadata("PlayerPlaced")) {
                 e.setCancelled(true);
             }
         }
