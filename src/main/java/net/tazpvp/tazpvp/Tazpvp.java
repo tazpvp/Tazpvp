@@ -50,6 +50,7 @@ import net.tazpvp.tazpvp.utils.functions.CombatFunctions;
 import net.tazpvp.tazpvp.utils.objects.AssistKill;
 import net.tazpvp.tazpvp.utils.observer.Observer;
 import org.bukkit.Bukkit;
+import org.bukkit.block.Block;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -83,6 +84,7 @@ public final class Tazpvp extends JavaPlugin {
         events.add("FFA");
 
         registerObservable();
+        BlockFunctions.registerOres();
 
         spawnNpcs();
 

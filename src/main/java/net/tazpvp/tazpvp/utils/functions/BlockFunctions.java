@@ -46,7 +46,8 @@ import java.util.WeakHashMap;
 
 public class BlockFunctions {
 
-    public static WeakHashMap<Material, Material> ores = new WeakHashMap<>();
+    public static WeakHashMap<Material, Integer> ores = new WeakHashMap<>();
+
     public static List<Material> pickaxes = List.of(
         Material.WOODEN_PICKAXE,
         Material.STONE_PICKAXE,
@@ -56,10 +57,11 @@ public class BlockFunctions {
     );
 
     public static void registerOres() {
-        ores.put(Material.EMERALD_ORE, Material.EMERALD);
-        ores.put(Material.DIAMOND_ORE, Material.DIAMOND);
-        ores.put(Material.REDSTONE_ORE, Material.REDSTONE);
-        ores.put(Material.GOLD_ORE, Material.GOLD_INGOT);
+        ores.put(Material.GOLD_ORE, 20*9);
+        ores.put(Material.REDSTONE_ORE, 20*13);
+        ores.put(Material.LAPIS_ORE, 20*16);
+        ores.put(Material.DIAMOND_ORE, 20*21);
+        ores.put(Material.EMERALD_ORE, 20*25);
     }
 
     public static void respawnOre(Player p, Block block, Material mat, Material smelted, int time) {
@@ -99,5 +101,14 @@ public class BlockFunctions {
     private static void giveOre(Player p, Material mat, int amount) {
         p.getInventory().addItem(new ItemStack(mat, amount));
         p.playSound(p.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
+    }
+
+    public static Material getSmelted(Material block) {
+        if (block == Material.GOLD_ORE) return Material.RAW_GOLD;
+        if (block == Material.REDSTONE_ORE) return Material.REDSTONE;
+        if (block == Material.LAPIS_ORE) return Material.LAPIS_LAZULI;
+        if (block == Material.DIAMOND_ORE) return Material.DIAMOND;
+        if (block == Material.EMERALD_ORE) return Material.EMERALD;
+        return null;
     }
 }

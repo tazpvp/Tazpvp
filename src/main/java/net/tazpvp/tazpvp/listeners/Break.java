@@ -51,7 +51,12 @@ public class Break implements Listener {
         Material mat = b.getType();
 
         if (!p.getGameMode().equals(GameMode.CREATIVE)) {
-            if (BlockFunctions.ores.contains(mat)) {
+            if (BlockFunctions.ores.containsKey(mat)) {
+
+                Material smelted = BlockFunctions.getSmelted(mat);
+                int time = BlockFunctions.ores.get(mat);
+
+                BlockFunctions.respawnOre(p, b, mat, smelted, time);
 
             } else if (!b.hasMetadata("PlayerPlaced")) {
                 e.setCancelled(true);
