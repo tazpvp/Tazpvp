@@ -37,6 +37,7 @@ import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -130,6 +131,7 @@ public class Shop extends GUI {
             PersistentData.remove(p, DataTypes.COINS, cost);
             p.getInventory().addItem(new ItemStack(mat, amount));
             p.sendMessage("you purchased" + name);
+            p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
         } else {
             p.sendMessage("You don't have enough money");
         }
