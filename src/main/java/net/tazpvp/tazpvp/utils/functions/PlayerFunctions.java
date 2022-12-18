@@ -63,10 +63,12 @@ public class PlayerFunctions {
     }
 
     public static void healPlr(Player p) {
-        if (PersistentData.getInt(p, DataTypes.REBIRTH) >= 1)
+        if (PersistentData.getInt(p, DataTypes.REBIRTH) >= 1) {
             p.setHealthScale(22.0);
-        else
+        } else {
             p.setHealthScale(20.0);
+        }
+        p.setHealth(getMaxHealth(p));
     }
 
     public static void feedPlr(Player p) {

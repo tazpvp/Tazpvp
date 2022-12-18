@@ -26,7 +26,10 @@ public final class LooseData {
     }
 
     public static Integer getChatCount(UUID p) {
-        return chatCount.get(p);
+        if (chatCount.containsKey(p)) {
+            return chatCount.get(p);
+        }
+        return 0;
     }
 
     public static void resetKs(UUID uuid) {

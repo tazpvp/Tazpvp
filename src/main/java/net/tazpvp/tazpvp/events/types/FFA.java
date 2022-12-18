@@ -34,7 +34,7 @@ package net.tazpvp.tazpvp.events.types;
 
 import net.tazpvp.tazpvp.events.Event;
 import org.bukkit.Bukkit;
-import world.ntdi.nrcore.utils.ConfigUtils;
+import world.ntdi.nrcore.utils.config.ConfigUtils;
 
 import javax.annotation.Nonnull;
 import java.util.List;

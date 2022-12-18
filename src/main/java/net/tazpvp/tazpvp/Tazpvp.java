@@ -77,7 +77,7 @@ public final class Tazpvp extends JavaPlugin {
         registerEvents();
         registerCommands();
 
-        new Generator();
+        Generator.generate();
 
         events.add("FFA");
 
@@ -135,10 +135,11 @@ public final class Tazpvp extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Join(), this);
         getServer().getPluginManager().registerEvents(new Leave(), this);
         getServer().getPluginManager().registerEvents(new InventoryClick(), this);
-        getServer().getPluginManager().registerEvents(new BlockBreak(), this);
+        getServer().getPluginManager().registerEvents(new Break(), this);
         getServer().getPluginManager().registerEvents(new ItemDrop(), this);
         getServer().getPluginManager().registerEvents(new Move(), this);
         getServer().getPluginManager().registerEvents(new Place(), this);
+        getServer().getPluginManager().registerEvents(new Chat(), this);
 
     }
 
