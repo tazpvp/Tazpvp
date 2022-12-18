@@ -32,11 +32,13 @@
 
 package net.tazpvp.tazpvp.gui.guis;
 
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.talents.talent.Revenge;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -139,8 +141,11 @@ public class Talents extends GUI {
                         talents.setMedic(true); }
 
                     PersistentData.setTalents(p, talents);
+                    p.closeInventory();
+                    p.sendTitle("New Talent",  name, 10, 20, 10);
+                    p.playSound(p.getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN, 1, 1);
 
-                    p.sendMessage("You learned a new talent: " + name);
+                    Tazpvp.getObservers().forEach(observer -> observer.talent(p));
                 } else {
                     p.sendMessage("You do not have enough shards.");
                 }

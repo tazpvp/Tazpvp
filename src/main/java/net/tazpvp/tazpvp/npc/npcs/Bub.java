@@ -60,7 +60,13 @@ public class Bub extends NPC {
         ItemStack item = p.getInventory().getItemInMainHand();
         if (item.getType().equals(Material.PLAYER_HEAD)) {
             int num = item.getAmount();
-            item.setType(Material.AIR);
+            if (num >= 2) {
+                item.setAmount(num - 1);
+            } else {
+                p.getInventory().remove(item);
+            }
+            p.sendMessage("You gave head");
+
             p.getInventory().addItem(new ItemStack(Material.AMETHYST_SHARD, num));
         }
     }
