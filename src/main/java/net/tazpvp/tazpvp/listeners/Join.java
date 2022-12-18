@@ -59,7 +59,8 @@ public class Join implements Listener {
         ScoreboardFunctions.initScoreboard(p);
         LooseData.resetKs(p.getUniqueId());
 
-        PlayerFunctions.setMaxHealth(p);
+        PlayerFunctions.healPlr(p);
+        PlayerFunctions.feedPlr(p);
 
         if (!p.hasPlayedBefore()) {
             PlayerFunctions.kitPlayer(p);

@@ -37,6 +37,7 @@ import lombok.Getter;
 import net.tazpvp.tazpvp.achievements.achievement.*;
 import net.tazpvp.tazpvp.commands.*;
 import net.tazpvp.tazpvp.duels.Duel;
+import net.tazpvp.tazpvp.events.continuous.Generator;
 import net.tazpvp.tazpvp.listeners.*;
 import net.tazpvp.tazpvp.npc.NPC;
 import net.tazpvp.tazpvp.npc.npcs.Bub;
@@ -75,6 +76,8 @@ public final class Tazpvp extends JavaPlugin {
 
         registerEvents();
         registerCommands();
+
+        new Generator();
 
         events.add("FFA");
 
@@ -132,7 +135,7 @@ public final class Tazpvp extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Join(), this);
         getServer().getPluginManager().registerEvents(new Leave(), this);
         getServer().getPluginManager().registerEvents(new InventoryClick(), this);
-        getServer().getPluginManager().registerEvents(new Mine(), this);
+        getServer().getPluginManager().registerEvents(new BlockBreak(), this);
         getServer().getPluginManager().registerEvents(new ItemDrop(), this);
         getServer().getPluginManager().registerEvents(new Move(), this);
         getServer().getPluginManager().registerEvents(new Place(), this);

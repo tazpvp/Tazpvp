@@ -82,10 +82,11 @@ public class Death {
      * Replenishes the maximum health of the player and removes potion effects.
      */
     public void heal() {
-        victim.setHealth(PlayerFunctions.getMaxHealth(victim));
+        PlayerFunctions.healPlr(victim);
+        PlayerFunctions.feedPlr(victim);
 
         if ((killer.getHealth() + 5) >= PlayerFunctions.getMaxHealth(killer)) {
-            PlayerFunctions.setMaxHealth(killer);
+            PlayerFunctions.healPlr(killer);
             killer.setHealth(PlayerFunctions.getMaxHealth(killer));
         } else {
             killer.setHealth(killer.getHealth() + 5);
