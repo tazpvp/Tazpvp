@@ -33,20 +33,28 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
-public class Mine implements Listener {
+public class BlockBreak implements Listener {
 
     @EventHandler
-    public void onMine(BlockBreakEvent e) {
+    public void onBlockBreak(BlockBreakEvent e) {
         Player p = e.getPlayer();
-        Material mat = e.getBlock().getType();
+        Block b = e.getBlock();
+        Material mat = b.getType();
+
+        if (!p.getGameMode().equals(GameMode.CREATIVE)) {
+            if (!b.hasMetadata("PlayerPlaced")) {
+                e.setCancelled(true);
+            }
+        }
 
         Tazpvp.getObservers().forEach(observer -> observer.mine(p, mat));
-
     }
 }

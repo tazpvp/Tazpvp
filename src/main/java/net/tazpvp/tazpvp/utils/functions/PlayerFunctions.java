@@ -64,11 +64,15 @@ public class PlayerFunctions {
             return 20;
     }
 
-    public static void setMaxHealth(Player p) {
+    public static void healPlr(Player p) {
         if (PersistentData.getInt(p, DataTypes.REBIRTH) >= 1)
             p.setHealthScale(22.0);
         else
             p.setHealthScale(20.0);
+    }
+
+    public static void feedPlr(Player p) {
+        p.setFoodLevel(20); //TODO: get max food
     }
 
     public static void kitPlayer(Player p) {

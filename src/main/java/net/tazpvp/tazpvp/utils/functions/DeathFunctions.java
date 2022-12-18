@@ -33,6 +33,8 @@
 package net.tazpvp.tazpvp.utils.functions;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.duels.Duel;
+import net.tazpvp.tazpvp.duels.DuelUtils;
 import net.tazpvp.tazpvp.events.EventUtils;
 import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
@@ -70,6 +72,13 @@ public class DeathFunctions {
                     death.killMessage(killer);
             }
             LooseData.addKs(killer.getUniqueId());
+
+            for (Duel duel : DuelUtils.ACTIVE_DUELS) {
+                if (duel.getDUELERS().contains(killer.getUniqueId())) {
+                    DuelUtils.end(victim, killer, duel.getDUELERS());
+                }
+            }
+
         }
 
         if (Tazpvp.playerList.contains(victim.getUniqueId())) {
