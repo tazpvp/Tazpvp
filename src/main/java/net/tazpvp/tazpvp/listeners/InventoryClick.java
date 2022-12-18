@@ -10,6 +10,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class InventoryClick implements Listener {
@@ -49,16 +50,17 @@ public class InventoryClick implements Listener {
                             });
 
                             Map<Enchantment, Integer> enchantMap = applyTo.getEnchantments();
+                            Map<Enchantment, Integer> newMap = new HashMap<>();
 
-                            enchantMap.forEach((ech, i) -> {
-                                enchantMap.put(ech, i++);
-                            });
+                            for (Map.Entry<Enchantment, Integer> entry : enchantMap.entrySet()) {
+                                newMap.put(entry.getKey(), entry.getValue() + 1);
+                            }
 
                             for (Enchantment enchantment : applyTo.getEnchantments().keySet()) {
                                 applyTo.removeEnchantment(enchantment);
                             }
 
-                            applyTo.addUnsafeEnchantments(enchantMap);
+                            applyTo.addUnsafeEnchantments(newMap);
 
                             HumanEntity p = e.getWhoClicked();
                             p.setItemOnCursor(new ItemStack(Material.AIR));
