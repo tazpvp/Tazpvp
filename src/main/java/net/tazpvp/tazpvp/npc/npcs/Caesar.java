@@ -76,12 +76,16 @@ public class Caesar extends NPC {
             if (doubleClick.contains(p)) {
                 if (shardCount >= cost) {
 
-                    PlayerFunctions.takeShards(p, cost);
-
                     if (pickaxe.getType() == Material.WOODEN_PICKAXE) { pickaxe.setType(Material.IRON_PICKAXE);}
                     if (pickaxe.getType() == Material.STONE_PICKAXE) { pickaxe.setType(Material.IRON_PICKAXE);}
                     if (pickaxe.getType() == Material.IRON_PICKAXE) { pickaxe.setType(Material.DIAMOND_PICKAXE);}
                     if (pickaxe.getType() == Material.DIAMOND_PICKAXE) { pickaxe.setType(Material.GOLDEN_PICKAXE);}
+                    if (pickaxe.getType() == Material.GOLDEN_PICKAXE) {
+                        p.sendMessage("You already have the best upgrade.");
+                        return;
+                    }
+
+                    PlayerFunctions.takeShards(p, cost);
 
                     p.closeInventory();
                     p.sendMessage("Thanks, here is your new pickaxe.");

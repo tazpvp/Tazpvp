@@ -105,6 +105,7 @@ public class PlayerFunctions {
     }
 
     public static void takeShards(Player p, int cost) {
+
         for (int n = 0; n < cost; n++) {
             for (ItemStack i : p.getInventory()) {
                 if (i == null) continue;
@@ -114,6 +115,7 @@ public class PlayerFunctions {
                     } else {
                         p.getInventory().remove(i);
                     }
+                    break;
                 }
             }
         }
