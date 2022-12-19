@@ -2,6 +2,7 @@ package net.tazpvp.tazpvp.guild;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
+import net.tazpvp.tazpvp.utils.data.GuildData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -60,6 +61,10 @@ public class Guild implements Serializable {
         PersistentData.setValueS(p, DataTypes.GUILD_ID.getColumnName(), getID().toString());
     }
 
+    public void resetPlayerGuild(UUID uuid) {
+        PersistentData.setValueS(uuid, DataTypes.GUILD_ID.getColumnName(), "n");
+    }
+
     public UUID[] getAllMembers() {
         List<UUID> mem = guild_members;
         mem.addAll(guild_generals);
@@ -99,12 +104,12 @@ public class Guild implements Serializable {
     public void removeMember(UUID uuid) {
         if (getGuild_members().contains(uuid)) {
             getGuild_members().remove(uuid);
-            PersistentData.setValueS(uuid, DataTypes.GUILD_ID.getColumnName(), "n");
+            resetPlayerGuild(uuid);
             OfflinePlayer p = Bukkit.getOfflinePlayer(uuid);
             sendAll(p.getName() + " has left the guild!");
         } else if (getGuild_generals().contains(uuid)) {
             getGuild_generals().remove(uuid);
-            PersistentData.setValueS(uuid, DataTypes.GUILD_ID.getColumnName(), "n");
+            resetPlayerGuild(uuid)
             OfflinePlayer p = Bukkit.getOfflinePlayer(uuid);
             sendAll(p.getName() + " has left the guild!");
         } else {
@@ -173,6 +178,13 @@ public class Guild implements Serializable {
         } else if (Bukkit.getOfflinePlayer(uuid).isOnline()) {
             Player p = Bukkit.getPlayer(uuid);
             p.sendMessage("You were not invited to guild " + getName());
+        }
+    }
+
+    public void deleteGuild() {
+        for (UUID member : getAllMembers()) {
+            resetPlayerGuild(member);
+            GuildData.deleteGuild(getID());
         }
     }
 }

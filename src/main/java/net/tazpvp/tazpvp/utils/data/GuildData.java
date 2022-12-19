@@ -9,7 +9,9 @@ import javax.annotation.Nonnull;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 import java.util.UUID;
 
 public class GuildData {
@@ -58,5 +60,15 @@ public class GuildData {
 
     private static void setValueS(@Nonnull final UUID ID, final String value) {
         SQLHelper.updateValue(NAME, ID_COLUMN, "'" + ID.toString() + "'", "guild", "'" + value + "'");
+    }
+
+    public static List<Guild> getAllGuilds() {
+        List<Guild> g = new ArrayList<>();
+        SQLHelper.getListOfColumn(NAME, "guild").forEach(guild -> g.add((Guild) guild));
+        return g;
+    }
+
+    public static void deleteGuild(UUID id) {
+        SQLHelper.deleteRow(NAME, ID_COLUMN, id.toString());
     }
 }
