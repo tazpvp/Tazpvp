@@ -40,6 +40,8 @@ import world.ntdi.nrcore.utils.PlayerUtils;
 import world.ntdi.nrcore.utils.command.CommandCore;
 import world.ntdi.nrcore.utils.command.CommandFunction;
 
+import java.util.ArrayList;
+
 public class EventCommandFunction extends CommandCore implements CommandFunction {
 
     public EventCommandFunction() {
@@ -54,25 +56,23 @@ public class EventCommandFunction extends CommandCore implements CommandFunction
                 if (!PlayerUtils.checkPerms(p, Tazpvp.prefix + "event.host")) return;
                 for (String event : Tazpvp.events) {
                     if (args[1].equalsIgnoreCase(event)) {
-                        if (Tazpvp.eventKey == null) Tazpvp.eventKey = args[1].toUpperCase();
+                        if (Tazpvp.event == null) Tazpvp.event = EventUtils.create(args[1], new ArrayList<>());
                         return;
                     }
                 }
             }
             else if (args[0].equalsIgnoreCase("list")) {
-                for (String event : Tazpvp.events) {
-                    p.sendMessage(event);
-                    return;
-                }
+                p.sendMessage(Tazpvp.event.getNAME());
+                return;
             }
             else if (args[0].equalsIgnoreCase("begin")) {
-                if (Tazpvp.eventKey != null) {
-                    EventUtils.begin(Tazpvp.eventKey, Tazpvp.playerList);
+                if (Tazpvp.event != null) {
+                    EventUtils.create(Tazpvp.event.getNAME(), Tazpvp.playerList);
                     return;
                 }
             }
             else if (args[0].equalsIgnoreCase("join")) {
-                if (Tazpvp.eventKey != null) {
+                if (Tazpvp.event != null) {
                     Tazpvp.getObservers().forEach(observer -> observer.event(p));
                     Tazpvp.playerList.add(p.getUniqueId());
                     return;

@@ -33,6 +33,8 @@
 package net.tazpvp.tazpvp.events;
 
 import lombok.Getter;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -49,13 +51,30 @@ public abstract class Event {
     /**
      * Initalize an Event
      * @param NAME The name of the event
-     * @param list List of all the players
+     * @param playerList List of all the players
      */
-    public Event(@Nonnull final String NAME, @Nonnull List<UUID> list) {
+    public Event(@Nonnull final String NAME, @Nonnull List<UUID> playerList) {
         this.NAME = NAME;
-        playerList = list;
-        begin();
+        this.playerList = playerList;
     }
 
-    protected abstract void begin();
+    public void check() {
+        if (getPlayerList().size() < 2) {
+            UUID winner = getWinner();
+            end(Bukkit.getPlayer(winner));
+        }
+    }
+
+    public UUID getWinner() {
+        return playerList.get(0);
+    }
+
+    public abstract void begin();
+
+    public void end(Player winner) {
+        if (winner != null)
+            Bukkit.broadcastMessage(winner.getName() + " won");
+        else
+            Bukkit.broadcastMessage("Nobody won");
+    }
 }
