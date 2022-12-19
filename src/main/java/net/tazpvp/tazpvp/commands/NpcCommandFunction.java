@@ -32,6 +32,8 @@
 
 package net.tazpvp.tazpvp.commands;
 
+import net.tazpvp.tazpvp.npc.npcs.Bub;
+import net.tazpvp.tazpvp.npc.npcs.Caesar;
 import net.tazpvp.tazpvp.npc.npcs.Lorenzo;
 import net.tazpvp.tazpvp.npc.npcs.Maxim;
 import org.bukkit.command.CommandSender;
@@ -53,6 +55,10 @@ public class NpcCommandFunction extends CommandCore implements CommandFunction {
                 new Maxim();
             } else if (args[0].equalsIgnoreCase("lorenzo")) {
                 new Lorenzo();
+            } else if (args[0].equalsIgnoreCase("caesar")) {
+                new Caesar();
+            } else if (args[0].equalsIgnoreCase("bub")) {
+                new Bub();
             }
         }
     }
