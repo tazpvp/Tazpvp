@@ -68,7 +68,7 @@ public class GuildData {
 
     public static List<Guild> getAllGuilds() {
         List<Guild> g = new ArrayList<>();
-        SQLHelper.getListOfColumn(NAME, "guild").forEach(guild -> g.add((Guild) guild));
+        SQLHelper.getListOfColumn(NAME, "guild").forEach(guild -> g.add(getGuild(UUID.fromString((String) guild))));
         return g;
     }
 
