@@ -90,6 +90,7 @@ public abstract class NPC implements Listener {
         V.setProfession(PROFESSION);
         V.setVillagerType(TYPE);
         V.setGravity(false);
+        V.setCollidable(false);
         PDCUtil.setPDC(V, PDCUtil.getNpcKey(), this.ID.toString());
 
         Tazpvp.getInstance().getServer().getPluginManager().registerEvents(this, Tazpvp.getInstance());

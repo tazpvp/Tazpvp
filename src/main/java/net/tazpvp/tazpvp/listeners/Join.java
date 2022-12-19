@@ -67,5 +67,6 @@ public class Join implements Listener {
         }
 
         p.teleport(ConfigUtils.spawn);
+        p.setCollidable(false);
     }
 }

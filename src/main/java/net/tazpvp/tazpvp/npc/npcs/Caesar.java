@@ -100,10 +100,15 @@ public class Caesar extends NPC {
                 }
             } else {
 
-                p.sendMessage("Are you sure you would like to upgrade your pickaxe for $" + cost + "?");
-                p.sendMessage("Click me again to continue.");
+                p.sendMessage("Click again to confirm your upgrade for " + cost + " Shards.");
 
                 doubleClick.add(p);
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        doubleClick.remove(p);
+                    }
+                }.runTaskLater(Tazpvp.getInstance(), 20*5);
             }
         } else {
             p.sendMessage("Click me with your pickaxe and I will upgrade it.");
