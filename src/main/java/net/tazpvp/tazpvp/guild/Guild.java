@@ -109,7 +109,7 @@ public class Guild implements Serializable {
             sendAll(p.getName() + " has left the guild!");
         } else if (getGuild_generals().contains(uuid)) {
             getGuild_generals().remove(uuid);
-            resetPlayerGuild(uuid)
+            resetPlayerGuild(uuid);
             OfflinePlayer p = Bukkit.getOfflinePlayer(uuid);
             sendAll(p.getName() + " has left the guild!");
         } else {
