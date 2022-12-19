@@ -40,16 +40,15 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.UUID;
 
-public class FFA extends Event{
+public class FFA extends Event {
 
     public FFA(@Nonnull List<UUID> list) {
         super("FFA", list);
     }
 
     @Override
-    protected void begin() {
-        List<UUID> list = super.playerList;
-        for (UUID uuid : list) {
+    public void begin() {
+        for (UUID uuid : getPlayerList()) {
             Bukkit.getPlayer(uuid).teleport(ConfigUtils.spawn);
         }
     }

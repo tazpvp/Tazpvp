@@ -35,7 +35,6 @@ package net.tazpvp.tazpvp.utils.functions;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.duels.DuelUtils;
-import net.tazpvp.tazpvp.events.EventUtils;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
@@ -84,7 +83,6 @@ public class DeathFunctions {
         if (Tazpvp.playerList.contains(victim.getUniqueId())) {
 
             Tazpvp.playerList.remove(victim.getUniqueId());
-            EventUtils.check();
         }
 
         PersistentData.add(victim, DataTypes.DEATHS);

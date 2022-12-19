@@ -33,12 +33,12 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.events.EventUtils;
 import net.tazpvp.tazpvp.utils.PlaytimeUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
+import world.ntdi.nrcore.utils.ArmorManager;
 
 public class Leave implements Listener {
 
@@ -47,7 +47,14 @@ public class Leave implements Listener {
         Player p = e.getPlayer();
 
         Tazpvp.playerList.remove(p.getUniqueId());
-        EventUtils.check();
         PlaytimeUtil.playerLeft(p);
+
+        saveInv(p);
+    }
+
+    private void saveInv(Player p) {
+        if (ArmorManager.getItems().containsKey(p.getUniqueId())) {
+            ArmorManager.setPlayerContents(p, true);
+        }
     }
 }
