@@ -58,7 +58,7 @@ public class Caesar extends NPC {
 
     public Caesar() {
         super(CC.GOLD + "Caesar", new Location(
-                Bukkit.getWorld("arena"), -6.5, 100, -4.5),
+                Bukkit.getWorld("arena"), 9.5, 100, -0.5),
                 Villager.Profession.ARMORER,
                 Villager.Type.JUNGLE,
                 Sound.ITEM_GOAT_HORN_SOUND_0);
