@@ -73,22 +73,25 @@ public class Caesar extends NPC {
             int cost = BlockFunctions.pickaxes.get(pickaxe.getType());
             int shardCount = PlayerFunctions.countShards(p);
 
+            if (pickaxe.getType() == Material.GOLDEN_PICKAXE) {
+                p.sendMessage("You already have the best upgrade.");
+                return;
+            }
+
             if (doubleClick.contains(p)) {
                 if (shardCount >= cost) {
 
-                    if (pickaxe.getType() == Material.WOODEN_PICKAXE) { pickaxe.setType(Material.IRON_PICKAXE);}
-                    if (pickaxe.getType() == Material.STONE_PICKAXE) { pickaxe.setType(Material.IRON_PICKAXE);}
-                    if (pickaxe.getType() == Material.IRON_PICKAXE) { pickaxe.setType(Material.DIAMOND_PICKAXE);}
-                    if (pickaxe.getType() == Material.DIAMOND_PICKAXE) { pickaxe.setType(Material.GOLDEN_PICKAXE);}
-                    if (pickaxe.getType() == Material.GOLDEN_PICKAXE) {
-                        p.sendMessage("You already have the best upgrade.");
-                        return;
-                    }
+                    if (pickaxe.getType() == Material.WOODEN_PICKAXE) { pickaxe.setType(Material.STONE_PICKAXE);}
+                    else if (pickaxe.getType() == Material.STONE_PICKAXE) { pickaxe.setType(Material.IRON_PICKAXE);}
+                    else if (pickaxe.getType() == Material.IRON_PICKAXE) { pickaxe.setType(Material.DIAMOND_PICKAXE);}
+                    else if (pickaxe.getType() == Material.DIAMOND_PICKAXE) { pickaxe.setType(Material.GOLDEN_PICKAXE);}
 
                     PlayerFunctions.takeShards(p, cost);
 
                     p.closeInventory();
                     p.sendMessage("Thanks, here is your new pickaxe.");
+
+                    doubleClick.remove(p);
 
                     Tazpvp.getObservers().forEach(observer -> observer.talent(p));
 
@@ -100,12 +103,7 @@ public class Caesar extends NPC {
                 p.sendMessage("Are you sure you would like to upgrade your pickaxe for $" + cost + "?");
                 p.sendMessage("Click me again to continue.");
 
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        doubleClick.add(p);
-                    }
-                }.runTaskLater(Tazpvp.getInstance(), 20);
+                doubleClick.add(p);
             }
         } else {
             p.sendMessage("Click me with your pickaxe and I will upgrade it.");
