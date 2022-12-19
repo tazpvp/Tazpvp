@@ -92,4 +92,30 @@ public class PlayerFunctions {
 
         inv.setItem(8, new ItemStack(Material.ARROW, 32));
     }
+
+    public static int countShards(Player p) {
+        int shardCount = 0;
+        for (ItemStack i : p.getInventory()) {
+            if (i == null) continue;
+            if (i.getType() == Material.AMETHYST_SHARD) {
+                shardCount = shardCount + i.getAmount();
+            }
+        }
+        return shardCount;
+    }
+
+    public static void takeShards(Player p, int cost) {
+        for (int n = 0; n < cost; n++) {
+            for (ItemStack i : p.getInventory()) {
+                if (i == null) continue;
+                if (i.getType() == Material.AMETHYST_SHARD) {
+                    if (i.getAmount() >= 2) {
+                        i.setAmount(i.getAmount() - 1);
+                    } else {
+                        p.getInventory().remove(i);
+                    }
+                }
+            }
+        }
+    }
 }

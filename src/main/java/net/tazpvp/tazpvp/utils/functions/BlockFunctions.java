@@ -48,13 +48,7 @@ public class BlockFunctions {
 
     public static WeakHashMap<Material, Integer> ores = new WeakHashMap<>();
 
-    public static List<Material> pickaxes = List.of(
-        Material.WOODEN_PICKAXE,
-        Material.STONE_PICKAXE,
-        Material.IRON_PICKAXE,
-        Material.DIAMOND_PICKAXE,
-        Material.GOLDEN_PICKAXE
-    );
+    public static WeakHashMap<Material, Integer> pickaxes = new WeakHashMap<>();
 
     public static void registerOres() {
         ores.put(Material.GOLD_ORE, 20*9);
@@ -63,6 +57,15 @@ public class BlockFunctions {
         ores.put(Material.DIAMOND_ORE, 20*21);
         ores.put(Material.EMERALD_ORE, 20*25);
     }
+
+    public static void registerPickaxes() {
+        pickaxes.put(Material.WOODEN_PICKAXE, 4);
+        pickaxes.put(Material.STONE_PICKAXE, 8);
+        pickaxes.put(Material.IRON_PICKAXE, 12);
+        pickaxes.put(Material.DIAMOND_PICKAXE, 16);
+        pickaxes.put(Material.GOLDEN_PICKAXE, 20);
+    }
+
 
     public static void respawnOre(Player p, Block block, Material mat, Material smelted, int time) {
 
@@ -89,10 +92,10 @@ public class BlockFunctions {
         giveOre(p, mat, 1);
     }
 
-    private static ItemStack getPickaxe(Player p) {
-        if (pickaxes.contains(p.getInventory().getItemInMainHand().getType())) {
+    public static ItemStack getPickaxe(Player p) {
+        if (pickaxes.containsKey(p.getInventory().getItemInMainHand().getType())) {
             return p.getInventory().getItemInMainHand();
-        } else if (pickaxes.contains(p.getInventory().getItemInOffHand().getType())) {
+        } else if (pickaxes.containsKey(p.getInventory().getItemInOffHand().getType())) {
             return p.getInventory().getItemInOffHand();
         }
         return null;

@@ -101,7 +101,11 @@ public class Shop extends GUI {
     }
 
     private void setButton(String name, String text, Material mat, Player p, int cost, int amount) {
-        addButton(Button.create(ItemBuilder.of(mat, amount).name(CC.YELLOW + "" + CC.BOLD + name).lore(CC.GOLD + text, " ", CC.GRAY + "Cost: $" + cost).build(), (e) -> {
+        addButton(Button.create(ItemBuilder.of(mat, amount)
+                .name(CC.YELLOW + "" + CC.BOLD + name)
+                .lore(CC.GOLD + text, " ", CC.GRAY + "Cost: $" + cost)
+                .build(), (e) -> {
+
             checkMoney(p, cost, name, mat, amount);
         }), slotNum);
         calcSlot();
@@ -117,8 +121,13 @@ public class Shop extends GUI {
                 } else {
                     clearSlot(25);
                     int num = new Random().nextInt(list.size());
-                    addButton(Button.create(ItemBuilder.of(list.get(num), 1).name(CC.YELLOW + "" + CC.BOLD + name).lore(CC.GOLD + text, " ", CC.GRAY + "Cost: " + cost).build(), (e) -> {
+                    addButton(Button.create(ItemBuilder.of(list.get(num), 1)
+                            .name(CC.YELLOW + "" + CC.BOLD + name)
+                            .lore(CC.GOLD + text, " ", CC.GRAY + "Cost: " + cost)
+                            .build(), (e) -> {
+
                         checkMoney(p, cost, name, list.get(num), amount);
+
                     }), slot);
                 }
             }

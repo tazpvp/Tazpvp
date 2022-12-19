@@ -35,6 +35,7 @@ package net.tazpvp.tazpvp.gui.guis;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -80,27 +81,19 @@ public class Talents extends GUI {
 
         String complete = completed ? CC.GREEN + "Active" : CC.RED + "Inactive";
 
-        addButton(Button.create(ItemBuilder.of(mat, 1).name(CC.AQUA +  "" + CC.BOLD +name).lore(CC.DARK_AQUA + lore, " ",CC.GRAY + "Cost: " + cost + " Shards", " ", complete).flag(ItemFlag.HIDE_POTION_EFFECTS).flag(ItemFlag.HIDE_ATTRIBUTES).build(), (e) -> {
+        addButton(Button.create(ItemBuilder.of(mat, 1)
+                .name(CC.AQUA +  "" + CC.BOLD +name)
+                .lore(CC.DARK_AQUA + lore, " ",CC.GRAY + "Cost: " + cost + " Shards", " ", complete)
+                .flag(ItemFlag.HIDE_POTION_EFFECTS).flag(ItemFlag.HIDE_ATTRIBUTES)
+                .build(), (e) -> {
+
             if (!completed) {
-                for (ItemStack i : p.getInventory()) {
-                    if (i == null) continue;
-                    if (i.getType() == Material.AMETHYST_SHARD) {
-                        shardCount = shardCount + i.getAmount();
-                    }
-                }
+
+                shardCount = PlayerFunctions.countShards(p);
+
                 if (shardCount >= cost) {
-                    for (int n = 0 ; n < cost ; n++) {
-                        for (ItemStack i : p.getInventory()) {
-                            if (i == null) continue;
-                            if (i.getType() == Material.AMETHYST_SHARD) {
-                                if (i.getAmount() >= 2) {
-                                    i.setAmount(i.getAmount() - 1);
-                                } else {
-                                    p.getInventory().remove(i);
-                                }
-                            }
-                        }
-                    }
+
+                    PlayerFunctions.takeShards(p, cost);
 
                     net.tazpvp.tazpvp.talents.Talents talents = PersistentData.getTalents(p);
 
