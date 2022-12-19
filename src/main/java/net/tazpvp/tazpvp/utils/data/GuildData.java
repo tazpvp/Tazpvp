@@ -45,7 +45,7 @@ public class GuildData {
         setValueS(uuid, guildToString(guild));
     }
 
-    private static String guildToString(@Nonnull final Guild g) {
+    public static String guildToString(@Nonnull final Guild g) {
         ByteArrayOutputStream str = new ByteArrayOutputStream();
         BukkitObjectOutputStream data = null;
         try {
@@ -56,6 +56,10 @@ public class GuildData {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static String getString(@Nonnull final UUID uuid) {
+        return SQLHelper.getString(NAME, ID_COLUMN, uuid.toString(), 2);
     }
 
     private static void setValueS(@Nonnull final UUID ID, final String value) {
