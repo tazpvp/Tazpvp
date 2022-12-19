@@ -73,6 +73,11 @@ public class Caesar extends NPC {
             int cost = BlockFunctions.pickaxes.get(pickaxe.getType());
             int shardCount = PlayerFunctions.countShards(p);
 
+            if (pickaxe.getType() == Material.GOLDEN_PICKAXE) {
+                p.sendMessage("You already have the best upgrade.");
+                return;
+            }
+
             if (doubleClick.contains(p)) {
                 if (shardCount >= cost) {
 
@@ -80,10 +85,6 @@ public class Caesar extends NPC {
                     else if (pickaxe.getType() == Material.STONE_PICKAXE) { pickaxe.setType(Material.IRON_PICKAXE);}
                     else if (pickaxe.getType() == Material.IRON_PICKAXE) { pickaxe.setType(Material.DIAMOND_PICKAXE);}
                     else if (pickaxe.getType() == Material.DIAMOND_PICKAXE) { pickaxe.setType(Material.GOLDEN_PICKAXE);}
-                    else if (pickaxe.getType() == Material.GOLDEN_PICKAXE) {
-                        p.sendMessage("You already have the best upgrade.");
-                        return;
-                    }
 
                     PlayerFunctions.takeShards(p, cost);
 
@@ -102,12 +103,7 @@ public class Caesar extends NPC {
                 p.sendMessage("Are you sure you would like to upgrade your pickaxe for $" + cost + "?");
                 p.sendMessage("Click me again to continue.");
 
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        doubleClick.add(p);
-                    }
-                }.runTaskLater(Tazpvp.getInstance(), 20);
+                doubleClick.add(p);
             }
         } else {
             p.sendMessage("Click me with your pickaxe and I will upgrade it.");
