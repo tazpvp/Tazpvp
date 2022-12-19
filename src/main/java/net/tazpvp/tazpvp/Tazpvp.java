@@ -131,7 +131,6 @@ public final class Tazpvp extends JavaPlugin {
         new NpcCommandFunction();
         new StatCommandFunction();
         new GuildCommandFunction();
-        new InvCommandFunction();
     }
 
     public void registerEvents() {
