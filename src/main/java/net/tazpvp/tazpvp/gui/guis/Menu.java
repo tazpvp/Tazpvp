@@ -44,7 +44,11 @@ public class Menu extends GUI {
 
     public Menu(Player p) {
         super("Menu", 3);
+        addItems(p);
+        open(p);
+    }
 
+    private void addItems(Player p) {
         fill(0, 3*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
         addButton(Button.create(ItemBuilder.of(Material.BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Achievements").lore(CC.GRAY + "Check your achievements").build(), (e) -> {
@@ -59,6 +63,6 @@ public class Menu extends GUI {
             new GuildBrowser(p);
         }), 14);
 
-        open(p);
+        update();
     }
 }

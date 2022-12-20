@@ -44,7 +44,11 @@ public class Achievements extends GUI {
 
     public Achievements(Player p) {
         super("Achievements", 4);
+        addItems(p);
+        open(p);
+    }
 
+    private void addItems(Player p) {
         net.tazpvp.tazpvp.achievements.Achievements ACH = PersistentData.getAchievements(p.getUniqueId());
 
         fill(0, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
@@ -60,7 +64,7 @@ public class Achievements extends GUI {
         setButton(p,  19, "Merchant", "kys", ACH.isMerchant());
         setButton(p,  20, "Superior", "kys", ACH.isSuperior());
 
-        open(p);
+        update();
     }
 
     private void setButton(Player p, int slot, String name, String lore, boolean completed) {

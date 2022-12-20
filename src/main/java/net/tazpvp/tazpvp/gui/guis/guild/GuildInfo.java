@@ -47,14 +47,18 @@ public class GuildInfo extends GUI {
 
     public GuildInfo(Player p, Guild g) {
         super(g.getName() + "Info", 3);
+        addItems(p, g);
+        open(p);
+    }
 
+    private void addItems(Player p, Guild g) {
         String[] lore = {
-            " ",
-            CC.DARK_GREEN + "Kills: " + CC.GREEN + g.getKills(),
-            CC.DARK_GREEN + "Deaths: " + CC.GREEN + g.getDeaths(),
-            CC.DARK_GREEN + "KDR: " + CC.GREEN + g.getKDR(),
-            " ",
-            CC.GOLD + "Click to edit"
+                " ",
+                CC.DARK_GREEN + "Kills: " + CC.GREEN + g.getKills(),
+                CC.DARK_GREEN + "Deaths: " + CC.GREEN + g.getDeaths(),
+                CC.DARK_GREEN + "KDR: " + CC.GREEN + g.getKDR(),
+                " ",
+                CC.GOLD + "Click to edit"
         };
 
         OfflinePlayer leader = Bukkit.getOfflinePlayer(g.getGuild_leader());
@@ -71,5 +75,7 @@ public class GuildInfo extends GUI {
                 .name(CC.GREEN + "Members").lore(" ", CC.DARK_GREEN + "View guild members.").build(), (e) -> {
             //code to go to view guild members
         }), 15);
+
+        update();
     }
 }

@@ -54,8 +54,12 @@ public class Shop extends GUI {
     private int num;
 
     public Shop(Player p) {
-
         super("Shop", 4);
+        addItems(p);
+        open(p);
+    }
+
+    private void addItems(Player p) {
         List<Material> wool = List.of(
                 Material.ORANGE_WOOL,
                 Material.PURPLE_WOOL,
@@ -97,7 +101,7 @@ public class Shop extends GUI {
         setButton("sex2", "Extinguish flames.", Material.STONE, p, 30, 1);
         setChangingButton("RGB Blocks", "RGB Placeable Blocks", wool, p, 30, 64);
 
-        open(p);
+        update();
     }
 
     private void setButton(String name, String text, Material mat, Player p, int cost, int amount) {

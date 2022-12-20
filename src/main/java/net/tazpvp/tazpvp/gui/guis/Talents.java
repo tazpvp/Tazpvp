@@ -41,7 +41,6 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
 import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
@@ -53,7 +52,11 @@ public class Talents extends GUI {
 
     public Talents(Player p) {
         super("Talents", 4);
+        addItems(p);
+        open(p);
+    }
 
+    private void addItems(Player p) {
         net.tazpvp.tazpvp.talents.Talents talents = PersistentData.getTalents(p.getUniqueId());
 
         fill(0, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
@@ -73,8 +76,6 @@ public class Talents extends GUI {
         setButton(p, 23, Material.ELYTRA,6, "Glider", "The launch pad pushes you further.", talents.isGlider());
         setButton(p, 24, Material.EXPERIENCE_BOTTLE,9, "Proficient", "Gain experience from duels.", talents.isProficient());
         setButton(p, 25, PotionBuilder.of(PotionBuilder.PotionType.SPLASH).setColor(Color.PURPLE).build().getType(),10, "Medic", "Heal nearby guild mates on kill.", talents.isMedic());
-
-        open(p);
     }
 
     private void setButton(Player p, int slot, Material mat, int cost, String name, String lore, boolean completed) {
