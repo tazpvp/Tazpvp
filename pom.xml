@@ -86,8 +86,13 @@
         <dependency>
             <groupId>world.ntdi</groupId>
             <artifactId>nrcore</artifactId>
-            <version>1.0.17</version>
+            <version>1.0.18</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.wesjd</groupId>
+            <artifactId>anvilgui</artifactId>
+            <version>1.5.3-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.javatuples</groupId>

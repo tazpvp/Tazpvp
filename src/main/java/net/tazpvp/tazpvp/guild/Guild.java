@@ -101,6 +101,7 @@ public class Guild implements Serializable {
         } else {
             throw new ArrayIndexOutOfBoundsException();
         }
+        GuildData.setGuild(getID(), this);
     }
 
     public void removeMember(UUID uuid) {
@@ -117,6 +118,7 @@ public class Guild implements Serializable {
         } else {
             throw new IllegalArgumentException("Cannot kick someone who is not a member or general of a guild (includes owner)");
         }
+        GuildData.setGuild(getID(), this);
     }
 
     public void promoteMember(UUID uuid) {
@@ -127,6 +129,7 @@ public class Guild implements Serializable {
         } else {
             throw new IllegalArgumentException("Cannot promote non member ranked");
         }
+        GuildData.setGuild(getID(), this);
     }
 
     public void demoteMember(UUID uuid) {
@@ -137,30 +140,37 @@ public class Guild implements Serializable {
         } else {
             throw new IllegalArgumentException("Cannot promote non general ranked");
         }
+        GuildData.setGuild(getID(), this);
     }
 
     public void setDescription(UUID uuid, String description) {
         if (getGuild_leader().equals(uuid)) this.description = description;
+        GuildData.setGuild(getID(), this);
     }
 
     public void setTag(UUID uuid, String tag) {
         if (getGuild_leader().equals(uuid)) this.tag = tag;
+        GuildData.setGuild(getID(), this);
     }
 
     public void setIcon(UUID uuid, Material icon) {
         if (getGuild_leader().equals(uuid)) this.icon = icon;
+        GuildData.setGuild(getID(), this);
     }
 
     public void setShow_in_browser(UUID uuid, boolean show_in_browser) {
         if (getGuild_leader().equals(uuid)) this.show_in_browser = show_in_browser;
+        GuildData.setGuild(getID(), this);
     }
 
     public void addKills(int amt) {
         kills = kills + amt;
+        GuildData.setGuild(getID(), this);
     }
 
     public void addDeaths(int amt) {
         deaths = deaths + amt;
+        GuildData.setGuild(getID(), this);
     }
 
     public void invitePlayer(UUID invited, UUID inviter) {
@@ -168,6 +178,7 @@ public class Guild implements Serializable {
             this.invited.add(invited);
             sendAll(Bukkit.getOfflinePlayer(inviter).getName() + " has invited " + Bukkit.getOfflinePlayer(invited) + " to the guild");
         }
+        GuildData.setGuild(getID(), this);
     }
 
     public boolean isInvited(UUID uuid) {
@@ -181,6 +192,7 @@ public class Guild implements Serializable {
             Player p = Bukkit.getPlayer(uuid);
             p.sendMessage("You were not invited to guild " + getName());
         }
+        GuildData.setGuild(getID(), this);
     }
 
     public void deleteGuild() {
