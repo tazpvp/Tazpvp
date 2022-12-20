@@ -69,13 +69,7 @@ public abstract class NPC implements Listener {
     @Getter
     private final UUID ID;
 
-    /**
-     * Generate a villager NPC
-     * @param NAME Name of the villager
-     * @param SPAWN Spawn of the villager
-     * @param PROFESSION Profession of the villager, see {@code Villager.Profession}
-     * @param TYPE Type of the villager, see {@code Villager.Type}
-     */
+
     public NPC(@Nonnull final String NAME, @Nonnull final Location SPAWN, @Nonnull final Villager.Profession PROFESSION, @Nonnull final Villager.Type TYPE, @Nonnull final Sound SOUND) {
         this.NAME = NAME;
         this.SPAWN = SPAWN;
@@ -83,8 +77,8 @@ public abstract class NPC implements Listener {
         this.TYPE = TYPE;
         this.SOUND = SOUND;
         this.ID = UUID.randomUUID();
-
         this.V = (Villager) SPAWN.getWorld().spawnEntity(SPAWN, EntityType.VILLAGER);
+
         V.setCustomName(CC.trans(NAME));
         V.setInvulnerable(true);
         V.setProfession(PROFESSION);
@@ -96,18 +90,10 @@ public abstract class NPC implements Listener {
         Tazpvp.getInstance().getServer().getPluginManager().registerEvents(this, Tazpvp.getInstance());
     }
 
-    /**
-     * Remove the villager from existence. (To meet your dad)
-     */
     public void remove() {
         V.remove();
     }
 
-    /**
-     * Handle what should happen when a player interacts with the NPC
-     * @param e The PlayerInteractAtEntityEvent
-     * @param p The player who interacted with the NPC
-     */
     public abstract void interact(@Nonnull final PlayerInteractAtEntityEvent e, @Nonnull final Player p);
 
     @EventHandler
@@ -118,9 +104,7 @@ public abstract class NPC implements Listener {
 
             if (pair.getValue0()) {
                 if (pair.getValue1().equals(ID.toString())) {
-                    e.getPlayer().playSound(e.getPlayer(), SOUND, 1, 1);
                     interact(e, e.getPlayer());
-//                    Tazpvp.getObservers().forEach(observer -> observer.(e.getPlayer(), NAME));
                 }
             }
         }
