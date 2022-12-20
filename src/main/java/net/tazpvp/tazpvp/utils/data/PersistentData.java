@@ -47,7 +47,7 @@ public final class PersistentData {
      */
     public static void initPlayer(UUID uuid) {
         if (!SQLHelper.ifRowExists(NAME, ID_COLUMN, uuid.toString())) {
-            SQLHelper.initializeValues(NAME, "ID, COINS, XP, LEVEL, KILLS, DEATHS, TOP_KS, PRESTIGE, REBIRTH, DUEL_WINS, DIVISION, PLAYTIME, GUILD_ID, TALENTS, ACHIEVEMENTS", "'" + uuid + "'", "0", "0", "0", "0", "0", "0", "0", "0", "0", "1", "0", "'a'", "'set'", "'set'");
+            SQLHelper.initializeValues(NAME, "ID, COINS, XP, LEVEL, KILLS, DEATHS, TOP_KS, PRESTIGE, REBIRTH, PREMIUM, PREFIX, DUEL_WINS, DIVISION, PLAYTIME, GUILD_ID, TALENTS, ACHIEVEMENTS", "'" + uuid + "'", "0", "0", "0", "0", "0", "0", "0", "0", "false", "''", "0", "1", "0", "'a'", "'set'", "'set'");
             setTalents(uuid, new Talents());
             setAchievements(uuid, new Achievements());
         }
@@ -183,6 +183,26 @@ public final class PersistentData {
     public static float getFloat(@Nonnull final OfflinePlayer p, final DataTypes dataTypes) {
         return getFloat(p.getUniqueId(), dataTypes);
     }
+
+    /**
+     * If the player is premium
+     * @param uuid Target player's uuid
+     * @return The player's premium status
+     */
+    public static boolean isPremium(@Nonnull final UUID uuid) {
+        return (boolean) getObject(uuid, DataTypes.PREMIUM.getColumnIndex());
+    }
+
+    /**
+     * If the player is premium
+     * @param p Target player
+     * @return The player's premium status
+     */
+    public static boolean isPremium(@Nonnull final OfflinePlayer p) {
+        return (boolean) getObject(p.getUniqueId(), DataTypes.PREMIUM.getColumnIndex());
+    }
+
+
     /*
         ====================== End GET ====================== Start SET ======================
      */
@@ -303,6 +323,16 @@ public final class PersistentData {
      * @param value the new value
      */
     public static void setValueS(@Nonnull final UUID ID, final String columnName, final String value) {
+        SQLHelper.updateValue(NAME, ID_COLUMN, "'" + ID.toString() + "'", columnName, "'" + value + "'");
+    }
+
+    /**
+     * Set the value of a String in a column
+     * @param ID the targeted UUID
+     * @param columnName the column name
+     * @param value the new value
+     */
+    public static void setValueB(@Nonnull final UUID ID, final String columnName, final boolean value) {
         SQLHelper.updateValue(NAME, ID_COLUMN, "'" + ID.toString() + "'", columnName, "'" + value + "'");
     }
 

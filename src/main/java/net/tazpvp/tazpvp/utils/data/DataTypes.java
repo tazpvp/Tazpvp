@@ -11,12 +11,14 @@ public enum DataTypes {
     TOPKILLSTREAK("top_ks", 7, true),
     PRESTIGE("prestige", 8, true),
     REBIRTH("rebirth", 9, true),
-    DUELWINS("duel_wins", 10, true),
-    DIVISION("division", 11, true),
-    PLAYTIMEUNIX("playtime", 12, true),
-    GUILD_ID("guild_id", 13, false),
-    TALENTS("talents", 14, false),
-    ACHIEVEMENTS("achievements", 15, false);
+    PREMIUM("premium", 10, false),
+    PREFIX("prefix", 11, true),
+    DUELWINS("duel_wins", 12, true),
+    DIVISION("division", 13, true),
+    PLAYTIMEUNIX("playtime", 14, true),
+    GUILD_ID("guild_id", 15, false),
+    TALENTS("talents", 16, false),
+    ACHIEVEMENTS("achievements", 17, false);
 
     private final String columnName;
     private final int columnIndex;
