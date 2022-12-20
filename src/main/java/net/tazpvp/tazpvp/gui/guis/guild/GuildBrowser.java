@@ -93,7 +93,7 @@ public class GuildBrowser extends GUI {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-//                        View player's guild
+                        new GuildInfo(p, g);
                     }
                 }.runTaskLater(Tazpvp.getInstance(), 2L);
             });

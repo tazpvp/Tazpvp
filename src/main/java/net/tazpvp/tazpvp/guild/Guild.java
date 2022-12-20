@@ -161,6 +161,14 @@ public class Guild implements Serializable {
 
     public void addDeaths(int amt) {
         deaths = deaths + amt;
+
+    }
+
+    public int getKDR() {
+        if (deaths == 0 || kills == 0) {
+            return 0;
+        }
+        return kills / deaths;
     }
 
     public void invitePlayer(UUID invited, UUID inviter) {
