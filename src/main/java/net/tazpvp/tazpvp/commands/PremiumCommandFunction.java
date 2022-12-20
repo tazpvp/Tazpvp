@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public class PremiumCommandFunction extends CommandCore implements CommandFunction {
     public PremiumCommandFunction() {
-        super("premium", "setprem", "pem");
+        super("premium", "setprem", "prem");
         setDefaultFunction(this);
     }
 

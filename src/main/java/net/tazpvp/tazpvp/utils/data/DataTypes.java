@@ -12,7 +12,7 @@ public enum DataTypes {
     PRESTIGE("prestige", 8, true),
     REBIRTH("rebirth", 9, true),
     PREMIUM("premium", 10, false),
-    PREFIX("prefix", 11, true),
+    PREFIX("prefix", 11, false),
     DUELWINS("duel_wins", 12, true),
     DIVISION("division", 13, true),
     PLAYTIMEUNIX("playtime", 14, true),
