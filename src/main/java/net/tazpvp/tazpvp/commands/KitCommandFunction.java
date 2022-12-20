@@ -30,46 +30,37 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.gui.guis.guild;
+package net.tazpvp.tazpvp.commands;
 
-import net.tazpvp.tazpvp.guild.Guild;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import lombok.NonNull;
+import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import world.ntdi.nrcore.utils.gui.Button;
-import world.ntdi.nrcore.utils.gui.GUI;
-import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
-import world.ntdi.nrcore.utils.item.builders.SkullBuilder;
+import world.ntdi.nrcore.utils.PlayerUtils;
+import world.ntdi.nrcore.utils.command.CommandCore;
+import world.ntdi.nrcore.utils.command.CommandFunction;
 
-public class GuildInfo extends GUI {
+public class KitCommandFunction extends CommandCore implements CommandFunction {
 
-    public GuildInfo(Player p, Guild g) {
-        super(g.getName() + "Info", 3);
-
-        String[] lore = {
-            " ",
-            CC.DARK_GREEN + "Kills: " + CC.GREEN + g.getKills(),
-            CC.DARK_GREEN + "Deaths: " + CC.GREEN + g.getDeaths(),
-            CC.DARK_GREEN + "KDR: " + CC.GREEN + g.getKDR(),
-            " ",
-            CC.GOLD + "Click to edit"
-        };
-
-        OfflinePlayer leader = Bukkit.getOfflinePlayer(g.getGuild_leader());
-
-        addButton(Button.create(ItemBuilder.of(Material.ENCHANTING_TABLE, 1)
-                .name(CC.GREEN + g.getName()).lore(lore).build(), (e) -> {
-            new GuildEdit(p, g);
-        }), 11);
-
-        addButton(Button.createBasic(SkullBuilder.of().setHeadTexture(leader.getName())
-                .name(CC.GREEN + "Guild Master").lore(" ", CC.DARK_GREEN + leader.getName()).build()), 13);
-
-        addButton(Button.create(ItemBuilder.of(Material.WRITABLE_BOOK, 1)
-                .name(CC.GREEN + "Members").lore(" ", CC.DARK_GREEN + "View guild members.").build(), (e) -> {
-            //code to go to view guild members
-        }), 15);
+    public KitCommandFunction() {
+        super("kit", "kit", "kit");
     }
+
+    @Override
+    public void execute(CommandSender sender, String[] args) {
+        if (sender instanceof Player p) {
+            if (args.length > 0) {
+                if (Bukkit.getPlayer(args[0]) != null) {
+                    PlayerFunctions.kitPlayer(Bukkit.getPlayer(args[0]));
+                } else {
+                    p.sendMessage("Usage: /kit <player>");
+                }
+            } else {
+                PlayerFunctions.kitPlayer(p);
+            }
+        }
+
+    }
+
 }

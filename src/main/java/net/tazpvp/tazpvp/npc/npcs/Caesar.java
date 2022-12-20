@@ -78,8 +78,8 @@ public class Caesar extends NPC {
                 return;
             }
 
-            if (doubleClick.contains(p)) {
-                if (shardCount >= cost) {
+            if (shardCount >= cost) {
+                if (doubleClick.contains(p)) {
 
                     if (pickaxe.getType() == Material.WOODEN_PICKAXE) { pickaxe.setType(Material.STONE_PICKAXE);}
                     else if (pickaxe.getType() == Material.STONE_PICKAXE) { pickaxe.setType(Material.IRON_PICKAXE);}
@@ -96,19 +96,19 @@ public class Caesar extends NPC {
                     Tazpvp.getObservers().forEach(observer -> observer.talent(p));
 
                 } else {
-                    p.sendMessage("You do not have enough shards.");
+
+                    p.sendMessage("Click again to confirm your upgrade for " + cost + " Shards.");
+
+                    doubleClick.add(p);
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            doubleClick.remove(p);
+                        }
+                    }.runTaskLater(Tazpvp.getInstance(), 20*5);
                 }
             } else {
-
-                p.sendMessage("Click again to confirm your upgrade for " + cost + " Shards.");
-
-                doubleClick.add(p);
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        doubleClick.remove(p);
-                    }
-                }.runTaskLater(Tazpvp.getInstance(), 20*5);
+                p.sendMessage("You do not have enough shards.");
             }
         } else {
             p.sendMessage("Click me with your pickaxe and I will upgrade it.");
