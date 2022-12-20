@@ -35,8 +35,11 @@ public class GuildEdit extends GUI {
         // Show Guild in Browser
 
 
-        Button guildIcon = Button.create(ItemBuilder.of(g.getIcon()).build(), e -> {
-            new Icon(p, g);
+        Button guildIcon = Button.create(ItemBuilder.of(g.getIcon()).name("Edit Guild Icon").lore("Need a rank hgome boy").build(), e -> {
+            if (PersistentData.isPremium(p))
+                new Icon(p, g);
+            else
+                p.sendMessage("No rank broke boy");
         });
 
         Button guildDescription = Button.create(ItemBuilder.of(Material.OAK_SIGN).name("Change Discription").lore("cost 6k coins yo yo").build(), e -> {
@@ -48,7 +51,7 @@ public class GuildEdit extends GUI {
         });
 
         Button guildTag = Button.create(ItemBuilder.of(Material.NAME_TAG).name("Change Tag").lore("need a rank ;)").build(), e -> {
-            if (PersistentData.getInt(p, DataTypes.COINS) > 6000) {
+            if (PersistentData.isPremium(p)) {
                 setTag(p, g);
             } else {
                 p.sendMessage("no rank broke ass");
