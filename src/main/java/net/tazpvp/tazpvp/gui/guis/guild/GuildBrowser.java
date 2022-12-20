@@ -21,7 +21,7 @@ public class GuildBrowser extends GUI {
     private int pagesNeeded;
     private int numNum;
     public GuildBrowser(Player p) {
-        super(CC.GOLD + "Guild Browser", 6);
+        super(CC.GOLD + "Guild Browser", 5);
         this.pagesNeeded = (int) Math.ceil(GuildUtils.getSortedGuilds().size() / (double) (4 * 7));
         pageChange(p, 0);
         open(p);
@@ -67,7 +67,7 @@ public class GuildBrowser extends GUI {
             Button lastPage = Button.create(ItemBuilder.of(Material.ARROW).name(ChatColor.GREEN + "Last Page").build(), (e) -> {
                 if((page - 1) * numNum >= 0) pageChange(p, page - 1);
             });
-            addButton(lastPage, 45);
+            addButton(lastPage, 18);
         }
 
         if (page != pagesNeeded - 1) {
@@ -75,7 +75,7 @@ public class GuildBrowser extends GUI {
                 if((page + 1) * numNum < guilds.size()) pageChange(p, page + 1);
             });
 
-            addButton(nextPage, 53);
+            addButton(nextPage, 26);
         }
 
         update();
