@@ -18,8 +18,8 @@ import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import java.util.List;
 
-public class EditGuild extends GUI {
-    public EditGuild(Player p, Guild g) {
+public class GuildEdit extends GUI {
+    public GuildEdit(Player p, Guild g) {
         super(CC.GOLD + "Edit Guild", 3);
         addItems(p, g);
         open(p);
@@ -60,7 +60,7 @@ public class EditGuild extends GUI {
            g.setShow_in_browser(p.getUniqueId(), !g.isShow_in_browser());
            p.closeInventory();
            p.sendMessage((g.isShow_in_browser() ? "Enabled" : "Disabled"));
-           new EditGuild(p, g);
+           new GuildEdit(p, g);
         });
 
         addButton(guildIcon, 11);
@@ -96,7 +96,7 @@ public class EditGuild extends GUI {
                         new BukkitRunnable() {
                             @Override
                             public void run() {
-                                new EditGuild(p, g);
+                                new GuildEdit(p, g);
                             }
                         }.runTaskLater(Tazpvp.getInstance(), 1);
 

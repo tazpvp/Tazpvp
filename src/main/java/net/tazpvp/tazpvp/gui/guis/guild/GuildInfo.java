@@ -33,7 +33,6 @@
 package net.tazpvp.tazpvp.gui.guis.guild;
 
 import net.tazpvp.tazpvp.guild.Guild;
-import net.tazpvp.tazpvp.guild.GuildUtils;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -62,7 +61,7 @@ public class GuildInfo extends GUI {
 
         addButton(Button.create(ItemBuilder.of(Material.ENCHANTING_TABLE, 1)
                 .name(CC.GREEN + g.getName()).lore(lore).build(), (e) -> {
-            //code to go to edit guild gui
+            new GuildEdit(p, g);
         }), 11);
 
         addButton(Button.createBasic(SkullBuilder.of().setHeadTexture(leader.getName())
