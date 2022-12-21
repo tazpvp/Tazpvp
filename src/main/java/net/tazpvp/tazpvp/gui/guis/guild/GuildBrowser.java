@@ -3,12 +3,18 @@ package net.tazpvp.tazpvp.gui.guis.guild;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.guild.Guild;
 import net.tazpvp.tazpvp.guild.GuildUtils;
+import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.GuildData;
+import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
@@ -106,12 +112,43 @@ public class GuildBrowser extends GUI {
                     .lore(CC.DARK_GREEN + "Click to buy a guild.", " ", CC.GRAY + "Cost: $6,000")
             .build(), (e) -> {
                 p.closeInventory();
-//                create guild
+                if (PersistentData.getInt(p, DataTypes.COINS) >= 6000) {
+                    nameGuild(p);
+                } else {
+                    p.sendMessage("You don't have enough money");
+                }
             });
         }
         addButton(playerGuild, 4);
 
         update();
+    }
+
+    private static void nameGuild(Player p) {
+        new AnvilGUI.Builder()
+            .onComplete((player, text) -> {
+                if (text.startsWith("kys")) {
+                    text = text.replaceFirst("kys", "");
+                }
+                PersistentData.remove(p, DataTypes.COINS, 6000);
+                p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
+
+                createGuild(text, p.getUniqueId());
+                return AnvilGUI.Response.close();
+            })
+            .onClose(player -> {
+                p.sendMessage("Guild creation cancelled.");
+            })
+            .text("kys")
+            .itemLeft(ItemBuilder.of(Material.NAME_TAG).build())
+            .title("Name your guild")
+            .plugin(Tazpvp.getInstance())
+            .open(p);
+
+    }
+
+    public static void createGuild(String text, UUID id) {
+        new Guild(text, id);
     }
 
 }
