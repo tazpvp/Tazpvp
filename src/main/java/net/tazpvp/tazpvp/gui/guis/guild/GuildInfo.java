@@ -46,7 +46,7 @@ import world.ntdi.nrcore.utils.item.builders.SkullBuilder;
 public class GuildInfo extends GUI {
 
     public GuildInfo(Player p, Guild g) {
-        super(g.getName() + "Info", 3);
+        super(g.getName() + " Info", 3);
         addItems(p, g);
         open(p);
     }

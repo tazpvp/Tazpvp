@@ -53,6 +53,8 @@ public class Break implements Listener {
         if (!p.getGameMode().equals(GameMode.CREATIVE)) {
             if (BlockFunctions.ores.containsKey(mat)) {
 
+                e.setCancelled(true);
+
                 Material smelted = BlockFunctions.getSmelted(mat);
                 int time = BlockFunctions.ores.get(mat);
 
