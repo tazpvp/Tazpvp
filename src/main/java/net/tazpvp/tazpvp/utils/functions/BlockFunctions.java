@@ -69,7 +69,14 @@ public class BlockFunctions {
 
     public static void respawnOre(Player p, Block block, Material mat, Material smelted, int time) {
 
-        block.setType(Material.BEDROCK);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                block.setType(Material.BEDROCK);
+            }
+        }.runTaskLater(Tazpvp.getInstance(), 1);
+
         new BukkitRunnable() {
             @Override
             public void run() {
