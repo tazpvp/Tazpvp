@@ -120,7 +120,7 @@ public class GuildEdit extends GUI {
         }
     }
 
-    private void setDescription(Player p, Guild g) {
+    private void  setDescription(Player p, Guild g) {
         new AnvilGUI.Builder()
                 .onComplete((player, text) -> {
                     if (text.startsWith(">")) {
