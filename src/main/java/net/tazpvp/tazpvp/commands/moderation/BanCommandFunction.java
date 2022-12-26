@@ -32,5 +32,24 @@
 
 package net.tazpvp.tazpvp.commands.moderation;
 
-public class BanCommandFunction {
+import lombok.NonNull;
+import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import world.ntdi.nrcore.utils.command.CommandCore;
+import world.ntdi.nrcore.utils.command.CommandFunction;
+
+public class BanCommandFunction extends CommandCore implements CommandFunction {
+
+    public BanCommandFunction() {
+        super("ban", "ban", "banish");
+    }
+
+    @Override
+    public void execute(CommandSender sender, String[] args) {
+
+        if (args.length >= 2) {
+            Player target = Bukkit.getPlayer(args[0]);
+        }
+    }
 }
