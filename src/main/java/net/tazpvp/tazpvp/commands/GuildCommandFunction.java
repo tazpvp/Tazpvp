@@ -41,7 +41,22 @@ public class GuildCommandFunction extends CommandCore implements CommandFunction
                 }
             } else if (args[0].equalsIgnoreCase("accept")) {
                 acceptInvite(p);
+            } else if (args[0].equalsIgnoreCase("leave")) {
+                if (GuildUtils.isInGuild(p)) {
+                    Guild g = GuildData.getGuild(p.getUniqueId());
+                    if (g.getGuild_leader() == p.getUniqueId()) {
+                        p.sendMessage("You cannot leave your guild. Try disbanding it.");
+                        return;
+                    }
+                    g.removeMember(p.getUniqueId());
+
+                }
             }
+            //disband
+            //hijack
+            //kick
+            //promote
+            //demote
         }
     }
 
