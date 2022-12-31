@@ -29,19 +29,23 @@ public class GuildCommandFunction extends CommandCore implements CommandFunction
 
     @Override
     public void execute(CommandSender sender, String[] args) {
+        String notInGuild = "You are not in a guild";
+        String noPerms = "You do not have permission to do this.";
+
         if (sender instanceof Player p) {
-            if (args[0].equalsIgnoreCase("invite")) {
+            String cmd = args[0];
+            if (cmd.equalsIgnoreCase("invite")) {
                 if (GuildUtils.isInGuild(p)) {
                     Player target = Bukkit.getPlayer(args[1]);
                     Guild g = GuildData.getGuild(p.getUniqueId());
 
                     invite(p, target, g);
                 } else {
-                    p.sendMessage("You are not in a guild");
+                    p.sendMessage(notInGuild);
                 }
-            } else if (args[0].equalsIgnoreCase("accept")) {
+            } else if (cmd.equalsIgnoreCase("accept")) {
                 acceptInvite(p);
-            } else if (args[0].equalsIgnoreCase("leave")) {
+            } else if (cmd.equalsIgnoreCase("leave")) {
                 if (GuildUtils.isInGuild(p)) {
                     Guild g = GuildData.getGuild(p.getUniqueId());
                     if (g.getGuild_leader() == p.getUniqueId()) {
@@ -49,14 +53,107 @@ public class GuildCommandFunction extends CommandCore implements CommandFunction
                         return;
                     }
                     g.removeMember(p.getUniqueId());
+                } else {
+                    p.sendMessage(notInGuild);
+                }
+            } else if (cmd.equalsIgnoreCase("disband")) {
+                if (GuildUtils.isInGuild(p)) {
+                    Guild g = GuildData.getGuild(p.getUniqueId());
+                    if (g.getGuild_leader() != p.getUniqueId()) return;
+                    g.deleteGuild();
+                    p.sendMessage("You disbanded your guild.");
+                } else {
+                    p.sendMessage(notInGuild);
+                }
+            } else if (cmd.equalsIgnoreCase("delete")) {
+                String guildName = args[1];
+                for (Guild g : GuildData.getAllGuilds()) {
+                    if (g.getName().equals(guildName)) {
+                        if (!p.isOp()) return;
+                        g.deleteGuild();
+                        p.sendMessage("You've deleted the guild: " + guildName);
+                    }
+                }
+            } else if (cmd.equalsIgnoreCase("kick")) {
+                Player target = Bukkit.getPlayer(args[1]);
+                if (GuildUtils.isInGuild(p)) {
+                    Guild g = GuildData.getGuild(p.getUniqueId());
+                    if (!g.hasElevatedPerms(p.getUniqueId())) {
+                        p.sendMessage(noPerms);
+                        return;
+                    }
+                    if (target != null) {
+                        if (g.getGuild_members().contains(p.getUniqueId())) {
+                            g.removeMember(target.getUniqueId());
+                            p.sendMessage("You kicked the user: " + target);
+                        } else {
+                            p.sendMessage("This user is not in your guild.");
+                            return;
+                        }
+                    } else {
+                        p.sendMessage("User was not found.");
+                    }
+                } else {
+                    p.sendMessage(notInGuild);
+                }
+            } else if (cmd.equalsIgnoreCase("promote")) {
+                Player target = Bukkit.getPlayer(args[1]);
 
+                if (GuildUtils.isInGuild(p)) {
+                    Guild g = GuildData.getGuild(p.getUniqueId());
+
+                    if (g.getGuild_leader() != p.getUniqueId()) {
+                        p.sendMessage(noPerms);
+                        return;
+                    }
+                    if (target != null) {
+                        if (g.getGuild_members().contains(p.getUniqueId())) {
+                            if (g.getGuild_generals().contains(target.getUniqueId())) {
+                                p.sendMessage("This user is already a general.");
+                            } else {
+                                g.promoteMember(target.getUniqueId());
+                            }
+                        } else {
+                            p.sendMessage("This user is not in your guild.");
+                            return;
+                        }
+                    } else {
+                        p.sendMessage("User was not found.");
+                    }
+                } else {
+                    p.sendMessage(notInGuild);
+                }
+            } else if (cmd.equalsIgnoreCase("demote")) {
+                Player target = Bukkit.getPlayer(args[1]);
+
+                if (GuildUtils.isInGuild(p)) {
+                    Guild g = GuildData.getGuild(p.getUniqueId());
+
+                    if (g.getGuild_leader() != p.getUniqueId()) {
+                        p.sendMessage(noPerms);
+                        return;
+                    }
+
+                    if (target != null) {
+                        if (g.getGuild_members().contains(p.getUniqueId())) {
+                            if (g.getGuild_generals().contains(target.getUniqueId())) {
+                                g.demoteMember(target.getUniqueId());
+                                p.sendMessage("You just demoted: " + target.getName());
+                            } else {
+                                p.sendMessage("This user is already a member.");
+                            }
+                        } else {
+                            p.sendMessage("This user is not in your guild.");
+                            return;
+                        }
+                    } else {
+                        p.sendMessage("User was not found.");
+                    }
+                } else {
+                    p.sendMessage(notInGuild);
                 }
             }
-            //disband
-            //hijack
-            //kick
-            //promote
-            //demote
+            //TODO: transfer ownership cmd
         }
     }
 

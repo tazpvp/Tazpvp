@@ -1,6 +1,7 @@
 package net.tazpvp.tazpvp.gui.guis.guild;
 
 import net.tazpvp.tazpvp.guild.Guild;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -47,24 +48,15 @@ public class GuildMembers extends GUI {
         int index = 10;
         for (OfflinePlayer p : members) {
             ChatColor nameColor = g.getGuild_generals().contains(p.getUniqueId()) ? ChatColor.GREEN : ChatColor.GRAY;
-            ChatColor rankColor = g.getGuild_generals().contains(p.getUniqueId()) ? ChatColor.DARK_GREEN : ChatColor.GRAY;
-//            String contributions = ChatColor.GRAY + "Kills: " + ChatColor.WHITE + g.getKillsPlayer(p.getUniqueId());
-//            String contributions2 = ChatColor.GRAY + "Deaths: " + ChatColor.WHITE + g.getDeathsPlayer(p.getUniqueId());
-            String extraLore = g.hasElevatedPerms(viewer.getUniqueId()) ? ChatColor.RED + "Click me to edit!" : "";
-            ItemStack plrItem;
-            if (g.hasElevatedPerms(viewer.getUniqueId())) {
-                plrItem = SkullBuilder.of().setHeadTexture(p).name(nameColor + p.getName()).lore(rankColor + g.getGroup(p.getUniqueId()), /*contributions, contributions2,*/ "", extraLore);
-            } else {
-                plrItem = new ItemBuilder(ItemUtils.skull(p)).setName(nameColor + p.getName()).setLore(rankColor + g.getGroup(p.getUniqueId()), /*contributions, contributions2*/);
-            }
-            Button plr = Button.create(plrItem, (e) -> {
-                if (!viewer.getUniqueId().equals(p.getUniqueId())) {
-                    if (g.isOwner(viewer.getUniqueId())) ownerGui(viewer, p, g);
-                    else if (g.isStaff(viewer.getUniqueId())) staffGui(viewer, p, g);
-                }
-            });
+            //rank based colors
 
-            gui.addButton(index, plr);
+            String lore = g.hasElevatedPerms(viewer.getUniqueId()) ? ChatColor.RED + "Click me to edit!" : "";
+
+            ItemStack plrItem = SkullBuilder.of().setHeadTexture(p).name(nameColor + p.getName()).lore(nameColor + g.getRank(p.getUniqueId()), "", lore).build();
+
+            Button item = Button.createBasic(plrItem);
+
+            addButton(item, index);
 
             if (index == 16 || index == 25) {
                 index += 2;
@@ -73,17 +65,14 @@ public class GuildMembers extends GUI {
         }
 
         if (members.isEmpty()) {
-            ItemButton emptylmfao = ItemButton.create(new ItemBuilder(Material.OAK_SIGN).setName(ChatColor.WHITE + "Such Lonely (╯°□°）╯︵ ┻━┻").setLore(ChatColor.GRAY + "Invite some members with /guild invite or the paper button"), e->{});
-            gui.addButton(22, emptylmfao);
+            addButton(
+                    Button.createBasic(ItemBuilder.of(Material.OAK_SIGN)
+                            .name("Your guild is empty.")
+                            .lore(CC.GRAY + "Invite more members with" + CC.GREEN + "/guild invite")
+                            .build()),
+                    22);
         }
 
-        if (g.hasPerms(viewer)) {
-            ItemButton inviteBTN = ItemButton.create(new ItemBuilder(Material.PAPER).setName(ChatColor.GREEN + "Invite Player").setLore(ChatColor.GRAY + "Invite a player to your guild."), (e) -> {
-                new InviteGuildGUI(viewer, g);
-            });
-            gui.addButton(27, inviteBTN);
-        }
-
-        gui.update();
+        update();
     }
 }

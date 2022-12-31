@@ -73,7 +73,7 @@ public class GuildInfo extends GUI {
 
         addButton(Button.create(ItemBuilder.of(Material.WRITABLE_BOOK, 1)
                 .name(CC.GREEN + "Members").lore(" ", CC.DARK_GREEN + "View guild members.").build(), (e) -> {
-            //code to go to view guild members
+            new GuildMembers(p, g);
         }), 15);
 
         update();

@@ -59,6 +59,7 @@ public class Guild implements Serializable {
     public void setPlayersGuild(OfflinePlayer p) {
         setPlayersGuild(p.getUniqueId());
     }
+
     public void setPlayersGuild(UUID p) {
         PersistentData.setValueS(p, DataTypes.GUILD_ID.getColumnName(), getID().toString());
     }
@@ -207,6 +208,16 @@ public class Guild implements Serializable {
         for (UUID member : getAllMembers()) {
             resetPlayerGuild(member);
             GuildData.deleteGuild(getID());
+        }
+    }
+
+    public String getRank(UUID uuid) {
+        if (getGuild_leader() == uuid) {
+            return "Leader";
+        } else if (getGuild_generals().contains(uuid)) {
+            return "General";
+        } else {
+            return "Member";
         }
     }
 }
