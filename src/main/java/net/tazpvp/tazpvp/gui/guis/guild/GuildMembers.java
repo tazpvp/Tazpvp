@@ -51,9 +51,7 @@ public class GuildMembers extends GUI {
             //rank based colors
 
             String lore = g.hasElevatedPerms(viewer.getUniqueId()) ? ChatColor.RED + "Click me to edit!" : "";
-
             ItemStack plrItem = SkullBuilder.of().setHeadTexture(p).name(nameColor + p.getName()).lore(nameColor + g.getRank(p.getUniqueId()), "", lore).build();
-
             Button item = Button.createBasic(plrItem);
 
             addButton(item, index);
@@ -66,11 +64,11 @@ public class GuildMembers extends GUI {
 
         if (members.isEmpty()) {
             addButton(
-                    Button.createBasic(ItemBuilder.of(Material.OAK_SIGN)
-                            .name("Your guild is empty.")
-                            .lore(CC.GRAY + "Invite more members with" + CC.GREEN + "/guild invite")
-                            .build()),
-                    22);
+                Button.createBasic(ItemBuilder.of(Material.OAK_SIGN)
+                        .name("Your guild is empty.")
+                        .lore(CC.GRAY + "Invite more members with" + CC.GREEN + "/guild invite")
+                        .build()),
+                22);
         }
 
         update();
