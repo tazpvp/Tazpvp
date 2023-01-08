@@ -32,12 +32,13 @@
 
 package net.tazpvp.tazpvp.commands.moderation;
 
-import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.CommandCore;
 import world.ntdi.nrcore.utils.command.CommandFunction;
+
+import javax.annotation.Nullable;
 
 public class BanCommandFunction extends CommandCore implements CommandFunction {
 
@@ -48,8 +49,36 @@ public class BanCommandFunction extends CommandCore implements CommandFunction {
     @Override
     public void execute(CommandSender sender, String[] args) {
 
-        if (args.length >= 2) {
+        if (args.length == 1) {
             Player target = Bukkit.getPlayer(args[0]);
+
+        } else if (args.length == 2) {
+            Player target = Bukkit.getPlayer(args[0]);
+            String reason = args[1];
+
+        } else if (args.length == 3) {
+
+
+        } else {
+            if (sender instanceof Player p) {
+                p.sendMessage("Usage: /ban <player> <reason> <time>");
+            } else {
+                Bukkit.getLogger().info("Usage: /ban <player> <reason> <time>");
+            }
         }
     }
+
+    public void ban(@Nullable Player target, @Nullable String reason, @Nullable Integer time) {
+
+        if (reason == null) reason = "Unfair Advantage";
+
+        if (time == null) {
+
+        } else {
+
+        }
+
+
+    }
+
 }

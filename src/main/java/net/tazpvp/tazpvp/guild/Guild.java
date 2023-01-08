@@ -53,6 +53,8 @@ public class Guild implements Serializable {
         this.description = "A guild";
         this.icon = Material.OAK_SIGN;
 
+        GuildData.setGuild(getID(), this);
+
         setPlayersGuild(getGuild_leader());
     }
 
