@@ -44,7 +44,7 @@ public class GuildCommandFunction extends CommandCore implements CommandFunction
                 acceptInvite(p);
             } else if (cmd.equalsIgnoreCase("leave")) {
                 if (GuildUtils.isInGuild(p)) {
-                    Guild g = GuildData.getGuild(p.getUniqueId());
+                    Guild g = GuildUtils.getGuildPlayerIn(p);
                     if (g.getGuild_leader() == p.getUniqueId()) {
                         p.sendMessage("You cannot leave your guild. Try disbanding it.");
                         return;
@@ -55,7 +55,7 @@ public class GuildCommandFunction extends CommandCore implements CommandFunction
                 }
             } else if (cmd.equalsIgnoreCase("disband")) {
                 if (GuildUtils.isInGuild(p)) {
-                    Guild g = GuildData.getGuild(p.getUniqueId());
+                    Guild g = GuildUtils.getGuildPlayerIn(p);
                     if (g.getGuild_leader() != p.getUniqueId()) return;
                     g.deleteGuild();
                     p.sendMessage("You disbanded your guild.");
@@ -74,7 +74,7 @@ public class GuildCommandFunction extends CommandCore implements CommandFunction
             } else if (cmd.equalsIgnoreCase("kick")) {
                 Player target = Bukkit.getPlayer(args[1]);
                 if (GuildUtils.isInGuild(p)) {
-                    Guild g = GuildData.getGuild(p.getUniqueId());
+                    Guild g = GuildUtils.getGuildPlayerIn(p);
                     if (!g.hasElevatedPerms(p.getUniqueId())) {
                         p.sendMessage(noPerms);
                         return;
@@ -97,7 +97,7 @@ public class GuildCommandFunction extends CommandCore implements CommandFunction
                 Player target = Bukkit.getPlayer(args[1]);
 
                 if (GuildUtils.isInGuild(p)) {
-                    Guild g = GuildData.getGuild(p.getUniqueId());
+                    Guild g = GuildUtils.getGuildPlayerIn(p);
 
                     if (g.getGuild_leader() != p.getUniqueId()) {
                         p.sendMessage(noPerms);
@@ -124,7 +124,7 @@ public class GuildCommandFunction extends CommandCore implements CommandFunction
                 Player target = Bukkit.getPlayer(args[1]);
 
                 if (GuildUtils.isInGuild(p)) {
-                    Guild g = GuildData.getGuild(p.getUniqueId());
+                    Guild g = GuildUtils.getGuildPlayerIn(p);
 
                     if (g.getGuild_leader() != p.getUniqueId()) {
                         p.sendMessage(noPerms);
