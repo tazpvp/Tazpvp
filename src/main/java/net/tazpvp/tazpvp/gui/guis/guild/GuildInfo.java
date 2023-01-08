@@ -46,7 +46,7 @@ import world.ntdi.nrcore.utils.item.builders.SkullBuilder;
 public class GuildInfo extends GUI {
 
     public GuildInfo(Player p, Guild g) {
-        super(g.getName() + " Info", 3);
+        super(CC.DARK_GREEN + g.getName(), 3);
         addItems(p, g);
         open(p);
     }
@@ -62,6 +62,8 @@ public class GuildInfo extends GUI {
         };
 
         OfflinePlayer leader = Bukkit.getOfflinePlayer(g.getGuild_leader());
+
+        fill(0, 3*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE).name(" ").build());
 
         addButton(Button.create(ItemBuilder.of(Material.ENCHANTING_TABLE, 1)
                 .name(CC.GREEN + g.getName()).lore(lore).build(), (e) -> {

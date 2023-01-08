@@ -25,7 +25,7 @@ public class GuildBrowser extends GUI {
     private int pagesNeeded;
     private int numNum;
     public GuildBrowser(Player p) {
-        super(CC.GOLD + "Guild Browser", 5);
+        super(CC.DARK_GREEN + "Guild Browser", 5);
         this.pagesNeeded = (int) Math.ceil(GuildUtils.getSortedGuilds().size() / (double) (4 * 7));
         pageChange(p, 0);
         open(p);
@@ -34,12 +34,6 @@ public class GuildBrowser extends GUI {
     public void pageChange(Player p, int page) {
         defaults(p);
         LinkedHashMap<UUID, Integer> guilds = GuildUtils.getSortedGuilds();
-
-        if (guilds.size() < 1) {
-            addButton(Button.createBasic(ItemBuilder.of(Material.OAK_SIGN).name("No Guilds!").build()), 36 );
-            update();
-            return;
-        }
 
         int displacement = 10;
         for(int i = (page * numNum); i < Math.min(numNum + (page*numNum), guilds.size()); i++) {
