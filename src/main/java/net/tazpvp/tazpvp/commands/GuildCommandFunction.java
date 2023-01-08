@@ -1,15 +1,13 @@
 package net.tazpvp.tazpvp.commands;
 
-import net.md_5.bungee.api.chat.*;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.guild.Guild;
 import net.tazpvp.tazpvp.guild.GuildUtils;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.GuildData;
-import net.tazpvp.tazpvp.utils.data.PersistentData;
-import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -17,7 +15,6 @@ import org.bukkit.metadata.FixedMetadataValue;
 import world.ntdi.nrcore.utils.command.CommandCore;
 import world.ntdi.nrcore.utils.command.CommandFunction;
 
-import java.awt.*;
 import java.util.UUID;
 
 public class GuildCommandFunction extends CommandCore implements CommandFunction {
@@ -37,7 +34,7 @@ public class GuildCommandFunction extends CommandCore implements CommandFunction
             if (cmd.equalsIgnoreCase("invite")) {
                 if (GuildUtils.isInGuild(p)) {
                     Player target = Bukkit.getPlayer(args[1]);
-                    Guild g = GuildData.getGuild(p.getUniqueId());
+                    Guild g = GuildUtils.getGuildPlayerIn(p);
 
                     invite(p, target, g);
                 } else {
