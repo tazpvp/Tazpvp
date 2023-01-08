@@ -19,7 +19,7 @@ import java.util.UUID;
 
 public class GuildMembers extends GUI {
     public GuildMembers(Player p, Guild g) {
-        super("Members", 4);
+        super("Guild Members", 4);
         addItems(p, g);
         open(p);
     }

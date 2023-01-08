@@ -20,7 +20,7 @@ import java.util.List;
 
 public class GuildEdit extends GUI {
     public GuildEdit(Player p, Guild g) {
-        super(CC.GOLD + "Edit Guild", 3);
+        super("Guild Edit", 3);
         addItems(p, g);
         open(p);
     }

@@ -191,6 +191,10 @@ public class GuildCommandFunction extends CommandCore implements CommandFunction
         if (p.hasMetadata("guildInvited")) {
             UUID guildID = UUID.fromString(p.getMetadata("guildInvited").get(0).asString());
             Guild g = GuildData.getGuild(guildID);
+            for (UUID u : g.getInvited()) {
+                Bukkit.broadcastMessage(Bukkit.getPlayer(u).getName());
+            }
+
             g.acceptInvite(p.getUniqueId());
             p.removeMetadata("guildInvite", Tazpvp.getInstance());
         } else {

@@ -25,7 +25,7 @@ public class GuildBrowser extends GUI {
     private int pagesNeeded;
     private int numNum;
     public GuildBrowser(Player p) {
-        super(CC.DARK_GREEN + "Guild Browser", 5);
+        super("Guild Browser", 5);
         this.pagesNeeded = (int) Math.ceil(GuildUtils.getSortedGuilds().size() / (double) (4 * 7));
         pageChange(p, 0);
         open(p);
