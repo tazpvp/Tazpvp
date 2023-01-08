@@ -13,8 +13,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
@@ -127,8 +125,8 @@ public class GuildBrowser extends GUI {
     private static void nameGuild(Player p) {
         new AnvilGUI.Builder()
             .onComplete((player, text) -> {
-                if (text.startsWith("kys")) {
-                    text = text.replaceFirst("kys", "");
+                if (text.startsWith(">")) {
+                    text = text.replaceFirst(">", "");
                 }
                 PersistentData.remove(p, DataTypes.COINS, 6000);
                 p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
@@ -139,7 +137,7 @@ public class GuildBrowser extends GUI {
             .onClose(player -> {
                 p.sendMessage("Guild creation cancelled.");
             })
-            .text("kys")
+            .text(">")
             .itemLeft(ItemBuilder.of(Material.NAME_TAG).build())
             .title("Name your guild")
             .plugin(Tazpvp.getInstance())
