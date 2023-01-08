@@ -70,7 +70,7 @@ public class GuildInfo extends GUI {
             new GuildEdit(p, g);
         }), 11);
 
-        addButton(Button.createBasic(SkullBuilder.of().setHeadTexture(leader.getName())
+        addButton(Button.createBasic(SkullBuilder.of().setHeadTexture(g.getGuild_leader())
                 .name(CC.GREEN + "Guild Master").lore(" ", CC.DARK_GREEN + leader.getName()).build()), 13);
 
         addButton(Button.create(ItemBuilder.of(Material.WRITABLE_BOOK, 1)
