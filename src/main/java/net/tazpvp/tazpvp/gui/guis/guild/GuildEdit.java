@@ -26,7 +26,7 @@ public class GuildEdit extends GUI {
     }
 
     private void addItems(Player p, Guild g) {
-        fill(0, 3 * 9, ItemBuilder.of(Material.GRAY_STAINED_GLASS_PANE).name(" ").build());
+        fill(0, 3 * 9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE).name(" ").build());
 
         // Guild Icon
         // Guild Description

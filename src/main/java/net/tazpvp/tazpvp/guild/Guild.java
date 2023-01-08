@@ -82,7 +82,8 @@ public class Guild implements Serializable {
     }
 
     public boolean hasElevatedPerms(UUID uuid) {
-        return !guild_members.contains(uuid);
+        if (guild_leader == uuid) return true;
+        else return guild_generals.contains(uuid);
     }
 
     public void sendAll(String message) {
