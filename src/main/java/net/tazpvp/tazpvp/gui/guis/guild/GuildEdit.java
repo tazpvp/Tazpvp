@@ -91,22 +91,16 @@ public class GuildEdit extends GUI {
             int index = 10;
             for (Material m : icons) {
                 Button iconBTN = Button.create(ItemBuilder.of(m).name(ChatColor.YELLOW + m.name()).lore(ChatColor.GREEN + "Click to set icon", ChatColor.DARK_AQUA + "Cost: " + ChatColor.AQUA + "50 credits").build(), (e) -> {
-                    if (true) { // check if ranked
-                        g.setIcon(p.getUniqueId(), m);
-                        p.closeInventory();
-                        g.sendAll(ChatColor.YELLOW + p.getName() + ChatColor.GREEN + " has set the guild icon to " + ChatColor.YELLOW + m.name());
-                        p.playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                new GuildEdit(p, g);
-                            }
-                        }.runTaskLater(Tazpvp.getInstance(), 1);
-
-                    } else {
-                        p.sendMessage(ChatColor.RED + "No rank broke ass");
-                        p.closeInventory();
-                    }
+                    g.setIcon(p.getUniqueId(), m);
+                    p.closeInventory();
+                    g.sendAll(ChatColor.YELLOW + p.getName() + ChatColor.GREEN + " has set the guild icon to " + ChatColor.YELLOW + m.name());
+                    p.playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            new GuildEdit(p, g);
+                        }
+                    }.runTaskLater(Tazpvp.getInstance(), 1);
                 });
 
                 addButton(iconBTN, index);

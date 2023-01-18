@@ -45,6 +45,7 @@ public class KitCommandFunction extends CommandCore implements CommandFunction {
 
     public KitCommandFunction() {
         super("kit", "kit", "kit");
+        setDefaultFunction(this);
     }
 
     @Override

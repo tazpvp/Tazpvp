@@ -68,7 +68,7 @@ public class GuildBrowser extends GUI {
             addButton(lastPage, 18);
         }
 
-        if (page != pagesNeeded - 1) {
+        if (page != pagesNeeded) {
             Button nextPage = Button.create(ItemBuilder.of(Material.ARROW).name(CC.GREEN + "Next Page").build(), (e) -> {
                 if((page + 1) * numNum < guilds.size()) pageChange(p, page + 1);
             });
