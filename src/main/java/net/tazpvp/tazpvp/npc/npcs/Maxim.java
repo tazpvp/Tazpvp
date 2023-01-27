@@ -32,7 +32,7 @@
 
 package net.tazpvp.tazpvp.npc.npcs;
 
-import net.tazpvp.tazpvp.gui.guis.Shop;
+import net.tazpvp.tazpvp.guis.Shop;
 import net.tazpvp.tazpvp.npc.NPC;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Bukkit;

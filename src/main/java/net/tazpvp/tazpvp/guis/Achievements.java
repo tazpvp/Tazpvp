@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  *
- * Copyright (c) 2022, n-tdi
+ * Copyright (c) 2023, n-tdi
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,9 +30,9 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.gui.guis;
+package net.tazpvp.tazpvp.guis;
 
-import net.tazpvp.tazpvp.gui.guis.guild.GuildBrowser;
+import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -40,29 +40,38 @@ import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
-public class Menu extends GUI {
+public class Achievements extends GUI {
 
-    public Menu(Player p) {
-        super("Menu", 3);
+    public Achievements(Player p) {
+        super("Achievements", 4);
         addItems(p);
         open(p);
     }
 
     private void addItems(Player p) {
-        fill(0, 3*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
+        net.tazpvp.tazpvp.achievements.Achievements ACH = PersistentData.getAchievements(p.getUniqueId());
 
-        addButton(Button.create(ItemBuilder.of(Material.BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Achievements").lore(CC.GRAY + "Check your achievements").build(), (e) -> {
-            new Achievements(p);
-        }), 10);
+        fill(0, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
-        addButton(Button.create(ItemBuilder.of(Material.LECTERN, 1).name(CC.GREEN + "" + CC.BOLD + "Talents").lore(CC.GRAY + "Check your talents").build(), (e) -> {
-            new Talents(p);
-        }), 12);
+        setButton(p,  10, "Adept", "kys", ACH.isAdept());
+        setButton(p,  11, "Bowling", "kys", ACH.isBowling());
+        setButton(p,  12, "Charm", "kys", ACH.isCharm());
+        setButton(p,  13, "Craftsman", "kys", ACH.isCraftsman());
+        setButton(p,  14, "Gamble", "kys", ACH.isGamble());
+        setButton(p,  15, "Gladiator", "kys", ACH.isGladiator());
+        setButton(p,  16, "Legend", "kys", ACH.isLegend());
 
-        addButton(Button.create(ItemBuilder.of(Material.LECTERN, 1).name(CC.GREEN + "" + CC.BOLD + "Guilds").lore(CC.GRAY + "Browse guilds").build(), (e) -> {
-            new GuildBrowser(p);
-        }), 14);
+        setButton(p,  19, "Merchant", "kys", ACH.isMerchant());
+        setButton(p,  20, "Superior", "kys", ACH.isSuperior());
 
         update();
+    }
+
+    private void setButton(Player p, int slot, String name, String lore, boolean completed) {
+
+        String complete = completed ? CC.GREEN + "Complete" : CC.RED + "Incomplete";
+        Material mat = completed ? Material.ENCHANTED_BOOK : Material.BOOK;
+
+        addButton(Button.createBasic(ItemBuilder.of(mat, 1).name(CC.RED + "" + CC.BOLD + name).lore(CC.GRAY + lore, " ", complete).build()), slot);
     }
 }

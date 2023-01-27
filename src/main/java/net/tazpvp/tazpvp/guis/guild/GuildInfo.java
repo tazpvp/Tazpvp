@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  *
- * Copyright (c) 2022, n-tdi
+ * Copyright (c) 2023, n-tdi
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,48 +30,54 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.gui.guis;
+package net.tazpvp.tazpvp.guis.guild;
 
-import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.guild.Guild;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
+import world.ntdi.nrcore.utils.item.builders.SkullBuilder;
 
-public class Achievements extends GUI {
+public class GuildInfo extends GUI {
 
-    public Achievements(Player p) {
-        super("Achievements", 4);
-        addItems(p);
+    public GuildInfo(Player p, Guild g) {
+        super("Guild Info", 3);
+        addItems(p, g);
         open(p);
     }
 
-    private void addItems(Player p) {
-        net.tazpvp.tazpvp.achievements.Achievements ACH = PersistentData.getAchievements(p.getUniqueId());
+    private void addItems(Player p, Guild g) {
+        String[] lore = {
+                " ",
+                CC.DARK_GREEN + "Kills: " + CC.GREEN + g.getKills(),
+                CC.DARK_GREEN + "Deaths: " + CC.GREEN + g.getDeaths(),
+                CC.DARK_GREEN + "KDR: " + CC.GREEN + g.getKDR(),
+                " ",
+                CC.GOLD + "Click to edit"
+        };
 
-        fill(0, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
+        OfflinePlayer leader = Bukkit.getOfflinePlayer(g.getGuild_leader());
 
-        setButton(p,  10, "Adept", "kys", ACH.isAdept());
-        setButton(p,  11, "Bowling", "kys", ACH.isBowling());
-        setButton(p,  12, "Charm", "kys", ACH.isCharm());
-        setButton(p,  13, "Craftsman", "kys", ACH.isCraftsman());
-        setButton(p,  14, "Gamble", "kys", ACH.isGamble());
-        setButton(p,  15, "Gladiator", "kys", ACH.isGladiator());
-        setButton(p,  16, "Legend", "kys", ACH.isLegend());
+        fill(0, 3*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE).name(" ").build());
 
-        setButton(p,  19, "Merchant", "kys", ACH.isMerchant());
-        setButton(p,  20, "Superior", "kys", ACH.isSuperior());
+        addButton(Button.create(ItemBuilder.of(Material.ENCHANTING_TABLE, 1)
+                .name(CC.GREEN + g.getName()).lore(lore).build(), (e) -> {
+            new GuildEdit(p, g);
+        }), 11);
+
+        addButton(Button.createBasic(SkullBuilder.of().setHeadTexture(g.getGuild_leader())
+                .name(CC.GREEN + "Guild Master").lore(" ", CC.DARK_GREEN + leader.getName()).build()), 13);
+
+        addButton(Button.create(ItemBuilder.of(Material.WRITABLE_BOOK, 1)
+                .name(CC.GREEN + "Members").lore(" ", CC.DARK_GREEN + "View guild members.").build(), (e) -> {
+            new GuildMembers(p, g);
+        }), 15);
 
         update();
-    }
-
-    private void setButton(Player p, int slot, String name, String lore, boolean completed) {
-
-        String complete = completed ? CC.GREEN + "Complete" : CC.RED + "Incomplete";
-        Material mat = completed ? Material.ENCHANTED_BOOK : Material.BOOK;
-
-        addButton(Button.createBasic(ItemBuilder.of(mat, 1).name(CC.RED + "" + CC.BOLD + name).lore(CC.GRAY + lore, " ", complete).build()), slot);
     }
 }

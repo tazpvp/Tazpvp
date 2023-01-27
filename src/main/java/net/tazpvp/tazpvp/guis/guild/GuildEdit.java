@@ -1,11 +1,42 @@
-package net.tazpvp.tazpvp.gui.guis.guild;
+/*
+ * BSD 3-Clause License
+ *
+ * Copyright (c) 2023, n-tdi
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its
+ *    contributors may be used to endorse or promote products derived from
+ *    this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+package net.tazpvp.tazpvp.guis.guild;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.guild.Guild;
 import net.tazpvp.tazpvp.utils.Profanity;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
-import net.tazpvp.tazpvp.utils.enums.CC;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -19,6 +50,9 @@ import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 import java.util.List;
 
 public class GuildEdit extends GUI {
+
+    private String noRank = "You do not have premium, visit the store to purchase it.";
+
     public GuildEdit(Player p, Guild g) {
         super("Guild Edit", 3);
         addItems(p, g);
@@ -28,25 +62,18 @@ public class GuildEdit extends GUI {
     private void addItems(Player p, Guild g) {
         fill(0, 3 * 9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE).name(" ").build());
 
-        // Guild Icon
-        // Guild Description
-        // Guild Tag
-
-        // Show Guild in Browser
-
-
         Button guildIcon = Button.create(ItemBuilder.of(g.getIcon()).name("Edit Guild Icon").lore("Need a rank hgome boy").build(), e -> {
             if (PersistentData.isPremium(p))
                 new Icon(p, g);
             else
-                p.sendMessage("No rank broke boy");
+                p.sendMessage(noRank);
         });
 
-        Button guildDescription = Button.create(ItemBuilder.of(Material.OAK_SIGN).name("Change Discription").lore("cost 6k coins yo yo").build(), e -> {
+        Button guildDescription = Button.create(ItemBuilder.of(Material.WRITABLE_BOOK).name("Change Discription").lore("cost 6k coins yo yo").build(), e -> {
             if (PersistentData.getInt(p, DataTypes.COINS) > 6000) {
                 setDescription(p, g);
             } else {
-                p.sendMessage("broke ass");
+                p.sendMessage(noRank);
             }
         });
 
@@ -54,22 +81,22 @@ public class GuildEdit extends GUI {
             if (PersistentData.isPremium(p)) {
                 setTag(p, g);
             } else {
-                p.sendMessage("no rank broke ass");
+                p.sendMessage(noRank);
             }
         });
 
         String showinbrowserTexxt = (g.isShow_in_browser() ? "Enabled" : "Disabled");
-        Button setShowInBrowser = Button.create(ItemBuilder.of(Material.REDSTONE_TORCH).name("Show in browser").lore(showinbrowserTexxt).build(), e -> {
+        Button setShowInBrowser = Button.create(ItemBuilder.of(Material.BELL).name("Show in browser").lore(showinbrowserTexxt).build(), e -> {
            g.setShow_in_browser(p.getUniqueId(), !g.isShow_in_browser());
            p.closeInventory();
            p.sendMessage((g.isShow_in_browser() ? "Enabled" : "Disabled"));
            new GuildEdit(p, g);
         });
 
-        addButton(guildIcon, 11);
+        addButton(guildIcon, 10);
         addButton(guildDescription, 12);
-        addButton(guildTag, 13);
-        addButton(setShowInBrowser, 15);
+        addButton(guildTag, 14);
+        addButton(setShowInBrowser, 16);
 
         update();
     }

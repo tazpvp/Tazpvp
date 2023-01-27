@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  *
- * Copyright (c) 2022, n-tdi
+ * Copyright (c) 2023, n-tdi
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,53 +30,38 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.gui.guis.guild;
+package net.tazpvp.tazpvp.guis;
 
-import net.tazpvp.tazpvp.guild.Guild;
+import net.tazpvp.tazpvp.guis.guild.GuildBrowser;
 import net.tazpvp.tazpvp.utils.enums.CC;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
-import world.ntdi.nrcore.utils.item.builders.SkullBuilder;
 
-public class GuildInfo extends GUI {
+public class Menu extends GUI {
 
-    public GuildInfo(Player p, Guild g) {
-        super("Guild Info", 3);
-        addItems(p, g);
+    public Menu(Player p) {
+        super("Menu", 3);
+        addItems(p);
         open(p);
     }
 
-    private void addItems(Player p, Guild g) {
-        String[] lore = {
-                " ",
-                CC.DARK_GREEN + "Kills: " + CC.GREEN + g.getKills(),
-                CC.DARK_GREEN + "Deaths: " + CC.GREEN + g.getDeaths(),
-                CC.DARK_GREEN + "KDR: " + CC.GREEN + g.getKDR(),
-                " ",
-                CC.GOLD + "Click to edit"
-        };
+    private void addItems(Player p) {
+        fill(0, 3*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
-        OfflinePlayer leader = Bukkit.getOfflinePlayer(g.getGuild_leader());
+        addButton(Button.create(ItemBuilder.of(Material.BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Achievements").lore(CC.GRAY + "Check your achievements").build(), (e) -> {
+            new Achievements(p);
+        }), 10);
 
-        fill(0, 3*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE).name(" ").build());
+        addButton(Button.create(ItemBuilder.of(Material.LECTERN, 1).name(CC.GREEN + "" + CC.BOLD + "Talents").lore(CC.GRAY + "Check your talents").build(), (e) -> {
+            new Talents(p);
+        }), 12);
 
-        addButton(Button.create(ItemBuilder.of(Material.ENCHANTING_TABLE, 1)
-                .name(CC.GREEN + g.getName()).lore(lore).build(), (e) -> {
-            new GuildEdit(p, g);
-        }), 11);
-
-        addButton(Button.createBasic(SkullBuilder.of().setHeadTexture(g.getGuild_leader())
-                .name(CC.GREEN + "Guild Master").lore(" ", CC.DARK_GREEN + leader.getName()).build()), 13);
-
-        addButton(Button.create(ItemBuilder.of(Material.WRITABLE_BOOK, 1)
-                .name(CC.GREEN + "Members").lore(" ", CC.DARK_GREEN + "View guild members.").build(), (e) -> {
-            new GuildMembers(p, g);
-        }), 15);
+        addButton(Button.create(ItemBuilder.of(Material.LECTERN, 1).name(CC.GREEN + "" + CC.BOLD + "Guilds").lore(CC.GRAY + "Browse guilds").build(), (e) -> {
+            new GuildBrowser(p);
+        }), 14);
 
         update();
     }
