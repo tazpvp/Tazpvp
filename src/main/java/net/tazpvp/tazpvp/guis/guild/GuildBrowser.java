@@ -51,6 +51,7 @@ import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class GuildBrowser extends GUI {
@@ -59,24 +60,20 @@ public class GuildBrowser extends GUI {
     public GuildBrowser(Player p) {
         super("Guild Browser", 5);
         this.pagesNeeded = (int) Math.ceil(GuildUtils.getSortedGuilds().size() / (double) (4 * 7));
-        pageChange(p, 0);
+        listGuilds(p);
         open(p);
     }
 
-    public void pageChange(Player p, int page) {
+    public void listGuilds(Player p) {
         defaults(p);
+
+        int index = 10;
         LinkedHashMap<UUID, Integer> guilds = GuildUtils.getSortedGuilds();
 
-        int displacement = 10;
-        for(int i = (page * numNum); i < Math.min(numNum + (page*numNum), guilds.size()); i++) {
-            Guild g = GuildData.getGuild(UUID.fromString(String.valueOf(guilds.keySet().toArray()[i])));
-            String tag = (g.getTag() == null) ? "" : CC.YELLOW + " [" + g.getTag() + "]";
-            CC color = CC.WHITE;
-            if (i == 0) color = CC.GOLD;
-            else if (i == 1) color = CC.GRAY;
-            else if (i == 2) color = CC.DARK_RED;
+        for (Map.Entry<UUID, Integer> guild : guilds.entrySet()) {
+            Guild g = GuildData.getGuild(guild.getKey());
 
-            Button guildView = Button.create(ItemBuilder.of(g.getIcon()).name(color + g.getName() + tag).lore(
+            Button guildView = Button.create(ItemBuilder.of(g.getIcon()).name(CC.WHITE + g.getName()).lore(
                     "",
                     CC.WHITE + g.getDescription(),
                     ChatColor.GRAY + "-" + Bukkit.getOfflinePlayer(g.getGuild_leader()).getName(),
@@ -85,29 +82,13 @@ public class GuildBrowser extends GUI {
                     CC.GRAY + "Kills: " + CC.WHITE + (int) g.getKills()
             ).build(), (e) -> {});
 
-            addButton(guildView, displacement);
+            addButton(guildView, index);
 
-            if((i+1) % 7 == 0) {
-                displacement += 2;
+            if (index == 16 || index == 25) {
+                index += 2;
             }
-            displacement++;
+            index++;
         }
-
-        if (page != 0) {
-            Button lastPage = Button.create(ItemBuilder.of(Material.ARROW).name(CC.GREEN + "Last Page").build(), (e) -> {
-                if((page - 1) * numNum >= 0) pageChange(p, page - 1);
-            });
-            addButton(lastPage, 18);
-        }
-
-        if (page != pagesNeeded) {
-            Button nextPage = Button.create(ItemBuilder.of(Material.ARROW).name(CC.GREEN + "Next Page").build(), (e) -> {
-                if((page + 1) * numNum < guilds.size()) pageChange(p, page + 1);
-            });
-
-            addButton(nextPage, 26);
-        }
-
         update();
     }
 

@@ -50,6 +50,9 @@ public class Chat implements Listener {
         String message = e.getMessage();
         String[] words = message.split(" ");
 
+        //TODO: chat prefixes
+        //TODO: guild suffixes
+
         for (String word : words) {
             for (Player plr : Bukkit.getOnlinePlayers()) {
                 if (word.equalsIgnoreCase(plr.getName())) {
