@@ -69,7 +69,7 @@ public class GuildData {
 
     public static List<Guild> getAllGuilds() {
         List<Guild> g = new ArrayList<>();
-        SQLHelper.getListOfColumn(NAME, "guild").forEach(guild -> g.add(getGuild(UUID.fromString((String) guild))));
+        SQLHelper.getListOfColumn(NAME, "id").forEach(id -> g.add(getGuild(UUID.fromString((String) id))));
         Bukkit.getLogger().info(g.size() + "");
         return g;
     }
