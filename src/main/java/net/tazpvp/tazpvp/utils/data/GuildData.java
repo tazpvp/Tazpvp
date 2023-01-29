@@ -1,6 +1,7 @@
 package net.tazpvp.tazpvp.utils.data;
 
 import net.tazpvp.tazpvp.guild.Guild;
+import org.bukkit.Bukkit;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
 import world.ntdi.nrcore.utils.sql.SQLHelper;
@@ -69,6 +70,7 @@ public class GuildData {
     public static List<Guild> getAllGuilds() {
         List<Guild> g = new ArrayList<>();
         SQLHelper.getListOfColumn(NAME, "guild").forEach(guild -> g.add(getGuild(UUID.fromString((String) guild))));
+        Bukkit.getLogger().info(g.size() + "");
         return g;
     }
 
