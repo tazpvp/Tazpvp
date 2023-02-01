@@ -37,7 +37,16 @@ public class GuildCommandFunction extends CommandCore implements CommandFunction
 
         if (sender instanceof Player p) {
             String cmd = args[0];
-            if (cmd.equalsIgnoreCase("invite")) {
+            if (cmd.equalsIgnoreCase("help")) {
+                String[] help = {
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                };
+                p.sendMessage(help);
+            } else if (cmd.equalsIgnoreCase("invite")) {
                 if (GuildUtils.isInGuild(p)) {
                     Player target = Bukkit.getPlayer(args[1]);
                     Guild g = GuildUtils.getGuildPlayerIn(p);
