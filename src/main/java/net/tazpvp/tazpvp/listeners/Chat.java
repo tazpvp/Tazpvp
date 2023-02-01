@@ -42,28 +42,32 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Chat implements Listener {
 
     @EventHandler
     public void onChat(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
         String message = e.getMessage();
-        String[] words = message.split(" ");
 
         //TODO: chat prefixes
         //TODO: guild suffixes
 
-        for (String word : words) {
-            for (Player plr : Bukkit.getOnlinePlayers()) {
-                if (word.equalsIgnoreCase(plr.getName())) {
-                    word = CC.YELLOW + word;
-                    plr.playSound(plr.getLocation(), Sound.BLOCK_BELL_USE, 1, 1);
-                }
+        for (Player h : Bukkit.getOnlinePlayers()) {
+            Pattern pattern = Pattern.compile(h.getName(), Pattern.CASE_INSENSITIVE);
+            Matcher match = pattern.matcher(message);
+            if (match.find()) {
+                h.playSound(h.getLocation(), Sound.BLOCK_BELL_USE, 1, 1);
+                message.replace(h.getName(), CC.YELLOW + h.getName());
             }
         }
 
         LooseData.setChatCount(p.getUniqueId(), LooseData.getChatCount(p.getUniqueId()) + 1);
 
         Tazpvp.getObservers().forEach(observer -> observer.chat(p, e.getMessage()));
+
+        e.setMessage(message);
     }
 }

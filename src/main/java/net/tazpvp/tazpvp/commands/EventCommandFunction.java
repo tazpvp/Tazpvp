@@ -41,6 +41,7 @@ import world.ntdi.nrcore.utils.command.CommandCore;
 import world.ntdi.nrcore.utils.command.CommandFunction;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class EventCommandFunction extends CommandCore implements CommandFunction {
 
@@ -80,5 +81,10 @@ public class EventCommandFunction extends CommandCore implements CommandFunction
             }
         }
         return;
+    }
+
+    @Override
+    public List<String> tabCompletion(CommandSender commandSender, String[] strings) {
+        return null;
     }
 }

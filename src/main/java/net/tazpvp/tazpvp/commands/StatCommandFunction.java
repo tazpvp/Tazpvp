@@ -40,6 +40,8 @@ import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.CommandCore;
 import world.ntdi.nrcore.utils.command.CommandFunction;
 
+import java.util.List;
+
 public class StatCommandFunction extends CommandCore implements CommandFunction {
     public StatCommandFunction() {
         super("stats", "stats", "stat");
@@ -65,5 +67,10 @@ public class StatCommandFunction extends CommandCore implements CommandFunction 
         } else if (args[0].equalsIgnoreCase("reset")) {
 
         }
+    }
+
+    @Override
+    public List<String> tabCompletion(CommandSender commandSender, String[] strings) {
+        return null;
     }
 }

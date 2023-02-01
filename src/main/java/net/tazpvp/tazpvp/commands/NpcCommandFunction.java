@@ -41,6 +41,8 @@ import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.CommandCore;
 import world.ntdi.nrcore.utils.command.CommandFunction;
 
+import java.util.List;
+
 public class NpcCommandFunction extends CommandCore implements CommandFunction {
 
     public NpcCommandFunction() {
@@ -61,5 +63,10 @@ public class NpcCommandFunction extends CommandCore implements CommandFunction {
                 new Bub();
             }
         }
+    }
+
+    @Override
+    public List<String> tabCompletion(CommandSender commandSender, String[] strings) {
+        return null;
     }
 }

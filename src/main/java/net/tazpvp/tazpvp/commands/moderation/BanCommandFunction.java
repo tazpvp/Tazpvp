@@ -39,6 +39,7 @@ import world.ntdi.nrcore.utils.command.CommandCore;
 import world.ntdi.nrcore.utils.command.CommandFunction;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class BanCommandFunction extends CommandCore implements CommandFunction {
 
@@ -81,4 +82,8 @@ public class BanCommandFunction extends CommandCore implements CommandFunction {
 
     }
 
+    @Override
+    public List<String> tabCompletion(CommandSender commandSender, String[] strings) {
+        return null;
+    }
 }

@@ -215,4 +215,9 @@ public class GuildCommandFunction extends CommandCore implements CommandFunction
             p.sendMessage("You were not invited to this guild.");
         }
     }
+
+    @Override
+    public List<String> tabCompletion(CommandSender commandSender, String[] strings) {
+        return null;
+    }
 }
