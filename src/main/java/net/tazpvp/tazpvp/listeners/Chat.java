@@ -33,7 +33,9 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.utils.data.LooseData;
+import net.tazpvp.tazpvp.guild.Guild;
+import net.tazpvp.tazpvp.guild.GuildUtils;
+import net.tazpvp.tazpvp.utils.data.*;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -42,6 +44,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,10 +53,38 @@ public class Chat implements Listener {
     @EventHandler
     public void onChat(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
+        UUID uuid = p.getUniqueId();
         String message = e.getMessage();
+        boolean hasRank = RankData.hasRank(uuid);
 
-        //TODO: chat prefixes
-        //TODO: guild suffixes
+        /* Check if player has a guild tag */
+        boolean hasGuildTag = false;
+        if (GuildUtils.isInGuild(p)) {
+            Guild g = GuildData.getGuild(uuid);
+            if (g.getTag() != null ) hasGuildTag = true;
+        }
+
+        String format = "&GRAY[{LEVEL}&GRAY] {PREFIX} %s &GOLD{SUFFIX}&GRAY &M%s";
+        format
+                .replace("&GRAY", CC.GRAY.toString())
+                .replace("&GOLD", CC.GOLD.toString())
+                .replace("&M",
+                        (hasRank
+                                ? CC.WHITE.toString()
+                                : CC.GRAY.toString())
+                )
+                .replace("{LEVEL}", String.valueOf(PersistentData.getInt(uuid, DataTypes.LEVEL)))
+                .replace("{PREFIX}",
+                        (hasRank
+                                ? RankData.getRank(uuid)
+                                : "")
+                )
+                .replace("{SUFFIX}",
+                        (hasGuildTag
+                                ? GuildData.getGuild(uuid).getTag()
+                                : "")
+                );
+
 
         for (Player h : Bukkit.getOnlinePlayers()) {
             Pattern pattern = Pattern.compile(h.getName(), Pattern.CASE_INSENSITIVE);
@@ -69,5 +100,6 @@ public class Chat implements Listener {
         Tazpvp.getObservers().forEach(observer -> observer.chat(p, e.getMessage()));
 
         e.setMessage(message);
+        e.setFormat(format);
     }
 }
