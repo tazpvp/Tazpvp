@@ -38,12 +38,17 @@ import net.tazpvp.tazpvp.npc.npcs.Lorenzo;
 import net.tazpvp.tazpvp.npc.npcs.Maxim;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.util.StringUtil;
 import world.ntdi.nrcore.utils.command.CommandCore;
 import world.ntdi.nrcore.utils.command.CommandFunction;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class NpcCommandFunction extends CommandCore implements CommandFunction {
+    private static final String[] commands = {"maxim", "lorenzo", "caesar", "bub"};
 
     public NpcCommandFunction() {
         super("npc", "npc", "npc");
@@ -66,7 +71,7 @@ public class NpcCommandFunction extends CommandCore implements CommandFunction {
     }
 
     @Override
-    public List<String> tabCompletion(CommandSender commandSender, String[] strings) {
-        return null;
+    public List<String> tabCompletion(CommandSender commandSender, String[] args) {
+        return List.of("");
     }
 }

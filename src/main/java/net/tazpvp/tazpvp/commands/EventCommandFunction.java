@@ -85,6 +85,6 @@ public class EventCommandFunction extends CommandCore implements CommandFunction
 
     @Override
     public List<String> tabCompletion(CommandSender commandSender, String[] strings) {
-        return null;
+        return List.of("");
     }
 }

@@ -37,6 +37,6 @@ public class PremiumCommandFunction extends CommandCore implements CommandFuncti
 
     @Override
     public List<String> tabCompletion(CommandSender commandSender, String[] strings) {
-        return null;
+        return List.of("");
     }
 }

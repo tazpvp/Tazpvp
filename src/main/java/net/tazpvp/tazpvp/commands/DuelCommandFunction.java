@@ -43,6 +43,7 @@ import org.javatuples.Pair;
 import world.ntdi.nrcore.utils.command.CommandCore;
 import world.ntdi.nrcore.utils.command.CommandFunction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DuelCommandFunction extends CommandCore implements CommandFunction {
@@ -108,6 +109,6 @@ public class DuelCommandFunction extends CommandCore implements CommandFunction 
 
     @Override
     public List<String> tabCompletion(CommandSender commandSender, String[] strings) {
-        return null;
+        return List.of("");
     }
 }
