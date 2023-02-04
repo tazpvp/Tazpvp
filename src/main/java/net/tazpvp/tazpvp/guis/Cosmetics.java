@@ -36,14 +36,15 @@ import net.tazpvp.tazpvp.guis.guild.GuildBrowser;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
-public class Menu extends GUI {
+public class Cosmetics extends GUI {
 
-    public Menu(Player p) {
-        super("Menu", 3);
+    public Cosmetics(Player p) {
+        super("Cosmetics", 5);
         addItems(p);
         open(p);
     }
@@ -51,21 +52,10 @@ public class Menu extends GUI {
     private void addItems(Player p) {
         fill(0, 3*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
-        addButton(Button.create(ItemBuilder.of(Material.BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Achievements").lore(CC.GRAY + "Check your achievements").build(), (e) -> {
-            new Achievements(p);
+        addButton(Button.create(ItemBuilder.of(Material.BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Cosmetics").lore(CC.GRAY + "C").build(), (e) -> {
+            p.sendMessage("h");
+            p.closeInventory();
         }), 10);
-
-        addButton(Button.create(ItemBuilder.of(Material.LECTERN, 1).name(CC.GREEN + "" + CC.BOLD + "Talents").lore(CC.GRAY + "Check your talents").build(), (e) -> {
-            new Talents(p);
-        }), 12);
-
-        addButton(Button.create(ItemBuilder.of(Material.TOTEM_OF_UNDYING, 1).name(CC.GREEN + "" + CC.BOLD + "Guilds").lore(CC.GRAY + "Browse guilds").build(), (e) -> {
-            new GuildBrowser(p);
-        }), 14);
-
-        addButton(Button.create(ItemBuilder.of(Material.FIRE_CHARGE, 1).name(CC.GREEN + "" + CC.BOLD + "Cosmetics").lore(CC.GRAY + "Premium features").build(), (e) -> {
-            new Cosmetics(p);
-        }), 14);
 
         update();
     }
