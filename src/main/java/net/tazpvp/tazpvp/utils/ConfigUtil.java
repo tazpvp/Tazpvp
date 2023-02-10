@@ -32,6 +32,7 @@
 
 package net.tazpvp.tazpvp.utils;
 
+import net.tazpvp.tazpvp.Tazpvp;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -51,7 +52,7 @@ public class ConfigUtil extends YamlConfiguration {
     public ConfigUtil(@Nonnull final String filename, JavaPlugin plugin) {
         this.filename = filename;
         this.plugin = plugin;
-        file = new File(NRCore.getInstance().getDataFolder(), filename);
+        file = new File(Tazpvp.getInstance().getDataFolder(), filename);
         loadDefaults();
         reload();
     }
@@ -59,7 +60,7 @@ public class ConfigUtil extends YamlConfiguration {
     private void loadDefaults() {
         final YamlConfiguration defaultConfig = new YamlConfiguration();
 
-        try (final InputStream inputStream = NRCore.getInstance().getResource(filename)) {
+        try (final InputStream inputStream = Tazpvp.getInstance().getResource(filename)) {
             if (inputStream != null) {
                 try (final Reader reader = new InputStreamReader(Objects.requireNonNull(inputStream))) {
                     defaultConfig.load(reader);

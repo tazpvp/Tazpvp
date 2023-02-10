@@ -32,8 +32,10 @@
 
 package net.tazpvp.tazpvp.events.types;
 
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.events.Event;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import world.ntdi.nrcore.utils.config.ConfigUtils;
 
 import javax.annotation.Nonnull;
@@ -49,7 +51,7 @@ public class Parkour extends Event {
     @Override
     public void begin() {
         for (UUID uuid : getPlayerList()) {
-            Bukkit.getPlayer(uuid).teleport(ConfigUtils.spawn);
+            Bukkit.getPlayer(uuid).teleport(Tazpvp.getParkourUtil().getLocation("spawn"));
         }
     }
 }
