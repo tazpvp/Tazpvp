@@ -53,7 +53,10 @@ public class Damage implements Listener {
                         DeathFunctions.death(victim, killer);
                     }
                 } else if (e.getCause() == EntityDamageEvent.DamageCause.FIRE) {
+                    DeathFunctions.death(victim, victim);
                     Tazpvp.getObservers().forEach(observer -> observer.burn(victim));
+                } else if (e.getCause() == EntityDamageEvent.DamageCause.LAVA) {
+                    DeathFunctions.death(victim, victim);
                 }
             }
         }

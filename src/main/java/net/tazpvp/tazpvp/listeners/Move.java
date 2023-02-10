@@ -1,6 +1,8 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.events.Event;
+import net.tazpvp.tazpvp.events.EventUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -17,6 +19,10 @@ public class Move implements Listener {
         Player p = e.getPlayer();
 
         Location raidus = new Location(Bukkit.getWorld("arena"), 0, 100, 24);
+
+        if (Tazpvp.playerList.contains(p.getUniqueId())) {
+
+        }
 
         if (p.getWorld().getName().equals("arena")) {
             if (p.getLocation().distance(raidus) < 5) {

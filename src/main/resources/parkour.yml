@@ -1,0 +1,10 @@
+checkpoints:
+  1:
+    check: 50
+    teleport: 0
+  2:
+    check: 100
+    teleport: 50
+  3:
+    check: 150
+    teleport: 100

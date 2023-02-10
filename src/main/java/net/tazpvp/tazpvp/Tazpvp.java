@@ -46,6 +46,7 @@ import net.tazpvp.tazpvp.npc.npcs.Lorenzo;
 import net.tazpvp.tazpvp.npc.npcs.Maxim;
 import net.tazpvp.tazpvp.talents.talent.Moist;
 import net.tazpvp.tazpvp.talents.talent.Revenge;
+import net.tazpvp.tazpvp.utils.ConfigUtil;
 import net.tazpvp.tazpvp.utils.functions.BlockFunctions;
 import net.tazpvp.tazpvp.utils.functions.CombatFunctions;
 import net.tazpvp.tazpvp.utils.objects.AssistKill;
@@ -74,6 +75,9 @@ public final class Tazpvp extends JavaPlugin {
 
     private List<NPC> npcs = new LinkedList<>();
 
+    @Getter
+    private static ConfigUtil parkourUtil;
+
     @Override
     public void onEnable() {
 
@@ -96,6 +100,9 @@ public final class Tazpvp extends JavaPlugin {
                 CombatFunctions.check();
             }
         }.runTaskTimerAsynchronously(this, 16L, 16L);
+
+        parkourUtil = new ConfigUtil("parkour", this);
+
     }
 
     public static void registerObserver(Observer observer) {

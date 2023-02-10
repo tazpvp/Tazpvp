@@ -81,7 +81,6 @@ public class DeathFunctions {
         }
 
         if (Tazpvp.playerList.contains(victim.getUniqueId())) {
-
             Tazpvp.playerList.remove(victim.getUniqueId());
         }
 

@@ -65,7 +65,7 @@ public class Menu extends GUI {
 
         addButton(Button.create(ItemBuilder.of(Material.FIRE_CHARGE, 1).name(CC.GREEN + "" + CC.BOLD + "Cosmetics").lore(CC.GRAY + "Premium features").build(), (e) -> {
             new Cosmetics(p);
-        }), 14);
+        }), 16);
 
         update();
     }

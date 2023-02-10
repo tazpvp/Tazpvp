@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  *
- * Copyright (c) 2022, n-tdi
+ * Copyright (c) 2023, n-tdi
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,22 +30,24 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.events;
+package net.tazpvp.tazpvp.utils;
 
-import net.tazpvp.tazpvp.events.types.FFA;
-import net.tazpvp.tazpvp.events.types.Parkour;
+import net.tazpvp.tazpvp.Tazpvp;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
-import java.util.List;
-import java.util.UUID;
+public class ParkourUtil {
 
-public final class EventUtils {
-
-    public static Event create(String name, List<UUID> playerList) {
-        if (name.equalsIgnoreCase("ffa")) {
-            return new FFA(playerList);
-        } else if (name.equalsIgnoreCase("parkour")) {
-            return new Parkour(playerList);
+    public static void getCheckpoint(Player p)  {
+        for (int i = 1; i < Tazpvp.getParkourUtil().getConfigurationSection("checkpoints").getValues(false).size(); i++) {
+            if (p.getLocation().getX() <= Tazpvp.getParkourUtil().getInt("checkpoints." + i + ".check")) {
+                p.teleport(teleportCheckpoint(i, p));
+                return;
+            }
         }
-        return null;
+    }
+
+    public static Location teleportCheckpoint(int num, Player p) {
+        return new Location(p.getWorld(), Tazpvp.getParkourUtil().getInt("checkpoints." + num + ".teleport"), 60, 0, 0, 0);
     }
 }

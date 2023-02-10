@@ -44,7 +44,7 @@ import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 public class Cosmetics extends GUI {
 
     public Cosmetics(Player p) {
-        super("Cosmetics", 5);
+        super("Cosmetics", 3);
         addItems(p);
         open(p);
     }
