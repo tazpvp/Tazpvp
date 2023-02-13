@@ -234,18 +234,16 @@ public final class PersistentData {
         } else {
             setValue(ID, dataType.getColumnName(), (int) value);
             if (p != null) {
-                if (dataType.equals(DataTypes.XP)) {
-                    if (getInt(ID, DataTypes.XP) >= LooseData.getExpLeft(ID)) {
-                        PlayerFunctions.levelUp(ID);
-                    } else {
-                        p.getScoreboard().getTeam(dataType.getColumnName()).setSuffix((int) value + " / " + LooseData.getExpLeft(p.getUniqueId()));
-                        return;
-                    }
-                }
                 if (dataType != DataTypes.TOPKILLSTREAK) {
                     p.getScoreboard().getTeam(dataType.getColumnName()).setSuffix((int) value + "");
                     if (dataType.equals(DataTypes.KILLS) || dataType.equals(DataTypes.DEATHS)) {
                         p.getScoreboard().getTeam("kdr").setSuffix(kdrFormula(getFloat(p, DataTypes.KILLS), getFloat(p, DataTypes.DEATHS)) + "");
+                    }
+                    if (dataType.equals(DataTypes.XP)) {
+                        if (getInt(ID, DataTypes.XP) >= LooseData.getExpLeft(ID)) {
+                            PlayerFunctions.levelUp(ID);
+                        }
+                        p.getScoreboard().getTeam(DataTypes.XP.getColumnName()).setSuffix((int) value + " / " + LooseData.getExpLeft(p.getUniqueId()));
                     }
                 }
             }

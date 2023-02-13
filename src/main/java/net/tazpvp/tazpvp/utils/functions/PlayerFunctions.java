@@ -130,6 +130,5 @@ public class PlayerFunctions {
         if (p != null) {
             p.sendMessage("You leveled up.");
         }
-
     }
 }

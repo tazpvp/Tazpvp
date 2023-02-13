@@ -232,12 +232,12 @@ public class Death {
     }
 
     public void rewards() {
-        final int xp = 35;
+        final int xp = 15;
         final int coins = 26;
 
         sendActionbar(xp, coins);
-        PersistentData.add(victim, DataTypes.XP, xp);
-        PersistentData.add(victim, DataTypes.COINS, coins);
+        PersistentData.add(killer, DataTypes.XP, xp);
+        PersistentData.add(killer, DataTypes.COINS, coins);
     }
 
     @SuppressWarnings("all")
