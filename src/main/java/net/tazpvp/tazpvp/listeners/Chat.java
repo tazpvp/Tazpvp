@@ -60,7 +60,7 @@ public class Chat implements Listener {
         /* Check if player has a guild tag */
         boolean hasGuildTag = false;
         if (GuildUtils.isInGuild(p)) {
-            Guild g = GuildData.getGuild(uuid);
+            Guild g = GuildUtils.getGuildPlayerIn(p);
             if (g.getTag() != null ) hasGuildTag = true;
         }
 

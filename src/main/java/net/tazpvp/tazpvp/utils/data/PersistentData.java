@@ -2,6 +2,7 @@ package net.tazpvp.tazpvp.utils.data;
 
 import net.tazpvp.tazpvp.achievements.Achievements;
 import net.tazpvp.tazpvp.talents.Talents;
+import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -13,6 +14,7 @@ import javax.annotation.Nonnull;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.Base64;
 import java.util.UUID;
 
@@ -224,24 +226,27 @@ public final class PersistentData {
      * @param value the new value for the datatype
      */
     public static void set(@Nonnull final UUID ID, @Nonnull final DataTypes dataType, final float value) {
+        Player p = Bukkit.getPlayer(ID);
         if (!dataType.isQuantitative()) {
             Bukkit.getLogger().severe("Data not quantitative in integer form");
         } else if (dataType.equals(DataTypes.PLAYTIMEUNIX)) {
             setValueF(ID, dataType.getColumnName(), value);
         } else {
             setValue(ID, dataType.getColumnName(), (int) value);
-            if (dataType.equals(DataTypes.XP)) {
-                if (getInt(ID, DataTypes.XP) >= levelFormula((int) getInt(ID, DataTypes.LEVEL))) {
-                    add(ID, DataTypes.LEVEL);
-                    set(ID, DataTypes.XP, 0);
-                    // TODO: Add level up messages/functions
-                }
-            }
-            Player p = Bukkit.getPlayer(ID);
             if (p != null) {
-                p.getScoreboard().getTeam(dataType.getColumnName()).setSuffix((int) value + "");
-                if (dataType.equals(DataTypes.KILLS) || dataType.equals(DataTypes.DEATHS)) {
-                    p.getScoreboard().getTeam("kdr").setSuffix(kdrFormula(getFloat(p, DataTypes.KILLS), getFloat(p, DataTypes.DEATHS)) + "");
+                if (dataType.equals(DataTypes.XP)) {
+                    if (getInt(ID, DataTypes.XP) >= LooseData.getExpLeft(ID)) {
+                        PlayerFunctions.levelUp(ID);
+                    } else {
+                        p.getScoreboard().getTeam(dataType.getColumnName()).setSuffix((int) value + " / " + LooseData.getExpLeft(p.getUniqueId()));
+                        return;
+                    }
+                }
+                if (dataType != DataTypes.TOPKILLSTREAK) {
+                    p.getScoreboard().getTeam(dataType.getColumnName()).setSuffix((int) value + "");
+                    if (dataType.equals(DataTypes.KILLS) || dataType.equals(DataTypes.DEATHS)) {
+                        p.getScoreboard().getTeam("kdr").setSuffix(kdrFormula(getFloat(p, DataTypes.KILLS), getFloat(p, DataTypes.DEATHS)) + "");
+                    }
                 }
             }
         }
@@ -426,13 +431,12 @@ public final class PersistentData {
         ====================== End ADD/REMOVE ====================== Start Formula ======================
      */
 
-    private static int levelFormula(final int level) {
-        return (int) ((level * 5) / 3);
-    }
-
     public static float kdrFormula(final float kills, final float deaths) {
-        if (kills != 0 && deaths != 0)
-            return kills /deaths;
+        if (kills != 0 && deaths != 0) {
+            DecimalFormat df = new DecimalFormat("0.00");
+
+            return Float.parseFloat(df.format(kills / deaths));
+        }
         return 0F;
     }
 }

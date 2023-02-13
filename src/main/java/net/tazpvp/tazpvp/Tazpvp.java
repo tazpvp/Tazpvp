@@ -53,8 +53,10 @@ import net.tazpvp.tazpvp.utils.objects.AssistKill;
 import net.tazpvp.tazpvp.utils.observer.Observer;
 import net.tazpvp.tazpvp.utils.runnables.Generator;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import world.ntdi.nrcore.utils.region.Cuboid;
 
 import java.util.*;
 
@@ -79,6 +81,9 @@ public final class Tazpvp extends JavaPlugin {
     @Getter
     private static ConfigUtil parkourUtil;
 
+    @Getter
+    public static Cuboid spawnRegion;
+
     @Override
     public void onEnable() {
 
@@ -102,7 +107,12 @@ public final class Tazpvp extends JavaPlugin {
             }
         }.runTaskTimerAsynchronously(this, 16L, 16L);
 
-        parkourUtil = new ConfigUtil("parkour", this);
+        parkourUtil = new ConfigUtil("parkour.yml", this);
+
+        spawnRegion = new Cuboid(
+                new Location(Bukkit.getWorld("arena"), 25, 137, -31),
+                new Location(Bukkit.getWorld("arena"), -24, 93, 25)
+        );
 
     }
 

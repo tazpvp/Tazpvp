@@ -48,6 +48,8 @@ import java.util.List;
 
 public class DuelCommandFunction extends CommandCore implements CommandFunction {
 
+    String help = "Commands:\n" + "/duel <player> <type>\n" + "/duel accept";
+
     public DuelCommandFunction() {
         super("duel", null, "duel");
         setDefaultFunction(this);
@@ -77,13 +79,11 @@ public class DuelCommandFunction extends CommandCore implements CommandFunction 
                     } else {
                         p.sendMessage("No one sent you a duel request");
                     }
+                } else {
+                    p.sendMessage(help);
                 }
             } else {
-                p.sendMessage(
-                        "Commands:\n" +
-                        "/duel <player> <type>\n" +
-                        "/duel accept"
-                );
+                p.sendMessage(help);
             }
         }
     }

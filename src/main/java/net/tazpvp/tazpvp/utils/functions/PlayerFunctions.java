@@ -34,6 +34,7 @@ package net.tazpvp.tazpvp.utils.functions;
 
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -42,6 +43,7 @@ import org.bukkit.inventory.ItemStack;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import java.util.List;
+import java.util.UUID;
 
 public class PlayerFunctions {
 
@@ -119,5 +121,15 @@ public class PlayerFunctions {
                 }
             }
         }
+    }
+
+    public static void levelUp(UUID ID) {
+        Player p = Bukkit.getPlayer(ID);
+        PersistentData.add(ID, DataTypes.LEVEL);
+        PersistentData.set(ID, DataTypes.XP, 0);
+        if (p != null) {
+            p.sendMessage("You leveled up.");
+        }
+
     }
 }

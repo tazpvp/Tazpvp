@@ -57,7 +57,6 @@ public class Join implements Listener {
         PlaytimeUtil.playerJoined(p);
 
         ScoreboardFunctions.initScoreboard(p);
-        LooseData.resetKs(p.getUniqueId());
 
         PlayerFunctions.healPlr(p);
         PlayerFunctions.feedPlr(p);

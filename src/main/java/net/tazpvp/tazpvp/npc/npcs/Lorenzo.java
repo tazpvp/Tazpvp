@@ -47,7 +47,10 @@ import javax.annotation.Nonnull;
 public class Lorenzo extends NPC {
 
     public Lorenzo() {
-        super(CC.GOLD + "Lorenzo", new Location(Bukkit.getWorld("arena"), 9.5, 100, 12.5), Villager.Profession.ARMORER, Villager.Type.JUNGLE, Sound.ITEM_GOAT_HORN_SOUND_0);
+        super(CC.GOLD + "Lorenzo", new Location(Bukkit.getWorld("arena"), 13.5, 100, 13, 135, 0),
+                Villager.Profession.ARMORER,
+                Villager.Type.JUNGLE,
+                Sound.ITEM_GOAT_HORN_SOUND_0);
     }
 
     @Override

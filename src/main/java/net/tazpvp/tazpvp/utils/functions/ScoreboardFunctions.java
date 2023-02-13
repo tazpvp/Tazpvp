@@ -33,7 +33,9 @@
 package net.tazpvp.tazpvp.utils.functions;
 
 import net.tazpvp.tazpvp.utils.data.DataTypes;
+import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -53,66 +55,36 @@ public class ScoreboardFunctions {
     public static void initScoreboard(Player p) {
 
         board = Bukkit.getScoreboardManager().getNewScoreboard();
-        objective = board.registerNewObjective("sb", "dummy", "tazpvp");
+        objective = board.registerNewObjective("sb", "dummy", CC.translateAlternateColorCodes('&', "&3&lTAZPVP.NET"));
 
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-        newLine(DataTypes.LEVEL, p, "Level:", ChatColor.AQUA).setScore(6);
-        newLine(DataTypes.COINS, p, "Coins:", ChatColor.GOLD).setScore(5);
-        newLine(DataTypes.XP, p, "Exp:", ChatColor.BLACK).setScore(4);
-        objective.getScore(" ").setScore(3);
-        newLine(DataTypes.KILLS, p, "Kills:", ChatColor.YELLOW).setScore(2);
-        newLine(DataTypes.DEATHS, p, "Deaths:", ChatColor.DARK_PURPLE).setScore(1);
-        KDRScore(p).setScore(0);
+        objective.getScore("                         ").setScore(8);
+        newLine(p, DataTypes.LEVEL.getColumnName(), "〡 Level:", CC.AQUA,
+                PersistentData.getInt(p, DataTypes.LEVEL) + "").setScore(7);
+        newLine(p, DataTypes.COINS.getColumnName(), "〡 Coins:", CC.GOLD,
+                PersistentData.getInt(p, DataTypes.COINS) + "").setScore(6);
+        newLine(p, DataTypes.XP.getColumnName(), "〡 EXP:", CC.BLACK,
+                PersistentData.getInt(p, DataTypes.XP) + " / " + LooseData.getExpLeft(p.getUniqueId())).setScore(5);
+        objective.getScore(" ").setScore(4);
+        newLine(p, DataTypes.KILLS.getColumnName(), "〡 Kills:", CC.YELLOW,
+                PersistentData.getInt(p, DataTypes.KILLS) + "").setScore(3);
+        newLine(p, DataTypes.DEATHS.getColumnName(), "〡 Deaths:", CC.DARK_PURPLE,
+                PersistentData.getInt(p, DataTypes.DEATHS) + "").setScore(2);
+        newLine(p, "kdr", "〡 KDR:", CC.GRAY, PersistentData.kdrFormula(
+                PersistentData.getFloat(p, DataTypes.KILLS), PersistentData.getFloat(p, DataTypes.DEATHS)) + "").setScore(1);
+        objective.getScore("   ").setScore(0);
 
         p.setScoreboard(board);
     }
 
-
-    /**
-     * Create a new line with a value to insert into the scoreboard.
-     * @param q The data type.
-     * @param p The player.
-     * @param prefix The text to go with the value.
-     * @return The score.
-     */
-
-    private static Score newLine(DataTypes q, Player p, String prefix, ChatColor chatColor) {
-
+    private static Score newLine(Player p, String name, String prefix, CC chatColor, String suffix) {
         String ID = chatColor.toString();
-
-        Team team = board.registerNewTeam(q.getColumnName());
-
-        team.addEntry(ID);
-        team.setPrefix(prefix + " ");
-        team.setSuffix(PersistentData.getInt(p, q) + "");
-
-        return objective.getScore(ID);
-    }
-
-//    private static Score StreakScore(Player p) {
-//        String ID = ChatColor.BOLD.toString();
-//        Team team = board.registerNewTeam("streak");
-//
-//        team.addEntry(ID);
-//        team.setPrefix("Streak: ");
-//        team.setSuffix(String.valueOf(LooseData.getKs(p.getUniqueId())));
-//
-//        return objective.getScore(ID);
-//    }
-
-    /**
-     * Insert a new line just for the KDR.
-     * @param p The player.
-     * @return The score.
-     */
-    private static Score KDRScore(Player p) {
-        String ID = ChatColor.UNDERLINE.toString();
-        Team team = board.registerNewTeam("kdr");
+        Team team = board.registerNewTeam(name);
 
         team.addEntry(ID);
-        team.setPrefix("KDR: ");
-        team.setSuffix(String.valueOf(PersistentData.kdrFormula(PersistentData.getFloat(p, DataTypes.KILLS), PersistentData.getFloat(p, DataTypes.DEATHS))));
+        team.setPrefix(CC.AQUA + prefix + CC.GRAY + " ");
+        team.setSuffix(suffix);
 
         return objective.getScore(ID);
     }

@@ -23,7 +23,7 @@ public class Move implements Listener {
         Block b = new Location(e.getPlayer().getWorld(), e.getPlayer().getLocation().getX(), e.getPlayer().getLocation().getY() - 1, e.getPlayer().getLocation().getZ()).getBlock();
 
         if (p.getWorld().equals(Bukkit.getWorld("parkour"))) {
-            if (b.getType() == Material.WATER && p.getGameMode() != GameMode.CREATIVE) {
+            if (b.getType() == Material.WATER && p.getGameMode() != GameMode.SURVIVAL) {
                 ParkourUtil.getCheckpoint(p);
             }
         }
@@ -33,30 +33,18 @@ public class Move implements Listener {
                 Launchpad(p);
                 return;
             }
-            if (!Tazpvp.fell.contains(p.getUniqueId())) {
-                if (p.getLocation().getY() < 80) {
-                    if (p.getGameMode() != GameMode.CREATIVE) {
-                        Tazpvp.fell.add(p.getUniqueId());
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                if (p.getLocation().getY() < 80) {
-                                    DeathFunctions.death(p, p);
-                                    Tazpvp.fell.remove(p.getUniqueId());
-                                }
-                            }
-                        }.runTaskLater(Tazpvp.getInstance(), 20*5);
-                    }
+            if (p.getLocation().getY() < 80) {
+                if (p.getGameMode() == GameMode.SURVIVAL) {
+                    DeathFunctions.death(p, p);
                 }
             }
-
         }
     }
 
     private void Launchpad(Player p) {
         if (p.getGameMode().equals(GameMode.SURVIVAL)){
             p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1, 1);
-            p.setVelocity(new Vector(0, 1.5, 3));
+            p.setVelocity(new Vector(0, 1, 1.5));
             Tazpvp.getObservers().forEach(o -> o.launch(p));
         }
     }

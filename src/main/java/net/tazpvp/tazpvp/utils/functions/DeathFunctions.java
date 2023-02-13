@@ -77,7 +77,6 @@ public class DeathFunctions {
                     DuelUtils.end(victim, killer, duel.getDUELERS(), duel);
                 }
             }
-
         }
 
         if (Tazpvp.playerList.contains(victim.getUniqueId())) {
@@ -90,6 +89,8 @@ public class DeathFunctions {
         death.rewards();
         death.coffin();
         death.heal();
+
+        LooseData.resetKs(victim.getUniqueId());
 
         victim.teleport(ConfigUtils.spawn);
     }
