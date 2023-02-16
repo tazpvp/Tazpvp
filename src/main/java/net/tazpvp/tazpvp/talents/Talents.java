@@ -1,14 +1,12 @@
 package net.tazpvp.tazpvp.talents;
 
-import lombok.Getter;
-import lombok.Setter;
-import net.tazpvp.tazpvp.events.DataHolder;
+import net.tazpvp.tazpvp.utils.data.ContainerData;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Talents extends DataHolder implements Serializable {
+public class Talents extends ContainerData implements Serializable {
 
     public Talents() {
         super(new HashMap<>(Map.ofEntries(

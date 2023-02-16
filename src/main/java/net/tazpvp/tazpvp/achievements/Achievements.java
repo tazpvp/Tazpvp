@@ -32,16 +32,13 @@
 
 package net.tazpvp.tazpvp.achievements;
 
-import lombok.Getter;
-import lombok.Setter;
-import net.tazpvp.tazpvp.events.DataHolder;
+import net.tazpvp.tazpvp.utils.data.ContainerData;
 
-import javax.annotation.Nonnull;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Achievements extends DataHolder implements Serializable {
+public class Achievements extends ContainerData implements Serializable {
     public Achievements() {
         super(new HashMap<>(Map.of(
                 "Adept", false,

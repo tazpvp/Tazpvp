@@ -28,10 +28,9 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
  */
 
-package net.tazpvp.tazpvp.events;
+package net.tazpvp.tazpvp.utils.data;
 
 import lombok.Getter;
 
@@ -39,11 +38,11 @@ import javax.annotation.Nonnull;
 import java.io.Serializable;
 import java.util.Map;
 
-public abstract class DataHolder implements Serializable {
+public abstract class ContainerData implements Serializable {
     @Getter
     private Map<String, Boolean> data;
 
-    public DataHolder(Map<String, Boolean> data) {
+    public ContainerData(Map<String, Boolean> data) {
         this.data = data;
     }
 

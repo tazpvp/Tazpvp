@@ -42,30 +42,12 @@ public class Adept extends Observable {
 
     @Override
     public void talent(Player p) {
-        if (allTalents(p)) {
-            Achievements ach = PersistentData.getAchievements(p.getUniqueId());
-            ach.set("Adept", true);
-            PersistentData.setAchievements(p, ach);
-        }
-    }
-
-    private Boolean allTalents(Player p) {
         Talents talents = PersistentData.getTalents(p.getUniqueId());
-        if (talents.isAgile()
-                && talents.isArchitect()
-                && talents.isBlessed()
-                && talents.isCannibal()
-                && talents.isExcavator()
-                && talents.isGlider()
-                && talents.isHarvester()
-                && talents.isHunter()
-                && talents.isMedic()
-                && talents.isMoist()
-                && talents.isNecromancer()
-                && talents.isProficient()
-                && talents.isResilient()
-                && talents.isRevenge()
-        ) return true;
-        return false;
+        Achievements ach = PersistentData.getAchievements(p.getUniqueId());
+        for (boolean value : talents.getData().values()) {
+            if (!value) return;
+        }
+        ach.set("Adept", true);
+        PersistentData.setAchievements(p, ach);
     }
 }
