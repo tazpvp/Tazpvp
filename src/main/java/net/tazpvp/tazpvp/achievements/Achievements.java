@@ -43,7 +43,7 @@ import java.util.Map;
 
 public class Achievements extends DataHolder implements Serializable {
     public Achievements() {
-        super(Map.of(
+        super(new HashMap<>(Map.of(
                 "Adept", false,
                 "Merchant", false,
                 "Bowling", false,
@@ -54,6 +54,6 @@ public class Achievements extends DataHolder implements Serializable {
                 "Gladiator", false,
                 "Charm", false,
                 "Rehab", false
-        ));
+        )));
     }
 }
