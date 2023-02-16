@@ -36,9 +36,10 @@ package net.tazpvp.tazpvp.events;
 import lombok.Getter;
 
 import javax.annotation.Nonnull;
+import java.io.Serializable;
 import java.util.Map;
 
-public abstract class DataHolder {
+public abstract class DataHolder implements Serializable {
     @Getter
     private Map<String, Boolean> data;
 
