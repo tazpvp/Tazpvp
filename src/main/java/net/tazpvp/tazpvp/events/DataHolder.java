@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  *
- * Copyright (c) 2022, n-tdi
+ * Copyright (c) 2023, n-tdi
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,32 +28,39 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
  */
 
-package net.tazpvp.tazpvp.achievements;
+package net.tazpvp.tazpvp.events;
 
 import lombok.Getter;
-import lombok.Setter;
-import net.tazpvp.tazpvp.events.DataHolder;
 
 import javax.annotation.Nonnull;
-import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Map;
 
-public class Achievements extends DataHolder implements Serializable {
-    public Achievements() {
-        super(Map.of(
-                "Adept", false,
-                "Merchant", false,
-                "Bowling", false,
-                "Legend", false,
-                "Gamble", false,
-                "Superior", false,
-                "Craftsman", false,
-                "Gladiator", false,
-                "Charm", false,
-                "Rehab", false
-        ));
+public abstract class DataHolder {
+    @Getter
+    private Map<String, Boolean> data;
+
+    public DataHolder(Map<String, Boolean> data) {
+        this.data = data;
+    }
+
+    /**
+     * Set the value of an achievement
+     * @param achievement The Achievement's String (should prolly be an enum but wtv)
+     * @param value The new value for that Achievement, true or false
+     * @return Returns if the achievement actually existed in the map
+     */
+    public boolean set(@Nonnull final String achievement, final boolean value) {
+        if (getData().containsKey(achievement)) {
+            data.put(achievement, value);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean is(@Nonnull final String achievement) {
+        return getData().get(achievement);
     }
 }
