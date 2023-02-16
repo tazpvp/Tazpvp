@@ -35,13 +35,46 @@ package net.tazpvp.tazpvp.achievements;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.annotation.Nonnull;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Achievements implements Serializable {
     @Getter
-    @Setter
-    private boolean Adept, Merchant, Bowling, Legend, Gamble, Superior, Craftsman = false;
-    @Getter
-    @Setter
-    private boolean Gladiator, Charm, Rehab = false;
+    private Map<String, Boolean> achievements;
+
+    public Achievements() {
+        achievements = new HashMap<>();
+        achievements.putAll(Map.of(
+                "Adept", false,
+                "Merchant", false,
+                "Bowling", false,
+                "Legend", false,
+                "Gamble", false,
+                "Superior", false,
+                "Craftsman", false,
+                "Gladiator", false,
+                "Charm", false,
+                "Rehab", false
+        ));
+    }
+
+    /**
+     * Set the value of an achievement
+     * @param achievement The Achievement's String (should prolly be an enum but wtv)
+     * @param value The new value for that Achievement, true or false
+     * @return Returns if the achievement actually existed in the map
+     */
+    public boolean set(@Nonnull final String achievement, final boolean value) {
+        if (getAchievements().containsKey(achievement)) {
+            achievements.put(achievement, value);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean is(@Nonnull final String achievement) {
+        return getAchievements().get(achievement);
+    }
 }

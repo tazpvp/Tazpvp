@@ -53,16 +53,16 @@ public class Achievements extends GUI {
 
         fill(0, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
-        setButton(p,  10, "Adept", "kys", ACH.isAdept());
-        setButton(p,  11, "Bowling", "kys", ACH.isBowling());
-        setButton(p,  12, "Charm", "kys", ACH.isCharm());
-        setButton(p,  13, "Craftsman", "kys", ACH.isCraftsman());
-        setButton(p,  14, "Gamble", "kys", ACH.isGamble());
-        setButton(p,  15, "Gladiator", "kys", ACH.isGladiator());
-        setButton(p,  16, "Legend", "kys", ACH.isLegend());
+        setButton(p,  10, "Adept", "kys", ACH.is("Adept"));
+        setButton(p,  11, "Bowling", "kys", ACH.is("Bowling"));
+        setButton(p,  12, "Charm", "kys", ACH.is("Charm"));
+        setButton(p,  13, "Craftsman", "kys", ACH.is("Craftsman"));
+        setButton(p,  14, "Gamble", "kys", ACH.is("Gamble"));
+        setButton(p,  15, "Gladiator", "kys", ACH.is("Gladiator"));
+        setButton(p,  16, "Legend", "kys", ACH.is("Legend"));
 
-        setButton(p,  19, "Merchant", "kys", ACH.isMerchant());
-        setButton(p,  20, "Superior", "kys", ACH.isSuperior());
+        setButton(p,  19, "Merchant", "kys", ACH.is("Merchant"));
+        setButton(p,  20, "Superior", "kys", ACH.is("Superior"));
 
         update();
     }

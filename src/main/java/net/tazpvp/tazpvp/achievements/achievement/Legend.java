@@ -41,7 +41,7 @@ public class Legend extends Observable {
     @Override
     public void rebirth(Player p) {
         Achievements ach = PersistentData.getAchievements(p.getUniqueId());
-        ach.setLegend(true);
+        ach.set("Legend", true);
         PersistentData.setAchievements(p, ach);
     }
 }

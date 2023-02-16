@@ -10,7 +10,7 @@ public class Merchant extends Observable {
     public void gui(Player p, String name) {
         if (name.equalsIgnoreCase("caesar")) { // TODO: Add proper name
             Achievements ach = PersistentData.getAchievements(p.getUniqueId());
-            ach.setMerchant(true);
+            ach.set("Merchant", true);
             PersistentData.setAchievements(p, ach);
         }
     }

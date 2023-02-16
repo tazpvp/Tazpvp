@@ -44,7 +44,7 @@ public class Adept extends Observable {
     public void talent(Player p) {
         if (allTalents(p)) {
             Achievements ach = PersistentData.getAchievements(p.getUniqueId());
-            ach.setAdept(true);
+            ach.set("Adept", true);
             PersistentData.setAchievements(p, ach);
         }
     }

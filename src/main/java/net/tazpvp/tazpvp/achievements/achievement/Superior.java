@@ -42,7 +42,7 @@ public class Superior extends Observable {
     @Override
     public void event(Player p) {
         Achievements ach = PersistentData.getAchievements(p.getUniqueId());
-        ach.setLegend(true);
+        ach.set("Superior", true);
         PersistentData.setAchievements(p, ach);
     }
 }

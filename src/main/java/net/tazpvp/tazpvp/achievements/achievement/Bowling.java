@@ -43,7 +43,7 @@ public class Bowling extends Observable {
     public void death(Player victim, Player killer) {
         if (LooseData.getKs(killer.getUniqueId()) == 100) {
             Achievements ach = PersistentData.getAchievements(killer.getUniqueId());
-            ach.setBowling(true);
+            ach.set("Bowling", true);
             PersistentData.setAchievements(killer, ach);
         }
     }

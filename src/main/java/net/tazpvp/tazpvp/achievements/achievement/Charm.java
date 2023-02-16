@@ -44,7 +44,7 @@ public class Charm extends Observable {
     public void chat(Player p, String chat) {
         if (LooseData.getChatCount(p.getUniqueId()) >= 100) {
             Achievements ach = PersistentData.getAchievements(p.getUniqueId());
-            ach.setCharm(true);
+            ach.set("Charm", true);
             PersistentData.setAchievements(p, ach);
         }
     }
