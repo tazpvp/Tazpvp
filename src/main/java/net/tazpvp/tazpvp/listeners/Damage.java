@@ -45,10 +45,9 @@ public class Damage implements Listener {
     @EventHandler
     public void onEntityDamage(EntityDamageEvent e) {
         if (e.getEntity() instanceof Player victim) {
-            if (Tazpvp.spawnRegion.contains(victim.getLocation())) {
-                e.setCancelled(true);
-                return;
-            }
+            if (Tazpvp.spawnRegion.contains(victim.getLocation())) return;
+
+            if (compare(e, e.getCause() == EntityDamageEvent.DamageCause.FALL)) return;
 
             double fd = e.getFinalDamage();
 
@@ -66,5 +65,10 @@ public class Damage implements Listener {
                 }
             }
         }
+    }
+
+    private boolean compare(EntityDamageEvent e, boolean condition) {
+        if (condition) e.setCancelled(true);
+        return condition;
     }
 }
