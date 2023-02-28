@@ -6,6 +6,8 @@ import org.bukkit.entity.Player;
 public class Revenge extends Observable {
     @Override
     public void death(Player victim, Player killer) {
-        killer.setFireTicks(20 * 3);
+        if (victim != killer) {
+            killer.setFireTicks(20 * 3);
+        }
     }
 }
