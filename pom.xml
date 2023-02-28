@@ -68,6 +68,15 @@
             <id>github</id>
             <url>https://maven.pkg.github.com/tazpvp/NR-Core/</url>
         </repository>
+        <repository>
+            <id>ntdi-releases</id>
+            <name>Ntdi's Repositories</name>
+            <url>https://repo.ntdi.world/releases</url>
+        </repository>
+        <repository>
+            <id>codemc-snapshots</id>
+            <url>https://repo.codemc.io/repository/maven-snapshots/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -86,18 +95,23 @@
         <dependency>
             <groupId>world.ntdi</groupId>
             <artifactId>nrcore</artifactId>
-            <version>1.0.21</version>
+            <version>1.1.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.wesjd</groupId>
             <artifactId>anvilgui</artifactId>
-            <version>1.5.3-SNAPSHOT</version>
+            <version>1.6.3-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.javatuples</groupId>
             <artifactId>javatuples</artifactId>
             <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>world.ntdi</groupId>
+            <artifactId>postglam</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 </project>

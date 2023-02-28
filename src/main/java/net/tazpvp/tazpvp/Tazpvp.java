@@ -114,6 +114,10 @@ public final class Tazpvp extends JavaPlugin {
                 new Location(Bukkit.getWorld("arena"), -24, 93, 25)
         );
 
+        getConfig().options().copyDefaults(true);
+        saveDefaultConfig();
+
+
     }
 
     public static void registerObserver(Observer observer) {

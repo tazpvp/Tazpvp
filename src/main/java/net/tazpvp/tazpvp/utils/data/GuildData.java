@@ -25,6 +25,8 @@ public class GuildData {
      */
     private static final String ID_COLUMN = "ID";
 
+
+
     public static Guild getGuild(@Nonnull final UUID uuid) {
         ByteArrayInputStream stream = new ByteArrayInputStream(Base64.getDecoder().decode(SQLHelper.getString(NAME, ID_COLUMN, "'" + uuid + "'", 2)));
         BukkitObjectInputStream data = null;
