@@ -34,16 +34,11 @@ package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.PlaytimeUtil;
-import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.functions.ScoreboardFunctions;
 import net.tazpvp.tazpvp.utils.objects.AssistKill;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarStyle;
-import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -72,5 +67,10 @@ public class Join implements Listener {
 
         p.teleport(ConfigUtils.spawn);
         p.setCollidable(false);
+
+        p.setPlayerListHeaderFooter(
+                CC.RED + "                                      " +
+                        "\n                TazPVP                ",
+                CC.LIGHT_PURPLE + "Join our Discord! /discord");
     }
 }
