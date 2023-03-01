@@ -99,8 +99,6 @@ public final class Tazpvp extends JavaPlugin {
         events.add("FFA");
 
         registerObservable();
-        BlockFunctions.registerOres();
-        BlockFunctions.registerPickaxes();
 
         spawnNpcs();
 

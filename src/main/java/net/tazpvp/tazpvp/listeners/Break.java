@@ -34,13 +34,17 @@ package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.functions.BlockFunctions;
+import net.tazpvp.tazpvp.utils.objects.Ore;
+import net.tazpvp.tazpvp.utils.objects.Pickaxe;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class Break implements Listener {
 
@@ -51,17 +55,23 @@ public class Break implements Listener {
         Material mat = b.getType();
 
         if (!p.getGameMode().equals(GameMode.CREATIVE)) {
-            if (BlockFunctions.ores.containsKey(mat)) {
-
-                e.setCancelled(true);
-
-                Material smelted = BlockFunctions.getSmelted(mat);
-                int time = BlockFunctions.ores.get(mat);
-
-                BlockFunctions.respawnOre(p, b, mat, smelted, time);
-
-            } else if (!b.hasMetadata("PlayerPlaced")) {
-                e.setCancelled(true);
+            for (Ore ore : BlockFunctions.ores) {
+                if (mat.equals(ore.getMat())) {
+                    e.setCancelled(true);
+                    Material tool = BlockFunctions.getPickaxe(p).getType();
+                    for (Pickaxe pickaxe : BlockFunctions.pickaxes) {
+                        if (tool.equals(pickaxe.getMat())) {
+                            if (pickaxe.getLevel() >= ore.getLevel()) {
+                                BlockFunctions.respawnOre(p, b, mat, ore.getSmelted(), ore.getTime());
+                            } else {
+                                p.sendMessage("You require at least a " + ore.getPickaxe() + " pickaxe to mine this ore.");
+                                p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+                            }
+                        }
+                    }
+                } else if (!b.hasMetadata("PlayerPlaced")) {
+                    e.setCancelled(true);
+                }
             }
         }
 

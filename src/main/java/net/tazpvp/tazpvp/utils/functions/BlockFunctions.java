@@ -33,6 +33,8 @@
 package net.tazpvp.tazpvp.utils.functions;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.objects.Ore;
+import net.tazpvp.tazpvp.utils.objects.Pickaxe;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -41,31 +43,27 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.WeakHashMap;
 
 public class BlockFunctions {
 
-    public static WeakHashMap<Material, Integer> ores = new WeakHashMap<>();
+    public static final List<Ore> ores = new ArrayList<>(Arrays.asList(
+            new Ore(20*9, 2, 1, Material.GOLD_ORE, Material.RAW_GOLD, "stone"),
+            new Ore(20*13, 3, 2, Material.REDSTONE_ORE, Material.REDSTONE, "iron"),
+            new Ore(20*16, 4, 3, Material.LAPIS_ORE, Material.LAPIS_LAZULI, "diamond"),
+            new Ore(20*21, 5, 4, Material.DIAMOND_ORE, Material.DIAMOND, "netherite"),
+            new Ore(20*25, 6, 5, Material.EMERALD_ORE, Material.EMERALD, "gold")
+    ));
 
-    public static WeakHashMap<Material, Integer> pickaxes = new WeakHashMap<>();
-
-    public static void registerOres() {
-        ores.put(Material.GOLD_ORE, 20*9);
-        ores.put(Material.REDSTONE_ORE, 20*13);
-        ores.put(Material.LAPIS_ORE, 20*16);
-        ores.put(Material.DIAMOND_ORE, 20*21);
-        ores.put(Material.EMERALD_ORE, 20*25);
-    }
-
-    public static void registerPickaxes() {
-        pickaxes.put(Material.WOODEN_PICKAXE, 4);
-        pickaxes.put(Material.STONE_PICKAXE, 8);
-        pickaxes.put(Material.IRON_PICKAXE, 12);
-        pickaxes.put(Material.DIAMOND_PICKAXE, 16);
-        pickaxes.put(Material.GOLDEN_PICKAXE, 20);
-    }
-
+    public static final List<Pickaxe> pickaxes = new ArrayList<>(Arrays.asList(
+            new Pickaxe(Material.STONE_PICKAXE, 4, 1, Material.IRON_PICKAXE),
+            new Pickaxe(Material.IRON_PICKAXE, 8, 2, Material.DIAMOND_PICKAXE),
+            new Pickaxe(Material.DIAMOND_PICKAXE, 16, 3, Material.NETHERITE_PICKAXE),
+            new Pickaxe(Material.NETHERITE_PICKAXE, 19, 4, Material.GOLDEN_PICKAXE),
+            new Pickaxe(Material.GOLDEN_PICKAXE, 25, 5, Material.GOLDEN_PICKAXE)));
 
     public static void respawnOre(Player p, Block block, Material mat, Material smelted, int time) {
 
@@ -100,10 +98,23 @@ public class BlockFunctions {
     }
 
     public static ItemStack getPickaxe(Player p) {
-        if (pickaxes.containsKey(p.getInventory().getItemInMainHand().getType())) {
-            return p.getInventory().getItemInMainHand();
-        } else if (pickaxes.containsKey(p.getInventory().getItemInOffHand().getType())) {
-            return p.getInventory().getItemInOffHand();
+        for (Pickaxe pick : pickaxes) {
+            if (p.getInventory().getItemInMainHand().getType().equals(pick.getMat())) {
+                return p.getInventory().getItemInMainHand();
+            } else if (p.getInventory().getItemInOffHand().getType().equals(pick.getMat())) {
+                return p.getInventory().getItemInOffHand();
+            }
+        }
+        return null;
+    }
+
+    public static ItemStack getOreInHand(Player p) {
+        for (Ore ore : ores) {
+            if (p.getInventory().getItemInMainHand().getType().equals(ore.getMat())) {
+                return p.getInventory().getItemInMainHand();
+            } else if (p.getInventory().getItemInOffHand().getType().equals(ore.getMat())) {
+                return p.getInventory().getItemInOffHand();
+            }
         }
         return null;
     }
@@ -113,12 +124,14 @@ public class BlockFunctions {
         p.playSound(p.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
     }
 
-    public static Material getSmelted(Material block) {
-        if (block == Material.GOLD_ORE) return Material.RAW_GOLD;
-        if (block == Material.REDSTONE_ORE) return Material.REDSTONE;
-        if (block == Material.LAPIS_ORE) return Material.LAPIS_LAZULI;
-        if (block == Material.DIAMOND_ORE) return Material.DIAMOND;
-        if (block == Material.EMERALD_ORE) return Material.EMERALD;
+    public static Ore getOreFrom(Material mat) {
+        for (Ore ore : ores) {
+            if (mat.equals(ore.getMat())) {
+                return ore;
+            }
+        }
         return null;
     }
+
+
 }
