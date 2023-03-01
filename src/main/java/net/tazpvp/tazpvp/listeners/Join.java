@@ -70,10 +70,6 @@ public class Join implements Listener {
             PlayerFunctions.kitPlayer(p);
         }
 
-        BossBar bossBar = Bukkit.createBossBar(ChatColor.WHITE + "" + ChatColor.BOLD +  "TAZPVP.NET", BarColor.BLUE, BarStyle.SEGMENTED_10);
-        bossBar.addPlayer(p);
-        bossBar.setProgress(1);
-
         p.teleport(ConfigUtils.spawn);
         p.setCollidable(false);
     }
