@@ -1,14 +1,28 @@
 package net.tazpvp.tazpvp.utils.data;
 
-import world.ntdi.nrcore.utils.sql.SQLHelper;
+import net.tazpvp.tazpvp.Tazpvp;
+import world.ntdi.postglam.data.DataTypes;
+import world.ntdi.postglam.sql.module.Column;
+import world.ntdi.postglam.sql.module.Row;
+import world.ntdi.postglam.sql.module.Table;
 
 import javax.annotation.Nonnull;
+import java.sql.SQLException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public final class RankData {
+    private static final Table table;
 
-    private static final String NAME = "ranks";
-    private static final String ID_COLUMN = "id";
+    static {
+        try {
+            table = new Table(Tazpvp.getDatabase(), "ranks", Map.entry("id", DataTypes.UUID), new LinkedHashMap<>(Map.of("rank", DataTypes.TEXT, "prefix", DataTypes.TEXT)));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     /**
      * Set rank of UUID, doesn't have to already be in table.
@@ -21,7 +35,11 @@ public final class RankData {
             return;
         }
 
-        SQLHelper.updateValue(NAME, ID_COLUMN, uuid.toString(), "rank", rank);
+        try {
+            new Row(table, uuid.toString()).update(new Column(table, "rank"), rank);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         final String rankPrefix = "prefix"; //TODO: Hook into vault
         setPrefix(uuid, rankPrefix);
     }
@@ -33,7 +51,11 @@ public final class RankData {
      */
     private static void initRank(@Nonnull final UUID uuid, @Nonnull final String rank) {
         final String rankPrefix = "prefix"; //TODO: Hook into vault
-        SQLHelper.initializeValues(NAME, "ID, RANK, PREFIX", "'" + uuid.toString() + "', '" + rank + "', '" + rankPrefix + "'");
+        try {
+            new Row(table, uuid.toString(), rank, rankPrefix);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -42,7 +64,13 @@ public final class RankData {
      * @param prefix New Prefix
      */
     public static void setPrefix(@Nonnull final UUID uuid, @Nonnull final String prefix) {
-        SQLHelper.updateValue(NAME, ID_COLUMN, uuid.toString(), "prefix", prefix);
+        if (hasRank(uuid)) {
+            try {
+                new Row(table, uuid.toString()).update(new Column(table, "prefix"), prefix);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     /**
@@ -51,7 +79,11 @@ public final class RankData {
      * @return if player is inside rank table
      */
     public static boolean hasRank(@Nonnull final UUID uuid) {
-        return SQLHelper.ifRowExists(NAME, ID_COLUMN, uuid.toString());
+        try {
+            return table.doesRowExist(uuid.toString());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -60,7 +92,11 @@ public final class RankData {
      * @return String of UUID's rank
      */
     public static String getRank(@Nonnull final UUID uuid) {
-        return SQLHelper.getString(NAME, ID_COLUMN, uuid.toString(), 2); // INDEX = 2 bc that is index of rank column
+        try {
+            return (String) new Row(table, uuid.toString()).fetch(new Column(table, "rank"));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -69,6 +105,10 @@ public final class RankData {
      * @return String of UUID's prefix
      */
     public static String getPrefix(@Nonnull final UUID uuid) {
-        return SQLHelper.getString(NAME, ID_COLUMN, uuid.toString(), 3); // INDEX = 3 bc that is index of prefix column
+        try {
+            return (String) new Row(table, uuid.toString()).fetch(new Column(table, "prefix"));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

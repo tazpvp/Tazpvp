@@ -57,6 +57,7 @@ import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.utils.region.Cuboid;
+import world.ntdi.postglam.connection.Database;
 
 import java.util.*;
 
@@ -83,6 +84,9 @@ public final class Tazpvp extends JavaPlugin {
 
     @Getter
     public static Cuboid spawnRegion;
+
+    @Getter
+    private static Database database;
 
     @Override
     public void onEnable() {
@@ -118,6 +122,17 @@ public final class Tazpvp extends JavaPlugin {
         saveDefaultConfig();
 
 
+        connectDatabase(
+                getConfig().getString("sql-host"),
+                getConfig().getInt("sql-port"),
+                getConfig().getString("sql-user"),
+                getConfig().getString("sql-password")
+        );
+    }
+
+    private static void connectDatabase(String host, int port, String user, String password) {
+        database = new Database(host, port, user, password);
+        database.connect();
     }
 
     public static void registerObserver(Observer observer) {
