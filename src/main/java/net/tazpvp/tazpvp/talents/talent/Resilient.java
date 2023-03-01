@@ -39,6 +39,8 @@ public class Resilient extends Observable {
 
     @Override
     public void death(Player victim, Player killer) {
-        killer.setAbsorptionAmount(4);
+        if (victim != killer) {
+            killer.setAbsorptionAmount(4);
+        }
     }
 }

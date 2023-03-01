@@ -39,18 +39,17 @@ import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
+import world.ntdi.nrcore.utils.config.ConfigUtils;
 import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.holograms.Hologram;
@@ -64,7 +63,6 @@ import java.util.Random;
 
 public class Death {
 
-    final String prefix = CC.GRAY + "[" + CC.DARK_RED + "☠" + CC.GRAY + "] " + CC.DARK_GRAY;
     private final Player victim;
     private final Player killer;
     private final Location deathLocation;
@@ -78,28 +76,11 @@ public class Death {
     }
 
     /**
-     * Replenishes the maximum health of the player and removes potion effects.
-     */
-    public void heal() {
-        PlayerFunctions.healPlr(victim);
-        PlayerFunctions.feedPlr(victim);
-
-        if ((killer.getHealth() + 5) >= PlayerFunctions.getMaxHealth(killer)) {
-            PlayerFunctions.healPlr(killer);
-            killer.setHealth(PlayerFunctions.getMaxHealth(killer));
-        } else {
-            killer.setHealth(killer.getHealth() + 5);
-        }
-
-        for (PotionEffect effect : victim.getActivePotionEffects()) {
-            victim.removePotionEffect(effect.getType());
-        }
-    }
-
-    /**
      * Creates a small chance of a chest spawning in the location of the death with enchantments inside.
      */
     public void coffin() {
+        if (killer == victim) return;
+
         Location loc = victim.getLocation();
         Material chest = new ItemStack(Material.CHEST).getType();
         int chance = new Random().nextInt(100);
@@ -190,54 +171,18 @@ public class Death {
      */
     private ItemStack makeSkull(@Nonnull final Player p) {
         ItemStack stack = SkullBuilder.of(1, p.getName()).setHeadTexture(p).build();
-        p.sendMessage("kys");
         return stack;
     }
 
-    /**
-     * Send personal and broadcast public kill messages.
-     * @param p The user that the message is sent to.
-     */
-    public void killMessage(final Player p) {
-        final String who = (p == killer) ? "You" : CC.GRAY + killer.getName();
-        final String what = CC.DARK_GRAY + " killed " + CC.GRAY + victim.getName();
-        String msg = prefix + who + what;
-
-        p.sendMessage(msg);
-    }
-
-    /**
-     * Used to send personal death messages or broadcasting suicide messages.
-     * @param p The user that the message is sent to.
-     */
-    public void deathMessage(final Player p) {
-        final String who = (p == victim) ? "You" : CC.GRAY + victim.getName();
-        String msg = prefix + who + " died.";
-
-        p.sendMessage(msg);
-    }
-
-    /**
-     * Broadcast a death message for either a suicide or kill.
-     * @param which Suicide or kill?
-     */
-    public void MessageAll(String which) {
-        for (Player op : Bukkit.getOnlinePlayers()) {
-            if (which.equals("kill")) {
-                killMessage(op);
-            } else if (which.equals("death")) {
-                deathMessage(op);
-            }
-        }
-    }
-
     public void rewards() {
-        final int xp = 15;
-        final int coins = 26;
+        if (killer != victim) {
+            final int xp = 15;
+            final int coins = 26;
 
-        sendActionbar(xp, coins);
-        PersistentData.add(killer, DataTypes.XP, xp);
-        PersistentData.add(killer, DataTypes.COINS, coins);
+            sendActionbar(xp, coins);
+            PersistentData.add(killer, DataTypes.COINS, coins);
+            PersistentData.add(killer, DataTypes.XP, xp);
+        }
     }
 
     @SuppressWarnings("all")

@@ -108,7 +108,7 @@ public class Caesar extends NPC {
                     }.runTaskLater(Tazpvp.getInstance(), 20*5);
                 }
             } else {
-                p.sendMessage("You do not have enough shards.");
+                p.sendMessage("You do not have enough shards. You need " + (cost - shardCount) + " more shards.");
             }
         } else {
             p.sendMessage("Click me with your pickaxe and I will upgrade it.");

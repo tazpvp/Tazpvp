@@ -39,6 +39,11 @@ import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.functions.ScoreboardFunctions;
 import net.tazpvp.tazpvp.utils.objects.AssistKill;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -64,6 +69,10 @@ public class Join implements Listener {
         if (!p.hasPlayedBefore()) {
             PlayerFunctions.kitPlayer(p);
         }
+
+        BossBar bossBar = Bukkit.createBossBar(ChatColor.WHITE + "" + ChatColor.BOLD +  "TAZPVP.NET", BarColor.BLUE, BarStyle.SEGMENTED_10);
+        bossBar.addPlayer(p);
+        bossBar.setProgress(1);
 
         p.teleport(ConfigUtils.spawn);
         p.setCollidable(false);

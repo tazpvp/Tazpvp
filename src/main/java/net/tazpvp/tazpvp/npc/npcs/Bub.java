@@ -60,14 +60,15 @@ public class Bub extends NPC {
         ItemStack item = p.getInventory().getItemInMainHand();
         if (item.getType().equals(Material.PLAYER_HEAD)) {
             int num = item.getAmount();
-            if (num >= 2) {
-                item.setAmount(num - 1);
-            } else {
-                p.getInventory().remove(item);
-            }
-            p.sendMessage("You gave head");
 
+            if (num > 1) p.sendMessage("Here you go, take " + num + " shards.");
+            else p.sendMessage("Here you go, take " + num + " shard.");
+
+            item.setAmount(0);
             p.getInventory().addItem(new ItemStack(Material.AMETHYST_SHARD, num));
+
+        } else {
+            p.sendMessage("Right click me with player heads to trade them for shards.");
         }
     }
 }
