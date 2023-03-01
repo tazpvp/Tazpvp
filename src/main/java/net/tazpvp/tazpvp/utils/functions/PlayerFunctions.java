@@ -32,9 +32,12 @@
 
 package net.tazpvp.tazpvp.utils.functions;
 
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
+import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -44,6 +47,8 @@ import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import java.util.List;
 import java.util.UUID;
+
+import static net.tazpvp.tazpvp.utils.data.PersistentData.getInt;
 
 public class PlayerFunctions {
 
@@ -58,14 +63,14 @@ public class PlayerFunctions {
     );
 
     public static Integer getMaxHealth(Player p) {
-        if (PersistentData.getInt(p, DataTypes.REBIRTH) >= 1)
+        if (getInt(p, DataTypes.REBIRTH) >= 1)
             return 22;
         else
             return 20;
     }
 
     public static void healPlr(Player p) {
-        if (PersistentData.getInt(p, DataTypes.REBIRTH) >= 1) {
+        if (getInt(p, DataTypes.REBIRTH) >= 1) {
             p.setHealthScale(22.0);
         } else {
             p.setHealthScale(20.0);
@@ -126,9 +131,16 @@ public class PlayerFunctions {
     public static void levelUp(UUID ID) {
         Player p = Bukkit.getPlayer(ID);
         PersistentData.add(ID, DataTypes.LEVEL);
-        PersistentData.set(ID, DataTypes.XP, 0);
+        PersistentData.add(ID, DataTypes.COINS, 100);
+        PersistentData.set(ID, DataTypes.XP, (LooseData.getExpLeft(ID) - getInt(ID, DataTypes.XP)));
+        p.getInventory().addItem(new ItemStack(Material.AMETHYST_SHARD));
         if (p != null) {
-            p.sendMessage("You leveled up.");
+            p.sendMessage("");
+            p.sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "  LEVEL UP " + ChatColor.DARK_AQUA + "Combat Lvl. " + ChatColor.AQUA + getInt(ID, DataTypes.LEVEL));
+            p.sendMessage("");
+            p.sendMessage(ChatColor.DARK_GRAY + "  ▶ " + ChatColor.GOLD + "100 Coins");
+            p.sendMessage(ChatColor.DARK_GRAY + "  ▶ " + ChatColor.DARK_AQUA + "1 Shard");
+            p.sendMessage("");
         }
     }
 }

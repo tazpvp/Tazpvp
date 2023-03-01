@@ -34,6 +34,7 @@ package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
+import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -56,12 +57,14 @@ public class Damage implements Listener {
                 if (e instanceof EntityDamageByEntityEvent ee) {
                     if (ee.getDamager() instanceof Player killer) {
                         DeathFunctions.death(victim, killer);
+                    } else {
+                        DeathFunctions.death(victim, ee.getDamager());
                     }
-                } else if (e.getCause() == EntityDamageEvent.DamageCause.FIRE) {
-                    DeathFunctions.death(victim, victim);
-                    Tazpvp.getObservers().forEach(observer -> observer.burn(victim));
-                } else if (e.getCause() == EntityDamageEvent.DamageCause.LAVA) {
-                    DeathFunctions.death(victim, victim);
+                } else {
+                    if (e.getCause() == EntityDamageEvent.DamageCause.FIRE) {
+                        Tazpvp.getObservers().forEach(observer -> observer.burn(victim));
+                    }
+                    DeathFunctions.death(victim, null);
                 }
             }
         }

@@ -38,60 +38,120 @@ import net.tazpvp.tazpvp.duels.DuelUtils;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.objects.Death;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.utils.config.ConfigUtils;
 
 import javax.annotation.Nullable;
 
 public class DeathFunctions {
 
+    static final String prefix = CC.GRAY + "[" + CC.DARK_RED + "☠" + CC.GRAY + "] " + CC.DARK_GRAY;
 
     /**
      * Runs for every death and runs all the checks for the victim and killer.
      * @param victim The person who died.
      * @param killer The person who killed.
      */
-
-    public static void death(Player victim, @Nullable Player killer) {
-        Death death = new Death(victim, killer);
-
+    public static void death(Player victim, @Nullable Entity killer) {
         if (killer != null) {
-            PersistentData.add(killer, DataTypes.KILLS);
-            if (Bukkit.getOnlinePlayers().size() < 10) {
-                if (killer == victim)
-                    death.MessageAll("death");
-                else
-                    death.MessageAll("kill");
-            } else {
-                if (killer == victim)
-                    death.deathMessage(victim);
-                else
-                    death.killMessage(killer);
-            }
-            LooseData.addKs(killer.getUniqueId());
+            if (killer instanceof Player pKiller) {
+                Death death = new Death(victim, pKiller);
 
-            for (Duel duel : DuelUtils.ACTIVE_DUELS) {
-                if (duel.getDUELERS().contains(killer.getUniqueId())) {
-                    DuelUtils.end(victim, killer, duel.getDUELERS(), duel);
+                if (pKiller == victim) {
+                    MessageAll(false, victim, pKiller);
+                } else {
+                    PersistentData.add(pKiller.getUniqueId(), DataTypes.KILLS);
+                    LooseData.addKs(pKiller.getUniqueId());
+
+                    death.coffin();
+                    death.rewards();
+                    death.dropHead();
+                    MessageAll(true, victim, pKiller);
+
+                    addHealth(pKiller, 5);
+
+                    for (Duel duel : DuelUtils.ACTIVE_DUELS) {
+                        if (duel.getDUELERS().contains(pKiller.getUniqueId())) {
+                            DuelUtils.end(victim, pKiller, duel.getDUELERS(), duel);
+                        }
+                    }
                 }
+            } else if (killer instanceof Mob mKiller) {
+                MessageAll(true, victim, mKiller);
             }
-            death.coffin();
+        } else {
+            MessageAll(false, victim, null);
         }
-
         if (Tazpvp.playerList.contains(victim.getUniqueId())) {
             Tazpvp.playerList.remove(victim.getUniqueId());
         }
 
         PersistentData.add(victim, DataTypes.DEATHS);
-
-        death.dropHead();
-        death.rewards();
-        death.heal();
-
         LooseData.resetKs(victim.getUniqueId());
 
-        victim.teleport(ConfigUtils.spawn);
+        heal(victim);
+        respawn(victim);
+    }
+
+    public static void respawn(Player p) {
+        p.setGameMode(GameMode.SPECTATOR);
+        p.sendTitle(CC.RED + "" + CC.BOLD + "YOU DIED", CC.GOLD + "Respawning...", 5, 50, 5);
+        new BukkitRunnable() {
+            public void run() {
+                p.setGameMode(GameMode.SURVIVAL);
+                p.teleport(ConfigUtils.spawn);
+            }
+        }.runTaskLater(Tazpvp.getInstance(), 20*3);
+    }
+
+    public static void heal(Player p) {
+        PlayerFunctions.healPlr(p);
+        PlayerFunctions.feedPlr(p);
+
+        for (PotionEffect effect : p.getActivePotionEffects()) {
+            p.removePotionEffect(effect.getType());
+        }
+    }
+
+    public static void addHealth(Player p, int amount) {
+        if ((p.getHealth() + 5) >= PlayerFunctions.getMaxHealth(p)) {
+            PlayerFunctions.healPlr(p);
+            p.setHealth(PlayerFunctions.getMaxHealth(p));
+        } else {
+            p.setHealth(p.getHealth() + amount);
+        }
+    }
+
+    public static void killMessage(Player p, Player victim, Entity killer) {
+        final String who = (p == victim) ? "You" : CC.GRAY + killer.getName();
+        final String what = CC.DARK_GRAY + " killed " + CC.GRAY + victim.getName();
+        String msg = prefix + who + what;
+
+        p.sendMessage(msg);
+    }
+
+    public static void deathMessage(Player p, Player victim) {
+        final String who = (p == victim) ? "You" : CC.GRAY + victim.getName();
+        String msg = prefix + who + " died.";
+
+        p.sendMessage(msg);
+    }
+
+    public static void MessageAll(boolean pKill, Player victim, @Nullable Entity killer) {
+        for (Player op : Bukkit.getOnlinePlayers()) {
+            if (pKill) {
+                killMessage(op, victim, killer);
+            } else {
+                deathMessage(op, victim);
+            }
+        }
     }
 }
