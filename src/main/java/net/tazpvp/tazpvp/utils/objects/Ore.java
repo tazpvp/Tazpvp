@@ -32,39 +32,23 @@
 
 package net.tazpvp.tazpvp.utils.objects;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.bukkit.Material;
 
+@AllArgsConstructor
 public class Ore {
 
-    private int time;
-    private int cost;
-    private int level;
-    private Material mat;
-    private Material smelted;
-    private String pickaxe;
-
-    public Ore(int time, int cost, int level, Material mat, Material smelted, String pickaxe) {
-        this.time = time;
-        this.cost = cost;
-        this.level = level;
-        this.mat = mat;
-        this.smelted = smelted;
-        this.pickaxe = pickaxe;
-    }
-
-    public int getTime() {
-        return time;
-    }
-
-    public int getCost() {
-        return cost;
-    }
-
-    public int getLevel() { return level; }
-
-    public Material getMat() { return mat; }
-
-    public Material getSmelted() { return smelted; }
-
-    public String getPickaxe() { return pickaxe; }
+    @Getter
+    private final int time;
+    @Getter
+    private final int cost;
+    @Getter
+    private final int level;
+    @Getter
+    private final Material mat;
+    @Getter
+    private final Material smelted;
+    @Getter
+    private final String pickaxe;
 }

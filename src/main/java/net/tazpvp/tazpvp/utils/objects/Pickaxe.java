@@ -32,34 +32,18 @@
 
 package net.tazpvp.tazpvp.utils.objects;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.bukkit.Material;
 
+@AllArgsConstructor
 public class Pickaxe {
-    private Material mat;
-    private int cost;
-    private int level;
-    private Material upgrade;
-
-    public Pickaxe(Material mat, int cost, int level, Material upgrade) {
-        this.mat = mat;
-        this.cost = cost;
-        this.level = level;
-        this.upgrade = upgrade;
-    }
-
-    public Material getMat() {
-        return mat;
-    }
-
-    public int getCost() {
-        return cost;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public Material getUpgrade() {
-        return upgrade;
-    }
+    @Getter
+    private final Material mat;
+    @Getter
+    private final int cost;
+    @Getter
+    private final int level;
+    @Getter
+    private final Material upgrade;
 }

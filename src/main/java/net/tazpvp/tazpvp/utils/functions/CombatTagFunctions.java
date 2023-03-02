@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  *
- * Copyright (c) 2022, n-tdi
+ * Copyright (c) 2023, n-tdi
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,34 +36,25 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.objects.CombatTag;
 import org.bukkit.entity.Player;
 
-import java.util.Map;
+import java.util.Queue;
 import java.util.UUID;
 
-public class CombatFunctions {
+public class CombatTagFunctions {
 
-    /**
-     * Add a player to another player's combat tag
-     * @param attacker the attacker to add to the combat tag
-     * @param victim the victim's combat tag to add to
-     */
-    public static void tag(Player attacker, Player victim) {
-//        Tazpvp.combatTag.get(victim.getUniqueId()).add(attacker.getUniqueId());
-        Tazpvp.combatAssist.get(victim.getUniqueId()).addAttacker(attacker.getUniqueId());
-    }
+//    public static void putInCombat(UUID victim, UUID attacker) {
+//        if (isInCombat(victim)) {
+//
+//        } else {
+//            CombatTag tag = new CombatTag();
+//        }
+//    }
 
-
-    /**
-     * Check if a person is in the combat tag still
-     */
-    public static void check() {
-        for (Map.Entry<UUID, CombatTag> entrySet : Tazpvp.combatAssist.entrySet()) {
-            CombatTag playerAssistData = entrySet.getValue();
-            if (playerAssistData.overCheck()) {
-                // out of combat lol
-            } else {
-                // still in combat
-                playerAssistData.decreaseCountdown();
-            }
-        }
-    }
+//    public static boolean isInCombat(UUID ID) {
+//        for (CombatTag tags : Tazpvp.combatAssist) {
+//            if (tags.getAttackers().contains(ID) || tags.getVictim() == ID) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 }

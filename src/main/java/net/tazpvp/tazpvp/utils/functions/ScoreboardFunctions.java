@@ -55,8 +55,13 @@ public class ScoreboardFunctions {
     public static void initScoreboard(Player p) {
 
         board = Bukkit.getScoreboardManager().getNewScoreboard();
-        objective = board.registerNewObjective("sb", "dummy", CC.translateAlternateColorCodes('&', "&3&lTAZPVP.NET"));
 
+        if (board.getObjective("health") == null) {
+            Objective healthObjective = board.registerNewObjective("health", Criteria.HEALTH, CC.RED + "❤", RenderType.INTEGER);
+            healthObjective.setDisplaySlot(DisplaySlot.BELOW_NAME);
+        }
+
+        objective = board.registerNewObjective("sb", "dummy", CC.translateAlternateColorCodes('&', "&3&lTAZPVP.NET"));
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         objective.getScore("                         ").setScore(8);

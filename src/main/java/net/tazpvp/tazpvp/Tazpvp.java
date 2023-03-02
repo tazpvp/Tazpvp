@@ -47,9 +47,8 @@ import net.tazpvp.tazpvp.npc.npcs.Maxim;
 import net.tazpvp.tazpvp.talents.talent.Moist;
 import net.tazpvp.tazpvp.talents.talent.Revenge;
 import net.tazpvp.tazpvp.utils.ConfigUtil;
-import net.tazpvp.tazpvp.utils.functions.BlockFunctions;
 import net.tazpvp.tazpvp.utils.functions.CombatFunctions;
-import net.tazpvp.tazpvp.utils.objects.AssistKill;
+import net.tazpvp.tazpvp.utils.objects.CombatTag;
 import net.tazpvp.tazpvp.utils.observer.Observer;
 import net.tazpvp.tazpvp.utils.runnables.Generator;
 import org.bukkit.Bukkit;
@@ -74,7 +73,7 @@ public final class Tazpvp extends JavaPlugin {
 
     public static String prefix = "tazpvp.";
 
-    public static WeakHashMap<UUID, AssistKill> combatAssist = new WeakHashMap<>();
+    public static WeakHashMap<UUID, CombatTag> combatAssist = new WeakHashMap<>();
     public static WeakHashMap<UUID, Duel> duels = new WeakHashMap<>();
 
     private List<NPC> npcs = new LinkedList<>();

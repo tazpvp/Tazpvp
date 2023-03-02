@@ -38,7 +38,7 @@ import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.functions.ScoreboardFunctions;
-import net.tazpvp.tazpvp.utils.objects.AssistKill;
+import net.tazpvp.tazpvp.utils.objects.CombatTag;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -54,7 +54,7 @@ public class Join implements Listener {
 
         PersistentData.initPlayer(p);
 
-        Tazpvp.combatAssist.put(p.getUniqueId(), new AssistKill());
+        Tazpvp.combatAssist.put(p.getUniqueId(), new CombatTag());
         PlaytimeUtil.playerJoined(p);
 
         ScoreboardFunctions.initScoreboard(p);
