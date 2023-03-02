@@ -53,15 +53,22 @@ import java.util.UUID;
 
 public class CombatTagFunctions {
 
+    private static final String nowInCombat = CC.RED + "You are now in combat with ";
+    private static final String noLongerInCombat = CC.GREEN +"You are no longer in combat.";
+
     public static void putInCombat(UUID victim, UUID attacker) {
         if (victim != attacker && victim != null) {
             if (getTag(victim) != null) {
-                setTimer(getTag(victim), victim, 16);
+                setTimer(getTag(victim), victim, 15);
                 if (!getTag(victim).getAttackers().contains(attacker)) {
                     getTag(victim).getAttackers().add(attacker);
+                    if (!getTag(attacker).getAttackers().contains(victim)) {
+                        Bukkit.getPlayer(attacker).sendMessage(nowInCombat + CC.BOLD + Bukkit.getPlayer(victim).getName());
+                        Bukkit.getPlayer(victim).sendMessage(nowInCombat + CC.BOLD + Bukkit.getPlayer(attacker).getName());
+                    }
                 }
                 if (getTag(attacker) != null) {
-                    setTimer(getTag(attacker), attacker, 16);
+                    setTimer(getTag(attacker), attacker, 15);
                 } else {
                     putInCombat(attacker, victim);
                 }
@@ -71,7 +78,8 @@ public class CombatTagFunctions {
                 Tazpvp.tags.put(victim, tag);
                 tag.getAttackers().add(attacker);
 
-                setTimer(tag, victim, 16);
+                Bukkit.getPlayer(victim).sendMessage(nowInCombat + CC.BOLD + Bukkit.getPlayer(attacker).getName());
+                setTimer(tag, victim, 15);
                 putInCombat(attacker, victim);
             }
         }
@@ -91,12 +99,13 @@ public class CombatTagFunctions {
     public static void countDown(CombatTag tag, UUID id) {
         Player p = Bukkit.getPlayer(id);
         if (tag.getCountdown() > 0) {
+            tag.getBar().setProgress((float) tag.getCountdown() / 15);
+            tag.getBar().setTitle("Combat Tag: " + tag.getCountdown() + "s");
             tag.setCountdown(tag.getCountdown() - 1);
-            tag.getBar().setProgress((float) (tag.getCountdown() / 16));
         } else {
             clearAttackers(tag);
             tag.getBar().removePlayer(p);
-            p.sendMessage("You are now out of combat.");
+            p.sendMessage(noLongerInCombat);
         }
     }
 
