@@ -54,7 +54,6 @@ public class Join implements Listener {
 
         PersistentData.initPlayer(p);
 
-        Tazpvp.combatAssist.put(p.getUniqueId(), new CombatTag());
         PlaytimeUtil.playerJoined(p);
 
         ScoreboardFunctions.initScoreboard(p);

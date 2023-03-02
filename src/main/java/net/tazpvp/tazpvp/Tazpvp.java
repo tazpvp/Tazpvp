@@ -47,7 +47,6 @@ import net.tazpvp.tazpvp.npc.npcs.Maxim;
 import net.tazpvp.tazpvp.talents.talent.Moist;
 import net.tazpvp.tazpvp.talents.talent.Revenge;
 import net.tazpvp.tazpvp.utils.ConfigUtil;
-import net.tazpvp.tazpvp.utils.functions.CombatFunctions;
 import net.tazpvp.tazpvp.utils.objects.CombatTag;
 import net.tazpvp.tazpvp.utils.observer.Observer;
 import net.tazpvp.tazpvp.utils.runnables.Generator;
@@ -66,17 +65,15 @@ import java.util.*;
 public final class Tazpvp extends JavaPlugin {
     @Getter
     private static List<Observer> observers = new ArrayList<>();
+    public static List<UUID> fell = new ArrayList<>();
+    private List<NPC> npcs = new LinkedList<>();
+    public static List<UUID> playerList = new ArrayList<>();
     public static List<String> events = new ArrayList<>();
     public static Event event;
-    public static List<UUID> playerList = new ArrayList<>();
-    public static List<UUID> fell = new ArrayList<>();
-
     public static String prefix = "tazpvp.";
 
-    public static WeakHashMap<UUID, CombatTag> combatAssist = new WeakHashMap<>();
+    public static WeakHashMap<UUID, CombatTag> tags = new WeakHashMap<>();
     public static WeakHashMap<UUID, Duel> duels = new WeakHashMap<>();
-
-    private List<NPC> npcs = new LinkedList<>();
 
     @Getter
     private static ConfigUtil parkourUtil;
@@ -100,13 +97,6 @@ public final class Tazpvp extends JavaPlugin {
         registerObservable();
 
         spawnNpcs();
-
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                CombatFunctions.check();
-            }
-        }.runTaskTimerAsynchronously(this, 16L, 16L);
 
         parkourUtil = new ConfigUtil("parkour.yml", this);
 

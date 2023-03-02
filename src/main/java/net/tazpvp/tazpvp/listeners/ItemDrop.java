@@ -33,6 +33,7 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -47,10 +48,12 @@ public class ItemDrop implements Listener {
         ItemStack i = e.getItemDrop().getItemStack();
         Player p = e.getPlayer();
 
-        for (Material m : PlayerFunctions.kitItems) {
-            if (i.getType().equals(m)){
-                e.setCancelled(true);
-                p.sendMessage("You cannot drop kit items.");
+        if (p.getGameMode() != GameMode.CREATIVE) {
+            for (Material m : PlayerFunctions.kitItems) {
+                if (i.getType().equals(m)){
+                    e.setCancelled(true);
+                    p.sendMessage("You cannot drop kit items.");
+                }
             }
         }
     }

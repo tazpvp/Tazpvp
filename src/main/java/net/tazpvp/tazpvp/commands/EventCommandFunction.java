@@ -34,6 +34,7 @@ package net.tazpvp.tazpvp.commands;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.events.EventUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.PlayerUtils;
@@ -42,6 +43,7 @@ import world.ntdi.nrcore.utils.command.CommandFunction;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class EventCommandFunction extends CommandCore implements CommandFunction {
 
@@ -57,27 +59,41 @@ public class EventCommandFunction extends CommandCore implements CommandFunction
                 if (!PlayerUtils.checkPerms(p, Tazpvp.prefix + "event.host")) return;
                 for (String event : Tazpvp.events) {
                     if (args[1].equalsIgnoreCase(event)) {
-                        if (Tazpvp.event == null) Tazpvp.event = EventUtils.create(args[1], new ArrayList<>());
+                        if (Tazpvp.event == null) {
+                            Tazpvp.event = EventUtils.create(args[1], new ArrayList<>());
+                            p.sendMessage("You created a(n) " + args[1] + " event.");
+                        }
                         return;
                     }
                 }
-            }
-            else if (args[0].equalsIgnoreCase("list")) {
-                p.sendMessage(Tazpvp.event.getNAME());
+            } else if (args[0].equalsIgnoreCase("list")) {
+                for (UUID id : Tazpvp.event.getPlayerList()) {
+                    p.sendMessage(Bukkit.getPlayer(id).getName());
+                }
                 return;
-            }
-            else if (args[0].equalsIgnoreCase("begin")) {
+            } else if (args[0].equalsIgnoreCase("begin")) {
                 if (Tazpvp.event != null) {
                     EventUtils.create(Tazpvp.event.getNAME(), Tazpvp.playerList);
+                    p.sendMessage("You began the " + Tazpvp.event.getNAME() + " event.");
                     return;
                 }
-            }
-            else if (args[0].equalsIgnoreCase("join")) {
+            } else if (args[0].equalsIgnoreCase("join")) {
                 if (Tazpvp.event != null) {
                     Tazpvp.getObservers().forEach(observer -> observer.event(p));
                     Tazpvp.playerList.add(p.getUniqueId());
+                    p.sendMessage("You joined the event: " + Tazpvp.event.getNAME());
                     return;
                 }
+            } else {
+                String[] commands = {
+                        "Event Commands:\n",
+                        "/event create <type> (FFA / Parkour)\n",
+                        "/event list - Lists the players in the event.\n",
+                        "/event join - Joins the current event.\n",
+                        "/event begin - Starts the current event.\n",
+                        ""
+                };
+                p.sendMessage(commands);
             }
         }
         return;

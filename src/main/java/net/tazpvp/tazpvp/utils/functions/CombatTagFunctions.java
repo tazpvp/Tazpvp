@@ -32,29 +32,92 @@
 
 package net.tazpvp.tazpvp.utils.functions;
 
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.objects.CombatTag;
+import org.bukkit.Bukkit;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
+import org.bukkit.boss.KeyedBossBar;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
+import java.awt.*;
+import java.util.LinkedList;
 import java.util.Queue;
 import java.util.UUID;
 
 public class CombatTagFunctions {
 
-//    public static void putInCombat(UUID victim, UUID attacker) {
-//        if (isInCombat(victim)) {
-//
-//        } else {
-//            CombatTag tag = new CombatTag();
-//        }
-//    }
+    public static void putInCombat(UUID victim, UUID attacker) {
+        if (victim != attacker && victim != null) {
+            if (getTag(victim) != null) {
+                setTimer(getTag(victim), victim, 16);
+                if (!getTag(victim).getAttackers().contains(attacker)) {
+                    getTag(victim).getAttackers().add(attacker);
+                }
+                if (getTag(attacker) != null) {
+                    setTimer(getTag(attacker), attacker, 16);
+                } else {
+                    putInCombat(attacker, victim);
+                }
+            } else {
+                CombatTag tag = new CombatTag();
 
-//    public static boolean isInCombat(UUID ID) {
-//        for (CombatTag tags : Tazpvp.combatAssist) {
-//            if (tags.getAttackers().contains(ID) || tags.getVictim() == ID) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+                Tazpvp.tags.put(victim, tag);
+                tag.getAttackers().add(attacker);
+
+                setTimer(tag, victim, 16);
+                putInCombat(attacker, victim);
+            }
+        }
+    }
+
+    public static CombatTag getTag(UUID ID) {
+        if (Tazpvp.tags.containsKey(ID)) {
+            return Tazpvp.tags.get(ID);
+        }
+        return null;
+    }
+
+    public static void clearAttackers(CombatTag tag) {
+        tag.getAttackers().clear();
+    }
+
+    public static void countDown(CombatTag tag, UUID id) {
+        Player p = Bukkit.getPlayer(id);
+        if (tag.getCountdown() > 0) {
+            tag.setCountdown(tag.getCountdown() - 1);
+            tag.getBar().setProgress((float) (tag.getCountdown() / 16));
+        } else {
+            clearAttackers(tag);
+            tag.getBar().removePlayer(p);
+            p.sendMessage("You are now out of combat.");
+        }
+    }
+
+    public static void setTimer(CombatTag tag, UUID id, int time) {
+        if (tag.getCountdown() <= 0) {
+            tag.setCountdown(time);
+            tag.setBar(Bukkit.createBossBar("Combat Tag: " + tag.getCountdown() + "s", BarColor.RED, BarStyle.SOLID));
+            tag.getBar().setProgress(1);
+            tag.getBar().addPlayer(Bukkit.getPlayer(id));
+            new BukkitRunnable() {
+                public void run() {
+                    if (tag.getCountdown() > 0) {
+                        countDown(tag, id);
+                    } else {
+                        countDown(tag, id);
+                        cancel();
+                    }
+                }
+            }.runTaskTimer(Tazpvp.getInstance(), 0, 20);
+        } else {
+            tag.setCountdown(time);
+        }
+    }
 }

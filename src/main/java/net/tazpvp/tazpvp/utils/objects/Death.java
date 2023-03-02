@@ -38,6 +38,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -60,6 +61,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 public class Death {
 
@@ -182,6 +184,18 @@ public class Death {
             sendActionbar(xp, coins);
             PersistentData.add(killer, DataTypes.COINS, coins);
             PersistentData.add(killer, DataTypes.XP, xp);
+
+            for (UUID id : CombatTagFunctions.getTag(victim.getUniqueId()).getAttackers()) {
+                if (id != killer.getUniqueId() && id != null) {
+                    Player assister = Bukkit.getPlayer(id);
+                    final int AssistXP = 5;
+                    final int AssistCoins = 5;
+
+                    assister.sendMessage("You assisted in killing " + victim.getName() + "+5 EXP, +5 Coins");
+                    PersistentData.add(assister, DataTypes.COINS, coins);
+                    PersistentData.add(assister, DataTypes.XP, xp);
+                }
+            }
         }
     }
 

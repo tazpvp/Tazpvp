@@ -33,7 +33,9 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
+import net.tazpvp.tazpvp.utils.objects.CombatTag;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -68,6 +70,12 @@ public class Damage implements Listener {
                         Tazpvp.getObservers().forEach(observer -> observer.burn(victim));
                     }
                     DeathFunctions.death(victim, null);
+                }
+            } else {
+                if (e instanceof EntityDamageByEntityEvent ee) {
+                    if (ee.getDamager() instanceof Player killer) {
+                        CombatTagFunctions.putInCombat(victim.getUniqueId(), killer.getUniqueId());
+                    }
                 }
             }
         }
