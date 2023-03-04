@@ -55,7 +55,7 @@ public class Chat implements Listener {
         Player p = e.getPlayer();
         UUID uuid = p.getUniqueId();
         String message = e.getMessage();
-        boolean hasRank = RankData.hasRank(uuid);
+        boolean hasRank = PlayerRankData.hasRank(uuid);
 
         /* Check if player has a guild tag */
         boolean hasGuildTag = false;
@@ -64,7 +64,7 @@ public class Chat implements Listener {
             if (g.getTag() != null ) hasGuildTag = true;
         }
 
-        String format = "&GRAY[{LEVEL}&GRAY] {PREFIX} %s &GOLD{SUFFIX}&GRAY &M%s";
+        String format = "&GRAY[{LEVEL}&GRAY] {PREFIX}%s &GOLD{SUFFIX}&GRAY&M%s";
         format = format
                 .replace("&GRAY", CC.GRAY.toString())
                 .replace("&GOLD", CC.GOLD.toString())
@@ -76,12 +76,12 @@ public class Chat implements Listener {
                 .replace("{LEVEL}", String.valueOf(PersistentData.getInt(uuid, DataTypes.LEVEL)))
                 .replace("{PREFIX}",
                         (hasRank
-                                ? RankData.getRank(uuid)
+                                ? PlayerRankData.getRank(uuid) + " "
                                 : "")
                 )
                 .replace("{SUFFIX}",
                         (hasGuildTag
-                                ? GuildData.getGuild(uuid).getTag()
+                                ? GuildData.getGuild(uuid).getTag() + " "
                                 : "")
                 );
 

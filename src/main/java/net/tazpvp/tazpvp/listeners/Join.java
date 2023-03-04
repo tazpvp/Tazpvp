@@ -40,11 +40,13 @@ import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.functions.ScoreboardFunctions;
 import net.tazpvp.tazpvp.utils.objects.CombatTag;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import world.ntdi.nrcore.utils.config.ConfigUtils;
+import world.ntdi.nrcore.utils.nametag.PlayerNameTag;
 
 public class Join implements Listener {
 
@@ -67,6 +69,13 @@ public class Join implements Listener {
 
         p.teleport(ConfigUtils.spawn);
         p.setCollidable(false);
+
+        int ranking = 1; //TODO: Use database and rankdata
+        String prefix = Tazpvp.getChat().getPlayerPrefix(p);
+        String suffix = Tazpvp.getChat().getPlayerSuffix(p);
+        ChatColor color = ChatColor.GRAY; //TODO: Use database and rankdata
+
+        new PlayerNameTag().initializePlayerNameTag(e.getPlayer(), ranking, prefix, suffix, color);
 
         p.setPlayerListHeaderFooter(
                 CC.DARK_AQUA + "                                      " +

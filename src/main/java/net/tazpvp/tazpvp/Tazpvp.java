@@ -52,12 +52,14 @@ import net.tazpvp.tazpvp.utils.observer.Observer;
 import net.tazpvp.tazpvp.utils.runnables.Generator;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.utils.region.Cuboid;
 import world.ntdi.postglam.connection.Database;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 /*
     A plugin for tazpvp beacuse we love tazpvp! <3 I love tazpvp <3 <3 <3 Rownxo smells like tazpvp stinky tazpvp
@@ -84,6 +86,9 @@ public final class Tazpvp extends JavaPlugin {
     @Getter
     private static Database database;
 
+    private static final Logger log = Logger.getLogger("Minecraft");
+    private static net.milkbowl.vault.chat.Chat chat = null;
+
     @Override
     public void onEnable() {
 
@@ -97,6 +102,8 @@ public final class Tazpvp extends JavaPlugin {
         registerObservable();
 
         spawnNpcs();
+
+        setupChat();
 
         parkourUtil = new ConfigUtil("parkour.yml", this);
 
@@ -129,7 +136,15 @@ public final class Tazpvp extends JavaPlugin {
     @Override
     public void onDisable() {
 
+        log.info(String.format("[%s] Disabled Version %s", getDescription().getName(), getDescription().getVersion()));
+
         despawnNpcs();
+    }
+
+    private boolean setupChat() {
+        RegisteredServiceProvider<net.milkbowl.vault.chat.Chat> rsp = getServer().getServicesManager().getRegistration(net.milkbowl.vault.chat.Chat.class);
+        chat = rsp.getProvider();
+        return chat != null;
     }
 
     public static Tazpvp getInstance() {
@@ -184,6 +199,10 @@ public final class Tazpvp extends JavaPlugin {
     private void despawnNpcs() {
         npcs.forEach(NPC::remove);
         npcs.clear();
+    }
+
+    public static net.milkbowl.vault.chat.Chat getChat() {
+        return chat;
     }
 
 }

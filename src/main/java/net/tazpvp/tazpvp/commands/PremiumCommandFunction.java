@@ -1,8 +1,6 @@
 package net.tazpvp.tazpvp.commands;
 
-import net.tazpvp.tazpvp.utils.data.DataTypes;
-import net.tazpvp.tazpvp.utils.data.PersistentData;
-import net.tazpvp.tazpvp.utils.data.RankData;
+import net.tazpvp.tazpvp.utils.data.PlayerRankData;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -24,10 +22,10 @@ public class PremiumCommandFunction extends CommandCore implements CommandFuncti
             Player p = Bukkit.getPlayer(args[0]);
             if (p != null) {
                 UUID uuid = p.getUniqueId();
-                boolean isPremium = RankData.hasRank(uuid);
+                boolean isPremium = PlayerRankData.hasRank(uuid);
 
                 if (!isPremium) {
-                    RankData.setRank(uuid, "Premium");
+                    PlayerRankData.setRank(uuid, "Premium");
                 } else {
                     p.sendMessage("This user is already premium.");
                 }

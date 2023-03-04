@@ -1,114 +1,56 @@
+/*
+ * BSD 3-Clause License
+ *
+ * Copyright (c) 2023, n-tdi
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its
+ *    contributors may be used to endorse or promote products derived from
+ *    this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
 package net.tazpvp.tazpvp.utils.data;
 
-import net.tazpvp.tazpvp.Tazpvp;
-import world.ntdi.postglam.data.DataTypes;
-import world.ntdi.postglam.sql.module.Column;
-import world.ntdi.postglam.sql.module.Row;
-import world.ntdi.postglam.sql.module.Table;
+import lombok.Getter;
+import net.tazpvp.tazpvp.utils.enums.CC;
 
-import javax.annotation.Nonnull;
-import java.sql.SQLException;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.UUID;
+public enum RankData {
+    DEFAULT(1, CC.GRAY),
+    PREMIUM(2, CC.GRAY),
+    HELPER(3, CC.GRAY),
+    MOD(4, CC.GRAY),
+    ADMIN(5, CC.GRAY),
+    MANAGER(6, CC.GRAY),
+    OWNER(7, CC.RED);
 
-public final class RankData {
-    private static final Table table;
+    @Getter
+    private final int ranking;
+    @Getter
+    private final CC color;
 
-    static {
-        try {
-            table = new Table(Tazpvp.getDatabase(), "ranks", Map.entry("id", DataTypes.UUID), new LinkedHashMap<>(Map.of("rank", DataTypes.TEXT, "prefix", DataTypes.TEXT)));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    /**
-     * Set rank of UUID, doesn't have to already be in table.
-     * @param uuid UUID target
-     * @param rank Vault Rank
-     */
-    public static void setRank(@Nonnull final UUID uuid, @Nonnull final String rank) {
-        if (!hasRank(uuid)) {
-            initRank(uuid, rank);
-            return;
-        }
-
-        try {
-            new Row(table, uuid.toString()).update(new Column(table, "rank"), rank);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        final String rankPrefix = "prefix"; //TODO: Hook into vault
-        setPrefix(uuid, rankPrefix);
-    }
-
-    /**
-     * Initialize uuid into table
-     * @param uuid UUID Target
-     * @param rank Vault Rank
-     */
-    private static void initRank(@Nonnull final UUID uuid, @Nonnull final String rank) {
-        final String rankPrefix = "prefix"; //TODO: Hook into vault
-        try {
-            new Row(table, uuid.toString(), rank, rankPrefix);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Set prefix of row, will do nothing if not already inside of table
-     * @param uuid UUID target
-     * @param prefix New Prefix
-     */
-    public static void setPrefix(@Nonnull final UUID uuid, @Nonnull final String prefix) {
-        if (hasRank(uuid)) {
-            try {
-                new Row(table, uuid.toString()).update(new Column(table, "prefix"), prefix);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    /**
-     * Check if they are inside rank table
-     * @param uuid UUID target
-     * @return if player is inside rank table
-     */
-    public static boolean hasRank(@Nonnull final UUID uuid) {
-        try {
-            return table.doesRowExist(uuid.toString());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Get the rank of UUID - Will throw runtime exception if not in table
-     * @param uuid UUID target
-     * @return String of UUID's rank
-     */
-    public static String getRank(@Nonnull final UUID uuid) {
-        try {
-            return (String) new Row(table, uuid.toString()).fetch(new Column(table, "rank"));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Get prefix of UUID - Will throw runtime exception if not in table
-     * @param uuid UUID target
-     * @return String of UUID's prefix
-     */
-    public static String getPrefix(@Nonnull final UUID uuid) {
-        try {
-            return (String) new Row(table, uuid.toString()).fetch(new Column(table, "prefix"));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    RankData(int ranking, CC color) {
+        this.ranking = ranking;
+        this.color = color;
     }
 }
