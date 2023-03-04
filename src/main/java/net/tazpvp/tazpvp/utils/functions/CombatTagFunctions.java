@@ -42,10 +42,12 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.boss.KeyedBossBar;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.awt.*;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -53,80 +55,28 @@ import java.util.UUID;
 
 public class CombatTagFunctions {
 
-    private static final String nowInCombat = CC.RED + "You are now in combat with ";
-    private static final String noLongerInCombat = CC.GREEN +"You are no longer in combat.";
-
-    public static void putInCombat(UUID victim, UUID attacker) {
+    public static void putInCombat(UUID victim, @Nullable UUID attacker) {
         if (victim != attacker && victim != null) {
-            if (getTag(victim) != null) {
-                setTimer(getTag(victim), victim, 15);
-                if (!getTag(victim).getAttackers().contains(attacker)) {
-                    getTag(victim).getAttackers().add(attacker);
-                    if (!getTag(attacker).getAttackers().contains(victim)) {
-                        Bukkit.getPlayer(attacker).sendMessage(nowInCombat + CC.BOLD + Bukkit.getPlayer(victim).getName());
-                        Bukkit.getPlayer(victim).sendMessage(nowInCombat + CC.BOLD + Bukkit.getPlayer(attacker).getName());
-                    }
-                }
-                if (getTag(attacker) != null) {
-                    setTimer(getTag(attacker), attacker, 15);
-                } else {
-                    putInCombat(attacker, victim);
-                }
+            if (attacker != null) {
+                getTag(victim).setTimer(attacker);
+                getTag(attacker).setTimer(victim);
             } else {
-                CombatTag tag = new CombatTag();
-
-                Tazpvp.tags.put(victim, tag);
-                tag.getAttackers().add(attacker);
-
-                Bukkit.getPlayer(victim).sendMessage(nowInCombat + CC.BOLD + Bukkit.getPlayer(attacker).getName());
-                setTimer(tag, victim, 15);
-                putInCombat(attacker, victim);
+                getTag(victim).setTimer(null);
             }
         }
     }
 
     public static CombatTag getTag(UUID ID) {
-        if (Tazpvp.tags.containsKey(ID)) {
-            return Tazpvp.tags.get(ID);
-        }
-        return null;
+        return Tazpvp.tags.get(ID);
     }
 
-    public static void clearAttackers(CombatTag tag) {
-        tag.getAttackers().clear();
-    }
-
-    public static void countDown(CombatTag tag, UUID id) {
-        Player p = Bukkit.getPlayer(id);
-        if (tag.getCountdown() > 0) {
-            tag.getBar().setProgress((float) tag.getCountdown() / 15);
-            tag.getBar().setTitle("Combat Tag: " + tag.getCountdown() + "s");
-            tag.setCountdown(tag.getCountdown() - 1);
-        } else {
-            clearAttackers(tag);
-            tag.getBar().removePlayer(p);
-            p.sendMessage(noLongerInCombat);
-        }
-    }
-
-    public static void setTimer(CombatTag tag, UUID id, int time) {
-        if (tag.getCountdown() <= 0) {
-            tag.setCountdown(time);
-            tag.setBar(Bukkit.createBossBar("Combat Tag: " + tag.getCountdown() + "s", BarColor.RED, BarStyle.SOLID));
-            tag.getBar().setProgress(1);
-            tag.getBar().addPlayer(Bukkit.getPlayer(id));
-            new BukkitRunnable() {
-                public void run() {
-                    if (tag.getCountdown() > 0) {
-                        countDown(tag, id);
-                    } else {
-                        countDown(tag, id);
-                        cancel();
-                    }
+    public static void initCombatTag() {
+        new BukkitRunnable() {
+            public void run() {
+                for (UUID id : Tazpvp.tags.keySet()) {
+                    Tazpvp.tags.get(id).countDown();
                 }
-            }.runTaskTimer(Tazpvp.getInstance(), 0, 20);
-        } else {
-            tag.setCountdown(time);
-        }
+            }
+        }.runTaskTimer(Tazpvp.getInstance(), 0, 20);
     }
 }

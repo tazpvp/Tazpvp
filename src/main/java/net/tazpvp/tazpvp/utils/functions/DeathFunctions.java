@@ -42,6 +42,7 @@ import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.objects.Death;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
@@ -74,35 +75,27 @@ public class DeathFunctions {
                     death.coffin();
                     death.rewards();
                     death.dropHead();
-                    MessageAll(true, victim, pKiller);
 
+                    MessageAll(true, victim, pKiller);
                     addHealth(pKiller, 5);
 
-                    for (Duel duel : DuelUtils.ACTIVE_DUELS) {
-                        if (duel.getDUELERS().contains(pKiller.getUniqueId())) {
-                            DuelUtils.end(victim, pKiller, duel.getDUELERS(), duel);
-                        }
-                    }
+                    pKiller.playSound(pKiller.getLocation(), Sound.BLOCK_NOTE_BLOCK_BIT, 1, 1);
                 }
             } else if (killer instanceof Mob mKiller) {
-                MessageAll(true, victim, mKiller);
+                MessageAll(false, victim, mKiller);
             }
-        } else {
-            MessageAll(false, victim, null);
         }
-        if (Tazpvp.playerList.contains(victim.getUniqueId())) {
-            Tazpvp.playerList.remove(victim.getUniqueId());
-        }
-
         PersistentData.add(victim, DataTypes.DEATHS);
         LooseData.resetKs(victim.getUniqueId());
 
         heal(victim);
         respawn(victim);
+        Tazpvp.tags.get(victim.getUniqueId()).endCombat(null, false);
     }
 
     public static void respawn(Player p) {
         p.setGameMode(GameMode.SPECTATOR);
+        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1, 1);
         p.sendTitle(CC.RED + "" + CC.BOLD + "YOU DIED", CC.GOLD + "Respawning...", 5, 50, 5);
         new BukkitRunnable() {
             public void run() {

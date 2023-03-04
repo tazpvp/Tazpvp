@@ -47,6 +47,7 @@ import net.tazpvp.tazpvp.npc.npcs.Maxim;
 import net.tazpvp.tazpvp.talents.talent.Moist;
 import net.tazpvp.tazpvp.talents.talent.Revenge;
 import net.tazpvp.tazpvp.utils.ConfigUtil;
+import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.objects.CombatTag;
 import net.tazpvp.tazpvp.utils.observer.Observer;
 import net.tazpvp.tazpvp.utils.runnables.Generator;
@@ -87,23 +88,19 @@ public final class Tazpvp extends JavaPlugin {
     private static Database database;
 
     private static final Logger log = Logger.getLogger("Minecraft");
-    private static net.milkbowl.vault.chat.Chat chat = null;
+    private static net.milkbowl.vault.chat.Chat chat;
 
     @Override
     public void onEnable() {
 
         registerEvents();
         registerCommands();
-
         Generator.generate();
-
         events.add("FFA");
-
         registerObservable();
-
         spawnNpcs();
-
         setupChat();
+        CombatTagFunctions.initCombatTag();
 
         parkourUtil = new ConfigUtil("parkour.yml", this);
 
@@ -114,7 +111,6 @@ public final class Tazpvp extends JavaPlugin {
 
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
-
 
         connectDatabase(
                 getConfig().getString("sql-host"),
@@ -143,7 +139,9 @@ public final class Tazpvp extends JavaPlugin {
 
     private boolean setupChat() {
         RegisteredServiceProvider<net.milkbowl.vault.chat.Chat> rsp = getServer().getServicesManager().getRegistration(net.milkbowl.vault.chat.Chat.class);
-        chat = rsp.getProvider();
+        if (rsp != null) {
+            chat = rsp.getProvider();
+        }
         return chat != null;
     }
 

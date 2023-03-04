@@ -70,12 +70,14 @@ public class Join implements Listener {
         p.teleport(ConfigUtils.spawn);
         p.setCollidable(false);
 
-        int ranking = 1; //TODO: Use database and rankdata
-        String prefix = Tazpvp.getChat().getPlayerPrefix(p);
-        String suffix = Tazpvp.getChat().getPlayerSuffix(p);
-        ChatColor color = ChatColor.GRAY; //TODO: Use database and rankdata
+        Tazpvp.tags.put(p.getUniqueId(), new CombatTag(p.getUniqueId()));
 
-        new PlayerNameTag().initializePlayerNameTag(e.getPlayer(), ranking, prefix, suffix, color);
+//        int ranking = 1; //TODO: Use database and rankdata
+//        String prefix = Tazpvp.getChat().getPlayerPrefix(p);
+//        String suffix = Tazpvp.getChat().getPlayerSuffix(p);
+//        ChatColor color = ChatColor.GRAY; //TODO: Use database and rankdata
+//
+//        new PlayerNameTag().initializePlayerNameTag(e.getPlayer(), ranking, prefix, suffix, color);
 
         p.setPlayerListHeaderFooter(
                 CC.DARK_AQUA + "                                      " +
