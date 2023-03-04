@@ -37,7 +37,6 @@ import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
 

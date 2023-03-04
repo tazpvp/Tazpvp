@@ -1,8 +1,5 @@
 package net.tazpvp.tazpvp.utils.data;
 
-import javax.swing.text.NumberFormatter;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.UUID;
 import java.util.WeakHashMap;
 

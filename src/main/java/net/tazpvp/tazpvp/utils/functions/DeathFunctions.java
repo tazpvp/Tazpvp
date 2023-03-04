@@ -33,8 +33,6 @@
 package net.tazpvp.tazpvp.utils.functions;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.duels.Duel;
-import net.tazpvp.tazpvp.duels.DuelUtils;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;

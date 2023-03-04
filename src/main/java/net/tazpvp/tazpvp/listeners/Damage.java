@@ -49,6 +49,7 @@ public class Damage implements Listener {
     @EventHandler
     public void onEntityDamage(EntityDamageEvent e) {
         if (e.getEntity() instanceof Player victim) {
+            Bukkit.broadcastMessage("player victim");
             if (Tazpvp.spawnRegion.contains(victim.getLocation())) {
                 e.setCancelled(true);
                 return;
@@ -59,6 +60,7 @@ public class Damage implements Listener {
             double fd = e.getFinalDamage();
 
             if (e instanceof EntityDamageByEntityEvent ee) {
+                Bukkit.broadcastMessage("test");
                 if ((victim.getHealth() - fd) <= 0) {
                     e.setCancelled(true);
                     DeathFunctions.death(victim, ee.getDamager());
@@ -68,6 +70,7 @@ public class Damage implements Listener {
                     CombatTagFunctions.putInCombat(victim.getUniqueId(), killer.getUniqueId());
                 }
             } else {
+                Bukkit.broadcastMessage("test2");
                 if ((victim.getHealth() - fd) <= 0) {
                     if (e.getCause() == EntityDamageEvent.DamageCause.FIRE) {
                         Tazpvp.getObservers().forEach(observer -> observer.burn(victim));
@@ -77,6 +80,8 @@ public class Damage implements Listener {
                     CombatTagFunctions.putInCombat(victim.getUniqueId(), null);
                 }
             }
+        } else {
+            Bukkit.broadcastMessage("no");
         }
     }
 
