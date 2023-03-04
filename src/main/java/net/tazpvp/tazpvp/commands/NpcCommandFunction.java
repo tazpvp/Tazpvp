@@ -32,19 +32,15 @@
 
 package net.tazpvp.tazpvp.commands;
 
-import net.tazpvp.tazpvp.npc.npcs.Bub;
-import net.tazpvp.tazpvp.npc.npcs.Caesar;
-import net.tazpvp.tazpvp.npc.npcs.Lorenzo;
-import net.tazpvp.tazpvp.npc.npcs.Maxim;
+import net.tazpvp.tazpvp.npc.shops.Bub;
+import net.tazpvp.tazpvp.npc.shops.Caesar;
+import net.tazpvp.tazpvp.npc.shops.Lorenzo;
+import net.tazpvp.tazpvp.npc.shops.Maxim;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.util.StringUtil;
 import world.ntdi.nrcore.utils.command.CommandCore;
 import world.ntdi.nrcore.utils.command.CommandFunction;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class NpcCommandFunction extends CommandCore implements CommandFunction {

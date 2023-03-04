@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  *
- * Copyright (c) 2022, n-tdi
+ * Copyright (c) 2023, n-tdi
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,31 +30,44 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.npc.npcs;
+package net.tazpvp.tazpvp.npc.shops;
 
-import net.tazpvp.tazpvp.guis.Shop;
-import net.tazpvp.tazpvp.npc.NPC;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
-public class Maxim extends NPC {
+public class Bub extends NPC {
 
-    public Maxim() {
-        super(CC.GOLD + "Maxim", new Location(Bukkit.getWorld("arena"), -12, 100, 13, -135, 0),
-                Villager.Profession.ARMORER,
-                Villager.Type.JUNGLE,
-                Sound.ITEM_GOAT_HORN_SOUND_0);
+    public Bub() {
+        super(CC.GOLD + "Bub", new Location(Bukkit.getWorld("arena"), 0.5, 80, 88.5), Villager.Profession.ARMORER, Villager.Type.JUNGLE, Sound.ITEM_GOAT_HORN_SOUND_0);
     }
 
     @Override
     public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
-        new Shop(p);
+        sellHead(p);
+    }
+
+    public static void sellHead(Player p) {
+        ItemStack item = p.getInventory().getItemInMainHand();
+        if (item.getType().equals(Material.PLAYER_HEAD)) {
+            int num = item.getAmount();
+
+            if (num > 1) p.sendMessage("Here you go, take " + num + " shards.");
+            else p.sendMessage("Here you go, take " + num + " shard.");
+
+            item.setAmount(0);
+            p.getInventory().addItem(new ItemStack(Material.AMETHYST_SHARD, num));
+
+        } else {
+            p.sendMessage("Right click me with player heads to trade them for shards.");
+        }
     }
 }

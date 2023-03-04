@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  *
- * Copyright (c) 2022, n-tdi
+ * Copyright (c) 2023, n-tdi
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,31 +30,30 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.listeners;
+package net.tazpvp.tazpvp.npc.shops;
 
-import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
+import net.tazpvp.tazpvp.guis.Menu;
+import net.tazpvp.tazpvp.utils.enums.CC;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.entity.Villager;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 
-public class ItemDrop implements Listener {
+import javax.annotation.Nonnull;
 
-    @EventHandler
-    public void onItemDrop(PlayerDropItemEvent e) {
-        ItemStack i = e.getItemDrop().getItemStack();
-        Player p = e.getPlayer();
+public class Lorenzo extends NPC {
 
-        if (p.getGameMode() != GameMode.CREATIVE) {
-            for (Material m : PlayerFunctions.kitItems) {
-                if (i.getType().equals(m)){
-                    e.setCancelled(true);
-                    p.sendMessage("You cannot drop kit items.");
-                }
-            }
-        }
+    public Lorenzo() {
+        super(CC.GOLD + "Lorenzo", new Location(Bukkit.getWorld("arena"), 13.5, 100, 13, 135, 0),
+                Villager.Profession.ARMORER,
+                Villager.Type.JUNGLE,
+                Sound.ITEM_GOAT_HORN_SOUND_0);
+    }
+
+    @Override
+    public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
+        new Menu(p);
     }
 }

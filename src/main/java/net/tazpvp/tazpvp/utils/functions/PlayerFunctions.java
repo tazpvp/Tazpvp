@@ -89,7 +89,7 @@ public class PlayerFunctions {
         p.getEquipment().setLeggings(ItemBuilder.of(Material.DIAMOND_LEGGINGS, 1, "Leggings").build());
         p.getEquipment().setBoots(ItemBuilder.of(Material.DIAMOND_BOOTS, 1, "Boots").build());
 
-        inv.addItem(ItemBuilder.of(Material.DIAMOND_SWORD, 1, "Sword").enchantment(Enchantment.DAMAGE_ALL, 3).build());
+        inv.addItem(ItemBuilder.of(Material.DIAMOND_SWORD, 1, "Sword").enchantment(Enchantment.DAMAGE_ALL, 1).build());
         inv.addItem(ItemBuilder.of(Material.BOW, 1, "Bow").build());
         inv.addItem(ItemBuilder.of(Material.STONE_PICKAXE, 1, "Pickaxe").build());
 
