@@ -131,8 +131,9 @@ public class DeathFunctions {
     }
 
     public static void killMessage(Player p, Player victim, Entity killer) {
-        final String who = (p == victim) ? "You" : CC.GRAY + killer.getName();
-        final String what = CC.DARK_GRAY + " killed " + CC.GRAY + victim.getName();
+        final String who = (p == killer) ? "You" : CC.GRAY + killer.getName();
+        final String what = CC.DARK_GRAY + " killed ";
+        final String died = (p == victim) ? "you" : CC.GRAY + victim.getName();
         String msg = prefix + who + what;
 
         p.sendMessage(msg);
@@ -140,7 +141,7 @@ public class DeathFunctions {
 
     public static void deathMessage(Player p, Player victim) {
         final String who = (p == victim) ? "You" : CC.GRAY + victim.getName();
-        String msg = prefix + who + " died.";
+        String msg = prefix + who + CC.DARK_GRAY + " died.";
 
         p.sendMessage(msg);
     }

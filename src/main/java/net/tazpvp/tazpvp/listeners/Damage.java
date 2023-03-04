@@ -57,26 +57,24 @@ public class Damage implements Listener {
 
             double fd = e.getFinalDamage();
 
-            if ((victim.getHealth() - fd) <= 0) {
-                e.setCancelled(true);
-                if (e instanceof EntityDamageByEntityEvent ee) {
+            if (e instanceof EntityDamageByEntityEvent ee) {
+                if ((victim.getHealth() - fd) <= 0) {
+                    e.setCancelled(true);
                     if (ee.getDamager() instanceof Player killer) {
                         DeathFunctions.death(victim, killer);
-                    } else {
-                        DeathFunctions.death(victim, ee.getDamager());
+                        return;
                     }
+                    DeathFunctions.death(victim, ee.getDamager());
                 } else {
-                    if (e.getCause() == EntityDamageEvent.DamageCause.FIRE) {
-                        Tazpvp.getObservers().forEach(observer -> observer.burn(victim));
-                    }
-                    DeathFunctions.death(victim, null);
-                }
-            } else {
-                if (e instanceof EntityDamageByEntityEvent ee) {
                     if (ee.getDamager() instanceof Player killer) {
                         CombatTagFunctions.putInCombat(victim.getUniqueId(), killer.getUniqueId());
                     }
                 }
+            } else {
+                if (e.getCause() == EntityDamageEvent.DamageCause.FIRE) {
+                    Tazpvp.getObservers().forEach(observer -> observer.burn(victim));
+                }
+                DeathFunctions.death(victim, null);
             }
         }
     }
