@@ -132,9 +132,8 @@ public class DeathFunctions {
 
     public static void killMessage(Player p, Player victim, Entity killer) {
         final String who = (p == killer) ? "You" : CC.GRAY + killer.getName();
-        final String what = CC.DARK_GRAY + " killed ";
         final String died = (p == victim) ? "you" : CC.GRAY + victim.getName();
-        String msg = prefix + who + what;
+        String msg = prefix + who + CC.DARK_GRAY + " killed " + died;
 
         p.sendMessage(msg);
     }
