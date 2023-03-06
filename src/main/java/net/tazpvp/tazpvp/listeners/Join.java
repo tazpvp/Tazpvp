@@ -72,5 +72,12 @@ public class Join implements Listener {
                 CC.RED + "                                      " +
                         "\n                TazPVP                ",
                 CC.LIGHT_PURPLE + "Join our Discord! /discord");
+        
+        final String name = p.getName();
+        
+        final String plus = CC.GRAY + "[" + CC.GOLD + "+" + CC.GRAY + "]";
+        final String message = plus + " " + name;
+        
+        e.setJoinMessage(message);
     }
 }

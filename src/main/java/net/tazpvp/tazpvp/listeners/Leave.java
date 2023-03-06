@@ -51,6 +51,8 @@ public class Leave implements Listener {
         PlaytimeUtil.playerLeft(p);
 
         saveInv(p);
+        
+        e.setQuitMessage(null);
     }
 
     private void saveInv(Player p) {
