@@ -1,9 +1,12 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,12 +21,23 @@ public class Place implements Listener {
         if (p.getGameMode() != GameMode.CREATIVE) {
 
             Block b = e.getBlockPlaced();
+            BlockState previousBlock = e.getBlockReplacedState();
             b.setMetadata("PlayerPlaced", new FixedMetadataValue(Tazpvp.getInstance(), true));
+
+            if (Tazpvp.spawnRegion.contains(p.getLocation())) {
+                e.setCancelled(true);
+                return;
+            }
+
+            if (b.getLocation().distance(new Location(Bukkit.getWorld("arena"), 0, 90, 76)) > 35 || b.getLocation().getY() <= 90) {
+                e.setCancelled(true);
+                return;
+            }
 
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    e.getBlock().setType(Material.AIR);
+                    e.getBlock().setType(previousBlock.getType());
                 }
             }.runTaskLater(Tazpvp.getInstance(), 20 * 8);
 

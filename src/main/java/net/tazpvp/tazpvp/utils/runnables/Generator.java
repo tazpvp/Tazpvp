@@ -50,10 +50,10 @@ public class Generator {
             public void run() {
                 if (Bukkit.getOnlinePlayers().size() >= 5) {
 
-                    Item i = (Bukkit.getWorld("arena")).dropItem(new Location(Bukkit.getWorld("arena"), 25.5, 91, 70.5), shard);
+                    Item i = (Bukkit.getWorld("arena")).dropItem(new Location(Bukkit.getWorld("arena"), 25.5, 91, 76.5), shard);
                     i.setVelocity(new Vector(0, 0, 0));
 
-                    Item i2 = (Bukkit.getWorld("arena")).dropItem(new Location(Bukkit.getWorld("arena"), -24.5, 91, 70.5), shard);
+                    Item i2 = (Bukkit.getWorld("arena")).dropItem(new Location(Bukkit.getWorld("arena"), -24.5, 91, 76.5), shard);
                     i2.setVelocity(new Vector(0, 0, 0));
 
                     ChatFunctions.announce(ChatColor.LIGHT_PURPLE + " A shard has generated underground.", Sound.BLOCK_NOTE_BLOCK_BELL);;
