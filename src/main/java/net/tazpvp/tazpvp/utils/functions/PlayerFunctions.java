@@ -148,4 +148,13 @@ public class PlayerFunctions {
             p.sendMessage("");
         }
     }
+
+    public static void addHealth(Player p, int amount) {
+        if ((p.getHealth() + amount) >= PlayerFunctions.getMaxHealth(p)) {
+            PlayerFunctions.healPlr(p);
+            p.setHealth(PlayerFunctions.getMaxHealth(p));
+        } else {
+            p.setHealth(p.getHealth() + amount);
+        }
+    }
 }

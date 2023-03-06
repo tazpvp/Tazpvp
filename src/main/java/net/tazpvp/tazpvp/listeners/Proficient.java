@@ -30,23 +30,19 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.talents.talent;
+package net.tazpvp.tazpvp.listeners;
 
+import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.observer.Observable;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
-import java.util.Random;
-
-public class Hunter extends Observable {
+public class Proficient extends Observable {
     @Override
-    public void shoot(Player shooter) {
-        if (PersistentData.getTalents(shooter.getUniqueId()).is("Hunter")) {
-            if (new Random().nextInt(0, 10) > 9) {
-                shooter.getInventory().addItem(new ItemStack(Material.ARROW));
-            }
+    public void duel(Player p) {
+        if (PersistentData.getTalents(p.getUniqueId()).is("Proficient")) {
+            PersistentData.add(p.getUniqueId(), DataTypes.XP, 50);
+            p.sendMessage("Proficient Talent: + 50 EXP");
         }
     }
 }

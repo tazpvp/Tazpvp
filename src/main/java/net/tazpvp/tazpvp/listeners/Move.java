@@ -5,6 +5,7 @@ import net.tazpvp.tazpvp.events.Event;
 import net.tazpvp.tazpvp.events.EventUtils;
 import net.tazpvp.tazpvp.utils.ConfigUtil;
 import net.tazpvp.tazpvp.utils.ParkourUtil;
+import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -45,10 +46,23 @@ public class Move implements Listener {
     }
 
     private void Launchpad(Player p) {
-        if (p.getGameMode().equals(GameMode.SURVIVAL)){
-            p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1, 1);
-            p.setVelocity(new Vector(0, 1, 1.5));
-            Tazpvp.getObservers().forEach(o -> o.launch(p));
+        if (!Tazpvp.launching.contains(p.getUniqueId())) {
+            Tazpvp.launching.add(p.getUniqueId());
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    Tazpvp.launching.remove(p.getUniqueId());
+                }
+            }.runTaskLater(Tazpvp.getInstance(), 20);
+            if (p.getGameMode().equals(GameMode.SURVIVAL)){
+                p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1, 1);
+                if (PersistentData.getTalents(p.getUniqueId()).is("Glide")) {
+                    p.setVelocity(new Vector(0, 1, 2));
+                } else {
+                    p.setVelocity(new Vector(0, 1, 1.5));
+                }
+                Tazpvp.getObservers().forEach(o -> o.launch(p));
+            }
         }
     }
 }

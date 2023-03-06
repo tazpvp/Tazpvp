@@ -96,47 +96,53 @@ public class Death {
     public void coffin() {
         if (killer == victim) return;
 
+        int chance = new Random().nextInt(10);
+
+        if (PersistentData.getTalents(killer.getUniqueId()).is("Necromancer")) {
+            if (!(chance <= 2)) return;
+        } else if (chance != 1) return;
+
         Material chest = new ItemStack(Material.CHEST).getType();
-        int chance = new Random().nextInt(100);
 
-        if (chance <= 5) {
-            Block block = location.getBlock();
-            block.setType(chest);
+        Block block = location.getBlock();
+        block.setType(chest);
 
-            Chest coffin = (Chest) block.getState();
-            Inventory inv = coffin.getInventory();
-            GUI gui = new GUI(inv);
+        Chest coffin = (Chest) block.getState();
+        Inventory inv = coffin.getInventory();
+        GUI gui = new GUI(inv);
 
-            Enchantment ench = coffinEnchant();
-            int lvl = r.nextInt(2) + 1;
+        Enchantment ench = coffinEnchant();
+        int lvl = r.nextInt(2) + 1;
 
-            ItemStack enchantment = ItemBuilder.of(Material.ENCHANTED_BOOK, 1).enchantment(ench, lvl).build();
-            Hologram hologram = new Hologram(new String[]{"&3&l" + ench.getKey().getKey() + " &b&l" + lvl}, location.getBlock().getLocation().add(0.5, 0, 0.5).subtract(0, 0.5, 0), false);
+        ItemStack enchantment = ItemBuilder.of(Material.ENCHANTED_BOOK, 1).enchantment(ench, lvl).build();
+        Hologram hologram = new Hologram(new String[]{"&3&l" + ench.getKey().getKey() + " &b&l" + lvl}, location.getBlock().getLocation().add(0.5, 0, 0.5).subtract(0, 0.5, 0), false);
 
-            gui.addButton(Button.create(enchantment, (e) -> {
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        gui.setReturnsItems(true);
-                        e.getWhoClicked().closeInventory();
-                        e.getWhoClicked().getInventory().addItem(enchantment);
-                        gui.destroy();
-                        block.setType(Material.AIR);
-                        hologram.deleteHologram();
-                    }
-                }.runTaskLater(Tazpvp.getInstance(), 1);
-            }), 13);
-
-            gui.update();
-
+        gui.addButton(Button.create(enchantment, (e) -> {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    hologram.deleteHologram();
+                    gui.setReturnsItems(true);
+                    e.getWhoClicked().closeInventory();
+                    e.getWhoClicked().getInventory().addItem(enchantment);
+                    gui.destroy();
                     block.setType(Material.AIR);
+                    hologram.deleteHologram();
+                    if (e.getWhoClicked() instanceof Player p) {
+                        p.playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+                    }
                 }
-            }.runTaskLater(Tazpvp.getInstance(), 20 * 10);
-        }
+            }.runTaskLater(Tazpvp.getInstance(), 1);
+        }), 13);
+
+        gui.update();
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                hologram.deleteHologram();
+                block.setType(Material.AIR);
+            }
+        }.runTaskLater(Tazpvp.getInstance(), 20 * 10);
     }
 
     /**
@@ -154,10 +160,14 @@ public class Death {
     }
 
     public void dropHead() {
-        if (new Random().nextInt(4) == 3) {
-            World w = location.getWorld();
-            w.dropItemNaturally(location.add(0, 1, 0), makeSkull(victim));
+        if (PersistentData.getTalents(killer.getUniqueId()).is("Harvester")) {
+            if (new Random().nextInt(4) != 1) return;
+        } else {
+            if (new Random().nextInt(6) != 1) return;
         }
+        World w = location.getWorld();
+        w.dropItemNaturally(location.add(0, 1, 0), makeSkull(victim));
+
     }
 
     private ItemStack makeSkull(@Nonnull final Player p) {
@@ -183,15 +193,6 @@ public class Death {
 
         for (PotionEffect effect : victim.getActivePotionEffects()) {
             victim.removePotionEffect(effect.getType());
-        }
-    }
-
-    public void addHealth(int amount) {
-        if ((pKiller.getHealth() + amount) >= PlayerFunctions.getMaxHealth(pKiller)) {
-            PlayerFunctions.healPlr(pKiller);
-            pKiller.setHealth(PlayerFunctions.getMaxHealth(pKiller));
-        } else {
-            pKiller.setHealth(pKiller.getHealth() + amount);
         }
     }
 

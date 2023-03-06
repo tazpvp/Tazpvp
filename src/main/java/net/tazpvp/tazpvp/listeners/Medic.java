@@ -30,22 +30,33 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.talents.talent;
+package net.tazpvp.tazpvp.listeners;
 
+import net.tazpvp.tazpvp.guild.Guild;
+import net.tazpvp.tazpvp.guild.GuildUtils;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.observer.Observable;
-import org.bukkit.Material;
+import org.bukkit.Bukkit;
+import org.bukkit.EntityEffect;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
-import java.util.Random;
+import javax.xml.crypto.Data;
 
-public class Hunter extends Observable {
+public class Medic extends Observable {
     @Override
-    public void shoot(Player shooter) {
-        if (PersistentData.getTalents(shooter.getUniqueId()).is("Hunter")) {
-            if (new Random().nextInt(0, 10) > 9) {
-                shooter.getInventory().addItem(new ItemStack(Material.ARROW));
+    public void death(Player victim, Player killer) {
+        if (PersistentData.getTalents(killer.getUniqueId()).is("Medic")) {
+            if (GuildUtils.isInGuild(killer)) {
+                killer.playEffect(EntityEffect.LOVE_HEARTS);
+                Guild g = GuildUtils.getGuildPlayerIn(killer);
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    if (p.getLocation().distance(killer.getLocation()) < 5) {
+                        if (p != killer) {
+                            PlayerFunctions.addHealth(p, 5);
+                        }
+                    }
+                }
             }
         }
     }

@@ -60,4 +60,6 @@ public interface Observer {
     void burn(Player p);
 
     void place(Player p, Block b);
+
+    void shoot(Player shooter);
 }

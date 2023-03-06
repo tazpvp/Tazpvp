@@ -34,19 +34,14 @@ package net.tazpvp.tazpvp.talents.talent;
 
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.observer.Observable;
-import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
-import java.util.Random;
-
-public class Hunter extends Observable {
+public class Cannibal extends Observable {
     @Override
-    public void shoot(Player shooter) {
-        if (PersistentData.getTalents(shooter.getUniqueId()).is("Hunter")) {
-            if (new Random().nextInt(0, 10) > 9) {
-                shooter.getInventory().addItem(new ItemStack(Material.ARROW));
-            }
+    public void death(Player victim, Player killer) {
+        if (PersistentData.getTalents(killer.getUniqueId()).is("Cannibal")) {
+            killer.setFoodLevel(20);
         }
     }
 }

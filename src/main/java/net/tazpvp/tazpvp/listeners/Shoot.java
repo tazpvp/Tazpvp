@@ -30,22 +30,21 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.talents.talent;
+package net.tazpvp.tazpvp.listeners;
 
-import net.tazpvp.tazpvp.utils.data.PersistentData;
-import net.tazpvp.tazpvp.utils.observer.Observable;
-import org.bukkit.Material;
+import net.tazpvp.tazpvp.Tazpvp;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 
-import java.util.Random;
-
-public class Hunter extends Observable {
-    @Override
-    public void shoot(Player shooter) {
-        if (PersistentData.getTalents(shooter.getUniqueId()).is("Hunter")) {
-            if (new Random().nextInt(0, 10) > 9) {
-                shooter.getInventory().addItem(new ItemStack(Material.ARROW));
+public class Shoot implements Listener {
+    @EventHandler
+    private void onShoot(ProjectileLaunchEvent e) {
+        if (e.getEntity().getShooter() instanceof Player shooter) {
+            if (shooter.getGameMode().equals(GameMode.CREATIVE)) {
+                Tazpvp.getObservers().forEach(observer -> observer.shoot(shooter));
             }
         }
     }

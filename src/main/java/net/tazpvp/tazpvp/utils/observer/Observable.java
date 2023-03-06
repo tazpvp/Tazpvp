@@ -104,4 +104,9 @@ public class Observable implements Observer {
     public void place(Player p, Block b) {
 
     }
+
+    @Override
+    public void shoot(Player shooter) {
+
+    }
 }

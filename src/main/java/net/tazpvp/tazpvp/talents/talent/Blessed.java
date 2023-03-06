@@ -40,12 +40,12 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Random;
 
-public class Hunter extends Observable {
+public class Blessed extends Observable {
     @Override
-    public void shoot(Player shooter) {
-        if (PersistentData.getTalents(shooter.getUniqueId()).is("Hunter")) {
-            if (new Random().nextInt(0, 10) > 9) {
-                shooter.getInventory().addItem(new ItemStack(Material.ARROW));
+    public void death(Player victim, Player killer) {
+        if (PersistentData.getTalents(killer.getUniqueId()).is("Blessed")) {
+            if (new Random().nextInt(5) == 1) {
+                killer.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE));
             }
         }
     }

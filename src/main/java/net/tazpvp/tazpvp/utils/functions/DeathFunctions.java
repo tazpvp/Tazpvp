@@ -76,7 +76,7 @@ public class DeathFunctions {
                     death.dropHead();
 
                     death.deathMessage(true);
-                    death.addHealth(10);
+                    PlayerFunctions.addHealth(victim, 10);
 
                     pKiller.playSound(pKiller.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
                 }
