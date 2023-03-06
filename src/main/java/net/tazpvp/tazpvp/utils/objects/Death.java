@@ -32,18 +32,20 @@
 
 package net.tazpvp.tazpvp.utils.objects;
 
+import lombok.Getter;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Mob;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -60,33 +62,40 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 public class Death {
 
     private final Player victim;
-    private final Player killer;
-    private final Location deathLocation;
+    private final UUID victimID;
+
+    private final Entity killer;
+    private Player pKiller = null;
+    private UUID killerID = null;
+
+    private final Location location;
     private final Random r = new Random();
 
-    public Death(final Player victim, @Nullable final Player killer) {
+    public Death(Player victim, @Nullable final Entity killer) {
         this.victim = victim;
-        this.deathLocation = victim.getLocation();
+        this.victimID = victim.getUniqueId();
         this.killer = killer;
-        Tazpvp.getObservers().forEach(observer -> observer.death(victim, killer));
+        this.location = victim.getLocation();
+        if (killer instanceof Player pKiller) {
+            this.killerID = pKiller.getUniqueId();
+            this.pKiller = pKiller;
+            Tazpvp.getObservers().forEach(observer -> observer.death(victim, pKiller));
+        }
     }
 
-    /**
-     * Creates a small chance of a chest spawning in the location of the death with enchantments inside.
-     */
     public void coffin() {
         if (killer == victim) return;
 
-        Location loc = victim.getLocation();
         Material chest = new ItemStack(Material.CHEST).getType();
         int chance = new Random().nextInt(100);
 
-        if (chance < 50) {
-            Block block = loc.getBlock();
+        if (chance <= 5) {
+            Block block = location.getBlock();
             block.setType(chest);
 
             Chest coffin = (Chest) block.getState();
@@ -94,11 +103,10 @@ public class Death {
             GUI gui = new GUI(inv);
 
             Enchantment ench = coffinEnchant();
-            int lvl = coffinEnchantLevel();
+            int lvl = r.nextInt(2) + 1;
 
             ItemStack enchantment = ItemBuilder.of(Material.ENCHANTED_BOOK, 1).enchantment(ench, lvl).build();
-
-            Hologram hologram = new Hologram(new String[]{"&6" + ench.getKey().getKey() + " &c" + lvl}, loc.getBlock().getLocation().add(0.5, 0, 0.5).subtract(0, 0.5, 0), false);
+            Hologram hologram = new Hologram(new String[]{"&b&l" + ench.getKey().getKey() + " &6&l" + lvl}, location.getBlock().getLocation().add(0.5, 0, 0.5).subtract(0, 0.5, 0), false);
 
             gui.addButton(Button.create(enchantment, (e) -> {
                 new BukkitRunnable() {
@@ -115,7 +123,6 @@ public class Death {
             }), 13);
 
             gui.update();
-
 
             new BukkitRunnable() {
                 @Override
@@ -141,37 +148,65 @@ public class Death {
         return list.get(r.nextInt(list.size()));
     }
 
-    public int coffinEnchantLevel() {
-        return r.nextInt(2) + 1;
-    }
-
-    /**
-     * Run functionality of dropping the victim's head at their death location
-     */
     public void dropHead() {
-        if (skullDropChange()) {
-            World w = deathLocation.getWorld();
-            w.dropItemNaturally(deathLocation.add(0, 1, 0), makeSkull(victim));
+        if (new Random().nextInt(4) == 3) {
+            World w = location.getWorld();
+            w.dropItemNaturally(location.add(0, 1, 0), makeSkull(victim));
         }
     }
 
-    /**
-     * 25% chance of returning true
-     * @return true or false
-     */
-    private boolean skullDropChange() {
-        Random r = new Random();
-        return r.nextInt(4) == 3;
-    }
-
-    /**
-     * Make a skull ItemStack with a given player
-     * @param p The Player you want to make the skull of
-     * @return the ItemStack with the Player's skull
-     */
     private ItemStack makeSkull(@Nonnull final Player p) {
         ItemStack stack = SkullBuilder.of(1, p.getName()).setHeadTexture(p).build();
         return stack;
+    }
+
+    public void respawn() {
+        victim.setGameMode(GameMode.SPECTATOR);
+        victim.playSound(victim.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1, 1);
+        victim.sendTitle(CC.RED + "" + CC.BOLD + "YOU DIED", CC.GOLD + "Respawning...", 5, 50, 5);
+        new BukkitRunnable() {
+            public void run() {
+                victim.setGameMode(GameMode.SURVIVAL);
+                victim.teleport(ConfigUtils.spawn);
+            }
+        }.runTaskLater(Tazpvp.getInstance(), 20*3);
+    }
+
+    public void heal() {
+        PlayerFunctions.healPlr(victim);
+        PlayerFunctions.feedPlr(victim);
+
+        for (PotionEffect effect : victim.getActivePotionEffects()) {
+            victim.removePotionEffect(effect.getType());
+        }
+    }
+
+    public void addHealth(int amount) {
+        if ((pKiller.getHealth() + 5) >= PlayerFunctions.getMaxHealth(pKiller)) {
+            PlayerFunctions.healPlr(pKiller);
+            pKiller.setHealth(PlayerFunctions.getMaxHealth(pKiller));
+        } else {
+            pKiller.setHealth(pKiller.getHealth() + amount);
+        }
+    }
+
+    public void deathMessage(boolean pKill) {
+        final String prefix = CC.GRAY + "[" + CC.DARK_RED + "☠" + CC.GRAY + "] " + CC.DARK_GRAY;
+
+        for (Player op : Bukkit.getOnlinePlayers()) {
+            if (pKill) {
+                final String who = (op == killer) ? "You" : CC.GRAY + killer.getName();
+                final String died = (op == victim) ? "you" : CC.GRAY + victim.getName();
+                String msg = prefix + who + CC.DARK_GRAY + " killed " + died;
+
+                op.sendMessage(msg);
+            } else {
+                final String who = (op == victim) ? "You" : CC.GRAY + victim.getName();
+                String msg = prefix + who + CC.DARK_GRAY + " died.";
+
+                op.sendMessage(msg);
+            }
+        }
     }
 
     public void rewards() {
@@ -179,14 +214,23 @@ public class Death {
             final int xp = 15;
             final int coins = 26;
 
-            sendActionbar(xp, coins);
-            PersistentData.add(killer, DataTypes.COINS, coins);
-            PersistentData.add(killer, DataTypes.XP, xp);
-        }
-    }
+            pKiller.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(CC.AQUA + "EXP: " + xp + CC.GOLD + " Coins: " + coins));
+            PersistentData.add(killerID, DataTypes.COINS, coins);
+            PersistentData.add(killerID, DataTypes.XP, xp);
 
-    @SuppressWarnings("all")
-    private void sendActionbar(final int xp, final int coins) {
-        killer.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(CC.AQUA + "EXP: " + xp + CC.GOLD + " Coins: " + coins));
+            CombatTag tag = Tazpvp.tags.get(victimID);
+
+            for (UUID id : tag.getAttackers()) {
+                if (id != killerID && id != null) {
+                    Player assister = Bukkit.getPlayer(id);
+                    final int AssistXP = 5;
+                    final int AssistCoins = 5;
+
+                    assister.sendMessage("You assisted in killing " + victim.getName() + "+" + AssistXP + " EXP, +" + AssistCoins + " Coins");
+                    PersistentData.add(assister, DataTypes.COINS, AssistCoins);
+                    PersistentData.add(assister, DataTypes.XP, AssistXP);
+                }
+            }
+        }
     }
 }

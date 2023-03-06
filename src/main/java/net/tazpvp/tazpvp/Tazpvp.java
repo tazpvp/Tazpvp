@@ -39,27 +39,27 @@ import net.tazpvp.tazpvp.commands.*;
 import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.events.Event;
 import net.tazpvp.tazpvp.listeners.*;
-import net.tazpvp.tazpvp.npc.NPC;
-import net.tazpvp.tazpvp.npc.npcs.Bub;
-import net.tazpvp.tazpvp.npc.npcs.Caesar;
-import net.tazpvp.tazpvp.npc.npcs.Lorenzo;
-import net.tazpvp.tazpvp.npc.npcs.Maxim;
+import net.tazpvp.tazpvp.npc.shops.NPC;
+import net.tazpvp.tazpvp.npc.shops.Bub;
+import net.tazpvp.tazpvp.npc.shops.Caesar;
+import net.tazpvp.tazpvp.npc.shops.Lorenzo;
+import net.tazpvp.tazpvp.npc.shops.Maxim;
 import net.tazpvp.tazpvp.talents.talent.Moist;
 import net.tazpvp.tazpvp.talents.talent.Revenge;
 import net.tazpvp.tazpvp.utils.ConfigUtil;
-import net.tazpvp.tazpvp.utils.functions.BlockFunctions;
-import net.tazpvp.tazpvp.utils.functions.CombatFunctions;
-import net.tazpvp.tazpvp.utils.objects.AssistKill;
+import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
+import net.tazpvp.tazpvp.utils.objects.CombatTag;
 import net.tazpvp.tazpvp.utils.observer.Observer;
 import net.tazpvp.tazpvp.utils.runnables.Generator;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.utils.region.Cuboid;
 import world.ntdi.postglam.connection.Database;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 /*
     A plugin for tazpvp beacuse we love tazpvp! <3 I love tazpvp <3 <3 <3 Rownxo smells like tazpvp stinky tazpvp
@@ -67,17 +67,15 @@ import java.util.*;
 public final class Tazpvp extends JavaPlugin {
     @Getter
     private static List<Observer> observers = new ArrayList<>();
+    public static List<UUID> fell = new ArrayList<>();
+    private List<NPC> npcs = new LinkedList<>();
+    public static List<UUID> playerList = new ArrayList<>();
     public static List<String> events = new ArrayList<>();
     public static Event event;
-    public static List<UUID> playerList = new ArrayList<>();
-    public static List<UUID> fell = new ArrayList<>();
-
     public static String prefix = "tazpvp.";
 
-    public static WeakHashMap<UUID, AssistKill> combatAssist = new WeakHashMap<>();
+    public static WeakHashMap<UUID, CombatTag> tags = new WeakHashMap<>();
     public static WeakHashMap<UUID, Duel> duels = new WeakHashMap<>();
-
-    private List<NPC> npcs = new LinkedList<>();
 
     @Getter
     private static ConfigUtil parkourUtil;
@@ -88,28 +86,20 @@ public final class Tazpvp extends JavaPlugin {
     @Getter
     private static Database database;
 
+    private static final Logger log = Logger.getLogger("Minecraft");
+    private static net.milkbowl.vault.chat.Chat chat;
+
     @Override
     public void onEnable() {
 
         registerEvents();
         registerCommands();
-
         Generator.generate();
-
         events.add("FFA");
-
         registerObservable();
-        BlockFunctions.registerOres();
-        BlockFunctions.registerPickaxes();
-
         spawnNpcs();
-
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                CombatFunctions.check();
-            }
-        }.runTaskTimerAsynchronously(this, 16L, 16L);
+        setupChat();
+        CombatTagFunctions.initCombatTag();
 
         parkourUtil = new ConfigUtil("parkour.yml", this);
 
@@ -120,7 +110,6 @@ public final class Tazpvp extends JavaPlugin {
 
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
-
 
         connectDatabase(
                 getConfig().getString("sql-host"),
@@ -142,7 +131,17 @@ public final class Tazpvp extends JavaPlugin {
     @Override
     public void onDisable() {
 
+        log.info(String.format("[%s] Disabled Version %s", getDescription().getName(), getDescription().getVersion()));
+
         despawnNpcs();
+    }
+
+    private boolean setupChat() {
+        RegisteredServiceProvider<net.milkbowl.vault.chat.Chat> rsp = getServer().getServicesManager().getRegistration(net.milkbowl.vault.chat.Chat.class);
+        if (rsp != null) {
+            chat = rsp.getProvider();
+        }
+        return chat != null;
     }
 
     public static Tazpvp getInstance() {
@@ -180,7 +179,6 @@ public final class Tazpvp extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Leave(), this);
         getServer().getPluginManager().registerEvents(new InventoryClick(), this);
         getServer().getPluginManager().registerEvents(new Break(), this);
-        getServer().getPluginManager().registerEvents(new ItemDrop(), this);
         getServer().getPluginManager().registerEvents(new Move(), this);
         getServer().getPluginManager().registerEvents(new Place(), this);
         getServer().getPluginManager().registerEvents(new Chat(), this);
@@ -197,6 +195,10 @@ public final class Tazpvp extends JavaPlugin {
     private void despawnNpcs() {
         npcs.forEach(NPC::remove);
         npcs.clear();
+    }
+
+    public static net.milkbowl.vault.chat.Chat getChat() {
+        return chat;
     }
 
 }

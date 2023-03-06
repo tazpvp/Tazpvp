@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  *
- * Copyright (c) 2022, n-tdi
+ * Copyright (c) 2023, n-tdi
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,18 +30,20 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.npc.npcs;
+package net.tazpvp.tazpvp.npc.shops;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.npc.NPC;
+import net.tazpvp.tazpvp.utils.data.DataTypes;
+import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.BlockFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
+import net.tazpvp.tazpvp.utils.objects.Ore;
+import net.tazpvp.tazpvp.utils.objects.Pickaxe;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
@@ -68,48 +70,61 @@ public class Caesar extends NPC {
     public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
 
         if (BlockFunctions.getPickaxe(p) != null) {
-
-            ItemStack pickaxe = BlockFunctions.getPickaxe(p);
-            int cost = BlockFunctions.pickaxes.get(pickaxe.getType());
+            ItemStack tool = BlockFunctions.getPickaxe(p);
             int shardCount = PlayerFunctions.countShards(p);
 
-            if (pickaxe.getType() == Material.GOLDEN_PICKAXE) {
+            if (tool.getType().equals(Material.GOLDEN_PICKAXE)) {
                 p.sendMessage("You already have the best upgrade.");
                 return;
             }
 
-            if (shardCount >= cost) {
-                if (doubleClick.contains(p)) {
+            for (Pickaxe pickaxe : BlockFunctions.pickaxes) {
+                if (pickaxe.getMat().equals(tool.getType())) {
+                    int cost = pickaxe.getCost();
+                    if (shardCount >= cost) {
+                        if (doubleClick.contains(p)) {
 
-                    if (pickaxe.getType() == Material.WOODEN_PICKAXE) { pickaxe.setType(Material.STONE_PICKAXE);}
-                    else if (pickaxe.getType() == Material.STONE_PICKAXE) { pickaxe.setType(Material.IRON_PICKAXE);}
-                    else if (pickaxe.getType() == Material.IRON_PICKAXE) { pickaxe.setType(Material.DIAMOND_PICKAXE);}
-                    else if (pickaxe.getType() == Material.DIAMOND_PICKAXE) { pickaxe.setType(Material.GOLDEN_PICKAXE);}
+                            tool.setType(pickaxe.getUpgrade());
 
-                    PlayerFunctions.takeShards(p, cost);
+                            PlayerFunctions.takeShards(p, cost);
 
-                    p.closeInventory();
-                    p.sendMessage("Thanks, here is your new pickaxe.");
+                            p.closeInventory();
+                            p.sendMessage("Thanks, here is your new pickaxe.");
+                            p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, 1, 1);
 
-                    doubleClick.remove(p);
-
-                    Tazpvp.getObservers().forEach(observer -> observer.talent(p));
-
-                } else {
-
-                    p.sendMessage("Click again to confirm your upgrade for " + cost + " Shards.");
-
-                    doubleClick.add(p);
-                    new BukkitRunnable() {
-                        @Override
-                        public void run() {
                             doubleClick.remove(p);
+
+                            Tazpvp.getObservers().forEach(observer -> observer.talent(p));
+
+                        } else {
+
+                            p.sendMessage("Are you sure you want to upgrade your pickaxe for " + cost + " Shards?");
+
+                            doubleClick.add(p);
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    doubleClick.remove(p);
+                                }
+                            }.runTaskLater(Tazpvp.getInstance(), 20*5);
                         }
-                    }.runTaskLater(Tazpvp.getInstance(), 20*5);
+                    } else {
+                        p.sendMessage("You do not have enough shards. You need " + (cost - shardCount) + " more shards.");
+                    }
                 }
-            } else {
-                p.sendMessage("You do not have enough shards. You need " + (cost - shardCount) + " more shards.");
             }
+        } else if (BlockFunctions.getOreInHand(p) != null) {
+            Ore ore = BlockFunctions.getOreFrom(BlockFunctions.getOreInHand(p).getType());
+            int amount = 0;
+            for (ItemStack i : p.getInventory()) {
+                if (i != null && i.getType().equals(ore.getMat())) {
+                    amount = amount + i.getAmount();
+                    i.setAmount(0);
+                }
+            }
+            PersistentData.add(p.getUniqueId(), DataTypes.COINS, (amount * ore.getCost()));
+            p.sendMessage("Here you go, take $" + (amount * ore.getCost()));
+            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
         } else {
             p.sendMessage("Click me with your pickaxe and I will upgrade it.");
         }

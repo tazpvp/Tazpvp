@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  *
- * Copyright (c) 2022, n-tdi
+ * Copyright (c) 2023, n-tdi
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,40 +30,20 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.utils.functions;
+package net.tazpvp.tazpvp.utils.objects;
 
-import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.utils.objects.AssistKill;
-import org.bukkit.entity.Player;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.bukkit.Material;
 
-import java.util.Map;
-import java.util.UUID;
-
-public class CombatFunctions {
-
-    /**
-     * Add a player to another player's combat tag
-     * @param attacker the attacker to add to the combat tag
-     * @param victim the victim's combat tag to add to
-     */
-    public static void tag(Player attacker, Player victim) {
-//        Tazpvp.combatTag.get(victim.getUniqueId()).add(attacker.getUniqueId());
-        Tazpvp.combatAssist.get(victim.getUniqueId()).addAttacker(attacker.getUniqueId());
-    }
-
-
-    /**
-     * Check if a person is in the combat tag still
-     */
-    public static void check() {
-        for (Map.Entry<UUID, AssistKill> entrySet : Tazpvp.combatAssist.entrySet()) {
-            AssistKill playerAssistData = entrySet.getValue();
-            if (playerAssistData.overCheck()) {
-                // out of combat lol
-            } else {
-                // still in combat
-                playerAssistData.decreaseCountdown();
-            }
-        }
-    }
+@AllArgsConstructor
+public class Pickaxe {
+    @Getter
+    private final Material mat;
+    @Getter
+    private final int cost;
+    @Getter
+    private final int level;
+    @Getter
+    private final Material upgrade;
 }

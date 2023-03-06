@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  *
- * Copyright (c) 2022, n-tdi
+ * Copyright (c) 2023, n-tdi
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,64 +35,48 @@ package net.tazpvp.tazpvp.utils.functions;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
-import net.tazpvp.tazpvp.utils.data.LooseData;
-import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.objects.CombatTag;
-import net.tazpvp.tazpvp.utils.objects.Death;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Sound;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Mob;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
+import org.bukkit.boss.KeyedBossBar;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
-import world.ntdi.nrcore.NRCore;
-import world.ntdi.nrcore.utils.config.ConfigUtils;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.awt.*;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.UUID;
 
-public class DeathFunctions {
+public class CombatTagFunctions {
 
-
-    public static void death(Player victim, @Nullable Entity killer) {
-
-        Death death = new Death(victim, killer);
-
-        if (killer != null) {
-            if (killer instanceof Player pKiller) {
-                if (pKiller == victim) {
-                    death.deathMessage(false);
-                } else {
-                    PersistentData.add(pKiller.getUniqueId(), DataTypes.KILLS);
-                    LooseData.addKs(pKiller.getUniqueId());
-
-                    death.coffin();
-                    death.rewards();
-                    death.dropHead();
-
-                    death.deathMessage(true);
-                    death.addHealth(5);
-
-                    pKiller.playSound(pKiller.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
-                }
-            } else if (killer instanceof Mob mKiller) {
-                death.deathMessage(false);
+    public static void putInCombat(UUID victim, @Nullable UUID attacker) {
+        if (victim != attacker && victim != null) {
+            if (attacker != null) {
+                getTag(victim).setTimer(attacker);
+                getTag(attacker).setTimer(victim);
+            } else {
+                getTag(victim).setTimer(null);
             }
         }
-        UUID currentKiller = Tazpvp.tags.get(victim.getUniqueId()).getAttackers().peek(); //TODO: Fix
+    }
 
-        PersistentData.add(victim, DataTypes.DEATHS);
-        LooseData.resetKs(victim.getUniqueId());
+    public static CombatTag getTag(UUID ID) {
+        return Tazpvp.tags.get(ID);
+    }
 
-        death.heal();
-        death.respawn();
-        victim.getInventory().clear();
-        PlayerFunctions.kitPlayer(victim);
-        Tazpvp.tags.get(victim.getUniqueId()).endCombat(null, false);
+    public static void initCombatTag() {
+        new BukkitRunnable() {
+            public void run() {
+                for (UUID id : Tazpvp.tags.keySet()) {
+                    Tazpvp.tags.get(id).countDown();
+                }
+            }
+        }.runTaskTimer(Tazpvp.getInstance(), 0, 20);
     }
 }

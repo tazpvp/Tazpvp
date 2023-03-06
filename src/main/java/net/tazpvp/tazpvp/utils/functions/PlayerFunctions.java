@@ -32,7 +32,6 @@
 
 package net.tazpvp.tazpvp.utils.functions;
 
-import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
@@ -59,7 +58,7 @@ public class PlayerFunctions {
             Material.DIAMOND_BOOTS,
             Material.DIAMOND_SWORD,
             Material.BOW,
-            Material.IRON_PICKAXE
+            Material.STONE_PICKAXE
     );
 
     public static Integer getMaxHealth(Player p) {
@@ -90,9 +89,9 @@ public class PlayerFunctions {
         p.getEquipment().setLeggings(ItemBuilder.of(Material.DIAMOND_LEGGINGS, 1, "Leggings").build());
         p.getEquipment().setBoots(ItemBuilder.of(Material.DIAMOND_BOOTS, 1, "Boots").build());
 
-        inv.addItem(ItemBuilder.of(Material.DIAMOND_SWORD, 1, "Sword").enchantment(Enchantment.DAMAGE_ALL, 3).build());
+        inv.addItem(ItemBuilder.of(Material.DIAMOND_SWORD, 1, "Sword").enchantment(Enchantment.DAMAGE_ALL, 1).build());
         inv.addItem(ItemBuilder.of(Material.BOW, 1, "Bow").build());
-        inv.addItem(ItemBuilder.of(Material.IRON_PICKAXE, 1, "Pickaxe").build());
+        inv.addItem(ItemBuilder.of(Material.STONE_PICKAXE, 1, "Pickaxe").build());
 
         inv.addItem(new ItemStack(Material.COOKED_BEEF, 20));
         inv.addItem(new ItemStack(Material.OAK_PLANKS, 64));

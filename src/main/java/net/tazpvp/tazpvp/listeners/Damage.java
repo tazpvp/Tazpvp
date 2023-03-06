@@ -33,7 +33,10 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
+import net.tazpvp.tazpvp.utils.objects.CombatTag;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -45,6 +48,7 @@ public class Damage implements Listener {
 
     @EventHandler
     public void onEntityDamage(EntityDamageEvent e) {
+        Bukkit.broadcastMessage("test");
         if (e.getEntity() instanceof Player victim) {
             if (Tazpvp.spawnRegion.contains(victim.getLocation())) {
                 e.setCancelled(true);
@@ -55,19 +59,23 @@ public class Damage implements Listener {
 
             double fd = e.getFinalDamage();
 
-            if ((victim.getHealth() - fd) <= 0) {
-                e.setCancelled(true);
-                if (e instanceof EntityDamageByEntityEvent ee) {
-                    if (ee.getDamager() instanceof Player killer) {
-                        DeathFunctions.death(victim, killer);
-                    } else {
-                        DeathFunctions.death(victim, ee.getDamager());
-                    }
-                } else {
+            if (e instanceof EntityDamageByEntityEvent ee) {
+                if ((victim.getHealth() - fd) <= 0) {
+                    e.setCancelled(true);
+                    DeathFunctions.death(victim, ee.getDamager());
+                    return;
+                }
+                if (ee.getDamager() instanceof Player killer) {
+                    CombatTagFunctions.putInCombat(victim.getUniqueId(), killer.getUniqueId());
+                }
+            } else {
+                if ((victim.getHealth() - fd) <= 0) {
                     if (e.getCause() == EntityDamageEvent.DamageCause.FIRE) {
                         Tazpvp.getObservers().forEach(observer -> observer.burn(victim));
                     }
                     DeathFunctions.death(victim, null);
+                } else {
+                    CombatTagFunctions.putInCombat(victim.getUniqueId(), null);
                 }
             }
         }

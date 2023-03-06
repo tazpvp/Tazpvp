@@ -32,13 +32,11 @@
 
 package net.tazpvp.tazpvp.listeners;
 
-import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.PlaytimeUtil;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.functions.ScoreboardFunctions;
-import net.tazpvp.tazpvp.utils.objects.AssistKill;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -53,7 +51,6 @@ public class Join implements Listener {
 
         PersistentData.initPlayer(p);
 
-        Tazpvp.combatAssist.put(p.getUniqueId(), new AssistKill());
         PlaytimeUtil.playerJoined(p);
 
         ScoreboardFunctions.initScoreboard(p);
@@ -68,16 +65,29 @@ public class Join implements Listener {
         p.teleport(ConfigUtils.spawn);
         p.setCollidable(false);
 
+        Tazpvp.tags.put(p.getUniqueId(), new CombatTag(p.getUniqueId()));
+
+//        int ranking = 1; //TODO: Use database and rankdata
+//        String prefix = Tazpvp.getChat().getPlayerPrefix(p);
+//        String suffix = Tazpvp.getChat().getPlayerSuffix(p);
+//        ChatColor color = ChatColor.GRAY; //TODO: Use database and rankdata
+//
+//        new PlayerNameTag().initializePlayerNameTag(e.getPlayer(), ranking, prefix, suffix, color);
+
         p.setPlayerListHeaderFooter(
-                CC.RED + "                                      " +
-                        "\n                TazPVP                ",
-                CC.LIGHT_PURPLE + "Join our Discord! /discord");
-        
+                CC.DARK_AQUA + "                                      " +
+                        "\n                  " + CC.BOLD + "TAZPVP.NET" + "               " +
+                        "\n",
+                "\n" +
+                        CC.GRAY + "Players: " + CC.AQUA + Bukkit.getOnlinePlayers().size() + CC.GRAY + "/" + CC.DARK_AQUA + Bukkit.getMaxPlayers() +
+                        CC.GRAY + "\nChat with us:" + CC.GOLD + " /discord" +
+                        "\n");
+
         final String name = p.getName();
-        
+
         final String plus = CC.GRAY + "[" + CC.GOLD + "+" + CC.GRAY + "]";
         final String message = plus + " " + name;
-        
+
         e.setJoinMessage(message);
     }
 }

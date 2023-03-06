@@ -30,40 +30,30 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.utils.data;
+package net.tazpvp.tazpvp.npc.shops;
 
-import lombok.Getter;
+import net.tazpvp.tazpvp.guis.Shop;
+import net.tazpvp.tazpvp.utils.enums.CC;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 
 import javax.annotation.Nonnull;
 
-public enum DataTypes {
-    COINS("coins", 2, true),
-    XP("xp", 3, true),
-    LEVEL("level", 4, true),
-    KILLS("kills", 5, true),
-    DEATHS("deaths", 6, true),
-    TOPKILLSTREAK("top_ks", 7, true),
-    PRESTIGE("prestige", 8, true),
-    REBIRTH("rebirth", 9, true),
-    PREMIUM("premium", 10, false),
-    PREFIX("prefix", 11, false),
-    DUELWINS("duel_wins", 12, true),
-    DIVISION("division", 13, true),
-    PLAYTIMEUNIX("playtime", 14, true),
-    GUILD_ID("guild_id", 15, false),
-    TALENTS("talents", 16, false),
-    ACHIEVEMENTS("achievements", 17, false);
+public class Maxim extends NPC {
 
-    @Getter
-    private final String columnName;
-    @Getter
-    private final int columnIndex;
-    @Getter
-    private final boolean quantitative;
+    public Maxim() {
+        super(CC.GOLD + "Maxim", new Location(Bukkit.getWorld("arena"), -12, 100, 13, -135, 0),
+                Villager.Profession.ARMORER,
+                Villager.Type.JUNGLE,
+                Sound.ITEM_GOAT_HORN_SOUND_0);
+    }
 
-    DataTypes(@Nonnull final String columnName, final int columnIndex, final boolean quantitative) {
-        this.columnName = columnName;
-        this.columnIndex = columnIndex;
-        this.quantitative = quantitative;
+    @Override
+    public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
+        new Shop(p);
     }
 }

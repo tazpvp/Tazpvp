@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  *
- * Copyright (c) 2022, n-tdi
+ * Copyright (c) 2023, n-tdi
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,31 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.npc.npcs;
+package net.tazpvp.tazpvp.npc.bosses;
 
-import net.tazpvp.tazpvp.guis.Menu;
-import net.tazpvp.tazpvp.npc.NPC;
-import net.tazpvp.tazpvp.utils.enums.CC;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Sound;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
-import org.bukkit.event.player.PlayerInteractAtEntityEvent;
-
-import javax.annotation.Nonnull;
-
-public class Lorenzo extends NPC {
-
-    public Lorenzo() {
-        super(CC.GOLD + "Lorenzo", new Location(Bukkit.getWorld("arena"), 13.5, 100, 13, 135, 0),
-                Villager.Profession.ARMORER,
-                Villager.Type.JUNGLE,
-                Sound.ITEM_GOAT_HORN_SOUND_0);
-    }
-
-    @Override
-    public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
-        new Menu(p);
-    }
+public class Zorg {
 }
