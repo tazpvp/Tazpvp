@@ -42,13 +42,11 @@ import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.functions.ScoreboardFunctions;
 import net.tazpvp.tazpvp.utils.objects.CombatTag;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import world.ntdi.nrcore.utils.config.ConfigUtils;
-import world.ntdi.nrcore.utils.nametag.PlayerNameTag;
 
 import javax.xml.crypto.Data;
 
@@ -102,5 +100,12 @@ public class Join implements Listener {
                         CC.GRAY + "Players: " + CC.AQUA + Bukkit.getOnlinePlayers().size() + CC.GRAY + "/" + CC.DARK_AQUA + Bukkit.getMaxPlayers() +
                         CC.GRAY + "\nChat with us:" + CC.GOLD + " /discord" +
                         "\n");
+
+        final String name = p.getName();
+
+        final String plus = CC.GRAY + "[" + CC.GOLD + "+" + CC.GRAY + "]";
+        final String message = plus + " " + name;
+
+        e.setJoinMessage(message);
     }
 }
