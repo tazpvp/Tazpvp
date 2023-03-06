@@ -38,6 +38,7 @@ import net.tazpvp.tazpvp.utils.data.PersistentData;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -127,12 +128,17 @@ public class PlayerFunctions {
         }
     }
 
-    public static void levelUp(UUID ID) {
+    public static void levelUp(UUID ID, float value) {
         Player p = Bukkit.getPlayer(ID);
         PersistentData.add(ID, DataTypes.LEVEL);
         PersistentData.add(ID, DataTypes.COINS, 100);
-        PersistentData.set(ID, DataTypes.XP, (LooseData.getExpLeft(ID) - getInt(ID, DataTypes.XP)));
+        int num = (int) value - LooseData.getExpLeft(ID);
+        PersistentData.set(ID, DataTypes.XP, num);
+        p.getScoreboard().getTeam(DataTypes.XP.getColumnName()).setSuffix(num + " / " + LooseData.getExpLeft(p.getUniqueId()));
         p.getInventory().addItem(new ItemStack(Material.AMETHYST_SHARD));
+        p.setLevel(PersistentData.getInt(ID, DataTypes.LEVEL));
+        p.setExp((float) num / LooseData.getExpLeft(p.getUniqueId()));
+        p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
         if (p != null) {
             p.sendMessage("");
             p.sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "  LEVEL UP " + ChatColor.DARK_AQUA + "Combat Lvl. " + ChatColor.AQUA + getInt(ID, DataTypes.LEVEL));

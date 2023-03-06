@@ -34,6 +34,7 @@ package net.tazpvp.tazpvp.utils.observer;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 public class Observable implements Observer {
@@ -96,6 +97,11 @@ public class Observable implements Observer {
 
     @Override
     public void burn(Player p) {
+
+    }
+
+    @Override
+    public void place(Player p, Block b) {
 
     }
 }

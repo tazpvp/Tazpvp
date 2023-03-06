@@ -32,12 +32,15 @@
 
 package net.tazpvp.tazpvp.talents.talent;
 
+import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import org.bukkit.entity.Player;
 
 public class Moist extends Observable {
     @Override
     public void burn(Player victim) {
-        victim.setFireTicks(0);
+        if (PersistentData.getTalents(victim.getUniqueId()).is("Moist")) {
+            victim.setFireTicks(0);
+        }
     }
 }

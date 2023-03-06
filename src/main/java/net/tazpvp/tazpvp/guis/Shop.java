@@ -98,7 +98,7 @@ public class Shop extends GUI {
         setButton("Arrows", "Projectiles.", Material.ARROW, p, 30, 5);
         setButton("Steak", "We have the meats.", Material.COOKED_BEEF, p, 30, 5);
         setButton("Gold Carrot", "Good nutrition.", Material.GOLDEN_CARROT, p, 30, 5);
-        setButton("Gold Apple", "Only for rich people.", Material.STONE, p, 30, 1);
+        setButton("Gold Apple", "Only for rich people.", Material.GOLDEN_APPLE, p, 30, 1);
         setChangingButton("RGB Blocks", "RGB Placeable Blocks", wool, p, 30, 64);
 
         update();

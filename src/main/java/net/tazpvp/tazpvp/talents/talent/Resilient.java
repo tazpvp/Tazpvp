@@ -32,6 +32,7 @@
 
 package net.tazpvp.tazpvp.talents.talent;
 
+import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import org.bukkit.entity.Player;
 
@@ -40,7 +41,9 @@ public class Resilient extends Observable {
     @Override
     public void death(Player victim, Player killer) {
         if (victim != killer) {
-            killer.setAbsorptionAmount(4);
+            if (PersistentData.getTalents(victim.getUniqueId()).is("Resilient")) {
+                killer.setAbsorptionAmount(4);
+            }
         }
     }
 }

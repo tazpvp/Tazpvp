@@ -53,16 +53,16 @@ public class Achievements extends GUI {
 
         fill(0, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
-        setButton(p,  10, "Adept", "kys", ACH.is("Adept"));
-        setButton(p,  11, "Bowling", "kys", ACH.is("Bowling"));
-        setButton(p,  12, "Charm", "kys", ACH.is("Charm"));
-        setButton(p,  13, "Craftsman", "kys", ACH.is("Craftsman"));
-        setButton(p,  14, "Gamble", "kys", ACH.is("Gamble"));
-        setButton(p,  15, "Gladiator", "kys", ACH.is("Gladiator"));
-        setButton(p,  16, "Legend", "kys", ACH.is("Legend"));
+        setButton(p,  10, "Adept", "Learn every talent.", ACH.is("Adept"));
+        setButton(p,  11, "Bowling", "Get a kill streak of 50.", ACH.is("Bowling"));
+        setButton(p,  12, "Charm", "Chat 100 times before leaving.", ACH.is("Charm"));
+        setButton(p,  13, "Craftsman", "Combine your sword with an enchantment.", ACH.is("Craftsman"));
+        setButton(p,  14, "Gamble", "Kill a player while at low health.", ACH.is("Gamble"));
+        setButton(p,  15, "Gladiator", "Win 35 duels.", ACH.is("Gladiator"));
+        setButton(p,  16, "Legend", "Rebirth your character.", ACH.is("Legend"));
 
-        setButton(p,  19, "Merchant", "kys", ACH.is("Merchant"));
-        setButton(p,  20, "Superior", "kys", ACH.is("Superior"));
+        setButton(p,  19, "Merchant", "Trade with Caesar at the mines.", ACH.is("Merchant"));
+        setButton(p,  20, "Superior", "Win an event.", ACH.is("Superior"));
 
         update();
     }

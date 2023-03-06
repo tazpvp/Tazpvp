@@ -55,18 +55,21 @@ public class CombatTag {
     }
 
     public void setTimer(@Nullable UUID attacker) {
+        if (attacker == null) {
+            Bukkit.getPlayer(id).sendMessage(CC.RED + "You are now in combat.");
+            return;
+        } else {
+            if (!attackers.contains(attacker)) {
+                attackers.add(attacker);
+
+                Bukkit.getPlayer(id).sendMessage(CC.RED + "You are now in combat with " + CC.BOLD + Bukkit.getPlayer(attacker).getName());
+            }
+        }
         if (countdown <= 0) {
             countdown = 15;
             updateBar();
             bar.setVisible(true);
-            if (attacker == null) {
-                Bukkit.getPlayer(id).sendMessage(CC.RED + "You are now in combat.");
-                return;
-            }
-            if (!attackers.contains(attacker)) {
-                attackers.add(attacker);
-                Bukkit.getPlayer(id).sendMessage(CC.RED + "You are now in combat with " + CC.BOLD + Bukkit.getPlayer(attacker).getName());
-            }
+
         } else {
             countdown = 15;
             updateBar();

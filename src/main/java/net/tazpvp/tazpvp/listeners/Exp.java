@@ -30,30 +30,16 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.npc.shops;
+package net.tazpvp.tazpvp.listeners;
 
-import net.tazpvp.tazpvp.guis.Menu;
-import net.tazpvp.tazpvp.utils.enums.CC;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Sound;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
-import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.GameMode;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerExpChangeEvent;
 
-import javax.annotation.Nonnull;
-
-public class Lorenzo extends NPC {
-
-    public Lorenzo() {
-        super(CC.GOLD + "Lorenzo", new Location(Bukkit.getWorld("arena"), 13, 99, 19, 135, 0),
-                Villager.Profession.ARMORER,
-                Villager.Type.JUNGLE,
-                Sound.ITEM_GOAT_HORN_SOUND_0);
-    }
-
-    @Override
-    public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
-        new Menu(p);
+public class Exp implements Listener {
+    @EventHandler
+    public void onGetExp(PlayerExpChangeEvent e) {
+        if (e.getPlayer().getGameMode() == GameMode.SURVIVAL) e.setAmount(0);
     }
 }

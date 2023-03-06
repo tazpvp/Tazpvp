@@ -33,6 +33,7 @@
 package net.tazpvp.tazpvp.utils.observer;
 
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 public interface Observer {
@@ -57,4 +58,6 @@ public interface Observer {
     void chat(Player p, String chat);
 
     void burn(Player p);
+
+    void place(Player p, Block b);
 }

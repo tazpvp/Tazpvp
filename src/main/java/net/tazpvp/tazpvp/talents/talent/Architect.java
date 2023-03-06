@@ -30,30 +30,23 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.npc.shops;
+package net.tazpvp.tazpvp.talents.talent;
 
-import net.tazpvp.tazpvp.guis.Menu;
-import net.tazpvp.tazpvp.utils.enums.CC;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Sound;
+import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.observer.Observable;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
-import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.inventory.ItemStack;
 
-import javax.annotation.Nonnull;
+import java.util.Random;
 
-public class Lorenzo extends NPC {
-
-    public Lorenzo() {
-        super(CC.GOLD + "Lorenzo", new Location(Bukkit.getWorld("arena"), 13, 99, 19, 135, 0),
-                Villager.Profession.ARMORER,
-                Villager.Type.JUNGLE,
-                Sound.ITEM_GOAT_HORN_SOUND_0);
-    }
-
+public class Architect extends Observable {
     @Override
-    public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
-        new Menu(p);
+    public void place(Player p, Block b) {
+        if (PersistentData.getTalents(p.getUniqueId()).is("Architect")) {
+            if (new Random().nextInt(0, 10) > 9) {
+                p.getInventory().addItem(new ItemStack(b.getType()));
+            }
+        }
     }
 }

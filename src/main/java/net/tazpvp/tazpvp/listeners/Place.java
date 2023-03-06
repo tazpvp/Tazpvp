@@ -26,6 +26,8 @@ public class Place implements Listener {
                     e.getBlock().setType(Material.AIR);
                 }
             }.runTaskLater(Tazpvp.getInstance(), 20 * 8);
+
+            Tazpvp.getObservers().forEach(observer -> observer.place(p, b));
         }
     }
 }

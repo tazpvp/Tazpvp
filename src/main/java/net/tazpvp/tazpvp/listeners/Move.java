@@ -3,6 +3,7 @@ package net.tazpvp.tazpvp.listeners;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.events.Event;
 import net.tazpvp.tazpvp.events.EventUtils;
+import net.tazpvp.tazpvp.utils.ConfigUtil;
 import net.tazpvp.tazpvp.utils.ParkourUtil;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
 import org.bukkit.*;
@@ -13,13 +14,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+import world.ntdi.nrcore.NRCore;
+import world.ntdi.nrcore.utils.config.ConfigUtils;
 
 public class Move implements Listener {
     @EventHandler
     public void onMove(PlayerMoveEvent e) {
         Player p = e.getPlayer();
 
-        Location raidus = new Location(Bukkit.getWorld("arena"), 0, 100, 24);
+        Location raidus = new Location(Bukkit.getWorld("arena"), 0, 100, ConfigUtils.spawn.getZ() + 27);
         Block b = new Location(e.getPlayer().getWorld(), e.getPlayer().getLocation().getX(), e.getPlayer().getLocation().getY() - 1, e.getPlayer().getLocation().getZ()).getBlock();
 
         if (p.getWorld().equals(Bukkit.getWorld("parkour"))) {
@@ -33,7 +36,7 @@ public class Move implements Listener {
                 Launchpad(p);
                 return;
             }
-            if (p.getLocation().getY() < 80) {
+            if (p.getLocation().getY() < ConfigUtils.spawn.getY() - 22) {
                 if (p.getGameMode() == GameMode.SURVIVAL) {
                     DeathFunctions.death(p, p);
                 }

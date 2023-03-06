@@ -42,6 +42,8 @@ public class Excavator extends Observable {
 
     @Override
     public void mine(Player p, Material material) {
-        PersistentData.add(p, DataTypes.XP, 1);
+        if (PersistentData.getTalents(p.getUniqueId()).is("Revenge")) {
+            PersistentData.add(p, DataTypes.XP, 1);
+        }
     }
 }

@@ -33,6 +33,7 @@
 package net.tazpvp.tazpvp.utils.objects;
 
 import lombok.Getter;
+import lombok.Setter;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.tazpvp.tazpvp.Tazpvp;
@@ -66,17 +67,21 @@ import java.util.UUID;
 
 public class Death {
 
-    private final Player victim;
-    private final UUID victimID;
+    @Getter
+    @Setter
+    private Player victim;
+    private UUID victimID;
 
-    private final Entity killer;
+    @Getter
+    @Setter
+    private Entity killer;
     private Player pKiller = null;
     private UUID killerID = null;
 
     private final Location location;
     private final Random r = new Random();
 
-    public Death(Player victim, @Nullable final Entity killer) {
+    public Death(Player victim, @Nullable Entity killer) {
         this.victim = victim;
         this.victimID = victim.getUniqueId();
         this.killer = killer;
@@ -106,7 +111,7 @@ public class Death {
             int lvl = r.nextInt(2) + 1;
 
             ItemStack enchantment = ItemBuilder.of(Material.ENCHANTED_BOOK, 1).enchantment(ench, lvl).build();
-            Hologram hologram = new Hologram(new String[]{"&b&l" + ench.getKey().getKey() + " &6&l" + lvl}, location.getBlock().getLocation().add(0.5, 0, 0.5).subtract(0, 0.5, 0), false);
+            Hologram hologram = new Hologram(new String[]{"&3&l" + ench.getKey().getKey() + " &b&l" + lvl}, location.getBlock().getLocation().add(0.5, 0, 0.5).subtract(0, 0.5, 0), false);
 
             gui.addButton(Button.create(enchantment, (e) -> {
                 new BukkitRunnable() {
@@ -142,8 +147,8 @@ public class Death {
         List<Enchantment> list = List.of(
             Enchantment.DAMAGE_ALL,
             Enchantment.ARROW_DAMAGE,
-            Enchantment.PROTECTION_ENVIRONMENTAL
-        );
+            Enchantment.PROTECTION_ENVIRONMENTAL,
+            Enchantment.MENDING);
 
         return list.get(r.nextInt(list.size()));
     }
@@ -182,7 +187,7 @@ public class Death {
     }
 
     public void addHealth(int amount) {
-        if ((pKiller.getHealth() + 5) >= PlayerFunctions.getMaxHealth(pKiller)) {
+        if ((pKiller.getHealth() + amount) >= PlayerFunctions.getMaxHealth(pKiller)) {
             PlayerFunctions.healPlr(pKiller);
             pKiller.setHealth(PlayerFunctions.getMaxHealth(pKiller));
         } else {
@@ -214,7 +219,7 @@ public class Death {
             final int xp = 15;
             final int coins = 26;
 
-            pKiller.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(CC.AQUA + "EXP: " + xp + CC.GOLD + " Coins: " + coins));
+            pKiller.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(CC.DARK_AQUA + "" + CC.BOLD +  "EXP: " + CC.AQUA + "" + CC.BOLD +  xp + CC.GOLD + "" + CC.BOLD + " COINS: " + CC.YELLOW + "" + CC.BOLD +  coins));
             PersistentData.add(killerID, DataTypes.COINS, coins);
             PersistentData.add(killerID, DataTypes.XP, xp);
 
@@ -226,7 +231,7 @@ public class Death {
                     final int AssistXP = 5;
                     final int AssistCoins = 5;
 
-                    assister.sendMessage("You assisted in killing " + victim.getName() + "+" + AssistXP + " EXP, +" + AssistCoins + " Coins");
+                    assister.sendMessage(CC.DARK_GRAY + "Assist kill: " + CC.GRAY + victim.getName() + ": " + CC.DARK_AQUA +  "EXP: " + CC.AQUA +  AssistXP + CC.GOLD + " COINS: " + CC.YELLOW +  AssistCoins);
                     PersistentData.add(assister, DataTypes.COINS, AssistCoins);
                     PersistentData.add(assister, DataTypes.XP, AssistXP);
                 }

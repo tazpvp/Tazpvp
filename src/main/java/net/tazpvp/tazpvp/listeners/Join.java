@@ -34,6 +34,8 @@ package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.PlaytimeUtil;
+import net.tazpvp.tazpvp.utils.data.DataTypes;
+import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
@@ -47,6 +49,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import world.ntdi.nrcore.utils.config.ConfigUtils;
 import world.ntdi.nrcore.utils.nametag.PlayerNameTag;
+
+import javax.xml.crypto.Data;
 
 public class Join implements Listener {
 
@@ -71,6 +75,17 @@ public class Join implements Listener {
         p.setCollidable(false);
 
         Tazpvp.tags.put(p.getUniqueId(), new CombatTag(p.getUniqueId()));
+
+        p.setLevel(PersistentData.getInt(p.getUniqueId(), DataTypes.LEVEL));
+        if (PersistentData.getFloat(p.getUniqueId(), DataTypes.XP) >= LooseData.getExpLeft(p.getUniqueId())) {
+            float num = PersistentData.getFloat(p.getUniqueId(), DataTypes.XP) - LooseData.getExpLeft(p.getUniqueId());
+            PlayerFunctions.levelUp(p.getUniqueId(), num);
+        } else if (PersistentData.getFloat(p.getUniqueId(), DataTypes.XP) < 0) {
+            PersistentData.set(p.getUniqueId(), DataTypes.XP, 0);
+        } else {
+            p.setExp(PersistentData.getFloat(p.getUniqueId(), DataTypes.XP) / LooseData.getExpLeft(p.getUniqueId()));
+        }
+
 
 //        int ranking = 1; //TODO: Use database and rankdata
 //        String prefix = Tazpvp.getChat().getPlayerPrefix(p);

@@ -76,15 +76,20 @@ public class DeathFunctions {
                     death.dropHead();
 
                     death.deathMessage(true);
-                    death.addHealth(5);
+                    death.addHealth(10);
 
                     pKiller.playSound(pKiller.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
                 }
             } else if (killer instanceof Mob mKiller) {
                 death.deathMessage(false);
             }
+        } else {
+            if (!Tazpvp.tags.get(victim.getUniqueId()).getAttackers().isEmpty()) {
+                UUID currentKiller = Tazpvp.tags.get(victim.getUniqueId()).getAttackers().peek();
+                death.setKiller(Bukkit.getPlayer(currentKiller));
+                death.rewards();
+            }
         }
-        UUID currentKiller = Tazpvp.tags.get(victim.getUniqueId()).getAttackers().peek(); //TODO: Fix
 
         PersistentData.add(victim, DataTypes.DEATHS);
         LooseData.resetKs(victim.getUniqueId());

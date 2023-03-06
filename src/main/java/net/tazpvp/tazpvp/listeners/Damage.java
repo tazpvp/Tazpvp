@@ -48,7 +48,6 @@ public class Damage implements Listener {
 
     @EventHandler
     public void onEntityDamage(EntityDamageEvent e) {
-        Bukkit.broadcastMessage("test");
         if (e.getEntity() instanceof Player victim) {
             if (Tazpvp.spawnRegion.contains(victim.getLocation())) {
                 e.setCancelled(true);
