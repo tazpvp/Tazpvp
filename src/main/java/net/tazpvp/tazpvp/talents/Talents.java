@@ -21,7 +21,7 @@ public class Talents extends ContainerData implements Serializable {
                     Map.entry("Harvester", false),
                     Map.entry("Necromancer", false),
                     Map.entry("Blessed", false),
-                    Map.entry("Glider", false),
+                    Map.entry("Glide", false),
                     Map.entry("Proficient", false),
                     Map.entry("Medic", false)
             ))

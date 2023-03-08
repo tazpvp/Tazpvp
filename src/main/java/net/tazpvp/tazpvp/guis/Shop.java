@@ -38,6 +38,7 @@ import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -52,14 +53,16 @@ public class Shop extends GUI {
 
     private int slotNum;
     private int num;
+    private Player p;
 
     public Shop(Player p) {
-        super("Shop", 4);
-        addItems(p);
+        super("Shop", 6);
+        this.p = p;
+        addItems();
         open(p);
     }
 
-    private void addItems(Player p) {
+    private void addItems() {
         List<Material> wool = List.of(
                 Material.ORANGE_WOOL,
                 Material.PURPLE_WOOL,
@@ -84,38 +87,53 @@ public class Shop extends GUI {
         slotNum = 10;
         num = 1;
 
-        fill(0, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
+        fill(0, 6*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
-        setButton("Azure Vapor", "Extinguish flames.", Material.BLUE_ORCHID, p, 30, 1);
-        setButton("Sticky Web", "Slow down your enemies.", Material.COBWEB, p, 30, 5);
-        setButton("Ink Splash", "Blind your enemies.", Material.INK_SAC, p, 30, 3);
-        setButton("Lighter", "Set things afire.", Material.FLINT_AND_STEEL, p, 30, 1);
-        setButton("Rusty Shield", "One-time-use shield.", Material.SHIELD, p, 30, 1);
-        setButton("Exp Bottle", "Mend your armor.", Material.EXPERIENCE_BOTTLE, p, 30, 1);
-        setChangingButton("Wooden Planks", "Placeable Blocks", wood, p, 30, 64);
-        setButton("Hatchet", "Break wooden blocks.", Material.GOLDEN_AXE, p, 30, 1);
-        setButton("Shears", "Break wool blocks.", Material.SHEARS, p, 30, 1);
-        setButton("Arrows", "Projectiles.", Material.ARROW, p, 30, 5);
-        setButton("Steak", "We have the meats.", Material.COOKED_BEEF, p, 30, 5);
-        setButton("Gold Carrot", "Good nutrition.", Material.GOLDEN_CARROT, p, 30, 5);
-        setButton("Gold Apple", "Only for rich people.", Material.GOLDEN_APPLE, p, 30, 1);
-        setChangingButton("RGB Blocks", "RGB Placeable Blocks", wool, p, 30, 64);
+        setButton("Azure Vapor", "Extinguish flames.", Material.BLUE_ORCHID, 30, 1);
+        setButton("Sticky Web", "Slow down your enemies.", Material.COBWEB, 30, 5);
+        setButton("Ink Splash", "Blind your enemies.", Material.INK_SAC, 30, 3);
+        setButton("Lighter", "Set things afire.", Material.FLINT_AND_STEEL, 30, 1);
+        setButton("Rusty Shield", "One-time-use shield.", Material.SHIELD, 30, 1);
+        setButton("Exp Bottle", "Mend your armor.", Material.EXPERIENCE_BOTTLE, 30, 1);
+        setChangingButton("Wooden Planks", "Placeable Blocks", wood, 30, 64);
+
+        setButton("Hatchet", "Break wooden blocks.", Material.GOLDEN_AXE, 30, 1);
+        setButton("Shears", "Break wool blocks.", Material.SHEARS, 30, 1);
+        setButton("Arrows", "Projectiles.", Material.ARROW, 30, 5);
+        setButton("Steak", "We have the meats.", Material.COOKED_BEEF, 30, 5);
+        setButton("Gold Carrot", "Good nutrition.", Material.GOLDEN_CARROT, 30, 5);
+        setButton("Gold Apple", "Only for rich people.", Material.GOLDEN_APPLE, 30, 1);
+        setChangingButton("RGB Blocks", "RGB Placeable Blocks", wool, 30, 64);
+
+        setButton("Mending", "Heal armor with xp bottles.", ItemBuilder.of(Material.ENCHANTED_BOOK).enchantment(Enchantment.MENDING, 1).build().getType(), 30, 1);
+        setButton("Sharpness", "Deal more sword damage.", ItemBuilder.of(Material.ENCHANTED_BOOK).enchantment(Enchantment.DAMAGE_ALL, 1).build().getType(), 30, 1);
+        setButton("Unbreaking", "Fortify your tools.", ItemBuilder.of(Material.ENCHANTED_BOOK).enchantment(Enchantment.DURABILITY, 1).build().getType(), 30, 1);
+        setButton("Protection", "Take less damage.", ItemBuilder.of(Material.ENCHANTED_BOOK).enchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1).build().getType(), 30, 1);
+        setButton("Projectile Protection", "Take less damage to projectiles.", ItemBuilder.of(Material.ENCHANTED_BOOK).enchantment(Enchantment.PROTECTION_PROJECTILE, 1).build().getType(), 30, 1);
+        setButton("Fire Protection", "Take less damage to fire.", ItemBuilder.of(Material.ENCHANTED_BOOK).enchantment(Enchantment.PROTECTION_FIRE, 1).build().getType(), 30, 1);
+        setButton("Sweeping Edge", "Increase attack range.", ItemBuilder.of(Material.ENCHANTED_BOOK).enchantment(Enchantment.SWEEPING_EDGE, 1).build().getType(), 30, 1);
+
+        setButton("Punch", "Shoot players back further.", ItemBuilder.of(Material.ENCHANTED_BOOK).enchantment(Enchantment.ARROW_KNOCKBACK, 1).build().getType(), 30, 1);
+        setButton("Knockback", "Hit players back further.", ItemBuilder.of(Material.ENCHANTED_BOOK).enchantment(Enchantment.KNOCKBACK, 1).build().getType(), 30, 1);
+        setButton("Flame", "Shoot and set things on fire.", ItemBuilder.of(Material.ENCHANTED_BOOK).enchantment(Enchantment.ARROW_FIRE, 1).build().getType(), 30, 1);
+        setButton("Fire Aspect", "Hit and set things on fire.", ItemBuilder.of(Material.ENCHANTED_BOOK).enchantment(Enchantment.FIRE_ASPECT, 1).build().getType(), 30, 1);
+        setButton("Spectral Arrow", "Highlight targets.", Material.SPECTRAL_ARROW, 30, 1);
 
         update();
     }
 
-    private void setButton(String name, String text, Material mat, Player p, int cost, int amount) {
+    private void setButton(String name, String text, Material mat, int cost, int amount) {
         addButton(Button.create(ItemBuilder.of(mat, amount)
                 .name(CC.YELLOW + "" + CC.BOLD + name)
                 .lore(CC.GOLD + text, " ", CC.GRAY + "Cost: $" + cost)
                 .build(), (e) -> {
 
-            checkMoney(p, cost, name, mat, amount);
+            checkMoney(cost, name, mat, amount);
         }), slotNum);
         calcSlot();
     }
 
-    private void setChangingButton(String name, String text, List<Material> list, Player p, int cost, int amount) {
+    private void setChangingButton(String name, String text, List<Material> list, int cost, int amount) {
         int slot = slotNum;
         new BukkitRunnable() {
             @Override
@@ -130,7 +148,7 @@ public class Shop extends GUI {
                             .lore(CC.GOLD + text, " ", CC.GRAY + "Cost: " + cost)
                             .build(), (e) -> {
 
-                        checkMoney(p, cost, name, list.get(num), amount);
+                        checkMoney(cost, name, list.get(num), amount);
 
                     }), slot);
                 }
@@ -139,7 +157,7 @@ public class Shop extends GUI {
         calcSlot();
     }
 
-    private void checkMoney(Player p, int cost, String name, Material mat, int amount) {
+    private void checkMoney(int cost, String name, Material mat, int amount) {
         if (PersistentData.getInt(p, DataTypes.COINS) >= cost) {
             PersistentData.remove(p, DataTypes.COINS, cost);
             p.getInventory().addItem(new ItemStack(mat, amount));

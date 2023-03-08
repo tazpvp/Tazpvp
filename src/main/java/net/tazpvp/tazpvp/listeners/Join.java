@@ -103,7 +103,7 @@ public class Join implements Listener {
 
         final String name = p.getName();
 
-        final String plus = CC.GRAY + "[" + CC.GOLD + "+" + CC.GRAY + "]";
+        final String plus = CC.GREEN + "[" + CC.GOLD + "+" + CC.GREEN + "]";
         final String message = plus + " " + name;
 
         e.setJoinMessage(message);

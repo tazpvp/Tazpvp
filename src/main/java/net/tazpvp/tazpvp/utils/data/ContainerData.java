@@ -32,6 +32,7 @@
 
 package net.tazpvp.tazpvp.utils.data;
 
+import lombok.Data;
 import lombok.Getter;
 
 import javax.annotation.Nonnull;

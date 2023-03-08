@@ -154,7 +154,15 @@ public class Death {
             Enchantment.DAMAGE_ALL,
             Enchantment.ARROW_DAMAGE,
             Enchantment.PROTECTION_ENVIRONMENTAL,
-            Enchantment.MENDING);
+            Enchantment.MENDING,
+            Enchantment.PROTECTION_FIRE,
+            Enchantment.PROTECTION_PROJECTILE,
+            Enchantment.ARROW_FIRE,
+            Enchantment.FIRE_ASPECT,
+            Enchantment.SWEEPING_EDGE,
+            Enchantment.KNOCKBACK,
+            Enchantment.DURABILITY
+        );
 
         return list.get(r.nextInt(list.size()));
     }
