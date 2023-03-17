@@ -108,7 +108,9 @@ public final class PersistentData {
      * @return The Talents object stored in the column
      */
     public static Talents getTalents(@Nonnull final UUID uuid) {
-        return (Talents) getSerializeObject(uuid, DataTypes.TALENTS);
+        Talents talents = (Talents) getSerializeObject(uuid, DataTypes.TALENTS);
+        System.out.println(talents.getData());
+        return talents;
     }
 
     public static Achievements getAchievements(@Nonnull final UUID uuid) {
