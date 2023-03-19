@@ -46,6 +46,7 @@ import net.tazpvp.tazpvp.npc.shops.Lorenzo;
 import net.tazpvp.tazpvp.npc.shops.Maxim;
 import net.tazpvp.tazpvp.talents.talent.*;
 import net.tazpvp.tazpvp.utils.ConfigUtil;
+import net.tazpvp.tazpvp.utils.crate.CrateManager;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.objects.CombatTag;
 import net.tazpvp.tazpvp.utils.observer.Observer;
@@ -89,6 +90,8 @@ public final class Tazpvp extends JavaPlugin {
 
     private static final Logger log = Logger.getLogger("Minecraft");
     private static net.milkbowl.vault.chat.Chat chat;
+    @Getter
+    private static CrateManager crateManager;
 
     @Override
     public void onEnable() {
@@ -119,6 +122,8 @@ public final class Tazpvp extends JavaPlugin {
                 getConfig().getString("sql-user"),
                 getConfig().getString("sql-password")
         );
+
+        crateManager = new CrateManager();
     }
 
     private static void connectDatabase(String host, int port, String user, String password) {
@@ -136,6 +141,8 @@ public final class Tazpvp extends JavaPlugin {
         log.info(String.format("[%s] Disabled Version %s", getDescription().getName(), getDescription().getVersion()));
 
         despawnNpcs();
+
+        crateManager.shutdown();
     }
 
     private boolean setupChat() {
