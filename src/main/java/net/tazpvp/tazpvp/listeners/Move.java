@@ -39,7 +39,7 @@ public class Move implements Listener {
             }
             if (p.getLocation().getY() < ConfigUtils.spawn.getY() - 22) {
                 if (p.getGameMode() == GameMode.SURVIVAL) {
-                    DeathFunctions.death(p, p);
+                    DeathFunctions.death(p, null);
                 }
             }
         }

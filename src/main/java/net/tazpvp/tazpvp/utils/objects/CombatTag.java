@@ -55,10 +55,7 @@ public class CombatTag {
     }
 
     public void setTimer(@Nullable UUID attacker) {
-        if (attacker == null) {
-            Bukkit.getPlayer(id).sendMessage(CC.RED + "You are now in combat.");
-            return;
-        } else {
+        if (attacker != null) {
             if (!attackers.contains(attacker)) {
                 attackers.add(attacker);
 
@@ -66,10 +63,12 @@ public class CombatTag {
             }
         }
         if (countdown <= 0) {
+            if (attacker == null) {
+                Bukkit.getPlayer(id).sendMessage(CC.RED + "You are now in combat.");
+            }
             countdown = 15;
             updateBar();
             bar.setVisible(true);
-
         } else {
             countdown = 15;
             updateBar();

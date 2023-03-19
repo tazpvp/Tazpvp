@@ -73,7 +73,7 @@ public class Talents extends GUI {
         setButton(p, 20, Material.SHEARS,11, "Harvester", "Better chance that players drop heads.", talents.is("Harvester"));
         setButton(p, 21, Material.NETHERITE_HOE,15, "Necromancer", "Gain more from player coffins.", talents.is("Necromancer"));
         setButton(p, 22, Material.GOLDEN_APPLE,20, "Blessed", "A chance of getting a golden apple from a kill.", talents.is("Blessed"));
-        setButton(p, 23, Material.ELYTRA,6, "Glider", "The launch pad pushes you further.", talents.is("Glider"));
+        setButton(p, 23, Material.ELYTRA,6, "Glide", "The launch pad pushes you further.", talents.is("Glide"));
         setButton(p, 24, Material.EXPERIENCE_BOTTLE,9, "Proficient", "Gain experience from duels.", talents.is("Proficient"));
         setButton(p, 25, PotionBuilder.of(PotionBuilder.PotionType.SPLASH).setColor(Color.PURPLE).build().getType(),10, "Medic", "Heal nearby guild mates on kill.", talents.is("Medic"));
     }

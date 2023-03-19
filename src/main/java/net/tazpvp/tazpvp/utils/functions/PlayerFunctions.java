@@ -134,7 +134,6 @@ public class PlayerFunctions {
         PersistentData.add(ID, DataTypes.COINS, 100);
         int num = (int) value - LooseData.getExpLeft(ID);
         PersistentData.set(ID, DataTypes.XP, num);
-        p.getScoreboard().getTeam(DataTypes.XP.getColumnName()).setSuffix(num + " / " + LooseData.getExpLeft(p.getUniqueId()));
         p.getInventory().addItem(new ItemStack(Material.AMETHYST_SHARD));
         p.setLevel(PersistentData.getInt(ID, DataTypes.LEVEL));
         p.setExp((float) num / LooseData.getExpLeft(p.getUniqueId()));

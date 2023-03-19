@@ -44,12 +44,12 @@ import net.tazpvp.tazpvp.npc.shops.Bub;
 import net.tazpvp.tazpvp.npc.shops.Caesar;
 import net.tazpvp.tazpvp.npc.shops.Lorenzo;
 import net.tazpvp.tazpvp.npc.shops.Maxim;
-import net.tazpvp.tazpvp.talents.talent.Moist;
-import net.tazpvp.tazpvp.talents.talent.Revenge;
+import net.tazpvp.tazpvp.talents.talent.*;
 import net.tazpvp.tazpvp.utils.ConfigUtil;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.objects.CombatTag;
 import net.tazpvp.tazpvp.utils.observer.Observer;
+import net.tazpvp.tazpvp.utils.runnables.Alerts;
 import net.tazpvp.tazpvp.utils.runnables.Generator;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -96,6 +96,7 @@ public final class Tazpvp extends JavaPlugin {
         registerEvents();
         registerCommands();
         Generator.generate();
+        Alerts.alert();
         events.add("FFA");
         registerObservable();
         spawnNpcs();
@@ -162,6 +163,13 @@ public final class Tazpvp extends JavaPlugin {
 
         new Revenge();
         new Moist();
+        new Agile();
+        new Architect();
+        new Blessed();
+        new Cannibal();
+        new Excavator();
+        new Hunter();
+        new Resilient();
     }
 
     public void registerCommands() {

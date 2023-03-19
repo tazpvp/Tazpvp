@@ -108,9 +108,7 @@ public final class PersistentData {
      * @return The Talents object stored in the column
      */
     public static Talents getTalents(@Nonnull final UUID uuid) {
-        Talents talents = (Talents) getSerializeObject(uuid, DataTypes.TALENTS);
-        System.out.println(talents.getData());
-        return talents;
+        return (Talents) getSerializeObject(uuid, DataTypes.TALENTS);
     }
 
     public static Achievements getAchievements(@Nonnull final UUID uuid) {
@@ -241,7 +239,6 @@ public final class PersistentData {
                         if (value >= LooseData.getExpLeft(ID)) {
                             PlayerFunctions.levelUp(ID, value);
                         } else {
-                            p.getScoreboard().getTeam(DataTypes.XP.getColumnName()).setSuffix((int) value + " / " + LooseData.getExpLeft(p.getUniqueId()));
                             p.setExp(value / LooseData.getExpLeft(p.getUniqueId()));
                         }
                     } else {

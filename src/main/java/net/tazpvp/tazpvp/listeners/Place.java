@@ -13,6 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
+import world.ntdi.nrcore.utils.config.ConfigUtils;
 
 public class Place implements Listener {
     @EventHandler
@@ -29,7 +30,7 @@ public class Place implements Listener {
                 return;
             }
 
-            if (b.getLocation().distance(new Location(Bukkit.getWorld("arena"), 0, 90, 76)) > 35 || b.getLocation().getY() <= 90) {
+            if (b.getLocation().distance(new Location(Bukkit.getWorld("arena"), 0, ConfigUtils.spawn.getY() - 10, ConfigUtils.spawn.getZ() + 76)) > 35 || b.getLocation().getY() < ConfigUtils.spawn.getY() - 10) {
                 e.setCancelled(true);
                 return;
             }

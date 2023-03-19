@@ -65,11 +65,9 @@ public class ScoreboardFunctions {
 
         objective.getScore("                         ").setScore(8);
         newLine(p, DataTypes.LEVEL.getColumnName(), "〡 Level:", CC.AQUA,
-                PersistentData.getInt(p, DataTypes.LEVEL) + "").setScore(7);
+                PersistentData.getInt(p, DataTypes.LEVEL) + "").setScore(6);
         newLine(p, DataTypes.COINS.getColumnName(), "〡 Coins:", CC.GOLD,
-                PersistentData.getInt(p, DataTypes.COINS) + "").setScore(6);
-        newLine(p, DataTypes.XP.getColumnName(), "〡 EXP:", CC.BLACK,
-                PersistentData.getInt(p, DataTypes.XP) + " / " + LooseData.getExpLeft(p.getUniqueId())).setScore(5);
+                PersistentData.getInt(p, DataTypes.COINS) + "").setScore(5);
         objective.getScore(" ").setScore(4);
         newLine(p, DataTypes.KILLS.getColumnName(), "〡 Kills:", CC.YELLOW,
                 PersistentData.getInt(p, DataTypes.KILLS) + "").setScore(3);

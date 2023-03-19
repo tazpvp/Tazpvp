@@ -228,6 +228,7 @@ public class Death {
             final int xp = 15;
             final int coins = 26;
 
+            //TODO: fix buh
             pKiller.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(CC.DARK_AQUA + "" + CC.BOLD +  "EXP: " + CC.AQUA + "" + CC.BOLD +  xp + CC.GOLD + "" + CC.BOLD + " COINS: " + CC.YELLOW + "" + CC.BOLD +  coins));
             PersistentData.add(killerID, DataTypes.COINS, coins);
             PersistentData.add(killerID, DataTypes.XP, xp);
