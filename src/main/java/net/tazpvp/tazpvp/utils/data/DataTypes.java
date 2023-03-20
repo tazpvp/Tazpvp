@@ -50,9 +50,10 @@ public enum DataTypes {
     DUELWINS("duel_wins", 12, true),
     DIVISION("division", 13, true),
     PLAYTIMEUNIX("playtime", 14, true),
-    GUILD_ID("guild_id", 15, false),
-    TALENTS("talents", 16, false),
-    ACHIEVEMENTS("achievements", 17, false);
+    DAILYCRATEUNIX("daily_crate", 15, true),
+    GUILD_ID("guild_id", 16, false),
+    TALENTS("talents", 17, false),
+    ACHIEVEMENTS("achievements", 18, false);
 
     @Getter
     private final String columnName;

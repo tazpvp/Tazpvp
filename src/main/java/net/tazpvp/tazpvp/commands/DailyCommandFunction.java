@@ -31,38 +31,49 @@
  *
  */
 
-package net.tazpvp.tazpvp.utils.crate;
+package net.tazpvp.tazpvp.commands;
 
-import lombok.Getter;
+import lombok.NonNull;
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.crate.KeyFactory;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
+import net.tazpvp.tazpvp.utils.enums.CC;
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import world.ntdi.nrcore.utils.command.CommandCore;
+import world.ntdi.nrcore.utils.command.CommandFunction;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CrateManager {
-    @Getter
-    private List<Crate> crates;
+public class DailyCommandFunction extends CommandCore implements CommandFunction {
 
-    public CrateManager() {
-        this.crates = new ArrayList<>();
-
-        getCrates().add(new Crate(new Location(Bukkit.getWorld("world"), 0, 0, 0), "Daily Crate", "daily",
-                Material.ACACIA_PLANKS, Material.BIRCH_PLANKS)); // TODO: Add real values
+    public DailyCommandFunction() {
+        super("daily", null, "daily");
+        setDefaultFunction(this);
     }
 
-    public boolean canClaimDaily(OfflinePlayer p) {
-        long timeNow = System.currentTimeMillis();
-        long timeSinceLastDaily = PersistentData.getInt(p, DataTypes.DAILYCRATEUNIX);
-
-        return timeNow - timeSinceLastDaily > 24 * 60 * 60 * 1000;
+    @Override
+    public List<String> tabCompletion(CommandSender commandSender, String[] strings) {
+        return new ArrayList<>();
     }
 
-    public void shutdown() {
-        crates.forEach(Crate::remove);
+    @Override
+    public void execute(CommandSender sender, String[] strings) {
+        if (sender instanceof Player p) {
+            if (Tazpvp.getCrateManager().canClaimDaily(p)) {
+                p.getInventory().addItem(KeyFactory.getFactory().createDailyKey());
+                p.sendMessage(CC.GREEN + "Claimed " + CC.GOLD + "DAILY " + CC.GREEN + "crate key!");
+                p.playSound(p.getLocation(), Sound.ITEM_BOTTLE_FILL_DRAGONBREATH, 1F, 1F);
+
+                PersistentData.set(p, DataTypes.DAILYCRATEUNIX, System.currentTimeMillis());
+            } else {
+                p.sendMessage(CC.RED + "Unable to claim " + CC.GOLD + "DAILY " + CC.RED + "crate key!");
+                p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_HURT, 1F, 1F);
+            }
+        }
     }
 }
