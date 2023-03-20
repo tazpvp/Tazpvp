@@ -87,7 +87,8 @@ public class DeathFunctions {
             if (!Tazpvp.tags.get(victim.getUniqueId()).getAttackers().isEmpty()) {
                 UUID currentKiller = Tazpvp.tags.get(victim.getUniqueId()).getAttackers().peek();
                 if (currentKiller == null) return;
-                death.setKiller(Bukkit.getPlayer(currentKiller));
+                Bukkit.broadcastMessage(Bukkit.getPlayer(currentKiller).getName());
+                death.setPKiller(Bukkit.getPlayer(currentKiller));
                 death.rewards();
             }
         }

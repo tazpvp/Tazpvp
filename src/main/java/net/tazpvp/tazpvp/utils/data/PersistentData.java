@@ -232,22 +232,16 @@ public final class PersistentData {
         } else if (dataType.equals(DataTypes.PLAYTIMEUNIX)) {
             setValueF(ID, dataType.getColumnName(), value);
         } else {
-            if (p != null) {
-                if (dataType != DataTypes.TOPKILLSTREAK) {
-                    setValue(ID, dataType.getColumnName(), (int) value);
-                    if (dataType.equals(DataTypes.XP)) {
-                        if (value >= LooseData.getExpLeft(ID)) {
-                            PlayerFunctions.levelUp(ID, value);
-                        } else {
-                            p.setExp(value / LooseData.getExpLeft(p.getUniqueId()));
-                        }
-                    } else {
-                        p.getScoreboard().getTeam(dataType.getColumnName()).setSuffix((int) value + "");
-                        if (dataType.equals(DataTypes.KILLS) || dataType.equals(DataTypes.DEATHS)) {
-                            p.getScoreboard().getTeam("kdr").setSuffix(kdrFormula(getFloat(p, DataTypes.KILLS), getFloat(p, DataTypes.DEATHS)) + "");
-                        }
-                    }
-                }
+            if (p == null) return;
+            if (dataType == DataTypes.TOPKILLSTREAK) return;
+            setValue(ID, dataType.getColumnName(), (int) value);
+            if (dataType.equals(DataTypes.XP)) {
+                PlayerFunctions.levelUp(ID, value);
+                return;
+            }
+            p.getScoreboard().getTeam(dataType.getColumnName()).setSuffix((int) value + "");
+            if (dataType.equals(DataTypes.KILLS) || dataType.equals(DataTypes.DEATHS)) {
+                p.getScoreboard().getTeam("kdr").setSuffix(kdrFormula(getFloat(p, DataTypes.KILLS), getFloat(p, DataTypes.DEATHS)) + "");
             }
         }
     }

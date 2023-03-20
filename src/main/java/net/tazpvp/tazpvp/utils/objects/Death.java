@@ -73,8 +73,9 @@ public class Death {
     private UUID victimID;
 
     @Getter
-    @Setter
     private Entity killer;
+    @Getter
+    @Setter
     private Player pKiller = null;
     private UUID killerID = null;
 
