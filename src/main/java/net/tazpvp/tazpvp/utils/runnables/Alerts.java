@@ -54,7 +54,7 @@ public class Alerts {
             @Override
             public void run() {
                 for (Player p : Bukkit.getOnlinePlayers()) {
-                    num = (num + 1) % 7;
+                    num++;
                     switch(num){
                         case 0:
                             Bukkit.broadcastMessage(ChatUtils.chat(prefix + "Join our community by typing &3/discord"));
@@ -72,10 +72,11 @@ public class Alerts {
                             Bukkit.broadcastMessage(ChatUtils.chat(prefix + "Think someone is hacking? Report them using &3/report"));
                             break;
                         case 5:
-                            Bukkit.broadcastMessage(ChatUtils.chat(prefix + "Hop in the AFK pit and claim rewards."));
+                            Bukkit.broadcastMessage(ChatUtils.chat(prefix + "You can hop in the AFK pit at spawn to claim rewards."));
                             break;
                         case 6:
                             Bukkit.broadcastMessage(ChatUtils.chat(prefix + "Died to a hacker? Get an inventory restore with &3/restore"));
+                            num = 1;
                             break;
                     }
                 }

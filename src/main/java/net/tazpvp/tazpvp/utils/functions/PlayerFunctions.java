@@ -130,21 +130,25 @@ public class PlayerFunctions {
 
     public static void levelUp(UUID ID, float value) {
         Player p = Bukkit.getPlayer(ID);
-        PersistentData.add(ID, DataTypes.LEVEL);
-        PersistentData.add(ID, DataTypes.COINS, 100);
-        int num = (int) value - LooseData.getExpLeft(ID);
-        PersistentData.set(ID, DataTypes.XP, num);
-        p.getInventory().addItem(new ItemStack(Material.AMETHYST_SHARD));
-        p.setLevel(PersistentData.getInt(ID, DataTypes.LEVEL));
-        p.setExp((float) num / LooseData.getExpLeft(p.getUniqueId()));
-        p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-        if (p != null) {
-            p.sendMessage("");
-            p.sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "  LEVEL UP " + ChatColor.DARK_AQUA + "Combat Lvl. " + ChatColor.AQUA + getInt(ID, DataTypes.LEVEL));
-            p.sendMessage("");
-            p.sendMessage(ChatColor.DARK_GRAY + "  ▶ " + ChatColor.GOLD + "100 Coins");
-            p.sendMessage(ChatColor.DARK_GRAY + "  ▶ " + ChatColor.DARK_AQUA + "1 Shard");
-            p.sendMessage("");
+        if (value >= LooseData.getExpLeft(ID)) {
+            int num = (int) value - LooseData.getExpLeft(ID);
+            PersistentData.set(ID, DataTypes.XP, num);
+            PersistentData.add(ID, DataTypes.LEVEL);
+            PersistentData.add(ID, DataTypes.COINS, 100);
+            p.getInventory().addItem(new ItemStack(Material.AMETHYST_SHARD));
+            p.setLevel(PersistentData.getInt(ID, DataTypes.LEVEL));
+            p.setExp((float) num / LooseData.getExpLeft(p.getUniqueId()));
+            p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+            if (p != null) {
+                p.sendMessage("");
+                p.sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "  LEVEL UP " + ChatColor.DARK_AQUA + "Combat Lvl. " + ChatColor.AQUA + getInt(ID, DataTypes.LEVEL));
+                p.sendMessage("");
+                p.sendMessage(ChatColor.DARK_GRAY + "  ▶ " + ChatColor.GOLD + "100 Coins");
+                p.sendMessage(ChatColor.DARK_GRAY + "  ▶ " + ChatColor.DARK_AQUA + "1 Shard");
+                p.sendMessage("");
+            }
+        } else {
+            p.setExp(value / LooseData.getExpLeft(p.getUniqueId()));
         }
     }
 
