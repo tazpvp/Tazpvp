@@ -41,6 +41,7 @@ import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
+import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -234,7 +235,7 @@ public class Death {
             PersistentData.add(killerID, DataTypes.COINS, coins);
             PersistentData.add(killerID, DataTypes.XP, xp);
 
-            CombatTag tag = Tazpvp.tags.get(victimID);
+            CombatTag tag = DeathFunctions.tags.get(victimID);
 
             for (UUID id : tag.getAttackers()) {
                 if (id != killerID && id != null) {

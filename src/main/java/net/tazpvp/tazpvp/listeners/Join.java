@@ -40,6 +40,7 @@ import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.functions.ScoreboardFunctions;
 import net.tazpvp.tazpvp.utils.objects.CombatTag;
@@ -74,7 +75,7 @@ public class Join implements Listener {
         p.teleport(ConfigUtils.spawn);
         p.setCollidable(false);
 
-        Tazpvp.tags.put(p.getUniqueId(), new CombatTag(p.getUniqueId()));
+        DeathFunctions.tags.put(p.getUniqueId(), new CombatTag(p.getUniqueId()));
 
         p.setLevel(PersistentData.getInt(p.getUniqueId(), DataTypes.LEVEL));
         if (PersistentData.getFloat(p.getUniqueId(), DataTypes.XP) >= LooseData.getExpLeft(p.getUniqueId())) {

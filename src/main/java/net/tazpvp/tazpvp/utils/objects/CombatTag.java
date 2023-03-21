@@ -22,7 +22,7 @@ public class CombatTag {
 
     private UUID id;
     @Getter
-    private Queue<UUID> attackers;
+    private LinkedList<UUID> attackers;
     @Getter
     private float countdown;
     @Getter

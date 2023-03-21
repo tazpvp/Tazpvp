@@ -75,8 +75,6 @@ public final class Tazpvp extends JavaPlugin {
     public static Event event;
     public static String prefix = "tazpvp.";
     public static List<UUID> launching = new ArrayList<>();
-
-    public static WeakHashMap<UUID, CombatTag> tags = new WeakHashMap<>();
     public static WeakHashMap<UUID, Duel> duels = new WeakHashMap<>();
 
     @Getter

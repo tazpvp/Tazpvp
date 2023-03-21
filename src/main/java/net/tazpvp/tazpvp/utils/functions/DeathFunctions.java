@@ -55,9 +55,10 @@ import world.ntdi.nrcore.utils.config.ConfigUtils;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
+import java.util.WeakHashMap;
 
 public class DeathFunctions {
-
+    public static WeakHashMap<UUID, CombatTag> tags = new WeakHashMap<>();
 
     public static void death(Player victim, @Nullable Entity killer) {
 
@@ -84,13 +85,11 @@ public class DeathFunctions {
                 death.deathMessage(false);
             }
         } else {
-            if (!Tazpvp.tags.get(victim.getUniqueId()).getAttackers().isEmpty()) {
-                UUID currentKiller = Tazpvp.tags.get(victim.getUniqueId()).getAttackers().peek();
-                if (currentKiller == null) return;
-                Bukkit.broadcastMessage(Bukkit.getPlayer(currentKiller).getName());
-                death.setPKiller(Bukkit.getPlayer(currentKiller));
-                death.rewards();
-            }
+            UUID currentKiller = tags.get(victim.getUniqueId()).getAttackers().peekLast();
+            if (currentKiller == null) return;
+            Bukkit.broadcastMessage(Bukkit.getPlayer(currentKiller).getName());
+            death.setPKiller(Bukkit.getPlayer(currentKiller));
+            death.rewards();
         }
 
         PersistentData.add(victim, DataTypes.DEATHS);
@@ -100,6 +99,6 @@ public class DeathFunctions {
         death.respawn();
         victim.getInventory().clear();
         PlayerFunctions.kitPlayer(victim);
-        Tazpvp.tags.get(victim.getUniqueId()).endCombat(null, false);
+        tags.get(victim.getUniqueId()).endCombat(null, false);
     }
 }
