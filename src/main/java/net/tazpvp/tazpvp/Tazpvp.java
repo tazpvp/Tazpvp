@@ -140,7 +140,7 @@ public final class Tazpvp extends JavaPlugin {
 
         despawnNpcs();
 
-        crateManager.shutdown();
+        getCrateManager().shutdown();
     }
 
     private boolean setupChat() {
