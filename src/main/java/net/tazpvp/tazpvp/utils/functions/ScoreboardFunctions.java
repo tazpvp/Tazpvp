@@ -32,13 +32,17 @@
 
 package net.tazpvp.tazpvp.utils.functions;
 
+import net.md_5.bungee.api.ChatColor;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.enums.ColorCodes;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
+
+import static net.tazpvp.tazpvp.utils.functions.ChatFunctions.hex;
 
 public class ScoreboardFunctions {
 
@@ -60,22 +64,28 @@ public class ScoreboardFunctions {
             healthObjective.setDisplaySlot(DisplaySlot.BELOW_NAME);
         }
 
-        objective = board.registerNewObjective("sb", "dummy", CC.translateAlternateColorCodes('&', "&3&lTAZPVP.NET"));
+        objective = board.registerNewObjective("sb", "dummy", ChatFunctions.createGradient(ColorCodes.SERVERIP.toString(), "TAZPVP.NET", true));
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         objective.getScore("                         ").setScore(8);
-        newLine(p, DataTypes.LEVEL.getColumnName(), "〡 Level:", CC.AQUA,
+        newLine(p, DataTypes.LEVEL.getColumnName(), ChatFunctions.createGradient(ColorCodes.STAT.toString(), "✳ ʟᴇᴠᴇʟ", false), CC.AQUA,
                 PersistentData.getInt(p, DataTypes.LEVEL) + "").setScore(6);
-        newLine(p, DataTypes.COINS.getColumnName(), "〡 Coins:", CC.GOLD,
+        newLine(p, DataTypes.COINS.getColumnName(), ChatFunctions.createGradient(ColorCodes.STAT.toString(), "❂ ᴄᴏɪɴꜱ", false), CC.GOLD,
                 PersistentData.getInt(p, DataTypes.COINS) + "").setScore(5);
         objective.getScore(" ").setScore(4);
-        newLine(p, DataTypes.KILLS.getColumnName(), "〡 Kills:", CC.YELLOW,
+        newLine(p, DataTypes.KILLS.getColumnName(), ChatFunctions.createGradient(ColorCodes.STAT.toString(), "⚔ ᴋɪʟʟꜱ", false), CC.YELLOW,
                 PersistentData.getInt(p, DataTypes.KILLS) + "").setScore(3);
-        newLine(p, DataTypes.DEATHS.getColumnName(), "〡 Deaths:", CC.DARK_PURPLE,
+        newLine(p, DataTypes.DEATHS.getColumnName(), ChatFunctions.createGradient(ColorCodes.STAT.toString(), "☠ ᴅᴇᴀᴛʜꜱ", false), CC.DARK_PURPLE,
                 PersistentData.getInt(p, DataTypes.DEATHS) + "").setScore(2);
-        newLine(p, "kdr", "〡 KDR:", CC.GRAY, PersistentData.kdrFormula(
+        newLine(p, "kdr", ChatFunctions.createGradient(ColorCodes.STAT.toString(), "✚ ᴋᴅʀ", false), CC.GRAY, PersistentData.kdrFormula(
                 PersistentData.getFloat(p, DataTypes.KILLS), PersistentData.getFloat(p, DataTypes.DEATHS)) + "").setScore(1);
         objective.getScore("   ").setScore(0);
+
+
+
+
+
+
 
         p.setScoreboard(board);
     }
@@ -85,7 +95,7 @@ public class ScoreboardFunctions {
         Team team = board.registerNewTeam(name);
 
         team.addEntry(ID);
-        team.setPrefix(CC.AQUA + prefix + CC.GRAY + " ");
+        team.setPrefix(prefix + CC.GRAY + " ");
         team.setSuffix(suffix);
 
         return objective.getScore(ID);

@@ -32,9 +32,14 @@
 
 package net.tazpvp.tazpvp.utils.functions;
 
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ChatFunctions {
 
@@ -50,4 +55,50 @@ public class ChatFunctions {
             p.playSound(p.getLocation(), sound, 1, 1);
         }
     }
+
+    private static final Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6}");
+
+    public static String hex(String input) {
+        Matcher matcher = pattern.matcher(input);
+        while (matcher.find()) {
+            String color = input.substring(matcher.start(), matcher.end());
+            input = input.replace(color, ChatColor.of(color) + "");
+            matcher = pattern.matcher(input);
+        }
+        return input;
+    }
+
+    public static String createGradient(String hexColorCode, String text, boolean isBold) {
+        StringBuilder coloredText = new StringBuilder();
+        Matcher matcher = pattern.matcher(hexColorCode);
+        if (matcher.find()) {
+            hexColorCode = matcher.group();
+        } else {
+            return text;
+        }
+        int red = Integer.parseInt(hexColorCode.substring(1, 3), 16);
+        int green = Integer.parseInt(hexColorCode.substring(3, 5), 16);
+        int blue = Integer.parseInt(hexColorCode.substring(5, 7), 16);
+
+        int length = text.length();
+        float step = 1.5f / ((length + 1) * 2);
+
+        for (int i = 0; i < length; i++) {
+            int r = (int) (red + (255 - red) * i * step);
+            int g = (int) (green + (255 - green) * i * step);
+            int b = (int) (blue + (255 - blue) * i * step);
+            String color = String.format("#%02x%02x%02x", r, g, b);
+            coloredText.append(hex(color));
+            if (isBold) {
+                coloredText.append(ChatColor.BOLD);
+            }
+            coloredText.append(text.charAt(i));
+            if (isBold) {
+                coloredText.append(ChatColor.RESET);
+            }
+        }
+
+        return coloredText.toString();
+    }
+
 }

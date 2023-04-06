@@ -40,6 +40,8 @@ import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.enums.ColorCodes;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.functions.ScoreboardFunctions;
@@ -96,13 +98,12 @@ public class Join implements Listener {
 //        new PlayerNameTag().initializePlayerNameTag(e.getPlayer(), ranking, prefix, suffix, color);
 
         p.setPlayerListHeaderFooter(
-                CC.DARK_AQUA + "                                      " +
-                        "\n                  " + CC.BOLD + "TAZPVP.NET" + "               " +
-                        "\n",
+                CC.DARK_AQUA + "                                      " + "\n                 " +
+                        ChatFunctions.createGradient(ColorCodes.SERVERIP.toString(), "TAZPVP.NET", true) + "               " + "\n",
                 "\n" +
-                        CC.GRAY + "Players: " + CC.AQUA + Bukkit.getOnlinePlayers().size() + CC.GRAY + "/" + CC.DARK_AQUA + Bukkit.getMaxPlayers() +
-                        CC.GRAY + "\nChat with us:" + CC.GOLD + " /discord" +
-                        "\n");
+                        ChatFunctions.createGradient(ColorCodes.DISCORD.toString(), "✉ ᴊᴏɪɴ ᴜꜱ /ᴅɪꜱᴄᴏʀᴅ", false) + "\n" +
+                        ChatFunctions.createGradient(ColorCodes.STORE.toString(), "✘ ꜱᴜʙꜱᴄʀɪʙᴇ /ꜱᴛᴏʀᴇ", false) + "\n");
+
 
         final String name = p.getName();
 

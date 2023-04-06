@@ -86,10 +86,11 @@ public class DeathFunctions {
             }
         } else {
             UUID currentKiller = tags.get(victim.getUniqueId()).getAttackers().peekLast();
-            if (currentKiller == null) return;
-            Bukkit.broadcastMessage(Bukkit.getPlayer(currentKiller).getName());
-            death.setPKiller(Bukkit.getPlayer(currentKiller));
-            death.rewards();
+            if (currentKiller != null) {
+                Bukkit.broadcastMessage(Bukkit.getPlayer(currentKiller).getName());
+                death.setPKiller(Bukkit.getPlayer(currentKiller));
+                death.rewards();
+            }
         }
 
         PersistentData.add(victim, DataTypes.DEATHS);

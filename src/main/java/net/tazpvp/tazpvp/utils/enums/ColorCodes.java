@@ -28,41 +28,27 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
  */
 
-package net.tazpvp.tazpvp.utils.crate;
+package net.tazpvp.tazpvp.utils.enums;
 
 import lombok.Getter;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
-import net.tazpvp.tazpvp.utils.data.PersistentData;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 
-import java.util.ArrayList;
-import java.util.List;
+public enum ColorCodes {
+    SERVERIP("#008fb3"),
+    DISCORD("#e6b800"),
+    STORE("#2eb82e"),
+    STAT("#00b8e6");
 
-public class CrateManager {
     @Getter
-    private List<Crate> crates;
+    private String hex;
 
-    public CrateManager() {
-        this.crates = new ArrayList<>();
-
-        getCrates().add(new Crate(new Location(Bukkit.getWorld("arena"), -13, 99, 5), "Daily Crate", "daily",
-                Material.ACACIA_PLANKS, Material.BIRCH_PLANKS)); // TODO: Add real values
+    ColorCodes(String hex) {
+        this.hex = hex;
     }
 
-    public boolean canClaimDaily(OfflinePlayer p) {
-        long timeNow = System.currentTimeMillis();
-        long timeSinceLastDaily = PersistentData.getInt(p, DataTypes.DAILYCRATEUNIX);
-
-        return timeNow - timeSinceLastDaily > 24 * 60 * 60 * 1000;
-    }
-
-    public void shutdown() {
-        crates.forEach(Crate::remove);
+    @Override
+    public String toString() {
+        return getHex();
     }
 }

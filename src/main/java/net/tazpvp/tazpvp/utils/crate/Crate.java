@@ -52,7 +52,7 @@ public class Crate {
     @Getter
     private final Hologram hologram;
     @Getter
-    private final Block block;
+    private final Material block;
     @Getter
     private final String type;
     @Getter
@@ -60,10 +60,11 @@ public class Crate {
 
     public Crate(Location location, String hologramText, String type, Material... crateDrops) {
         this.location = location;
-        this.hologram = new Hologram(hologramText, getLocation(), false);
+        Location hologramLocation = new Location(location.getWorld(), location.getX() + 0.5, location.getY(), location.getZ() + 0.5);
+        this.hologram = new Hologram(hologramText, hologramLocation, false);
         this.type = type;
-        this.block = getLocation().getBlock();
-        getBlock().setType(Material.BEACON);
+        this.block = getLocation().getBlock().getType();
+        getLocation().getBlock().setType(Material.BEACON);
         this.crateDrops = crateDrops;
     }
 
@@ -86,12 +87,12 @@ public class Crate {
     }
 
     public void remove() {
-        getBlock().setType(Material.AIR);
+        getLocation().getBlock().setType(Material.AIR);
         getHologram().deleteHologram();
     }
 
     private boolean isCrate(PlayerInteractEvent e) {
-        return (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock() != null && e.getClickedBlock().getType() == getBlock().getType() && e.getClickedBlock().getLocation() == getLocation());
+        return (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock() != null && e.getClickedBlock().getType() == getLocation().getBlock().getType() && e.getClickedBlock().getLocation() == getLocation());
     }
 
     private boolean hasKey(Player p) {
