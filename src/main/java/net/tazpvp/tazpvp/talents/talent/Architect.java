@@ -44,7 +44,7 @@ public class Architect extends Observable {
     @Override
     public void place(Player p, Block b) {
         if (PersistentData.getTalents(p.getUniqueId()).is("Architect")) {
-            if (new Random().nextInt(0, 10) > 7) {
+            if (new Random().nextInt(10) > 7) {
                 p.getInventory().addItem(new ItemStack(b.getType()));
             }
         }

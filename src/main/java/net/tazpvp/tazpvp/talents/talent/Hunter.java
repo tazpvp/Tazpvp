@@ -44,7 +44,7 @@ public class Hunter extends Observable {
     @Override
     public void shoot(Player shooter) {
         if (PersistentData.getTalents(shooter.getUniqueId()).is("Hunter")) {
-            if (new Random().nextInt(0, 10) > 7) {
+            if (new Random().nextInt(10) > 7) {
                 shooter.getInventory().addItem(new ItemStack(Material.ARROW));
             }
         }
