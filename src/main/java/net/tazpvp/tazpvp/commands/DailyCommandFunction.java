@@ -57,11 +57,6 @@ public class DailyCommandFunction extends CommandCore implements CommandFunction
     }
 
     @Override
-    public List<String> tabCompletion(CommandSender commandSender, String[] strings) {
-        return new ArrayList<>();
-    }
-
-    @Override
     public void execute(CommandSender sender, String[] strings) {
         if (sender instanceof Player p) {
             if (Tazpvp.getCrateManager().canClaimDaily(p)) {
@@ -75,5 +70,10 @@ public class DailyCommandFunction extends CommandCore implements CommandFunction
                 p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_HURT, 1F, 1F);
             }
         }
+    }
+
+    @Override
+    public List<String> tabCompletion(CommandSender commandSender, String[] strings) {
+        return List.of("");
     }
 }

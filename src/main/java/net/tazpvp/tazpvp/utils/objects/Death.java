@@ -74,6 +74,7 @@ public class Death {
     private UUID victimID;
 
     @Getter
+    @Setter
     private Entity killer;
     @Getter
     @Setter

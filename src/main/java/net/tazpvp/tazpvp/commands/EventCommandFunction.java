@@ -48,7 +48,7 @@ import java.util.UUID;
 public class EventCommandFunction extends CommandCore implements CommandFunction {
 
     public EventCommandFunction() {
-        super("event", null, "ev");
+        super("events", null, "ev");
         setDefaultFunction(this);
     }
 

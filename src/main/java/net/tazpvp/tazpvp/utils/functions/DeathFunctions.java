@@ -63,8 +63,13 @@ public class DeathFunctions {
     public static void death(Player victim, @Nullable Entity killer) {
 
         Death death = new Death(victim, killer);
+        UUID currentKiller = tags.get(victim.getUniqueId()).getAttackers().peekLast();
 
-        if (killer != null) {
+        if (currentKiller != null) {
+            Bukkit.broadcastMessage(victim.getName() + " " + Bukkit.getPlayer(currentKiller).getName());
+            death(victim, Bukkit.getPlayer(currentKiller));
+            return;
+        } else if (killer != null) {
             if (killer instanceof Player pKiller) {
                 if (pKiller == victim) {
                     death.deathMessage(false);
@@ -83,13 +88,6 @@ public class DeathFunctions {
                 }
             } else if (killer instanceof Mob mKiller) {
                 death.deathMessage(false);
-            }
-        } else {
-            UUID currentKiller = tags.get(victim.getUniqueId()).getAttackers().peekLast();
-            if (currentKiller != null) {
-                Bukkit.broadcastMessage(Bukkit.getPlayer(currentKiller).getName());
-                death.setPKiller(Bukkit.getPlayer(currentKiller));
-                death.rewards();
             }
         }
 
