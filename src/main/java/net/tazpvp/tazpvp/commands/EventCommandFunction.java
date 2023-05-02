@@ -70,19 +70,16 @@ public class EventCommandFunction extends CommandCore implements CommandFunction
                 for (UUID id : Tazpvp.event.getPlayerList()) {
                     p.sendMessage(Bukkit.getPlayer(id).getName());
                 }
-                return;
             } else if (args[0].equalsIgnoreCase("begin")) {
                 if (Tazpvp.event != null) {
                     EventUtils.create(Tazpvp.event.getNAME(), Tazpvp.playerList);
                     p.sendMessage("You began the " + Tazpvp.event.getNAME() + " event.");
-                    return;
                 }
             } else if (args[0].equalsIgnoreCase("join")) {
                 if (Tazpvp.event != null) {
                     Tazpvp.getObservers().forEach(observer -> observer.event(p));
                     Tazpvp.playerList.add(p.getUniqueId());
                     p.sendMessage("You joined the event: " + Tazpvp.event.getNAME());
-                    return;
                 }
             } else {
                 String[] commands = {
@@ -96,7 +93,6 @@ public class EventCommandFunction extends CommandCore implements CommandFunction
                 p.sendMessage(commands);
             }
         }
-        return;
     }
 
     @Override
