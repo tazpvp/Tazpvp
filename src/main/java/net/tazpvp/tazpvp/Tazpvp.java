@@ -39,16 +39,10 @@ import net.tazpvp.tazpvp.commands.*;
 import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.events.Event;
 import net.tazpvp.tazpvp.listeners.*;
-import net.tazpvp.tazpvp.npc.shops.NPC;
-import net.tazpvp.tazpvp.npc.shops.Bub;
-import net.tazpvp.tazpvp.npc.shops.Caesar;
-import net.tazpvp.tazpvp.npc.shops.Lorenzo;
-import net.tazpvp.tazpvp.npc.shops.Maxim;
+import net.tazpvp.tazpvp.npc.shops.*;
 import net.tazpvp.tazpvp.talents.talent.*;
 import net.tazpvp.tazpvp.utils.ConfigUtil;
-import net.tazpvp.tazpvp.utils.crate.CrateManager;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
-import net.tazpvp.tazpvp.utils.objects.CombatTag;
 import net.tazpvp.tazpvp.utils.observer.Observer;
 import net.tazpvp.tazpvp.utils.runnables.Alerts;
 import net.tazpvp.tazpvp.utils.runnables.Generator;
@@ -88,11 +82,13 @@ public final class Tazpvp extends JavaPlugin {
 
     private static final Logger log = Logger.getLogger("Minecraft");
     private static net.milkbowl.vault.chat.Chat chat;
-    @Getter
-    private static CrateManager crateManager;
+//    @Getter
+//    private static CrateManager crateManager;
 
     @Override
     public void onEnable() {
+        getConfig().options().copyDefaults(true);
+        saveDefaultConfig();
 
         registerEvents();
         registerCommands();
@@ -111,9 +107,6 @@ public final class Tazpvp extends JavaPlugin {
                 new Location(Bukkit.getWorld("arena"), -24, 93, 25)
         );
 
-        getConfig().options().copyDefaults(true);
-        saveDefaultConfig();
-
         connectDatabase(
                 getConfig().getString("sql-host"),
                 getConfig().getInt("sql-port"),
@@ -121,7 +114,7 @@ public final class Tazpvp extends JavaPlugin {
                 getConfig().getString("sql-password")
         );
 
-        crateManager = new CrateManager();
+//        crateManager = new CrateManager();
     }
 
     private static void connectDatabase(String host, int port, String user, String password) {
@@ -140,7 +133,7 @@ public final class Tazpvp extends JavaPlugin {
 
         despawnNpcs();
 
-        getCrateManager().shutdown();
+//        getCrateManager().shutdown();
     }
 
     private boolean setupChat() {
