@@ -40,7 +40,6 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
-import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import org.bukkit.*;
@@ -53,7 +52,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
-import world.ntdi.nrcore.utils.config.ConfigUtils;
+import world.ntdi.nrcore.NRCore;
 import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.holograms.Hologram;
@@ -193,7 +192,7 @@ public class Death {
         new BukkitRunnable() {
             public void run() {
                 victim.setGameMode(GameMode.SURVIVAL);
-                victim.teleport(ConfigUtils.spawn);
+                victim.teleport(NRCore.config.spawn);
             }
         }.runTaskLater(Tazpvp.getInstance(), 20*3);
     }

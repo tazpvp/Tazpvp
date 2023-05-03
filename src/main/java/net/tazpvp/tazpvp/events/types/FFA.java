@@ -34,7 +34,7 @@ package net.tazpvp.tazpvp.events.types;
 
 import net.tazpvp.tazpvp.events.Event;
 import org.bukkit.Bukkit;
-import world.ntdi.nrcore.utils.config.ConfigUtils;
+import world.ntdi.nrcore.NRCore;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -49,7 +49,7 @@ public class FFA extends Event {
     @Override
     public void begin() {
         for (UUID uuid : getPlayerList()) {
-            Bukkit.getPlayer(uuid).teleport(ConfigUtils.spawn);
+            Bukkit.getPlayer(uuid).teleport(NRCore.config.spawn);
         }
     }
 }

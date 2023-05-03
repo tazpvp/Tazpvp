@@ -32,9 +32,6 @@
 
 package net.tazpvp.tazpvp.listeners;
 
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.TextComponent;
-import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.PlaytimeUtil;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.LooseData;
@@ -46,14 +43,11 @@ import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.functions.ScoreboardFunctions;
 import net.tazpvp.tazpvp.utils.objects.CombatTag;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import world.ntdi.nrcore.utils.config.ConfigUtils;
-
-import javax.xml.crypto.Data;
+import world.ntdi.nrcore.NRCore;
 
 public class Join implements Listener {
 
@@ -74,7 +68,7 @@ public class Join implements Listener {
             PlayerFunctions.kitPlayer(p);
         }
 
-        p.teleport(ConfigUtils.spawn);
+        p.teleport(NRCore.config.spawn);
         p.setCollidable(false);
 
         DeathFunctions.tags.put(p.getUniqueId(), new CombatTag(p.getUniqueId()));
