@@ -50,7 +50,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-import world.ntdi.nrcore.NRCore;
 import world.ntdi.nrcore.utils.region.Cuboid;
 import world.ntdi.postglam.connection.Database;
 
@@ -91,7 +90,7 @@ public final class Tazpvp extends JavaPlugin {
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
 
-        getLogger().info(NRCore.config.FROM_MESSAGE);
+//        getLogger().info(NRCore.config.FROM_MESSAGE);
 
         registerEvents();
         registerCommands();
