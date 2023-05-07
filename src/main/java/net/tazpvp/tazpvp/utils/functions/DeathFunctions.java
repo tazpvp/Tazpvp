@@ -67,6 +67,7 @@ public class DeathFunctions {
 
         if (currentKiller != null) {
             Bukkit.broadcastMessage(victim.getName() + " " + Bukkit.getPlayer(currentKiller).getName());
+            tags.get(victim.getUniqueId()).getAttackers().clear();
             death(victim, Bukkit.getPlayer(currentKiller));
             return;
         } else if (killer != null) {

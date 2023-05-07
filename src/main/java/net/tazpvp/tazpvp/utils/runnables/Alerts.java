@@ -44,42 +44,32 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import world.ntdi.nrcore.utils.ChatUtils;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
 public class Alerts {
 
-    private static int num = 1;
+    private static int num = 0;
     private static String prefix = "&8(&c!&8) &7";
+
+    private static LinkedList<String> texts = new LinkedList<>(Arrays.asList(
+            "Join our community by typing &3/discord",
+            "Check out what you can do with premium! Type &3/premium",
+            "Looking to apply for staff? Type &3/apply",
+            "Want to support us? Get our advertisement using &3/ad",
+            "Think someone is hacking? Report them using &3/report",
+            "You can hop in the AFK pit at spawn to claim rewards.",
+            "Died to a hacker? Get an inventory restore with &3/restore "
+    ));
 
     public static void alert() {
         new BukkitRunnable() {
             @Override
             public void run() {
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    num++;
-                    switch(num){
-                        case 0:
-                            Bukkit.broadcastMessage(ChatUtils.chat(prefix + "Join our community by typing &3/discord"));
-                            break;
-                        case 1:
-                            Bukkit.broadcastMessage(ChatUtils.chat(prefix + "Check out what you can do with premium! Type &3/premium"));
-                            break;
-                        case 2:
-                            Bukkit.broadcastMessage(ChatUtils.chat(prefix + "Looking to apply for staff? Type &3/apply"));
-                            break;
-                        case 3:
-                            Bukkit.broadcastMessage(ChatUtils.chat(prefix + "Want to support us? Get our advertisement using &3/ad"));
-                            break;
-                        case 4:
-                            Bukkit.broadcastMessage(ChatUtils.chat(prefix + "Think someone is hacking? Report them using &3/report"));
-                            break;
-                        case 5:
-                            Bukkit.broadcastMessage(ChatUtils.chat(prefix + "You can hop in the AFK pit at spawn to claim rewards."));
-                            break;
-                        case 6:
-                            Bukkit.broadcastMessage(ChatUtils.chat(prefix + "Died to a hacker? Get an inventory restore with &3/restore"));
-                            num = 1;
-                            break;
-                    }
-                }
+                Bukkit.broadcastMessage(ChatUtils.chat(prefix + texts.get(num)));
+                num++;
+                if (num  >= texts.size()) num = 0;
             }
         }.runTaskTimer(Tazpvp.getInstance(), 20, 20*60*4);
     }
