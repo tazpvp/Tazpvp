@@ -11,6 +11,7 @@ import org.bukkit.util.io.BukkitObjectOutputStream;
 import world.ntdi.nrcore.utils.sql.SQLHelper;
 
 import javax.annotation.Nonnull;
+import javax.xml.crypto.Data;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -229,7 +230,7 @@ public final class PersistentData {
         Player p = Bukkit.getPlayer(ID);
         if (!dataType.isQuantitative()) {
             Bukkit.getLogger().severe("Data not quantitative in integer form");
-        } else if (dataType.equals(DataTypes.PLAYTIMEUNIX)) {
+        } else if (dataType.equals(DataTypes.PLAYTIMEUNIX) || dataType.equals(DataTypes.DAILYCRATEUNIX)) {
             setValueF(ID, dataType.getColumnName(), value);
         } else {
             if (p == null) return;

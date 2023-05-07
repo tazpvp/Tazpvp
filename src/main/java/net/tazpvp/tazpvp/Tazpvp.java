@@ -42,6 +42,7 @@ import net.tazpvp.tazpvp.listeners.*;
 import net.tazpvp.tazpvp.npc.shops.*;
 import net.tazpvp.tazpvp.talents.talent.*;
 import net.tazpvp.tazpvp.utils.ConfigUtil;
+import net.tazpvp.tazpvp.utils.crate.CrateManager;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.observer.Observer;
 import net.tazpvp.tazpvp.utils.runnables.Alerts;
@@ -82,8 +83,8 @@ public final class Tazpvp extends JavaPlugin {
 
     private static final Logger log = Logger.getLogger("Minecraft");
     private static net.milkbowl.vault.chat.Chat chat;
-//    @Getter
-//    private static CrateManager crateManager;
+    @Getter
+    private static CrateManager crateManager;
 
     @Override
     public void onEnable() {
@@ -116,7 +117,7 @@ public final class Tazpvp extends JavaPlugin {
                 getConfig().getString("sql-password")
         );
 
-//        crateManager = new CrateManager();
+        crateManager = new CrateManager();
     }
 
     private static void connectDatabase(String host, int port, String user, String password) {
@@ -135,7 +136,7 @@ public final class Tazpvp extends JavaPlugin {
 
         despawnNpcs();
 
-//        getCrateManager().shutdown();
+        getCrateManager().shutdown();
     }
 
     private boolean setupChat() {
@@ -193,7 +194,7 @@ public final class Tazpvp extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Place(), this);
         getServer().getPluginManager().registerEvents(new Chat(), this);
         getServer().getPluginManager().registerEvents(new Exp(), this);
-
+        getServer().getPluginManager().registerEvents(new Interact(), this);
     }
 
     private void spawnNpcs() {
