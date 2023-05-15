@@ -55,13 +55,15 @@ import java.util.UUID;
 
 public class CombatTagFunctions {
 
-    public static void putInCombat(UUID victim, @Nullable UUID attacker) {
-        if (victim != attacker && victim != null) {
-            if (attacker != null) {
+    public static void putInCombat(@Nullable UUID victim, @Nullable UUID attacker) {
+        if (victim != attacker) {
+            if (victim == null) {
+                getTag(attacker).setTimer(null);
+            } else if (attacker == null) {
+                getTag(victim).setTimer(null);
+            } else {
                 getTag(victim).setTimer(attacker);
                 getTag(attacker).setTimer(victim);
-            } else {
-                getTag(victim).setTimer(null);
             }
         }
     }

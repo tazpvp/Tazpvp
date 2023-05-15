@@ -69,7 +69,6 @@ public class Join implements Listener {
         }
 
         p.teleport(NRCore.config.spawn);
-        p.setCollidable(false);
 
         DeathFunctions.tags.put(p.getUniqueId(), new CombatTag(p.getUniqueId()));
 

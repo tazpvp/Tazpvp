@@ -63,19 +63,17 @@ public class Damage implements Listener {
             }
 
             if (e instanceof EntityDamageByEntityEvent ee) {
+                if (ee.getDamager() instanceof Player killer) {
+                    CombatTagFunctions.putInCombat(victim.getUniqueId(), killer.getUniqueId());
+                }
                 if ((victim.getHealth() - fd) <= 0) {
                     e.setCancelled(true);
                     DeathFunctions.death(victim, ee.getDamager());
-                    return;
-                }
-                if (ee.getDamager() instanceof Player killer) {
-                    CombatTagFunctions.putInCombat(victim.getUniqueId(), killer.getUniqueId());
                 }
             } else {
                 if ((victim.getHealth() - fd) <= 0) {
                     e.setCancelled(true);
                     DeathFunctions.death(victim, null);
-                    return;
                 } else {
                     CombatTagFunctions.putInCombat(victim.getUniqueId(), null);
                 }

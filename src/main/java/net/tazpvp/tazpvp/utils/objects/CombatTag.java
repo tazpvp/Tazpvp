@@ -54,16 +54,16 @@ public class CombatTag {
         }
     }
 
-    public void setTimer(@Nullable UUID attacker) {
-        if (attacker != null) {
-            if (!attackers.contains(attacker)) {
-                attackers.add(attacker);
+    public void setTimer(@Nullable UUID player) {
+        if (player != null) {
+            if (!attackers.contains(player)) {
+                attackers.add(player);
 
-                Bukkit.getPlayer(id).sendMessage(CC.RED + "You are now in combat with " + CC.BOLD + Bukkit.getPlayer(attacker).getName());
+                Bukkit.getPlayer(id).sendMessage(CC.RED + "You are now in combat with " + CC.BOLD + Bukkit.getPlayer(player).getName());
             }
         }
         if (countdown <= 0) {
-            if (attacker == null) {
+            if (player == null) {
                 Bukkit.getPlayer(id).sendMessage(CC.RED + "You are now in combat.");
             }
             countdown = 15;
