@@ -47,7 +47,7 @@ import javax.annotation.Nonnull;
 public class Bub extends NPC {
 
     public Bub() {
-        super(CC.GOLD + "Bub", new Location(Bukkit.getWorld("arena"), 0.5, 79, 78.5), Villager.Profession.ARMORER, Villager.Type.JUNGLE, Sound.ITEM_GOAT_HORN_SOUND_0);
+        super(CC.GOLD + "Bub", new Location(Bukkit.getWorld("arena"), 0.5, 79, 78.5), Villager.Profession.CLERIC, Villager.Type.SNOW, Sound.ITEM_GOAT_HORN_SOUND_0);
     }
 
     @Override

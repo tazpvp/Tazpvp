@@ -47,8 +47,8 @@ public class Lorenzo extends NPC {
 
     public Lorenzo() {
         super(CC.GOLD + "Lorenzo", new Location(Bukkit.getWorld("arena"), 13, 99, 19, 135, 0),
-                Villager.Profession.ARMORER,
-                Villager.Type.JUNGLE,
+                Villager.Profession.FLETCHER,
+                Villager.Type.TAIGA,
                 Sound.ITEM_GOAT_HORN_SOUND_0);
     }
 

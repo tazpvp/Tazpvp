@@ -47,8 +47,8 @@ public class Maxim extends NPC {
 
     public Maxim() {
         super(CC.GOLD + "Maxim", new Location(Bukkit.getWorld("arena"), -12, 99, 19, -135, 0),
-                Villager.Profession.ARMORER,
-                Villager.Type.JUNGLE,
+                Villager.Profession.FARMER,
+                Villager.Type.SAVANNA,
                 Sound.ITEM_GOAT_HORN_SOUND_0);
     }
 
