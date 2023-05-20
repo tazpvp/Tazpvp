@@ -45,6 +45,7 @@ import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
+import world.ntdi.nrcore.utils.item.builders.EnchantmentBookBuilder;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import javax.annotation.Nullable;
@@ -168,12 +169,7 @@ public class Shop extends GUI {
             if (enchantment == null) {
                 p.getInventory().addItem(ItemBuilder.of(mat, amount).build());
             } else {
-                ItemStack enchantedBook = new ItemStack(mat);
-                EnchantmentStorageMeta meta = (EnchantmentStorageMeta) enchantedBook.getItemMeta();
-                meta.addStoredEnchant(enchantment, 1, true);
-                enchantedBook.setItemMeta(meta);
-
-                p.getInventory().addItem(enchantedBook);
+                p.getInventory().addItem(EnchantmentBookBuilder.of(mat).enchantment(enchantment, 1).build());
             }
 
             p.sendMessage("you purchased " + name);
