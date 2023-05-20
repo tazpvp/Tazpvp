@@ -46,6 +46,12 @@ public class PlayerInventoryStorage {
         p.getInventory().setContents(playerInventoryStorage.getItems());
         p.getInventory().setArmorContents(playerInventoryStorage.getArmors());
 
+        playerInventoryStorageWeakHashMap.remove(p.getUniqueId());
+
+    }
+
+    public static void restoreStorage(UUID uuid) {
+        restoreStorage(Bukkit.getPlayer(uuid));
     }
 
 }

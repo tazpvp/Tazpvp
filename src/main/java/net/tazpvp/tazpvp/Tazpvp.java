@@ -36,6 +36,7 @@ package net.tazpvp.tazpvp;
 import lombok.Getter;
 import net.tazpvp.tazpvp.achievements.achievement.*;
 import net.tazpvp.tazpvp.commands.*;
+import net.tazpvp.tazpvp.commands.moderation.RestoreCommandFunction;
 import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.events.Event;
 import net.tazpvp.tazpvp.listeners.*;
@@ -180,6 +181,7 @@ public final class Tazpvp extends JavaPlugin {
         new PremiumCommandFunction();
         new KitCommandFunction();
         new DailyCommandFunction();
+        new RestoreCommandFunction();
     }
 
     public void registerEvents() {
