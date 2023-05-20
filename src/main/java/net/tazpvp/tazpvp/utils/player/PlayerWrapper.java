@@ -18,6 +18,8 @@ public class PlayerWrapper {
     private boolean launching;
     @Getter @Setter
     private boolean respawning;
+    @Getter @Setter
+    private boolean canRestore;
 
     /**
      * Should only take UUID, all other values should not have to persist.
@@ -27,6 +29,7 @@ public class PlayerWrapper {
         this.uuid = uuid;
         this.launching = false;
         this.respawning = false;
+        this.canRestore = false;
     }
 
     public Player getPlayer() {

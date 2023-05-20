@@ -59,7 +59,6 @@ import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.holograms.Hologram;
 import world.ntdi.nrcore.utils.item.builders.EnchantmentBookBuilder;
-import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 import world.ntdi.nrcore.utils.item.builders.SkullBuilder;
 
 import javax.annotation.Nonnull;
@@ -259,6 +258,6 @@ public class Death {
     }
 
     public void storeInventory() {
-        PlayerInventoryStorage.updateStorage(victim);
+        PlayerInventoryStorage.updateStorage(victim, killerID);
     }
 }
