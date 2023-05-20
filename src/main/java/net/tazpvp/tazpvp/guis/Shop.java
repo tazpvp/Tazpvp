@@ -41,6 +41,7 @@ import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
@@ -131,7 +132,7 @@ public class Shop extends GUI {
     }
 
     private void setButton(String name, String text, Material mat, int cost, int amount, Enchantment enchantment) {
-        addButton(Button.create(ItemBuilder.of(mat, amount).name(CC.YELLOW + "" + CC.BOLD + name).lore(CC.GOLD + text, " ", CC.GRAY + "Cost: $" + cost).enchantment(enchantment, 1).build(), (e) -> {
+        addButton(Button.create(ItemBuilder.of(mat, amount).name(CC.YELLOW + "" + CC.BOLD + name).lore(CC.GOLD + text, " ", CC.GRAY + "Cost: $" + cost).build(), (e) -> {
             checkMoney(cost, name, mat, amount, enchantment);
         }), slotNum);
         calcSlot();
@@ -164,10 +165,15 @@ public class Shop extends GUI {
     private void checkMoney(int cost, String name, Material mat, int amount, @Nullable Enchantment enchantment) {
         if (PersistentData.getInt(p, DataTypes.COINS) >= cost) {
             PersistentData.remove(p, DataTypes.COINS, cost);
-            if (enchantment != null) {
+            if (enchantment == null) {
                 p.getInventory().addItem(ItemBuilder.of(mat, amount).build());
             } else {
-                p.getInventory().addItem(ItemBuilder.of(mat, amount).enchantment(enchantment, 1).build());
+                ItemStack enchantedBook = new ItemStack(mat);
+                EnchantmentStorageMeta meta = (EnchantmentStorageMeta) enchantedBook.getItemMeta();
+                meta.addStoredEnchant(enchantment, 1, true);
+                enchantedBook.setItemMeta(meta);
+
+                p.getInventory().addItem(enchantedBook);
             }
 
             p.sendMessage("you purchased " + name);

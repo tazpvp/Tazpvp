@@ -40,6 +40,7 @@ import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.CommandCore;
 import world.ntdi.nrcore.utils.command.CommandFunction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StatCommandFunction extends CommandCore implements CommandFunction {
@@ -71,6 +72,20 @@ public class StatCommandFunction extends CommandCore implements CommandFunction 
 
     @Override
     public List<String> tabCompletion(CommandSender commandSender, String[] strings) {
+        if (strings.length == 0) {
+            return List.of("give");
+        } else if (strings.length == 1) {
+            return List.of("coins");
+        } else if (strings.length == 2) {
+            return List.of("10", "100", "1000", "10000");
+        } else if (strings.length == 3) {
+            List<String> pList = new ArrayList<>();
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                String name = p.getName();
+                pList.add(name);
+            }
+            return pList;
+        }
         return List.of("");
     }
 }
