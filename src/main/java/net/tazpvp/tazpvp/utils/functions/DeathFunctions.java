@@ -32,26 +32,16 @@
 
 package net.tazpvp.tazpvp.utils.functions;
 
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
-import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
-import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.objects.CombatTag;
 import net.tazpvp.tazpvp.utils.objects.Death;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.scheduler.BukkitRunnable;
-import world.ntdi.nrcore.NRCore;
-import world.ntdi.nrcore.utils.config.ConfigUtils;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -80,6 +70,7 @@ public class DeathFunctions {
                     death.coffin();
                     death.rewards();
                     death.dropHead();
+                    death.storeInventory();
 
                     death.deathMessage(true);
                     PlayerFunctions.addHealth(victim, 10);

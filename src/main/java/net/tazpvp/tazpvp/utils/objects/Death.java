@@ -42,6 +42,7 @@ import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
+import net.tazpvp.tazpvp.utils.player.PlayerInventoryStorage;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -254,5 +255,9 @@ public class Death {
                 }
             }
         }
+    }
+
+    public void storeInventory() {
+        PlayerInventoryStorage.updateStorage(victim);
     }
 }
