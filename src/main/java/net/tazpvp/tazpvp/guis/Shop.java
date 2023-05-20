@@ -46,6 +46,7 @@ import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
@@ -105,30 +106,33 @@ public class Shop extends GUI {
         setButton("Gold Apple", "Only for rich people.", Material.GOLDEN_APPLE, 30, 1);
         setChangingButton("RGB Blocks", "RGB Placeable Blocks", wool, 30, 64);
 
-        setButton("Mending", "Heal armor with xp bottles.", ItemBuilder.of(Material.ENCHANTED_BOOK).enchantment(Enchantment.MENDING, 1).build().getType(), 30, 1);
-        setButton("Sharpness", "Deal more sword damage.", ItemBuilder.of(Material.ENCHANTED_BOOK).enchantment(Enchantment.DAMAGE_ALL, 1).build().getType(), 30, 1);
-        setButton("Unbreaking", "Fortify your tools.", ItemBuilder.of(Material.ENCHANTED_BOOK).enchantment(Enchantment.DURABILITY, 1).build().getType(), 30, 1);
-        setButton("Protection", "Take less damage.", ItemBuilder.of(Material.ENCHANTED_BOOK).enchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1).build().getType(), 30, 1);
-        setButton("Projectile Protection", "Take less damage to projectiles.", ItemBuilder.of(Material.ENCHANTED_BOOK).enchantment(Enchantment.PROTECTION_PROJECTILE, 1).build().getType(), 30, 1);
-        setButton("Fire Protection", "Take less damage to fire.", ItemBuilder.of(Material.ENCHANTED_BOOK).enchantment(Enchantment.PROTECTION_FIRE, 1).build().getType(), 30, 1);
-        setButton("Sweeping Edge", "Increase attack range.", ItemBuilder.of(Material.ENCHANTED_BOOK).enchantment(Enchantment.SWEEPING_EDGE, 1).build().getType(), 30, 1);
+        setButton("Mending", "Heal armor with xp bottles.", Material.ENCHANTED_BOOK, 30, 1, Enchantment.MENDING);
+        setButton("Sharpness", "Deal more sword damage.", Material.ENCHANTED_BOOK, 30, 1, Enchantment.DAMAGE_ALL);
+        setButton("Unbreaking", "Fortify your tools.", Material.ENCHANTED_BOOK, 30, 1, Enchantment.DURABILITY);
+        setButton("Protection", "Take less damage.", Material.ENCHANTED_BOOK, 30, 1, Enchantment.PROTECTION_ENVIRONMENTAL);
+        setButton("Projectile Protection", "Take less damage to projectiles.", Material.ENCHANTED_BOOK, 30, 1, Enchantment.PROTECTION_PROJECTILE);
+        setButton("Fire Protection", "Take less damage to fire.", Material.ENCHANTED_BOOK, 30, 1, Enchantment.PROTECTION_FIRE);
+        setButton("Sweeping Edge", "Increase attack range.", Material.ENCHANTED_BOOK, 30, 1, Enchantment.SWEEPING_EDGE);
 
-        setButton("Punch", "Shoot players back further.", ItemBuilder.of(Material.ENCHANTED_BOOK).enchantment(Enchantment.ARROW_KNOCKBACK, 1).build().getType(), 30, 1);
-        setButton("Knockback", "Hit players back further.", ItemBuilder.of(Material.ENCHANTED_BOOK).enchantment(Enchantment.KNOCKBACK, 1).build().getType(), 30, 1);
-        setButton("Flame", "Shoot and set things on fire.", ItemBuilder.of(Material.ENCHANTED_BOOK).enchantment(Enchantment.ARROW_FIRE, 1).build().getType(), 30, 1);
-        setButton("Fire Aspect", "Hit and set things on fire.", ItemBuilder.of(Material.ENCHANTED_BOOK).enchantment(Enchantment.FIRE_ASPECT, 1).build().getType(), 30, 1);
+        setButton("Punch", "Shoot players back further.", Material.ENCHANTED_BOOK, 30, 1, Enchantment.ARROW_KNOCKBACK);
+        setButton("Knockback", "Hit players back further.", Material.ENCHANTED_BOOK, 30, 1, Enchantment.KNOCKBACK);
+        setButton("Flame", "Shoot and set things on fire.", Material.ENCHANTED_BOOK, 30, 1, Enchantment.ARROW_FIRE);
+        setButton("Fire Aspect", "Hit and set things on fire.", Material.ENCHANTED_BOOK, 30, 1, Enchantment.FIRE_ASPECT);
         setButton("Spectral Arrow", "Highlight targets.", Material.SPECTRAL_ARROW, 30, 1);
 
         update();
     }
 
     private void setButton(String name, String text, Material mat, int cost, int amount) {
-        addButton(Button.create(ItemBuilder.of(mat, amount)
-                .name(CC.YELLOW + "" + CC.BOLD + name)
-                .lore(CC.GOLD + text, " ", CC.GRAY + "Cost: $" + cost)
-                .build(), (e) -> {
+        addButton(Button.create(ItemBuilder.of(mat, amount).name(CC.YELLOW + "" + CC.BOLD + name).lore(CC.GOLD + text, " ", CC.GRAY + "Cost: $" + cost).build(), (e) -> {
+            checkMoney(cost, name, mat, amount, null);
+        }), slotNum);
+        calcSlot();
+    }
 
-            checkMoney(cost, name, mat, amount);
+    private void setButton(String name, String text, Material mat, int cost, int amount, Enchantment enchantment) {
+        addButton(Button.create(ItemBuilder.of(mat, amount).name(CC.YELLOW + "" + CC.BOLD + name).lore(CC.GOLD + text, " ", CC.GRAY + "Cost: $" + cost).enchantment(enchantment, 1).build(), (e) -> {
+            checkMoney(cost, name, mat, amount, enchantment);
         }), slotNum);
         calcSlot();
     }
@@ -148,7 +152,7 @@ public class Shop extends GUI {
                             .lore(CC.GOLD + text, " ", CC.GRAY + "Cost: " + cost)
                             .build(), (e) -> {
 
-                        checkMoney(cost, name, list.get(num), amount);
+                        checkMoney(cost, name, list.get(num), amount, null);
 
                     }), slot);
                 }
@@ -157,10 +161,15 @@ public class Shop extends GUI {
         calcSlot();
     }
 
-    private void checkMoney(int cost, String name, Material mat, int amount) {
+    private void checkMoney(int cost, String name, Material mat, int amount, @Nullable Enchantment enchantment) {
         if (PersistentData.getInt(p, DataTypes.COINS) >= cost) {
             PersistentData.remove(p, DataTypes.COINS, cost);
-            p.getInventory().addItem(new ItemStack(mat, amount));
+            if (enchantment != null) {
+                p.getInventory().addItem(ItemBuilder.of(mat, amount).build());
+            } else {
+                p.getInventory().addItem(ItemBuilder.of(mat, amount).enchantment(enchantment, 1).build());
+            }
+
             p.sendMessage("you purchased " + name);
             p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
         } else {
