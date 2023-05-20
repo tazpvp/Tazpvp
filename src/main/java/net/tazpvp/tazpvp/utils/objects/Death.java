@@ -58,6 +58,7 @@ import world.ntdi.nrcore.NRCore;
 import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.holograms.Hologram;
+import world.ntdi.nrcore.utils.item.builders.EnchantmentBookBuilder;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 import world.ntdi.nrcore.utils.item.builders.SkullBuilder;
 
@@ -115,19 +116,19 @@ public class Death {
         Inventory inv = coffin.getInventory();
         GUI gui = new GUI(inv);
 
-        Enchantment ench = coffinEnchant();
+        Enchantment enchant = coffinEnchant();
         int lvl = r.nextInt(2) + 1;
 
-        ItemStack enchantment = ItemBuilder.of(Material.ENCHANTED_BOOK, 1).enchantment(ench, lvl).build();
-        Hologram hologram = new Hologram(new String[]{"&3&l" + ench.getKey().getKey() + " &b&l" + lvl}, location.getBlock().getLocation().add(0.5, 0, 0.5).subtract(0, 0.5, 0), false);
+        ItemStack book = EnchantmentBookBuilder.of(Material.ENCHANTED_BOOK).enchantment(enchant, lvl).build();
+        Hologram hologram = new Hologram(new String[]{"&3&l" + enchant.getKey().getKey() + " &b&l" + lvl}, location.getBlock().getLocation().add(0.5, 0, 0.5).subtract(0, 0.5, 0), false);
 
-        gui.addButton(Button.create(enchantment, (e) -> {
+        gui.addButton(Button.create(book, (e) -> {
             new BukkitRunnable() {
                 @Override
                 public void run() {
                     gui.setReturnsItems(true);
                     e.getWhoClicked().closeInventory();
-                    e.getWhoClicked().getInventory().addItem(enchantment);
+                    e.getWhoClicked().getInventory().addItem(book);
                     gui.destroy();
                     block.setType(Material.AIR);
                     hologram.deleteHologram();
