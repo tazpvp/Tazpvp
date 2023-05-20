@@ -169,7 +169,7 @@ public class Shop extends GUI {
             if (enchantment == null) {
                 p.getInventory().addItem(ItemBuilder.of(mat, amount).build());
             } else {
-                p.getInventory().addItem(EnchantmentBookBuilder.of(mat).enchantment(enchantment, 1).build());
+                p.getInventory().addItem(new EnchantmentBookBuilder().enchantment(enchantment, 1).build());
             }
 
             p.sendMessage("you purchased " + name);
