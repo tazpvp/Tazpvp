@@ -62,4 +62,6 @@ public interface Observer {
     void place(Player p, Block b);
 
     void shoot(Player shooter);
+
+    void kill_zorg(Player p); // TODO: Add event to implement to
 }

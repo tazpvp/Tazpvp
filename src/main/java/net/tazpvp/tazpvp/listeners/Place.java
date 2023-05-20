@@ -6,6 +6,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,6 +23,7 @@ public class Place implements Listener {
 
             Block b = e.getBlockPlaced();
             BlockState previousBlock = e.getBlockReplacedState();
+            BlockData previousBlockBlockData = previousBlock.getBlockData();
             b.setMetadata("PlayerPlaced", new FixedMetadataValue(Tazpvp.getInstance(), true));
 
             if (Tazpvp.spawnRegion.contains(p.getLocation())) {
@@ -38,6 +40,7 @@ public class Place implements Listener {
                 @Override
                 public void run() {
                     e.getBlock().setType(previousBlock.getType());
+                    e.getBlock().setBlockData(previousBlockBlockData);
                 }
             }.runTaskLater(Tazpvp.getInstance(), 20 * 8);
 

@@ -36,21 +36,21 @@ import net.tazpvp.tazpvp.utils.data.ContainerData;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Map;
 
 public class Achievements extends ContainerData implements Serializable {
     public Achievements() {
-        super(new HashMap<>(Map.of(
-                "Adept", false,
-                "Merchant", false,
-                "Bowling", false,
-                "Legend", false,
-                "Gamble", false,
-                "Superior", false,
-                "Craftsman", false,
-                "Gladiator", false,
-                "Charm", false,
-                "Rehab", false
-        )));
+        super(new HashMap<>() {{
+                put("Adept", false);
+                put("Merchant", false);
+                put("Bowling", false);
+                put("Legend", false);
+                put("Gamble", false);
+                put("Superior", false);
+                put("Craftsman", false);
+                put("Gladiator", false);
+                put("Charm", false);
+                put("Rehab", false);
+                put("Zorging", false);
+              }});
     }
 }

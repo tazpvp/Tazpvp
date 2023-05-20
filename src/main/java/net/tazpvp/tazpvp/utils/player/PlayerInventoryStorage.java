@@ -5,6 +5,8 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.tazpvp.tazpvp.utils.data.DataTypes;
+import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -54,6 +56,8 @@ public class PlayerInventoryStorage {
         p.getInventory().clear();
         p.getInventory().setContents(playerInventoryStorage.getItems());
         p.getInventory().setArmorContents(playerInventoryStorage.getArmors());
+
+        PersistentData.remove(p.getUniqueId(), DataTypes.DEATHS);
 
         playerInventoryStorageWeakHashMap.remove(p.getUniqueId());
 
