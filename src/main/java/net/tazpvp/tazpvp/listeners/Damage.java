@@ -35,9 +35,7 @@ package net.tazpvp.tazpvp.listeners;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
-import net.tazpvp.tazpvp.utils.objects.CombatTag;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Mob;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -49,12 +47,16 @@ public class Damage implements Listener {
     @EventHandler
     public void onEntityDamage(EntityDamageEvent e) {
         if (e.getEntity() instanceof Player victim) {
+            PlayerWrapper vw = PlayerWrapper.getPlayer(victim);
+
             if (Tazpvp.spawnRegion.contains(victim.getLocation())) {
                 e.setCancelled(true);
                 return;
             }
 
-            if (compare(e, e.getCause() == EntityDamageEvent.DamageCause.FALL)) return;
+            if (!vw.isLaunching()) {
+                if (compare(e, e.getCause() == EntityDamageEvent.DamageCause.FALL)) return;
+            }
 
             double fd = e.getFinalDamage();
 

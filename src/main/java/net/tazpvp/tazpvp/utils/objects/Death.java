@@ -42,6 +42,7 @@ import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -186,13 +187,17 @@ public class Death {
     }
 
     public void respawn() {
+        victim.teleport(new Location(Bukkit.getWorld("arena"), -45.5, 105, 76.5, -90, 15));
         victim.setGameMode(GameMode.SPECTATOR);
         victim.playSound(victim.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1, 1);
         victim.sendTitle(CC.RED + "" + CC.BOLD + "YOU DIED", CC.GOLD + "Respawning...", 5, 50, 5);
+        PlayerWrapper vp = PlayerWrapper.getPlayer(victim);
+        vp.setRespawning(true);
         new BukkitRunnable() {
             public void run() {
                 victim.setGameMode(GameMode.SURVIVAL);
                 victim.teleport(NRCore.config.spawn);
+                vp.setRespawning(false);
             }
         }.runTaskLater(Tazpvp.getInstance(), 20*3);
     }
