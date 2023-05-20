@@ -35,6 +35,7 @@ package net.tazpvp.tazpvp.utils.functions;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.objects.CombatTag;
 import net.tazpvp.tazpvp.utils.objects.Death;
 import org.bukkit.Bukkit;
@@ -66,6 +67,13 @@ public class DeathFunctions {
                 } else {
                     PersistentData.add(pKiller.getUniqueId(), DataTypes.KILLS);
                     LooseData.addKs(pKiller.getUniqueId());
+
+                    if ((LooseData.getKs(pKiller.getUniqueId()) % 5) == 0) {
+                        Bukkit.broadcastMessage(
+                                CC.GOLD + killer.getName() + CC.YELLOW + " has a kill streak of " + CC.GOLD + LooseData.getKs(pKiller.getUniqueId()) + "\n" +
+                                CC.GOLD + "Bounty: " + CC.YELLOW + "$" + (LooseData.getKs(pKiller.getUniqueId()) * 10)
+                        );
+                    }
 
                     death.coffin();
                     death.rewards();

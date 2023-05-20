@@ -38,6 +38,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
+import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
@@ -69,16 +70,13 @@ import java.util.UUID;
 
 public class Death {
 
-    @Getter
-    @Setter
+    @Getter @Setter
     private Player victim;
     private UUID victimID;
 
-    @Getter
-    @Setter
+    @Getter @Setter
     private Entity killer;
-    @Getter
-    @Setter
+    @Getter @Setter
     private Player pKiller = null;
     private UUID killerID = null;
 
@@ -235,9 +233,13 @@ public class Death {
         if (killer != victim) {
             final int xp = 15;
             final int coins = 26;
+            final int bounty = LooseData.getKs(victimID) * 10;
 
             //TODO: fix buh
             pKiller.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(CC.DARK_AQUA + "" + CC.BOLD +  "EXP: " + CC.AQUA + "" + CC.BOLD +  xp + CC.GOLD + "" + CC.BOLD + " COINS: " + CC.YELLOW + "" + CC.BOLD +  coins));
+            if (bounty > 0) {
+                pKiller.sendMessage("You collected " + victim.getName() + "'s $" + bounty + "bounty.");
+            }
             PersistentData.add(killerID, DataTypes.COINS, coins);
             PersistentData.add(killerID, DataTypes.XP, xp);
 

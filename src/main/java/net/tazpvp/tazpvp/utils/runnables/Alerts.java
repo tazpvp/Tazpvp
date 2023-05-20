@@ -54,13 +54,13 @@ public class Alerts {
     private static String prefix = "&8(&c!&8) &7";
 
     private static LinkedList<String> texts = new LinkedList<>(Arrays.asList(
-            "Join our community by typing &3/discord",
-            "Check out what you can do with premium! Type &3/premium",
-            "Looking to apply for staff? Type &3/apply",
-            "Want to support us? Get our advertisement using &3/ad",
-            "Think someone is hacking? Report them using &3/report",
+            "Join our fun community: &3/discord",
+            "Check out what you can do with premium! &3/premium",
+            "Looking to apply for staff? &3/apply",
+            "Want to support us? Get our advertisement: &3/ad",
+            "Think someone is hacking? Report them: &3/report",
             "You can hop in the AFK pit at spawn to claim rewards.",
-            "Died to a hacker? Get an inventory restore with &3/restore "
+            "Died to a cheater? Restore your inventory: &3/restore "
     ));
 
     public static void alert() {
