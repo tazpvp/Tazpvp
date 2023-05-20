@@ -63,13 +63,11 @@ import java.util.logging.Logger;
 public final class Tazpvp extends JavaPlugin {
     @Getter
     private static List<Observer> observers = new ArrayList<>();
-    public static List<UUID> fell = new ArrayList<>();
     private List<NPC> npcs = new LinkedList<>();
     public static List<UUID> playerList = new ArrayList<>();
     public static List<String> events = new ArrayList<>();
     public static Event event;
     public static String prefix = "tazpvp.";
-    public static List<UUID> launching = new ArrayList<>();
     public static WeakHashMap<UUID, Duel> duels = new WeakHashMap<>();
 
     @Getter

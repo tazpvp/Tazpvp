@@ -4,6 +4,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.ParkourUtil;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -18,6 +19,7 @@ public class Move implements Listener {
     @EventHandler
     public void onMove(PlayerMoveEvent e) {
         Player p = e.getPlayer();
+        PlayerWrapper pw = PlayerWrapper.getPlayer(p);
 
         Location raidus = new Location(Bukkit.getWorld("arena"), 0, 100, NRCore.config.spawn.getZ() + 27);
         Block b = new Location(e.getPlayer().getWorld(), e.getPlayer().getLocation().getX(), e.getPlayer().getLocation().getY() - 1, e.getPlayer().getLocation().getZ()).getBlock();
@@ -33,6 +35,9 @@ public class Move implements Listener {
                 Launchpad(p);
                 return;
             }
+            if (pw.isRespawning()) {
+                e.setCancelled(true);
+            }
             if (p.getLocation().getY() < NRCore.config.spawn.getY() - 22) {
                 if (p.getGameMode() == GameMode.SURVIVAL) {
                     DeathFunctions.death(p, null);
@@ -42,12 +47,13 @@ public class Move implements Listener {
     }
 
     private void Launchpad(Player p) {
-        if (!Tazpvp.launching.contains(p.getUniqueId())) {
-            Tazpvp.launching.add(p.getUniqueId());
+        PlayerWrapper pw = PlayerWrapper.getPlayer(p);
+        if (!pw.isLaunching()) {
+            pw.setLaunching(true);
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    Tazpvp.launching.remove(p.getUniqueId());
+                    pw.setLaunching(false);
                 }
             }.runTaskLater(Tazpvp.getInstance(), 20);
             if (p.getGameMode().equals(GameMode.SURVIVAL)){
