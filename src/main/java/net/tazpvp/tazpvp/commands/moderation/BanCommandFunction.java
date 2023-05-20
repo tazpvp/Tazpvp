@@ -47,6 +47,7 @@ public class BanCommandFunction extends CommandCore implements CommandFunction {
         super("ban", "ban", "banish");
     }
 
+    //TODO: Call the checkContainedBanned method in PlayerInventoryStorage
     @Override
     public void execute(CommandSender sender, String[] args) {
 
