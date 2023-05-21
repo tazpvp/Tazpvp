@@ -4,6 +4,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.data.BlockData;
@@ -34,6 +35,11 @@ public class Place implements Listener {
             if (b.getLocation().distance(new Location(Bukkit.getWorld("arena"), 0, NRCore.config.spawn.getY() - 10, NRCore.config.spawn.getZ() + 76)) > 35 || b.getLocation().getY() < NRCore.config.spawn.getY() - 10) {
                 e.setCancelled(true);
                 return;
+            }
+
+            if (e.getBlock().getType() == Material.PLAYER_HEAD) {
+                e.setCancelled(true);
+                p.sendMessage("Trade player heads with bub at the tree.");
             }
 
             new BukkitRunnable() {
