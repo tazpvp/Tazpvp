@@ -11,9 +11,15 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class InventoryClick implements Listener {
+    private final Map<String, List<String>> acceptable = new HashMap<>(){{
+        put("BOW", List.of("punch", "knockback", "flame", "unbreaking"));
+        put("SWORD", List.of("sharpness", "fire_aspect", "sweeping", "unbreaking"));
+    }};
+
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
         ItemStack applyTo = e.getCurrentItem();
@@ -26,43 +32,22 @@ public class InventoryClick implements Listener {
                 if (enchant.getType().equals(Material.ENCHANTED_BOOK)) {
 
                     if (ableToApplyEnchantTo(applyTo)) {
+                        EnchantmentStorageMeta meta = (EnchantmentStorageMeta) enchant.getItemMeta();
+                        Enchantment enchantment = (Enchantment) meta.getStoredEnchants().keySet().toArray()[0];
 
-                        e.setCancelled(true);
-                        for (Enchantment enchantment : applyTo.getEnchantments().keySet()) {
-                            applyTo.removeEnchantment(enchantment);
-                        }
-
-                        if(enchant.getItemMeta() instanceof EnchantmentStorageMeta) {
-                            EnchantmentStorageMeta meta = (EnchantmentStorageMeta) enchant.getItemMeta();
-                            meta.getStoredEnchants().forEach(applyTo::addUnsafeEnchantment);
-                        } else {
-                            enchant.getEnchantments().forEach(applyTo::addUnsafeEnchantment);
-                        }
-
-
-                        HumanEntity p = e.getWhoClicked();
-                        p.setItemOnCursor(new ItemStack(Material.AIR));
-
-                    } else if (applyTo.getType() == Material.ENCHANTED_BOOK) {
-                        if (enchant.getEnchantments().equals(applyTo.getEnchantments())) {
-                            enchant.getEnchantments().values().forEach(val -> {
-                                if (val > 3) return;
-                            });
+                        if (acceptableEnchant(applyTo, enchantment)) {
 
                             e.setCancelled(true);
-
-                            Map<Enchantment, Integer> enchantMap = applyTo.getEnchantments();
-                            Map<Enchantment, Integer> newMap = new HashMap<>();
-
-                            for (Map.Entry<Enchantment, Integer> entry : enchantMap.entrySet()) {
-                                newMap.put(entry.getKey(), entry.getValue() + 1);
+                            for (Enchantment enchantRemoved : applyTo.getEnchantments().keySet()) {
+                                applyTo.removeEnchantment(enchantRemoved);
                             }
 
-                            for (Enchantment enchantment : applyTo.getEnchantments().keySet()) {
-                                applyTo.removeEnchantment(enchantment);
+                            if (enchant.getItemMeta() instanceof EnchantmentStorageMeta) {
+                                meta.getStoredEnchants().forEach(applyTo::addUnsafeEnchantment);
+                            } else {
+                                enchant.getEnchantments().forEach(applyTo::addUnsafeEnchantment);
                             }
 
-                            applyTo.addUnsafeEnchantments(newMap);
 
                             HumanEntity p = e.getWhoClicked();
                             p.setItemOnCursor(new ItemStack(Material.AIR));
@@ -86,5 +71,14 @@ public class InventoryClick implements Listener {
         if (name.endsWith("PICKAXE")) return true;
 
         return false;
+    }
+
+    private boolean acceptableEnchant(ItemStack i, Enchantment e) {
+        String cutName = i.getType().name().split("_")[1];
+
+        acceptable.get(cutName).forEach(name -> {
+            System.out.println(e.getKey().toString().equals("minecraft:" + name));
+        });
+        return true;
     }
 }
