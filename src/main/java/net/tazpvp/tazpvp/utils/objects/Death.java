@@ -240,7 +240,7 @@ public class Death {
             if (bounty > 0) {
                 pKiller.sendMessage("You collected " + victim.getName() + "'s $" + bounty + "bounty.");
             }
-            PersistentData.add(killerID, DataTypes.COINS, coins);
+            PersistentData.add(killerID, DataTypes.COINS, coins + bounty);
             PersistentData.add(killerID, DataTypes.XP, xp);
 
             CombatTag tag = DeathFunctions.tags.get(victimID);

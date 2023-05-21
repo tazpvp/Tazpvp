@@ -67,9 +67,11 @@ public class Alerts {
         new BukkitRunnable() {
             @Override
             public void run() {
-                Bukkit.broadcastMessage(ChatUtils.chat(prefix + texts.get(num)));
-                num++;
-                if (num  >= texts.size()) num = 0;
+                if (Bukkit.getOnlinePlayers().size() > 0) {
+                    Bukkit.broadcastMessage(ChatUtils.chat(prefix + texts.get(num)));
+                    num++;
+                    if (num  >= texts.size()) num = 0;
+                }
             }
         }.runTaskTimer(Tazpvp.getInstance(), 20, 20*60*4);
     }
