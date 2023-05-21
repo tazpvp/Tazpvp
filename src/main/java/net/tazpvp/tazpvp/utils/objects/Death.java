@@ -186,7 +186,8 @@ public class Death {
     }
 
     public void respawn() {
-        victim.teleport(new Location(Bukkit.getWorld("arena"), -45.5, 105, 76.5, -90, 15));
+        EulerAngleSpectating eulerAngleSpectating = new EulerAngleSpectating(location);
+        victim.teleport(eulerAngleSpectating.getResult());
         victim.setGameMode(GameMode.SPECTATOR);
         victim.playSound(victim.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1, 1);
         victim.sendTitle(CC.RED + "" + CC.BOLD + "YOU DIED", CC.GOLD + "Respawning...", 5, 50, 5);
