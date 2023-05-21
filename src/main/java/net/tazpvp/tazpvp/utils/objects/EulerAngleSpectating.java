@@ -2,7 +2,9 @@ package net.tazpvp.tazpvp.utils.objects;
 
 import lombok.Getter;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import java.util.Random;
@@ -11,43 +13,47 @@ public class EulerAngleSpectating {
     @Getter
     private final Location A;
     @Getter
-    private final Location result;
+    private Location result;
     private final Random random;
 
     public EulerAngleSpectating(Location a) {
         this.random = new Random();
         A = a;
-        final World world = a.getWorld();
-        final double x = a.getX() + calculateNegative(5);
-        final double y = a.getY() + 6;
-        final double z = a.getZ() + calculateNegativeOrZero(5);
-        final float yaw = yawFromLocation(x, y, z);
-        final float pitch = 45F;
-        result = new Location(world, x, y, z, yaw, pitch);
+        int tries = 0;
+        boolean isSafe = false;
+        while (!isSafe) {
+            if (tries > 10) {
+                result = new Location(getA().getWorld(), -42.5, 108, 76.5, -88.5F, 25.7F);
+                isSafe = true;
+            }
+            Location location = calculateResult();
+            if (location.getBlock().getType() == Material.AIR) {
+                result = location;
+                isSafe = true;
+            }
+            tries++;
+        }
+    }
+
+    public void faceLocation(Player p) {
+        Vector direction = getA().clone().subtract(p.getEyeLocation()).toVector();
+        Location loc = p.getLocation().setDirection(direction);
+        p.teleport(loc);
+    }
+
+    private Location calculateResult() {
+        final World world = getA().getWorld();
+        final double x = getA().getX() + calculateNegative(5);
+        final double y = getA().getY() + 6;
+        final double z = getA().getZ() + calculateNegative(5);
+        return new Location(world, x, y, z);
     }
 
     private int calculateNegative(int toCalc) {
         final int choice = random.nextInt(2);
-        return (choice == 0 ? toCalc * -1 : toCalc);
-    }
-
-    private int calculateNegativeOrZero(int toCalc) {
-        final int choice = random.nextInt(3);
-        switch (choice) {
-            case 0 -> {
-                return toCalc;
-            }
-            case 2 -> {
-                return -1 * toCalc;
-            }
-            default -> {
-                return 0;
-            }
+        if (choice == 1) {
+            return -1 * toCalc;
         }
-    }
-
-    private float yawFromLocation(double x, double y, double z) {
-        Vector direction = getA().toVector().subtract(new Vector(x, y, z));
-        return (float) Math.toDegrees(Math.atan2(-direction.getZ(), direction.getX()));
+        return toCalc;
     }
 }
