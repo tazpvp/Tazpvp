@@ -240,7 +240,7 @@ public class Death {
             //TODO: fix buh
             pKiller.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(CC.DARK_AQUA + "" + CC.BOLD +  "EXP: " + CC.AQUA + "" + CC.BOLD +  xp + CC.GOLD + "" + CC.BOLD + " COINS: " + CC.YELLOW + "" + CC.BOLD +  coins));
             if (bounty > 0) {
-                pKiller.sendMessage("You collected " + victim.getName() + "'s $ " + bounty + "bounty.");
+                pKiller.sendMessage(CC.YELLOW + "You collected " + victim.getName() + "'s " + CC.GOLD + "$" + bounty + CC.YELLOW + " bounty.");
             }
             PersistentData.add(killerID, DataTypes.COINS, coins + bounty);
             PersistentData.add(killerID, DataTypes.XP, xp);
