@@ -109,4 +109,9 @@ public class Observable implements Observer {
     public void shoot(Player shooter) {
 
     }
+    @Override
+    public void kill_zorg(Player shooter) {
+
+    }
+
 }
