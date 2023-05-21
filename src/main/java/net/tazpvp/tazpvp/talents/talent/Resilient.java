@@ -41,7 +41,7 @@ public class Resilient extends Observable {
     @Override
     public void death(Player victim, Player killer) {
         if (victim != killer) {
-            if (PersistentData.getTalents(victim.getUniqueId()).is("Resilient")) {
+            if (PersistentData.getTalents(killer.getUniqueId()).is("Resilient")) {
                 killer.setAbsorptionAmount(4);
             }
         }
