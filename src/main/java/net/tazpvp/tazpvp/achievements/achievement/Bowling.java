@@ -41,10 +41,12 @@ import org.bukkit.entity.Player;
 public class Bowling extends Observable {
     @Override
     public void death(Player victim, Player killer) {
-        if (LooseData.getKs(killer.getUniqueId()) == 100) {
-            Achievements ach = PersistentData.getAchievements(killer.getUniqueId());
-            ach.set("Bowling", true);
-            PersistentData.setAchievements(killer, ach);
+        if (!PersistentData.getAchievements(killer.getUniqueId()).is("Bowling")) {
+            if (LooseData.getKs(killer.getUniqueId()) >= 50) {
+                Achievements ach = PersistentData.getAchievements(killer.getUniqueId());
+                ach.set("Bowling", true);
+                PersistentData.setAchievements(killer, ach);
+            }
         }
     }
 }

@@ -1,8 +1,11 @@
 package net.tazpvp.tazpvp.listeners;
 
+import net.tazpvp.tazpvp.Tazpvp;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -38,6 +41,9 @@ public class InventoryClick implements Listener {
                         if (acceptableEnchant(applyTo, enchantment)) {
 
                             e.setCancelled(true);
+
+
+
                             for (Enchantment enchantRemoved : applyTo.getEnchantments().keySet()) {
                                 applyTo.removeEnchantment(enchantRemoved);
                             }
@@ -51,6 +57,9 @@ public class InventoryClick implements Listener {
 
                             HumanEntity p = e.getWhoClicked();
                             p.setItemOnCursor(new ItemStack(Material.AIR));
+                            if (p instanceof Player plr) {
+                                Tazpvp.getObservers().forEach(observer -> observer.enchant(plr));
+                            }
                         }
                     }
                 }

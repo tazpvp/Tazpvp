@@ -42,12 +42,14 @@ public class Adept extends Observable {
 
     @Override
     public void talent(Player p) {
-        Talents talents = PersistentData.getTalents(p.getUniqueId());
-        Achievements ach = PersistentData.getAchievements(p.getUniqueId());
-        for (boolean value : talents.getData().values()) {
-            if (!value) return;
+        if (!PersistentData.getAchievements(p.getUniqueId()).is("Adept")) {
+            Talents talents = PersistentData.getTalents(p.getUniqueId());
+            Achievements ach = PersistentData.getAchievements(p.getUniqueId());
+            for (boolean value : talents.getData().values()) {
+                if (!value) return;
+            }
+            ach.set("Adept", true);
+            PersistentData.setAchievements(p, ach);
         }
-        ach.set("Adept", true);
-        PersistentData.setAchievements(p, ach);
     }
 }

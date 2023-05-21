@@ -63,6 +63,7 @@ public class Achievements extends GUI {
 
         setButton(p,  19, "Merchant", "Trade with Caesar at the mines.", ACH.is("Merchant"));
         setButton(p,  20, "Superior", "Win an event.", ACH.is("Superior"));
+        setButton(p,  21, "Zorgin", "Kill Zorg in the mines.", ACH.is("Zorgin"));
 
         update();
     }

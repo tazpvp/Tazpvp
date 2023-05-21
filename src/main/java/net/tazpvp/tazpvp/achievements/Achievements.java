@@ -50,7 +50,7 @@ public class Achievements extends ContainerData implements Serializable {
                 put("Gladiator", false);
                 put("Charm", false);
                 put("Rehab", false);
-                put("Zorging", false);
+                put("Zorgin", false);
               }});
     }
 }

@@ -41,10 +41,10 @@ public class Craftsman extends Observable {
 
     @Override
     public void enchant(Player p) {
-        //TODO: Check if it's the first time that the player combined two enchantments.
-        // We can just check if it they already have the achievement for this ^^ - Ntdi
-        Achievements ach = PersistentData.getAchievements(p.getUniqueId());
-        ach.set("Craftsman", true);
-        PersistentData.setAchievements(p, ach);
+        if (!PersistentData.getAchievements(p.getUniqueId()).is("Craftsman")) {
+            Achievements ach = PersistentData.getAchievements(p.getUniqueId());
+            ach.set("Craftsman", true);
+            PersistentData.setAchievements(p, ach);
+        }
     }
 }

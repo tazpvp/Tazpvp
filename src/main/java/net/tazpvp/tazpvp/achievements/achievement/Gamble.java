@@ -41,10 +41,12 @@ public class Gamble extends Observable {
 
     @Override
     public void death(Player victim, Player killer) {
-        if (killer.getHealth() <= 1) {
-            Achievements ach = PersistentData.getAchievements(killer.getUniqueId());
-            ach.set("Gamble", true);
-            PersistentData.setAchievements(killer, ach);
+        if (!PersistentData.getAchievements(killer.getUniqueId()).is("Gamble")) {
+            if (killer.getHealth() <= 1) {
+                Achievements ach = PersistentData.getAchievements(killer.getUniqueId());
+                ach.set("Gamble", true);
+                PersistentData.setAchievements(killer, ach);
+            }
         }
     }
 }
