@@ -37,10 +37,8 @@ import lombok.Getter;
 import net.tazpvp.tazpvp.achievements.achievement.*;
 import net.tazpvp.tazpvp.commands.admin.kit.KitCommand;
 import net.tazpvp.tazpvp.commands.admin.npc.NpcCommand;
-import net.tazpvp.tazpvp.commands.admin.StatCommand;
 import net.tazpvp.tazpvp.commands.moderation.RestoreCommand;
 import net.tazpvp.tazpvp.commands.moderation.ban.BanCommand;
-import net.tazpvp.tazpvp.commands.player.*;
 import net.tazpvp.tazpvp.commands.player.spawn.SpawnCommand;
 import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.events.Event;
@@ -58,6 +56,7 @@ import org.bukkit.Location;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import world.ntdi.nrcore.utils.command.CommandCL;
+import world.ntdi.nrcore.utils.command.simple.NRCommand;
 import world.ntdi.nrcore.utils.region.Cuboid;
 import world.ntdi.postglam.connection.Database;
 
@@ -180,11 +179,13 @@ public final class Tazpvp extends JavaPlugin {
     }
 
     public void registerCommands() {
-        CommandCL.register(new KitCommand());
-        CommandCL.register(new NpcCommand());
-        CommandCL.register(new BanCommand());
-        CommandCL.register(new RestoreCommand());
-        CommandCL.register(new SpawnCommand());
+        register(new KitCommand(), new NpcCommand(), new BanCommand(), new RestoreCommand(), new SpawnCommand());
+    }
+
+    private void register(NRCommand... commands) {
+        for (NRCommand command : commands) {
+            CommandCL.register(command, "tazpvp");
+        }
     }
 
     public void registerEvents() {
