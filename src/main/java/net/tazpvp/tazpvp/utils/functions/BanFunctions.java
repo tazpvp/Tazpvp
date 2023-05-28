@@ -14,17 +14,5 @@ public class BanFunctions {
 
     public static void ban(Player target, String time, String reason) {
         BanList banList = Bukkit.getBanList(BanList.Type.NAME);
-        if (isPermanent(time)) {
-
-        } else {
-
-        }
-    }
-
-    public static boolean isPermanent(String arg) {
-        if (arg.equalsIgnoreCase("permanent")) {
-            return true;
-        }
-        return false;
     }
 }
