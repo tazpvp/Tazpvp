@@ -47,6 +47,7 @@ public class BanCommand extends NRCommand {
 
         setNativeExecutor((sender, args) -> {
             if (args.length <= 1) {
+                sendIncorrectUsage(sender, "/ban <user> <time (m, h, d)> <reason>");
                 return true;
             }
 

@@ -41,6 +41,7 @@ import net.tazpvp.tazpvp.commands.admin.StatCommand;
 import net.tazpvp.tazpvp.commands.moderation.RestoreCommand;
 import net.tazpvp.tazpvp.commands.moderation.ban.BanCommand;
 import net.tazpvp.tazpvp.commands.player.*;
+import net.tazpvp.tazpvp.commands.player.spawn.SpawnCommand;
 import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.events.Event;
 import net.tazpvp.tazpvp.listeners.*;
@@ -183,6 +184,7 @@ public final class Tazpvp extends JavaPlugin {
         CommandCL.register(new NpcCommand());
         CommandCL.register(new BanCommand());
         CommandCL.register(new RestoreCommand());
+        CommandCL.register(new SpawnCommand());
     }
 
     public void registerEvents() {
