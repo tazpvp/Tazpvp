@@ -10,7 +10,6 @@ import net.tazpvp.tazpvp.utils.player.PlayerInventoryStorage;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.sender;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
