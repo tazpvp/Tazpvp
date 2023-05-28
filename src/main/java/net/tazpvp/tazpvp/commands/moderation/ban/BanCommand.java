@@ -32,6 +32,7 @@
 
 package net.tazpvp.tazpvp.commands.moderation.ban;
 
+import net.tazpvp.tazpvp.utils.functions.BanFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
@@ -45,33 +46,13 @@ public class BanCommand extends NRCommand {
         super(new Label("ban", "tazpvp.ban"));
 
         setNativeExecutor((sender, args) -> {
-            if (args.length < 1) {
-                sendWrongUsage();
+            if (args.length <= 1) {
                 return true;
             }
 
             Player target = Bukkit.getPlayer(args[0]);
 
-            if (args.length == 1) {
-                ban(target);
-            }
-
-            if (args.length == 1) {
-
-            } else if (args.length == 2) {
-                Player target = Bukkit.getPlayer(args[0]);
-                String reason = args[1];
-
-            } else if (args.length == 3) {
-
-
-            } else {
-                if (sender instanceof Player p) {
-                    p.sendMessage("Usage: /ban <player> <time> <reason>");
-                } else {
-                    Bukkit.getLogger().info("Usage: /ban <player> <time> <reason>");
-                }
-            }
+            BanFunctions.ban(target, args[1], args[2]);
 
             return true;
         });

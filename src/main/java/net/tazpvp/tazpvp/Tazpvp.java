@@ -35,9 +35,9 @@ package net.tazpvp.tazpvp;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.achievements.achievement.*;
-import net.tazpvp.tazpvp.commands.admin.NpcCommand;
-import net.tazpvp.tazpvp.commands.admin.StatCommandFunction;
-import net.tazpvp.tazpvp.commands.moderation.RestoreCommandFunction;
+import net.tazpvp.tazpvp.commands.admin.npc.NpcCommand;
+import net.tazpvp.tazpvp.commands.admin.StatCommand;
+import net.tazpvp.tazpvp.commands.moderation.RestoreCommand;
 import net.tazpvp.tazpvp.commands.player.*;
 import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.events.Event;
@@ -179,12 +179,12 @@ public final class Tazpvp extends JavaPlugin {
         new EventCommandFunction();
         new DuelCommandFunction();
         new NpcCommand();
-        new StatCommandFunction();
+        new StatCommand();
         new GuildCommandFunction();
         new PremiumCommandFunction();
         new KitCommandFunction();
         new DailyCommandFunction();
-        new RestoreCommandFunction();
+        new RestoreCommand();
     }
 
     public void registerEvents() {

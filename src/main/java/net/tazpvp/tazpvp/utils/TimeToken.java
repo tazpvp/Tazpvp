@@ -13,8 +13,8 @@ public class TimeToken {
     @Getter
     private final boolean permanent;
 
-    private final String[] conversionText = {"w", "d", "h", "m"};
-    private final int[] conversionMultiplier = {7 * 24 * 60 * 60 * 1000, 24 * 60 * 60 * 1000, 60 * 60 * 1000, 60 * 1000};
+    private final String[] conversionText = {"d", "h", "m"};
+    private final int[] conversionMultiplier = {24 * 60 * 60 * 1000, 60 * 60 * 1000, 60 * 1000};
 
     public TimeToken(String untokenized) {
         this.untokenized = untokenized.toLowerCase(Locale.ROOT);

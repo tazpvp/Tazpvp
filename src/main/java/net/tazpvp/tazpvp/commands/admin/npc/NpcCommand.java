@@ -30,62 +30,50 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.commands.admin;
+package net.tazpvp.tazpvp.commands.admin.npc;
 
-import net.tazpvp.tazpvp.utils.data.DataTypes;
-import net.tazpvp.tazpvp.utils.data.PersistentData;
-import org.bukkit.Bukkit;
+import net.tazpvp.tazpvp.npc.shops.Bub;
+import net.tazpvp.tazpvp.npc.shops.Caesar;
+import net.tazpvp.tazpvp.npc.shops.Lorenzo;
+import net.tazpvp.tazpvp.npc.shops.Maxim;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import world.ntdi.nrcore.utils.command.CommandCore;
-import world.ntdi.nrcore.utils.command.CommandFunction;
+import world.ntdi.nrcore.utils.command.simple.Completer;
+import world.ntdi.nrcore.utils.command.simple.Label;
+import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class StatCommandFunction extends CommandCore implements CommandFunction {
-    public StatCommandFunction() {
-        super("stats", "stats", "stat");
-        setDefaultFunction(this);
+public class NpcCommand extends NRCommand {
+
+    public NpcCommand() {
+        super(new Label("npc", "tazpvp.npc"));
+        setNativeExecutor((sender, args) -> {
+
+            if (!(sender instanceof Player p)) {
+                sendNoPermission(sender);
+                return true;
+            }
+
+            if (args[0].equalsIgnoreCase("maxim")) {
+                new Maxim();
+            } else if (args[0].equalsIgnoreCase("lorenzo")) {
+                new Lorenzo();
+            } else if (args[0].equalsIgnoreCase("caesar")) {
+                new Caesar();
+            } else if (args[0].equalsIgnoreCase("bub")) {
+                new Bub();
+            }
+
+            return true;
+        });
     }
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
-
-        if (args.length >= 4) {
-            Player target = Bukkit.getPlayer(args[3]);
-            stats(args, target);
-        } else if (sender instanceof Player p) {
-            stats(args, p);
+    public List<String> complete(CommandSender sender, String[] args) {
+        if (args.length == 1) {
+            return List.of("maxim", "lorenzo", "caesar", "bub");
         }
-    }
-
-    private void stats(String[] args, Player p) {
-        if (args[0].equalsIgnoreCase("give")) {
-            if (args[1].equalsIgnoreCase("coins")) {
-                PersistentData.add(p.getUniqueId(), DataTypes.COINS, Integer.parseInt(args[2]));
-            }
-        } else if (args[0].equalsIgnoreCase("reset")) {
-
-        }
-    }
-
-    @Override
-    public List<String> tabCompletion(CommandSender commandSender, String[] strings) {
-        if (strings.length == 0) {
-            return List.of("give");
-        } else if (strings.length == 1) {
-            return List.of("coins");
-        } else if (strings.length == 2) {
-            return List.of("10", "100", "1000", "10000");
-        } else if (strings.length == 3) {
-            List<String> pList = new ArrayList<>();
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                String name = p.getName();
-                pList.add(name);
-            }
-            return pList;
-        }
-        return List.of("");
+        return List.of();
     }
 }

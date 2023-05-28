@@ -1,5 +1,6 @@
 package net.tazpvp.tazpvp.commands.moderation;
 
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -9,38 +10,37 @@ import net.tazpvp.tazpvp.utils.player.PlayerInventoryStorage;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.sender;
 import org.bukkit.entity.Player;
-import world.ntdi.nrcore.utils.PlayerUtils;
-import world.ntdi.nrcore.utils.command.CommandCore;
-import world.ntdi.nrcore.utils.command.CommandFunction;
+import world.ntdi.nrcore.utils.command.simple.Label;
+import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
-public class RestoreCommandFunction extends CommandCore implements CommandFunction {
-    public RestoreCommandFunction() {
-        super("restore", null, "rst");
-        setDefaultFunction(this);
+public class RestoreCommand extends NRCommand {
+    public RestoreCommand() {
+        super(new Label("restore", "tazpvp.restore"));
     }
 
     @Override
-    public List<String> tabCompletion(CommandSender commandSender, String[] strings) {
-        return List.of("");
-    }
+    public boolean execute(@NonNull CommandSender sender, @NonNull String[] args) {
 
-    @Override
-    public void execute(CommandSender commandSender, String[] strings) {
-        if (strings.length == 1) {
-            if (PlayerUtils.checkPerms(commandSender, "tazpvp.restore")) {
-                final Player target = Bukkit.getPlayer(strings[0]);
+        if (!(sender instanceof Player p)) {
+            sendNoPermission(sender);
+            return true;
+        }
+
+        if (args.length == 1) {
+            if (sender.hasPermission(getLabel().getPermission())) {
+                final Player target = Bukkit.getPlayer(args[0]);
 
                 final PlayerInventoryStorage playerInventoryStorage = PlayerInventoryStorage.getStorage(target);
 
-                commandSender.sendMessage(CC.AQUA + "-----------------------------------");
+                sender.sendMessage(CC.AQUA + "-----------------------------------");
                 if (playerInventoryStorage == null) {
-                    commandSender.sendMessage(String.format(CC.GREEN + "\t%s has no available backups :(", target.getName()));
+                    sender.sendMessage(String.format(CC.GREEN + "\t%s has no available backups :(", target.getName()));
                 } else {
                     final long timeDifference = System.currentTimeMillis() - playerInventoryStorage.getTimestamp();
                     final Date date = new Date(timeDifference * 1000L);
@@ -50,13 +50,11 @@ public class RestoreCommandFunction extends CommandCore implements CommandFuncti
                     TextComponent component = new TextComponent(String.format(CC.GREEN + "\t%s - Created %s ago", playerInventoryStorage.getUuid(), friendlyTime));
                     component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(CC.GOLD + "Restore this save")}));
                     component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, String.format("/restore act %s", target.getUniqueId())));
-                    commandSender.spigot().sendMessage(component);
+                    sender.spigot().sendMessage(component);
                 }
-                commandSender.sendMessage(CC.AQUA + "-----------------------------------");
+                sender.sendMessage(CC.AQUA + "-----------------------------------");
             } else {
-                if (strings[0].equals("self")) {
-                    if (!(commandSender instanceof Player p)) return;
-
+                if (args[0].equals("self")) {
                     PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(p);
                     if (playerWrapper.isCanRestore()) {
                         PlayerInventoryStorage.restoreStorage(p);
@@ -64,14 +62,15 @@ public class RestoreCommandFunction extends CommandCore implements CommandFuncti
                     }
                 }
             }
-        }else if (strings.length == 2) {
-            if (strings[0].equals("act")) {
-                if (PlayerUtils.checkPerms(commandSender, "tazpvp.restore")) {
-                    UUID uuid = UUID.fromString(strings[1]);
+        } else if (args.length == 2) {
+            if (args[0].equals("act")) {
+                if (sender.hasPermission(getLabel().getPermission())) {
+                    UUID uuid = UUID.fromString(args[1]);
                     PlayerInventoryStorage.restoreStorage(uuid);
-                    commandSender.sendMessage(String.format(CC.DARK_AQUA + "Success"));
+                    sender.sendMessage(String.format(CC.DARK_AQUA + "Success"));
                 }
             }
         }
+        return true;
     }
 }

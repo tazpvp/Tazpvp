@@ -7,6 +7,7 @@ public final class LooseData {
     private static final WeakHashMap<UUID, Integer> ks = new WeakHashMap<>();
 
     private static final WeakHashMap<UUID, Integer> chatCount = new WeakHashMap<>();
+    private static final WeakHashMap<UUID, Integer> mineCount = new WeakHashMap<>();
 
     public static int getExpLeft(UUID uuid) {
         float level = PersistentData.getInt(uuid, DataTypes.LEVEL);
@@ -33,6 +34,17 @@ public final class LooseData {
     public static Integer getChatCount(UUID p) {
         if (chatCount.containsKey(p)) {
             return chatCount.get(p);
+        }
+        return 0;
+    }
+
+    public static void setMineCount(UUID p, int val) {
+        mineCount.put(p, val);
+    }
+
+    public static Integer getMineCount(UUID p) {
+        if (mineCount.containsKey(p)) {
+            return mineCount.get(p);
         }
         return 0;
     }

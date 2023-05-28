@@ -33,6 +33,7 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.functions.BlockFunctions;
 import net.tazpvp.tazpvp.utils.objects.Ore;
 import net.tazpvp.tazpvp.utils.objects.Pickaxe;
@@ -63,6 +64,7 @@ public class Break implements Listener {
                         if (tool.equals(pickaxe.getMat())) {
                             if (pickaxe.getLevel() >= ore.getLevel()) {
                                 BlockFunctions.respawnOre(p, b, mat, ore.getSmelted(), ore.getTime());
+                                LooseData.setMineCount(p.getUniqueId(), LooseData.getChatCount(p.getUniqueId()) + 1);
                             } else {
                                 p.sendMessage("You require at least a " + ore.getPickaxe() + " pickaxe to mine this ore.");
                                 p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
