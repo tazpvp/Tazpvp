@@ -30,44 +30,50 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.commands;
+package net.tazpvp.tazpvp.commands.moderation.ban;
 
-import lombok.NonNull;
-import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import world.ntdi.nrcore.utils.PlayerUtils;
-import world.ntdi.nrcore.utils.command.CommandCore;
-import world.ntdi.nrcore.utils.command.CommandFunction;
+import world.ntdi.nrcore.utils.command.simple.Label;
+import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
-import java.util.List;
+import javax.annotation.Nullable;
 
-public class KitCommandFunction extends CommandCore implements CommandFunction {
+public class BanCommand extends NRCommand {
 
-    public KitCommandFunction() {
-        super("kit", "kit", "kit");
-        setDefaultFunction(this);
-    }
+    public BanCommand() {
+        super(new Label("ban", "tazpvp.ban"));
 
-    @Override
-    public void execute(CommandSender sender, String[] args) {
-        if (sender instanceof Player p) {
-            if (args.length > 0) {
-                if (Bukkit.getPlayer(args[0]) != null) {
-                    PlayerFunctions.kitPlayer(Bukkit.getPlayer(args[0]));
-                } else {
-                    p.sendMessage("Usage: /kit <player>");
-                }
-            } else {
-                PlayerFunctions.kitPlayer(p);
+        setNativeExecutor((sender, args) -> {
+            if (args.length < 1) {
+                sendWrongUsage();
+                return true;
             }
-        }
 
-    }
+            Player target = Bukkit.getPlayer(args[0]);
 
-    @Override
-    public List<String> tabCompletion(CommandSender commandSender, String[] strings) {
-        return List.of("");
+            if (args.length == 1) {
+                ban(target);
+            }
+
+            if (args.length == 1) {
+
+            } else if (args.length == 2) {
+                Player target = Bukkit.getPlayer(args[0]);
+                String reason = args[1];
+
+            } else if (args.length == 3) {
+
+
+            } else {
+                if (sender instanceof Player p) {
+                    p.sendMessage("Usage: /ban <player> <time> <reason>");
+                } else {
+                    Bukkit.getLogger().info("Usage: /ban <player> <time> <reason>");
+                }
+            }
+
+            return true;
+        });
     }
 }

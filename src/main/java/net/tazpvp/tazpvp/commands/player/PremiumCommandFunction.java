@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.commands;
+package net.tazpvp.tazpvp.commands.player;
 
 import net.tazpvp.tazpvp.utils.data.PlayerRankData;
 import org.bukkit.Bukkit;

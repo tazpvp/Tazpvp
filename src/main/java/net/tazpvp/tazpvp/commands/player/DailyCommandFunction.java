@@ -31,7 +31,7 @@
  *
  */
 
-package net.tazpvp.tazpvp.commands;
+package net.tazpvp.tazpvp.commands.player;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.crate.KeyFactory;
