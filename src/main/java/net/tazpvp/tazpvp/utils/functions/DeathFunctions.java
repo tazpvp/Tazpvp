@@ -32,12 +32,14 @@
 
 package net.tazpvp.tazpvp.utils.functions;
 
+import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.objects.CombatTag;
 import net.tazpvp.tazpvp.utils.objects.Death;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
@@ -56,6 +58,8 @@ public class DeathFunctions {
         Death death = new Death(victim, killer);
         UUID currentKiller = tags.get(victim.getUniqueId()).getAttackers().peekLast();
 
+        PlayerWrapper wrapper = PlayerWrapper.getPlayer(victim);
+
         if (currentKiller != null) {
             tags.get(victim.getUniqueId()).getAttackers().clear();
             death(victim, Bukkit.getPlayer(currentKiller));
@@ -65,6 +69,15 @@ public class DeathFunctions {
                 if (pKiller == victim) {
                     death.deathMessage(false);
                 } else {
+
+                    if (wrapper.isDueling()) {
+                        Duel duel = Duel.getDuel(victim.getUniqueId());
+                        duel.setWinner(pKiller);
+                        duel.setLoser(victim);
+                        duel.end();
+                        return;
+                    }
+
                     PersistentData.add(pKiller.getUniqueId(), DataTypes.KILLS);
                     LooseData.addKs(pKiller.getUniqueId());
 

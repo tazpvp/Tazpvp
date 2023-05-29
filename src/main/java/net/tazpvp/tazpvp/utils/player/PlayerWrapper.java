@@ -23,6 +23,8 @@ public class PlayerWrapper {
     private boolean respawning;
     @Getter @Setter
     private boolean canRestore;
+    @Getter @Setter
+    private boolean dueling;
 
     /**
      * List of all players the player wrapper owner is hidden from

@@ -33,6 +33,7 @@
 package net.tazpvp.tazpvp.duels.type;
 
 import net.tazpvp.tazpvp.duels.Duel;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -41,6 +42,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import world.ntdi.nrcore.utils.ArmorManager;
 
+import java.util.List;
 import java.util.UUID;
 
 public class Classic extends Duel {
@@ -58,8 +60,8 @@ public class Classic extends Duel {
         ArmorManager.storeAndClearInventory(p1);
         ArmorManager.storeAndClearInventory(p2);
 
-        p1.teleport(new Location(Bukkit.getWorld("arena"), -5, 60, 0, 0, 0));
-        p2.teleport(new Location(Bukkit.getWorld("arena"), 5, 60, 0, 0, 0));
+        //TODO: Teleport to worlds
+
 
         for (UUID id : super.getDUELERS()) {
             Player p = Bukkit.getPlayer(id);
@@ -75,5 +77,15 @@ public class Classic extends Duel {
 
             p.sendMessage("The duel hath begun.");
         }
+    }
+
+    @Override
+    public void end() {
+        ChatFunctions.announce(super.getWinner().getName() + " won the duel against " + super.getLoser().getName());
+
+        ArmorManager.setPlayerContents(super.getLoser(), true);
+        ArmorManager.setPlayerContents(super.getWinner(), true);
+
+        duels.remove(this);
     }
 }

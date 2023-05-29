@@ -34,7 +34,6 @@ package net.tazpvp.tazpvp.commands.player;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.duels.Duel;
-import net.tazpvp.tazpvp.duels.DuelUtils;
 import net.tazpvp.tazpvp.duels.type.Classic;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -43,7 +42,6 @@ import org.javatuples.Pair;
 import world.ntdi.nrcore.utils.command.CommandCore;
 import world.ntdi.nrcore.utils.command.CommandFunction;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DuelCommandFunction extends CommandCore implements CommandFunction {
@@ -70,8 +68,6 @@ public class DuelCommandFunction extends CommandCore implements CommandFunction 
                     if (duelPair.getValue0()) {
                         Duel duel = duelPair.getValue1();
 
-                        DuelUtils.ACTIVE_DUELS.add(duel);
-
                         duel.begin();
                         duel.getDUELERS().forEach(d -> {
                             Bukkit.getPlayer(d).sendMessage("Duel Commencing!");
@@ -89,7 +85,7 @@ public class DuelCommandFunction extends CommandCore implements CommandFunction 
     }
 
     private Pair<Boolean, Duel> requested(Player p) {
-        for (Duel duel : Tazpvp.duels.values()) {
+        for (Duel duel : Duel.duels) {
             if (duel.getP2().equals(p.getUniqueId())) {
                 return Pair.with(true, duel);
             }
@@ -99,7 +95,7 @@ public class DuelCommandFunction extends CommandCore implements CommandFunction 
 
     private void putInDuel(String type, Player p, Player target) {
         if (type.equalsIgnoreCase("classic")) {
-            Tazpvp.duels.put(p.getUniqueId(), new Classic(p.getUniqueId(), target.getUniqueId()));
+            new Classic(p.getUniqueId(), target.getUniqueId());
         } else {
             p.sendMessage("Not a valid type");
             return;

@@ -33,11 +33,16 @@
 package net.tazpvp.tazpvp.duels;
 
 import lombok.Getter;
+import lombok.Setter;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
+import org.bukkit.entity.Player;
+import world.ntdi.nrcore.utils.ArmorManager;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.WeakHashMap;
 
 public abstract class Duel {
 
@@ -49,6 +54,10 @@ public abstract class Duel {
     private final String NAME;
     @Getter
     private final List<UUID> DUELERS;
+    @Getter @Setter
+    private Player winner;
+    @Getter @Setter
+    private Player loser;
 
     public Duel(@Nonnull final UUID P1, @Nonnull final UUID P2, @Nonnull final String NAME) {
         this.P1 = P1;
@@ -58,9 +67,20 @@ public abstract class Duel {
         this.DUELERS = new ArrayList<>();
         this.DUELERS.add(P1);
         this.DUELERS.add(P2);
-
     }
 
     public abstract void begin();
+
+    public abstract void end();
+
+    public static List<Duel> duels = new ArrayList<>();
+    public static Duel getDuel(UUID id) {
+        for (Duel duel : duels) {
+            if (duel.DUELERS.contains(id)) {
+                return duel;
+            }
+        }
+        return null;
+    }
 
 }
