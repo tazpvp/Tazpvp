@@ -77,7 +77,8 @@ public class PlayerWrapper {
      * Hide the player from ALL other players.
      */
     public void showPlayer() {
-        getHiddenFrom().forEach(uuid -> {
+        List<UUID> hiddenFrom = getHiddenFrom();
+        hiddenFrom.forEach(uuid -> {
             Player target = Bukkit.getPlayer(uuid);
             if (target != null) {
                 showPlayer(target);
@@ -100,11 +101,9 @@ public class PlayerWrapper {
     }
 
     public void showFromPlayer() {
-        getHiddenFrom().forEach(uuid -> {
-            Player target = Bukkit.getPlayer(uuid);
-            if (target != null ){
-                PlayerWrapper.getPlayer(target).showPlayer(getPlayer());
-            }
+        Bukkit.getOnlinePlayers().forEach(uuid -> {
+            PlayerWrapper wrapper = PlayerWrapper.getPlayer(uuid);
+            wrapper.showPlayer(getPlayer());
         });
     }
 

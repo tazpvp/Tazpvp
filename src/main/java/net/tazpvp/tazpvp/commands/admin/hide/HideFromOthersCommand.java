@@ -11,9 +11,9 @@ import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
 import java.util.List;
 
-public class HideFromSelfCommand extends NRCommand {
-    public HideFromSelfCommand() {
-        super(new Label("self", "tazpvp.hide"));
+public class HideFromOthersCommand extends NRCommand {
+    public HideFromOthersCommand() {
+        super(new Label("other", "tazpvp.hide"));
     }
 
     @Override
@@ -30,12 +30,12 @@ public class HideFromSelfCommand extends NRCommand {
 
         final String target = args[0];
 
-        if (target.equalsIgnoreCase("all")) {
-            PlayerWrapper.getPlayer(p).hidePlayer();
+        if (target.equalsIgnoreCase( "all")) {
+            PlayerWrapper.getPlayer(p).hideFromPlayer();
         } else {
             final Player targetPlayer = Bukkit.getPlayer(target);
             if (targetPlayer != null) {
-                PlayerWrapper.getPlayer(p).hidePlayer(targetPlayer);
+                PlayerWrapper.getPlayer(p).hideFromPlayer(targetPlayer);
             } else {
                 sendIncorrectUsage(sender);
                 return true;
