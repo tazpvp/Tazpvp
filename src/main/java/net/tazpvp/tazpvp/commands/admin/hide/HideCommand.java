@@ -16,5 +16,7 @@ public class HideCommand extends NRCommand {
         }));
 
         addSubcommand(new HideFromSelfCommand());
+        addSubcommand(new HideFromOthersCommand());
+        addSubcommand(new ShowCommand());
     }
 }
