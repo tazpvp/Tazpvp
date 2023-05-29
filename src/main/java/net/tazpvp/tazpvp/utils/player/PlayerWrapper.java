@@ -6,10 +6,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import java.util.WeakHashMap;
+import java.util.*;
 
 /**
  * Wrapper for the player object which contains valuable methods exclusive to tazpvp
@@ -75,13 +72,13 @@ public class PlayerWrapper {
      * Hide the player from ALL other players.
      */
     public void showPlayer() {
-        List<UUID> hiddenFrom = getHiddenFrom();
-        hiddenFrom.forEach(uuid -> {
+        for (Iterator<UUID> iterator = hiddenFrom.iterator(); iterator.hasNext(); ) {
+            UUID uuid = iterator.next();
             Player target = Bukkit.getPlayer(uuid);
             if (target != null) {
                 showPlayer(target);
             }
-        });
+        }
     }
 
     /**
