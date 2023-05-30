@@ -12,6 +12,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,41 +26,55 @@ public class InventoryClick implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
-        ItemStack applyTo = e.getCurrentItem();
+        ItemStack equipment = e.getCurrentItem();
         ItemStack enchant = e.getCursor();
-        if (applyTo == null || enchant == null) return;
+        Player p = (Player) e.getWhoClicked();
+
+        if (equipment == null || enchant == null) return;
 
         if (e.getInventory().getType() == InventoryType.CRAFTING) {
-            if (!applyTo.getType().equals(Material.AIR) && !enchant.getType().equals(Material.AIR)) {
+            if (!equipment.getType().equals(Material.AIR) && !enchant.getType().equals(Material.AIR)) {
 
                 if (enchant.getType().equals(Material.ENCHANTED_BOOK)) {
 
-                    if (ableToApplyEnchantTo(applyTo)) {
+                    if (ableToApplyEnchantTo(equipment)) {
                         EnchantmentStorageMeta meta = (EnchantmentStorageMeta) enchant.getItemMeta();
                         Enchantment enchantment = (Enchantment) meta.getStoredEnchants().keySet().toArray()[0];
 
-                        if (acceptableEnchant(applyTo, enchantment)) {
+                        if (acceptableEnchant(equipment, enchantment)) {
 
                             e.setCancelled(true);
 
+                            if (equipment.getEnchantments().containsKey(enchantment)) {
+                                if (equipment.hasItemMeta() && equipment.getItemMeta().hasEnchants()) {
 
+                                    Map<Enchantment, Integer> enchantments = equipment.getEnchantments();
+                                    Enchantment firstEquipmentEnchant = enchantments.keySet().iterator().next();
+                                    final int equipmentEnchantLevel = enchantments.get(firstEquipmentEnchant);
+                                    ItemMeta equipmentMeta = equipment.getItemMeta();
 
-                            for (Enchantment enchantRemoved : applyTo.getEnchantments().keySet()) {
-                                applyTo.removeEnchantment(enchantRemoved);
+                                    if (!(equipmentMeta instanceof EnchantmentStorageMeta equipmentEnchantMeta)) {
+                                        return;
+                                    }
+
+                                    if (equipmentEnchantLevel >= 3) {
+                                        p.sendMessage("This enchantment is already at it's maximum level.");
+                                        equipmentEnchantMeta.addEnchant(enchantment, equipmentEnchantLevel, true);
+                                        return;
+                                    }
+                                    equipmentEnchantMeta.addEnchant(enchantment, (equipmentEnchantLevel + 1), true);
+                                }
+                                return;
                             }
 
-                            if (enchant.getItemMeta() instanceof EnchantmentStorageMeta) {
-                                meta.getStoredEnchants().forEach(applyTo::addUnsafeEnchantment);
-                            } else {
-                                enchant.getEnchantments().forEach(applyTo::addUnsafeEnchantment);
+                            for (Enchantment enchantRemoved : equipment.getEnchantments().keySet()) {
+                                equipment.removeEnchantment(enchantRemoved);
                             }
 
+                            meta.getStoredEnchants().forEach(equipment::addUnsafeEnchantment);
 
-                            HumanEntity p = e.getWhoClicked();
                             p.setItemOnCursor(new ItemStack(Material.AIR));
-                            if (p instanceof Player plr) {
-                                Tazpvp.getObservers().forEach(observer -> observer.enchant(plr));
-                            }
+                            Tazpvp.getObservers().forEach(observer -> observer.enchant(p));
                         }
                     }
                 }
