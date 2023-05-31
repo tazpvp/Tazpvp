@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.commands.player;
+package net.tazpvp.tazpvp.commands.gameplay;
 
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;

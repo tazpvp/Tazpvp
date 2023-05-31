@@ -1,19 +1,14 @@
-package net.tazpvp.tazpvp.commands.player.spawn;
+package net.tazpvp.tazpvp.commands.gameplay.spawn;
 
-import lombok.NonNull;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.enums.CC;
-import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
-import net.tazpvp.tazpvp.utils.objects.CombatTag;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.NRCore;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
-
-import java.util.UUID;
 
 public class SpawnCommand extends NRCommand {
     public SpawnCommand() {

@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  *
- * Copyright (c) 2023, n-tdi
+ * Copyright (c) 2022, n-tdi
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,45 +28,78 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
  */
 
-package net.tazpvp.tazpvp.commands.player;
+package net.tazpvp.tazpvp.commands.gameplay;
 
-import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.utils.crate.KeyFactory;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
-import net.tazpvp.tazpvp.utils.data.PersistentData;
-import net.tazpvp.tazpvp.utils.enums.CC;
-import org.bukkit.Sound;
+import net.tazpvp.tazpvp.duels.Duel;
+import net.tazpvp.tazpvp.duels.type.Classic;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.javatuples.Pair;
 import world.ntdi.nrcore.utils.command.CommandCore;
 import world.ntdi.nrcore.utils.command.CommandFunction;
 
 import java.util.List;
 
-public class DailyCommandFunction extends CommandCore implements CommandFunction {
+public class DuelCommandFunction extends CommandCore implements CommandFunction {
 
-    public DailyCommandFunction() {
-        super("daily", null, "daily");
+    String help = "Commands:\n" + "/duel <player> <type>\n" + "/duel accept";
+
+    public DuelCommandFunction() {
+        super("duel", null, "duel");
         setDefaultFunction(this);
     }
 
     @Override
-    public void execute(CommandSender sender, String[] strings) {
+    public void execute(CommandSender sender, String[] args) {
         if (sender instanceof Player p) {
-            if (Tazpvp.getCrateManager().canClaimDaily(p)) {
-                p.getInventory().addItem(KeyFactory.getFactory().createDailyKey());
-                p.sendMessage(CC.GREEN + "Claimed " + CC.GOLD + "DAILY " + CC.GREEN + "crate key!");
-                p.playSound(p.getLocation(), Sound.ITEM_BOTTLE_FILL_DRAGONBREATH, 1F, 1F);
+            if (args.length == 2) {
+                Player target = Bukkit.getPlayer(args[0]);
+                if (target != null) {
+                    putInDuel(args[1], p, target);
+                }
+            } else if (args.length == 1) {
+                if (args[0].equalsIgnoreCase("accept")) {
+                    Pair<Boolean, Duel> duelPair = requested(p);
 
-                PersistentData.set(p, DataTypes.DAILYCRATEUNIX, System.currentTimeMillis());
+                    if (duelPair.getValue0()) {
+                        Duel duel = duelPair.getValue1();
+
+                        duel.begin();
+                        duel.getDUELERS().forEach(d -> {
+                            Bukkit.getPlayer(d).sendMessage("Duel Commencing!");
+                        });
+                    } else {
+                        p.sendMessage("No one sent you a duel request");
+                    }
+                } else {
+                    p.sendMessage(help);
+                }
             } else {
-                p.sendMessage(CC.RED + "Unable to claim " + CC.GOLD + "DAILY " + CC.RED + "crate key!");
-                p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_HURT, 1F, 1F);
+                p.sendMessage(help);
             }
         }
+    }
+
+    private Pair<Boolean, Duel> requested(Player p) {
+        for (Duel duel : Duel.duels) {
+            if (duel.getP2().equals(p.getUniqueId())) {
+                return Pair.with(true, duel);
+            }
+        }
+        return Pair.with(false, null);
+    }
+
+    private void putInDuel(String type, Player p, Player target) {
+        if (type.equalsIgnoreCase("classic")) {
+            new Classic(p.getUniqueId(), target.getUniqueId());
+        } else {
+            p.sendMessage("Not a valid type");
+            return;
+        }
+        target.sendMessage(p.getName() + " sent you a duel request.");
     }
 
     @Override
