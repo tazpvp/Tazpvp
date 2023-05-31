@@ -13,7 +13,7 @@ import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
 public class DiscordCommand extends NRCommand {
-    public DiscordCommand(@NonNull Label label) {
+    public DiscordCommand() {
         super(new Label("discord", null));
         setNativeExecutor((sender, args) -> {
             if (!(sender instanceof Player p)) {

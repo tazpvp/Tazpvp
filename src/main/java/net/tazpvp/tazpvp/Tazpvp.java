@@ -41,6 +41,7 @@ import net.tazpvp.tazpvp.commands.admin.npc.NpcCommand;
 import net.tazpvp.tazpvp.commands.moderation.RestoreCommand;
 import net.tazpvp.tazpvp.commands.moderation.ban.BanCommand;
 import net.tazpvp.tazpvp.commands.gameplay.spawn.SpawnCommand;
+import net.tazpvp.tazpvp.commands.network.DiscordCommand;
 import net.tazpvp.tazpvp.events.Event;
 import net.tazpvp.tazpvp.listeners.*;
 import net.tazpvp.tazpvp.npc.shops.*;
@@ -178,7 +179,15 @@ public final class Tazpvp extends JavaPlugin {
     }
 
     public void registerCommands() {
-        register(new KitCommand(), new NpcCommand(), new BanCommand(), new RestoreCommand(), new SpawnCommand(), new HideCommand());
+        register(
+                new KitCommand(),
+                new NpcCommand(),
+                new BanCommand(),
+                new RestoreCommand(),
+                new SpawnCommand(),
+                new HideCommand(),
+                new DiscordCommand())
+        ;
     }
 
     private void register(NRCommand... commands) {
