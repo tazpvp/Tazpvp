@@ -1,8 +1,10 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -27,59 +29,53 @@ public class InventoryClick implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
         ItemStack equipment = e.getCurrentItem();
-        ItemStack enchant = e.getCursor();
-        Player p = (Player) e.getWhoClicked();
+        ItemStack enchantBook = e.getCursor();
+        Player player = (Player) e.getWhoClicked();
 
-        if (equipment == null || enchant == null) return;
+        if (equipment == null || enchantBook == null) return;
+        if (e.getInventory().getType() != InventoryType.CRAFTING) return;
+        if (equipment.getType() == Material.AIR || enchantBook.getType() != Material.ENCHANTED_BOOK) return;
+        if (!ableToApplyEnchantTo(equipment)) return;
 
-        if (e.getInventory().getType() == InventoryType.CRAFTING) {
-            if (!equipment.getType().equals(Material.AIR) && !enchant.getType().equals(Material.AIR)) {
+        EnchantmentStorageMeta enchantMeta = (EnchantmentStorageMeta) enchantBook.getItemMeta();
+        if (enchantMeta == null || enchantMeta.getStoredEnchants().isEmpty()) return;
 
-                if (enchant.getType().equals(Material.ENCHANTED_BOOK)) {
+        Enchantment enchantment = enchantMeta.getStoredEnchants().keySet().iterator().next();
+        if (!acceptableEnchant(equipment, enchantment)) return;
 
-                    if (ableToApplyEnchantTo(equipment)) {
-                        EnchantmentStorageMeta meta = (EnchantmentStorageMeta) enchant.getItemMeta();
-                        Enchantment enchantment = (Enchantment) meta.getStoredEnchants().keySet().toArray()[0];
+        e.setCancelled(true);
 
-                        if (acceptableEnchant(equipment, enchantment)) {
+        ItemMeta equipmentMeta = equipment.getItemMeta();
+        if (equipmentMeta == null) return;
 
-                            e.setCancelled(true);
-
-                            if (equipment.getEnchantments().containsKey(enchantment)) {
-                                if (equipment.hasItemMeta() && equipment.getItemMeta().hasEnchants()) {
-
-                                    Map<Enchantment, Integer> enchantments = equipment.getEnchantments();
-                                    Enchantment firstEquipmentEnchant = enchantments.keySet().iterator().next();
-                                    final int equipmentEnchantLevel = enchantments.get(firstEquipmentEnchant);
-                                    ItemMeta equipmentMeta = equipment.getItemMeta();
-
-                                    if (!(equipmentMeta instanceof EnchantmentStorageMeta equipmentEnchantMeta)) {
-                                        return;
-                                    }
-
-                                    if (equipmentEnchantLevel >= 3) {
-                                        p.sendMessage("This enchantment is already at it's maximum level.");
-                                        equipmentEnchantMeta.addEnchant(enchantment, equipmentEnchantLevel, true);
-                                        return;
-                                    }
-                                    equipmentEnchantMeta.addEnchant(enchantment, (equipmentEnchantLevel + 1), true);
-                                }
-                                return;
-                            }
-
-                            for (Enchantment enchantRemoved : equipment.getEnchantments().keySet()) {
-                                equipment.removeEnchantment(enchantRemoved);
-                            }
-
-                            meta.getStoredEnchants().forEach(equipment::addUnsafeEnchantment);
-
-                            p.setItemOnCursor(new ItemStack(Material.AIR));
-                            Tazpvp.getObservers().forEach(observer -> observer.enchant(p));
-                        }
-                    }
-                }
+        int newLevel;
+        if (equipmentMeta.hasEnchant(enchantment)) {
+            int currentLevel = equipmentMeta.getEnchantLevel(enchantment);
+            if (currentLevel >= 3) {
+                player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
+                player.sendMessage(CC.RED + "This enchantment is already at its maximum level.");
+                return;
             }
+            newLevel = currentLevel + 1;
+        } else {
+            newLevel = 1;
         }
+
+        equipmentMeta.addEnchant(enchantment, newLevel, true);
+        equipment.setItemMeta(equipmentMeta);
+
+        enchantBook.setAmount(enchantBook.getAmount() - 1);
+        if (enchantBook.getAmount() <= 0) {
+            e.setCursor(new ItemStack(Material.AIR));
+        } else {
+            e.setCursor(enchantBook);
+        }
+
+        player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1.0f, 1.0f);
+
+        player.sendMessage(CC.RED + "Enchantment " + enchantment.getKey().getKey() + " applied to the equipment (Level " + newLevel + ").");
+
+        Tazpvp.getObservers().forEach(observer -> observer.enchant(player));
     }
 
     private boolean ableToApplyEnchantTo(ItemStack i) {
@@ -99,10 +95,13 @@ public class InventoryClick implements Listener {
 
     private boolean acceptableEnchant(ItemStack i, Enchantment e) {
         String cutName = i.getType().name().split("_")[1];
-
-        acceptable.get(cutName).forEach(name -> {
-            System.out.println(e.getKey().toString().equals("minecraft:" + name));
-        });
-        return true;
+        if (acceptable.containsKey(cutName)) {
+            for (String name : acceptable.get(cutName)) {
+                if (e.getKey().toString().equals("minecraft:" + name)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
