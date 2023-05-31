@@ -1,6 +1,7 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.data.PersistentData;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -20,9 +21,12 @@ public class Place implements Listener {
     @EventHandler
     public void onPlace(BlockPlaceEvent e) {
         Player p = e.getPlayer();
+        int delay;
+
         if (p.getGameMode() != GameMode.CREATIVE) {
 
             Block b = e.getBlockPlaced();
+            Material mat = b.getType();
             BlockState previousBlock = e.getBlockReplacedState();
             BlockData previousBlockBlockData = previousBlock.getBlockData();
             b.setMetadata("PlayerPlaced", new FixedMetadataValue(Tazpvp.getInstance(), true));
@@ -37,9 +41,18 @@ public class Place implements Listener {
                 return;
             }
 
-            if (e.getBlock().getType() == Material.PLAYER_HEAD) {
+            if (mat == Material.PLAYER_HEAD) {
                 e.setCancelled(true);
                 p.sendMessage("Trade player heads with bub at the tree.");
+            }
+
+            // Delay in seconds.
+            if (mat == Material.COBWEB) {
+                delay = 2;
+            } else if (PersistentData.isPremium(p.getUniqueId())) {
+                delay = 20;
+            } else {
+                delay = 8;
             }
 
             new BukkitRunnable() {
@@ -48,7 +61,7 @@ public class Place implements Listener {
                     e.getBlock().setType(previousBlock.getType());
                     e.getBlock().setBlockData(previousBlockBlockData);
                 }
-            }.runTaskLater(Tazpvp.getInstance(), 20 * 8);
+            }.runTaskLater(Tazpvp.getInstance(), 20 * delay);
 
             Tazpvp.getObservers().forEach(observer -> observer.place(p, b));
         }

@@ -3,6 +3,7 @@ package net.tazpvp.tazpvp.listeners;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.ParkourUtil;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.*;
@@ -37,11 +38,17 @@ public class Move implements Listener {
             }
             if (pw.isRespawning()) {
                 e.setCancelled(true);
+                return;
             }
             if (p.getLocation().getY() < NRCore.config.spawn.getY() - 22) {
                 if (p.getGameMode() == GameMode.SURVIVAL) {
                     DeathFunctions.death(p, null);
+                    return;
                 }
+            }
+            if (p.hasMetadata("spawnTeleport")) {
+                p.sendMessage(CC.RED + "Teleportation cancelled. You moved.");
+                p.removeMetadata("spawnTeleport", Tazpvp.getInstance());
             }
         }
     }
