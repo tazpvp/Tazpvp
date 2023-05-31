@@ -50,9 +50,12 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.NRCore;
@@ -130,6 +133,20 @@ public class Death {
                     hologram.deleteHologram();
                     if (e.getWhoClicked() instanceof Player p) {
                         p.playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+
+                        // Create particle effect
+                        Location playerLocation = p.getLocation();
+                        playerLocation.getWorld().spawnParticle(Particle.SPELL_MOB, playerLocation, 100, 0.5, 1, 0.5, 0.2);
+
+                        // Play firework sound
+                        p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1, 1);
+
+                        // Create firework
+                        Firework firework = (Firework) playerLocation.getWorld().spawnEntity(playerLocation, EntityType.FIREWORK);
+                        FireworkMeta fireworkMeta = firework.getFireworkMeta();
+                        fireworkMeta.addEffect(FireworkEffect.builder().withColor(Color.BLUE, Color.WHITE).with(FireworkEffect.Type.BALL).build());
+                        fireworkMeta.setPower(1);
+                        firework.setFireworkMeta(fireworkMeta);
                     }
                 }
             }.runTaskLater(Tazpvp.getInstance(), 1);
