@@ -114,10 +114,9 @@ public class Death {
         GUI gui = new GUI(inv);
 
         Enchantment enchant = coffinEnchant();
-        int lvl = r.nextInt(2) + 1;
 
-        ItemStack book = new EnchantmentBookBuilder().enchantment(enchant, lvl).build();
-        Hologram hologram = new Hologram(new String[]{"&3&l" + enchant.getKey().getKey() + " &b&l" + lvl}, location.getBlock().getLocation().add(0.5, 0, 0.5).subtract(0, 0.5, 0), false);
+        ItemStack book = new EnchantmentBookBuilder().enchantment(enchant, 1).build();
+        Hologram hologram = new Hologram(new String[]{"&3&l" + enchant.getKey().getKey()}, location.getBlock().getLocation().add(0.5, 0, 0.5).subtract(0, 0.5, 0), false);
 
         gui.addButton(Button.create(book, (e) -> {
             new BukkitRunnable() {
