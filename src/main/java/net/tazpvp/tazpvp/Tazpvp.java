@@ -86,7 +86,6 @@ public final class Tazpvp extends JavaPlugin {
     private static Database database;
 
     private static final Logger log = Logger.getLogger("Minecraft");
-    private static net.milkbowl.vault.chat.Chat chat;
     @Getter
     private static CrateManager crateManager;
 
@@ -104,7 +103,6 @@ public final class Tazpvp extends JavaPlugin {
         events.add("FFA");
         registerObservable();
         spawnNpcs();
-        setupChat();
         CombatTagFunctions.initCombatTag();
 
         parkourUtil = new ConfigUtil("parkour.yml", this);
@@ -141,14 +139,6 @@ public final class Tazpvp extends JavaPlugin {
         despawnNpcs();
 
         getCrateManager().shutdown();
-    }
-
-    private boolean setupChat() {
-        RegisteredServiceProvider<net.milkbowl.vault.chat.Chat> rsp = getServer().getServicesManager().getRegistration(net.milkbowl.vault.chat.Chat.class);
-        if (rsp != null) {
-            chat = rsp.getProvider();
-        }
-        return chat != null;
     }
 
     public static Tazpvp getInstance() {
@@ -220,10 +210,6 @@ public final class Tazpvp extends JavaPlugin {
     private void despawnNpcs() {
         npcs.forEach(NPC::remove);
         npcs.clear();
-    }
-
-    public static net.milkbowl.vault.chat.Chat getChat() {
-        return chat;
     }
 
 }
