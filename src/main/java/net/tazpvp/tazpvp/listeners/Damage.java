@@ -36,11 +36,14 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.projectiles.ProjectileSource;
 
 public class Damage implements Listener {
 
@@ -67,6 +70,11 @@ public class Damage implements Listener {
             if (e instanceof EntityDamageByEntityEvent ee) {
                 if (ee.getDamager() instanceof Player killer) {
                     CombatTagFunctions.putInCombat(victim.getUniqueId(), killer.getUniqueId());
+                } else if (ee.getDamager() instanceof Arrow arrow) {
+                    ProjectileSource shooter = arrow.getShooter();
+                    if (shooter instanceof Player pShooter) {
+                        CombatTagFunctions.putInCombat(victim.getUniqueId(), pShooter.getUniqueId());
+                    }
                 }
                 if ((victim.getHealth() - fd) <= 0) {
                     e.setCancelled(true);
