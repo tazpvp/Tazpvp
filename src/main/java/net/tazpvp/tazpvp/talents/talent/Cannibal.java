@@ -42,6 +42,7 @@ public class Cannibal extends Observable {
     public void death(Player victim, Player killer) {
         if (PersistentData.getTalents(killer.getUniqueId()).is("Cannibal")) {
             killer.setFoodLevel(20);
+            killer.setSaturation(20f);
         }
     }
 }
