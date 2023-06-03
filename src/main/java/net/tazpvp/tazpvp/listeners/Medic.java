@@ -51,7 +51,7 @@ public class Medic extends Observable {
                 killer.playEffect(EntityEffect.LOVE_HEARTS);
                 Guild g = GuildUtils.getGuildPlayerIn(killer);
                 for (Player p : Bukkit.getOnlinePlayers()) {
-                    if (p.getLocation().distance(killer.getLocation()) < 5) {
+                    if (p.getLocation().distance(killer.getLocation()) <= 5) {
                         if (p != killer) {
                             PlayerFunctions.addHealth(p, 5);
                         }

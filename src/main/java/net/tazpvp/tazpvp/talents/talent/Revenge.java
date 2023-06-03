@@ -11,7 +11,9 @@ public class Revenge extends Observable {
     public void death(Player victim, Player killer) {
         if (victim != killer) {
             if (PersistentData.getTalents(victim.getUniqueId()).is("Revenge")) {
-                killer.setFireTicks(20 * 3);
+                if (!PersistentData.getTalents(killer.getUniqueId()).is("Moist")) {
+                    killer.setFireTicks(20 * 3);
+                }
             }
         }
     }

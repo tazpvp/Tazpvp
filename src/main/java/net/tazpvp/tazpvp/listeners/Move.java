@@ -66,9 +66,9 @@ public class Move implements Listener {
             if (p.getGameMode().equals(GameMode.SURVIVAL)){
                 p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1, 1);
                 if (PersistentData.getTalents(p.getUniqueId()).is("Glide")) {
-                    p.setVelocity(new Vector(0, 1, 2));
+                    p.setVelocity(new Vector(0, 1, 10));
                 } else {
-                    p.setVelocity(new Vector(0, 1, 1.5));
+                    p.setVelocity(new Vector(0, 1, 3));
                 }
                 Tazpvp.getObservers().forEach(o -> o.launch(p));
             }
