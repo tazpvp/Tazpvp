@@ -108,19 +108,21 @@ public class Shop extends GUI {
         setButton("Gold Apple", "Only for rich people.", Material.GOLDEN_APPLE, 30, 1);
         setChangingButton("RGB Blocks", "RGB Placeable Blocks", wool, 30, 64);
 
+        setButton("Spectral Arrow", "Highlight targets.", Material.SPECTRAL_ARROW, 30, 1);
+        setButton("Crossbow", "Stronger than the bow.", Material.CROSSBOW, 30, 1);
         setButton("Mending", "Heal armor with xp bottles.", Material.ENCHANTED_BOOK, 30, 1, Enchantment.MENDING);
         setButton("Sharpness", "Deal more sword damage.", Material.ENCHANTED_BOOK, 30, 1, Enchantment.DAMAGE_ALL);
         setButton("Unbreaking", "Fortify your tools.", Material.ENCHANTED_BOOK, 30, 1, Enchantment.DURABILITY);
         setButton("Protection", "Take less damage.", Material.ENCHANTED_BOOK, 30, 1, Enchantment.PROTECTION_ENVIRONMENTAL);
         setButton("Projectile Protection", "Take less damage to projectiles.", Material.ENCHANTED_BOOK, 30, 1, Enchantment.PROTECTION_PROJECTILE);
+
         setButton("Fire Protection", "Take less damage to fire.", Material.ENCHANTED_BOOK, 30, 1, Enchantment.PROTECTION_FIRE);
         setButton("Sweeping Edge", "Increase attack range.", Material.ENCHANTED_BOOK, 30, 1, Enchantment.SWEEPING_EDGE);
-
         setButton("Punch", "Shoot players back further.", Material.ENCHANTED_BOOK, 30, 1, Enchantment.ARROW_KNOCKBACK);
         setButton("Knockback", "Hit players back further.", Material.ENCHANTED_BOOK, 30, 1, Enchantment.KNOCKBACK);
         setButton("Flame", "Shoot and set things on fire.", Material.ENCHANTED_BOOK, 30, 1, Enchantment.ARROW_FIRE);
         setButton("Fire Aspect", "Hit and set things on fire.", Material.ENCHANTED_BOOK, 30, 1, Enchantment.FIRE_ASPECT);
-        setButton("Spectral Arrow", "Highlight targets.", Material.SPECTRAL_ARROW, 30, 1);
+
 
         update();
     }
