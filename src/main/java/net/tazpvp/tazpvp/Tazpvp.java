@@ -86,7 +86,6 @@ public final class Tazpvp extends JavaPlugin {
     private static Database database;
 
     private static final Logger log = Logger.getLogger("Minecraft");
-    private static net.milkbowl.vault.chat.Chat chat;
     @Getter
     private static CrateManager crateManager;
 
@@ -211,10 +210,6 @@ public final class Tazpvp extends JavaPlugin {
     private void despawnNpcs() {
         npcs.forEach(NPC::remove);
         npcs.clear();
-    }
-
-    public static net.milkbowl.vault.chat.Chat getChat() {
-        return chat;
     }
 
 }
