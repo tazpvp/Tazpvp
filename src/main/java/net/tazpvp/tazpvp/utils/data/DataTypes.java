@@ -46,14 +46,15 @@ public enum DataTypes {
     PRESTIGE("prestige", 8, true),
     REBIRTH("rebirth", 9, true),
     PREMIUM("premium", 10, false),
-    PREFIX("prefix", 11, false),
-    DUELWINS("duel_wins", 12, true),
-    DIVISION("division", 13, true),
-    PLAYTIMEUNIX("playtime", 14, true),
-    DAILYCRATEUNIX("daily_crate", 15, true),
-    GUILD_ID("guild_id", 16, false),
-    TALENTS("talents", 17, false),
-    ACHIEVEMENTS("achievements", 18, false);
+    PLAYER_RANK("player_rank", 11, false),
+    PREFIX("prefix", 12, false),
+    DUELWINS("duel_wins", 13, true),
+    DIVISION("division", 14, true),
+    PLAYTIMEUNIX("playtime", 15, true),
+    DAILYCRATEUNIX("daily_crate", 16, true),
+    GUILD_ID("guild_id", 17, false),
+    TALENTS("talents", 18, false),
+    ACHIEVEMENTS("achievements", 19, false);
 
     @Getter
     private final String columnName;
