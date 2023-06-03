@@ -81,4 +81,11 @@ public class CombatTagFunctions {
             }
         }.runTaskTimer(Tazpvp.getInstance(), 0, 20);
     }
+
+    public static boolean isInCombat(UUID ID) {
+        if (getTag(ID).getAttackers().size() >= 1) {
+            return true;
+        }
+        return false;
+    }
 }

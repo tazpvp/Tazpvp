@@ -34,6 +34,7 @@ package net.tazpvp.tazpvp.talents.talent;
 
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.observer.Observable;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -44,7 +45,7 @@ public class Hunter extends Observable {
     @Override
     public void shoot(Player shooter) {
         if (PersistentData.getTalents(shooter.getUniqueId()).is("Hunter")) {
-            if (new Random().nextInt(3) > 1) {
+            if (new Random().nextInt(11) > 8) {
                 shooter.getInventory().addItem(new ItemStack(Material.ARROW));
             }
         }

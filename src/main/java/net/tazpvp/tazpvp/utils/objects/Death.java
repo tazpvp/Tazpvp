@@ -134,19 +134,10 @@ public class Death {
                     if (e.getWhoClicked() instanceof Player p) {
                         p.playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
 
-                        // Create particle effect
                         Location playerLocation = p.getLocation();
                         playerLocation.getWorld().spawnParticle(Particle.SPELL_MOB, playerLocation, 100, 0.5, 1, 0.5, 0.2);
 
-                        // Play firework sound
                         p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1, 1);
-
-                        // Create firework
-                        Firework firework = (Firework) playerLocation.getWorld().spawnEntity(playerLocation, EntityType.FIREWORK);
-                        FireworkMeta fireworkMeta = firework.getFireworkMeta();
-                        fireworkMeta.addEffect(FireworkEffect.builder().withColor(Color.BLUE, Color.WHITE).with(FireworkEffect.Type.BALL).build());
-                        fireworkMeta.setPower(1);
-                        firework.setFireworkMeta(fireworkMeta);
                     }
                 }
             }.runTaskLater(Tazpvp.getInstance(), 1);

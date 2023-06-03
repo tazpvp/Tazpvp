@@ -2,6 +2,7 @@ package net.tazpvp.tazpvp.commands.gameplay.spawn;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -18,7 +19,7 @@ public class SpawnCommand extends NRCommand {
                 return true;
             }
 
-            if (DeathFunctions.tags.containsKey(p.getUniqueId())) {
+            if (CombatTagFunctions.isInCombat(p.getUniqueId())) {
                 p.sendMessage(CC.RED + "You cannot teleport to spawn while in combat.");
                 return true;
             }
