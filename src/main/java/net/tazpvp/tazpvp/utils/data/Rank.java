@@ -35,22 +35,24 @@ package net.tazpvp.tazpvp.utils.data;
 import lombok.Getter;
 import net.tazpvp.tazpvp.utils.enums.CC;
 
-public enum RankData {
-    DEFAULT(1, CC.GRAY),
-    PREMIUM(2, CC.GRAY),
-    HELPER(3, CC.GRAY),
-    MOD(4, CC.GRAY),
-    ADMIN(5, CC.GRAY),
-    MANAGER(6, CC.GRAY),
-    OWNER(7, CC.RED);
+import java.util.List;
+
+public enum Rank {
+    DEFAULT("default", null, CC.GRAY, List.of(""));
 
     @Getter
-    private final int ranking;
+    private final String name;
+    @Getter
+    private final String prefix;
     @Getter
     private final CC color;
+    @Getter
+    private final List<String> permissions;
 
-    RankData(int ranking, CC color) {
-        this.ranking = ranking;
+    Rank(String name, String prefix, CC color, List<String> permissions) {
+        this.name = name;
+        this.prefix = prefix;
         this.color = color;
+        this.permissions = permissions;
     }
 }

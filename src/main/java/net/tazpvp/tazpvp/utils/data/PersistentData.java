@@ -50,7 +50,7 @@ public final class PersistentData {
      */
     public static void initPlayer(UUID uuid) {
         if (!SQLHelper.ifRowExists(NAME, ID_COLUMN, uuid.toString())) {
-            SQLHelper.initializeValues(NAME, "ID, COINS, XP, LEVEL, KILLS, DEATHS, TOP_KS, PRESTIGE, REBIRTH, PREMIUM, PLAYER_RANK, PREFIX, DUEL_WINS, DIVISION, PLAYTIME, DAILY_CRATE, GUILD_ID, TALENTS, ACHIEVEMENTS", "'" + uuid + "'", "0", "0", "0", "0", "0", "0", "0", "0", "false", "0", "null", "0", "1", "0", "0", "'n'", "'set'", "'set'");
+            SQLHelper.initializeValues(NAME, "ID, COINS, XP, LEVEL, KILLS, DEATHS, TOP_KS, PRESTIGE, REBIRTH, PREMIUM, PLAYER_RANK, PREFIX, DUEL_WINS, DIVISION, PLAYTIME, DAILY_CRATE, GUILD_ID, TALENTS, ACHIEVEMENTS", "'" + uuid + "'", "0", "0", "0", "0", "0", "0", "0", "0", "false", "default", "null", "0", "1", "0", "0", "'n'", "'set'", "'set'");
             setTalents(uuid, new Talents());
             setAchievements(uuid, new Achievements());
         }
@@ -203,6 +203,24 @@ public final class PersistentData {
      */
     public static boolean isPremium(@Nonnull final OfflinePlayer p) {
         return (boolean) getObject(p.getUniqueId(), DataTypes.PREMIUM.getColumnIndex());
+    }
+
+    /**
+     * Get the Rank of the player
+     * @param uuid UUID
+     * @return The player's rank
+     */
+    public static Rank getRank(@Nonnull final UUID uuid) {
+        return Rank.valueOf(getString(uuid, DataTypes.PLAYER_RANK));
+    }
+
+    /**
+     * Get the Rank of the player
+     * @param p The player
+     * @return The player's rank
+     */
+    public static Rank getRank(@Nonnull final OfflinePlayer p) {
+        return Rank.valueOf(getString(p.getUniqueId(), DataTypes.PLAYER_RANK));
     }
 
 

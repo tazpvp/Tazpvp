@@ -3,6 +3,8 @@ package net.tazpvp.tazpvp.utils.player;
 import lombok.Getter;
 import lombok.Setter;
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.Rank;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -22,6 +24,8 @@ public class PlayerWrapper {
     private boolean canRestore;
     @Getter @Setter
     private boolean dueling;
+    @Getter
+    private Rank rank;
 
     /**
      * List of all players the player wrapper owner is hidden from
@@ -39,6 +43,8 @@ public class PlayerWrapper {
         this.respawning = false;
         this.canRestore = false;
         this.hiddenFrom = new ArrayList<>();
+        this.dueling =false;
+        this.rank = PersistentData.getRank(uuid);
     }
 
     public Player getPlayer() {

@@ -104,7 +104,6 @@ public final class Tazpvp extends JavaPlugin {
         events.add("FFA");
         registerObservable();
         spawnNpcs();
-        setupChat();
         CombatTagFunctions.initCombatTag();
 
         parkourUtil = new ConfigUtil("parkour.yml", this);
@@ -141,14 +140,6 @@ public final class Tazpvp extends JavaPlugin {
         despawnNpcs();
 
         getCrateManager().shutdown();
-    }
-
-    private boolean setupChat() {
-        RegisteredServiceProvider<net.milkbowl.vault.chat.Chat> rsp = getServer().getServicesManager().getRegistration(net.milkbowl.vault.chat.Chat.class);
-        if (rsp != null) {
-            chat = rsp.getProvider();
-        }
-        return chat != null;
     }
 
     public static Tazpvp getInstance() {
