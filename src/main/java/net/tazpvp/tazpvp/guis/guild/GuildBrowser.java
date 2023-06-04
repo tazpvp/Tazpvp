@@ -139,10 +139,13 @@ public class GuildBrowser extends GUI {
                 p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
 
                 createGuild(text, p.getUniqueId());
+                p.sendMessage("You created a guild! " + GuildUtils.getGuildPlayerIn(p).getName());
                 return AnvilGUI.Response.close();
             })
             .onClose(player -> {
-                p.sendMessage("Guild creation cancelled.");
+                if (!GuildUtils.isInGuild(player)) {
+                    p.sendMessage("Guild creation cancelled.");
+                }
             })
             .text(">")
             .itemLeft(ItemBuilder.of(Material.NAME_TAG).build())
