@@ -38,6 +38,7 @@ import net.tazpvp.tazpvp.achievements.achievement.*;
 import net.tazpvp.tazpvp.commands.admin.hide.HideCommand;
 import net.tazpvp.tazpvp.commands.admin.kit.KitCommand;
 import net.tazpvp.tazpvp.commands.admin.npc.NpcCommand;
+import net.tazpvp.tazpvp.commands.admin.stats.StatCommand;
 import net.tazpvp.tazpvp.commands.moderation.RestoreCommand;
 import net.tazpvp.tazpvp.commands.moderation.ban.BanCommand;
 import net.tazpvp.tazpvp.commands.gameplay.spawn.SpawnCommand;
@@ -177,8 +178,9 @@ public final class Tazpvp extends JavaPlugin {
                 new RestoreCommand(),
                 new SpawnCommand(),
                 new HideCommand(),
-                new DiscordCommand())
-        ;
+                new DiscordCommand(),
+                new StatCommand()
+        );
     }
 
     private void register(NRCommand... commands) {

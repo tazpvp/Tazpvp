@@ -6,6 +6,7 @@ import net.tazpvp.tazpvp.utils.data.PersistentData;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import world.ntdi.nrcore.utils.command.simple.Completer;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
@@ -71,8 +72,12 @@ public class StatCommand extends NRCommand {
         } else if (args.length == 2) {
             List<String> values = new ArrayList<>();
             for (DataTypes dataTypes : dataTypes) {
-
+                values.add(dataTypes.name());
             }
+        } else if (args.length == 3) {
+            return Completer.intRange(1, 10, 1);
+        } else if (args.length == 4) {
+            return Completer.onlinePlayers(args[3]);
         }
         return List.of();
     }
