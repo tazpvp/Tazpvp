@@ -35,6 +35,7 @@ package net.tazpvp.tazpvp.duels;
 import lombok.Getter;
 import lombok.Setter;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.ArmorManager;
 
@@ -58,6 +59,8 @@ public abstract class Duel {
     private Player winner;
     @Getter @Setter
     private Player loser;
+    @Getter @Setter
+    private String worldName;
 
     public Duel(@Nonnull final UUID P1, @Nonnull final UUID P2, @Nonnull final String NAME) {
         this.P1 = P1;

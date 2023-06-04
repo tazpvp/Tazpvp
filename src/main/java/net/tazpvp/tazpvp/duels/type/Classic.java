@@ -57,6 +57,7 @@ public class Classic extends Duel {
         super(P1, P2, "classic");
         p1 = Bukkit.getPlayer(super.getP1());
         p2 = Bukkit.getPlayer(super.getP2());
+        super.setWorldName("duel_" + p1.getName() + "_" + p2.getName());
     }
 
 
@@ -64,12 +65,9 @@ public class Classic extends Duel {
     @Override
     public void begin() {
 
+        WorldUtil.cloneWorld("duelMap1", super.getWorldName());
 
-        final String duelName = "duel_" + p1.getName() + "_" + p2.getName();
-
-        WorldUtil.cloneWorld("duelMap1", duelName);
-
-        World world = Bukkit.getWorld(duelName);
+        World world = Bukkit.getWorld(super.getWorldName());
 
         ArmorManager.storeAndClearInventory(p1);
         ArmorManager.storeAndClearInventory(p2);
@@ -95,6 +93,9 @@ public class Classic extends Duel {
 
     @Override
     public void end() {
+
+        WorldUtil.deleteWorld(super.getWorldName());
+
         ChatFunctions.announce(super.getWinner().getName() + " won the duel against " + super.getLoser().getName());
 
         ArmorManager.setPlayerContents(super.getLoser(), true);
