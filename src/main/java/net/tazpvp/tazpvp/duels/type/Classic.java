@@ -37,9 +37,11 @@ import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import world.ntdi.nrcore.NRCore;
 import world.ntdi.nrcore.utils.ArmorManager;
 
 import java.util.List;
@@ -53,9 +55,10 @@ public class Classic extends Duel {
 
     @Override
     public void begin() {
-
         Player p1 = Bukkit.getPlayer(super.getP1());
         Player p2 = Bukkit.getPlayer(super.getP2());
+
+        String duelName = "duel_" + p1.getName() + "_" + p2.getName();
 
         ArmorManager.storeAndClearInventory(p1);
         ArmorManager.storeAndClearInventory(p2);
