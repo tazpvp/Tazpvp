@@ -50,7 +50,9 @@ public final class PersistentData {
      */
     public static void initPlayer(UUID uuid) {
         if (!SQLHelper.ifRowExists(NAME, ID_COLUMN, uuid.toString())) {
-            SQLHelper.initializeValues(NAME, "ID, COINS, XP, LEVEL, KILLS, DEATHS, TOP_KS, PRESTIGE, REBIRTH, PREMIUM, PLAYER_RANK, PREFIX, DUEL_WINS, DIVISION, PLAYTIME, DAILY_CRATE, GUILD_ID, TALENTS, ACHIEVEMENTS", "'" + uuid + "'", "0", "0", "0", "0", "0", "0", "0", "0", "false", "default", "null", "0", "1", "0", "0", "'n'", "'set'", "'set'");
+            SQLHelper.initializeValues(NAME,
+                    "ID, COINS, XP, LEVEL, KILLS, DEATHS, TOP_KS, PRESTIGE, REBIRTH, PREMIUM, PLAYER_RANK, PREFIX, DUEL_WINS, DIVISION, PLAYTIME, DAILY_CRATE, GUILD_ID, TALENTS, ACHIEVEMENTS",
+                    "'" + uuid + "'", "0", "0", "0", "0", "0", "0", "0", "0", "false", "DEFAULT", "null", "0", "1", "0", "0", "'n'", "'set'", "'set'");
             setTalents(uuid, new Talents());
             setAchievements(uuid, new Achievements());
         }

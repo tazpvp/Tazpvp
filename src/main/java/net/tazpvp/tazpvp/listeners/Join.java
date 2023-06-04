@@ -55,9 +55,10 @@ public class Join implements Listener {
     @EventHandler
     private void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
-        PlayerWrapper.addPlayer(p);
 
         PersistentData.initPlayer(p);
+
+        PlayerWrapper.addPlayer(p);
 
         PlaytimeUtil.playerJoined(p);
 

@@ -43,7 +43,7 @@ public class PlayerWrapper {
         this.respawning = false;
         this.canRestore = false;
         this.hiddenFrom = new ArrayList<>();
-        this.dueling =false;
+        this.dueling = false;
         this.rank = PersistentData.getRank(uuid);
     }
 
