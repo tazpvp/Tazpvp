@@ -43,28 +43,39 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import world.ntdi.nrcore.NRCore;
 import world.ntdi.nrcore.utils.ArmorManager;
+import world.ntdi.nrcore.utils.world.WorldUtil;
 
 import java.util.List;
 import java.util.UUID;
 
 public class Classic extends Duel {
 
+    Player p1;
+    Player p2;
+
     public Classic(UUID P1, UUID P2) {
         super(P1, P2, "classic");
+        p1 = Bukkit.getPlayer(super.getP1());
+        p2 = Bukkit.getPlayer(super.getP2());
     }
+
+
 
     @Override
     public void begin() {
-        Player p1 = Bukkit.getPlayer(super.getP1());
-        Player p2 = Bukkit.getPlayer(super.getP2());
 
-        String duelName = "duel_" + p1.getName() + "_" + p2.getName();
+
+        final String duelName = "duel_" + p1.getName() + "_" + p2.getName();
+
+        WorldUtil.cloneWorld("duelMap1", duelName);
+
+        World world = Bukkit.getWorld(duelName);
 
         ArmorManager.storeAndClearInventory(p1);
         ArmorManager.storeAndClearInventory(p2);
 
-        //TODO: Teleport to worlds
-
+        p1.teleport(new Location(world, 0.5, 10, 14.5, 180, 0));
+        p2.teleport(new Location(world, 0.5, 10, -13.5, 0, 0));
 
         for (UUID id : super.getDUELERS()) {
             Player p = Bukkit.getPlayer(id);
@@ -88,6 +99,9 @@ public class Classic extends Duel {
 
         ArmorManager.setPlayerContents(super.getLoser(), true);
         ArmorManager.setPlayerContents(super.getWinner(), true);
+
+        p1.teleport(NRCore.config.spawn);
+        p2.teleport(NRCore.config.spawn);
 
         duels.remove(this);
     }
