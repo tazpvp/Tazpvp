@@ -33,7 +33,9 @@
 package net.tazpvp.tazpvp.utils.functions;
 
 import net.tazpvp.tazpvp.duels.Duel;
+import net.tazpvp.tazpvp.guild.GuildUtils;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
+import net.tazpvp.tazpvp.utils.data.GuildData;
 import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
@@ -88,9 +90,14 @@ public class DeathFunctions {
                         );
                     }
 
-                    death.coffin();
-                    death.rewards();
-                    death.dropHead();
+                    if (GuildUtils.isInGuild(victim) && GuildUtils.isInGuild(pKiller)) {
+                        if (GuildUtils.getGuildPlayerIn(victim) != GuildUtils.getGuildPlayerIn(pKiller)) {
+                            death.coffin();
+                            death.rewards();
+                            death.dropHead();
+                        }
+                    }
+
                     death.storeInventory();
 
                     death.deathMessage(true);
