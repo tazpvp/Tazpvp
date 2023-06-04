@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  *
- * Copyright (c) 2022, n-tdi
+ * Copyright (c) 2023, n-tdi
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,34 +30,39 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.utils.runnables;
+package net.tazpvp.tazpvp.utils.passive;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
-import org.bukkit.*;
-import org.bukkit.entity.Item;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
+import world.ntdi.nrcore.utils.ChatUtils;
 
-public class Generator {
+import java.util.Arrays;
+import java.util.LinkedList;
 
-    private static ItemStack shard = new ItemStack(Material.AMETHYST_SHARD);
+public class Alerts {
 
-    public static void generate() {
+    private static int num = 0;
+    private static String prefix = "&8(&c!&8) &7";
+
+    private static LinkedList<String> texts = new LinkedList<>(Arrays.asList(
+            "Join our fun community: &3/discord",
+            "Check out what you can do with premium! &3/premium",
+            "Looking to apply for staff? &3/apply",
+            "Want to support us? Get our advertisement: &3/ad",
+            "Think someone is hacking? Report them: &3/report",
+            "You can hop in the AFK pit at spawn to claim rewards.",
+            "Died to a cheater? Restore your inventory: &3/restore "
+    ));
+
+    public static void alert() {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (Bukkit.getOnlinePlayers().size() >= 5) {
-
-                    Item i = (Bukkit.getWorld("arena")).dropItem(new Location(Bukkit.getWorld("arena"), 25.5, 91, 76.5), shard);
-                    i.setVelocity(new Vector(0, 0, 0));
-
-                    Item i2 = (Bukkit.getWorld("arena")).dropItem(new Location(Bukkit.getWorld("arena"), -24.5, 91, 76.5), shard);
-                    i2.setVelocity(new Vector(0, 0, 0));
-
-                    ChatFunctions.announce(ChatColor.LIGHT_PURPLE + " A shard has generated underground.", Sound.BLOCK_NOTE_BLOCK_BELL);;
-
+                if (Bukkit.getOnlinePlayers().size() > 0) {
+                    Bukkit.broadcastMessage(ChatUtils.chat(prefix + texts.get(num)));
+                    num++;
+                    if (num  >= texts.size()) num = 0;
                 }
             }
         }.runTaskTimer(Tazpvp.getInstance(), 20, 20*60*4);
