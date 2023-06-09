@@ -103,7 +103,7 @@ public class Crate {
     }
 
     private boolean hasKey(Player p) {
-        if (p.getInventory().getItemInMainHand().getType() == Material.TRIPWIRE) {
+        if (p.getInventory().getItemInMainHand().getType() == Material.TRIPWIRE_HOOK) {
             ItemStack i = p.getInventory().getItemInMainHand();
             if (i.getItemMeta() != null) {
                 return KeyFactory.getFactory().isCrateKey(i, getType());
