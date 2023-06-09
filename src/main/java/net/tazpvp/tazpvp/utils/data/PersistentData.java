@@ -11,7 +11,6 @@ import org.bukkit.util.io.BukkitObjectOutputStream;
 import world.ntdi.nrcore.utils.sql.SQLHelper;
 
 import javax.annotation.Nonnull;
-import javax.xml.crypto.Data;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

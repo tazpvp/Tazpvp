@@ -58,7 +58,7 @@ public class CrateManager {
 
     public boolean canClaimDaily(OfflinePlayer p) {
         long timeNow = System.currentTimeMillis();
-        long timeSinceLastDaily = PersistentData.getInt(p, DataTypes.DAILYCRATEUNIX);
+        long timeSinceLastDaily = (long) PersistentData.getFloat(p, DataTypes.DAILYCRATEUNIX);
 
         return timeNow - timeSinceLastDaily > 24 * 60 * 60 * 1000;
     }
