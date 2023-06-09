@@ -76,9 +76,9 @@ public abstract class Duel {
 
     public abstract void end();
 
-    public static List<Duel> duels = new ArrayList<>();
+    public static WeakHashMap<Duel, UUID> duels = new WeakHashMap<>();
     public static Duel getDuel(UUID id) {
-        for (Duel duel : duels) {
+        for (Duel duel : duels.keySet()) {
             if (duel.DUELERS.contains(id)) {
                 return duel;
             }

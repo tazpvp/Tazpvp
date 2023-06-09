@@ -60,8 +60,6 @@ public class Classic extends Duel {
         super.setWorldName("duel_" + p1.getName() + "_" + p2.getName());
     }
 
-
-
     @Override
     public void begin() {
 

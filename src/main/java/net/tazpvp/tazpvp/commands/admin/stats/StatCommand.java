@@ -34,7 +34,7 @@ public class StatCommand extends NRCommand {
 
         // /stats modifier datatype number player
         if (args.length < 4) {
-            sendIncorrectUsage(sender, "MISSING ALL ARGS");
+            sendIncorrectUsage(sender, "/stats <add/remove/set> <type> <amount> <player>");
             return false;
         }
 
@@ -74,6 +74,7 @@ public class StatCommand extends NRCommand {
             for (DataTypes dataTypes : dataTypes) {
                 values.add(dataTypes.name());
             }
+            return values;
         } else if (args.length == 3) {
             return Completer.intRange(1, 10, 1);
         } else if (args.length == 4) {
