@@ -32,69 +32,90 @@
 
 package net.tazpvp.tazpvp.utils.data;
 
-import lombok.Getter;
-import world.ntdi.nrcore.utils.sql.SQLHelper;
+import lombok.NonNull;
+import net.tazpvp.tazpvp.Tazpvp;
+import world.ntdi.postglam.data.DataTypes;
+import world.ntdi.postglam.sql.module.Column;
+import world.ntdi.postglam.sql.module.Row;
+import world.ntdi.postglam.sql.module.Table;
 
-import javax.annotation.Nonnull;
+import java.sql.SQLException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.UUID;
 
-public class PunishmentData {
+public class PunishmentData extends Table {
 
-    public static final String NAME = "punishments";
-    public static final String ID = "id";
+    private static final String NAME = "punishments";
+    private static final PunishmentData punishmentData;
 
-    public static void punish(@Nonnull final UUID uuid, @Nonnull final PunishTypes type, final long timestamp) {
-        if (!isInTable(uuid)) {
-            SQLHelper.initializeValues(NAME, "ID, TIME, MUTED, BANNED", "'" + uuid + "', " + timestamp + ", false, false");
-            SQLHelper.updateValue(NAME, ID, uuid.toString(), type.columnName, true);
-            return;
-        }
-
-        SQLHelper.deleteRow(NAME, ID, uuid.toString());
-        punish(uuid, type, timestamp);
-    }
-
-    public static void unpunish(@Nonnull final UUID uuid) {
-        if (isInTable(uuid)) {
-            SQLHelper.deleteRow(NAME, ID, uuid.toString());
+    static {
+        try {
+            punishmentData = new PunishmentData();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public static long timeLeft(@Nonnull final UUID uuid) {
-        if (!isInTable(uuid))
-            throw new IllegalArgumentException(uuid + " is not in table! Should check with `isInTable()` first");
-
-        return SQLHelper.getInt(NAME, ID, uuid.toString(), PunishTypes.TIME.getColumnIndex());
+    public PunishmentData() throws SQLException {
+        super(Tazpvp.getDatabase(), NAME, Map.entry("id", DataTypes.UUID), new LinkedHashMap<>() {{
+                    put("time", DataTypes.BIGINT);
+                    put("punishment", DataTypes.TEXT);
+                }}
+        );
     }
 
-    public static boolean isPunished(PunishTypes type, UUID id) {
-        if (!isInTable(id)) return false; // Check if in table
-        if (type == PunishTypes.MUTE && isPunished(PunishTypes.BAN, id)) return true; // Check if muted when banned
-        return SQLHelper.getBool(NAME, ID, id.toString(), type.columnIndex); // Final check for punishment
-    }
-
-    public static boolean isInTable(@Nonnull final UUID uuid) {
-        return SQLHelper.ifRowExists(NAME, ID, uuid.toString());
-    }
-
-    public enum PunishTypes {
-        TIME("time", 2),
-        BAN("muted", 3),
-        MUTE("banned", 4);
-
-        @Getter
-        private final String columnName;
-        @Getter
-        private final int columnIndex;
-
-        PunishTypes(@Nonnull final String columnName, final int columnIndex) {
-            this.columnName = columnName;
-            this.columnIndex = columnIndex;
+    public static void punish(final @NonNull UUID uuid, final @NonNull PunishmentType punishmentType, final long time) {
+        try {
+            if (punishmentData.doesRowExist(uuid.toString())) {
+                Row punishmentRow = new Row(punishmentData, uuid.toString());
+                punishmentRow.drop();
+            }
+            Row punishmentRow = new Row(punishmentData, uuid.toString(), String.valueOf(System.currentTimeMillis() + time), punishmentType.name());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
+    public static long getTimeRemaining(final @NonNull UUID uuid) {
+        try {
+            if (punishmentData.doesRowExist(uuid.toString())) {
+                Row punishmentRow = new Row(punishmentData, uuid.toString());
+                Column timeColumn = new Column(punishmentRow.getTable(), "time");
+                return (long) punishmentRow.fetch(timeColumn);
+            } else {
+                return 0L;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    public static PunishmentType getPunishment(final @NonNull UUID uuid) {
+        try {
+            if (punishmentData.doesRowExist(uuid.toString())) {
+                Row punishmentRow = new Row(punishmentData, uuid.toString());
+                Column punishmentTypeColumn = new Column(punishmentRow.getTable(), "punishment");
+                return PunishmentType.valueOf((String) punishmentRow.fetch(punishmentTypeColumn));
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    public static boolean isPunished(final @NonNull UUID uuid) {
+        try {
+            return punishmentData.doesRowExist(uuid.toString());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public enum PunishmentType {
+        MUTED, BANNED, PERMANENT_BAN;
+    }
 }
 
 
