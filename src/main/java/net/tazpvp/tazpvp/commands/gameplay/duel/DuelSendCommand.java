@@ -1,6 +1,7 @@
 package net.tazpvp.tazpvp.commands.gameplay.duel;
 
 import lombok.NonNull;
+import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.duels.type.Classic;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -42,8 +43,17 @@ public class DuelSendCommand extends NRCommand {
     }
 
     private void putInDuel(String type, Player p, Player target) {
+        for (Duel duel : Duel.duels.keySet()) {
+            if (Duel.duels.get(duel) == target.getUniqueId()) {
+                if (duel.getP1() == p.getUniqueId()) {
+                    p.sendMessage("You already sent a duel to this person.");
+                    return;
+                }
+                Duel.duels.remove(duel);
+            }
+        }
         if (type.equalsIgnoreCase("classic")) {
-            new Classic(p.getUniqueId(), target.getUniqueId());
+            Duel.duels.put(new Classic(p.getUniqueId(), target.getUniqueId()), target.getUniqueId());
         } else {
             p.sendMessage("Not a valid type");
             return;

@@ -41,7 +41,7 @@ public class DuelAcceptCommand extends NRCommand {
 
     private Pair<Boolean, Duel> requested(Player p) {
         for (Duel duel : Duel.duels.keySet()) {
-            if (duel.getP2().equals(p.getUniqueId())) {
+            if (Duel.duels.get(duel) == p.getUniqueId()) {
                 return Pair.with(true, duel);
             }
         }
