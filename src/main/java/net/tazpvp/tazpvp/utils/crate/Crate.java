@@ -35,8 +35,10 @@ package net.tazpvp.tazpvp.utils.crate;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.utils.enums.CC;
-import org.bukkit.*;
-import org.bukkit.block.Block;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -70,8 +72,11 @@ public class Crate {
 
     public void acceptClick(PlayerInteractEvent e) {
         Player p = e.getPlayer();
+        System.out.println("made func!?");
         if (isCrate(e)) {
+            System.out.println("iscrat");
             if (hasKey(p)) { // Only runs if the player interacts with a crate and has the proper key
+                System.out.println("hasje");
                 getLocation().getWorld().spawnParticle(Particle.EXPLOSION_NORMAL, getLocation(), 1);
                 removeOne(p, p.getInventory().getItemInMainHand());
                 p.playSound(p.getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN, 1F, 1F);
