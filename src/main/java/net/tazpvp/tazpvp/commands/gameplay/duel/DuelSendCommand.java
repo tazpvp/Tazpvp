@@ -30,6 +30,11 @@ public class DuelSendCommand extends NRCommand {
 
         Player target = Bukkit.getPlayer(args[0]);
 
+        if (target == p) {
+            sendIncorrectUsage(sender, "You cannot send a duel to yourself.");
+            return true;
+        }
+
         if (target != null) {
             putInDuel(args[1], p, target);
         }
