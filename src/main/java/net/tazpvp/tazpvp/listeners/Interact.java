@@ -19,8 +19,9 @@ public class Interact implements Listener {
             if (e.getClickedBlock().getType() == Material.BEACON) {
                 e.setCancelled(true);
                 for (Crate crate : Tazpvp.getCrateManager().getCrates()) {
-                    crate.acceptClick(e);
                     System.out.println("call crat");
+                    crate.acceptClick(e);
+
                 }
             }
         }
