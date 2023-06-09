@@ -72,11 +72,8 @@ public class Crate {
 
     public void acceptClick(PlayerInteractEvent e) {
         Player p = e.getPlayer();
-        System.out.println("made func!?");
         if (isCrate(e)) {
-            System.out.println("iscrat");
             if (hasKey(p)) { // Only runs if the player interacts with a crate and has the proper key
-                System.out.println("hasje");
                 getLocation().getWorld().spawnParticle(Particle.EXPLOSION_NORMAL, getLocation(), 1);
                 removeOne(p, p.getInventory().getItemInMainHand());
                 p.playSound(p.getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN, 1F, 1F);
@@ -97,8 +94,6 @@ public class Crate {
     }
 
     private boolean isCrate(PlayerInteractEvent e) {
-        System.out.println(e.getAction() == Action.RIGHT_CLICK_BLOCK);
-        System.out.println(e.getClickedBlock().getLocation().equals(getLocation()));
         return (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock().getLocation().equals(getLocation()));
     }
 
