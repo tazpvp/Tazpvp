@@ -40,6 +40,7 @@ import net.tazpvp.tazpvp.commands.admin.kit.KitCommand;
 import net.tazpvp.tazpvp.commands.admin.npc.NpcCommand;
 import net.tazpvp.tazpvp.commands.admin.stats.StatCommand;
 import net.tazpvp.tazpvp.commands.gameplay.DailyCommand;
+import net.tazpvp.tazpvp.commands.gameplay.duel.DuelCommand;
 import net.tazpvp.tazpvp.commands.moderation.RestoreCommand;
 import net.tazpvp.tazpvp.commands.moderation.ban.BanCommand;
 import net.tazpvp.tazpvp.commands.gameplay.spawn.SpawnCommand;
@@ -181,7 +182,8 @@ public final class Tazpvp extends JavaPlugin {
                 new HideCommand(),
                 new DiscordCommand(),
                 new StatCommand(),
-                new DailyCommand()
+                new DailyCommand(),
+                new DuelCommand()
         );
     }
 

@@ -47,9 +47,4 @@ public class DuelAcceptCommand extends NRCommand {
         }
         return Pair.with(false, null);
     }
-
-    @Override
-    public List<String> complete(CommandSender sender, String[] args) {
-        return List.of("Accept");
-    }
 }
