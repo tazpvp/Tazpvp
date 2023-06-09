@@ -2,9 +2,7 @@ package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.crate.Crate;
-import net.tazpvp.tazpvp.utils.crate.CrateManager;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,10 +18,9 @@ public class Interact implements Listener {
         if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (e.getClickedBlock().getType() == Material.BEACON) {
                 e.setCancelled(true);
-                if (Tazpvp.getCrateManager().canClaimDaily(p)) {
-                    for (Crate crate : Tazpvp.getCrateManager().getCrates()) {
-                        crate.acceptClick(e);
-                    }
+                for (Crate crate : Tazpvp.getCrateManager().getCrates()) {
+                    crate.acceptClick(e);
+                    System.out.println("call crat");
                 }
             }
         }
