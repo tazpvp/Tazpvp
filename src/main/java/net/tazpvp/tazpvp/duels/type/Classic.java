@@ -66,18 +66,18 @@ public class Classic extends Duel {
     public void begin() {
 
         WorldUtil.cloneWorld("duelMap1", super.getWorldName());
-
-        World world = Bukkit.getWorld(super.getWorldName());
-
-        ArmorManager.storeAndClearInventory(p1);
-        ArmorManager.storeAndClearInventory(p2);
-
         new BukkitRunnable() {
             public void run() {
+                Duel duel = Duel.getDuel(p1.getUniqueId());
+                World world = Bukkit.getWorld(duel.getWorldName());
+
+                ArmorManager.storeAndClearInventory(p1);
+                ArmorManager.storeAndClearInventory(p2);
+
                 p1.teleport(new Location(world, 0.5, 10, 14.5, 180, 0));
                 p2.teleport(new Location(world, 0.5, 10, -13.5, 0, 0));
 
-                for (UUID id : Duel.getDuel(p1.getUniqueId()).getDUELERS()) {
+                for (UUID id : duel.getDUELERS()) {
                     Player p = Bukkit.getPlayer(id);
                     Inventory inv = p.getInventory();
 
