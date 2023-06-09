@@ -97,7 +97,9 @@ public class Crate {
     }
 
     private boolean isCrate(PlayerInteractEvent e) {
-        return (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock().getLocation() == getLocation());
+        System.out.println(e.getAction() == Action.RIGHT_CLICK_BLOCK);
+        System.out.println(e.getClickedBlock().getLocation().equals(getLocation()));
+        return (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock().getLocation().equals(getLocation()));
     }
 
     private boolean hasKey(Player p) {
