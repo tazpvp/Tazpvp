@@ -72,6 +72,7 @@ public abstract class Duel {
         this.DUELERS.add(P2);
     }
 
+    public abstract void initialize();
     public abstract void begin();
 
     public abstract void end();

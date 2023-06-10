@@ -1,10 +1,12 @@
 package net.tazpvp.tazpvp.commands.gameplay.duel;
 
 import lombok.NonNull;
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.duels.Duel;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.javatuples.Pair;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
@@ -29,7 +31,12 @@ public class DuelAcceptCommand extends NRCommand {
         if (duelPair.getValue0()) {
             Duel duel = duelPair.getValue1();
 
-            duel.begin();
+            duel.initialize();
+            new BukkitRunnable() {
+                public void run() {
+                    duel.begin();
+                }
+            }.runTaskLater(Tazpvp.getInstance(), 20*5L);
             duel.getDUELERS().forEach(d -> {
                 Bukkit.getPlayer(d).sendMessage("Duel Commencing!");
             });

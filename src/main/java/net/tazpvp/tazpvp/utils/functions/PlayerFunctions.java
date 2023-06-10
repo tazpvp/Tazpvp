@@ -43,6 +43,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import java.util.List;
@@ -70,6 +71,9 @@ public class PlayerFunctions {
     }
 
     public static void healPlr(Player p) {
+        for (PotionEffect effect : p.getActivePotionEffects()) {
+            p.removePotionEffect(effect.getType());
+        }
         if (getInt(p, DataTypes.REBIRTH) >= 1) {
             p.setHealthScale(22.0);
         } else {

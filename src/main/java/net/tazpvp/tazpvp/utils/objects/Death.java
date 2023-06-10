@@ -241,10 +241,6 @@ public class Death {
     public void heal() {
         PlayerFunctions.healPlr(victim);
         PlayerFunctions.feedPlr(victim);
-
-        for (PotionEffect effect : victim.getActivePotionEffects()) {
-            victim.removePotionEffect(effect.getType());
-        }
     }
 
     public void deathMessage(boolean pKill) {

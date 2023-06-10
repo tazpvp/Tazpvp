@@ -35,6 +35,7 @@ package net.tazpvp.tazpvp.duels.type;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
+import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -62,38 +63,35 @@ public class Classic extends Duel {
     }
 
     @Override
+    public void initialize() {
+        new WorldUtil().cloneWorld("duelMap1", super.getWorldName());
+    }
+
+    @Override
     public void begin() {
-        World world = new WorldUtil().cloneWorld("duelMap1", super.getWorldName());
 
-        new BukkitRunnable() {
-            public void run() {
-                Duel duel = Duel.getDuel(p1.getUniqueId());
-                World world = Bukkit.getWorld(duel.getWorldName());
+        World world = Bukkit.getWorld(super.getWorldName());
 
-                Bukkit.broadcastMessage(world.getName());
+        super.getDUELERS().forEach(p -> {ArmorManager.storeAndClearInventory(p2);});
+        super.getDUELERS().forEach(p -> {PlayerFunctions.healPlr(Bukkit.getPlayer(p));});
 
-                ArmorManager.storeAndClearInventory(p1);
-                ArmorManager.storeAndClearInventory(p2);
+        p1.teleport(new Location(world, 0.5, 10, 14.5, 180, 0));
+        p2.teleport(new Location(world, 0.5, 10, -13.5, 0, 0));
 
-                p1.teleport(new Location(world, 0.5, 10, 14.5, 180, 0));
-                p2.teleport(new Location(world, 0.5, 10, -13.5, 0, 0));
+        for (UUID id : super.getDUELERS()) {
+            Player p = Bukkit.getPlayer(id);
+            Inventory inv = p.getInventory();
 
-                for (UUID id : duel.getDUELERS()) {
-                    Player p = Bukkit.getPlayer(id);
-                    Inventory inv = p.getInventory();
+            p.getEquipment().setHelmet(new ItemStack(Material.DIAMOND_HELMET));
+            p.getEquipment().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
+            p.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
+            p.getEquipment().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
 
-                    p.getEquipment().setHelmet(new ItemStack(Material.DIAMOND_HELMET));
-                    p.getEquipment().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
-                    p.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
-                    p.getEquipment().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
+            inv.addItem(new ItemStack(Material.DIAMOND_SWORD));
+            inv.addItem(new ItemStack(Material.GOLDEN_APPLE, 6));
 
-                    inv.addItem(new ItemStack(Material.DIAMOND_SWORD));
-                    inv.addItem(new ItemStack(Material.GOLDEN_APPLE, 6));
-
-                    p.sendMessage("The duel hath begun.");
-                }
-            }
-        }.runTaskLater(Tazpvp.getInstance(), 20*5L);
+            p.sendMessage("The duel hath begun.");
+        }
     }
 
     @Override
@@ -112,7 +110,7 @@ public class Classic extends Duel {
         new BukkitRunnable() {
             public void run() {
                 ArmorManager.setPlayerContents(winner, true);
-                p2.teleport(NRCore.config.spawn);
+                winner.teleport(NRCore.config.spawn);
 
                 new WorldUtil().deleteWorld(worldName);
                 duels.remove(this);
