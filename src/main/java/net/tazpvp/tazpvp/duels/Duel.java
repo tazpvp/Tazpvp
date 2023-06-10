@@ -86,4 +86,15 @@ public abstract class Duel {
         return null;
     }
 
+    public static UUID getOtherDueler(UUID id) {
+        Duel duel = getDuel(id);
+        for (UUID dueler : duel.DUELERS) {
+            if (duel.getP1() == id) {
+                return duel.getP2();
+            }
+            return duel.getP1();
+        }
+        return null;
+    }
+
 }

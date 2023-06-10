@@ -65,7 +65,6 @@ public class Classic extends Duel {
     public void begin() {
         World world = new WorldUtil().cloneWorld("duelMap1", super.getWorldName());
 
-
         new BukkitRunnable() {
             public void run() {
                 Duel duel = Duel.getDuel(p1.getUniqueId());
@@ -100,16 +99,24 @@ public class Classic extends Duel {
     @Override
     public void end() {
 
-        ChatFunctions.announce(super.getWinner().getName() + " won the duel against " + super.getLoser().getName());
+        final Player winner = super.getWinner();
+        final Player loser = super.getLoser();
+        String worldName = super.getWorldName();
 
-        ArmorManager.setPlayerContents(super.getLoser(), true);
-        ArmorManager.setPlayerContents(super.getWinner(), true);
+        ChatFunctions.announce(winner.getName() + " won the duel against " + loser.getName());
+        ArmorManager.setPlayerContents(loser, true);
+        loser.teleport(NRCore.config.spawn);
 
-        p1.teleport(NRCore.config.spawn);
-        p2.teleport(NRCore.config.spawn);
+        winner.sendTitle("You Won", "");
 
-        new WorldUtil().deleteWorld(super.getWorldName());
+        new BukkitRunnable() {
+            public void run() {
+                ArmorManager.setPlayerContents(winner, true);
+                p2.teleport(NRCore.config.spawn);
 
-        duels.remove(this);
+                new WorldUtil().deleteWorld(worldName);
+                duels.remove(this);
+            }
+        }.runTaskLater(Tazpvp.getInstance(), 20*3);
     }
 }

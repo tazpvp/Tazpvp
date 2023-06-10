@@ -33,9 +33,11 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -48,51 +50,75 @@ import org.bukkit.projectiles.ProjectileSource;
 public class Damage implements Listener {
 
     @EventHandler
-    public void onEntityDamage(EntityDamageEvent e) {
-        if (e.getEntity() instanceof Player victim) {
-            PlayerWrapper vw = PlayerWrapper.getPlayer(victim);
+    public void onEntityDamage(EntityDamageEvent event) {
+        if (!(event.getEntity() instanceof Player)) {
+            return;
+        }
 
-            if (Tazpvp.spawnRegion.contains(victim.getLocation())) {
-                e.setCancelled(true);
-                return;
-            }
+        Player victim = (Player) event.getEntity();
+        PlayerWrapper vw = PlayerWrapper.getPlayer(victim);
 
-            if (!vw.isLaunching()) {
-                if (compare(e, e.getCause() == EntityDamageEvent.DamageCause.FALL)) return;
-            }
+        if (Tazpvp.spawnRegion.contains(victim.getLocation())) {
+            event.setCancelled(true);
+            return;
+        }
 
-            double fd = e.getFinalDamage();
+        double finalDamage = event.getFinalDamage();
+        boolean isFallingDamage = (event.getCause() == EntityDamageEvent.DamageCause.FALL);
+        Duel duel = Duel.getDuel(victim.getUniqueId());
 
-            if (e.getCause() == EntityDamageEvent.DamageCause.FIRE) {
-                Tazpvp.getObservers().forEach(observer -> observer.burn(victim));
-            }
+        if (!vw.isLaunching() && compare(event, isFallingDamage)) {
+            return;
+        }
 
-            if (e instanceof EntityDamageByEntityEvent ee) {
-                if (ee.getDamager() instanceof Player killer) {
-                    CombatTagFunctions.putInCombat(victim.getUniqueId(), killer.getUniqueId());
-                } else if (ee.getDamager() instanceof Arrow arrow) {
-                    ProjectileSource shooter = arrow.getShooter();
-                    if (shooter instanceof Player pShooter) {
-                        CombatTagFunctions.putInCombat(victim.getUniqueId(), pShooter.getUniqueId());
-                    }
-                }
-                if ((victim.getHealth() - fd) <= 0) {
-                    e.setCancelled(true);
-                    DeathFunctions.death(victim, ee.getDamager());
-                }
-            } else {
-                if ((victim.getHealth() - fd) <= 0) {
-                    e.setCancelled(true);
-                    DeathFunctions.death(victim, null);
-                } else {
-                    CombatTagFunctions.putInCombat(victim.getUniqueId(), null);
-                }
-            }
+        if (duel != null && (victim.getHealth() - finalDamage) <= 0) {
+            event.setCancelled(true);
+            duel.setWinner(Bukkit.getPlayer(Duel.getOtherDueler(victim.getUniqueId())));
+            duel.setLoser(victim);
+            duel.end();
+            return;
+        }
+
+        if (event.getCause() == EntityDamageEvent.DamageCause.FIRE) {
+            Tazpvp.getObservers().forEach(observer -> observer.burn(victim));
+        }
+
+        if (event instanceof EntityDamageByEntityEvent entityDamageByEntityEvent) {
+            handleEntityDamageByEntity(victim, entityDamageByEntityEvent, finalDamage);
+        } else {
+            handleNonEntityDamage(victim, event, finalDamage);
         }
     }
 
-    private boolean compare(EntityDamageEvent e, boolean condition) {
-        if (condition) e.setCancelled(true);
+    private boolean compare(EntityDamageEvent event, boolean condition) {
+        if (condition) {
+            event.setCancelled(true);
+        }
         return condition;
+    }
+
+    private void handleEntityDamageByEntity(Player victim, EntityDamageByEntityEvent event, double finalDamage) {
+        if (event.getDamager() instanceof Player killer) {
+            CombatTagFunctions.putInCombat(victim.getUniqueId(), killer.getUniqueId());
+        } else if (event.getDamager() instanceof Arrow arrow) {
+            ProjectileSource shooter = arrow.getShooter();
+            if (shooter instanceof Player pShooter) {
+                CombatTagFunctions.putInCombat(victim.getUniqueId(), pShooter.getUniqueId());
+            }
+        }
+
+        if ((victim.getHealth() - finalDamage) <= 0) {
+            event.setCancelled(true);
+            DeathFunctions.death(victim, event.getDamager());
+        }
+    }
+
+    private void handleNonEntityDamage(Player victim, EntityDamageEvent event, double finalDamage) {
+        if ((victim.getHealth() - finalDamage) <= 0) {
+            event.setCancelled(true);
+            DeathFunctions.death(victim, null);
+        } else {
+            CombatTagFunctions.putInCombat(victim.getUniqueId(), null);
+        }
     }
 }
