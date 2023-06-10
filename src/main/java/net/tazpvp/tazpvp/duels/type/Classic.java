@@ -35,7 +35,10 @@ package net.tazpvp.tazpvp.duels.type;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -44,7 +47,6 @@ import world.ntdi.nrcore.NRCore;
 import world.ntdi.nrcore.utils.ArmorManager;
 import world.ntdi.nrcore.utils.world.WorldUtil;
 
-import java.util.List;
 import java.util.UUID;
 
 public class Classic extends Duel {
@@ -61,8 +63,8 @@ public class Classic extends Duel {
 
     @Override
     public void begin() {
+        World world = new WorldUtil().cloneWorld("duelMap1", super.getWorldName());
 
-        WorldUtil.cloneWorld("duelMap1", super.getWorldName());
 
         new BukkitRunnable() {
             public void run() {
@@ -104,7 +106,7 @@ public class Classic extends Duel {
         p1.teleport(NRCore.config.spawn);
         p2.teleport(NRCore.config.spawn);
 
-        WorldUtil.deleteWorld(super.getWorldName());
+        new WorldUtil().deleteWorld(super.getWorldName());
 
         duels.remove(this);
     }
