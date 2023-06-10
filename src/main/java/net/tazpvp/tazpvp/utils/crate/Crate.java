@@ -78,7 +78,7 @@ public class Crate {
             if (hasKey(p)) { // Only runs if the player interacts with a crate and has the proper key
                 System.out.println("hasje");
                 getLocation().getWorld().spawnParticle(Particle.EXPLOSION_NORMAL, getLocation(), 1);
-                removeOne(p, p.getInventory().getItemInMainHand());
+                removeOne(p);
                 p.playSound(p.getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN, 1F, 1F);
                 Tuple<String, ItemStack> randomShopItem = randomShopItem();
                 p.sendMessage(CC.GREEN + "You got " + randomShopItem.getA() + "!");
@@ -115,11 +115,13 @@ public class Crate {
     /*
         Remove one item from the player's inventory, needed because can't set amount of an Item to 0 so must set to AIR if amount is 1
      */
-    private void removeOne(Player p, ItemStack i) {
+    private void removeOne(Player p) {
+        ItemStack i = p.getInventory().getItemInMainHand();
         if (i.getAmount() > 1) {
             i.setAmount(i.getAmount() - 1);
+            p.getInventory().setItemInMainHand(i);
         } else {
-            i.setType(Material.AIR);
+            p.getInventory().remove(i);
         }
     }
 

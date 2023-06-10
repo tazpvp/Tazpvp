@@ -35,10 +35,7 @@ package net.tazpvp.tazpvp.duels.type;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -66,6 +63,7 @@ public class Classic extends Duel {
     public void begin() {
 
         WorldUtil.cloneWorld("duelMap1", super.getWorldName());
+
         new BukkitRunnable() {
             public void run() {
                 Duel duel = Duel.getDuel(p1.getUniqueId());
