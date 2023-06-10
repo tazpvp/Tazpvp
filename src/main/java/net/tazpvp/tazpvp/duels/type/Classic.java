@@ -71,6 +71,8 @@ public class Classic extends Duel {
                 Duel duel = Duel.getDuel(p1.getUniqueId());
                 World world = Bukkit.getWorld(duel.getWorldName());
 
+                Bukkit.broadcastMessage(world.getName());
+
                 ArmorManager.storeAndClearInventory(p1);
                 ArmorManager.storeAndClearInventory(p2);
 
