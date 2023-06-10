@@ -22,7 +22,7 @@ public class Move implements Listener {
         Player p = e.getPlayer();
         PlayerWrapper pw = PlayerWrapper.getPlayer(p);
 
-        Location raidus = new Location(Bukkit.getWorld("arena"), 0, 100, NRCore.config.spawn.getZ() + 27);
+        Location raidus = new Location(Bukkit.getWorld("arena"), 0, 100, NRCore.config.spawn.getZ() + 29);
         Block b = new Location(e.getPlayer().getWorld(), e.getPlayer().getLocation().getX(), e.getPlayer().getLocation().getY() - 1, e.getPlayer().getLocation().getZ()).getBlock();
 
         if (p.getWorld().equals(Bukkit.getWorld("parkour"))) {

@@ -34,10 +34,15 @@ package net.tazpvp.tazpvp.duels;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+import world.ntdi.nrcore.NRCore;
 import world.ntdi.nrcore.utils.ArmorManager;
+import world.ntdi.nrcore.utils.world.WorldUtil;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -74,8 +79,36 @@ public abstract class Duel {
 
     public abstract void initialize();
     public abstract void begin();
+    public void end() {
+        final Player winner = getWinner();
+        final Player loser = getLoser();
 
-    public abstract void end();
+        ChatFunctions.announce(winner.getName() + " won the duel against " + loser.getName());
+        ArmorManager.setPlayerContents(loser, true);
+        loser.teleport(NRCore.config.spawn);
+
+        winner.sendTitle("You Won", "");
+
+        new BukkitRunnable() {
+            public void run() {
+                ArmorManager.setPlayerContents(winner, true);
+                winner.teleport(NRCore.config.spawn);
+
+                new WorldUtil().deleteWorld(getWorldName());
+                duels.remove(this);
+            }
+        }.runTaskLater(Tazpvp.getInstance(), 20*3);
+    }
+    public void abort() {
+        DUELERS.forEach(p -> {
+            Player plr = Bukkit.getPlayer(p);
+            plr.teleport(NRCore.config.spawn);
+            ArmorManager.setPlayerContents(plr, true);
+        });
+
+        new WorldUtil().deleteWorld(getWorldName());
+        duels.remove(this);
+    }
 
     public static WeakHashMap<Duel, UUID> duels = new WeakHashMap<>();
     public static Duel getDuel(UUID id) {

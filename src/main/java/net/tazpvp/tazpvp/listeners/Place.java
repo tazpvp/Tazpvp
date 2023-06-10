@@ -36,7 +36,7 @@ public class Place implements Listener {
                 return;
             }
 
-            if (b.getLocation().distance(new Location(Bukkit.getWorld("arena"), 0, NRCore.config.spawn.getY() - 10, NRCore.config.spawn.getZ() + 76)) > 35 || b.getLocation().getY() < NRCore.config.spawn.getY() - 10) {
+            if (b.getLocation().distance(new Location(Bukkit.getWorld("arena"), 0, NRCore.config.spawn.getY() - 10, NRCore.config.spawn.getZ() + 78)) > 36 || b.getLocation().getY() < NRCore.config.spawn.getY() - 10) {
                 e.setCancelled(true);
                 return;
             }

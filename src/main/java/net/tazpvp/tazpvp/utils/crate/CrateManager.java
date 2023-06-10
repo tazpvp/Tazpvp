@@ -52,7 +52,7 @@ public class CrateManager {
     public CrateManager() {
         this.crates = new ArrayList<>();
 
-        getCrates().add(new Crate(new Location(Bukkit.getWorld("arena"), -13, 99, 5), "Daily Crate", "daily",
+        getCrates().add(new Crate(new Location(Bukkit.getWorld("arena"), -11, 99, 8), "Daily Crate", "daily",
                 Material.ACACIA_PLANKS, Material.BIRCH_PLANKS)); // TODO: Add real values
     }
 

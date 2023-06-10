@@ -97,24 +97,6 @@ public class Classic extends Duel {
     @Override
     public void end() {
 
-        final Player winner = super.getWinner();
-        final Player loser = super.getLoser();
-        String worldName = super.getWorldName();
 
-        ChatFunctions.announce(winner.getName() + " won the duel against " + loser.getName());
-        ArmorManager.setPlayerContents(loser, true);
-        loser.teleport(NRCore.config.spawn);
-
-        winner.sendTitle("You Won", "");
-
-        new BukkitRunnable() {
-            public void run() {
-                ArmorManager.setPlayerContents(winner, true);
-                winner.teleport(NRCore.config.spawn);
-
-                new WorldUtil().deleteWorld(worldName);
-                duels.remove(this);
-            }
-        }.runTaskLater(Tazpvp.getInstance(), 20*3);
     }
 }
