@@ -122,13 +122,10 @@ public abstract class Duel {
 
     public static UUID getOtherDueler(UUID id) {
         Duel duel = getDuel(id);
-        for (UUID dueler : duel.DUELERS) {
-            if (duel.getP1() == id) {
-                return duel.getP2();
-            }
-            return duel.getP1();
+        if (duel.getP1() == id) {
+            return duel.getP2();
         }
-        return null;
+        return duel.getP1();
     }
 
 }

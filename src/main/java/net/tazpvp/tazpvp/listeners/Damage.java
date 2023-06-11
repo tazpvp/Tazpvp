@@ -47,15 +47,16 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.projectiles.ProjectileSource;
 
+import java.util.UUID;
+
 public class Damage implements Listener {
 
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
-        if (!(event.getEntity() instanceof Player)) {
+        if (!(event.getEntity() instanceof Player victim)) {
             return;
         }
 
-        Player victim = (Player) event.getEntity();
         PlayerWrapper vw = PlayerWrapper.getPlayer(victim);
 
         if (Tazpvp.spawnRegion.contains(victim.getLocation())) {
@@ -71,11 +72,14 @@ public class Damage implements Listener {
             return;
         }
 
-        if (duel != null && (victim.getHealth() - finalDamage) <= 0) {
-            event.setCancelled(true);
-            duel.setWinner(Bukkit.getPlayer(Duel.getOtherDueler(victim.getUniqueId())));
-            duel.setLoser(victim);
-            duel.end();
+        if (vw.isDueling()) {
+            if ((victim.getHealth() - finalDamage) <= 0) {
+                Bukkit.broadcastMessage("test");
+                event.setCancelled(true);
+                duel.setWinner(Duel.getOtherDueler(victim.getUniqueId()));
+                duel.setLoser(victim.getUniqueId());
+                duel.end();
+            }
             return;
         }
 
@@ -100,25 +104,37 @@ public class Damage implements Listener {
     private void handleEntityDamageByEntity(Player victim, EntityDamageByEntityEvent event, double finalDamage) {
         if (event.getDamager() instanceof Player killer) {
             CombatTagFunctions.putInCombat(victim.getUniqueId(), killer.getUniqueId());
+            checkDeath(victim.getUniqueId(), killer.getUniqueId(), event, finalDamage);
         } else if (event.getDamager() instanceof Arrow arrow) {
-            ProjectileSource shooter = arrow.getShooter();
-            if (shooter instanceof Player pShooter) {
+            if (arrow.getShooter() instanceof Player pShooter) {
                 CombatTagFunctions.putInCombat(victim.getUniqueId(), pShooter.getUniqueId());
+                checkDeath(victim.getUniqueId(), pShooter.getUniqueId(), event, finalDamage);
             }
-        }
-
-        if ((victim.getHealth() - finalDamage) <= 0) {
-            event.setCancelled(true);
-            DeathFunctions.death(victim, event.getDamager());
+        } else {
+            checkDeath(victim.getUniqueId(), event, finalDamage);
         }
     }
 
     private void handleNonEntityDamage(Player victim, EntityDamageEvent event, double finalDamage) {
         if ((victim.getHealth() - finalDamage) <= 0) {
             event.setCancelled(true);
-            DeathFunctions.death(victim, null);
+            DeathFunctions.death(victim.getUniqueId(), null);
         } else {
             CombatTagFunctions.putInCombat(victim.getUniqueId(), null);
+        }
+    }
+
+    private void checkDeath(UUID victim, UUID killer, EntityDamageEvent event, double finalDamage) {
+        if ((Bukkit.getPlayer(victim).getHealth() - finalDamage) <= 0) {
+            event.setCancelled(true);
+            DeathFunctions.death(victim, killer);
+        }
+    }
+
+    private void checkDeath(UUID victim, EntityDamageEvent event, double finalDamage) {
+        if ((Bukkit.getPlayer(victim).getHealth() - finalDamage) <= 0) {
+            event.setCancelled(true);
+            DeathFunctions.death(victim, null);
         }
     }
 }

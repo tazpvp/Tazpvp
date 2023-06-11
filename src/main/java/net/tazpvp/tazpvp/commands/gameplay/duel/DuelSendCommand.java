@@ -3,6 +3,9 @@ package net.tazpvp.tazpvp.commands.gameplay.duel;
 import lombok.NonNull;
 import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.duels.type.Classic;
+import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -26,6 +29,16 @@ public class DuelSendCommand extends NRCommand {
 
         if (args.length < 2) {
             sendIncorrectUsage(sender, "Usage: /duel send <player> <type>\n" + "Types: \n" + "- Classic");
+            return true;
+        }
+
+        if (PlayerWrapper.getPlayer(p).isDueling()) {
+            sendIncorrectUsage(sender, CC.RED + "You cannot use this command while dueling.");
+            return true;
+        }
+
+        if (CombatTagFunctions.isInCombat(p.getUniqueId())) {
+            sendIncorrectUsage(sender, CC.RED + "You cannot use this command while in combat.");
             return true;
         }
 

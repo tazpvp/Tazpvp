@@ -3,6 +3,9 @@ package net.tazpvp.tazpvp.commands.gameplay.duel;
 import lombok.NonNull;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.duels.Duel;
+import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -23,6 +26,16 @@ public class DuelAcceptCommand extends NRCommand {
 
         if (!(sender instanceof Player p)) {
             sendNoPermission(sender);
+            return true;
+        }
+
+        if (PlayerWrapper.getPlayer(p).isDueling()) {
+            sendIncorrectUsage(sender, CC.RED + "You cannot use this command while dueling.");
+            return true;
+        }
+
+        if (CombatTagFunctions.isInCombat(p.getUniqueId())) {
+            sendIncorrectUsage(sender, CC.RED + "You cannot use this command while in combat.");
             return true;
         }
 

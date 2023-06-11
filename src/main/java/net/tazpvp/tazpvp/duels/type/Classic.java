@@ -36,6 +36,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -72,8 +73,11 @@ public class Classic extends Duel {
 
         World world = Bukkit.getWorld(super.getWorldName());
 
-        super.getDUELERS().forEach(p -> {ArmorManager.storeAndClearInventory(p2);});
-        super.getDUELERS().forEach(p -> {PlayerFunctions.healPlr(Bukkit.getPlayer(p));});
+        super.getDUELERS().forEach(p -> {
+            ArmorManager.storeAndClearInventory(p2);
+            PlayerFunctions.healPlr(Bukkit.getPlayer(p));
+            PlayerWrapper.getPlayer(p).setDueling(true);
+        });
 
         p1.teleport(new Location(world, 0.5, 10, 14.5, 180, 0));
         p2.teleport(new Location(world, 0.5, 10, -13.5, 0, 0));
@@ -92,11 +96,5 @@ public class Classic extends Duel {
 
             p.sendMessage("The duel hath begun.");
         }
-    }
-
-    @Override
-    public void end() {
-
-
     }
 }
