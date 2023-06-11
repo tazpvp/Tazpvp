@@ -34,6 +34,7 @@ package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.PlaytimeUtil;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -43,7 +44,7 @@ import world.ntdi.nrcore.utils.ArmorManager;
 
 public class Leave implements Listener {
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     private void onLeave(PlayerQuitEvent e) {
         Player p = e.getPlayer();
 
@@ -51,7 +52,12 @@ public class Leave implements Listener {
         PlaytimeUtil.playerLeft(p);
 
         saveInv(p);
-        
+
+        PlayerWrapper.removePlayer(p);
+    }
+
+    @EventHandler
+    public void onLeaveNormal(PlayerQuitEvent e) {
         e.setQuitMessage(null);
     }
 
