@@ -17,6 +17,7 @@ import javax.annotation.Nullable;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.UUID;
+import java.util.WeakHashMap;
 
 public class CombatTag {
 
@@ -27,6 +28,7 @@ public class CombatTag {
     private float countdown;
     @Getter
     private BossBar bar;
+    public static WeakHashMap<UUID, CombatTag> tags = new WeakHashMap<>();
 
     public CombatTag(UUID id) {
         this.id = id;

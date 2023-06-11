@@ -273,7 +273,7 @@ public class Death {
         PersistentData.add(killer, DataTypes.COINS, coins + bounty);
         PersistentData.add(killer, DataTypes.XP, xp);
 
-        CombatTag tag = DeathFunctions.tags.get(victim);
+        CombatTag tag = CombatTag.tags.get(victim);
 
         for (UUID id : tag.getAttackers()) {
             if (id != killer && id != null) {
