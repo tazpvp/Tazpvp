@@ -5,6 +5,8 @@ import lombok.Setter;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.data.Rank;
+import net.tazpvp.tazpvp.utils.report.ReportDebounce;
+import net.tazpvp.tazpvp.utils.report.ReportLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -26,12 +28,10 @@ public class PlayerWrapper {
     private boolean dueling;
     @Getter
     private Rank rank;
-
-    /**
-     * List of all players the player wrapper owner is hidden from
-     */
     @Getter
-    private List<UUID> hiddenFrom;
+    private final List<ReportDebounce> reportDebouncesList;
+    @Getter
+    private final List<ReportLogger> reportLoggerList;
 
     /**
      * Should only take UUID, all other values should not have to persist.
@@ -42,9 +42,10 @@ public class PlayerWrapper {
         this.launching = false;
         this.respawning = false;
         this.canRestore = false;
-        this.hiddenFrom = new ArrayList<>();
         this.dueling = false;
         this.rank = PersistentData.getRank(uuid);
+        this.reportDebouncesList = new ArrayList<>();
+        this.reportLoggerList = new ArrayList<>();
     }
 
     public Player getPlayer() {
@@ -64,7 +65,6 @@ public class PlayerWrapper {
      */
     public void hidePlayer(Player target) {
         Player owner = getPlayer();
-        hiddenFrom.add(target.getUniqueId());
         owner.hidePlayer(Tazpvp.getInstance(), target);
     }
 
@@ -80,13 +80,11 @@ public class PlayerWrapper {
      * Hide the player from ALL other players.
      */
     public void showPlayer() {
-        for (Iterator<UUID> iterator = hiddenFrom.iterator(); iterator.hasNext(); ) {
-            UUID uuid = iterator.next();
-            Player target = Bukkit.getPlayer(uuid);
-            if (target != null) {
+        Bukkit.getOnlinePlayers().forEach(target -> {
+            if (!target.canSee(getPlayer())) {
                 showPlayer(target);
             }
-        }
+        });
     }
 
     /**
@@ -95,7 +93,6 @@ public class PlayerWrapper {
      */
     public void showPlayer(Player target) {
         Player owner = getPlayer();
-        hiddenFrom.remove(target.getUniqueId());
         owner.showPlayer(Tazpvp.getInstance(), target);
     }
 
@@ -108,6 +105,15 @@ public class PlayerWrapper {
             PlayerWrapper wrapper = PlayerWrapper.getPlayer(uuid);
             wrapper.showPlayer(getPlayer());
         });
+    }
+
+    public void reportPlayer(Player target, String reason) {
+        this.reportDebouncesList.add(new ReportDebounce(target.getUniqueId(), System.currentTimeMillis()));
+        PlayerWrapper.getPlayer(target).addReport(getUuid(), reason);
+    }
+
+    private void addReport(UUID reportee, String reason) {
+        this.reportLoggerList.add(new ReportLogger(reportee, reason, System.currentTimeMillis()));
     }
 
     private static final WeakHashMap<UUID, PlayerWrapper> playerMap = new WeakHashMap<>();
