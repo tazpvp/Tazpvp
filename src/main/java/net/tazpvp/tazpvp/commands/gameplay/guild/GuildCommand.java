@@ -45,7 +45,7 @@ public class GuildCommand extends NRCommand {
     private static final String noPerms = "You do not have permission to do this.";
 
     /*
-    Holy FUCK, the amount of classes, and abstraction that was used to make this easier to maintain, i think i might kms - Ntdi
+    Holy FUCK, the amount of classes, and abstraction that was used to make this easier to maintain, i think i might kms - @n-tdi
      */
     public GuildCommand() {
         super(new Label("guild", null, "g", "gild"));
