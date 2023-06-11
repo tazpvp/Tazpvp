@@ -74,7 +74,6 @@ public class Damage implements Listener {
 
         if (vw.isDueling()) {
             if ((victim.getHealth() - finalDamage) <= 0) {
-                Bukkit.broadcastMessage("test");
                 event.setCancelled(true);
                 duel.setWinner(Duel.getOtherDueler(victim.getUniqueId()));
                 duel.setLoser(victim.getUniqueId());

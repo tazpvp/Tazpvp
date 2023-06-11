@@ -140,10 +140,8 @@ public final class Tazpvp extends JavaPlugin {
     @Override
     public void onDisable() {
 
-        log.info(String.format("[%s] Disabled Version %s", getDescription().getName(), getDescription().getVersion()));
-
         despawnNpcs();
-
+        Holograms.removeHolograms();
         getCrateManager().shutdown();
     }
 

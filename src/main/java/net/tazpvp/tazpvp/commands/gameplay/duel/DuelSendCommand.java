@@ -77,6 +77,7 @@ public class DuelSendCommand extends NRCommand {
             p.sendMessage("Not a valid type");
             return;
         }
+        p.sendMessage("You sent a duel request to " + target.getName());
         target.sendMessage(p.getName() + " sent you a duel request.");
     }
 

@@ -55,7 +55,7 @@ public class DuelAcceptCommand extends NRCommand {
                 public void run() {
                     duel.begin();
                 }
-            }.runTaskLater(Tazpvp.getInstance(), 20*5L);
+            }.runTaskLater(Tazpvp.getInstance(), 20*2L);
             duel.getDUELERS().forEach(d -> {
                 Bukkit.getPlayer(d).sendMessage("Duel Commencing!");
             });
