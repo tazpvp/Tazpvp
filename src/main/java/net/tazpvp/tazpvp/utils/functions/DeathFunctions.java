@@ -43,6 +43,7 @@ import net.tazpvp.tazpvp.utils.objects.CombatTag;
 import net.tazpvp.tazpvp.utils.objects.Death;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Mob;
@@ -54,69 +55,89 @@ import java.util.WeakHashMap;
 
 public class DeathFunctions {
     public static WeakHashMap<UUID, CombatTag> tags = new WeakHashMap<>();
-
-    public static void death(Player victim, @Nullable Entity killer) {
+    public static void death(UUID victim, UUID killer) {
 
         Death death = new Death(victim, killer);
-        UUID currentKiller = tags.get(victim.getUniqueId()).getAttackers().peekLast();
-
+        final UUID currentKiller = tags.get(victim).getAttackers().peekLast();
         PlayerWrapper wrapper = PlayerWrapper.getPlayer(victim);
+        final Player pKiller = Bukkit.getPlayer(killer);
+        final Player pVictim = Bukkit.getPlayer(victim);
 
         if (currentKiller != null) {
-            tags.get(victim.getUniqueId()).getAttackers().clear();
-            death(victim, Bukkit.getPlayer(currentKiller));
+            tags.get(victim).getAttackers().clear();
+            death(victim, currentKiller);
             return;
-        } else if (killer != null) {
-            if (killer instanceof Player pKiller) {
-                if (pKiller == victim) {
-                    death.deathMessage(false);
-                } else {
+        }
 
-                    if (wrapper.isDueling()) {
-                        Duel duel = Duel.getDuel(victim.getUniqueId());
-                        duel.setWinner(pKiller);
-                        duel.setLoser(victim);
-                        duel.end();
-                        return;
-                    }
-
-                    PersistentData.add(pKiller.getUniqueId(), DataTypes.KILLS);
-                    LooseData.addKs(pKiller.getUniqueId());
-
-                    if ((LooseData.getKs(pKiller.getUniqueId()) % 5) == 0) {
-                        Bukkit.broadcastMessage(
-                                CC.GOLD + killer.getName() + CC.YELLOW + " has a kill streak of " + CC.GOLD + LooseData.getKs(pKiller.getUniqueId()) + "\n" +
-                                CC.GOLD + "Bounty: " + CC.YELLOW + "$" + (LooseData.getKs(pKiller.getUniqueId()) * 10)
-                        );
-                    }
-
-                    if (GuildUtils.isInGuild(victim) && GuildUtils.isInGuild(pKiller)) {
-                        if (GuildUtils.getGuildPlayerIn(victim) != GuildUtils.getGuildPlayerIn(pKiller)) {
-                            death.coffin();
-                            death.rewards();
-                            death.dropHead();
-                        }
-                    }
-
-                    death.storeInventory();
-
-                    death.deathMessage(true);
-                    PlayerFunctions.addHealth(victim, 10);
-
-                    pKiller.playSound(pKiller.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
+        if (killer != null) {
+            if (killer != victim) {
+                if (wrapper.isDueling()) {
+                    Duel duel = Duel.getDuel(victim);
+                    duel.setWinner(killer);
+                    duel.setLoser(victim);
+                    duel.end();
+                    return;
                 }
-            } else if (killer instanceof Mob mKiller) {
-                death.deathMessage(false);
+
+                PersistentData.add(killer, DataTypes.KILLS);
+                LooseData.addKs(killer);
+
+                if ((LooseData.getKs(killer) % 5) == 0) {
+                    Bukkit.broadcastMessage(
+                            CC.GOLD + pKiller.getName() + CC.YELLOW + " has a kill streak of " +
+                                    CC.GOLD + LooseData.getKs(killer) + "\n" +
+                                    CC.GOLD + "Bounty: " + CC.YELLOW + "$" + (LooseData.getKs(killer) * 10)
+                    );
+                }
+
+                death.coffin();
+                death.rewards();
+                death.dropHead();
+                death.storeInventory();
+                PlayerFunctions.addHealth(pKiller, 10);
+                pKiller.playSound(pKiller.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
             }
+            death.deathMessage();
         }
 
         PersistentData.add(victim, DataTypes.DEATHS);
-        LooseData.resetKs(victim.getUniqueId());
+        LooseData.resetKs(victim);
 
-        death.heal();
         death.respawn();
-        victim.getInventory().clear();
-        PlayerFunctions.kitPlayer(victim);
-        tags.get(victim.getUniqueId()).endCombat(null, false);
+        pVictim.getInventory().clear();
+        PlayerFunctions.kitPlayer(pVictim);
+        PlayerFunctions.healPlr(pVictim);
+        PlayerFunctions.feedPlr(pVictim);
+        tags.get(victim).endCombat(null, false);
+    }
+
+    public static void death(UUID victim) {
+
+        Death death = new Death(victim, null);
+        PlayerWrapper wrapper = PlayerWrapper.getPlayer(victim);
+        final Player pVictim = Bukkit.getPlayer(victim);
+
+        if (wrapper.isDueling()) {
+            Duel duel = Duel.getDuel(victim);
+            duel.setWinner(Duel.getOtherDueler(victim));
+            duel.setLoser(victim);
+            duel.end();
+            return;
+        }
+
+        death.coffin();
+        death.dropHead();
+        death.storeInventory();
+        death.deathMessage();
+
+        PersistentData.add(victim, DataTypes.DEATHS);
+        LooseData.resetKs(victim);
+
+        death.respawn();
+        pVictim.getInventory().clear();
+        PlayerFunctions.kitPlayer(pVictim);
+        PlayerFunctions.healPlr(pVictim);
+        PlayerFunctions.feedPlr(pVictim);
+        tags.get(victim).endCombat(null, false);
     }
 }

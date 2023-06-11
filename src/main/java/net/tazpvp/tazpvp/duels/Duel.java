@@ -61,9 +61,9 @@ public abstract class Duel {
     @Getter
     private final List<UUID> DUELERS;
     @Getter @Setter
-    private Player winner;
+    private UUID winner;
     @Getter @Setter
-    private Player loser;
+    private UUID loser;
     @Getter @Setter
     private String worldName;
 
@@ -80,8 +80,8 @@ public abstract class Duel {
     public abstract void initialize();
     public abstract void begin();
     public void end() {
-        final Player winner = getWinner();
-        final Player loser = getLoser();
+        final Player winner = Bukkit.getPlayer(getWinner());
+        final Player loser = Bukkit.getPlayer(getLoser());
 
         ChatFunctions.announce(winner.getName() + " won the duel against " + loser.getName());
         ArmorManager.setPlayerContents(loser, true);

@@ -37,6 +37,7 @@ import lombok.Setter;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.guild.GuildUtils;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
@@ -80,36 +81,33 @@ import java.util.UUID;
 public class Death {
 
     @Getter @Setter
-    private Player victim;
-    private UUID victimID;
-
+    private final UUID victim;
     @Getter @Setter
-    private Entity killer;
-    @Getter @Setter
-    private Player pKiller = null;
-    private UUID killerID = null;
-
+    private final UUID killer;
+    private Player pVictim;
+    private Player pKiller;
     private final Location location;
     private final Random r = new Random();
 
-    public Death(Player victim, @Nullable Entity killer) {
+    public Death(UUID victim, @Nullable UUID killer) {
         this.victim = victim;
-        this.victimID = victim.getUniqueId();
         this.killer = killer;
-        this.location = victim.getLocation();
-        if (killer instanceof Player pKiller) {
-            this.killerID = pKiller.getUniqueId();
-            this.pKiller = pKiller;
-            Tazpvp.getObservers().forEach(observer -> observer.death(victim, pKiller));
-        }
+        this.pVictim = Bukkit.getPlayer(victim);
+        this.pKiller = Bukkit.getPlayer(killer);
+        this.location = pVictim.getLocation();
+        Tazpvp.getObservers().forEach(observer -> observer.death(pVictim, pKiller));
     }
 
     public void coffin() {
         if (killer == victim) return;
 
+        if (GuildUtils.isInGuild(pVictim) && GuildUtils.isInGuild(pKiller)) {
+            if (GuildUtils.getGuildPlayerIn(pVictim) == GuildUtils.getGuildPlayerIn(pKiller)) return;
+        }
+
         int chance = new Random().nextInt(10);
 
-        if (PersistentData.getTalents(killer.getUniqueId()).is("Necromancer")) {
+        if (PersistentData.getTalents(killer).is("Necromancer")) {
             if (!(chance <= 2)) return;
         } else if (chance != 1) return;
 
@@ -124,7 +122,7 @@ public class Death {
 
         ItemStack item = coffinItem();
 
-        Hologram hologram = new Hologram(new String[]{"&3&l" + victim.getName() + "'s Coffin"}, location.getBlock().getLocation().add(0.5, 0, 0.5).subtract(0, 0.5, 0), false);
+        Hologram hologram = new Hologram(new String[]{"&3&l" + pVictim.getName() + "'s Coffin"}, location.getBlock().getLocation().add(0.5, 0, 0.5).subtract(0, 0.5, 0), false);
 
         gui.addButton(Button.create(item, (e) -> {
             new BukkitRunnable() {
@@ -205,13 +203,13 @@ public class Death {
     }
 
     public void dropHead() {
-        if (PersistentData.getTalents(killer.getUniqueId()).is("Harvester")) {
+        if (PersistentData.getTalents(killer).is("Harvester")) {
             if (new Random().nextInt(4) != 1) return;
         } else {
             if (new Random().nextInt(6) != 1) return;
         }
         World w = location.getWorld();
-        w.dropItemNaturally(location.add(0, 1, 0), makeSkull(victim));
+        w.dropItemNaturally(location.add(0, 1, 0), makeSkull(pVictim));
 
     }
 
@@ -222,40 +220,35 @@ public class Death {
 
     public void respawn() {
         EulerAngleSpectating eulerAngleSpectating = new EulerAngleSpectating(location);
-        victim.teleport(eulerAngleSpectating.getResult());
-        eulerAngleSpectating.faceLocation(victim);
-        victim.setGameMode(GameMode.SPECTATOR);
-        victim.playSound(victim.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1, 1);
-        victim.sendTitle(CC.RED + "" + CC.BOLD + "YOU DIED", CC.GOLD + "Respawning...", 5, 50, 5);
+        pVictim.teleport(eulerAngleSpectating.getResult());
+        eulerAngleSpectating.faceLocation(pVictim);
+        pVictim.setGameMode(GameMode.SPECTATOR);
+        pVictim.playSound(pVictim.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1, 1);
+        pVictim.sendTitle(CC.RED + "" + CC.BOLD + "YOU DIED", CC.GOLD + "Respawning...", 5, 50, 5);
         PlayerWrapper vp = PlayerWrapper.getPlayer(victim);
         vp.setRespawning(true);
         new BukkitRunnable() {
             public void run() {
-                victim.setGameMode(GameMode.SURVIVAL);
-                victim.teleport(NRCore.config.spawn);
+                pVictim.setGameMode(GameMode.SURVIVAL);
+                pVictim.teleport(NRCore.config.spawn);
                 vp.setRespawning(false);
             }
         }.runTaskLater(Tazpvp.getInstance(), 20*3);
     }
 
-    public void heal() {
-        PlayerFunctions.healPlr(victim);
-        PlayerFunctions.feedPlr(victim);
-    }
-
-    public void deathMessage(boolean pKill) {
+    public void deathMessage() {
         final String prefix = CC.GRAY + "[" + CC.DARK_RED + "☠" + CC.GRAY + "] " + CC.DARK_GRAY;
 
         for (Player op : Bukkit.getOnlinePlayers()) {
-            if (pKill) {
-                final String who = (op == killer) ? "You" : CC.GRAY + killer.getName();
-                final String died = (op == victim) ? "you" : CC.GRAY + victim.getName();
-                String msg = prefix + who + CC.DARK_GRAY + " killed " + died;
+            if (victim == killer || killer == null) {
+                final String who = (op == pVictim) ? "You" : CC.GRAY + pVictim.getName();
+                String msg = prefix + who + CC.DARK_GRAY + " died.";
 
                 op.sendMessage(msg);
             } else {
-                final String who = (op == victim) ? "You" : CC.GRAY + victim.getName();
-                String msg = prefix + who + CC.DARK_GRAY + " died.";
+                final String who = (op == pKiller) ? "You" : CC.GRAY + pKiller.getName();
+                final String died = (op == pVictim) ? "you" : CC.GRAY + pVictim.getName();
+                String msg = prefix + who + CC.DARK_GRAY + " killed " + died;
 
                 op.sendMessage(msg);
             }
@@ -263,36 +256,39 @@ public class Death {
     }
 
     public void rewards() {
-        if (killer != victim) {
-            final int xp = 15;
-            final int coins = 26;
-            final int bounty = LooseData.getKs(victimID) * 10;
+        if (killer == victim) return;
 
-            //TODO: fix buh
-            pKiller.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(CC.DARK_AQUA + "" + CC.BOLD +  "EXP: " + CC.AQUA + "" + CC.BOLD +  xp + CC.GOLD + "" + CC.BOLD + " COINS: " + CC.YELLOW + "" + CC.BOLD +  coins));
-            if (bounty > 0) {
-                pKiller.sendMessage(CC.YELLOW + "You collected " + victim.getName() + "'s " + CC.GOLD + "$" + bounty + CC.YELLOW + " bounty.");
-            }
-            PersistentData.add(killerID, DataTypes.COINS, coins + bounty);
-            PersistentData.add(killerID, DataTypes.XP, xp);
+        if (GuildUtils.isInGuild(pVictim) && GuildUtils.isInGuild(pKiller)) {
+            if (GuildUtils.getGuildPlayerIn(pVictim) == GuildUtils.getGuildPlayerIn(pKiller)) return;
+        }
 
-            CombatTag tag = DeathFunctions.tags.get(victimID);
+        final int xp = 15;
+        final int coins = 26;
+        final int bounty = LooseData.getKs(victim) * 10;
 
-            for (UUID id : tag.getAttackers()) {
-                if (id != killerID && id != null) {
-                    Player assister = Bukkit.getPlayer(id);
-                    final int AssistXP = 5;
-                    final int AssistCoins = 5;
+        pKiller.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(CC.DARK_AQUA + "" + CC.BOLD +  "EXP: " + CC.AQUA + "" + CC.BOLD +  xp + CC.GOLD + "" + CC.BOLD + " COINS: " + CC.YELLOW + "" + CC.BOLD +  coins));
+        if (bounty > 0) {
+            pKiller.sendMessage(CC.YELLOW + "You collected " + pVictim.getName() + "'s " + CC.GOLD + "$" + bounty + CC.YELLOW + " bounty.");
+        }
+        PersistentData.add(killer, DataTypes.COINS, coins + bounty);
+        PersistentData.add(killer, DataTypes.XP, xp);
 
-                    assister.sendMessage(CC.DARK_GRAY + "Assist kill: " + CC.GRAY + victim.getName() + ": " + CC.DARK_AQUA +  "EXP: " + CC.AQUA +  AssistXP + CC.GOLD + " COINS: " + CC.YELLOW +  AssistCoins);
-                    PersistentData.add(assister, DataTypes.COINS, AssistCoins);
-                    PersistentData.add(assister, DataTypes.XP, AssistXP);
-                }
+        CombatTag tag = DeathFunctions.tags.get(victim);
+
+        for (UUID id : tag.getAttackers()) {
+            if (id != killer && id != null) {
+                Player assister = Bukkit.getPlayer(id);
+                final int AssistXP = 5;
+                final int AssistCoins = 5;
+
+                assister.sendMessage(CC.DARK_GRAY + "Assist kill: " + CC.GRAY + pVictim.getName() + ": " + CC.DARK_AQUA +  "EXP: " + CC.AQUA +  AssistXP + CC.GOLD + " COINS: " + CC.YELLOW +  AssistCoins);
+                PersistentData.add(assister, DataTypes.COINS, AssistCoins);
+                PersistentData.add(assister, DataTypes.XP, AssistXP);
             }
         }
     }
 
     public void storeInventory() {
-        PlayerInventoryStorage.updateStorage(victim, killerID);
+        PlayerInventoryStorage.updateStorage(victim, killer);
     }
 }
