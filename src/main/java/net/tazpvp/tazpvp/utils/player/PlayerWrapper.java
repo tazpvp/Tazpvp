@@ -9,6 +9,7 @@ import net.tazpvp.tazpvp.utils.report.ReportDebounce;
 import net.tazpvp.tazpvp.utils.report.ReportLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.PermissionAttachment;
 
 import java.util.*;
 
@@ -32,6 +33,7 @@ public class PlayerWrapper {
     private final List<ReportDebounce> reportDebouncesList;
     @Getter
     private final List<ReportLogger> reportLoggerList;
+    private PermissionAttachment permissionAttachment;
 
     /**
      * Should only take UUID, all other values should not have to persist.
@@ -46,6 +48,8 @@ public class PlayerWrapper {
         this.rank = PersistentData.getRank(uuid);
         this.reportDebouncesList = new ArrayList<>();
         this.reportLoggerList = new ArrayList<>();
+
+        refreshPermissions();
     }
 
     public Player getPlayer() {
@@ -114,6 +118,18 @@ public class PlayerWrapper {
 
     private void addReport(UUID reportee, String reason) {
         this.reportLoggerList.add(new ReportLogger(reportee, reason, System.currentTimeMillis()));
+    }
+
+    private void refreshPermissions() {
+        this.permissionAttachment.remove();
+        this.permissionAttachment = getPlayer().addAttachment(Tazpvp.getInstance());
+        getRank().getPermissions().forEach(perm -> this.permissionAttachment.setPermission(perm, true));
+        this.permissionAttachment.getPermissible().recalculatePermissions();
+    }
+
+    public void setRank(Rank rank) {
+        this.rank = rank;
+        refreshPermissions();
     }
 
     private static final WeakHashMap<UUID, PlayerWrapper> playerMap = new WeakHashMap<>();
