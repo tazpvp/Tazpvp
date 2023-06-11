@@ -5,6 +5,7 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.tazpvp.tazpvp.utils.TimeUtil;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.player.PlayerInventoryStorage;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
@@ -14,8 +15,6 @@ import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.UUID;
 
 public class RestoreCommand extends NRCommand {
@@ -42,9 +41,7 @@ public class RestoreCommand extends NRCommand {
                     sender.sendMessage(String.format(CC.GREEN + "\t%s has no available backups :(", target.getName()));
                 } else {
                     final long timeDifference = System.currentTimeMillis() - playerInventoryStorage.getTimestamp();
-                    final Date date = new Date(timeDifference * 1000L);
-                    final SimpleDateFormat jdf = new SimpleDateFormat("HH:mm:ss");
-                    final String friendlyTime = jdf.format(date);
+                    final String friendlyTime = TimeUtil.howLongAgo(timeDifference);
 
                     TextComponent component = new TextComponent(String.format(CC.GREEN + "\t%s - Created %s ago", playerInventoryStorage.getUuid(), friendlyTime));
                     component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(CC.GOLD + "Restore this save")}));
