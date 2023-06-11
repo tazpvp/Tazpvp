@@ -73,9 +73,10 @@ public class Classic extends Duel {
 
         World world = Bukkit.getWorld(super.getWorldName());
 
-        super.getDUELERS().forEach(p -> {
-            ArmorManager.storeAndClearInventory(p2);
-            PlayerFunctions.healPlr(Bukkit.getPlayer(p));
+        super.getDUELERS().forEach(id -> {
+            Player p = Bukkit.getPlayer(id);
+            ArmorManager.storeAndClearInventory(p);
+            PlayerFunctions.healPlr(p);
             PlayerWrapper.getPlayer(p).setDueling(true);
         });
 

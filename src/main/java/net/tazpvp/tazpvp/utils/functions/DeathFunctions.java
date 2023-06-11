@@ -124,9 +124,6 @@ public class DeathFunctions {
             return;
         }
 
-        death.coffin();
-        death.dropHead();
-        death.storeInventory();
         death.deathMessage();
 
         PersistentData.add(victim, DataTypes.DEATHS);

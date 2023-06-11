@@ -118,7 +118,7 @@ public class Damage implements Listener {
     private void handleNonEntityDamage(Player victim, EntityDamageEvent event, double finalDamage) {
         if ((victim.getHealth() - finalDamage) <= 0) {
             event.setCancelled(true);
-            DeathFunctions.death(victim.getUniqueId(), null);
+            DeathFunctions.death(victim.getUniqueId());
         } else {
             CombatTagFunctions.putInCombat(victim.getUniqueId(), null);
         }
@@ -134,7 +134,7 @@ public class Damage implements Listener {
     private void checkDeath(UUID victim, EntityDamageEvent event, double finalDamage) {
         if ((Bukkit.getPlayer(victim).getHealth() - finalDamage) <= 0) {
             event.setCancelled(true);
-            DeathFunctions.death(victim, null);
+            DeathFunctions.death(victim);
         }
     }
 }

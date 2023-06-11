@@ -36,6 +36,8 @@ import lombok.Getter;
 import lombok.Setter;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
+import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -88,6 +90,11 @@ public abstract class Duel {
         loser.teleport(NRCore.config.spawn);
 
         winner.sendTitle("You Won", "");
+
+        DUELERS.forEach(p -> {
+            PlayerWrapper.getPlayer(p).setDueling(false);
+            PlayerFunctions.healPlr(Bukkit.getPlayer(p));
+        });
 
         new BukkitRunnable() {
             public void run() {

@@ -1,6 +1,7 @@
 package net.tazpvp.tazpvp.commands.gameplay.duel;
 
 import lombok.NonNull;
+import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
 import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.duels.type.Classic;
 import net.tazpvp.tazpvp.utils.enums.CC;
@@ -33,12 +34,17 @@ public class DuelSendCommand extends NRCommand {
         }
 
         if (PlayerWrapper.getPlayer(p).isDueling()) {
-            sendIncorrectUsage(sender, CC.RED + "You cannot use this command while dueling.");
+            p.sendMessage(CC.RED + "You cannot use this command while dueling.");
             return true;
         }
 
         if (CombatTagFunctions.isInCombat(p.getUniqueId())) {
-            sendIncorrectUsage(sender, CC.RED + "You cannot use this command while in combat.");
+            p.sendMessage( CC.RED + "You cannot use this command while in combat.");
+            return true;
+        }
+
+        if (TazloadCommand.tazloading) {
+            p.sendMessage(CC.RED + "This feature is disabled while the server is reloading.");
             return true;
         }
 
