@@ -41,7 +41,7 @@ public interface Observer {
     void death(Player victim, Player killer);
     void mine(Player p, Material material); // TODO: Add events to implement to
 
-    void launch(Player p); // TODO: Add events to implement to
+    void launch(Player p);
 
     void talent(Player p); // TODO: Add event to implement to
 
