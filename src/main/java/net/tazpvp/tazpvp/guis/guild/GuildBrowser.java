@@ -133,7 +133,7 @@ public class GuildBrowser extends GUI {
         new AnvilGUI.Builder()
             .onComplete((player, text) -> {
                 if (text.startsWith(">")) {
-                    text = text.replaceFirst(">", "");
+                    text = text.replaceFirst(">", "").replaceAll(" ", "");
                 }
                 PersistentData.remove(p, DataTypes.COINS, 6000);
                 p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
@@ -141,11 +141,6 @@ public class GuildBrowser extends GUI {
                 createGuild(text, p.getUniqueId());
                 p.sendMessage("You created a guild! " + GuildUtils.getGuildPlayerIn(p).getName());
                 return AnvilGUI.Response.close();
-            })
-            .onClose(player -> {
-                if (!GuildUtils.isInGuild(player)) {
-                    p.sendMessage("Guild creation cancelled.");
-                }
             })
             .text(">")
             .itemLeft(ItemBuilder.of(Material.NAME_TAG).build())

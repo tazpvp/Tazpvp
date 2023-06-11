@@ -214,6 +214,13 @@ public class Guild implements Serializable {
         }
     }
 
+    public void transferOwnership(UUID uuid) {
+        final UUID previousOwner = getGuild_leader();
+        this.guild_leader = uuid;
+        this.guild_generals.add(previousOwner);
+        GuildData.setGuild(getID(), this);
+    }
+
     public String getRank(UUID uuid) {
         if (getGuild_leader() == uuid) {
             return "Leader";
