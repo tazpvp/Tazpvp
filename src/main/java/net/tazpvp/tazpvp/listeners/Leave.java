@@ -33,7 +33,11 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
 import net.tazpvp.tazpvp.utils.PlaytimeUtil;
+import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
+import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
+import net.tazpvp.tazpvp.utils.objects.CombatTag;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -42,11 +46,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import world.ntdi.nrcore.utils.ArmorManager;
 
+import java.util.UUID;
+
 public class Leave implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void onLeave(PlayerQuitEvent e) {
         Player p = e.getPlayer();
+        UUID id = p.getUniqueId();
 
         Tazpvp.playerList.remove(p.getUniqueId());
         PlaytimeUtil.playerLeft(p);
@@ -58,7 +65,14 @@ public class Leave implements Listener {
 
     @EventHandler
     public void onLeaveNormal(PlayerQuitEvent e) {
+        Player p = e.getPlayer();
+        UUID id = p.getUniqueId();
         e.setQuitMessage(null);
+
+        if (CombatTagFunctions.isInCombat(id)) {
+            if (TazloadCommand.tazloading) return;
+            DeathFunctions.death(id, CombatTagFunctions.getLastAttacker(id));
+        }
     }
 
     private void saveInv(Player p) {

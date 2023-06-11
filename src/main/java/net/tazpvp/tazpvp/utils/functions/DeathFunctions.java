@@ -54,17 +54,16 @@ import java.util.UUID;
 import java.util.WeakHashMap;
 
 public class DeathFunctions {
-    public static WeakHashMap<UUID, CombatTag> tags = new WeakHashMap<>();
     public static void death(UUID victim, UUID killer) {
 
         Death death = new Death(victim, killer);
-        final UUID currentKiller = tags.get(victim).getAttackers().peekLast();
+        final UUID currentKiller = CombatTagFunctions.getLastAttacker(victim);
         PlayerWrapper wrapper = PlayerWrapper.getPlayer(victim);
         final Player pKiller = Bukkit.getPlayer(killer);
         final Player pVictim = Bukkit.getPlayer(victim);
 
         if (currentKiller != null) {
-            tags.get(victim).getAttackers().clear();
+            CombatTag.tags.get(victim).getAttackers().clear();
             death(victim, currentKiller);
             return;
         }
@@ -108,7 +107,7 @@ public class DeathFunctions {
         PlayerFunctions.kitPlayer(pVictim);
         PlayerFunctions.healPlr(pVictim);
         PlayerFunctions.feedPlr(pVictim);
-        tags.get(victim).endCombat(null, false);
+        CombatTag.tags.get(victim).endCombat(null, false);
     }
 
     public static void death(UUID victim) {
@@ -125,9 +124,6 @@ public class DeathFunctions {
             return;
         }
 
-        death.coffin();
-        death.dropHead();
-        death.storeInventory();
         death.deathMessage();
 
         PersistentData.add(victim, DataTypes.DEATHS);
@@ -138,6 +134,6 @@ public class DeathFunctions {
         PlayerFunctions.kitPlayer(pVictim);
         PlayerFunctions.healPlr(pVictim);
         PlayerFunctions.feedPlr(pVictim);
-        tags.get(victim).endCombat(null, false);
+        CombatTag.tags.get(victim).endCombat(null, false);
     }
 }

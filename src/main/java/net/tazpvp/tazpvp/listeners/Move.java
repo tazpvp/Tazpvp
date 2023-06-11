@@ -42,7 +42,7 @@ public class Move implements Listener {
             }
             if (p.getLocation().getY() < NRCore.config.spawn.getY() - 22) {
                 if (p.getGameMode() == GameMode.SURVIVAL) {
-                    DeathFunctions.death(p, null);
+                    DeathFunctions.death(p.getUniqueId());
                     return;
                 }
             }

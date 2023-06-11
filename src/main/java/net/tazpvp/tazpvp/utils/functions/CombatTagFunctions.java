@@ -69,14 +69,18 @@ public class CombatTagFunctions {
     }
 
     public static CombatTag getTag(UUID ID) {
-        return DeathFunctions.tags.get(ID);
+        return CombatTag.tags.get(ID);
+    }
+
+    public static UUID getLastAttacker(UUID ID) {
+        return getTag(ID).getAttackers().peekLast();
     }
 
     public static void initCombatTag() {
         new BukkitRunnable() {
             public void run() {
-                for (UUID id : DeathFunctions.tags.keySet()) {
-                    DeathFunctions.tags.get(id).countDown();
+                for (UUID id : CombatTag.tags.keySet()) {
+                    CombatTag.tags.get(id).countDown();
                 }
             }
         }.runTaskTimer(Tazpvp.getInstance(), 0, 20);

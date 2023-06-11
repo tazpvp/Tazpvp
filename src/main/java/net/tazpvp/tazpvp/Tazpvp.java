@@ -39,6 +39,7 @@ import net.tazpvp.tazpvp.commands.admin.hide.HideCommand;
 import net.tazpvp.tazpvp.commands.admin.kit.KitCommand;
 import net.tazpvp.tazpvp.commands.admin.npc.NpcCommand;
 import net.tazpvp.tazpvp.commands.admin.stats.StatCommand;
+import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
 import net.tazpvp.tazpvp.commands.gameplay.DailyCommand;
 import net.tazpvp.tazpvp.commands.gameplay.ReportCommand;
 import net.tazpvp.tazpvp.commands.gameplay.duel.DuelCommand;
@@ -141,10 +142,8 @@ public final class Tazpvp extends JavaPlugin {
     @Override
     public void onDisable() {
 
-        log.info(String.format("[%s] Disabled Version %s", getDescription().getName(), getDescription().getVersion()));
-
         despawnNpcs();
-
+        Holograms.removeHolograms();
         getCrateManager().shutdown();
     }
 
@@ -187,6 +186,8 @@ public final class Tazpvp extends JavaPlugin {
                 new StatCommand(),
                 new DailyCommand(),
                 new DuelCommand(),
+                new ReportCommand(),
+                new TazloadCommand()
                 new ReportCommand(),
                 new GuildCommand(),
                 new ReportViewCommand(),

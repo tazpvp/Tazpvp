@@ -36,6 +36,8 @@ import lombok.Getter;
 import lombok.Setter;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
+import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -89,6 +91,11 @@ public abstract class Duel {
 
         winner.sendTitle("You Won", "");
 
+        DUELERS.forEach(p -> {
+            PlayerWrapper.getPlayer(p).setDueling(false);
+            PlayerFunctions.healPlr(Bukkit.getPlayer(p));
+        });
+
         new BukkitRunnable() {
             public void run() {
                 ArmorManager.setPlayerContents(winner, true);
@@ -122,13 +129,10 @@ public abstract class Duel {
 
     public static UUID getOtherDueler(UUID id) {
         Duel duel = getDuel(id);
-        for (UUID dueler : duel.DUELERS) {
-            if (duel.getP1() == id) {
-                return duel.getP2();
-            }
-            return duel.getP1();
+        if (duel.getP1() == id) {
+            return duel.getP2();
         }
-        return null;
+        return duel.getP1();
     }
 
 }

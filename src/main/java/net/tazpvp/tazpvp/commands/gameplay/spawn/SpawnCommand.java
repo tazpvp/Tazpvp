@@ -4,6 +4,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -19,8 +20,13 @@ public class SpawnCommand extends NRCommand {
                 return true;
             }
 
+            if (PlayerWrapper.getPlayer(p).isDueling()) {
+                sendIncorrectUsage(sender, CC.RED + "You cannot use this command while dueling.");
+                return true;
+            }
+
             if (CombatTagFunctions.isInCombat(p.getUniqueId())) {
-                p.sendMessage(CC.RED + "You cannot teleport to spawn while in combat.");
+                sendIncorrectUsage(sender, CC.RED + "You cannot use this command while in combat.");
                 return true;
             }
 

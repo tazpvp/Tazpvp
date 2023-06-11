@@ -73,7 +73,7 @@ public class Join implements Listener {
 
         p.teleport(NRCore.config.spawn);
 
-        DeathFunctions.tags.put(p.getUniqueId(), new CombatTag(p.getUniqueId()));
+        CombatTag.tags.put(p.getUniqueId(), new CombatTag(p.getUniqueId()));
 
         p.setLevel(PersistentData.getInt(p.getUniqueId(), DataTypes.LEVEL));
         if (PersistentData.getFloat(p.getUniqueId(), DataTypes.XP) >= LooseData.getExpLeft(p.getUniqueId())) {

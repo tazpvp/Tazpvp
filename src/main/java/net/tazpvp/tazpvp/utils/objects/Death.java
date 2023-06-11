@@ -93,9 +93,11 @@ public class Death {
         this.victim = victim;
         this.killer = killer;
         this.pVictim = Bukkit.getPlayer(victim);
-        this.pKiller = Bukkit.getPlayer(killer);
         this.location = pVictim.getLocation();
-        Tazpvp.getObservers().forEach(observer -> observer.death(pVictim, pKiller));
+        if (killer != null) {
+            this.pKiller = Bukkit.getPlayer(killer);
+            Tazpvp.getObservers().forEach(observer -> observer.death(pVictim, pKiller));
+        }
     }
 
     public void coffin() {
@@ -273,7 +275,7 @@ public class Death {
         PersistentData.add(killer, DataTypes.COINS, coins + bounty);
         PersistentData.add(killer, DataTypes.XP, xp);
 
-        CombatTag tag = DeathFunctions.tags.get(victim);
+        CombatTag tag = CombatTag.tags.get(victim);
 
         for (UUID id : tag.getAttackers()) {
             if (id != killer && id != null) {

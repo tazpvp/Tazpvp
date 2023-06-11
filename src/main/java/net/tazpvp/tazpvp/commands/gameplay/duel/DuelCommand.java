@@ -1,5 +1,8 @@
 package net.tazpvp.tazpvp.commands.gameplay.duel;
 
+import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
@@ -16,6 +19,7 @@ public class DuelCommand extends NRCommand {
                 sendNoPermission(sender);
                 return true;
             }
+
             p.sendMessage("Duel Commands:\n" + "/duel <player> <type>\n" + "/duel accept");
             return true;
         });
