@@ -72,6 +72,9 @@ public class GuildBrowser extends GUI {
 
         for (Map.Entry<UUID, Integer> guild : guilds.entrySet()) {
             Guild g = GuildData.getGuild(guild.getKey());
+            if (!g.isShow_in_browser()) {
+                continue;
+            }
 
             Button guildView = Button.create(ItemBuilder.of(g.getIcon()).name(CC.WHITE + g.getName()).lore(
                     "",
