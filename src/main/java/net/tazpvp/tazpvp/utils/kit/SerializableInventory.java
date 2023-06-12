@@ -28,33 +28,45 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
  */
 
-package net.tazpvp.tazpvp.guis;
+package net.tazpvp.tazpvp.utils.kit;
 
-import net.tazpvp.tazpvp.utils.enums.CC;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import world.ntdi.nrcore.utils.gui.Button;
-import world.ntdi.nrcore.utils.gui.GUI;
-import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
+import lombok.Getter;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
-public class Cosmetics extends GUI {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-    public Cosmetics(Player p) {
-        super("Cosmetics", 3);
-        addItems(p);
-        open(p);
+public class SerializableInventory implements Serializable {
+    @Getter
+    private final ItemStack[] hotbar;
+
+    public SerializableInventory(ItemStack[] hotbar) {
+        this.hotbar = hotbar;
     }
 
-    private void addItems(Player p) {
-        fill(0, 3*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
+    public void addItems(PlayerInventory inventory, ItemStack... itemStacks) {
+        List<ItemStack> toAdd = new ArrayList<>();
+        for (int i = 0; i < hotbar.length; i++) {
+            for (ItemStack itemStack : itemStacks) {
+                if (itemStack.getType() == hotbar[i].getType()) {
+                    inventory.setItem(i, itemStack);
+                    continue;
+                }
+                toAdd.add(itemStack);
+            }
+        }
 
-        addButton(Button.create(ItemBuilder.of(Material.BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Cosmetics").lore(CC.GRAY + "C").build(), (e) -> {
-            p.sendMessage("h");
-            p.closeInventory();
-        }), 10);
+        inventory.addItem(toAdd.toArray(ItemStack[]::new));
+    }
 
-        update();
+    public static SerializableInventory readHotbar(PlayerInventory inventory) {
+        return new SerializableInventory(new ItemStack[]{
+                inventory.getItem(0), inventory.getItem(0), inventory.getItem(0), inventory.getItem(0), inventory.getItem(0), inventory.getItem(0), inventory.getItem(0), inventory.getItem(0), inventory.getItem(0)
+        });
     }
 }
