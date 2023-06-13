@@ -355,6 +355,24 @@ public final class PersistentData {
         SQLHelper.updateValue(NAME, ID_COLUMN, "'" + ID.toString() + "'", columnName, "'" + value + "'");
     }
 
+    /**
+     * Set the Rank of a player in a column
+     * @param ID UUID of player
+     * @param rank Rank to set
+     */
+    public static void setRank(@Nonnull final UUID ID, @Nonnull final Rank rank) {
+        SQLHelper.updateValue(NAME, ID_COLUMN, "'" + ID + "'", DataTypes.PLAYER_RANK.getColumnName(), rank);
+    }
+
+    /**
+     * Set the Rank of a player in a column
+     * @param offlinePlayer The player
+     * @param rank Rank to set
+     */
+    public static void setRank(@Nonnull final OfflinePlayer offlinePlayer, @Nonnull final Rank rank) {
+        SQLHelper.updateValue(NAME, ID_COLUMN, "'" + offlinePlayer.getUniqueId() + "'", DataTypes.PLAYER_RANK.getColumnName(), rank);
+    }
+
     /*
         ====================== End SET ====================== Start ADD/REMOVE ======================
      */

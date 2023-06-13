@@ -131,6 +131,7 @@ public class PlayerWrapper {
 
     public void setRank(Rank rank) {
         this.rank = rank;
+        PersistentData.setRank(getUuid(), rank);
         refreshPermissions();
     }
 
