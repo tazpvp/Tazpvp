@@ -33,6 +33,7 @@
 package net.tazpvp.tazpvp.npc.shops;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.npc.dialogue.Dialogues;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
@@ -63,7 +64,38 @@ public class Caesar extends NPC {
                 Bukkit.getWorld("arena"), -3, 90, 132, -155.5F, 0),
                 Villager.Profession.WEAPONSMITH,
                 Villager.Type.JUNGLE,
-                Sound.ITEM_GOAT_HORN_SOUND_0);
+                Sound.ITEM_GOAT_HORN_SOUND_0,
+                new Dialogues(
+                        "Caesar",
+                        List.of(
+                                "I've made some enemies in my time. Good thing Ores can't speak..",
+                                "Need to sell? HMU ig.",
+                                "Need coins? Can't PVP? Mine you bum.",
+                                "Upgrades are available for your crappy pickaxe..",
+                                "Only in dreams, are you able to get a good deal for your work.",
+                                "I slept with Maxim's wife. It's not my fault my pickaxe is really big.",
+                                "What are you gonna do without upgrades? I stole my shards from Bub."
+                        ),
+                        List.of(
+                                "Mine ore, sell ore, repeat.",
+                                "Upgrade your pickaxe to mine more rare ores.",
+                                "Beware of enemies! They may try to sneak up on you.", // Does dying with a upgraded pickaxe make you lose your upgrades? @rownox
+                                "I dunno what a \"premium\" is, but buy it for the ability to sell all your ores at once!",
+                                "Sell and upgrade, all I was trained to do.",
+                                "Why fight when you can mine! When you're done mining, hand over your ores here.",
+                                "Hey there miner! Welcome to the biggest time waste."
+                        ),
+                        List.of(
+                                "Mine for dimes! At least you get paid for your hard work! Enjoy it.",
+                                "Take a break from the fighting, mine your anger out.",
+                                "Gotta get Guild upgrades some how! Might as well mine for the cash.",
+                                "Upgrade your pickaxe, make your life so much easier.",
+                                "Just a few more coins till you next upgrade! Get to work!",
+                                "Tell me, are you ready for an adventure! I know the mines are ready for you!",
+                                "Ever need to sell quicker? Buy premium to sell all your ores at once, become worry free!",
+                                "PVP is overrated, just mine! Mining calms the soul and also rewards you with that sweet cash."
+                        )
+                ));
     }
 
     @Override

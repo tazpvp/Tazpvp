@@ -33,6 +33,7 @@
 package net.tazpvp.tazpvp.npc.shops;
 
 import net.tazpvp.tazpvp.guis.Shop;
+import net.tazpvp.tazpvp.npc.dialogue.Dialogues;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -42,6 +43,7 @@ import org.bukkit.entity.Villager;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 
 public class Maxim extends NPC {
 
@@ -49,7 +51,40 @@ public class Maxim extends NPC {
         super(CC.GOLD + "Maxim", new Location(Bukkit.getWorld("arena"), -11.5, 99, 20.5, -135, 0),
                 Villager.Profession.FARMER,
                 Villager.Type.SAVANNA,
-                Sound.ITEM_GOAT_HORN_SOUND_0);
+                Sound.ITEM_GOAT_HORN_SOUND_0,
+                new Dialogues(
+                        "Maxim",
+                        List.of(
+                                "I sell stuff I guess..",
+                                "erhm.",
+                                "Buy items if you want..",
+                                "Business is.. well..",
+                                "Who is Caesar? Why is my wife with him?",
+                                "Does anything even matter?",
+                                "Novelty items.. or soon to be.",
+                                "I blame Ntdi for this life.."
+                        ),
+                        List.of(
+                                "Need something?",
+                                "New sale, 0% off the entire store.",
+                                "Quality items, fair prices.",
+                                "No pain, no shame.",
+                                "Items if you want.",
+                                "Get your power-ups and items here",
+                                "Buy Buy Buy!",
+                                "New items, fresh stock"
+                        ),
+                        List.of(
+                                "Anything you need, I got it!",
+                                "Hello traveler! I'm here if you need anything.",
+                                "Get the upper hand with better items!",
+                                "Powerful items, useful power-ups, the options are endless!",
+                                "I love my shop, selling items is the best!",
+                                "You want it? I got it.",
+                                "Howdy! Need some super cool blocks?",
+                                "How about some food? Fighters get hungry too!"
+                        )
+                ));
     }
 
     @Override

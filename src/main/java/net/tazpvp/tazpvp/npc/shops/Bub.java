@@ -32,6 +32,7 @@
 
 package net.tazpvp.tazpvp.npc.shops;
 
+import net.tazpvp.tazpvp.npc.dialogue.Dialogues;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -43,11 +44,48 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 
 public class Bub extends NPC {
 
     public Bub() {
-        super(CC.GOLD + "Bub", new Location(Bukkit.getWorld("arena"), 1, 79, 77), Villager.Profession.CLERIC, Villager.Type.SNOW, Sound.ITEM_GOAT_HORN_SOUND_0);
+        super(CC.GOLD + "Bub",
+                new Location(Bukkit.getWorld("arena"), 1, 79, 77),
+                Villager.Profession.CLERIC,
+                Villager.Type.SNOW,
+                Sound.ITEM_GOAT_HORN_SOUND_0,
+                new Dialogues(
+                        "Bub",
+                        List.of(
+                                "Showed off my shards to Caesar, he stole a few and ran.",
+                                "Killing is so much better when you're rewarded for it..",
+                                "Don't come back.. I never wanted to see you in the first place.",
+                                "You smell worse than Caesar, I bet your player heads are fake",
+                                "Can't even kill a player? No Shards for you.",
+                                "A baby decaying smells better than the player heads you collect.",
+                                "Only minted heads allowed.. you scum."
+                        ),
+                        List.of(
+                                "I like heads, I'll even pay you for them.",
+                                "Got a rare head? Take a Shard and get paid.",
+                                "That'll be one head.",
+                                "Bring me more player heads!",
+                                "Shards are my favorite because I like getting player heads for them",
+                                "Kill a player, get lucky, and bring me their head.",
+                                "Be careful not to loose the Shard",
+                                "Watch where you're pointing that!"
+                        ),
+                        List.of(
+                                "Unlock abilities never seen before with Shards!",
+                                "Pay to win? More like play to win! Am I right or am I right?",
+                                "Don't ask where I got the Shards, just give me player heads for them!",
+                                "Use Shards to beat the person always killing you.",
+                                "Got some player heads! I'll take em'!",
+                                "You'll want these Shards more then just wearing a silly head.",
+                                "Skinning people isn't illegal right? Right?",
+                                "Got a player head? Does it smell good? Then i'll take it!"
+                        )
+                ));
     }
 
     @Override

@@ -34,6 +34,7 @@ package net.tazpvp.tazpvp.npc.shops;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.npc.dialogue.Dialogues;
 import net.tazpvp.tazpvp.utils.PDCUtil;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Location;
@@ -67,15 +68,18 @@ public abstract class NPC implements Listener {
     private final Villager V;
     @Getter
     private final UUID ID;
+    @Getter
+    private final Dialogues dialogues;
 
 
-    public NPC(@Nonnull final String NAME, @Nonnull final Location SPAWN, @Nonnull final Villager.Profession PROFESSION, @Nonnull final Villager.Type TYPE, @Nonnull final Sound SOUND) {
+    public NPC(@Nonnull final String NAME, @Nonnull final Location SPAWN, @Nonnull final Villager.Profession PROFESSION, @Nonnull final Villager.Type TYPE, @Nonnull final Sound SOUND, @Nonnull final Dialogues dialogues) {
         this.NAME = NAME;
         this.SPAWN = SPAWN;
         this.PROFESSION = PROFESSION;
         this.TYPE = TYPE;
         this.SOUND = SOUND;
         this.ID = UUID.randomUUID();
+        this.dialogues = dialogues;
         this.V = (Villager) SPAWN.getWorld().spawnEntity(SPAWN, EntityType.VILLAGER);
 
         V.setCustomName(CC.trans(NAME));

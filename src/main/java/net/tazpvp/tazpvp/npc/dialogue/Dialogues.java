@@ -28,21 +28,44 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
  */
 
-package net.tazpvp.tazpvp.utils.objects;
+package net.tazpvp.tazpvp.npc.dialogue;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.bukkit.Material;
+import net.tazpvp.tazpvp.utils.enums.CC;
+import org.bukkit.Bukkit;
+
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @AllArgsConstructor
 @Data
-public class Ore {
-    private final int time;
-    private final int cost;
-    private final int level;
-    private final Material mat;
-    private final Material smelted;
-    private final String pickaxe;
+public class Dialogues {
+    private final String name;
+    private final List<String> dialoguesSad;
+    private final List<String> dialoguesNormal;
+    private final List<String> dialoguesHappy;
+
+    public String getRandomDialogue() {
+        final int playerCount = Bukkit.getOnlinePlayers().size();
+        if (playerCount < 5) {
+            return formatDialogue(dialogueFromList(dialoguesSad));
+        } else if (playerCount < 25) {
+            return formatDialogue(dialogueFromList(dialoguesNormal));
+        } else {
+            return formatDialogue(dialogueFromList(dialoguesSad));
+        }
+    }
+
+    private String formatDialogue(String dialogue) {
+        return CC.YELLOW + "[" + name + "] " + CC.WHITE + dialogue;
+    }
+
+    private String dialogueFromList(List<String> dialogues) {
+        final int randomElementIndex = ThreadLocalRandom.current().nextInt(dialoguesSad.size()) % dialoguesSad.size();
+        return dialogues.get(randomElementIndex);
+    }
 }
