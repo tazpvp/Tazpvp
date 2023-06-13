@@ -32,17 +32,13 @@
 
 package net.tazpvp.tazpvp.utils.functions;
 
-import net.md_5.bungee.api.ChatColor;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
-import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.enums.ColorCodes;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
-
-import static net.tazpvp.tazpvp.utils.functions.ChatFunctions.hex;
 
 public class ScoreboardFunctions {
 
@@ -80,12 +76,6 @@ public class ScoreboardFunctions {
         newLine(p, "kdr", ChatFunctions.createGradient(ColorCodes.STAT.toString(), "✚ ᴋᴅʀ", false), CC.GRAY, PersistentData.kdrFormula(
                 PersistentData.getFloat(p, DataTypes.KILLS), PersistentData.getFloat(p, DataTypes.DEATHS)) + "").setScore(1);
         objective.getScore("   ").setScore(0);
-
-
-
-
-
-
 
         p.setScoreboard(board);
     }

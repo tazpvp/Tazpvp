@@ -39,13 +39,11 @@ import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.projectiles.ProjectileSource;
 
 import java.util.UUID;
 
@@ -136,4 +134,6 @@ public class Damage implements Listener {
             DeathFunctions.death(victim);
         }
     }
+
+    // oh my fg
 }
