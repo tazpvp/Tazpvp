@@ -34,11 +34,14 @@ package net.tazpvp.tazpvp.commands.moderation.ban;
 
 import net.tazpvp.tazpvp.utils.functions.BanFunctions;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import world.ntdi.nrcore.utils.ChatUtils;
+import world.ntdi.nrcore.utils.command.simple.Completer;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
-import javax.annotation.Nullable;
+import java.util.List;
 
 public class BanCommand extends NRCommand {
 
@@ -53,9 +56,19 @@ public class BanCommand extends NRCommand {
 
             Player target = Bukkit.getPlayer(args[0]);
 
-            BanFunctions.ban(target, args[1], args[2]);
+            BanFunctions.ban(target, args[1], ChatUtils.builder(args, 2));
 
             return true;
         });
+    }
+
+    @Override
+    public List<String> complete(CommandSender sender, String[] args) {
+        if (args.length == 1) {
+            return Completer.onlinePlayers(args[0]);
+        } else if (args.length == 2) {
+            return List.of("30m", "12h", "128d", "permanent");
+        }
+        return List.of("");
     }
 }
