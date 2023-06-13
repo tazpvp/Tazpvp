@@ -145,7 +145,7 @@ public final class Tazpvp extends JavaPlugin {
 
         despawnNpcs();
         Holograms.removeHolograms();
-        getCrateManager().shutdown();
+        getCrateManager().shutdown(); // brooooo why no woooorkkkkk  cmon man like cmon man cmon man like cmonnn mannnn
     }
 
     public static Tazpvp getInstance() {
