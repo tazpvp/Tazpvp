@@ -46,12 +46,12 @@ public class GuildDemoteCommand extends GuildAbstractArgumentCommand {
 
     @Override
     public boolean executeFunction(@NonNull Player p, @NonNull Guild g, @NonNull Player target) {
-        if (!g.getGuild_members().contains(target.getUniqueId())) {
+        if (!g.getGuildMembers().contains(target.getUniqueId())) {
             p.sendMessage("This user is not in your guild");
             return true;
         }
 
-        if (!g.getGuild_generals().contains(target.getUniqueId())) {
+        if (!g.getGuildGenerals().contains(target.getUniqueId())) {
             p.sendMessage("This user is already a member.");
             return true;
         }

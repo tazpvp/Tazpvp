@@ -20,11 +20,11 @@ public class Guild implements Serializable {
     @Getter
     private final UUID ID;
     @Getter
-    private UUID guild_leader;
+    private UUID guildLeader;
     @Getter
-    private final List<UUID> guild_generals;
+    private final List<UUID> guildGenerals;
     @Getter
-    private final List<UUID> guild_members;
+    private final List<UUID> guildMembers;
     @Getter
     private final List<UUID> invited;
     @Getter
@@ -40,12 +40,12 @@ public class Guild implements Serializable {
     @Getter
     private int kills, deaths;
 
-    public Guild(String name, UUID guild_leader) {
+    public Guild(String name, UUID guildLeader) {
         this.ID = UUID.randomUUID();
         this.name = name;
-        this.guild_leader = guild_leader;
-        this.guild_generals = new ArrayList<>();
-        this.guild_members = new ArrayList<>();
+        this.guildLeader = guildLeader;
+        this.guildGenerals = new ArrayList<>();
+        this.guildMembers = new ArrayList<>();
         this.invited = new ArrayList<>();
         this.kills = 0;
         this.deaths = 0;
@@ -55,7 +55,7 @@ public class Guild implements Serializable {
 
         GuildData.initializeGuild(getID(), this);
 
-        setPlayersGuild(getGuild_leader());
+        setPlayersGuild(getGuildLeader());
     }
 
     public void setPlayersGuild(OfflinePlayer p) {
@@ -71,9 +71,9 @@ public class Guild implements Serializable {
     }
 
     public UUID[] getAllMembers() {
-        List<UUID> mem = guild_members;
-        mem.addAll(guild_generals);
-        mem.add(guild_leader);
+        List<UUID> mem = guildMembers;
+        mem.addAll(guildGenerals);
+        mem.add(guildLeader);
         return mem.toArray(UUID[]::new);
     }
 
@@ -82,8 +82,8 @@ public class Guild implements Serializable {
     }
 
     public boolean hasElevatedPerms(UUID uuid) {
-        if (guild_leader.equals(uuid)) return true;
-        else return guild_generals.contains(uuid);
+        if (guildLeader.equals(uuid)) return true;
+        else return guildGenerals.contains(uuid);
     }
 
     public void sendAll(String message) {
@@ -97,7 +97,7 @@ public class Guild implements Serializable {
 
     public void addMember(UUID uuid) {
         if (getAllMembers().length < 22) {
-            guild_members.add(uuid);
+            guildMembers.add(uuid);
             invited.remove(uuid);
             setPlayersGuild(uuid);
             OfflinePlayer p = Bukkit.getOfflinePlayer(uuid);
@@ -109,13 +109,13 @@ public class Guild implements Serializable {
     }
 
     public void removeMember(UUID uuid) {
-        if (getGuild_members().contains(uuid)) {
-            getGuild_members().remove(uuid);
+        if (getGuildMembers().contains(uuid)) {
+            getGuildMembers().remove(uuid);
             resetPlayerGuild(uuid);
             OfflinePlayer p = Bukkit.getOfflinePlayer(uuid);
             sendAll(p.getName() + " has left the guild!");
-        } else if (getGuild_generals().contains(uuid)) {
-            getGuild_generals().remove(uuid);
+        } else if (getGuildGenerals().contains(uuid)) {
+            getGuildGenerals().remove(uuid);
             resetPlayerGuild(uuid);
             OfflinePlayer p = Bukkit.getOfflinePlayer(uuid);
             sendAll(p.getName() + " has left the guild!");
@@ -126,9 +126,9 @@ public class Guild implements Serializable {
     }
 
     public void promoteMember(UUID uuid) {
-        if (getGuild_members().contains(uuid)) {
-            getGuild_members().remove(uuid);
-            getGuild_generals().add(uuid);
+        if (getGuildMembers().contains(uuid)) {
+            getGuildMembers().remove(uuid);
+            getGuildGenerals().add(uuid);
             sendAll(Bukkit.getOfflinePlayer(uuid).getName() + " has been promoted to general");
         } else {
             throw new IllegalArgumentException("Cannot promote non member ranked");
@@ -137,9 +137,9 @@ public class Guild implements Serializable {
     }
 
     public void demoteMember(UUID uuid) {
-        if (getGuild_generals().contains(uuid)) {
-            guild_generals.remove(uuid);
-            guild_members.add(uuid);
+        if (getGuildGenerals().contains(uuid)) {
+            guildGenerals.remove(uuid);
+            guildMembers.add(uuid);
             sendAll(Bukkit.getOfflinePlayer(uuid).getName() + " has been demoted to member");
         } else {
             throw new IllegalArgumentException("Cannot promote non general ranked");
@@ -148,22 +148,22 @@ public class Guild implements Serializable {
     }
 
     public void setDescription(UUID uuid, String description) {
-        if (getGuild_leader().equals(uuid)) this.description = description;
+        if (getGuildLeader().equals(uuid)) this.description = description;
         GuildData.setGuild(getID(), this);
     }
 
     public void setTag(UUID uuid, String tag) {
-        if (getGuild_leader().equals(uuid)) this.tag = tag;
+        if (getGuildLeader().equals(uuid)) this.tag = tag;
         GuildData.setGuild(getID(), this);
     }
 
     public void setIcon(UUID uuid, Material icon) {
-        if (getGuild_leader().equals(uuid)) this.icon = icon;
+        if (getGuildLeader().equals(uuid)) this.icon = icon;
         GuildData.setGuild(getID(), this);
     }
 
     public void setShow_in_browser(UUID uuid, boolean show_in_browser) {
-        if (getGuild_leader().equals(uuid)) this.show_in_browser = show_in_browser;
+        if (getGuildLeader().equals(uuid)) this.show_in_browser = show_in_browser;
         GuildData.setGuild(getID(), this);
     }
 
@@ -215,16 +215,16 @@ public class Guild implements Serializable {
     }
 
     public void transferOwnership(UUID uuid) {
-        final UUID previousOwner = getGuild_leader();
-        this.guild_leader = uuid;
-        this.guild_generals.add(previousOwner);
+        final UUID previousOwner = getGuildLeader();
+        this.guildLeader = uuid;
+        this.guildGenerals.add(previousOwner);
         GuildData.setGuild(getID(), this);
     }
 
     public String getRank(UUID uuid) {
-        if (getGuild_leader() == uuid) {
+        if (getGuildLeader() == uuid) {
             return "Leader";
-        } else if (getGuild_generals().contains(uuid)) {
+        } else if (getGuildGenerals().contains(uuid)) {
             return "General";
         } else {
             return "Member";

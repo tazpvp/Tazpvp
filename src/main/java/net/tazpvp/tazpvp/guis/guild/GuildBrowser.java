@@ -79,7 +79,7 @@ public class GuildBrowser extends GUI {
             Button guildView = Button.create(ItemBuilder.of(g.getIcon()).name(CC.WHITE + g.getName()).lore(
                     "",
                     CC.WHITE + g.getDescription(),
-                    ChatColor.GRAY + "-" + Bukkit.getOfflinePlayer(g.getGuild_leader()).getName(),
+                    ChatColor.GRAY + "-" + Bukkit.getOfflinePlayer(g.getGuildLeader()).getName(),
                     "",
                     CC.GRAY + "Members: " + CC.WHITE + g.getAllMembers().length,
                     CC.GRAY + "Kills: " + CC.WHITE + (int) g.getKills()

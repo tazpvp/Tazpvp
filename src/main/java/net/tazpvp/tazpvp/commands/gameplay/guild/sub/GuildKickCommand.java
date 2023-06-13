@@ -52,7 +52,7 @@ public class GuildKickCommand extends GuildAbstractArgumentCommand {
             return true;
         }
 
-        if (!g.getGuild_members().contains(target.getUniqueId())) {
+        if (!g.getGuildMembers().contains(target.getUniqueId())) {
             p.sendMessage("This user is not in your guild");
             return true;
         }

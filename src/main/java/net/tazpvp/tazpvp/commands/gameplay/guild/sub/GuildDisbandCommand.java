@@ -46,7 +46,7 @@ public class GuildDisbandCommand extends GuildAvailableCommand {
 
     @Override
     public boolean executeFunction(@NonNull Player p, @NonNull Guild g) {
-        if (g.getGuild_leader() != p.getUniqueId()) {
+        if (g.getGuildLeader() != p.getUniqueId()) {
             sendIncorrectUsage(p, "You don't own this guild.");
             return false;
         }

@@ -61,7 +61,7 @@ public class GuildInfo extends GUI {
                 CC.GOLD + "Click to edit"
         };
 
-        OfflinePlayer leader = Bukkit.getOfflinePlayer(g.getGuild_leader());
+        OfflinePlayer leader = Bukkit.getOfflinePlayer(g.getGuildLeader());
 
         fill(0, 3*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE).name(" ").build());
 
@@ -70,7 +70,7 @@ public class GuildInfo extends GUI {
             new GuildEdit(p, g);
         }), 11);
 
-        addButton(Button.createBasic(SkullBuilder.of().setHeadTexture(g.getGuild_leader())
+        addButton(Button.createBasic(SkullBuilder.of().setHeadTexture(g.getGuildLeader())
                 .name(CC.GREEN + "Guild Master").lore(" ", CC.DARK_GREEN + leader.getName()).build()), 13);
 
         addButton(Button.create(ItemBuilder.of(Material.WRITABLE_BOOK, 1)

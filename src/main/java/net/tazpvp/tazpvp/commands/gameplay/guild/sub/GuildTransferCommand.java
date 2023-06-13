@@ -47,12 +47,12 @@ public class GuildTransferCommand extends GuildAbstractArgumentCommand {
 
     @Override
     public boolean executeFunction(@NonNull Player p, @NonNull Guild g, @NonNull Player target) {
-        if (g.getGuild_leader() != p.getUniqueId()) {
+        if (g.getGuildLeader() != p.getUniqueId()) {
             p.sendMessage(GuildCommand.getNoPerms());
             return true;
         }
 
-        if (!g.getGuild_members().contains(target.getUniqueId())) {
+        if (!g.getGuildMembers().contains(target.getUniqueId())) {
             p.sendMessage(target.getName() + " must be a member of your guild in order to transfer it to them!");
             return false;
         }

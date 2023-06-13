@@ -60,8 +60,8 @@ public class GuildMembers extends GUI {
         fill(0, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE).name(" ").build());
 
         Button owner = Button.createBasic(SkullBuilder.of()
-                .setHeadTexture(g.getGuild_leader())
-                .name(Bukkit.getOfflinePlayer(g.getGuild_leader()).getName())
+                .setHeadTexture(g.getGuildLeader())
+                .name(Bukkit.getOfflinePlayer(g.getGuildLeader()).getName())
                 .build());
 
         addButton(owner, 4);
@@ -79,7 +79,7 @@ public class GuildMembers extends GUI {
     private void allOthers(List<OfflinePlayer> members, Guild g, Player viewer) {
         int index = 10;
         for (OfflinePlayer p : members) {
-            ChatColor nameColor = g.getGuild_generals().contains(p.getUniqueId()) ? ChatColor.GREEN : ChatColor.GRAY;
+            ChatColor nameColor = g.getGuildGenerals().contains(p.getUniqueId()) ? ChatColor.GREEN : ChatColor.GRAY;
             //rank based colors
 
             String lore = g.hasElevatedPerms(viewer.getUniqueId()) ? ChatColor.RED + "Click me to edit!" : "";
