@@ -36,10 +36,10 @@ import net.tazpvp.tazpvp.utils.PlaytimeUtil;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.PunishmentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.enums.ColorCodes;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
-import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.functions.ScoreboardFunctions;
 import net.tazpvp.tazpvp.utils.objects.CombatTag;
@@ -59,6 +59,11 @@ public class Join implements Listener {
         PersistentData.initPlayer(p);
 
         PlayerWrapper.addPlayer(p);
+
+        if (PunishmentData.isPunished(p.getUniqueId())) {
+            if (PunishmentData.getTimeRemaining(p.getUniqueId()) > 0 || PunishmentData.isPermanentlyPunished(p.getUniqueId()))
+                p.kickPlayer("Xd Bannned xD");
+        }
 
         PlaytimeUtil.playerJoined(p);
 

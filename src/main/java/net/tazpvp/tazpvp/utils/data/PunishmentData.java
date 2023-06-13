@@ -82,13 +82,17 @@ public class PunishmentData extends Table {
             if (punishmentData.doesRowExist(uuid.toString())) {
                 Row punishmentRow = new Row(punishmentData, uuid.toString());
                 Column timeColumn = new Column(punishmentRow.getTable(), "time");
-                return (long) punishmentRow.fetch(timeColumn);
+                return System.currentTimeMillis() - (long) punishmentRow.fetch(timeColumn);
             } else {
                 return 0L;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static boolean isPermanentlyPunished(final @NonNull UUID uuid) {
+        return isPunished(uuid) && getTimeRemaining(uuid) == 0;
     }
 
     public static PunishmentType getPunishment(final @NonNull UUID uuid) {
