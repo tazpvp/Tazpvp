@@ -46,9 +46,14 @@ public class Move implements Listener {
                     return;
                 }
             }
-            for (NPC npc : Tazpvp.getInstance().getNpcs()) {
-                if (npc.withinRange(playerLocation)) {
-                    p.sendMessage(npc.getDialogues().getRandomDialogue());
+            if (!pw.isReceivedDialogue()) {
+                for (NPC npc : Tazpvp.getInstance().getNpcs()) {
+                    if (npc.withinRange(playerLocation)) {
+                        p.sendMessage(npc.getDialogues().getRandomDialogue());
+                        pw.setReceivedDialogue(true);
+                    } else {
+                        pw.setReceivedDialogue(false);
+                    }
                 }
             }
             if (p.hasMetadata("spawnTeleport")) {

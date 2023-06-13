@@ -10,6 +10,7 @@ import net.tazpvp.tazpvp.utils.report.ReportLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
@@ -34,6 +35,8 @@ public class PlayerWrapper {
     @Getter
     private final List<ReportLogger> reportLoggerList;
     private PermissionAttachment permissionAttachment;
+    @Getter
+    private boolean receivedDialogue;
 
     /**
      * Should only take UUID, all other values should not have to persist.
@@ -48,6 +51,7 @@ public class PlayerWrapper {
         this.rank = PersistentData.getRank(uuid);
         this.reportDebouncesList = new ArrayList<>();
         this.reportLoggerList = new ArrayList<>();
+        this.receivedDialogue = false;
 
         refreshPermissions();
     }
@@ -133,6 +137,19 @@ public class PlayerWrapper {
         this.rank = rank;
         PersistentData.setRank(getUuid(), rank);
         refreshPermissions();
+    }
+
+    public void setReceivedDialogue(boolean value) {
+        if (!value) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    PlayerWrapper.getPlayer(getUuid()).receivedDialogue = false;
+                }
+            }.runTaskLater(Tazpvp.getInstance(), 20 * 3);
+            return;
+        }
+        this.receivedDialogue = true;
     }
 
     private static final WeakHashMap<UUID, PlayerWrapper> playerMap = new WeakHashMap<>();
