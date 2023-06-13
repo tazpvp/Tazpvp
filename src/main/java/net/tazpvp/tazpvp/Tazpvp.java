@@ -77,7 +77,8 @@ import java.util.logging.Logger;
 public final class Tazpvp extends JavaPlugin {
     @Getter
     private static List<Observer> observers = new ArrayList<>();
-    private List<NPC> npcs = new LinkedList<>();
+    @Getter
+    private List<NPC> npcs = new ArrayList<>();
     public static List<UUID> playerList = new ArrayList<>();
     public static List<String> events = new ArrayList<>();
     public static Event event;

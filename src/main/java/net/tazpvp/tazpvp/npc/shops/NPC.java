@@ -71,6 +71,8 @@ public abstract class NPC implements Listener {
     @Getter
     private final Dialogues dialogues;
 
+    private final int RANGE = 4;
+
 
     public NPC(@Nonnull final String NAME, @Nonnull final Location SPAWN, @Nonnull final Villager.Profession PROFESSION, @Nonnull final Villager.Type TYPE, @Nonnull final Sound SOUND, @Nonnull final Dialogues dialogues) {
         this.NAME = NAME;
@@ -98,6 +100,10 @@ public abstract class NPC implements Listener {
     }
 
     public abstract void interact(@Nonnull final PlayerInteractAtEntityEvent e, @Nonnull final Player p);
+
+    public boolean withinRange(Location location) {
+        return getSPAWN().toVector().distance(location.toVector()) <= RANGE;
+    }
 
     @EventHandler
     public void onInteract(PlayerInteractAtEntityEvent e) {

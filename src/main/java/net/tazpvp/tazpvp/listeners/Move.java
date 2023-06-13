@@ -1,6 +1,7 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.npc.shops.NPC;
 import net.tazpvp.tazpvp.utils.ParkourUtil;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
@@ -21,17 +22,16 @@ public class Move implements Listener {
     public void onMove(PlayerMoveEvent e) {
         Player p = e.getPlayer();
         PlayerWrapper pw = PlayerWrapper.getPlayer(p);
+        Location playerLocation = p.getLocation();
 
         Location raidus = new Location(Bukkit.getWorld("arena"), 0, 100, NRCore.config.spawn.getZ() + 29);
-        Block b = new Location(e.getPlayer().getWorld(), e.getPlayer().getLocation().getX(), e.getPlayer().getLocation().getY() - 1, e.getPlayer().getLocation().getZ()).getBlock();
+        Block b = new Location(p.getWorld(), playerLocation.getX(), playerLocation.getY() - 1, playerLocation.getZ()).getBlock();
 
         if (p.getWorld().equals(Bukkit.getWorld("parkour"))) {
             if (b.getType() == Material.WATER && p.getGameMode() != GameMode.SURVIVAL) {
                 ParkourUtil.getCheckpoint(p);
             }
-        }
-
-        if (p.getWorld().getName().equals("arena")) {
+        } else if (p.getWorld().getName().equals("arena")) {
             if (p.getLocation().distance(raidus) < 5) {
                 Launchpad(p);
                 return;
@@ -44,6 +44,11 @@ public class Move implements Listener {
                 if (p.getGameMode() == GameMode.SURVIVAL) {
                     DeathFunctions.death(p.getUniqueId());
                     return;
+                }
+            }
+            for (NPC npc : Tazpvp.getInstance().getNpcs()) {
+                if (npc.withinRange(playerLocation)) {
+                    p.sendMessage(npc.getDialogues().getRandomDialogue());
                 }
             }
             if (p.hasMetadata("spawnTeleport")) {
