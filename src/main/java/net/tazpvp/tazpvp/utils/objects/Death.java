@@ -42,39 +42,18 @@ import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
-import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
-import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerInventoryStorage;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.*;
-import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.FireworkMeta;
-import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.PotionData;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionType;
 import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.NRCore;
-import world.ntdi.nrcore.utils.gui.Button;
-import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.holograms.Hologram;
-import world.ntdi.nrcore.utils.item.builders.EnchantmentBookBuilder;
-import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
-import world.ntdi.nrcore.utils.item.builders.PotionBuilder;
 import world.ntdi.nrcore.utils.item.builders.SkullBuilder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -113,95 +92,15 @@ public class Death {
             if (!(chance <= 2)) return;
         } else if (chance != 1) return;
 
-        Material chest = new ItemStack(Material.CHEST).getType();
 
-        Block block = location.getBlock();
-        block.setType(chest);
-
-        Chest coffin = (Chest) block.getState();
-        Inventory inv = coffin.getInventory();
-        GUI gui = new GUI(inv);
-
-        ItemStack item = coffinItem();
-
-        Hologram hologram = new Hologram(new String[]{"&3&l" + pVictim.getName() + "'s Coffin"}, location.getBlock().getLocation().add(0.5, 0, 0.5).subtract(0, 0.5, 0), false);
-
-        gui.addButton(Button.create(item, (e) -> {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    gui.setReturnsItems(true);
-                    e.getWhoClicked().closeInventory();
-                    e.getWhoClicked().getInventory().addItem(item);
-                    gui.destroy();
-                    block.setType(Material.AIR);
-                    hologram.deleteHologram();
-                    if (e.getWhoClicked() instanceof Player p) {
-                        p.playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
-
-                        Location playerLocation = p.getLocation();
-                        playerLocation.getWorld().spawnParticle(Particle.SPELL_MOB, playerLocation, 100, 0.5, 1, 0.5, 0.2);
-
-                        p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1, 1);
-                    }
-                }
-            }.runTaskLater(Tazpvp.getInstance(), 1);
-        }), 13);
-
-        gui.update();
+        Coffin coffin = new Coffin(location, new Hologram(new String[]{"&3&l" + pVictim.getName() + "'s Coffin"}, location.getBlock().getLocation().add(0.5, 0, 0.5).subtract(0, 0.5, 0), false));
 
         new BukkitRunnable() {
             @Override
             public void run() {
-                hologram.deleteHologram();
-                block.setType(Material.AIR);
+                coffin.destroy();
             }
         }.runTaskLater(Tazpvp.getInstance(), 20 * 10);
-    }
-
-    /**
-     * List of all possible enchantments that appear in the coffin.
-     * @return Returns a random enchantment out of the list.
-     */
-    private ItemStack coffinItem() {
-        List<PotionType> tippedArrows = Arrays.asList(
-                PotionType.SPEED,
-                PotionType.SLOWNESS,
-                PotionType.INSTANT_HEAL,
-                PotionType.INSTANT_DAMAGE,
-                PotionType.POISON,
-                PotionType.REGEN,
-                PotionType.STRENGTH,
-                PotionType.WEAKNESS,
-                PotionType.LUCK
-        );
-        List<Enchantment> list = List.of(
-                Enchantment.DAMAGE_ALL,
-                Enchantment.ARROW_DAMAGE,
-                Enchantment.PROTECTION_ENVIRONMENTAL,
-                Enchantment.MENDING,
-                Enchantment.PROTECTION_FIRE,
-                Enchantment.PROTECTION_PROJECTILE,
-                Enchantment.ARROW_FIRE,
-                Enchantment.FIRE_ASPECT,
-                Enchantment.SWEEPING_EDGE,
-                Enchantment.KNOCKBACK,
-                Enchantment.DURABILITY
-        );
-
-        if ((r.nextInt(2) + 1) <= 1) {
-            Enchantment enchant = list.get(r.nextInt(list.size()));
-            return new EnchantmentBookBuilder().enchantment(enchant, 1).build();
-        }
-
-        PotionType potionType = tippedArrows.get(r.nextInt(tippedArrows.size()));
-
-        ItemStack tippedArrow = new ItemStack(Material.TIPPED_ARROW, 10);
-        PotionMeta potionMeta = (PotionMeta) tippedArrow.getItemMeta();
-        potionMeta.setBasePotionData(new PotionData(potionType));
-        tippedArrow.setItemMeta(potionMeta);
-
-        return tippedArrow;
     }
 
     public void dropHead() {

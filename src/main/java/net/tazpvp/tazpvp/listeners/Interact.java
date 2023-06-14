@@ -2,6 +2,7 @@ package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.crate.Crate;
+import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -22,6 +23,12 @@ public class Interact implements Listener {
                     crate.acceptClick(e);
 
                 }
+                return;
+            }
+
+            if (e.getClickedBlock().getType() == Material.CHEST) {
+                e.setCancelled(true);
+                DeathFunctions.acceptClick(e);
             }
         }
     }

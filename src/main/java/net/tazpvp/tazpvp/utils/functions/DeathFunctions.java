@@ -32,28 +32,28 @@
 
 package net.tazpvp.tazpvp.utils.functions;
 
+import lombok.Getter;
 import net.tazpvp.tazpvp.duels.Duel;
-import net.tazpvp.tazpvp.guild.GuildUtils;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
-import net.tazpvp.tazpvp.utils.data.GuildData;
 import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.objects.Coffin;
 import net.tazpvp.tazpvp.utils.objects.CombatTag;
 import net.tazpvp.tazpvp.utils.objects.Death;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerInteractEvent;
 
-import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
-import java.util.WeakHashMap;
 
 public class DeathFunctions {
+    @Getter
+    private final static List<Coffin> coffins = new ArrayList<>();
     public static void death(UUID victim, UUID killer) {
 
         Death death = new Death(victim, killer);
@@ -135,5 +135,19 @@ public class DeathFunctions {
         PlayerFunctions.healPlr(pVictim);
         PlayerFunctions.feedPlr(pVictim);
         CombatTag.tags.get(victim).endCombat(null, false);
+    }
+
+    public static void acceptClick(PlayerInteractEvent e) {
+        for (Coffin coffin : getCoffins()) {
+            if (e.getClickedBlock() != null) {
+                if (e.getClickedBlock().getLocation().equals(coffin.getLocation())) {
+                    coffin.doTheDo(e.getPlayer());
+                }
+            }
+        }
+    }
+
+    public static void addCoffin(Coffin coffin) {
+        coffins.add(coffin);
     }
 }
