@@ -67,6 +67,7 @@ public class Coffin {
         location.getBlock().setType(Material.CHEST);
 
         DeathFunctions.addCoffin(this);
+        System.out.println("made coffin");
     }
 
     public void destroy() {
