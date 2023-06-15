@@ -46,16 +46,21 @@ public class Move implements Listener {
                     return;
                 }
             }
-            if (!pw.isReceivedDialogue()) {
-                for (NPC npc : Tazpvp.getInstance().getNpcs()) {
-                    if (npc.withinRange(playerLocation)) {
-                        p.sendMessage(npc.getDialogues().getRandomDialogue());
-                        pw.setReceivedDialogue(true);
-                    } else {
-                        pw.setReceivedDialogue(false);
-                    }
+
+            if (pw != null) pw.setReceivedDialogue(null);
+            for (NPC npc : Tazpvp.getInstance().getNpcs()) {
+                if (npc.withinRange(playerLocation)) {
+                    pw.setReceivedDialogue(npc);
+                    break;
                 }
             }
+            if (pw.getReceivedDialogue() != null && !pw.isNpcDialogue()) {
+                p.sendMessage(pw.getReceivedDialogue().getDialogues().getRandomDialogue());
+                pw.setNpcDialogue(true);
+            } else if (pw.getReceivedDialogue() == null) {
+                pw.setNpcDialogue(false);
+            }
+
             if (p.hasMetadata("spawnTeleport")) {
                 p.sendMessage(CC.RED + "Teleportation cancelled. You moved.");
                 p.removeMetadata("spawnTeleport", Tazpvp.getInstance());

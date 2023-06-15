@@ -93,7 +93,7 @@ public abstract class Duel {
 
         DUELERS.forEach(p -> {
             PlayerWrapper.getPlayer(p).setDueling(false);
-            PlayerFunctions.healPlr(Bukkit.getPlayer(p));
+            PlayerFunctions.resetHealth(Bukkit.getPlayer(p));
         });
 
         new BukkitRunnable() {

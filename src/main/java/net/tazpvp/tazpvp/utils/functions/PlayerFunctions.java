@@ -71,9 +71,6 @@ public class PlayerFunctions {
     }
 
     public static void healPlr(Player p) {
-        for (PotionEffect effect : p.getActivePotionEffects()) {
-            p.removePotionEffect(effect.getType());
-        }
         if (getInt(p, DataTypes.REBIRTH) >= 1) {
             p.setHealthScale(22.0);
         } else {
@@ -84,6 +81,13 @@ public class PlayerFunctions {
 
     public static void feedPlr(Player p) {
         p.setFoodLevel(20); //TODO: get max food
+    }
+
+    public static void resetHealth(Player p) {
+        for (PotionEffect effect : p.getActivePotionEffects()) {
+            p.removePotionEffect(effect.getType());
+        }
+        healPlr(p);
     }
 
     public static void kitPlayer(Player p) {
@@ -158,7 +162,7 @@ public class PlayerFunctions {
 
     public static void addHealth(Player p, int amount) {
         if ((p.getHealth() + amount) >= PlayerFunctions.getMaxHealth(p)) {
-            PlayerFunctions.healPlr(p);
+            healPlr(p);
             p.setHealth(PlayerFunctions.getMaxHealth(p));
         } else {
             p.setHealth(p.getHealth() + amount);
