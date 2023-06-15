@@ -3,6 +3,7 @@ package net.tazpvp.tazpvp.utils.player;
 import lombok.Getter;
 import lombok.Setter;
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.npc.shops.NPC;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.data.Rank;
 import net.tazpvp.tazpvp.utils.report.ReportDebounce;
@@ -38,7 +39,9 @@ public class PlayerWrapper {
     private final List<ReportLogger> reportLoggerList;
     private PermissionAttachment permissionAttachment;
     @Getter @Setter
-    private boolean receivedDialogue;
+    private NPC receivedDialogue;
+    @Getter @Setter
+    private boolean npcDialogue;
 
     /**
      * Should only take UUID, all other values should not have to persist.
@@ -53,7 +56,8 @@ public class PlayerWrapper {
         this.rank = PersistentData.getRank(uuid);
         this.reportDebouncesList = new ArrayList<>();
         this.reportLoggerList = new ArrayList<>();
-        this.receivedDialogue = false;
+        this.receivedDialogue = null;
+        this.npcDialogue = false;
 
         refreshPermissions();
     }

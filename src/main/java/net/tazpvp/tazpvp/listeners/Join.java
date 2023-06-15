@@ -69,7 +69,7 @@ public class Join implements Listener {
 
         ScoreboardFunctions.initScoreboard(p);
 
-        PlayerFunctions.healPlr(p);
+        PlayerFunctions.resetHealth(p);
         PlayerFunctions.feedPlr(p);
 
         if (!p.hasPlayedBefore()) {

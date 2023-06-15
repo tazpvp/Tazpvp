@@ -76,7 +76,7 @@ public class Classic extends Duel {
         super.getDUELERS().forEach(id -> {
             Player p = Bukkit.getPlayer(id);
             ArmorManager.storeAndClearInventory(p);
-            PlayerFunctions.healPlr(p);
+            PlayerFunctions.resetHealth(p);
             PlayerWrapper.getPlayer(p).setDueling(true);
         });
 
