@@ -140,7 +140,7 @@ public class DeathFunctions {
     public static void acceptClick(PlayerInteractEvent e) {
         for (Coffin coffin : getCoffins()) {
             if (e.getClickedBlock() != null) {
-                if (e.getClickedBlock().getLocation().equals(coffin.getLocation())) {
+                if (e.getClickedBlock().getLocation().distance(coffin.getLocation()) < 1D) {
                     coffin.doTheDo(e.getPlayer());
                 }
             }
@@ -149,5 +149,6 @@ public class DeathFunctions {
 
     public static void addCoffin(Coffin coffin) {
         coffins.add(coffin);
+        System.out.println(coffins);
     }
 }
