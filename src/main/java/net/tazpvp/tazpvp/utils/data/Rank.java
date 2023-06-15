@@ -38,7 +38,13 @@ import net.tazpvp.tazpvp.utils.enums.CC;
 import java.util.List;
 
 public enum Rank {
-    DEFAULT("default", null, CC.GRAY, List.of(""));
+    DEFAULT("default", null, CC.GRAY, 9, List.of("")),
+    PREMIUM("premium", null, CC.GOLD, 8, List.of("")),
+    HELPER("helper", CC.GREEN + "HELPER", CC.GREEN, 7, List.of("mute", "tazpvp.staff")),
+    MODERATOR("moderator", CC.AQUA + "MODERATOR", CC.AQUA, 6, List.of("mute", "tazpvp.ban", "tazpvp.restore")),
+    ADMIN("admin", CC.YELLOW + "ADMIN", CC.YELLOW, 5, List.of("mute", "tazpvp.staff", "tazpvp.ban", "tazpvp.restore", "tazpvp.hide", "tazpvp.kit")),
+    MANAGER("manager", CC.BLUE + "MANAGER", CC.BLUE, 4, List.of("mute", "tazpvp.staff", "tazpvp.ban", "tazpvp.restore", "tazpvp.hide", "tazpvp.kit", "tazpvp.stats")),
+    OWNER("owner", CC.RED + "OWNER", CC.RED, 1, List.of("is.op"));
 
     @Getter
     private final String name;
@@ -47,12 +53,15 @@ public enum Rank {
     @Getter
     private final CC color;
     @Getter
+    private final int rank;
+    @Getter
     private final List<String> permissions;
 
-    Rank(String name, String prefix, CC color, List<String> permissions) {
+    Rank(String name, String prefix, CC color, int rank, List<String> permissions) {
         this.name = name;
         this.prefix = prefix;
         this.color = color;
+        this.rank = rank;
         this.permissions = permissions;
     }
 }
