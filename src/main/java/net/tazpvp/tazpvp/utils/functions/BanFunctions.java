@@ -17,4 +17,14 @@ public class BanFunctions {
 
         target.kickPlayer("You got banned xd join discord xd lol \n" + "hello");
     }
+
+    public static void mute(Player target, String time) {
+        ban(target, time, "Chat Infraction");
+    }
+
+    public static void mute(Player target, String time, String reason) {
+        TimeToken timeToken = new TimeToken(time);
+
+        PunishmentData.punish(target.getUniqueId(), PunishmentData.PunishmentType.MUTED, timeToken.getUnixTimestamp());
+    }
 }

@@ -117,6 +117,10 @@ public class PunishmentData extends Table {
         }
     }
 
+    public static boolean isMuted(final @NonNull UUID uuid) {
+        return isPunished(uuid) && getPunishment(uuid) == PunishmentType.MUTED;
+    }
+
     public enum PunishmentType {
         MUTED, BANNED, PERMANENT_BAN;
     }

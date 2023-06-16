@@ -35,6 +35,7 @@ package net.tazpvp.tazpvp.listeners;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.guild.Guild;
 import net.tazpvp.tazpvp.guild.GuildUtils;
+import net.tazpvp.tazpvp.utils.TimeUtil;
 import net.tazpvp.tazpvp.utils.data.*;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
@@ -55,8 +56,14 @@ public class Chat implements Listener {
     public void onChat(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
         UUID uuid = p.getUniqueId();
+
+        if (PunishmentData.isMuted(uuid)) {
+            p.sendMessage("You are currently muted for " + TimeUtil.howLongAgo(PunishmentData.getTimeRemaining(uuid)));
+            e.setCancelled(true);
+        }
+
         String message = e.getMessage();
-        boolean hasRank = PlayerRankData.hasRank(uuid);
+        Rank rank = PersistentData.getRank(uuid);
 
         /* Check if player has a guild tag */
         boolean hasGuildTag = false;
@@ -70,15 +77,15 @@ public class Chat implements Listener {
                 .replace("&GRAY", CC.GRAY.toString())
                 .replace("&GOLD", CC.GOLD.toString())
                 .replace("&M",
-                        (hasRank
+                        (rank != Rank.DEFAULT
                                 ? CC.WHITE.toString()
                                 : CC.GRAY.toString())
                 )
                 .replace("{LEVEL}", String.valueOf(PersistentData.getInt(uuid, DataTypes.LEVEL)))
                 .replace("{PREFIX}",
-                        (hasRank
-                                ? PlayerRankData.getRank(uuid) + " "
-                                : "")
+                        (rank == null
+                                ? ""
+                                : rank.getPrefix())
                 )
                 .replace("{SUFFIX}",
                         (hasGuildTag
