@@ -3,6 +3,8 @@ package net.tazpvp.tazpvp.utils.player;
 import lombok.Getter;
 import lombok.Setter;
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.guild.Guild;
+import net.tazpvp.tazpvp.guild.GuildUtils;
 import net.tazpvp.tazpvp.npc.shops.NPC;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.data.Rank;
@@ -10,7 +12,6 @@ import net.tazpvp.tazpvp.utils.report.ReportDebounce;
 import net.tazpvp.tazpvp.utils.report.ReportLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 import world.ntdi.nrcore.utils.nametag.PlayerNameTag;
@@ -76,11 +77,19 @@ public class PlayerWrapper {
 
         refreshPermissions();
 
-        new PlayerNameTag().initializePlayerNameTag(getPlayer(), getRank().getRank(), getRank().getPrefix(), "Test", getRank().getColor());
+        new PlayerNameTag().initializePlayerNameTag(getPlayer(), getRank().getRank(), getRank().getPrefix() + " ", " " + getGuildTag(), getRank().getColor());
     }
 
     public Player getPlayer() {
         return Bukkit.getPlayer(uuid);
+    }
+
+    public String getGuildTag() {
+        Guild g = GuildUtils.getGuildPlayerIn(getUuid());
+        if (g != null && g.getTag() != null) {
+            return g.getTag();
+        }
+        return "";
     }
 
     /**

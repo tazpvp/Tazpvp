@@ -18,6 +18,11 @@ public final class GuildUtils {
         return GuildData.getGuild(UUID.fromString(id));
     }
 
+    public static Guild getGuildPlayerIn(UUID uuid) {
+        String id = PersistentData.getString(uuid, DataTypes.GUILD_ID);
+        return GuildData.getGuild(UUID.fromString(id));
+    }
+
     public static LinkedHashMap<UUID, Integer> getSortedGuilds() {
         LinkedHashMap<UUID, Integer> map  = new LinkedHashMap<>();
         for (Guild g : GuildData.getAllGuilds()) {
