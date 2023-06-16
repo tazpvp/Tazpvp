@@ -11,6 +11,7 @@ import net.tazpvp.tazpvp.utils.report.ReportLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
+import world.ntdi.nrcore.utils.nametag.PlayerNameTag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +61,8 @@ public class PlayerWrapper {
         this.npcDialogue = false;
 
         refreshPermissions();
+
+        new PlayerNameTag().initializePlayerNameTag(getPlayer(), getRank().getRank(), getRank().getPrefix(), "Test", getRank().getColor());
     }
 
     public Player getPlayer() {
