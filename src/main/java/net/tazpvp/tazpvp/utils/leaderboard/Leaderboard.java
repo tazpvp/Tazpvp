@@ -88,10 +88,10 @@ public class Leaderboard {
     }
 
     public enum leaderboardEnum {
-        COINS(new Leaderboard(DataTypes.COINS), "coins"),
-        DEATHS(new Leaderboard(DataTypes.DEATHS), "deaths"),
-        KILLS(new Leaderboard(DataTypes.KILLS), "kills"),
-        LEVELS(new Leaderboard(DataTypes.LEVEL), "levels");
+        COINS(new Leaderboard(DataTypes.COINS), "Coins"),
+        DEATHS(new Leaderboard(DataTypes.DEATHS), "Deaths"),
+        KILLS(new Leaderboard(DataTypes.KILLS), "Kills"),
+        LEVELS(new Leaderboard(DataTypes.LEVEL), "Levels");
 
         private final Leaderboard leaderboard;
         private final String type;
