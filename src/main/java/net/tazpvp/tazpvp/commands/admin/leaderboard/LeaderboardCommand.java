@@ -8,9 +8,7 @@ import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
-import java.util.List;
-import java.util.NavigableMap;
-import java.util.UUID;
+import java.util.*;
 
 public class LeaderboardCommand extends NRCommand {
     public LeaderboardCommand() {
@@ -28,10 +26,11 @@ public class LeaderboardCommand extends NRCommand {
             if (args[0].equalsIgnoreCase("view")) {
                 if (args[1].equalsIgnoreCase("coins")) {
                     int count = 1;
-                    NavigableMap<UUID, Leaderboard.Placement> sortedMap = Leaderboard.CoinsLeaderboard.getSortedPlacement().descendingMap();
-                    for (UUID id : sortedMap.keySet()) {
-                        Leaderboard.Placement placement = sortedMap.get(id);
-                        p.sendMessage(count + ". " + Bukkit.getOfflinePlayer(id).getName() + " " + placement.getPoints());
+                    TreeMap<Integer, UUID> sortedMap = new TreeMap<>(Collections.reverseOrder());
+                    Leaderboard.CoinsLeaderboard.getSortedPlacement().forEach((uuid, placement) -> sortedMap.put(placement.getPoints(), uuid));
+                    for (Map.Entry<Integer, UUID> entry : sortedMap.entrySet()) {
+                        Leaderboard.Placement placement = Leaderboard.CoinsLeaderboard.getSortedPlacement().get(entry.getValue());
+                        p.sendMessage(count + ". " + Bukkit.getOfflinePlayer(entry.getValue()).getName() + " " + placement.getPoints());
                         count++;
                     }
                     return true;
