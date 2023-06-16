@@ -77,7 +77,7 @@ public class PlayerWrapper {
 
         refreshPermissions();
 
-        new PlayerNameTag().initializePlayerNameTag(getPlayer(), getRank().getRank(), getRank().getPrefix() + " ", " " + getGuildTag(), getRank().getColor());
+        new PlayerNameTag().initializePlayerNameTag(getPlayer(), getRank().getRank(), getPrefix(), " " + getGuildTag(), getRank().getColor());
     }
 
     public Player getPlayer() {
@@ -90,6 +90,13 @@ public class PlayerWrapper {
             if (g != null && g.getTag() != null) {
                 return g.getTag();
             }
+        }
+        return "";
+    }
+
+    public String getPrefix() {
+        if (getRank().getPrefix() != null) {
+            return getRank().getPrefix() + " ";
         }
         return "";
     }
