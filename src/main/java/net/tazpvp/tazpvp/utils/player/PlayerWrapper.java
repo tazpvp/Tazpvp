@@ -9,6 +9,7 @@ import net.tazpvp.tazpvp.utils.data.Rank;
 import net.tazpvp.tazpvp.utils.report.ReportDebounce;
 import net.tazpvp.tazpvp.utils.report.ReportLogger;
 import org.bukkit.Bukkit;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 import world.ntdi.nrcore.utils.nametag.PlayerNameTag;
@@ -49,6 +50,8 @@ public class PlayerWrapper {
     private int killCount;
     @Getter @Setter
     private long timeOfLaunch;
+    @Getter @Setter
+    private List<Block> blocksPlaced;
 
     /**
      * Should only take UUID, all other values should not have to persist.

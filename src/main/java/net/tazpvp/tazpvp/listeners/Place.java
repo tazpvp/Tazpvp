@@ -2,6 +2,7 @@ package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -21,6 +22,7 @@ public class Place implements Listener {
     @EventHandler
     public void onPlace(BlockPlaceEvent e) {
         Player p = e.getPlayer();
+        PlayerWrapper pw = PlayerWrapper.getPlayer(p);
         int delay;
 
         if (p.getGameMode() != GameMode.CREATIVE) {
@@ -63,6 +65,7 @@ public class Place implements Listener {
                 }
             }.runTaskLater(Tazpvp.getInstance(), 20 * delay);
 
+            pw.getBlocksPlaced().add(b);
             Tazpvp.getObservers().forEach(observer -> observer.place(p, b));
         }
     }
