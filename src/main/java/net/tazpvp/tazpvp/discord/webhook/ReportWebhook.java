@@ -43,11 +43,11 @@ public class ReportWebhook {
 
         DiscordWebhook.EmbedObject embed = new DiscordWebhook.EmbedObject();
 
-        embed.setThumbnail("https://crafatar.com/avatars/" + player.getUniqueId());
+        embed.setThumbnail("https://crafatar.com/renders/body/" + player.getUniqueId());
         embed.setTitle(player.getName());
-        embed.setAuthor("repoted by " + reportedBy.getName(), "https://www.ntdi.world", "https://crafater.com/avatars/" + reportedBy.getUniqueId());
+        embed.setAuthor(reportedBy.getName() + " reported: ", "https://crafater.com/avatars/" + reportedBy.getUniqueId(), "https://crafatar.com/avatars/" + reportedBy.getUniqueId());
         embed.addField("Reason", reason, false);
-        embed.addField("View All Reports", "```/viewreports " + player.getName() + "```", false);
+        embed.addField("View all reports", "```/viewreports " + player.getName() + "```", false);
 
         embed.setFooter("Rownox likes toes", "https://crafatar.com/avatars/36233471-e1d8-497d-a007-3e2e3bc1289f");
 
