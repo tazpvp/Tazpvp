@@ -16,6 +16,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public final class PersistentData {
@@ -224,6 +226,17 @@ public final class PersistentData {
         return Rank.valueOf(getString(p.getUniqueId(), DataTypes.PLAYER_RANK));
     }
 
+    public static Map<UUID, Integer> getWithId(DataTypes dataTypes) {
+        if (!dataTypes.isQuantitative()) {
+            throw new IllegalArgumentException();
+        }
+        Map<UUID, Integer> map = new HashMap<>();
+        for (Map.Entry<String, Object> entry : SQLHelper.getListOfIdColumn(NAME, dataTypes.getColumnName(), ID_COLUMN).entrySet()) {
+            map.put(UUID.fromString(entry.getKey()), (int) entry.getValue());
+        }
+
+        return map;
+    }
 
     /*
         ====================== End GET ====================== Start SET ======================

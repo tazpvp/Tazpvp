@@ -31,59 +31,13 @@
  *
  */
 
-package net.tazpvp.tazpvp.utils.leaderboard;
+package net.tazpvp.tazpvp.utils.leaderboard.leaderboards;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
-import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.leaderboard.Leaderboard;
 
-import java.util.*;
-
-public class Leaderboard {
-    @Getter
-    private final DataTypes dataTypes;
-    @Getter
-    private final TreeMap<UUID, Placement> sortedPlacement;
-
-    public Leaderboard(DataTypes dataTypes) {
-        this.dataTypes = dataTypes;
-
-        if (!dataTypes.isQuantitative()) {
-            throw new IllegalArgumentException("Must be quantitative integer");
-        }
-
-        Map<UUID, Integer> unsortedMap = PersistentData.getWithId(dataTypes);
-        Map<UUID, Placement> unsortedPlacement = new HashMap<>();
-        unsortedMap.forEach(((uuid, integer) -> unsortedPlacement.put(uuid, new Placement(integer, uuid))));
-
-        this.sortedPlacement = putFirstEntries(10, new TreeMap<>(unsortedPlacement));
-    }
-
-    public <K,V> TreeMap<K,V> putFirstEntries(int max, TreeMap<K,V> source) {
-        int count = 0;
-        TreeMap<K,V> target = new TreeMap<K,V>();
-        for (Map.Entry<K,V> entry:source.entrySet()) {
-            if (count >= max) break;
-
-            target.put(entry.getKey(), entry.getValue());
-            count++;
-        }
-        return target;
-    }
-
-
-
-    @AllArgsConstructor
-    public static class Placement implements Comparable<Placement> {
-        @Getter
-        private final int points;
-        @Getter
-        private final UUID uuid;
-
-        @Override
-        public int compareTo(Placement placement) {
-            return getPoints() - placement.getPoints();
-        }
+public class KillsLeaderboard extends Leaderboard {
+    public KillsLeaderboard() {
+        super(DataTypes.KILLS);
     }
 }
