@@ -33,12 +33,10 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.guild.Guild;
-import net.tazpvp.tazpvp.guild.GuildUtils;
 import net.tazpvp.tazpvp.utils.TimeUtil;
 import net.tazpvp.tazpvp.utils.data.*;
 import net.tazpvp.tazpvp.utils.enums.CC;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -56,6 +54,7 @@ public class Chat implements Listener {
     public void onChat(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
         UUID uuid = p.getUniqueId();
+        PlayerWrapper pw = PlayerWrapper.getPlayer(p);
 
         if (PunishmentData.isMuted(uuid)) {
             p.sendMessage("You are currently muted for " + TimeUtil.howLongAgo(PunishmentData.getTimeRemaining(uuid)));
@@ -65,17 +64,12 @@ public class Chat implements Listener {
         String message = e.getMessage();
         Rank rank = PersistentData.getRank(uuid);
 
-        /* Check if player has a guild tag */
-        boolean hasGuildTag = false;
-        if (GuildUtils.isInGuild(p)) {
-            Guild g = GuildUtils.getGuildPlayerIn(p);
-            if (g.getTag() != null ) hasGuildTag = true;
-        }
+
 
         String format = "&GRAY[{LEVEL}&GRAY] {PREFIX}%s &GOLD{SUFFIX}&GRAY&M%s";
         format = format
                 .replace("&GRAY", CC.GRAY.toString())
-                .replace("&GOLD", CC.GOLD.toString())
+                .replace("&GOLD", CC.YELLOW.toString())
                 .replace("&M",
                         (rank != Rank.DEFAULT
                                 ? CC.WHITE.toString()
@@ -87,11 +81,7 @@ public class Chat implements Listener {
                                 ? ""
                                 : rank.getPrefix() + " ")
                 )
-                .replace("{SUFFIX}",
-                        (hasGuildTag
-                                ? GuildData.getGuild(uuid).getTag() + " "
-                                : "")
-                );
+                .replace("{SUFFIX}", "[" + pw.getGuildTag() + "] ");
 
 
         for (Player h : Bukkit.getOnlinePlayers()) {
