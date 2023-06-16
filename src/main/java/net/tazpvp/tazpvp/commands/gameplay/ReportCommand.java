@@ -1,6 +1,7 @@
 package net.tazpvp.tazpvp.commands.gameplay;
 
 import lombok.NonNull;
+import net.tazpvp.tazpvp.discord.webhook.ReportWebhook;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import net.tazpvp.tazpvp.utils.report.ReportDebounce;
@@ -53,6 +54,7 @@ public class ReportCommand extends NRCommand {
         playerWrapper.reportPlayer(targetPlayer, reason);
         p.sendMessage(CC.GOLD + "You've reported " + CC.RED + targetName + CC.GOLD + " for " + CC.RED + reason);
         Bukkit.broadcast(CC.RED + targetName + CC.GOLD + " has been reported for " + CC.RED + reason, "tazpvp.staff");
+        new ReportWebhook(targetPlayer, p, reason);
 
          return true;
     }
