@@ -87,8 +87,26 @@ public class Leaderboard {
         }
     }
 
-    public static Leaderboard CoinsLeaderboard = new Leaderboard(DataTypes.COINS);
-    public static Leaderboard DeathsLeaderboard = new Leaderboard(DataTypes.COINS);
-    public static Leaderboard KillsLeaderboard = new Leaderboard(DataTypes.COINS);
-    public static Leaderboard LevelLeaderboard = new Leaderboard(DataTypes.COINS);
+    public enum leaderboardEnum {
+        COINS(new Leaderboard(DataTypes.COINS), "coins"),
+        DEATHS(new Leaderboard(DataTypes.DEATHS), "deaths"),
+        KILLS(new Leaderboard(DataTypes.KILLS), "kills"),
+        LEVELS(new Leaderboard(DataTypes.LEVEL), "levels");
+
+        private final Leaderboard leaderboard;
+        private final String type;
+
+        leaderboardEnum(Leaderboard leaderboard, String type) {
+            this.leaderboard = leaderboard;
+            this.type = type;
+        }
+
+        public Leaderboard getLeaderboard() {
+            return leaderboard;
+        }
+
+        public String getType() {
+            return type;
+        }
+    }
 }

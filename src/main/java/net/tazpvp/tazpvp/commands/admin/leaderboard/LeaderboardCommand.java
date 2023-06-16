@@ -1,6 +1,7 @@
 package net.tazpvp.tazpvp.commands.admin.leaderboard;
 
 import lombok.NonNull;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.leaderboard.Leaderboard;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -23,17 +24,28 @@ public class LeaderboardCommand extends NRCommand {
         }
 
         if (args.length >= 2) {
-            if (args[0].equalsIgnoreCase("view")) {
-                if (args[1].equalsIgnoreCase("coins")) {
-                    int count = 1;
-                    TreeMap<Integer, UUID> sortedMap = new TreeMap<>(Collections.reverseOrder());
-                    Leaderboard.CoinsLeaderboard.getSortedPlacement().forEach((uuid, placement) -> sortedMap.put(placement.getPoints(), uuid));
-                    for (Map.Entry<Integer, UUID> entry : sortedMap.entrySet()) {
-                        Leaderboard.Placement placement = Leaderboard.CoinsLeaderboard.getSortedPlacement().get(entry.getValue());
-                        p.sendMessage(count + ". " + Bukkit.getOfflinePlayer(entry.getValue()).getName() + " " + placement.getPoints());
-                        count++;
+            String request = args[0];
+            String type = args[1];
+
+            if (!List.of("view").contains(type)) {
+                sendIncorrectUsage(sender);
+                return true;
+            }
+
+            if (request.equalsIgnoreCase("view")) {
+                for (Leaderboard.leaderboardEnum leaderboardEnum : Leaderboard.leaderboardEnum.values()) {
+                    if (type.equalsIgnoreCase(leaderboardEnum.getType())) {
+                        int count = 1;
+                        TreeMap<Integer, UUID> sortedMap = new TreeMap<>(Collections.reverseOrder());
+                        leaderboardEnum.getLeaderboard().getSortedPlacement().forEach((uuid, placement) -> sortedMap.put(placement.getPoints(), uuid));
+                        for (Map.Entry<Integer, UUID> entry : sortedMap.entrySet()) {
+                            Leaderboard.Placement placement = leaderboardEnum.getLeaderboard().getSortedPlacement().get(entry.getValue());
+                            p.sendMessage(type.toUpperCase() + " LEADERBOARD:");
+                            p.sendMessage(count + ". " + CC.GRAY + Bukkit.getOfflinePlayer(entry.getValue()).getName() + " " + CC.GOLD + placement.getPoints());
+                            count++;
+                        }
+                        return true;
                     }
-                    return true;
                 }
             }
         }
