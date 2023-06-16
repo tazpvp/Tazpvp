@@ -27,7 +27,7 @@ public class LeaderboardCommand extends NRCommand {
             String request = args[0];
             String type = args[1];
 
-            if (!List.of("view").contains(type)) {
+            if (!List.of("view").contains(request)) {
                 sendIncorrectUsage(sender);
                 return true;
             }
