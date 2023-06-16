@@ -86,4 +86,9 @@ public class Leaderboard {
             return getPoints() - placement.getPoints();
         }
     }
+
+    public static Leaderboard CoinsLeaderboard = new Leaderboard(DataTypes.COINS);
+    public static Leaderboard DeathsLeaderboard = new Leaderboard(DataTypes.COINS);
+    public static Leaderboard KillsLeaderboard = new Leaderboard(DataTypes.COINS);
+    public static Leaderboard LevelLeaderboard = new Leaderboard(DataTypes.COINS);
 }

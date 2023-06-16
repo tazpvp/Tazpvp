@@ -83,7 +83,7 @@ public class Chat implements Listener {
                 )
                 .replace("{LEVEL}", String.valueOf(PersistentData.getInt(uuid, DataTypes.LEVEL)))
                 .replace("{PREFIX}",
-                        (rank == null
+                        (rank.getPrefix() == null
                                 ? ""
                                 : rank.getPrefix())
                 )

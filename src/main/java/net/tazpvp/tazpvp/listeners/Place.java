@@ -65,7 +65,7 @@ public class Place implements Listener {
                 }
             }.runTaskLater(Tazpvp.getInstance(), 20 * delay);
 
-            pw.getBlocksPlaced().add(b);
+            pw.getBlocksPlaced().add(b.getType());
             Tazpvp.getObservers().forEach(observer -> observer.place(p, b));
         }
     }
