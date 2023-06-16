@@ -88,7 +88,7 @@ public class PlayerWrapper {
         if (GuildUtils.isInGuild(getPlayer())) {
             Guild g = GuildUtils.getGuildPlayerIn(getUuid());
             if (g != null && g.getTag() != null) {
-                return g.getTag();
+                return "[" + g.getTag() + "]";
             }
         }
         return "";

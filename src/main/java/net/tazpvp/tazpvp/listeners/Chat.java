@@ -81,7 +81,7 @@ public class Chat implements Listener {
                                 ? ""
                                 : rank.getPrefix() + " ")
                 )
-                .replace("{SUFFIX}", "[" + pw.getGuildTag() + "] ");
+                .replace("{SUFFIX}", pw.getGuildTag() + " ");
 
 
         for (Player h : Bukkit.getOnlinePlayers()) {
