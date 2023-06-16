@@ -132,7 +132,7 @@ public class DeathFunctions {
         death.respawn();
         pVictim.getInventory().clear();
         PlayerFunctions.kitPlayer(pVictim);
-        PlayerFunctions.healPlr(pVictim);
+        PlayerFunctions.resetHealth(pVictim);
         PlayerFunctions.feedPlr(pVictim);
         CombatTag.tags.get(victim).endCombat(null, false);
     }

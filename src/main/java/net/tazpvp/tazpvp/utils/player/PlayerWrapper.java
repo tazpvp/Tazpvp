@@ -43,6 +43,12 @@ public class PlayerWrapper {
     private NPC receivedDialogue;
     @Getter @Setter
     private boolean npcDialogue;
+    @Getter @Setter
+    private int coffinCount;
+    @Getter @Setter
+    private int killCount;
+    @Getter @Setter
+    private long timeOfLaunch;
 
     /**
      * Should only take UUID, all other values should not have to persist.
@@ -59,6 +65,9 @@ public class PlayerWrapper {
         this.reportLoggerList = new ArrayList<>();
         this.receivedDialogue = null;
         this.npcDialogue = false;
+        this.coffinCount = 0;
+        this.killCount = 0;
+        this.timeOfLaunch = 0;
 
         refreshPermissions();
 

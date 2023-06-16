@@ -34,6 +34,7 @@ public class Move implements Listener {
         } else if (p.getWorld().getName().equals("arena")) {
             if (p.getLocation().distance(raidus) < 5) {
                 Launchpad(p);
+                pw.setTimeOfLaunch(System.currentTimeMillis());
                 return;
             }
             if (pw.isRespawning()) {

@@ -46,72 +46,33 @@ public class Observable implements Observer {
     }
 
     @Override
-    public void death(Player victim, Player killer) {
-
-    }
-
+    public void death(Player victim, Player killer) {}
     @Override
-    public void mine(Player p, Material material) {
-
-    }
-
+    public void mine(Player p, Material material) {}
     @Override
-    public void launch(Player p) {
-
-    }
-
+    public void launch(Player p) {}
     @Override
-    public void talent(Player p) {
-
-    }
-
+    public void talent(Player p) {}
     @Override
-    public void gui(Player p, String name) {
-
-    }
-
+    public void gui(Player p, String name) {}
     @Override
-    public void rebirth(Player p) {
-
-    }
-
+    public void rebirth(Player p) {}
     @Override
-    public void duel(Player p) {
-
-    }
-
+    public void duel(Player p) {}
     @Override
-    public void event(Player p) {
-
-    }
-
+    public void event(Player p) {}
     @Override
-    public void enchant(Player p) {
-
-    }
-
+    public void enchant(Player p) {}
     @Override
-    public void chat(Player p, String chat) {
-
-    }
-
+    public void chat(Player p, String chat) {}
     @Override
-    public void burn(Player p) {
-
-    }
-
+    public void burn(Player p) {}
     @Override
-    public void place(Player p, Block b) {
-
-    }
-
+    public void place(Player p, Block b) {}
     @Override
-    public void shoot(Player shooter) {
-
-    }
+    public void shoot(Player shooter) {}
     @Override
-    public void kill_zorg(Player shooter) {
-
-    }
-
+    public void kill_zorg(Player shooter) {}
+    @Override
+    public void open_coffin(Player p) {}
 }

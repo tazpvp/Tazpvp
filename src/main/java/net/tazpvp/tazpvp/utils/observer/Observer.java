@@ -64,4 +64,6 @@ public interface Observer {
     void shoot(Player shooter);
 
     void kill_zorg(Player p); // TODO: Add event to implement to
+
+    void open_coffin(Player p);
 }

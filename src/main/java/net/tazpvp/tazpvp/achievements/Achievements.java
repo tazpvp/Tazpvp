@@ -40,18 +40,21 @@ import java.util.HashMap;
 public class Achievements extends ContainerData implements Serializable {
     public Achievements() {
         super(new HashMap<>() {{
-                put("Adept", false);
-                put("Merchant", false);
-                put("Bowling", false);
-                put("Legend", false);
-                put("Gamble", false);
-                put("Superior", false);
-                put("Craftsman", false);
-                put("Gladiator", false);
-                put("Charm", false);
-                put("Rehab", false);
-                put("Zorgin", false);
-                put("Grinder", false);
-              }});
+            put("Adept", false);
+            put("Merchant", false);
+            put("Bowling", false);
+            put("Legend", false);
+            put("Gamble", false);
+            put("Superior", false);
+            put("Craftsman", false);
+            put("Gladiator", false);
+            put("Charm", false);
+            put("Rehab", false);
+            put("Zorgin", false);
+            put("Grinder", false);
+            put("Harvester", false);
+            put("Speedrunner", false);
+            put("Artisan", false);
+        }});
     }
 }

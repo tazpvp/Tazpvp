@@ -164,6 +164,7 @@ public final class Tazpvp extends JavaPlugin {
         new Merchant();
         new Superior();
         new Zorgin();
+        new Harvester();
 
         new Revenge();
         new Moist();
