@@ -81,7 +81,7 @@ public class Chat implements Listener {
                                 ? ""
                                 : rank.getPrefix() + " ")
                 )
-                .replace("{SUFFIX}", pw.getGuildTag())
+                .replace("{SUFFIX}", pw.getGuildTag().toUpperCase())
                 .replace("{GUILDSPACE}", (pw.getGuildTag().equals("") ? "" : " "));
 
 

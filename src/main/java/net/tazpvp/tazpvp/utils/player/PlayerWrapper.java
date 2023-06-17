@@ -8,6 +8,7 @@ import net.tazpvp.tazpvp.guild.GuildUtils;
 import net.tazpvp.tazpvp.npc.shops.NPC;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.data.Rank;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.report.ReportDebounce;
 import net.tazpvp.tazpvp.utils.report.ReportLogger;
 import org.bukkit.Bukkit;
@@ -77,7 +78,7 @@ public class PlayerWrapper {
 
         refreshPermissions();
 
-        new PlayerNameTag().initializePlayerNameTag(getPlayer(), getRank().getRank(), getPrefix(), " " + getGuildTag(), getRank().getColor());
+        new PlayerNameTag().initializePlayerNameTag(getPlayer(), getRank().getRank(), getPrefix(), CC.YELLOW + " " + getGuildTag().toUpperCase(), getRank().getColor());
     }
 
     public Player getPlayer() {
