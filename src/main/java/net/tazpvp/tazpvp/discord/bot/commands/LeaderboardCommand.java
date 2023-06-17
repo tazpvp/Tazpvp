@@ -36,18 +36,40 @@ package net.tazpvp.tazpvp.discord.bot.commands;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.tazpvp.tazpvp.utils.leaderboard.Leaderboard;
+import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.UUID;
 
 public class LeaderboardCommand extends ListenerAdapter {
     @Override
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
         if (event.getName().equals("leaderboard")) {
             EmbedBuilder embedBuilder = new EmbedBuilder();
-
             StringBuilder stringBuilder = new StringBuilder();
 
+            String typeString = event.getOption("type").getAsString();
 
-            embedBuilder.setDescription("");
+            Leaderboard.LeaderboardEnum leaderboardEnum = Leaderboard.LeaderboardEnum.valueOf(typeString);
+
+            event.deferReply().queue();
+
+            int count = 1;
+
+            TreeMap<UUID, Leaderboard.Placement> leaderboard = leaderboardEnum.getLeaderboard().getSortedPlacement();
+
+            for (Map.Entry<UUID, Leaderboard.Placement> entry : leaderboard.entrySet()) {
+                stringBuilder.append(count + ". **" + Bukkit.getOfflinePlayer(entry.getKey()).getName() + "** - " + entry.getValue().getPoints()).append("\n");
+                count++;
+            }
+
+            embedBuilder.setTitle(typeString + " LEADERBOARD");
+            embedBuilder.setDescription(stringBuilder.toString());
+
+            event.replyEmbeds(embedBuilder.build()).queue();
         }
     }
 }

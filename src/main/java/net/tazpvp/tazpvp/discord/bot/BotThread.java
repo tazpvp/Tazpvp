@@ -71,10 +71,10 @@ public class BotThread extends Thread {
                 Commands.slash("leaderboard", "View a leaderboard")
                         .addOptions(
                                 new OptionData(OptionType.STRING, "type", "The type of leaderboard you want to view")
-                                        .addChoice("Kills", "kill")
-                                        .addChoice("Deaths", "death")
-                                        .addChoice("Coins", "coin")
-                                        .addChoice("Level", "level")
+                                        .addChoice("Kills", "KILLS")
+                                        .addChoice("Deaths", "DEATHS")
+                                        .addChoice("Coins", "COINS")
+                                        .addChoice("Levels", "LEVELS")
                         )
         ).queue();
 

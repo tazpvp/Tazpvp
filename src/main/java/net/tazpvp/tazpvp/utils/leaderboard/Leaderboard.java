@@ -87,7 +87,7 @@ public class Leaderboard {
         }
     }
 
-    public enum leaderboardEnum {
+    public enum LeaderboardEnum {
         COINS(new Leaderboard(DataTypes.COINS), "Coins"),
         DEATHS(new Leaderboard(DataTypes.DEATHS), "Deaths"),
         KILLS(new Leaderboard(DataTypes.KILLS), "Kills"),
@@ -96,7 +96,7 @@ public class Leaderboard {
         private final Leaderboard leaderboard;
         private final String type;
 
-        leaderboardEnum(Leaderboard leaderboard, String type) {
+        LeaderboardEnum(Leaderboard leaderboard, String type) {
             this.leaderboard = leaderboard;
             this.type = type;
         }
