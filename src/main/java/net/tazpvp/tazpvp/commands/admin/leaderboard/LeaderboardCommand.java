@@ -33,7 +33,7 @@ public class LeaderboardCommand extends NRCommand {
             }
 
             if (request.equalsIgnoreCase("view")) {
-                for (Leaderboard.leaderboardEnum leaderboardEnum : Leaderboard.leaderboardEnum.values()) {
+                for (Leaderboard.LeaderboardEnum leaderboardEnum : Leaderboard.LeaderboardEnum.values()) {
                     if (type.equalsIgnoreCase(leaderboardEnum.getType())) {
                         int count = 1;
                         TreeMap<Integer, UUID> sortedMap = new TreeMap<>(Collections.reverseOrder());
