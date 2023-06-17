@@ -66,7 +66,7 @@ public class Chat implements Listener {
 
 
 
-        String format = "&GRAY[{LEVEL}&GRAY] {PREFIX}%s&GOLD{SUFFIX} &GRAY&M%s";
+        String format = "&GRAY[{LEVEL}&GRAY] {PREFIX}%s{SUFFIX} &GRAY&M%s";
         format = format
                 .replace("&GRAY", CC.GRAY.toString())
                 .replace("&GOLD", CC.YELLOW.toString())

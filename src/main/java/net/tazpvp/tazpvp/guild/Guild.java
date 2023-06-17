@@ -1,6 +1,7 @@
 package net.tazpvp.tazpvp.guild;
 
 import lombok.Getter;
+import net.tazpvp.tazpvp.utils.PlayerNameTag;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.GuildData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
@@ -155,6 +156,12 @@ public class Guild implements Serializable {
     public void setTag(UUID uuid, String tag) {
         if (getGuildLeader().equals(uuid)) this.tag = tag;
         GuildData.setGuild(getID(), this);
+        for (UUID uuidMember : Arrays.stream(getAllMembers()).toList()) {
+            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuidMember);
+            if (offlinePlayer.isOnline()) {
+                new PlayerNameTag().initializePlayerNameTag(offlinePlayer.getPlayer());
+            }
+        }
     }
 
     public void setIcon(UUID uuid, Material icon) {
