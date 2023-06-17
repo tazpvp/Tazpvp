@@ -66,6 +66,8 @@ public class LeaderboardCommand extends ListenerAdapter {
             TreeMap<Integer, UUID> sortedMap = new TreeMap<>(Collections.reverseOrder());
             leaderboardEnum.getLeaderboard().getSortedPlacement().forEach((uuid, placement) -> sortedMap.put(placement.getPoints(), uuid));
 
+            embedBuilder.setThumbnail("https://crafatar.com/renders/head/" + sortedMap.firstEntry().getValue());
+
             for (Map.Entry<Integer, UUID> entry : sortedMap.entrySet()) {
                 stringBuilder.append(count + ". **" + Bukkit.getOfflinePlayer(entry.getValue()).getName() + "** - " + entry.getKey()).append("\n");
                 count++;
@@ -73,7 +75,6 @@ public class LeaderboardCommand extends ListenerAdapter {
 
             embedBuilder.setTitle(typeString + " LEADERBOARD");
             embedBuilder.setDescription(stringBuilder.toString());
-            embedBuilder.setThumbnail("https://crafatar.com/renders/head/" + sortedMap.firstEntry().getValue());
 
             event.replyEmbeds(embedBuilder.build()).queue();
         }
