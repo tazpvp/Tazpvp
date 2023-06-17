@@ -78,11 +78,11 @@ public class ChatFunctions {
         float[] hsl = hexToHSL(hexColorCode);
 
         int length = text.length();
-        float hueStep = 1.0f / length;
+        float hueStep = 0.01f; // Adjust the hue step size as desired
 
         for (int i = 0; i < length; i++) {
-            float hue = hsl[0] + (hueStep * i);
-            if (hue > 1.0f) {
+            float hue = hsl[0] + hueStep * i;
+            while (hue > 1.0f) {
                 hue -= 1.0f;
             }
             String color = hslToHex(hue, hsl[1], hsl[2]);
