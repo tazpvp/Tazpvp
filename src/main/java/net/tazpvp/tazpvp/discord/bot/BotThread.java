@@ -59,7 +59,7 @@ public class BotThread extends Thread {
     public void run() {
 
         JDA jda = JDABuilder.createDefault(this.token)
-                .enableCache(CacheFlag.MEMBER_OVERRIDES)
+                .disableCache(CacheFlag.VOICE_STATE)
                 .setEnabledIntents(GatewayIntent.GUILD_MEMBERS, GatewayIntent.MESSAGE_CONTENT)
                 .addEventListeners(new LeaderboardCommand())
                 .build();
