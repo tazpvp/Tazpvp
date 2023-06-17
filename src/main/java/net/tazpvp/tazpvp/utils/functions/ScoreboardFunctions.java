@@ -59,7 +59,7 @@ public class ScoreboardFunctions {
             healthObjective.setDisplaySlot(DisplaySlot.BELOW_NAME);
         }
 
-        objective = board.registerNewObjective("statboard", "dummy", ChatFunctions.createGradient(ColorCodes.SERVERIP.toString(), "TAZPVP.NET", true));
+        objective = board.registerNewObjective("statboard", "dummy", ChatFunctions.gradient(ColorCodes.SERVERIP.toString(), "TAZPVP.NET", true));
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         objective.getScore("                         ").setScore(8);
