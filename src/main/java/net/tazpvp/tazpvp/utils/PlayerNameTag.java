@@ -55,7 +55,7 @@ public class PlayerNameTag {
     private String getRankRanking(final int rank) {
         int count = 26 / rank;
         String value = "";
-        for (int i = 0; i < count; i++) {
+        for (int i = count - 1; i >= 0; i--) {
             value = value + ranking[i];
         }
         return value;
