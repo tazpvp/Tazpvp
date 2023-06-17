@@ -54,6 +54,7 @@ public class LeaderboardCommand extends ListenerAdapter {
 
             if (event.getOption("type") == null) {
                 event.reply("No type specified..").setEphemeral(true).queue();
+                return;
             }
 
             String typeString = event.getOption("type").getAsString();
