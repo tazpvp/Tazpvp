@@ -78,7 +78,7 @@ public class ChatFunctions {
         float[] hsl = hexToHSL(hexColorCode);
 
         int length = text.length();
-        float hueStep = -0.01f; // Adjust the hue step size as desired
+        float hueStep = -0.006f;
 
         for (int i = 0; i < length; i++) {
             float hue = hsl[0] + hueStep * i;
