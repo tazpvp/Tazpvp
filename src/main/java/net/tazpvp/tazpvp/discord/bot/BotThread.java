@@ -43,6 +43,7 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
+import net.tazpvp.tazpvp.discord.bot.commands.LeaderboardCommand;
 
 public class BotThread extends Thread {
     private final String token;
@@ -60,6 +61,7 @@ public class BotThread extends Thread {
         JDA jda = JDABuilder.createDefault(this.token)
                 .enableCache(CacheFlag.MEMBER_OVERRIDES)
                 .setEnabledIntents(GatewayIntent.GUILD_MEMBERS, GatewayIntent.MESSAGE_CONTENT)
+                .addEventListeners(new LeaderboardCommand())
                 .build();
 
         // optionally block until JDA is ready
