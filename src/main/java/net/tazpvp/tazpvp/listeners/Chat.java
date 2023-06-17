@@ -66,7 +66,7 @@ public class Chat implements Listener {
 
 
 
-        String format = "&GRAY[{LEVEL}&GRAY] {PREFIX}%s &GOLD{SUFFIX}{GUILDSPACE}&GRAY&M%s";
+        String format = "&GRAY[{LEVEL}&GRAY] {PREFIX}%s&GOLD{SUFFIX} &GRAY&M%s";
         format = format
                 .replace("&GRAY", CC.GRAY.toString())
                 .replace("&GOLD", CC.YELLOW.toString())
@@ -81,8 +81,7 @@ public class Chat implements Listener {
                                 ? ""
                                 : rank.getPrefix() + " ")
                 )
-                .replace("{SUFFIX}", pw.getGuildTag().toUpperCase())
-                .replace("{GUILDSPACE}", (pw.getGuildTag().equals("") ? "" : " "));
+                .replace("{SUFFIX}", pw.getGuildTag().toUpperCase());
 
 
         for (Player h : Bukkit.getOnlinePlayers()) {
