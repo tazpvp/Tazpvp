@@ -33,7 +33,6 @@
 package net.tazpvp.tazpvp.utils.functions;
 
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -68,7 +67,7 @@ public class ChatFunctions {
         return input;
     }
 
-    public static String createGradient(String hexColorCode, String text, boolean isBold) {
+    public static String gradient(String hexColorCode, String text, boolean isBold) {
         StringBuilder coloredText = new StringBuilder();
         Matcher matcher = pattern.matcher(hexColorCode);
         if (matcher.find()) {

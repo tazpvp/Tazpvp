@@ -1,6 +1,7 @@
 package net.tazpvp.tazpvp.utils.passive;
 
-import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.enums.ColorCodes;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -13,8 +14,17 @@ import java.util.List;
 public class Holograms {
 
     public static List<Hologram> holograms = new ArrayList<>();
+
+    String[] welcome = {
+            ChatFunctions.gradient("#ff2121", "Welcome to ", true) + ChatFunctions.gradient(ColorCodes.SERVERIP.toString(), "Tazpvp", true),
+            "",
+            "",
+            ""
+    };
     public static void holograms() {
-        holograms.add(new Hologram("Welcome", new Location(Bukkit.getWorld("arena"), 0.5, 99, 26.5), false));
+        holograms.add(
+                new Hologram(new Location(Bukkit.getWorld("arena"), 0.5, 99, 26.5), false, "Welcome", "Test", "Test")
+        );
         holograms.add(new Hologram("AFK PIT", new Location(Bukkit.getWorld("arena"), 14, 99, 7), false));
     }
 

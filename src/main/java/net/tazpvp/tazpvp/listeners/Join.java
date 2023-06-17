@@ -100,10 +100,10 @@ public class Join implements Listener {
 
         p.setPlayerListHeaderFooter(
                 CC.DARK_AQUA + "                                      " + "\n                 " +
-                        ChatFunctions.createGradient(ColorCodes.SERVERIP.toString(), "TAZPVP.NET", true) + "               " + "\n",
+                        ChatFunctions.gradient(ColorCodes.SERVERIP.toString(), "TAZPVP.NET", true) + "               " + "\n",
                 "\n" +
-                        ChatFunctions.createGradient(ColorCodes.DISCORD.toString(), "✉ ᴊᴏɪɴ ᴜꜱ /ᴅɪꜱᴄᴏʀᴅ", false) + "\n" +
-                        ChatFunctions.createGradient(ColorCodes.STORE.toString(), "✘ ꜱᴜʙꜱᴄʀɪʙᴇ /ꜱᴛᴏʀᴇ", false) + "\n");
+                        ChatFunctions.gradient(ColorCodes.DISCORD.toString(), "✉ ᴊᴏɪɴ ᴜꜱ /ᴅɪꜱᴄᴏʀᴅ", false) + "\n" +
+                        ChatFunctions.gradient(ColorCodes.STORE.toString(), "✘ ꜱᴜʙꜱᴄʀɪʙᴇ /ꜱᴛᴏʀᴇ", false) + "\n");
 
 
         final String name = p.getName();
