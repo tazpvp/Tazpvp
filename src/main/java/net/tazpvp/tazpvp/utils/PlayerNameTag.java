@@ -17,6 +17,8 @@ public class PlayerNameTag {
      */
     public void initializePlayerNameTag(Player p) {
         for (Player otherPlayer : Bukkit.getOnlinePlayers()) {
+            if (p.getUniqueId().equals(otherPlayer.getUniqueId())) continue;
+
             updateScoreboard(p, otherPlayer);
             updateScoreboard(otherPlayer, p);
         }

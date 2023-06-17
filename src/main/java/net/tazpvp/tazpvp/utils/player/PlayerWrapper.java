@@ -6,9 +6,9 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.guild.Guild;
 import net.tazpvp.tazpvp.guild.GuildUtils;
 import net.tazpvp.tazpvp.npc.shops.NPC;
-import net.tazpvp.tazpvp.utils.PlayerNameTag;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.data.Rank;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.report.ReportDebounce;
 import net.tazpvp.tazpvp.utils.report.ReportLogger;
 import org.bukkit.Bukkit;
@@ -76,8 +76,6 @@ public class PlayerWrapper {
         this.blocksPlaced = new ArrayList<>();
 
         refreshPermissions();
-
-        new PlayerNameTag().initializePlayerNameTag(getPlayer());
     }
 
     public Player getPlayer() {
@@ -88,7 +86,7 @@ public class PlayerWrapper {
         if (GuildUtils.isInGuild(getPlayer())) {
             Guild g = GuildUtils.getGuildPlayerIn(getUuid());
             if (g != null && g.getTag() != null) {
-                return "[" + g.getTag() + "]";
+                return CC.YELLOW + "[" + g.getTag().toUpperCase() + "]";
             }
         }
         return "";
