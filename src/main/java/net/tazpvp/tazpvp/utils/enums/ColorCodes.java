@@ -36,9 +36,9 @@ import lombok.Getter;
 
 public enum ColorCodes {
     SERVERIP("#055cff"),
-    DISCORD("#3366ff"),
+    DISCORD("#7a32ff"),
     STORE("#fcde00"),
-    STAT("#00b8e6"),
+    STAT("#06e50a"),
     POOP("#ac3a29");
 
     @Getter
