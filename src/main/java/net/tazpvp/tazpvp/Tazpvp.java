@@ -46,12 +46,13 @@ import net.tazpvp.tazpvp.commands.gameplay.ReportCommand;
 import net.tazpvp.tazpvp.commands.gameplay.duel.DuelCommand;
 import net.tazpvp.tazpvp.commands.gameplay.guild.GuildCommand;
 import net.tazpvp.tazpvp.commands.gameplay.help.HelpCommand;
+import net.tazpvp.tazpvp.commands.gameplay.spawn.SpawnCommand;
 import net.tazpvp.tazpvp.commands.moderation.MuteCommand;
 import net.tazpvp.tazpvp.commands.moderation.ReportViewCommand;
 import net.tazpvp.tazpvp.commands.moderation.RestoreCommand;
 import net.tazpvp.tazpvp.commands.moderation.ban.BanCommand;
-import net.tazpvp.tazpvp.commands.gameplay.spawn.SpawnCommand;
 import net.tazpvp.tazpvp.commands.network.DiscordCommand;
+import net.tazpvp.tazpvp.discord.bot.BotThread;
 import net.tazpvp.tazpvp.events.Event;
 import net.tazpvp.tazpvp.listeners.*;
 import net.tazpvp.tazpvp.npc.shops.*;
@@ -59,7 +60,6 @@ import net.tazpvp.tazpvp.talents.talent.*;
 import net.tazpvp.tazpvp.utils.ConfigUtil;
 import net.tazpvp.tazpvp.utils.crate.CrateManager;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
-import net.tazpvp.tazpvp.utils.leaderboard.Leaderboard;
 import net.tazpvp.tazpvp.utils.observer.Observer;
 import net.tazpvp.tazpvp.utils.passive.Alerts;
 import net.tazpvp.tazpvp.utils.passive.Generator;
@@ -72,7 +72,9 @@ import world.ntdi.nrcore.utils.command.simple.NRCommand;
 import world.ntdi.nrcore.utils.region.Cuboid;
 import world.ntdi.postglam.connection.Database;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 /*
@@ -133,6 +135,9 @@ public final class Tazpvp extends JavaPlugin {
         );
 
         crateManager = new CrateManager();
+
+        BotThread botThread = new BotThread(getConfig().getString("bot-token"));
+        botThread.start();
     }
 
     private static void connectDatabase(String host, int port, String user, String password) {

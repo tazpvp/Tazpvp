@@ -3,3 +3,4 @@ sql-port: 5432
 sql-user: 'root'
 sql-password: 'root'
 report-webhook: 'hh'
+bot-token: 'hhhhhh'
