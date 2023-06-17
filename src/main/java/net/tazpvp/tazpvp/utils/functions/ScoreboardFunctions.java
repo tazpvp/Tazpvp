@@ -59,20 +59,20 @@ public class ScoreboardFunctions {
             healthObjective.setDisplaySlot(DisplaySlot.BELOW_NAME);
         }
 
-        objective = board.registerNewObjective("statboard", "dummy", ChatFunctions.gradient(ColorCodes.SERVERIP.toString(), "TAZPVP.NET", true));
+        objective = board.registerNewObjective("statboard", "dummy", ChatFunctions.gradient(ColorCodes.SERVER.toString(), "TAZPVP.NET", true));
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         objective.getScore("                         ").setScore(8);
-        newLine(p, DataTypes.LEVEL.getColumnName(), ChatFunctions.gradient(ColorCodes.STAT.toString(), "✳ ʟᴇᴠᴇʟ", false), CC.AQUA,
+        newLine(p, DataTypes.LEVEL.getColumnName(), ChatFunctions.gradient(ColorCodes.SERVER.toString(), "✳ ʟᴇᴠᴇʟ", false), CC.AQUA,
                 PersistentData.getInt(p, DataTypes.LEVEL) + "").setScore(6);
-        newLine(p, DataTypes.COINS.getColumnName(), ChatFunctions.gradient(ColorCodes.STAT.toString(), "❂ ᴄᴏɪɴꜱ", false), CC.GOLD,
+        newLine(p, DataTypes.COINS.getColumnName(), ChatFunctions.gradient(ColorCodes.SERVER.toString(), "❂ ᴄᴏɪɴꜱ", false), CC.GOLD,
                 PersistentData.getInt(p, DataTypes.COINS) + "").setScore(5);
         objective.getScore(" ").setScore(4);
-        newLine(p, DataTypes.KILLS.getColumnName(), ChatFunctions.gradient(ColorCodes.STAT.toString(), "⚔ ᴋɪʟʟꜱ", false), CC.YELLOW,
+        newLine(p, DataTypes.KILLS.getColumnName(), ChatFunctions.gradient(ColorCodes.SERVER.toString(), "⚔ ᴋɪʟʟꜱ", false), CC.YELLOW,
                 PersistentData.getInt(p, DataTypes.KILLS) + "").setScore(3);
-        newLine(p, DataTypes.DEATHS.getColumnName(), ChatFunctions.gradient(ColorCodes.STAT.toString(), "☠ ᴅᴇᴀᴛʜꜱ", false), CC.DARK_PURPLE,
+        newLine(p, DataTypes.DEATHS.getColumnName(), ChatFunctions.gradient(ColorCodes.SERVER.toString(), "☠ ᴅᴇᴀᴛʜꜱ", false), CC.DARK_PURPLE,
                 PersistentData.getInt(p, DataTypes.DEATHS) + "").setScore(2);
-        newLine(p, "kdr", ChatFunctions.gradient(ColorCodes.STAT.toString(), "✚ ᴋᴅʀ", false), CC.GRAY, PersistentData.kdrFormula(
+        newLine(p, "kdr", ChatFunctions.gradient(ColorCodes.SERVER.toString(), "✚ ᴋᴅʀ", false), CC.GRAY, PersistentData.kdrFormula(
                 PersistentData.getFloat(p, DataTypes.KILLS), PersistentData.getFloat(p, DataTypes.DEATHS)) + "").setScore(1);
         objective.getScore("   ").setScore(0);
 
