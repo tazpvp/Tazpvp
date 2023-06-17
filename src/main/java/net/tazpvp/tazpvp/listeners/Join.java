@@ -58,8 +58,9 @@ public class Join implements Listener {
 
         PersistentData.initPlayer(p);
 
-        PlayerWrapper.addPlayer(p);
         ScoreboardFunctions.initScoreboard(p);
+
+        PlayerWrapper.addPlayer(p);
 
         if (PunishmentData.isPunished(p.getUniqueId())) {
             if (PunishmentData.getTimeRemaining(p.getUniqueId()) > 0 || PunishmentData.isPermanentlyPunished(p.getUniqueId()))
