@@ -79,6 +79,5 @@ public class BotThread extends Thread {
                                         .addChoice("Levels", "LEVELS")
                         )
         ).queue();
-
     }
 }

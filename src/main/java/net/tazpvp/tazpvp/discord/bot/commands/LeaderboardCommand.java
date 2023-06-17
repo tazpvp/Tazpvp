@@ -40,6 +40,7 @@ import net.tazpvp.tazpvp.utils.leaderboard.Leaderboard;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.UUID;
@@ -57,15 +58,17 @@ public class LeaderboardCommand extends ListenerAdapter {
 
             int count = 1;
 
-            TreeMap<UUID, Leaderboard.Placement> leaderboard = leaderboardEnum.getLeaderboard().getSortedPlacement();
+            TreeMap<Integer, UUID> sortedMap = new TreeMap<>(Collections.reverseOrder());
+            leaderboardEnum.getLeaderboard().getSortedPlacement().forEach((uuid, placement) -> sortedMap.put(placement.getPoints(), uuid));
 
-            for (Map.Entry<UUID, Leaderboard.Placement> entry : leaderboard.entrySet()) {
-                stringBuilder.append(count + ". **" + Bukkit.getOfflinePlayer(entry.getKey()).getName() + "** - " + entry.getValue().getPoints()).append("\n");
+            for (Map.Entry<Integer, UUID> entry : sortedMap.entrySet()) {
+                stringBuilder.append(count + ". **" + Bukkit.getOfflinePlayer(entry.getValue()).getName() + "** - " + entry.getKey()).append("\n");
                 count++;
             }
 
             embedBuilder.setTitle(typeString + " LEADERBOARD");
             embedBuilder.setDescription(stringBuilder.toString());
+            embedBuilder.setThumbnail("https://crafatar.com/renders/head/" + sortedMap.firstEntry().getValue());
 
             event.replyEmbeds(embedBuilder.build()).queue();
         }
