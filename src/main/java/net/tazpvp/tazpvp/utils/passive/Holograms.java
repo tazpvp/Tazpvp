@@ -16,7 +16,7 @@ public class Holograms {
     public static List<Hologram> holograms = new ArrayList<>();
 
     private static String[] welcome = {
-            ChatFunctions.hexColor("#ff2121", "Welcome to ", true) + ChatFunctions.gradient(ColorCodes.SERVERIP.toString(), "Tazpvp", true),
+            ChatFunctions.hexColor("#ff2121", "Welcome to ", true) + ChatFunctions.gradient(ColorCodes.SERVER.toString(), "Tazpvp", true),
             "",
             ""
     };
