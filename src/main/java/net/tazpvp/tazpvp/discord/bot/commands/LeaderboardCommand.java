@@ -55,8 +55,6 @@ public class LeaderboardCommand extends ListenerAdapter {
 
             Leaderboard.LeaderboardEnum leaderboardEnum = Leaderboard.LeaderboardEnum.valueOf(typeString);
 
-            event.deferReply().queue();
-
             int count = 1;
 
             TreeMap<UUID, Leaderboard.Placement> leaderboard = leaderboardEnum.getLeaderboard().getSortedPlacement();
