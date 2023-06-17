@@ -156,12 +156,7 @@ public class Guild implements Serializable {
     public void setTag(UUID uuid, String tag) {
         if (getGuildLeader().equals(uuid)) this.tag = tag;
         GuildData.setGuild(getID(), this);
-        for (UUID uuidMember : Arrays.stream(getAllMembers()).toList()) {
-            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuidMember);
-            if (offlinePlayer.isOnline()) {
-                new PlayerNameTag().initializePlayerNameTag(offlinePlayer.getPlayer());
-            }
-        }
+        Bukkit.getOnlinePlayers().forEach(plr -> new PlayerNameTag().initializePlayerNameTag(plr));
     }
 
     public void setIcon(UUID uuid, Material icon) {
