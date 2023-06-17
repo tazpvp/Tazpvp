@@ -52,6 +52,10 @@ public class LeaderboardCommand extends ListenerAdapter {
             EmbedBuilder embedBuilder = new EmbedBuilder();
             StringBuilder stringBuilder = new StringBuilder();
 
+            if (event.getOption("type") == null) {
+                event.reply("No type specified..").setEphemeral(true).queue();
+            }
+
             String typeString = event.getOption("type").getAsString();
 
             Leaderboard.LeaderboardEnum leaderboardEnum = Leaderboard.LeaderboardEnum.valueOf(typeString);

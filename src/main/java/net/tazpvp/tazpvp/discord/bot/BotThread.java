@@ -77,6 +77,7 @@ public class BotThread extends Thread {
                                         .addChoice("Deaths", "DEATHS")
                                         .addChoice("Coins", "COINS")
                                         .addChoice("Levels", "LEVELS")
+                                        .setRequired(true)
                         )
         ).queue();
     }
