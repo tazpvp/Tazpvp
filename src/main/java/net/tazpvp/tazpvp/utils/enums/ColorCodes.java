@@ -35,7 +35,7 @@ package net.tazpvp.tazpvp.utils.enums;
 import lombok.Getter;
 
 public enum ColorCodes {
-    SERVERIP("#008fb3"),
+    SERVERIP("#055cff"),
     DISCORD("#3366ff"),
     STORE("#e6b800"),
     STAT("#00b8e6"),

@@ -75,18 +75,17 @@ public class ChatFunctions {
         } else {
             return text;
         }
-        int red = Integer.parseInt(hexColorCode.substring(1, 3), 16);
-        int green = Integer.parseInt(hexColorCode.substring(3, 5), 16);
-        int blue = Integer.parseInt(hexColorCode.substring(5, 7), 16);
+        float[] hsl = hexToHSL(hexColorCode);
 
         int length = text.length();
-        float step = 1.5f / ((length + 1) * 2);
+        float hueStep = 1.0f / length;
 
         for (int i = 0; i < length; i++) {
-            int r = (int) (red + (255 - red) * i * step);
-            int g = (int) (green + (255 - green) * i * step);
-            int b = (int) (blue + (255 - blue) * i * step);
-            String color = String.format("#%02x%02x%02x", r, g, b);
+            float hue = hsl[0] + (hueStep * i);
+            if (hue > 1.0f) {
+                hue -= 1.0f;
+            }
+            String color = hslToHex(hue, hsl[1], hsl[2]);
             coloredText.append(hex(color));
             if (isBold) {
                 coloredText.append(ChatColor.BOLD);
@@ -100,4 +99,27 @@ public class ChatFunctions {
         return coloredText.toString();
     }
 
+    private static float[] hexToHSL(String hexColorCode) {
+        int red = Integer.parseInt(hexColorCode.substring(1, 3), 16);
+        int green = Integer.parseInt(hexColorCode.substring(3, 5), 16);
+        int blue = Integer.parseInt(hexColorCode.substring(5, 7), 16);
+
+        float[] hsl = new float[3];
+        java.awt.Color.RGBtoHSB(red, green, blue, hsl);
+
+        return hsl;
+    }
+
+    private static String hslToHex(float hue, float saturation, float lightness) {
+        int rgb = java.awt.Color.HSBtoRGB(hue, saturation, lightness);
+        return String.format("#%06X", (rgb & 0xFFFFFF));
+    }
+
+    public static String hexColor(String hexCode, String text, boolean bold) {
+        hexCode = hexCode.replace("#", "");
+        ChatColor color = ChatColor.of("#" + hexCode);
+        ChatColor finalColor = bold ? color.BOLD : color;
+        String formattedText = finalColor + text + ChatColor.RESET;
+        return formattedText;
+    }
 }
