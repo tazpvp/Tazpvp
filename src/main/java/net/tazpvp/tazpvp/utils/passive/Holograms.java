@@ -1,7 +1,10 @@
 package net.tazpvp.tazpvp.utils.passive;
 
+import net.tazpvp.tazpvp.Tazpvp;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import world.ntdi.nrcore.utils.holograms.Hologram;
 
 import java.util.ArrayList;
@@ -16,8 +19,10 @@ public class Holograms {
     }
 
     public static void removeHolograms() {
-        for (Hologram hologram : holograms) {
-            hologram.deleteHologram();
+        for (Entity entity : Bukkit.getWorld("arena").getEntities()) {
+            if (entity.getType() == EntityType.ARMOR_STAND) {
+                entity.remove();
+            }
         }
     }
 }

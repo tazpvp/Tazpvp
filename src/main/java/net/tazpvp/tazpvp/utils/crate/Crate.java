@@ -88,11 +88,6 @@ public class Crate {
         }
     }
 
-    public void remove() {
-        getLocation().getBlock().setType(Material.AIR);
-        getHologram().deleteHologram();
-    }
-
     private boolean isCrate(PlayerInteractEvent e) {
         return (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock().getLocation().equals(getLocation()));
     }

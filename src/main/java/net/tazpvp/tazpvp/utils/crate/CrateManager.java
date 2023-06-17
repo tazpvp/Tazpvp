@@ -62,8 +62,4 @@ public class CrateManager {
 
         return timeNow - timeSinceLastDaily > 24 * 60 * 60 * 1000;
     }
-
-    public void shutdown() {
-        crates.forEach(Crate::remove);
-    }
 }
