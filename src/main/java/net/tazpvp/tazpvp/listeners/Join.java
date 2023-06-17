@@ -59,6 +59,7 @@ public class Join implements Listener {
         PersistentData.initPlayer(p);
 
         PlayerWrapper.addPlayer(p);
+        ScoreboardFunctions.initScoreboard(p);
 
         if (PunishmentData.isPunished(p.getUniqueId())) {
             if (PunishmentData.getTimeRemaining(p.getUniqueId()) > 0 || PunishmentData.isPermanentlyPunished(p.getUniqueId()))
@@ -67,7 +68,6 @@ public class Join implements Listener {
 
         PlaytimeUtil.playerJoined(p);
 
-        ScoreboardFunctions.initScoreboard(p);
 
         PlayerFunctions.resetHealth(p);
         PlayerFunctions.feedPlr(p);

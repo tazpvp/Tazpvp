@@ -36,7 +36,6 @@ import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.enums.ColorCodes;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
 
@@ -53,7 +52,7 @@ public class ScoreboardFunctions {
     @SuppressWarnings("all")
     public static void initScoreboard(Player p) {
 
-        board = Bukkit.getScoreboardManager().getNewScoreboard();
+        board = p.getScoreboard();
 
         if (board.getObjective("health") == null) {
             Objective healthObjective = board.registerNewObjective("health", Criteria.HEALTH, CC.RED + "❤", RenderType.INTEGER);
