@@ -15,15 +15,14 @@ public class Holograms {
 
     public static List<Hologram> holograms = new ArrayList<>();
 
-    String[] welcome = {
+    private static String[] welcome = {
             ChatFunctions.gradient("#ff2121", "Welcome to ", true) + ChatFunctions.gradient(ColorCodes.SERVERIP.toString(), "Tazpvp", true),
-            "",
             "",
             ""
     };
     public static void holograms() {
         holograms.add(
-                new Hologram(new Location(Bukkit.getWorld("arena"), 0.5, 99, 26.5), false, "Welcome", "Test", "Test")
+                new Hologram(new Location(Bukkit.getWorld("arena"), 0.5, 99, 26.5), false, welcome)
         );
         holograms.add(new Hologram("AFK PIT", new Location(Bukkit.getWorld("arena"), 14, 99, 7), false));
     }
