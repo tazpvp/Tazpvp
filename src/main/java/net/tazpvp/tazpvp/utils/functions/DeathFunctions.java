@@ -34,6 +34,7 @@ package net.tazpvp.tazpvp.utils.functions;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.duels.Duel;
+import net.tazpvp.tazpvp.guild.GuildUtils;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
@@ -87,6 +88,14 @@ public class DeathFunctions {
                                     CC.GOLD + LooseData.getKs(killer) + "\n" +
                                     CC.GOLD + "Bounty: " + CC.YELLOW + "$" + (LooseData.getKs(killer) * 10)
                     );
+                }
+
+                if (GuildUtils.isInGuild(pKiller)) {
+                    GuildUtils.getGuildPlayerIn(killer).addKills(1);
+                }
+
+                if (GuildUtils.isInGuild(pVictim)) {
+                    GuildUtils.getGuildPlayerIn(victim).addDeaths(1);
                 }
 
                 death.coffin();
