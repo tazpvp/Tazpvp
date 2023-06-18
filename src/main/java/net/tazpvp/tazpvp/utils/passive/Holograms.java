@@ -24,7 +24,7 @@ public class Holograms {
         holograms.add(
                 new Hologram(new Location(Bukkit.getWorld("arena"), 0.5, 99, 26.5), false, welcome)
         );
-        holograms.add(new Hologram("AFK PIT", new Location(Bukkit.getWorld("arena"), 14, 99, 7), false));
+        holograms.add(new Hologram(ChatFunctions.gradient("#2cff19", "AFK PIT", true), new Location(Bukkit.getWorld("arena"), 14, 99, 7), false));
     }
 
     public static void removeHolograms() {

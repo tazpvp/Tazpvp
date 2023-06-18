@@ -36,6 +36,7 @@ package net.tazpvp.tazpvp.utils.crate;
 import lombok.Getter;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -52,8 +53,8 @@ public class CrateManager {
     public CrateManager() {
         this.crates = new ArrayList<>();
 
-        getCrates().add(new Crate(new Location(Bukkit.getWorld("arena"), -12, 99, 8), "Daily Crate", "daily",
-                Material.ACACIA_PLANKS, Material.BIRCH_PLANKS)); // TODO: Add real values
+        getCrates().add(new Crate(new Location(Bukkit.getWorld("arena"), -12, 99, 8), ChatFunctions.gradient("#fcde00", "Daily Crate", true), "daily",
+                Material.ACACIA_PLANKS, Material.BIRCH_PLANKS));
     }
 
     public boolean canClaimDaily(OfflinePlayer p) {

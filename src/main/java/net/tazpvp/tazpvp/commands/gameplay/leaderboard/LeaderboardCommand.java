@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.commands.admin.leaderboard;
+package net.tazpvp.tazpvp.commands.gameplay.leaderboard;
 
 import lombok.NonNull;
 import net.tazpvp.tazpvp.utils.enums.CC;

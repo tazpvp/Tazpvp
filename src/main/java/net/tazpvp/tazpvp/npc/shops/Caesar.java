@@ -38,6 +38,7 @@ import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.BlockFunctions;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.objects.Ore;
 import net.tazpvp.tazpvp.utils.objects.Pickaxe;
@@ -60,7 +61,7 @@ public class Caesar extends NPC {
     private static final List<Player> doubleClick = new ArrayList<>();
 
     public Caesar() {
-        super(CC.GOLD + "Caesar", new Location(
+        super(ChatFunctions.gradient("#fcfc00", "Caesar", true), new Location(
                 Bukkit.getWorld("arena"), -3, 90, 132, -155.5F, 0),
                 Villager.Profession.WEAPONSMITH,
                 Villager.Type.JUNGLE,
@@ -73,7 +74,7 @@ public class Caesar extends NPC {
                                 "Need coins? Can't PVP? Mine you bum.",
                                 "Upgrades are available for your crappy pickaxe..",
                                 "Only in dreams, are you able to get a good deal for your work.",
-                                "I slept with Maxim's wife. It's not my fault my pickaxe is really big.",
+                                "I took Maxim's toothbrush. It's not my fault my teeth were stinky.",
                                 "What are you gonna do without upgrades? I stole my shards from Bub."
                         ),
                         List.of(
