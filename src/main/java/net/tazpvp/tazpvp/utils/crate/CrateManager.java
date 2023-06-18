@@ -53,7 +53,8 @@ public class CrateManager {
     public CrateManager() {
         this.crates = new ArrayList<>();
 
-        getCrates().add(new Crate(new Location(Bukkit.getWorld("arena"), -12, 99, 8), ChatFunctions.gradient("#fcde00", "Daily Crate", true), "daily",
+        getCrates().add(new Crate(
+                new Location(Bukkit.getWorld("arena"), -12, 99, 8), ChatFunctions.gradient("#fcde00", "Daily Crate", true), "daily",
                 Material.ACACIA_PLANKS, Material.BIRCH_PLANKS));
     }
 

@@ -58,8 +58,6 @@ import java.util.List;
 
 public class Caesar extends NPC {
 
-    private static final List<Player> doubleClick = new ArrayList<>();
-
     public Caesar() {
         super(ChatFunctions.gradient("#fcfc00", "Caesar", true), new Location(
                 Bukkit.getWorld("arena"), -3, 90, 132, -155.5F, 0),
@@ -103,49 +101,7 @@ public class Caesar extends NPC {
     public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
 
         if (BlockFunctions.getPickaxe(p) != null) {
-            ItemStack tool = BlockFunctions.getPickaxe(p);
-            int shardCount = PlayerFunctions.countShards(p);
-
-            if (tool.getType().equals(Material.GOLDEN_PICKAXE)) {
-                p.sendMessage("You already have the best upgrade.");
-                return;
-            }
-
-            for (Pickaxe pickaxe : BlockFunctions.pickaxes) {
-                if (pickaxe.getMat().equals(tool.getType())) {
-                    int cost = pickaxe.getCost();
-                    if (shardCount >= cost) {
-                        if (doubleClick.contains(p)) {
-
-                            tool.setType(pickaxe.getUpgrade());
-
-                            PlayerFunctions.takeShards(p, cost);
-
-                            p.closeInventory();
-                            p.sendMessage("Thanks, here is your new pickaxe.");
-                            p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, 1, 1);
-
-                            doubleClick.remove(p);
-
-                            Tazpvp.getObservers().forEach(observer -> observer.talent(p));
-
-                        } else {
-
-                            p.sendMessage("Are you sure you want to upgrade your pickaxe for " + cost + " Shards?");
-
-                            doubleClick.add(p);
-                            new BukkitRunnable() {
-                                @Override
-                                public void run() {
-                                    doubleClick.remove(p);
-                                }
-                            }.runTaskLater(Tazpvp.getInstance(), 20*5);
-                        }
-                    } else {
-                        p.sendMessage("You do not have enough shards. You need " + (cost - shardCount) + " more shards.");
-                    }
-                }
-            }
+            new net.tazpvp.tazpvp.guis.Caesar(p);
         } else if (BlockFunctions.getOreInHand(p) != null) {
             Ore ore = BlockFunctions.getOreFrom(BlockFunctions.getOreInHand(p).getType());
             int amount = 0;
