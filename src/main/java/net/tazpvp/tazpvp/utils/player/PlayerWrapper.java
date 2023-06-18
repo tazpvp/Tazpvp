@@ -6,6 +6,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.guild.Guild;
 import net.tazpvp.tazpvp.guild.GuildUtils;
 import net.tazpvp.tazpvp.npc.shops.NPC;
+import net.tazpvp.tazpvp.utils.PlayerNameTag;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.data.Rank;
 import net.tazpvp.tazpvp.utils.enums.CC;
@@ -176,6 +177,10 @@ public class PlayerWrapper {
         this.rank = rank;
         PersistentData.setRank(getUuid(), rank);
         refreshPermissions();
+    }
+
+    public void refreshNametag() {
+        Bukkit.getOnlinePlayers().forEach(plr -> new PlayerNameTag().initializePlayerNameTag(plr));
     }
 
     private static final WeakHashMap<UUID, PlayerWrapper> playerMap = new WeakHashMap<>();

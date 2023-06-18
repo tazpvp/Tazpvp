@@ -1,10 +1,10 @@
 package net.tazpvp.tazpvp.guild;
 
 import lombok.Getter;
-import net.tazpvp.tazpvp.utils.PlayerNameTag;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.GuildData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -69,6 +69,7 @@ public class Guild implements Serializable {
 
     public void resetPlayerGuild(UUID uuid) {
         PersistentData.setValueS(uuid, DataTypes.GUILD_ID.getColumnName(), "n");
+        PlayerWrapper.getPlayer(uuid).refreshNametag();
     }
 
     public UUID[] getAllMembers() {
@@ -156,7 +157,6 @@ public class Guild implements Serializable {
     public void setTag(UUID uuid, String tag) {
         if (getGuildLeader().equals(uuid)) this.tag = tag;
         GuildData.setGuild(getID(), this);
-        Bukkit.getOnlinePlayers().forEach(plr -> new PlayerNameTag().initializePlayerNameTag(plr));
     }
 
     public void setIcon(UUID uuid, Material icon) {
@@ -232,4 +232,5 @@ public class Guild implements Serializable {
             return "Member";
         }
     }
+
 }

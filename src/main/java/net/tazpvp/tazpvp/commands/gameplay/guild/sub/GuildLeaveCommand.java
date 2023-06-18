@@ -46,7 +46,7 @@ public class GuildLeaveCommand extends GuildAvailableCommand {
 
     @Override
     public boolean executeFunction(@NonNull Player p, @NonNull Guild g) {
-        if (g.getGuildLeader() == p.getUniqueId()) {
+        if (g.getGuildLeader().equals(p.getUniqueId())) {
             p.sendMessage("You cannot leave your guild. Try /g disband");
             return true;
         }
