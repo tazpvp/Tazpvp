@@ -51,6 +51,7 @@ import net.tazpvp.tazpvp.commands.moderation.MuteCommand;
 import net.tazpvp.tazpvp.commands.moderation.ReportViewCommand;
 import net.tazpvp.tazpvp.commands.moderation.RestoreCommand;
 import net.tazpvp.tazpvp.commands.moderation.ban.BanCommand;
+import net.tazpvp.tazpvp.commands.network.AdCommand;
 import net.tazpvp.tazpvp.commands.network.ApplyCommand;
 import net.tazpvp.tazpvp.commands.network.DiscordCommand;
 import net.tazpvp.tazpvp.discord.bot.BotThread;
@@ -211,7 +212,8 @@ public final class Tazpvp extends JavaPlugin {
                 new HelpCommand(),
                 new MuteCommand(),
                 new LeaderboardCommand(),
-                new ApplyCommand()
+                new ApplyCommand(),
+                new AdCommand()
         );
     }
 
