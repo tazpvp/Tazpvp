@@ -63,7 +63,10 @@ public class Chat implements Listener {
         }
 
         String message = e.getMessage();
-        if (Profanity.sayNoNo(p, message)) return;
+        if (Profanity.sayNoNo(p, message)) {
+            e.setCancelled(true);
+            return;
+        }
         Rank rank = PersistentData.getRank(uuid);
 
         String format = "&GRAY[{LEVEL}&GRAY] {PREFIX}%s{SUFFIX} &GRAY&M%s";
