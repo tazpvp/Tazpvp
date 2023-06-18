@@ -50,12 +50,16 @@ public class SpawnableLeaderboard {
     private final Hologram hologram;
     @Getter
     private final Location location;
+    @Getter
+    private final String title;
 
-    public SpawnableLeaderboard(DataTypes dataTypes, Location location) {
+    public SpawnableLeaderboard(DataTypes dataTypes, String title, Location location) {
         this.dataTypes = dataTypes;
         this.location = location;
+        this.title = title;
 
         this.hologram = new Hologram(getLocation(), false,
+                CC.GRAY + "--< " + CC.GOLD + getTitle() + CC.GRAY + " >--",
                 formatLine(1),
                 formatLine(2),
                 formatLine(3),
@@ -67,22 +71,6 @@ public class SpawnableLeaderboard {
                 formatLine(9),
                 formatLine(10)
                 );
-
-        Leaderboard leaderboard = new Leaderboard(dataTypes);
-
-        int count = 1;
-
-        TreeMap<Integer, UUID> sortedMap = new TreeMap<>(Collections.reverseOrder());
-        leaderboard.getSortedPlacement().forEach((uuid, placement) -> sortedMap.put(placement.getPoints(), uuid));
-
-        List<String> lines = new ArrayList<>();
-
-        for (Map.Entry<Integer, UUID> entry : sortedMap.entrySet()) {
-            lines.add(formatLine(count, Bukkit.getOfflinePlayer(entry.getValue()).getName(), entry.getKey()));
-            count++;
-        }
-
-        hologram.updateHologram(lines.toArray(String[]::new));
     }
 
     private String formatLine(int number, String name, int points) {
@@ -95,5 +83,28 @@ public class SpawnableLeaderboard {
 
     private String formatLine(int number, String text) {
         return CC.GOLD.toString() + number + ". " + CC.GRAY + text;
+    }
+
+    public void update() {
+        System.out.println(getHologram().getText().length);
+        Leaderboard leaderboard = new Leaderboard(dataTypes);
+
+        int count = 1;
+
+        TreeMap<Integer, UUID> sortedMap = new TreeMap<>(Collections.reverseOrder());
+        leaderboard.getSortedPlacement().forEach((uuid, placement) -> sortedMap.put(placement.getPoints(), uuid));
+
+        List<String> lines = new ArrayList<>();
+
+        lines.add(CC.GRAY + "--< " + CC.GOLD + getTitle() + CC.GRAY + " >--");
+
+        for (Map.Entry<Integer, UUID> entry : sortedMap.entrySet()) {
+            lines.add(formatLine(count, Bukkit.getOfflinePlayer(entry.getValue()).getName(), entry.getKey()));
+            count++;
+        }
+
+        System.out.println(lines.toArray(String[]::new).length);
+
+        hologram.updateHologram(lines.toArray(String[]::new));
     }
 }

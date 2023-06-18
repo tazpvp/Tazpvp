@@ -88,21 +88,21 @@ public class Leaderboard {
     }
 
     public enum LeaderboardEnum {
-        COINS(new Leaderboard(DataTypes.COINS), "Coins"),
-        DEATHS(new Leaderboard(DataTypes.DEATHS), "Deaths"),
-        KILLS(new Leaderboard(DataTypes.KILLS), "Kills"),
-        LEVELS(new Leaderboard(DataTypes.LEVEL), "Levels");
+        COINS(DataTypes.COINS, "Coins"),
+        DEATHS(DataTypes.DEATHS, "Deaths"),
+        KILLS(DataTypes.KILLS, "Kills"),
+        LEVELS(DataTypes.LEVEL, "Levels");
 
-        private final Leaderboard leaderboard;
+        private final DataTypes dataTypes;
         private final String type;
 
-        LeaderboardEnum(Leaderboard leaderboard, String type) {
-            this.leaderboard = leaderboard;
+        LeaderboardEnum(DataTypes dataTypes, String type) {
+            this.dataTypes = dataTypes;
             this.type = type;
         }
 
         public Leaderboard getLeaderboard() {
-            return leaderboard;
+            return new Leaderboard(dataTypes);
         }
 
         public String getType() {

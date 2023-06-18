@@ -60,6 +60,7 @@ import net.tazpvp.tazpvp.talents.talent.*;
 import net.tazpvp.tazpvp.utils.ConfigUtil;
 import net.tazpvp.tazpvp.utils.crate.CrateManager;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
+import net.tazpvp.tazpvp.utils.leaderboard.spawnable.SpawnableLeaderboardManager;
 import net.tazpvp.tazpvp.utils.observer.Observer;
 import net.tazpvp.tazpvp.utils.passive.Alerts;
 import net.tazpvp.tazpvp.utils.passive.Generator;
@@ -102,6 +103,8 @@ public final class Tazpvp extends JavaPlugin {
     private static final Logger log = Logger.getLogger("Minecraft");
     @Getter
     private static CrateManager crateManager;
+    @Getter
+    private static SpawnableLeaderboardManager spawnableLeaderboardManager;
 
     @Override
     public void onEnable() {
@@ -138,6 +141,8 @@ public final class Tazpvp extends JavaPlugin {
 
         BotThread botThread = new BotThread(getConfig().getString("bot-token"));
         botThread.start();
+
+        spawnableLeaderboardManager = new SpawnableLeaderboardManager(this);
     }
 
     private static void connectDatabase(String host, int port, String user, String password) {

@@ -34,6 +34,10 @@
 package net.tazpvp.tazpvp.utils.leaderboard.spawnable;
 
 import lombok.Getter;
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.data.DataTypes;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +46,25 @@ public class SpawnableLeaderboardManager {
     @Getter
     private final List<SpawnableLeaderboard> spawnableLeaderboards;
 
-    public SpawnableLeaderboardManager() {
+    @Getter
+    private int taskId;
+
+    public SpawnableLeaderboardManager(Tazpvp tazpvp) {
         this.spawnableLeaderboards = new ArrayList<>();
+        this.spawnableLeaderboards.add(new SpawnableLeaderboard(DataTypes.LEVEL, "Levels", new Location(Bukkit.getWorld("arena"), -6, 102, 1.5)));
+        this.spawnableLeaderboards.add(new SpawnableLeaderboard(DataTypes.KILLS, "Kills", new Location(Bukkit.getWorld("arena"), 0.5, 102, -4)));
+        this.spawnableLeaderboards.add(new SpawnableLeaderboard(DataTypes.DEATHS, "Deaths", new Location(Bukkit.getWorld("arena"), 7, 102, 1.5)));
 
+        createScheduler(tazpvp);
+    }
 
+    private void createScheduler(Tazpvp tazpvp) {
+        this.taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(tazpvp, () -> {
+            if (spawnableLeaderboards.isEmpty()) return;
+
+            for (SpawnableLeaderboard spawnableLeaderboard : getSpawnableLeaderboards()) {
+                spawnableLeaderboard.update();
+            }
+        }, 30 * 20, 30 * 20);
     }
 }
