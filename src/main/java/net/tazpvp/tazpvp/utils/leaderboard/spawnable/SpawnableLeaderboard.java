@@ -36,6 +36,7 @@ package net.tazpvp.tazpvp.utils.leaderboard.spawnable;
 import lombok.Getter;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.leaderboard.Leaderboard;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -62,7 +63,7 @@ public class SpawnableLeaderboard {
         this.title = title;
 
         this.hologram = new Hologram(getLocation(), false,
-                CC.GRAY + "--< " + CC.GOLD + getTitle() + CC.GRAY + " >--",
+                CC.GRAY + "-< " + ChatFunctions.hexColor("#8aff70", getTitle(), false) + CC.GRAY + " >-",
                 formatLine(1),
                 formatLine(2),
                 formatLine(3),
@@ -77,7 +78,7 @@ public class SpawnableLeaderboard {
     }
 
     private String formatLine(int number, String name, int points) {
-        return formatLine(number, name + " - " + CC.YELLOW + points);
+        return formatLine(number, name + " " +CC.WHITE + points);
     }
 
     private String formatLine(int number) {
@@ -85,7 +86,7 @@ public class SpawnableLeaderboard {
     }
 
     private String formatLine(int number, String text) {
-        return CC.GOLD.toString() + number + ". " + CC.GRAY + text;
+        return ChatFunctions.hexColor("#29e226", number + ". " + text, false);
     }
 
     public void update() {
@@ -97,7 +98,7 @@ public class SpawnableLeaderboard {
 
         List<String> lines = new ArrayList<>();
 
-        lines.add(CC.GRAY + "--< " + CC.GOLD + getTitle() + CC.GRAY + " >--");
+        lines.add(CC.GRAY + "-< " + ChatFunctions.hexColor("#8aff70", getTitle(), false) + CC.GRAY + " >-");
 
         for (Map.Entry<UUID, Integer> entry : sortedMap.entrySet()) {
             lines.add(formatLine(count, Bukkit.getOfflinePlayer(entry.getKey()).getName(), entry.getValue()));

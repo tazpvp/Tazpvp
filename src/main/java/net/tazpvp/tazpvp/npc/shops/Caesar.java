@@ -73,7 +73,7 @@ public class Caesar extends NPC {
                                 "Need coins? Can't PVP? Mine you bum.",
                                 "Upgrades are available for your crappy pickaxe..",
                                 "Only in dreams, are you able to get a good deal for your work.",
-                                "I slept with Maxim's wife. It's not my fault my pickaxe is really big.",
+                                "I took Maxim's toothbrush. It's not my fault my teeth were stinky.",
                                 "What are you gonna do without upgrades? I stole my shards from Bub."
                         ),
                         List.of(
