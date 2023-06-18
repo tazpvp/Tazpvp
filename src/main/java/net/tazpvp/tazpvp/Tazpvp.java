@@ -37,7 +37,7 @@ import lombok.Getter;
 import net.tazpvp.tazpvp.achievements.achievement.*;
 import net.tazpvp.tazpvp.commands.admin.hide.HideCommand;
 import net.tazpvp.tazpvp.commands.admin.kit.KitCommand;
-import net.tazpvp.tazpvp.commands.admin.leaderboard.LeaderboardCommand;
+import net.tazpvp.tazpvp.commands.gameplay.leaderboard.LeaderboardCommand;
 import net.tazpvp.tazpvp.commands.admin.npc.NpcCommand;
 import net.tazpvp.tazpvp.commands.admin.stats.StatCommand;
 import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
@@ -51,6 +51,7 @@ import net.tazpvp.tazpvp.commands.moderation.MuteCommand;
 import net.tazpvp.tazpvp.commands.moderation.ReportViewCommand;
 import net.tazpvp.tazpvp.commands.moderation.RestoreCommand;
 import net.tazpvp.tazpvp.commands.moderation.ban.BanCommand;
+import net.tazpvp.tazpvp.commands.network.ApplyCommand;
 import net.tazpvp.tazpvp.commands.network.DiscordCommand;
 import net.tazpvp.tazpvp.discord.bot.BotThread;
 import net.tazpvp.tazpvp.events.Event;
@@ -204,7 +205,8 @@ public final class Tazpvp extends JavaPlugin {
                 new ReportCommand(),
                 new HelpCommand(),
                 new MuteCommand(),
-                new LeaderboardCommand()
+                new LeaderboardCommand(),
+                new ApplyCommand()
         );
     }
 
