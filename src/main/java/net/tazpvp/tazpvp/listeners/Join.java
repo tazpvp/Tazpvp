@@ -32,6 +32,7 @@
 
 package net.tazpvp.tazpvp.listeners;
 
+import net.tazpvp.tazpvp.utils.PlayerNameTag;
 import net.tazpvp.tazpvp.utils.PlaytimeUtil;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.LooseData;
@@ -61,6 +62,8 @@ public class Join implements Listener {
         ScoreboardFunctions.initScoreboard(p);
 
         PlayerWrapper.addPlayer(p);
+
+        new PlayerNameTag().initializePlayerNameTag(p);
 
         if (PunishmentData.isPunished(p.getUniqueId())) {
             if (PunishmentData.getTimeRemaining(p.getUniqueId()) > 0 || PunishmentData.isPermanentlyPunished(p.getUniqueId()))

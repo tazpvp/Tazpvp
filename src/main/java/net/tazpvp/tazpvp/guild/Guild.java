@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.GuildData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -68,6 +69,7 @@ public class Guild implements Serializable {
 
     public void resetPlayerGuild(UUID uuid) {
         PersistentData.setValueS(uuid, DataTypes.GUILD_ID.getColumnName(), "n");
+        PlayerWrapper.getPlayer(uuid).refreshNametag();
     }
 
     public UUID[] getAllMembers() {
@@ -230,4 +232,5 @@ public class Guild implements Serializable {
             return "Member";
         }
     }
+
 }

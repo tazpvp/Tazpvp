@@ -31,27 +31,19 @@
  *
  */
 
-package net.tazpvp.tazpvp.commands.gameplay.guild.sub;
+package net.tazpvp.tazpvp.utils;
 
-import lombok.NonNull;
-import net.tazpvp.tazpvp.commands.gameplay.guild.handler.GuildAvailableCommand;
-import net.tazpvp.tazpvp.guild.Guild;
-import org.bukkit.entity.Player;
-import world.ntdi.nrcore.utils.command.simple.Label;
+import java.util.*;
 
-public class GuildLeaveCommand extends GuildAvailableCommand {
-    public GuildLeaveCommand() {
-        super(new Label("leave", null));
-    }
+public class Sorting {
+    public static Map<UUID, Integer> sortByValueDesc(Map<UUID, Integer> map) {
+        List<Map.Entry<UUID, Integer>> list = new LinkedList(map.entrySet());
+        Collections.sort(list, (o1, o2) -> o2.getValue().compareTo(o1.getValue()));
 
-    @Override
-    public boolean executeFunction(@NonNull Player p, @NonNull Guild g) {
-        if (g.getGuildLeader().equals(p.getUniqueId())) {
-            p.sendMessage("You cannot leave your guild. Try /g disband");
-            return true;
+        Map<UUID, Integer> result = new LinkedHashMap<>();
+        for (Map.Entry<UUID, Integer> entry : list) {
+            result.put(entry.getKey(), entry.getValue());
         }
-
-        g.removeMember(p.getUniqueId());
-        return true;
+        return result;
     }
 }

@@ -31,27 +31,41 @@
  *
  */
 
-package net.tazpvp.tazpvp.commands.gameplay.guild.sub;
+package net.tazpvp.tazpvp.utils.leaderboard.spawnable;
 
-import lombok.NonNull;
-import net.tazpvp.tazpvp.commands.gameplay.guild.handler.GuildAvailableCommand;
-import net.tazpvp.tazpvp.guild.Guild;
-import org.bukkit.entity.Player;
-import world.ntdi.nrcore.utils.command.simple.Label;
+import lombok.Getter;
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.data.DataTypes;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 
-public class GuildLeaveCommand extends GuildAvailableCommand {
-    public GuildLeaveCommand() {
-        super(new Label("leave", null));
+import java.util.ArrayList;
+import java.util.List;
+
+public class SpawnableLeaderboardManager {
+    @Getter
+    private final List<SpawnableLeaderboard> spawnableLeaderboards;
+
+    @Getter
+    private int taskId;
+
+    public SpawnableLeaderboardManager(Tazpvp tazpvp) {
+        this.spawnableLeaderboards = new ArrayList<>();
+        this.spawnableLeaderboards.add(new SpawnableLeaderboard(DataTypes.LEVEL, "Levels", new Location(Bukkit.getWorld("arena"), -6, 102, 1.5)));
+        this.spawnableLeaderboards.add(new SpawnableLeaderboard(DataTypes.KILLS, "Kills", new Location(Bukkit.getWorld("arena"), 0.5, 102, -4)));
+        this.spawnableLeaderboards.add(new SpawnableLeaderboard(DataTypes.DEATHS, "Deaths", new Location(Bukkit.getWorld("arena"), 7, 102, 1.5)));
+
+        createScheduler(tazpvp);
     }
 
-    @Override
-    public boolean executeFunction(@NonNull Player p, @NonNull Guild g) {
-        if (g.getGuildLeader().equals(p.getUniqueId())) {
-            p.sendMessage("You cannot leave your guild. Try /g disband");
-            return true;
-        }
+    private void createScheduler(Tazpvp tazpvp) {
+        this.taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(tazpvp, () -> {
+            if (spawnableLeaderboards.isEmpty()) return;
+            if (Bukkit.getOnlinePlayers().size() < 1) return;
 
-        g.removeMember(p.getUniqueId());
-        return true;
+            for (SpawnableLeaderboard spawnableLeaderboard : getSpawnableLeaderboards()) {
+                spawnableLeaderboard.update();
+            }
+        }, 30 * 20, 30 * 20);
     }
 }
