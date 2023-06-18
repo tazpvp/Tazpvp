@@ -34,6 +34,7 @@ package net.tazpvp.tazpvp.npc.shops;
 
 import net.tazpvp.tazpvp.npc.dialogue.Dialogues;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -49,7 +50,7 @@ import java.util.List;
 public class Bub extends NPC {
 
     public Bub() {
-        super(CC.GOLD + "Bub",
+        super(ChatFunctions.gradient("#0082fc", "Bub", true),
                 new Location(Bukkit.getWorld("arena"), 1, 79, 77),
                 Villager.Profession.CLERIC,
                 Villager.Type.SNOW,

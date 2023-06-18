@@ -35,6 +35,7 @@ package net.tazpvp.tazpvp.npc.shops;
 import net.tazpvp.tazpvp.guis.Shop;
 import net.tazpvp.tazpvp.npc.dialogue.Dialogues;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -48,7 +49,7 @@ import java.util.List;
 public class Maxim extends NPC {
 
     public Maxim() {
-        super(CC.GOLD + "Maxim", new Location(Bukkit.getWorld("arena"), -11.5, 99, 20.5, -135, 0),
+        super(ChatFunctions.gradient("#fcc100", "Maxim", true), new Location(Bukkit.getWorld("arena"), -11.5, 99, 20.5, -135, 0),
                 Villager.Profession.FARMER,
                 Villager.Type.SAVANNA,
                 Sound.ITEM_GOAT_HORN_SOUND_0,

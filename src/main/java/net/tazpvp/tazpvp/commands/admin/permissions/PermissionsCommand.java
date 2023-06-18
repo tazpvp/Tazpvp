@@ -7,8 +7,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import world.ntdi.nrcore.utils.command.simple.Completer;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PermissionsCommand extends NRCommand {
     public PermissionsCommand() {
@@ -44,5 +48,23 @@ public class PermissionsCommand extends NRCommand {
         }
 
         return true;
+    }
+
+    @Override
+    public List<String> complete(CommandSender sender, String[] args) {
+        if (args.length == 1) {
+            return Completer.onlinePlayers(args[0]);
+        } else if (args.length == 2) {
+            return List.of("rank", "prefix");
+        } else if (args.length == 3) {
+            if (args[1].equalsIgnoreCase("rank")) {
+                List<String> ranks = new ArrayList<>();
+                for (Rank rank : Rank.values()) {
+                    ranks.add(rank.name());
+                }
+                return ranks;
+            }
+        }
+        return List.of();
     }
 }

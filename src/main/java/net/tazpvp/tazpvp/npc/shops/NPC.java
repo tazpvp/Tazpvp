@@ -85,6 +85,7 @@ public abstract class NPC implements Listener {
         this.V = (Villager) SPAWN.getWorld().spawnEntity(SPAWN, EntityType.VILLAGER);
 
         V.setCustomName(CC.trans(NAME));
+        V.setCustomNameVisible(true);
         V.setInvulnerable(true);
         V.setProfession(PROFESSION);
         V.setVillagerType(TYPE);

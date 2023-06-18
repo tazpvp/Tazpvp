@@ -38,6 +38,7 @@ import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.BlockFunctions;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.objects.Ore;
 import net.tazpvp.tazpvp.utils.objects.Pickaxe;
@@ -60,7 +61,7 @@ public class Caesar extends NPC {
     private static final List<Player> doubleClick = new ArrayList<>();
 
     public Caesar() {
-        super(CC.GOLD + "Caesar", new Location(
+        super(ChatFunctions.gradient("#fcfc00", "Caesar", true), new Location(
                 Bukkit.getWorld("arena"), -3, 90, 132, -155.5F, 0),
                 Villager.Profession.WEAPONSMITH,
                 Villager.Type.JUNGLE,
