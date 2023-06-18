@@ -86,7 +86,6 @@ public class SpawnableLeaderboard {
     }
 
     public void update() {
-        System.out.println(getHologram().getText().length);
         Leaderboard leaderboard = new Leaderboard(dataTypes);
 
         int count = 1;
@@ -98,12 +97,16 @@ public class SpawnableLeaderboard {
 
         lines.add(CC.GRAY + "--< " + CC.GOLD + getTitle() + CC.GRAY + " >--");
 
+
         for (Map.Entry<Integer, UUID> entry : sortedMap.entrySet()) {
             lines.add(formatLine(count, Bukkit.getOfflinePlayer(entry.getValue()).getName(), entry.getKey()));
             count++;
         }
 
-        System.out.println(lines.toArray(String[]::new).length);
+        while (lines.size() < 11) {
+            lines.add(formatLine(count));
+            count++;
+        }
 
         hologram.updateHologram(lines.toArray(String[]::new));
     }
