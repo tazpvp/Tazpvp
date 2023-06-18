@@ -33,9 +33,15 @@
 
 package net.tazpvp.tazpvp.guis.cosmetic;
 
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.Profanity;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
+import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
@@ -45,17 +51,57 @@ public class CosmeticMenu extends GUI {
 
     public CosmeticMenu(Player p) {
         super(Bukkit.createInventory(null, 3 * 9, CC.GREEN + "Cosmetics"));
-        addItems();
+        addItems(p);
         this.open(p);
     }
 
-    private void addItems() {
+    private void addItems(Player p) {
         fill(0, 3*9, ItemBuilder.of(Material.GRAY_STAINED_GLASS_PANE).name("").build());
 
         addButton(Button.create(ItemBuilder.of(Material.BEETROOT).name(CC.RED + "Death Particles").build(), e -> {
             // death particles goowy
         }), 10);
 
+        addButton(Button.create(ItemBuilder.of(Material.ARROW).name(CC.BLUE + "Arrow Particles").build(), e -> {
+            // Arrow Particle goowy
+        }), 13);
+
+        addButton(Button.create(ItemBuilder.of(Material.NAME_TAG).name(CC.GOLD + "Custom Prefix").build(), e -> {
+            p.closeInventory();
+            setCustomPrefix(p);
+        }), 16);
+
         update();
     }
+
+    private void setCustomPrefix(Player p) {
+        new AnvilGUI.Builder()
+                .onComplete((player, text) -> {
+                    if (text.startsWith(">")) {
+                        text = text.replaceFirst(">", "");
+                    }
+
+                    if (!(text.length() < 8)) {
+                        p.sendMessage("too long fatass");
+                        return AnvilGUI.Response.close();
+                    }
+
+                    if (Profanity.sayNoNo(p, text)) return AnvilGUI.Response.close();
+
+                    player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+                    PlayerWrapper.getPlayer(p).setCustomPrefix(text);
+                    p.sendMessage(CC.GREEN + "Set custom prefix to: " + CC.YELLOW + text);
+
+                    return AnvilGUI.Response.close();
+                })
+                .onClose(player -> {
+                    player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+                })
+                .text(">")
+                .itemLeft(ItemBuilder.of(Material.NAME_TAG).name(ChatColor.GREEN + "Custom Prefix < 7").build())
+                .title(ChatColor.YELLOW + "Custom Prefix < 7:")
+                .plugin(Tazpvp.getInstance())
+                .open(p);
+    }
+
 }
