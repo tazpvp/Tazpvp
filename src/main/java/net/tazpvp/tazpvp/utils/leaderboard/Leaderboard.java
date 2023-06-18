@@ -35,6 +35,7 @@ package net.tazpvp.tazpvp.utils.leaderboard;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import net.tazpvp.tazpvp.utils.Sorting;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 
@@ -44,7 +45,7 @@ public class Leaderboard {
     @Getter
     private final DataTypes dataTypes;
     @Getter
-    private final TreeMap<UUID, Placement> sortedPlacement;
+    private final Map<UUID, Integer> sortedPlacement;
 
     public Leaderboard(DataTypes dataTypes) {
         this.dataTypes = dataTypes;
@@ -53,16 +54,14 @@ public class Leaderboard {
             throw new IllegalArgumentException("Must be quantitative integer");
         }
 
-        Map<UUID, Integer> unsortedMap = PersistentData.getWithId(dataTypes);
-        Map<UUID, Placement> unsortedPlacement = new HashMap<>();
-        unsortedMap.forEach(((uuid, integer) -> unsortedPlacement.put(uuid, new Placement(integer, uuid))));
+        Map<UUID, Integer> unsortedMap = putFirstEntries(10, PersistentData.getWithId(dataTypes));
 
-        this.sortedPlacement = putFirstEntries(10, new TreeMap<>(unsortedPlacement));
+        this.sortedPlacement = Sorting.sortByValueDesc(unsortedMap);
     }
 
-    public <K,V> TreeMap<K,V> putFirstEntries(int max, TreeMap<K,V> source) {
+    public <K,V> Map<K,V> putFirstEntries(int max, Map<K,V> source) {
         int count = 0;
-        TreeMap<K,V> target = new TreeMap<K,V>();
+        Map<K,V> target = new HashMap<K,V>();
         for (Map.Entry<K,V> entry:source.entrySet()) {
             if (count >= max) break;
 

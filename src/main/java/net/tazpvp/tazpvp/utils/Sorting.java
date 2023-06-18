@@ -31,41 +31,19 @@
  *
  */
 
-package net.tazpvp.tazpvp.utils.leaderboard.spawnable;
+package net.tazpvp.tazpvp.utils;
 
-import lombok.Getter;
-import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.List;
+public class Sorting {
+    public static Map<UUID, Integer> sortByValueDesc(Map<UUID, Integer> map) {
+        List<Map.Entry<UUID, Integer>> list = new LinkedList(map.entrySet());
+        Collections.sort(list, (o1, o2) -> o2.getValue().compareTo(o1.getValue()));
 
-public class SpawnableLeaderboardManager {
-    @Getter
-    private final List<SpawnableLeaderboard> spawnableLeaderboards;
-
-    @Getter
-    private int taskId;
-
-    public SpawnableLeaderboardManager(Tazpvp tazpvp) {
-        this.spawnableLeaderboards = new ArrayList<>();
-        this.spawnableLeaderboards.add(new SpawnableLeaderboard(DataTypes.LEVEL, "Levels", new Location(Bukkit.getWorld("arena"), -6, 102, 1.5)));
-        this.spawnableLeaderboards.add(new SpawnableLeaderboard(DataTypes.KILLS, "Kills", new Location(Bukkit.getWorld("arena"), 0.5, 102, -4)));
-        this.spawnableLeaderboards.add(new SpawnableLeaderboard(DataTypes.DEATHS, "Deaths", new Location(Bukkit.getWorld("arena"), 7, 102, 1.5)));
-
-        createScheduler(tazpvp);
-    }
-
-    private void createScheduler(Tazpvp tazpvp) {
-        this.taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(tazpvp, () -> {
-            if (spawnableLeaderboards.isEmpty()) return;
-            if (Bukkit.getOnlinePlayers().size() < 1) return;
-
-            for (SpawnableLeaderboard spawnableLeaderboard : getSpawnableLeaderboards()) {
-                spawnableLeaderboard.update();
-            }
-        }, 30 * 20, 30 * 20);
+        Map<UUID, Integer> result = new LinkedHashMap<>();
+        for (Map.Entry<UUID, Integer> entry : list) {
+            result.put(entry.getKey(), entry.getValue());
+        }
+        return result;
     }
 }

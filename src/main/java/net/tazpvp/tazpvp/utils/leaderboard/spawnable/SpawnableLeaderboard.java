@@ -41,7 +41,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import world.ntdi.nrcore.utils.holograms.Hologram;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class SpawnableLeaderboard {
     @Getter
@@ -90,16 +93,14 @@ public class SpawnableLeaderboard {
 
         int count = 1;
 
-        TreeMap<Integer, UUID> sortedMap = new TreeMap<>(Collections.reverseOrder());
-        leaderboard.getSortedPlacement().forEach((uuid, placement) -> sortedMap.put(placement.getPoints(), uuid));
+        Map<UUID, Integer> sortedMap = leaderboard.getSortedPlacement();
 
         List<String> lines = new ArrayList<>();
 
         lines.add(CC.GRAY + "--< " + CC.GOLD + getTitle() + CC.GRAY + " >--");
 
-
-        for (Map.Entry<Integer, UUID> entry : sortedMap.entrySet()) {
-            lines.add(formatLine(count, Bukkit.getOfflinePlayer(entry.getValue()).getName(), entry.getKey()));
+        for (Map.Entry<UUID, Integer> entry : sortedMap.entrySet()) {
+            lines.add(formatLine(count, Bukkit.getOfflinePlayer(entry.getKey()).getName(), entry.getValue()));
             count++;
         }
 

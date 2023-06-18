@@ -36,12 +36,12 @@ public class LeaderboardCommand extends NRCommand {
                 for (Leaderboard.LeaderboardEnum leaderboardEnum : Leaderboard.LeaderboardEnum.values()) {
                     if (type.equalsIgnoreCase(leaderboardEnum.getType())) {
                         int count = 1;
-                        TreeMap<Integer, UUID> sortedMap = new TreeMap<>(Collections.reverseOrder());
-                        leaderboardEnum.getLeaderboard().getSortedPlacement().forEach((uuid, placement) -> sortedMap.put(placement.getPoints(), uuid));
+                        Map<UUID, Integer> sortedMap = leaderboardEnum.getLeaderboard().getSortedPlacement();
+
                         p.sendMessage( CC.DARK_AQUA + "" + CC.BOLD + leaderboardEnum.getType() + " Leaderboard");
-                        for (Map.Entry<Integer, UUID> entry : sortedMap.entrySet()) {
-                            Leaderboard.Placement placement = leaderboardEnum.getLeaderboard().getSortedPlacement().get(entry.getValue());
-                            p.sendMessage(count + ". " + CC.GRAY + Bukkit.getOfflinePlayer(entry.getValue()).getName() + " " + CC.GOLD + placement.getPoints());
+
+                        for (Map.Entry<UUID, Integer> entry : sortedMap.entrySet()) {
+                            p.sendMessage(count + ". " + CC.GRAY + Bukkit.getOfflinePlayer(entry.getKey()).getName() + " " + CC.GOLD + entry.getValue());
                             count++;
                         }
                         return true;
