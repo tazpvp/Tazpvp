@@ -1,14 +1,13 @@
 package net.tazpvp.tazpvp.commands.admin.teleportWorld;
 
-import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
-public class TeleportWorld extends NRCommand {
-    public TeleportWorld() {
+public class TeleportWorldCommand extends NRCommand {
+    public TeleportWorldCommand() {
         super(new Label("teleportworld", "tazpvp.worldtp", "tpworld"));
         setNativeExecutor((sender, args) -> {
             if (!(sender instanceof Player p)) {
