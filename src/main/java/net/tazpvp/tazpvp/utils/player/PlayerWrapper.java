@@ -7,6 +7,7 @@ import net.tazpvp.tazpvp.guild.Guild;
 import net.tazpvp.tazpvp.guild.GuildUtils;
 import net.tazpvp.tazpvp.npc.shops.NPC;
 import net.tazpvp.tazpvp.utils.PlayerNameTag;
+import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.data.Rank;
 import net.tazpvp.tazpvp.utils.enums.CC;
@@ -17,6 +18,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -100,7 +102,21 @@ public class PlayerWrapper {
         if (getRank().getPrefix() != null) {
             return getRank().getPrefix() + " ";
         }
+        String customPrefix = getCustomPrefix();
+        if (customPrefix != null) {
+            return customPrefix;
+        }
+
         return "";
+    }
+
+    @Nullable
+    public String getCustomPrefix() {
+        return PersistentData.getString(getUuid(), DataTypes.PREFIX);
+    }
+
+    public void setCustomPrefix(String prefix) {
+        PersistentData.setValueS(getUuid(), DataTypes.PREFIX.getColumnName(), prefix);
     }
 
     /**

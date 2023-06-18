@@ -33,6 +33,7 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.Profanity;
 import net.tazpvp.tazpvp.utils.TimeUtil;
 import net.tazpvp.tazpvp.utils.data.*;
 import net.tazpvp.tazpvp.utils.enums.CC;
@@ -61,10 +62,8 @@ public class Chat implements Listener {
             e.setCancelled(true);
         }
 
-        String message = e.getMessage();
+        String message = Profanity.censor(e.getMessage());
         Rank rank = PersistentData.getRank(uuid);
-
-
 
         String format = "&GRAY[{LEVEL}&GRAY] {PREFIX}%s{SUFFIX} &GRAY&M%s";
         format = format
