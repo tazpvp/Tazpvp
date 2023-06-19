@@ -58,7 +58,7 @@ public class PlayerWrapper {
     @Getter @Setter
     private List<Material> blocksPlaced;
     @Getter @Setter
-    private String prefix;
+    private String lastMessageSent;
 
     /**
      * Should only take UUID, all other values should not have to persist.
@@ -79,7 +79,7 @@ public class PlayerWrapper {
         this.killCount = 0;
         this.timeOfLaunch = 0;
         this.blocksPlaced = new ArrayList<>();
-        this.prefix = getRankPrefix();
+        this.lastMessageSent = "";
 
         refreshPermissions();
     }

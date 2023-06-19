@@ -60,6 +60,13 @@ public class Chat implements Listener {
         if (PunishmentData.isMuted(uuid)) {
             p.sendMessage("You are currently muted for " + TimeUtil.howLongAgo(PunishmentData.getTimeRemaining(uuid)));
             e.setCancelled(true);
+            return;
+        }
+
+        if (pw.getRank() == Rank.DEFAULT && pw.getLastMessageSent().equalsIgnoreCase(e.getMessage())) {
+            e.setCancelled(true);
+            p.sendMessage(CC.RED + "Please do not spam out chats.");
+            return;
         }
 
         String message = e.getMessage();
@@ -67,6 +74,9 @@ public class Chat implements Listener {
             e.setCancelled(true);
             return;
         }
+
+        pw.setLastMessageSent(message);
+
         Rank rank = PersistentData.getRank(uuid);
 
         String format = "&GRAY[{LEVEL}&GRAY] {PREFIX}%s{SUFFIX} &GRAY&M%s";
