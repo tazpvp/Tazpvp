@@ -156,6 +156,7 @@ public class Guild implements Serializable {
 
     public void setTag(UUID uuid, String tag) {
         if (getGuildLeader().equals(uuid)) this.tag = tag;
+        PlayerWrapper.getPlayer(uuid).refreshNametag();
         GuildData.setGuild(getID(), this);
     }
 
