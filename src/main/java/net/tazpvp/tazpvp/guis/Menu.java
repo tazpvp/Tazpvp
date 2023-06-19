@@ -32,6 +32,7 @@
 
 package net.tazpvp.tazpvp.guis;
 
+import net.tazpvp.tazpvp.guis.cosmetic.CosmeticMenu;
 import net.tazpvp.tazpvp.guis.guild.GuildBrowser;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Material;
@@ -64,7 +65,7 @@ public class Menu extends GUI {
         }), 14);
 
         addButton(Button.create(ItemBuilder.of(Material.FIRE_CHARGE, 1).name(CC.GREEN + "" + CC.BOLD + "Cosmetics").lore(CC.GRAY + "Premium features").build(), (e) -> {
-            new Cosmetics(p);
+            new CosmeticMenu(p);
         }), 16);
 
         update();

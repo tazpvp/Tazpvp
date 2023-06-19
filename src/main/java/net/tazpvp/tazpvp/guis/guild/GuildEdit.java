@@ -149,12 +149,12 @@ public class GuildEdit extends GUI {
                     }
 
 
-                    String description = Profanity.censor(text);
+                    if (Profanity.sayNoNo(p, text)) return AnvilGUI.Response.close();
                     player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
 
                     PersistentData.remove(p, DataTypes.COINS, 6000);
 
-                    g.setDescription(p.getUniqueId(), description);
+                    g.setDescription(p.getUniqueId(), text);
 
                     return AnvilGUI.Response.close();
                 })
@@ -180,10 +180,11 @@ public class GuildEdit extends GUI {
                         return AnvilGUI.Response.close();
                     }
 
-                    String tag = Profanity.censor(text);
+                    if (Profanity.sayNoNo(p, text)) return AnvilGUI.Response.close();
+
                     player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
 
-                    g.setTag(p.getUniqueId(), tag);
+                    g.setTag(p.getUniqueId(), text);
 
                     return AnvilGUI.Response.close();
                 })
