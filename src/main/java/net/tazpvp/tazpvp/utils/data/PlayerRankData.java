@@ -3,8 +3,8 @@ package net.tazpvp.tazpvp.utils.data;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.tazpvp.tazpvp.Tazpvp;
-import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.Particle;
 import world.ntdi.postglam.data.DataTypes;
 import world.ntdi.postglam.sql.module.Column;
 import world.ntdi.postglam.sql.module.Row;
@@ -66,7 +66,7 @@ public final class PlayerRankData {
      * @param uuid UUID target
      * @param prefix New Prefix
      */
-    public static void setPrefix(@Nonnull final UUID uuid, @Nonnull final String prefix) {
+    public static void setPrefix(@Nonnull final UUID uuid, @Nullable final String prefix) {
         if (hasRank(uuid)) {
             try {
                 new Row(table, uuid.toString()).update(new Column(table, "prefix"), prefix);
@@ -155,11 +155,11 @@ public final class PlayerRankData {
      * Set the material of the particles for a certain cosmetic affect
      * @param uuid UUID of player
      * @param particleMaterial PArticle type
-     * @param material Material Type, can be null to toggle OFF
+     * @param particle Material Type, can be null to toggle OFF
      */
-    public static void setMaterial(@Nonnull final UUID uuid, @Nonnull final ParticleMaterial particleMaterial, @Nullable final Material material) {
+    public static void setMaterial(@Nonnull final UUID uuid, @Nonnull final ParticleMaterial particleMaterial, @Nullable final Particle particle) {
         try {
-            new Row(table, uuid.toString()).update(new Column(table, particleMaterial.getColumnName()), material != null ? material.toString() : null);
+            new Row(table, uuid.toString()).update(new Column(table, particleMaterial.getColumnName()), particle != null ? particle.toString() : null);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -169,11 +169,12 @@ public final class PlayerRankData {
      * Get the material used in a particle
      * @param uuid UUID of player
      * @param particleMaterial The material for the correct particle
-     * @return The material corresponding to that particle type, can be NULL.
+     * @return The particle corresponding to that particle type, can be NULL.
      */
-    public static Material getMaterial(@Nonnull final UUID uuid, @Nonnull final ParticleMaterial particleMaterial) {
+    @Nullable
+    public static Particle getMaterial(@Nonnull final UUID uuid, @Nonnull final ParticleMaterial particleMaterial) {
         try {
-            return Material.valueOf((String) new Row(table, uuid.toString()).fetch(new Column(table, particleMaterial.columnName)));
+            return Particle.valueOf((String) new Row(table, uuid.toString()).fetch(new Column(table, particleMaterial.columnName)));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

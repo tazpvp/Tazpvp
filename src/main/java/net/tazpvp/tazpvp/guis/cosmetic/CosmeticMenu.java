@@ -35,19 +35,41 @@ package net.tazpvp.tazpvp.guis.cosmetic;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.Profanity;
+import net.tazpvp.tazpvp.utils.data.PlayerRankData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import net.wesjd.anvilgui.AnvilGUI;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class CosmeticMenu extends GUI {
+
+    private final List<ParticleSelectionContainer> deathParticles = new ArrayList<>(Arrays.asList(
+            new ParticleSelectionContainer(Material.REDSTONE, Particle.REDSTONE, CC.RED + "Redstone", "Forge from the stone of Asia."),
+            new ParticleSelectionContainer(Material.WATER_BUCKET, Particle.DRIP_WATER, CC.BLUE + "Wet", "Someone needed to cool off."),
+            new ParticleSelectionContainer(Material.TNT, Particle.EXPLOSION_NORMAL, CC.DARK_RED + "Creeper?", "Aww man."),
+            new ParticleSelectionContainer(Material.FIREWORK_ROCKET, Particle.FIREWORKS_SPARK, CC.GREEN + "Rocket", "Go out with a bang!"),
+            new ParticleSelectionContainer(Material.RED_CANDLE, Particle.HEART, CC.RED + "Heart", "Give a little love."),
+            new ParticleSelectionContainer(Material.SCULK_SHRIEKER, Particle.SONIC_BOOM, CC.AQUA + "Sonic Boom", "Break the sound barrier."),
+            new ParticleSelectionContainer(Material.BLAZE_POWDER, Particle.VILLAGER_ANGRY, CC.LIGHT_PURPLE + "Anger", "Someone woke up on the wrong side of the bed.")
+    ));
+
+    private final List<ParticleSelectionContainer> arrowParticles = new ArrayList<>(Arrays.asList(
+            new ParticleSelectionContainer(Material.FIRE, Particle.FLAME, CC.YELLOW + "Flame", "Feel the burn."),
+            new ParticleSelectionContainer(Material.DRAGON_BREATH, Particle.DRAGON_BREATH, CC.DARK_PURPLE + "Dragon Breath", "Made in China."),
+            new ParticleSelectionContainer(Material.TOTEM_OF_UNDYING, Particle.TOTEM, CC.GREEN + "Totem", "Lucky charms?"),
+            new ParticleSelectionContainer(Material.NOTE_BLOCK, Particle.NOTE, CC.AQUA + "Note", "The sound of arrows."),
+            new ParticleSelectionContainer(Material.CAMPFIRE, Particle.SMOKE_NORMAL, "Smoke", "I.. thought those were banned.. on planes.."),
+            new ParticleSelectionContainer(Material.TIPPED_ARROW, Particle.SPELL, CC.BLUE + "Magic", "Do you believe?"),
+            new ParticleSelectionContainer(Material.ENCHANTING_TABLE, Particle.ENCHANTMENT_TABLE, CC.YELLOW + "Enchant", "Enchantingly ugly.")
+    ));
 
     public CosmeticMenu(Player p) {
         super(Bukkit.createInventory(null, 3 * 9, CC.GREEN + "Cosmetics"));
@@ -59,11 +81,11 @@ public class CosmeticMenu extends GUI {
         fill(0, 3*9, ItemBuilder.of(Material.GRAY_STAINED_GLASS_PANE).name("").build());
 
         addButton(Button.create(ItemBuilder.of(Material.BEETROOT).name(CC.RED + "Death Particles").build(), e -> {
-            // death particles goowy
+            updateParticle(p, deathParticles, PlayerRankData.ParticleMaterial.DEATH);
         }), 10);
 
         addButton(Button.create(ItemBuilder.of(Material.ARROW).name(CC.BLUE + "Arrow Particles").build(), e -> {
-            // Arrow Particle goowy
+            updateParticle(p, arrowParticles, PlayerRankData.ParticleMaterial.ARROW);
         }), 13);
 
         addButton(Button.create(ItemBuilder.of(Material.NAME_TAG).name(CC.GOLD + "Custom Prefix").build(), e -> {
@@ -72,6 +94,11 @@ public class CosmeticMenu extends GUI {
         }), 16);
 
         update();
+    }
+
+    private void updateParticle(Player p, List<ParticleSelectionContainer> particles, PlayerRankData.ParticleMaterial particleMaterial) {
+        p.closeInventory();
+        new MaterialSelectionGui(p, particles, ((player, particleSelectionContainer) -> PlayerRankData.setMaterial(player.getUniqueId(), particleMaterial, particleSelectionContainer.particle())));
     }
 
     private void setCustomPrefix(Player p) {
