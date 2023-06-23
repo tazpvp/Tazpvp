@@ -98,6 +98,7 @@ public class DeathFunctions {
                     GuildUtils.getGuildPlayerIn(victim).addDeaths(1);
                 }
 
+                death.playParticle();
                 death.coffin();
                 death.rewards();
                 death.dropHead();

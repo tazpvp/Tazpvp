@@ -38,9 +38,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.guild.GuildUtils;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
-import net.tazpvp.tazpvp.utils.data.LooseData;
-import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.*;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.player.PlayerInventoryStorage;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
@@ -117,6 +115,18 @@ public class Death {
     private ItemStack makeSkull(@Nonnull final Player p) {
         ItemStack stack = SkullBuilder.of(1, p.getName()).setHeadTexture(p).build();
         return stack;
+    }
+
+    public void playParticle() {
+        PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(victim);
+
+        if (playerWrapper.getRank() != Rank.DEFAULT) {
+            Particle particle = PlayerRankData.getMaterial(victim, PlayerRankData.ParticleMaterial.DEATH);
+
+            if (particle != null) {
+                location.getWorld().spawnParticle(particle, location, 6);
+            }
+        }
     }
 
     public void respawn() {
