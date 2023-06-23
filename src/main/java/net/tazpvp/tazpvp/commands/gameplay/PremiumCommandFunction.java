@@ -12,6 +12,8 @@ import java.util.UUID;
 
 /*
 TODO: fix this god damn disgrace of a command class, whoever committed here last seriously needs to rethink what they're doing
+
+ EDIT: I now realize that by putting this message I was the last person who comitted to this class.
  */
 public class PremiumCommandFunction extends CommandCore implements CommandFunction {
     public PremiumCommandFunction() {
