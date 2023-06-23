@@ -37,6 +37,7 @@ import net.tazpvp.tazpvp.guild.Guild;
 import net.tazpvp.tazpvp.utils.Profanity;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.PlayerRankData;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -63,7 +64,7 @@ public class GuildEdit extends GUI {
         fill(0, 3 * 9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE).name(" ").build());
 
         Button guildIcon = Button.create(ItemBuilder.of(g.getIcon()).name("Edit Guild Icon").lore("Need a rank hgome boy").build(), e -> {
-            if (PersistentData.isPremium(p))
+            if (PlayerRankData.isPremium(p))
                 new Icon(p, g);
             else
                 p.sendMessage(noRank);
@@ -78,7 +79,7 @@ public class GuildEdit extends GUI {
         });
 
         Button guildTag = Button.create(ItemBuilder.of(Material.NAME_TAG).name("Change Tag").lore("need a rank ;)").build(), e -> {
-            if (PersistentData.isPremium(p)) {
+            if (PlayerRankData.isPremium(p)) {
                 setTag(p, g);
             } else {
                 p.sendMessage(noRank);

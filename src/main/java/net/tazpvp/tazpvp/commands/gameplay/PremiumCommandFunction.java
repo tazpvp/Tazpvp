@@ -22,10 +22,10 @@ public class PremiumCommandFunction extends CommandCore implements CommandFuncti
             Player p = Bukkit.getPlayer(args[0]);
             if (p != null) {
                 UUID uuid = p.getUniqueId();
-                boolean isPremium = PlayerRankData.hasRank(uuid);
+                boolean isPremium = PlayerRankData.isPremium(uuid);
 
                 if (!isPremium) {
-                    PlayerRankData.setRank(uuid, "Premium");
+                    PlayerRankData.setPremium(uuid, true);
                 } else {
                     p.sendMessage("This user is already premium.");
                 }

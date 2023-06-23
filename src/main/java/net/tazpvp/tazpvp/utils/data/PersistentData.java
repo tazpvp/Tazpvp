@@ -52,10 +52,12 @@ public final class PersistentData {
     public static void initPlayer(UUID uuid) {
         if (!SQLHelper.ifRowExists(NAME, ID_COLUMN, uuid.toString())) {
             SQLHelper.initializeValues(NAME,
-                    "ID, COINS, XP, LEVEL, KILLS, DEATHS, TOP_KS, PRESTIGE, REBIRTH, PREMIUM, PLAYER_RANK, PREFIX, DUEL_WINS, DIVISION, PLAYTIME, DAILY_CRATE, GUILD_ID, TALENTS, ACHIEVEMENTS",
-                    "'" + uuid + "'", "0", "0", "0", "0", "0", "0", "0", "0", "false", "'DEFAULT'", "null", "0", "1", "0", "0", "'n'", "'set'", "'set'");
+                    "ID, COINS, XP, LEVEL, KILLS, DEATHS, TOP_KS, PRESTIGE, REBIRTH, DUEL_WINS, DIVISION, PLAYTIME, DAILY_CRATE, GUILD_ID, TALENTS, ACHIEVEMENTS",
+                    "'" + uuid + "'", "0", "0", "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "'n'", "'set'", "'set'");
             setTalents(uuid, new Talents());
             setAchievements(uuid, new Achievements());
+
+            PlayerRankData.initRank(uuid);
         }
     }
 
@@ -188,42 +190,6 @@ public final class PersistentData {
      */
     public static float getFloat(@Nonnull final OfflinePlayer p, final DataTypes dataTypes) {
         return getFloat(p.getUniqueId(), dataTypes);
-    }
-
-    /**
-     * If the player is premium
-     * @param uuid Target player's uuid
-     * @return The player's premium status
-     */
-    public static boolean isPremium(@Nonnull final UUID uuid) {
-        return (boolean) getObject(uuid, DataTypes.PREMIUM.getColumnIndex());
-    }
-
-    /**
-     * If the player is premium
-     * @param p Target player
-     * @return The player's premium status
-     */
-    public static boolean isPremium(@Nonnull final OfflinePlayer p) {
-        return (boolean) getObject(p.getUniqueId(), DataTypes.PREMIUM.getColumnIndex());
-    }
-
-    /**
-     * Get the Rank of the player
-     * @param uuid UUID
-     * @return The player's rank
-     */
-    public static Rank getRank(@Nonnull final UUID uuid) {
-        return Rank.valueOf(getString(uuid, DataTypes.PLAYER_RANK));
-    }
-
-    /**
-     * Get the Rank of the player
-     * @param p The player
-     * @return The player's rank
-     */
-    public static Rank getRank(@Nonnull final OfflinePlayer p) {
-        return Rank.valueOf(getString(p.getUniqueId(), DataTypes.PLAYER_RANK));
     }
 
     public static Map<UUID, Integer> getWithId(DataTypes dataTypes) {
@@ -366,24 +332,6 @@ public final class PersistentData {
      */
     public static void setValueB(@Nonnull final UUID ID, final String columnName, final boolean value) {
         SQLHelper.updateValue(NAME, ID_COLUMN, "'" + ID.toString() + "'", columnName, "'" + value + "'");
-    }
-
-    /**
-     * Set the Rank of a player in a column
-     * @param ID UUID of player
-     * @param rank Rank to set
-     */
-    public static void setRank(@Nonnull final UUID ID, @Nonnull final Rank rank) {
-        SQLHelper.updateValue(NAME, ID_COLUMN, "'" + ID + "'", DataTypes.PLAYER_RANK.getColumnName(), rank);
-    }
-
-    /**
-     * Set the Rank of a player in a column
-     * @param offlinePlayer The player
-     * @param rank Rank to set
-     */
-    public static void setRank(@Nonnull final OfflinePlayer offlinePlayer, @Nonnull final Rank rank) {
-        SQLHelper.updateValue(NAME, ID_COLUMN, "'" + offlinePlayer.getUniqueId() + "'", DataTypes.PLAYER_RANK.getColumnName(), rank);
     }
 
     /*

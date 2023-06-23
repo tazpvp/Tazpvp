@@ -1,24 +1,30 @@
 package net.tazpvp.tazpvp.utils.data;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import org.bukkit.OfflinePlayer;
 import world.ntdi.postglam.data.DataTypes;
 import world.ntdi.postglam.sql.module.Column;
 import world.ntdi.postglam.sql.module.Row;
 import world.ntdi.postglam.sql.module.Table;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@Deprecated
 public final class PlayerRankData {
     private static final Table table;
 
     static {
         try {
-            table = new Table(Tazpvp.getDatabase(), "ranks", Map.entry("id", DataTypes.UUID), new LinkedHashMap<>(Map.of("rank", DataTypes.TEXT, "prefix", DataTypes.TEXT)));
+            table = new Table(Tazpvp.getDatabase(), "ranks", Map.entry("id", DataTypes.UUID), new LinkedHashMap<>(
+                    Map.of(
+                            "premium", DataTypes.BOOLEAN, "rank", DataTypes.TEXT, "prefix", DataTypes.TEXT, "death_particle_material", DataTypes.TEXT, "arrow_particle_material", DataTypes.TEXT
+                    )
+            )
+            );
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -30,30 +36,23 @@ public final class PlayerRankData {
      * @param uuid UUID target
      * @param rank Vault Rank
      */
-    public static void setRank(@Nonnull final UUID uuid, @Nonnull final String rank) {
-        if (!hasRank(uuid)) {
-            initRank(uuid, rank);
-            return;
-        }
-
+    public static void setRank(@Nonnull final UUID uuid, @Nonnull final Rank rank) {
         try {
-            new Row(table, uuid.toString()).update(new Column(table, "rank"), rank);
+            new Row(table, uuid.toString()).update(new Column(table, "rank"), rank.toString());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        final String rankPrefix = "prefix"; //TODO: Hook into vault
-        setPrefix(uuid, rankPrefix);
     }
 
     /**
      * Initialize uuid into table
      * @param uuid UUID Target
-     * @param rank Vault Rank
      */
-    private static void initRank(@Nonnull final UUID uuid, @Nonnull final String rank) {
-        final String rankPrefix = "prefix"; //TODO: Hook into vault
+    public static void initRank(@Nonnull final UUID uuid) {
+        if (hasRank(uuid)) return;
+
         try {
-            new Row(table, uuid.toString(), rank, rankPrefix);
+            new Row(table, uuid.toString(), false + "", Rank.DEFAULT.toString(), null, null, null);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -92,9 +91,9 @@ public final class PlayerRankData {
      * @param uuid UUID target
      * @return String of UUID's rank
      */
-    public static String getRank(@Nonnull final UUID uuid) {
+    public static Rank getRank(@Nonnull final UUID uuid) {
         try {
-            return (String) new Row(table, uuid.toString()).fetch(new Column(table, "rank"));
+            return Rank.valueOf((String) new Row(table, uuid.toString()).fetch(new Column(table, "rank")));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -105,9 +104,45 @@ public final class PlayerRankData {
      * @param uuid UUID target
      * @return String of UUID's prefix
      */
+    @Nullable
     public static String getPrefix(@Nonnull final UUID uuid) {
         try {
             return (String) new Row(table, uuid.toString()).fetch(new Column(table, "prefix"));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Checks if a player has premium status
+     * @param offlinePlayer The player to check
+     * @return True if the player has premium, else false.
+     */
+    public static boolean isPremium(@Nonnull final OfflinePlayer offlinePlayer) {
+        return isPremium(offlinePlayer.getUniqueId());
+    }
+
+    /**
+     * Checks if a player has premium status
+     * @param uuid The player to check
+     * @return True if the player has premium, else false.
+     */
+    public static boolean isPremium(@Nonnull final UUID uuid) {
+        try {
+            return (boolean) new Row(table, uuid.toString()).fetch(new Column(table, "premium"));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Checks if a player has premium status
+     * @param uuid The player to set their premium status
+     * @param premium The new value of their premium status
+     */
+    public static void setPremium(@Nonnull final UUID uuid, final boolean premium) {
+        try {
+            new Row(table, uuid.toString()).update(new Column(table, "premium"), premium + "");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -7,8 +7,7 @@ import net.tazpvp.tazpvp.guild.Guild;
 import net.tazpvp.tazpvp.guild.GuildUtils;
 import net.tazpvp.tazpvp.npc.shops.NPC;
 import net.tazpvp.tazpvp.utils.PlayerNameTag;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
-import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.PlayerRankData;
 import net.tazpvp.tazpvp.utils.data.Rank;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.report.ReportDebounce;
@@ -70,7 +69,7 @@ public class PlayerWrapper {
         this.respawning = false;
         this.canRestore = false;
         this.dueling = false;
-        this.rank = PersistentData.getRank(uuid);
+        this.rank = PlayerRankData.getRank(uuid);
         this.reportDebouncesList = new ArrayList<>();
         this.reportLoggerList = new ArrayList<>();
         this.receivedDialogue = null;
@@ -112,11 +111,11 @@ public class PlayerWrapper {
 
     @Nullable
     public String getCustomPrefix() {
-        return PersistentData.getString(getUuid(), DataTypes.PREFIX);
+        return PlayerRankData.getPrefix(getUuid());
     }
 
     public void setCustomPrefix(String prefix) {
-        PersistentData.setValueS(getUuid(), DataTypes.PREFIX.getColumnName(), prefix);
+        PlayerRankData.setPrefix(uuid, prefix);
     }
 
     /**
@@ -194,7 +193,7 @@ public class PlayerWrapper {
 
     public void setRank(Rank rank) {
         this.rank = rank;
-        PersistentData.setRank(getUuid(), rank);
+        PlayerRankData.setRank(getUuid(), rank);
         refreshPermissions();
     }
 

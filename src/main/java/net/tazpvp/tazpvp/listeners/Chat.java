@@ -77,7 +77,7 @@ public class Chat implements Listener {
 
         pw.setLastMessageSent(message);
 
-        Rank rank = PersistentData.getRank(uuid);
+        Rank rank = PlayerRankData.getRank(uuid);
 
         String format = "&GRAY[{LEVEL}&GRAY] {PREFIX}%s{SUFFIX} &GRAY&M%s";
         format = format
