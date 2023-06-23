@@ -34,6 +34,7 @@
 package net.tazpvp.tazpvp.discord.bot;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -45,14 +46,11 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import net.tazpvp.tazpvp.discord.bot.commands.LeaderboardCommand;
 
+@RequiredArgsConstructor
 public class BotThread extends Thread {
     private final String token;
     @Getter
     private Guild guild;
-
-    public BotThread(String token) {
-        this.token = token;
-    }
 
     @SneakyThrows
     @Override
