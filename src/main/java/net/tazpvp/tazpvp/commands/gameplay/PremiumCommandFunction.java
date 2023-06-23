@@ -10,6 +10,9 @@ import world.ntdi.nrcore.utils.command.CommandFunction;
 import java.util.List;
 import java.util.UUID;
 
+/*
+TODO: fix this god damn disgrace of a command class, whoever committed here last seriously needs to rethink what they're doing
+ */
 public class PremiumCommandFunction extends CommandCore implements CommandFunction {
     public PremiumCommandFunction() {
         super("premium", "manager", "prem");
