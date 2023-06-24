@@ -93,14 +93,14 @@ public class PlayerFunctions {
     public static void kitPlayer(Player p) {
         Inventory inv = p.getInventory();
 
-        p.getEquipment().setHelmet(ItemBuilder.of(Material.DIAMOND_HELMET, 1, "Helmet").build());
-        p.getEquipment().setChestplate(ItemBuilder.of(Material.DIAMOND_CHESTPLATE, 1, "Chestplate").build());
-        p.getEquipment().setLeggings(ItemBuilder.of(Material.DIAMOND_LEGGINGS, 1, "Leggings").build());
-        p.getEquipment().setBoots(ItemBuilder.of(Material.DIAMOND_BOOTS, 1, "Boots").build());
+        p.getEquipment().setHelmet(ItemBuilder.of(Material.DIAMOND_HELMET, 1, "Hard Hat").build());
+        p.getEquipment().setChestplate(ItemBuilder.of(Material.DIAMOND_CHESTPLATE, 1, "Tunic").build());
+        p.getEquipment().setLeggings(ItemBuilder.of(Material.DIAMOND_LEGGINGS, 1, "Pants").build());
+        p.getEquipment().setBoots(ItemBuilder.of(Material.DIAMOND_BOOTS, 1, "Sandles").build());
 
-        inv.addItem(ItemBuilder.of(Material.DIAMOND_SWORD, 1, "Sword").enchantment(Enchantment.DAMAGE_ALL, 1).build());
+        inv.addItem(ItemBuilder.of(Material.DIAMOND_SWORD, 1, "Sword of Sir " + p.getName()).enchantment(Enchantment.DAMAGE_ALL, 1).build());
         inv.addItem(ItemBuilder.of(Material.BOW, 1, "Bow").build());
-        inv.addItem(ItemBuilder.of(Material.STONE_PICKAXE, 1, "Pickaxe").build());
+        inv.addItem(ItemBuilder.of(Material.STONE_PICKAXE, 1, "Pickaxe o' mining").build());
 
         inv.addItem(new ItemStack(Material.COOKED_BEEF, 20));
         inv.addItem(new ItemStack(Material.OAK_PLANKS, 64));
