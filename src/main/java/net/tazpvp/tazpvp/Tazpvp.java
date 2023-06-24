@@ -35,6 +35,7 @@ package net.tazpvp.tazpvp;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.achievements.achievement.*;
+import net.tazpvp.tazpvp.commands.admin.edit.EditCommand;
 import net.tazpvp.tazpvp.commands.admin.hide.HideCommand;
 import net.tazpvp.tazpvp.commands.admin.kit.KitCommand;
 import net.tazpvp.tazpvp.commands.admin.permissions.PermissionsCommand;
@@ -217,7 +218,8 @@ public final class Tazpvp extends JavaPlugin {
                 new ApplyCommand(),
                 new AdCommand(),
                 new PermissionsCommand(),
-                new TeleportWorldCommand()
+                new TeleportWorldCommand(),
+                new EditCommand()
         );
     }
 

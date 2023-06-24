@@ -90,6 +90,17 @@ public class PlayerFunctions {
         healPlr(p);
     }
 
+    public static ItemStack[] getKitItems(Player p) {
+        return new ItemStack[] {
+                ItemBuilder.of(Material.DIAMOND_SWORD, 1, "Sword of Sir " + p.getName()).enchantment(Enchantment.DAMAGE_ALL, 1).build(),
+                ItemBuilder.of(Material.BOW, 1, "Bow").build(),
+                ItemBuilder.of(Material.STONE_PICKAXE, 1, "Pickaxe o' mining").build(),
+                new ItemStack(Material.COOKED_BEEF, 20),
+                new ItemStack(Material.OAK_PLANKS, 64),
+                new ItemStack(Material.ARROW, 32)
+        };
+    }
+
     public static void kitPlayer(Player p) {
         Inventory inv = p.getInventory();
 
@@ -98,14 +109,12 @@ public class PlayerFunctions {
         p.getEquipment().setLeggings(ItemBuilder.of(Material.DIAMOND_LEGGINGS, 1, "Pants").build());
         p.getEquipment().setBoots(ItemBuilder.of(Material.DIAMOND_BOOTS, 1, "Sandles").build());
 
-        inv.addItem(ItemBuilder.of(Material.DIAMOND_SWORD, 1, "Sword of Sir " + p.getName()).enchantment(Enchantment.DAMAGE_ALL, 1).build());
-        inv.addItem(ItemBuilder.of(Material.BOW, 1, "Bow").build());
-        inv.addItem(ItemBuilder.of(Material.STONE_PICKAXE, 1, "Pickaxe o' mining").build());
-
-        inv.addItem(new ItemStack(Material.COOKED_BEEF, 20));
-        inv.addItem(new ItemStack(Material.OAK_PLANKS, 64));
-
-        inv.setItem(8, new ItemStack(Material.ARROW, 32));
+        for (ItemStack kitItem : getKitItems(p)) {
+            if (kitItem.getType() == Material.ARROW) {
+                inv.setItem(8, kitItem);
+            }
+            inv.addItem(kitItem);
+        }
     }
 
     public static int countShards(Player p) {
