@@ -17,6 +17,7 @@ import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Caesar extends GUI {
 
     public Caesar(Player p) {
@@ -33,11 +34,6 @@ public class Caesar extends GUI {
 
         int upgradeButtonSlot = 10;
 
-        if (tool.getType() == Material.GOLDEN_PICKAXE) {
-            sendNPCMessage(p, "&cCaesar", "You already have the best upgrade.");
-            return;
-        }
-
         Pickaxe currentPickaxe = BlockFunctions.pickaxes.stream()
                 .filter(pickaxe -> pickaxe.getMat() == tool.getType())
                 .findFirst()
@@ -50,15 +46,21 @@ public class Caesar extends GUI {
         int cost = currentPickaxe.getCost();
 
         ItemBuilder upgradeButtonBuilder = ItemBuilder.of(tool.getType(), 1)
-                .name(CC.GREEN + "" + CC.BOLD + "Your Pickaxe")
+                .name(CC.YELLOW + "" + CC.BOLD + "Your Pickaxe")
                 .flag(ItemFlag.HIDE_ATTRIBUTES);
 
-        String[] lore = {CC.GRAY + "Click to upgrade its material.", "Cost: " + cost + " Shards"};
+        String[] lore = {CC.GRAY + "Click to upgrade its material.", CC.GRAY + "Cost: " + CC.DARK_AQUA + cost + " Shards"};
         upgradeButtonBuilder.lore(lore);
 
         ItemStack upgradeButton = upgradeButtonBuilder.build();
 
         addButton(Button.create(upgradeButton, (e) -> {
+
+            if (tool.getType() == Material.GOLDEN_PICKAXE) {
+                sendNPCMessage(p, "Caesar", "You already have the best upgrade.");
+                return;
+            }
+
             if (shardCount < cost) {
                 sendNPCMessage(p, "Caesar", "You do not have enough shards. You need " + (cost - shardCount) + " more shards.");
                 return;
@@ -74,8 +76,8 @@ public class Caesar extends GUI {
 
             Tazpvp.getObservers().forEach(observer -> observer.talent(p));
 
-            String[] lore2 = {CC.GRAY + "Click to upgrade its material.", "Cost: " + cost + " Shards"};
-            upgradeButtonBuilder.lore(String.valueOf(lore2));
+            String[] lore2 = {CC.GRAY + "Click to upgrade its material.", CC.GRAY + "Cost: " + CC.DARK_AQUA + cost + " Shards"};
+            upgradeButtonBuilder.lore(lore2);
             upgradeButton.setItemMeta(upgradeButtonBuilder.build().getItemMeta());
 
             update();
@@ -85,6 +87,6 @@ public class Caesar extends GUI {
     }
 
     private void sendNPCMessage(Player player, String npcName, String message) {
-        player.sendMessage(CC.DARK_GRAY + "[" + npcName + "] " + CC.GRAY + message);
+        player.sendMessage(CC.YELLOW + "[" + npcName + "] " + CC.GOLD + message);
     }
 }
