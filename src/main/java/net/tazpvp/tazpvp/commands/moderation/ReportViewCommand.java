@@ -14,7 +14,7 @@ import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
 import java.util.List;
 
-public class ReportViewCommand extends NRCommand {
+public class ReportViewCommand  extends NRCommand {
     public ReportViewCommand() {
         super(new Label("viewreport", "tazpvp.staff"));
     }

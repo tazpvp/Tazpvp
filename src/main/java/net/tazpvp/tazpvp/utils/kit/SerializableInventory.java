@@ -59,17 +59,18 @@ public class SerializableInventory implements Serializable {
      * @param itemStacks The items to be added to the inventory.
      */
     public void addItems(PlayerInventory inventory, ItemStack... itemStacks) {
-        List<ItemStack> toAdd = new ArrayList<>();
+        List<ItemStack> toAdd = new ArrayList<>(List.of(itemStacks));
         for (int i = 0; i < hotbar.length; i++) {
             for (ItemStack itemStack : itemStacks) {
+                if (hotbar[i] == null) continue;
                 if (itemStack.getType() == hotbar[i].getType()) {
                     inventory.setItem(i, itemStack);
-                    continue;
+                    toAdd.remove(itemStack);
                 }
-                toAdd.add(itemStack);
             }
         }
 
+        System.out.println(toAdd);
         inventory.addItem(toAdd.toArray(ItemStack[]::new));
     }
 

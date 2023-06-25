@@ -24,7 +24,11 @@ public final class PlayerRankData {
         try {
             table = new Table(Tazpvp.getDatabase(), "ranks", Map.entry("id", DataTypes.UUID), new LinkedHashMap<>(
                     Map.of(
-                            "premium", DataTypes.BOOLEAN, "rank", DataTypes.TEXT, "prefix", DataTypes.TEXT, "death_particle_material", DataTypes.TEXT, "arrow_particle_material", DataTypes.TEXT
+                            "premium", DataTypes.BOOLEAN,
+                            "rank", DataTypes.TEXT,
+                            "prefix", DataTypes.TEXT,
+                            "death_particle_material", DataTypes.TEXT,
+                            "arrow_particle_material", DataTypes.TEXT
                     )
             )
             );
@@ -95,6 +99,7 @@ public final class PlayerRankData {
      * @return String of UUID's rank
      */
     public static Rank getRank(@Nonnull final UUID uuid) {
+        initRank(uuid);
         try {
             return Rank.valueOf((String) new Row(table, uuid.toString()).fetch(new Column(table, "rank")));
         } catch (SQLException e) {
@@ -110,7 +115,8 @@ public final class PlayerRankData {
     @Nullable
     public static String getPrefix(@Nonnull final UUID uuid) {
         try {
-            return (String) new Row(table, uuid.toString()).fetch(new Column(table, "prefix"));
+            String prefix = (String) new Row(table, uuid.toString()).fetch(new Column(table, "prefix"));
+            return (prefix.equals("null") ? null : prefix);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -174,7 +180,8 @@ public final class PlayerRankData {
     @Nullable
     public static Particle getMaterial(@Nonnull final UUID uuid, @Nonnull final ParticleMaterial particleMaterial) {
         try {
-            return Particle.valueOf((String) new Row(table, uuid.toString()).fetch(new Column(table, particleMaterial.columnName)));
+            String particle = (String) new Row(table, uuid.toString()).fetch(new Column(table, particleMaterial.columnName));
+            return (particle.equals("null") ? null : Particle.valueOf(particle));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -3,6 +3,8 @@ package net.tazpvp.tazpvp.utils.data;
 import net.tazpvp.tazpvp.achievements.Achievements;
 import net.tazpvp.tazpvp.talents.Talents;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
+import net.tazpvp.tazpvp.utils.kit.SerializableInventory;
+import net.tazpvp.tazpvp.utils.serialization.SerializeObject;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -52,8 +54,8 @@ public final class PersistentData {
     public static void initPlayer(UUID uuid) {
         if (!SQLHelper.ifRowExists(NAME, ID_COLUMN, uuid.toString())) {
             SQLHelper.initializeValues(NAME,
-                    "ID, COINS, XP, LEVEL, KILLS, DEATHS, TOP_KS, PRESTIGE, REBIRTH, DUEL_WINS, DIVISION, PLAYTIME, DAILY_CRATE, GUILD_ID, TALENTS, ACHIEVEMENTS",
-                    "'" + uuid + "'", "0", "0", "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "'n'", "'set'", "'set'");
+                    "ID, COINS, XP, LEVEL, KILLS, DEATHS, TOP_KS, PRESTIGE, REBIRTH, DUEL_WINS, DIVISION, PLAYTIME, DAILY_CRATE, GUILD_ID, TALENTS, ACHIEVEMENTS, LOADOUT",
+                    "'" + uuid + "'", "0", "0", "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "'n'", "'set'", "'set'", "'set'");
             setTalents(uuid, new Talents());
             setAchievements(uuid, new Achievements());
 
@@ -119,6 +121,16 @@ public final class PersistentData {
 
     public static Achievements getAchievements(@Nonnull final UUID uuid) {
         return (Achievements) getSerializeObject(uuid, DataTypes.ACHIEVEMENTS);
+    }
+
+    public static SerializableInventory getLoadout(@Nonnull final UUID uuid) {
+        if (!hasCustomLoadout(uuid)) return null;
+
+        return (SerializableInventory) SerializeObject.getSerializeObject(getString(uuid, DataTypes.LOADOUT));
+    }
+
+    public static boolean hasCustomLoadout(@Nonnull final UUID uuid) {
+        return !(getString(uuid, DataTypes.LOADOUT).equals("set"));
     }
 
     public static Object getSerializeObject(@Nonnull final UUID uuid, @Nonnull final DataTypes dataTypes) {
@@ -279,6 +291,10 @@ public final class PersistentData {
      */
     public static void setAchievements(@Nonnull final UUID uuid, @Nonnull final Achievements achievements) {
         setSerializedObject(uuid, achievements, DataTypes.ACHIEVEMENTS);
+    }
+
+    public static void setLoadout(@Nonnull final UUID uuid, @Nonnull final SerializableInventory serializableInventory) {
+        setValueS(uuid, DataTypes.LOADOUT.getColumnName(), SerializeObject.serializedObject(serializableInventory));
     }
 
     private static void setSerializedObject(@Nonnull final UUID uuid, @Nonnull final Object object, @Nonnull final DataTypes dataTypes) {

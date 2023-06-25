@@ -51,7 +51,8 @@ public enum DataTypes {
     DAILYCRATEUNIX("daily_crate", 13, true),
     GUILD_ID("guild_id", 14, false),
     TALENTS("talents", 15, false),
-    ACHIEVEMENTS("achievements", 16, false);
+    ACHIEVEMENTS("achievements", 16, false),
+    LOADOUT("loadout", 17, false);
 
     @Getter
     private final String columnName;
