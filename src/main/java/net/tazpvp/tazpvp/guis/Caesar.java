@@ -1,9 +1,12 @@
 package net.tazpvp.tazpvp.guis;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.data.DataTypes;
+import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.BlockFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
+import net.tazpvp.tazpvp.utils.objects.Ore;
 import net.tazpvp.tazpvp.utils.objects.Pickaxe;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -13,9 +16,6 @@ import org.bukkit.inventory.ItemStack;
 import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class Caesar extends GUI {
@@ -32,8 +32,6 @@ public class Caesar extends GUI {
         ItemStack tool = BlockFunctions.getPickaxe(p);
         int shardCount = PlayerFunctions.countShards(p);
 
-        int upgradeButtonSlot = 10;
-
         Pickaxe currentPickaxe = BlockFunctions.pickaxes.stream()
                 .filter(pickaxe -> pickaxe.getMat() == tool.getType())
                 .findFirst()
@@ -46,10 +44,10 @@ public class Caesar extends GUI {
         int cost = currentPickaxe.getCost();
 
         ItemBuilder upgradeButtonBuilder = ItemBuilder.of(tool.getType(), 1)
-                .name(CC.YELLOW + "" + CC.BOLD + "Your Pickaxe")
+                .name(CC.YELLOW + "" + CC.BOLD + "Upgrade Pickaxe")
                 .flag(ItemFlag.HIDE_ATTRIBUTES);
 
-        String[] lore = {CC.GRAY + "Click to upgrade its material.", CC.GRAY + "Cost: " + CC.DARK_AQUA + cost + " Shards"};
+        String[] lore = {CC.GRAY + "Click to upgrade pickaxe material.", CC.GRAY + "Cost: " + CC.DARK_AQUA + cost + " Shards"};
         upgradeButtonBuilder.lore(lore);
 
         ItemStack upgradeButton = upgradeButtonBuilder.build();
@@ -81,7 +79,27 @@ public class Caesar extends GUI {
             upgradeButton.setItemMeta(upgradeButtonBuilder.build().getItemMeta());
 
             update();
-        }), upgradeButtonSlot);
+        }), 11);
+
+        addButton(Button.create(ItemBuilder.of(Material.ENCHANTED_BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Enchant Pickaxe").lore(CC.GRAY + "Check out the custom pickaxe enchantments.").build(), (e) -> {
+            p.closeInventory();
+        }), 13);
+
+        addButton(Button.create(ItemBuilder.of(Material.NAME_TAG, 1).name(CC.GREEN + "" + CC.BOLD + "Sell Your Ores").lore(CC.GRAY + "Sell all of your ores.").build(), (e) -> {
+            int reward = 0;
+            for (ItemStack i : p.getInventory()) {
+                if (i != null) {
+                    Ore ore = BlockFunctions.getOreFrom(i.getType());
+                    if (BlockFunctions.getOreFrom(i.getType()) != null) {
+                        reward += (ore.getCost() * i.getAmount());
+                        i.setAmount(0);
+                    }
+                }
+            }
+            PersistentData.add(p.getUniqueId(), DataTypes.COINS, (reward));
+            p.sendMessage("Here you go, take $" + (reward));
+            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
+        }), 15);
 
         update();
     }

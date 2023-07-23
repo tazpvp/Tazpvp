@@ -51,8 +51,8 @@ import java.util.WeakHashMap;
 public class BlockFunctions {
 
     public static final List<Ore> ores = new ArrayList<>(Arrays.asList(
-            new Ore(20*9, 2, 1, Material.GOLD_ORE, Material.RAW_GOLD, "stone"),
-            new Ore(20*13, 3, 2, Material.REDSTONE_ORE, Material.REDSTONE, "iron"),
+            new Ore(20*9, 2, 1, Material.COAL_ORE, Material.COAL, "stone"),
+            new Ore(20*13, 3, 2, Material.GOLD_ORE, Material.RAW_GOLD, "iron"),
             new Ore(20*16, 4, 3, Material.LAPIS_ORE, Material.LAPIS_LAZULI, "diamond"),
             new Ore(20*21, 5, 4, Material.DIAMOND_ORE, Material.DIAMOND, "netherite"),
             new Ore(20*25, 6, 5, Material.EMERALD_ORE, Material.EMERALD, "gold")
@@ -63,7 +63,8 @@ public class BlockFunctions {
             new Pickaxe(Material.IRON_PICKAXE, 8, 2, Material.DIAMOND_PICKAXE),
             new Pickaxe(Material.DIAMOND_PICKAXE, 16, 3, Material.NETHERITE_PICKAXE),
             new Pickaxe(Material.NETHERITE_PICKAXE, 19, 4, Material.GOLDEN_PICKAXE),
-            new Pickaxe(Material.GOLDEN_PICKAXE, 25, 5, Material.GOLDEN_PICKAXE)));
+            new Pickaxe(Material.GOLDEN_PICKAXE, 25, 5, Material.GOLDEN_PICKAXE))
+    );
 
     public static void respawnOre(Player p, Block block, Material mat, Material smelted, int time) {
 

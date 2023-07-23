@@ -102,18 +102,6 @@ public class Caesar extends NPC {
 
         if (BlockFunctions.getPickaxe(p) != null) {
             new net.tazpvp.tazpvp.guis.Caesar(p);
-        } else if (BlockFunctions.getOreInHand(p) != null) {
-            Ore ore = BlockFunctions.getOreFrom(BlockFunctions.getOreInHand(p).getType());
-            int amount = 0;
-            for (ItemStack i : p.getInventory()) {
-                if (i != null && i.getType().equals(ore.getMat())) {
-                    amount = amount + i.getAmount();
-                    i.setAmount(0);
-                }
-            }
-            PersistentData.add(p.getUniqueId(), DataTypes.COINS, (amount * ore.getCost()));
-            p.sendMessage("Here you go, take $" + (amount * ore.getCost()));
-            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
         } else {
             p.sendMessage("Click me with your pickaxe and I will upgrade it.");
         }
