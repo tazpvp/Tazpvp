@@ -28,46 +28,14 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
  */
 
-package net.tazpvp.tazpvp.guis;
+package net.tazpvp.tazpvp.guis.Menu.cosmetic;
 
-import net.tazpvp.tazpvp.guis.cosmetic.CosmeticMenu;
-import net.tazpvp.tazpvp.guis.guild.GuildBrowser;
-import net.tazpvp.tazpvp.utils.enums.CC;
+
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import world.ntdi.nrcore.utils.gui.Button;
-import world.ntdi.nrcore.utils.gui.GUI;
-import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
+import org.bukkit.Particle;
 
-public class Menu extends GUI {
-
-    public Menu(Player p) {
-        super("Menu", 3);
-        addItems(p);
-        open(p);
-    }
-
-    private void addItems(Player p) {
-        fill(0, 3*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
-
-        addButton(Button.create(ItemBuilder.of(Material.BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Achievements").lore(CC.GRAY + "Check your achievements").build(), (e) -> {
-            new Achievements(p);
-        }), 10);
-
-        addButton(Button.create(ItemBuilder.of(Material.LECTERN, 1).name(CC.GREEN + "" + CC.BOLD + "Talents").lore(CC.GRAY + "Check your talents").build(), (e) -> {
-            new Talents(p);
-        }), 12);
-
-        addButton(Button.create(ItemBuilder.of(Material.TOTEM_OF_UNDYING, 1).name(CC.GREEN + "" + CC.BOLD + "Guilds").lore(CC.GRAY + "Browse guilds").build(), (e) -> {
-            new GuildBrowser(p);
-        }), 14);
-
-        addButton(Button.create(ItemBuilder.of(Material.FIRE_CHARGE, 1).name(CC.GREEN + "" + CC.BOLD + "Cosmetics").lore(CC.GRAY + "Premium features").build(), (e) -> {
-            new CosmeticMenu(p);
-        }), 16);
-
-        update();
-    }
+public record ParticleSelectionContainer(Material material, Particle particle, String name, String lore) {
 }

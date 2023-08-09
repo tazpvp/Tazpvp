@@ -30,54 +30,50 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.guis.guild;
+package net.tazpvp.tazpvp.guis.Menu;
 
-import net.tazpvp.tazpvp.guild.Guild;
+import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
-import world.ntdi.nrcore.utils.item.builders.SkullBuilder;
 
-public class GuildInfo extends GUI {
+public class Achievements extends GUI {
 
-    public GuildInfo(Player p, Guild g) {
-        super("Guild Info", 3);
-        addItems(p, g);
+    public Achievements(Player p) {
+        super("Achievements", 4);
+        addItems(p);
         open(p);
     }
 
-    private void addItems(Player p, Guild g) {
-        String[] lore = {
-                " ",
-                CC.DARK_GREEN + "Kills: " + CC.GREEN + g.getKills(),
-                CC.DARK_GREEN + "Deaths: " + CC.GREEN + g.getDeaths(),
-                CC.DARK_GREEN + "KDR: " + CC.GREEN + g.getKDR(),
-                " ",
-                CC.GOLD + "Click to edit"
-        };
+    private void addItems(Player p) {
+        net.tazpvp.tazpvp.achievements.Achievements ACH = PersistentData.getAchievements(p.getUniqueId());
 
-        OfflinePlayer leader = Bukkit.getOfflinePlayer(g.getGuildLeader());
+        fill(0, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
-        fill(0, 3*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE).name(" ").build());
+        setButton(p,  10, "Adept", "Learn every talent.", ACH.is("Adept"));
+        setButton(p,  11, "Bowling", "Get a kill streak of 50.", ACH.is("Bowling"));
+        setButton(p,  12, "Charm", "Chat 100 times before leaving.", ACH.is("Charm"));
+        setButton(p,  13, "Craftsman", "Combine your sword with an enchantment.", ACH.is("Craftsman"));
+        setButton(p,  14, "Gamble", "Kill a player while at low health.", ACH.is("Gamble"));
+        setButton(p,  15, "Gladiator", "Win 35 duels.", ACH.is("Gladiator"));
+        setButton(p,  16, "Legend", "Rebirth your character.", ACH.is("Legend"));
 
-        addButton(Button.create(ItemBuilder.of(Material.ENCHANTING_TABLE, 1)
-                .name(CC.GREEN + g.getName()).lore(lore).build(), (e) -> {
-            new GuildEdit(p, g);
-        }), 11);
-
-        addButton(Button.createBasic(SkullBuilder.of().setHeadTexture(g.getGuildLeader())
-                .name(CC.GREEN + "Guild Master").lore(" ", CC.DARK_GREEN + leader.getName()).build()), 13);
-
-        addButton(Button.create(ItemBuilder.of(Material.WRITABLE_BOOK, 1)
-                .name(CC.GREEN + "Members").lore(" ", CC.DARK_GREEN + "View guild members.").build(), (e) -> {
-            new GuildMembers(p, g);
-        }), 15);
+        setButton(p,  19, "Merchant", "Trade with Caesar at the mines.", ACH.is("Merchant"));
+        setButton(p,  20, "Superior", "Win an event.", ACH.is("Superior"));
+        setButton(p,  21, "Zorgin", "Kill Zorg in the mines.", ACH.is("Zorgin"));
+        setButton(p,  22, "Grinder", "Mine 100 ores.", ACH.is("Grinder"));
 
         update();
+    }
+
+    private void setButton(Player p, int slot, String name, String lore, boolean completed) {
+
+        String complete = completed ? CC.GREEN + "Complete" : CC.RED + "Incomplete";
+        Material mat = completed ? Material.ENCHANTED_BOOK : Material.BOOK;
+
+        addButton(Button.createBasic(ItemBuilder.of(mat, 1).name(CC.RED + "" + CC.BOLD + name).lore(CC.GRAY + lore, " ", complete).build()), slot);
     }
 }

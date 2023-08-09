@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.guis;
+package net.tazpvp.tazpvp.guis.Mine;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
@@ -55,19 +55,19 @@ public class Caesar extends GUI {
         addButton(Button.create(upgradeButton, (e) -> {
 
             if (tool.getType() == Material.GOLDEN_PICKAXE) {
-                sendNPCMessage(p, "Caesar", "You already have the best upgrade.");
+                sendNPCMessage(p, "You already have the best upgrade.");
                 return;
             }
 
             if (shardCount < cost) {
-                sendNPCMessage(p, "Caesar", "You do not have enough shards. You need " + (cost - shardCount) + " more shards.");
+                sendNPCMessage(p, "You do not have enough shards. You need " + (cost - shardCount) + " more shards.");
                 return;
             }
 
             tool.setType(currentPickaxe.getUpgrade());
             PlayerFunctions.takeShards(p, cost);
 
-            sendNPCMessage(p, "Caesar", "Thanks, here is your new pickaxe.");
+            sendNPCMessage(p, "Thanks, here is your new pickaxe.");
             p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, 1, 1);
 
             addItems(p);
@@ -96,15 +96,20 @@ public class Caesar extends GUI {
                     }
                 }
             }
-            PersistentData.add(p.getUniqueId(), DataTypes.COINS, (reward));
-            p.sendMessage("Here you go, take $" + (reward));
-            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
+            if (reward == 0) {
+                sendNPCMessage(p, "Are you trying to scam me!? You don't have any ores!" + reward);
+                p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+            } else {
+                PersistentData.add(p.getUniqueId(), DataTypes.COINS, reward);
+                sendNPCMessage(p, "Great doing business!" + CC.GREEN + " + $" + reward);
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
+            }
         }), 15);
 
         update();
     }
 
-    private void sendNPCMessage(Player player, String npcName, String message) {
-        player.sendMessage(CC.YELLOW + "[" + npcName + "] " + CC.GOLD + message);
+    private void sendNPCMessage(Player player, String message) {
+        player.sendMessage(CC.YELLOW + "[" + "Caesar" + "] " + CC.GOLD + message);
     }
 }

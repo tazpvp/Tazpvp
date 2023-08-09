@@ -30,9 +30,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.guis;
+package net.tazpvp.tazpvp.guis.Menu;
 
-import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.guis.Menu.cosmetic.CosmeticMenu;
+import net.tazpvp.tazpvp.guis.Menu.guild.GuildBrowser;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -40,40 +41,33 @@ import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
-public class Achievements extends GUI {
+public class Lorenzo extends GUI {
 
-    public Achievements(Player p) {
-        super("Achievements", 4);
+    public Lorenzo(Player p) {
+        super("Lorenzo", 3);
         addItems(p);
         open(p);
     }
 
     private void addItems(Player p) {
-        net.tazpvp.tazpvp.achievements.Achievements ACH = PersistentData.getAchievements(p.getUniqueId());
+        fill(0, 3*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
-        fill(0, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
+        addButton(Button.create(ItemBuilder.of(Material.BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Achievements").lore(CC.GRAY + "Check your achievements").build(), (e) -> {
+            new Achievements(p);
+        }), 10);
 
-        setButton(p,  10, "Adept", "Learn every talent.", ACH.is("Adept"));
-        setButton(p,  11, "Bowling", "Get a kill streak of 50.", ACH.is("Bowling"));
-        setButton(p,  12, "Charm", "Chat 100 times before leaving.", ACH.is("Charm"));
-        setButton(p,  13, "Craftsman", "Combine your sword with an enchantment.", ACH.is("Craftsman"));
-        setButton(p,  14, "Gamble", "Kill a player while at low health.", ACH.is("Gamble"));
-        setButton(p,  15, "Gladiator", "Win 35 duels.", ACH.is("Gladiator"));
-        setButton(p,  16, "Legend", "Rebirth your character.", ACH.is("Legend"));
+        addButton(Button.create(ItemBuilder.of(Material.LECTERN, 1).name(CC.GREEN + "" + CC.BOLD + "Talents").lore(CC.GRAY + "Check your talents").build(), (e) -> {
+            new Talents(p);
+        }), 12);
 
-        setButton(p,  19, "Merchant", "Trade with Caesar at the mines.", ACH.is("Merchant"));
-        setButton(p,  20, "Superior", "Win an event.", ACH.is("Superior"));
-        setButton(p,  21, "Zorgin", "Kill Zorg in the mines.", ACH.is("Zorgin"));
-        setButton(p,  22, "Grinder", "Mine 100 ores.", ACH.is("Grinder"));
+        addButton(Button.create(ItemBuilder.of(Material.TOTEM_OF_UNDYING, 1).name(CC.GREEN + "" + CC.BOLD + "Guilds").lore(CC.GRAY + "Browse guilds").build(), (e) -> {
+            new GuildBrowser(p);
+        }), 14);
+
+        addButton(Button.create(ItemBuilder.of(Material.FIRE_CHARGE, 1).name(CC.GREEN + "" + CC.BOLD + "Cosmetics").lore(CC.GRAY + "Premium features").build(), (e) -> {
+            new CosmeticMenu(p);
+        }), 16);
 
         update();
-    }
-
-    private void setButton(Player p, int slot, String name, String lore, boolean completed) {
-
-        String complete = completed ? CC.GREEN + "Complete" : CC.RED + "Incomplete";
-        Material mat = completed ? Material.ENCHANTED_BOOK : Material.BOOK;
-
-        addButton(Button.createBasic(ItemBuilder.of(mat, 1).name(CC.RED + "" + CC.BOLD + name).lore(CC.GRAY + lore, " ", complete).build()), slot);
     }
 }

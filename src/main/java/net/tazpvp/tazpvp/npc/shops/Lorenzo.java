@@ -32,9 +32,7 @@
 
 package net.tazpvp.tazpvp.npc.shops;
 
-import net.tazpvp.tazpvp.guis.Menu;
 import net.tazpvp.tazpvp.npc.dialogue.Dialogues;
-import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -86,6 +84,6 @@ public class Lorenzo extends NPC {
 
     @Override
     public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
-        new Menu(p);
+        new net.tazpvp.tazpvp.guis.Menu.Lorenzo(p);
     }
 }

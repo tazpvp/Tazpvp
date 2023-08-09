@@ -32,9 +32,7 @@
 
 package net.tazpvp.tazpvp.npc.shops;
 
-import net.tazpvp.tazpvp.guis.Shop;
 import net.tazpvp.tazpvp.npc.dialogue.Dialogues;
-import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -90,6 +88,6 @@ public class Maxim extends NPC {
 
     @Override
     public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
-        new Shop(p);
+        new net.tazpvp.tazpvp.guis.Shop.Maxim(p);
     }
 }

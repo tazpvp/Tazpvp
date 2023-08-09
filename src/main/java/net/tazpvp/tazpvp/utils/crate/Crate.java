@@ -82,7 +82,7 @@ public class Crate {
                 p.getInventory().addItem(randomShopItem.getB());
             } else { // YEET the player backwards
                 p.setVelocity(p.getLocation().getDirection().multiply(-1));
-                p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, 1F, 1F);
+                p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1F, 1F);
                 p.sendMessage(CC.RED + "No crate key!");
             }
         }

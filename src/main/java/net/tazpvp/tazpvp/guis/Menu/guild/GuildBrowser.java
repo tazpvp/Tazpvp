@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.guis.guild;
+package net.tazpvp.tazpvp.guis.Menu.guild;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.guild.Guild;

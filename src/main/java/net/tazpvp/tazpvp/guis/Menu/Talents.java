@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.guis;
+package net.tazpvp.tazpvp.guis.Menu;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.data.PersistentData;

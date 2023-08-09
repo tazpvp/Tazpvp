@@ -257,5 +257,4 @@ public final class Tazpvp extends JavaPlugin {
         npcs.forEach(NPC::remove);
         npcs.clear();
     }
-
 }

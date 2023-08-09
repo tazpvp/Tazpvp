@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.guis;
+package net.tazpvp.tazpvp.guis.Shop;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
@@ -40,8 +40,6 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
@@ -52,14 +50,14 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-public class Shop extends GUI {
+public class Maxim extends GUI {
 
     private int slotNum;
     private int num;
     private Player p;
 
-    public Shop(Player p) {
-        super("Shop", 6);
+    public Maxim(Player p) {
+        super("Maxim", 6);
         this.p = p;
         addItems();
         open(p);

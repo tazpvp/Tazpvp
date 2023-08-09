@@ -32,28 +32,18 @@
 
 package net.tazpvp.tazpvp.npc.shops;
 
-import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.npc.dialogue.Dialogues;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
-import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.BlockFunctions;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
-import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
-import net.tazpvp.tazpvp.utils.objects.Ore;
-import net.tazpvp.tazpvp.utils.objects.Pickaxe;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Caesar extends NPC {
@@ -101,9 +91,9 @@ public class Caesar extends NPC {
     public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
 
         if (BlockFunctions.getPickaxe(p) != null) {
-            new net.tazpvp.tazpvp.guis.Caesar(p);
+            new net.tazpvp.tazpvp.guis.Mine.Caesar(p);
         } else {
-            p.sendMessage("Click me with your pickaxe and I will upgrade it.");
+            p.sendMessage(CC.YELLOW + "[" + "Caesar" + "] " + CC.GOLD + "Give me your pickaxe and I can upgrade it.");
         }
     }
 }

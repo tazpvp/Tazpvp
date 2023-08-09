@@ -31,7 +31,7 @@
  *
  */
 
-package net.tazpvp.tazpvp.guis.cosmetic;
+package net.tazpvp.tazpvp.guis.Menu.cosmetic;
 
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Material;
