@@ -2,7 +2,6 @@ package net.tazpvp.tazpvp.utils.objects;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -11,16 +10,15 @@ import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.RayTraceResult;
-import world.ntdi.nrcore.utils.ChatUtils;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 public class Zorg {
     @Getter
-    private final WitherSkeleton zorg;
+    private WitherSkeleton zorg;
 
 
     public Zorg(final Location location) {
-        this.zorg = (WitherSkeleton) location.getWorld().spawnEntity(location, EntityType.WITHER_SKELETON);
+        spawn(location);
         setup();
     }
 
@@ -41,10 +39,7 @@ public class Zorg {
                 entity -> {
                     if (entity.getUniqueId().equals(this.zorg.getUniqueId())) {
                         return false;
-                    } else if (entity.getType() == EntityType.PLAYER) {
-                        return true;
-                    }
-                    return false;
+                    } else return entity.getType() == EntityType.PLAYER;
                 }
         );
 
@@ -56,8 +51,10 @@ public class Zorg {
 
         this.zorg.getWorld().spawnParticle(Particle.SONIC_BOOM, zorg.getLocation(), 1);
 
-    };
-
+    }
+    public void spawn(Location location) {
+        this.zorg = (WitherSkeleton) location.getWorld().spawnEntity(location, EntityType.WITHER_SKELETON);
+    }
     public void despawn() {
         this.zorg.remove();
     }
