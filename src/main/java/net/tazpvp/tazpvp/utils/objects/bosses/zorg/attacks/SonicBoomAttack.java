@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.utils.objects.bosses.zorg;
+package net.tazpvp.tazpvp.utils.objects.bosses.zorg.attacks;
 
 import lombok.With;
 import net.tazpvp.tazpvp.utils.objects.bosses.BOSSSSS;

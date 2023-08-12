@@ -1,18 +1,15 @@
 package net.tazpvp.tazpvp.utils.objects.bosses.zorg;
 
-import lombok.Getter;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.objects.bosses.BOSSSSS;
+import net.tazpvp.tazpvp.utils.objects.bosses.zorg.attacks.SonicBoomAttack;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Particle;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
 import org.bukkit.entity.WitherSkeleton;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.RayTraceResult;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import java.util.Random;
