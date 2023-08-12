@@ -70,6 +70,7 @@ import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.leaderboard.spawnable.SpawnableLeaderboardManager;
 import net.tazpvp.tazpvp.utils.observer.Observer;
 import net.tazpvp.tazpvp.utils.passive.Alerts;
+import net.tazpvp.tazpvp.utils.passive.CustomBosses;
 import net.tazpvp.tazpvp.utils.passive.Generator;
 import net.tazpvp.tazpvp.utils.passive.Holograms;
 import org.bukkit.Bukkit;
@@ -129,6 +130,7 @@ public final class Tazpvp extends JavaPlugin {
         registerObservable();
         spawnNpcs();
         CombatTagFunctions.initCombatTag();
+        CustomBosses.respawnZorg();
 
         parkourUtil = new ConfigUtil("parkour.yml", this);
 
@@ -165,6 +167,7 @@ public final class Tazpvp extends JavaPlugin {
     public void onDisable() {
 
         despawnNpcs();
+        CustomBosses.despawnZorg();
         Holograms.removeHolograms();
     }
 
