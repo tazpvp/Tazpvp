@@ -39,17 +39,17 @@ import net.tazpvp.tazpvp.commands.admin.PremiumCommandFunction;
 import net.tazpvp.tazpvp.commands.admin.edit.EditCommand;
 import net.tazpvp.tazpvp.commands.admin.hide.HideCommand;
 import net.tazpvp.tazpvp.commands.admin.kit.KitCommand;
-import net.tazpvp.tazpvp.commands.admin.permissions.PermissionsCommand;
-import net.tazpvp.tazpvp.commands.admin.teleportWorld.TeleportWorldCommand;
-import net.tazpvp.tazpvp.commands.gameplay.leaderboard.LeaderboardCommand;
 import net.tazpvp.tazpvp.commands.admin.npc.NpcCommand;
+import net.tazpvp.tazpvp.commands.admin.permissions.PermissionsCommand;
 import net.tazpvp.tazpvp.commands.admin.stats.StatCommand;
 import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
+import net.tazpvp.tazpvp.commands.admin.teleportWorld.TeleportWorldCommand;
 import net.tazpvp.tazpvp.commands.gameplay.DailyCommand;
 import net.tazpvp.tazpvp.commands.gameplay.ReportCommand;
 import net.tazpvp.tazpvp.commands.gameplay.duel.DuelCommand;
 import net.tazpvp.tazpvp.commands.gameplay.guild.GuildCommand;
 import net.tazpvp.tazpvp.commands.gameplay.help.HelpCommand;
+import net.tazpvp.tazpvp.commands.gameplay.leaderboard.LeaderboardCommand;
 import net.tazpvp.tazpvp.commands.gameplay.spawn.SpawnCommand;
 import net.tazpvp.tazpvp.commands.moderation.MuteCommand;
 import net.tazpvp.tazpvp.commands.moderation.ReportViewCommand;
@@ -70,7 +70,7 @@ import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.leaderboard.spawnable.SpawnableLeaderboardManager;
 import net.tazpvp.tazpvp.utils.observer.Observer;
 import net.tazpvp.tazpvp.utils.passive.Alerts;
-import net.tazpvp.tazpvp.utils.passive.CustomBosses;
+import net.tazpvp.tazpvp.utils.objects.bosses.zorg.ZorgManager;
 import net.tazpvp.tazpvp.utils.passive.Generator;
 import net.tazpvp.tazpvp.utils.passive.Holograms;
 import org.bukkit.Bukkit;
@@ -130,7 +130,7 @@ public final class Tazpvp extends JavaPlugin {
         registerObservable();
         spawnNpcs();
         CombatTagFunctions.initCombatTag();
-        CustomBosses.respawnZorg();
+        ZorgManager.respawnZorg();
 
         parkourUtil = new ConfigUtil("parkour.yml", this);
 
@@ -167,7 +167,7 @@ public final class Tazpvp extends JavaPlugin {
     public void onDisable() {
 
         despawnNpcs();
-        CustomBosses.despawnZorg();
+        ZorgManager.despawnZorg();
         Holograms.removeHolograms();
     }
 
@@ -249,6 +249,7 @@ public final class Tazpvp extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Interact(), this);
         getServer().getPluginManager().registerEvents(new Shoot(), this);
         getServer().getPluginManager().registerEvents(new ProjectileLaunch(this), this);
+        getServer().getPluginManager().registerEvents(new Death(), this);
     }
 
     private void spawnNpcs() {

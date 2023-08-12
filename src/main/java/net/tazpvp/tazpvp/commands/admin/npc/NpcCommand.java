@@ -38,7 +38,6 @@ import net.tazpvp.tazpvp.npc.shops.Lorenzo;
 import net.tazpvp.tazpvp.npc.shops.Maxim;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import world.ntdi.nrcore.utils.command.simple.Completer;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 

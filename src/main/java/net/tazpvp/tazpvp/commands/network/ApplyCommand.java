@@ -1,6 +1,5 @@
 package net.tazpvp.tazpvp.commands.network;
 
-import lombok.NonNull;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;

@@ -41,8 +41,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.EntityEffect;
 import org.bukkit.entity.Player;
 
-import javax.xml.crypto.Data;
-
 public class Medic extends Observable {
     @Override
     public void death(Player victim, Player killer) {

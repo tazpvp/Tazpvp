@@ -39,7 +39,9 @@ import net.tazpvp.tazpvp.utils.Sorting;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class Leaderboard {
     @Getter

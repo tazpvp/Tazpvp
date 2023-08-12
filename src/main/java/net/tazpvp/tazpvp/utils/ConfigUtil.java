@@ -37,7 +37,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import world.ntdi.nrcore.NRCore;
 
 import javax.annotation.Nonnull;
 import java.io.*;

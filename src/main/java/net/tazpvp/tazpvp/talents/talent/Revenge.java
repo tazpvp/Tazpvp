@@ -1,7 +1,5 @@
 package net.tazpvp.tazpvp.talents.talent;
 
-import net.tazpvp.tazpvp.talents.Talents;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import org.bukkit.entity.Player;

@@ -15,8 +15,6 @@ import org.javatuples.Pair;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
-import java.util.List;
-
 public class DuelAcceptCommand extends NRCommand {
     public DuelAcceptCommand() {
         super(new Label("accept", null));

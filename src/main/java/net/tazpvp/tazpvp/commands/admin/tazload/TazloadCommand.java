@@ -1,7 +1,5 @@
 package net.tazpvp.tazpvp.commands.admin.tazload;
 
-import lombok.NonNull;
-import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.duels.Duel;
 import org.bukkit.Bukkit;
 import world.ntdi.nrcore.utils.command.simple.Label;
