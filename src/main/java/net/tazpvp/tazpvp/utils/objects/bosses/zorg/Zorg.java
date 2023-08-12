@@ -1,7 +1,7 @@
 package net.tazpvp.tazpvp.utils.objects.bosses.zorg;
 
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
-import net.tazpvp.tazpvp.utils.objects.bosses.BOSSSSS;
+import net.tazpvp.tazpvp.utils.objects.bosses.CustomBoss;
 import net.tazpvp.tazpvp.utils.objects.bosses.zorg.attacks.SonicBoomAttack;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -14,11 +14,11 @@ import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import java.util.Random;
 
-public class Zorg extends BOSSSSS {
+public class Zorg extends CustomBoss {
     private final Random random = new Random();
 
     public Zorg(final Location location) {
-        super(location.getWorld().spawnEntity(location, EntityType.WITHER_SKELETON));
+        super(location.getWorld().spawnEntity(location, EntityType.WITHER_SKELETON), location);
         getBossAs().setAI(true);
         getBossAs().setAware(true);
         getBossAs().setCustomNameVisible(true);
@@ -45,7 +45,8 @@ public class Zorg extends BOSSSSS {
         return (WitherSkeleton) getBoss();
     }
 
-    public void despawn() {
-        getBossAs().remove();
+    @Override
+    protected void despawn() {
+        getBossAs().setHealth(0);
     }
 }

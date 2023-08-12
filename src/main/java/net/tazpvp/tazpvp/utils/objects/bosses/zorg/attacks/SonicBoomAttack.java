@@ -1,10 +1,8 @@
 package net.tazpvp.tazpvp.utils.objects.bosses.zorg.attacks;
 
-import lombok.With;
-import net.tazpvp.tazpvp.utils.objects.bosses.BOSSSSS;
+import net.tazpvp.tazpvp.utils.objects.bosses.CustomBoss;
 import net.tazpvp.tazpvp.utils.objects.bosses.attacks.Attack;
 import org.bukkit.Particle;
-import org.bukkit.entity.Boss;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.WitherSkeleton;
@@ -17,7 +15,7 @@ public class SonicBoomAttack implements Attack {
     private final Random random = new Random();
 
     @Override
-    public void attack(BOSSSSS boss) {
+    public void attack(CustomBoss boss) {
         WitherSkeleton skeleton = (WitherSkeleton) boss.getBoss();
         final RayTraceResult result = boss.getBoss().getWorld().rayTraceEntities(
                 skeleton.getEyeLocation().add(boss.getBoss().getLocation().getDirection()),
