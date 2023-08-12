@@ -11,7 +11,7 @@ import java.util.Random;
 
 public abstract class CustomBoss {
     @Getter
-    private final Entity boss;
+    protected Entity boss;
     @Getter
     private final Location spawnLocation;
     private final List<Attack> attacks;
@@ -32,7 +32,7 @@ public abstract class CustomBoss {
         return attacks.get(random.nextInt(attacks.size()));
     }
 
+    protected abstract void spawn();
     protected abstract void setup();
-    protected abstract Entity spawn();
     protected abstract void despawn();
 }

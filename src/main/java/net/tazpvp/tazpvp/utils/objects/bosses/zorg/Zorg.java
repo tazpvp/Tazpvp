@@ -6,23 +6,16 @@ import net.tazpvp.tazpvp.utils.objects.bosses.zorg.attacks.SonicBoomAttack;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.WitherSkeleton;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
-import java.util.Random;
-
 public class Zorg extends CustomBoss {
 
     public Zorg(final Location location) {
         super(location.getWorld().spawnEntity(location, EntityType.WITHER_SKELETON), location);
-        getBossAs().setAI(true);
-        getBossAs().setAware(true);
-        getBossAs().setCustomNameVisible(true);
-
         addAttack(new SonicBoomAttack());
 
         setup();
@@ -39,11 +32,16 @@ public class Zorg extends CustomBoss {
         equipment.setBoots(new ItemStack(Material.DIAMOND_BOOTS));
         equipment.setItemInMainHand(new ItemBuilder().item(new ItemStack(Material.DIAMOND_SWORD)).enchantment(Enchantment.KNOCKBACK, 2).build());
         getBossAs().setCustomName(ChatFunctions.gradient("#FFADED", "Zorg", true));
+
+        getBossAs().setAI(true);
+        getBossAs().setAware(true);
+        getBossAs().setCustomNameVisible(true);
     }
 
     @Override
-    protected Entity spawn() {
-        return null;
+    protected void spawn() {
+        super.boss = getSpawnLocation().getWorld().spawnEntity(getSpawnLocation(), EntityType.WITHER_SKELETON);
+        setup();
     }
 
     protected WitherSkeleton getBossAs() {
