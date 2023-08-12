@@ -32,9 +32,11 @@
 
 package net.tazpvp.tazpvp.utils.functions;
 
+import net.tazpvp.tazpvp.utils.PlaytimeUtil;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -71,7 +73,9 @@ public class PlayerFunctions {
     }
 
     public static void healPlr(Player p) {
-        if (getInt(p, DataTypes.REBIRTH) >= 1) {
+        if (PersistentData.getInt(p.getUniqueId(), DataTypes.PLAYTIMEUNIX) <= 5 * 60 * 60 * 1000) {
+            p.setHealthScale(22.0);
+        } else if (getInt(p, DataTypes.REBIRTH) >= 1) {
             p.setHealthScale(22.0);
         } else {
             p.setHealthScale(20.0);
@@ -80,7 +84,7 @@ public class PlayerFunctions {
     }
 
     public static void feedPlr(Player p) {
-        p.setFoodLevel(20); //TODO: get max food
+        p.setFoodLevel(20);
     }
 
     public static void resetHealth(Player p) {

@@ -58,6 +58,7 @@ import net.tazpvp.tazpvp.commands.moderation.ban.BanCommand;
 import net.tazpvp.tazpvp.commands.network.AdCommand;
 import net.tazpvp.tazpvp.commands.network.ApplyCommand;
 import net.tazpvp.tazpvp.commands.network.DiscordCommand;
+import net.tazpvp.tazpvp.commands.network.PlaytimeCommand;
 import net.tazpvp.tazpvp.discord.bot.BotThread;
 import net.tazpvp.tazpvp.events.Event;
 import net.tazpvp.tazpvp.listeners.*;
@@ -221,7 +222,8 @@ public final class Tazpvp extends JavaPlugin {
                 new PermissionsCommand(),
                 new TeleportWorldCommand(),
                 new EditCommand(),
-                new PremiumCommandFunction()
+                new PremiumCommandFunction(),
+                new PlaytimeCommand()
         );
     }
 
