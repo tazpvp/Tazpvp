@@ -46,6 +46,11 @@ public class BossManager {
         }
     }
 
+    public static void bossDied() {
+        spawnedBoss = null;
+        spawnBoss();
+    }
+
     public static void addBoss(final CustomBoss p_customBoss) {
         bosses.add(p_customBoss);
     }
