@@ -16,7 +16,7 @@ import java.util.Random;
 public class BossManager {
 
     @Getter
-    private static List<CustomBoss> bosses;
+    private final static List<CustomBoss> bosses = new ArrayList<>();
     @Getter
     private static CustomBoss spawnedBoss;
     @Getter
