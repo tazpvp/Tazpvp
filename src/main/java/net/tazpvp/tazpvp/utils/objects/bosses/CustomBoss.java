@@ -33,6 +33,6 @@ public abstract class CustomBoss {
     }
 
     protected abstract void setup();
-
+    protected abstract Entity spawn();
     protected abstract void despawn();
 }

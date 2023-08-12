@@ -6,6 +6,7 @@ import net.tazpvp.tazpvp.utils.objects.bosses.zorg.attacks.SonicBoomAttack;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.WitherSkeleton;
 import org.bukkit.inventory.EntityEquipment;
@@ -15,7 +16,6 @@ import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 import java.util.Random;
 
 public class Zorg extends CustomBoss {
-    private final Random random = new Random();
 
     public Zorg(final Location location) {
         super(location.getWorld().spawnEntity(location, EntityType.WITHER_SKELETON), location);
@@ -39,6 +39,11 @@ public class Zorg extends CustomBoss {
         equipment.setBoots(new ItemStack(Material.DIAMOND_BOOTS));
         equipment.setItemInMainHand(new ItemBuilder().item(new ItemStack(Material.DIAMOND_SWORD)).enchantment(Enchantment.KNOCKBACK, 2).build());
         getBossAs().setCustomName(ChatFunctions.gradient("#FFADED", "Zorg", true));
+    }
+
+    @Override
+    protected Entity spawn() {
+        return null;
     }
 
     protected WitherSkeleton getBossAs() {

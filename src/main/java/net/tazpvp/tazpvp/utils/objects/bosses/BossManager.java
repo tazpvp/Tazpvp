@@ -25,6 +25,7 @@ public class BossManager {
     public static void spawnBoss() {
         if (spawnedBoss == null) {
             spawnedBoss = bosses.get(random.nextInt(bosses.size()));
+            spawnedBoss.spawn();
         }
     }
 
