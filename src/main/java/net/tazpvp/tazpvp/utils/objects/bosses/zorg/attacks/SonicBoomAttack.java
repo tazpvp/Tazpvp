@@ -20,17 +20,17 @@ public class SonicBoomAttack implements Attack {
 
     @Override
     public void attack(CustomBoss boss) {
-        WitherSkeleton skeleton = (WitherSkeleton) boss.getBoss();
-        Location origin = skeleton.getEyeLocation();
-        Vector direction = origin.getDirection();
+        final WitherSkeleton skeleton = (WitherSkeleton) boss.getBoss();
+        final Location origin = skeleton.getEyeLocation();
+        final Vector direction = origin.getDirection();
         direction.multiply(10);
         direction.normalize();
 
-        RayTraceResult result = skeleton.getWorld().rayTraceEntities(origin, direction, 10,
+        final RayTraceResult result = skeleton.getWorld().rayTraceEntities(origin, direction, 10,
                 entity -> entity instanceof Player && !entity.getUniqueId().equals(skeleton.getUniqueId()));
 
         if (result != null && result.getHitEntity() != null) {
-            Player target = (Player) result.getHitEntity();
+            final Player target = (Player) result.getHitEntity();
 
             if (target.getGameMode() == GameMode.SURVIVAL) {
                 for (int i = 0; i < 30; i++) {
