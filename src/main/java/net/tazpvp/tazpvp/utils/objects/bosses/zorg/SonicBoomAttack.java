@@ -18,9 +18,10 @@ public class SonicBoomAttack implements Attack {
 
     @Override
     public void attack(BOSSSSS boss) {
+        WitherSkeleton skeleton = (WitherSkeleton) boss.getBoss();
         final RayTraceResult result = boss.getBoss().getWorld().rayTraceEntities(
-                ((WitherSkeleton) boss.getBoss()).getEyeLocation().add(boss.getBoss().getLocation().getDirection()),
-                ((WitherSkeleton) boss.getBoss()).getEyeLocation().getDirection(),
+                skeleton.getEyeLocation().add(boss.getBoss().getLocation().getDirection()),
+                skeleton.getEyeLocation().getDirection(),
                 10,
                 entity -> {
                     if (entity.getUniqueId().equals(boss.getBoss().getUniqueId())) {
