@@ -68,9 +68,10 @@ import net.tazpvp.tazpvp.utils.ConfigUtil;
 import net.tazpvp.tazpvp.utils.crate.CrateManager;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.leaderboard.spawnable.SpawnableLeaderboardManager;
+import net.tazpvp.tazpvp.utils.objects.bosses.zorg.Zorg;
 import net.tazpvp.tazpvp.utils.observer.Observer;
 import net.tazpvp.tazpvp.utils.passive.Alerts;
-import net.tazpvp.tazpvp.utils.objects.bosses.zorg.ZorgManager;
+import net.tazpvp.tazpvp.utils.objects.bosses.BossManager;
 import net.tazpvp.tazpvp.utils.passive.Generator;
 import net.tazpvp.tazpvp.utils.passive.Holograms;
 import org.bukkit.Bukkit;
@@ -130,7 +131,13 @@ public final class Tazpvp extends JavaPlugin {
         registerObservable();
         spawnNpcs();
         CombatTagFunctions.initCombatTag();
-        ZorgManager.respawnZorg();
+
+        BossManager.addBoss(new Zorg(new Location(Bukkit.getWorld("arena"), -20, 65, 218))); // TODO: Update location
+        BossManager.addBoss(new Zorg(new Location(Bukkit.getWorld("arena"), -19, 65, 198)));
+        BossManager.addBoss(new Zorg(new Location(Bukkit.getWorld("arena"), -3, 65, 198)));
+
+        BossManager.spawnBoss();
+        BossManager.setupRunnable(this);
 
         parkourUtil = new ConfigUtil("parkour.yml", this);
 
@@ -167,7 +174,7 @@ public final class Tazpvp extends JavaPlugin {
     public void onDisable() {
 
         despawnNpcs();
-        ZorgManager.despawnZorg();
+        BossManager.despawnBoss();
         Holograms.removeHolograms();
     }
 

@@ -1,7 +1,7 @@
 package net.tazpvp.tazpvp.utils.objects.bosses.attacks;
 
-import net.tazpvp.tazpvp.utils.objects.bosses.BOSSSSS;
+import net.tazpvp.tazpvp.utils.objects.bosses.CustomBoss;
 
 public interface Attack {
-    void attack(BOSSSSS boss);
+    void attack(CustomBoss boss);
 }

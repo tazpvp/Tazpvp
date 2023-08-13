@@ -1,31 +1,21 @@
 package net.tazpvp.tazpvp.utils.objects.bosses.zorg;
 
-import lombok.Getter;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
-import net.tazpvp.tazpvp.utils.objects.bosses.BOSSSSS;
+import net.tazpvp.tazpvp.utils.objects.bosses.CustomBoss;
+import net.tazpvp.tazpvp.utils.objects.bosses.zorg.attacks.SonicBoomAttack;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Particle;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
 import org.bukkit.entity.WitherSkeleton;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.RayTraceResult;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
-import java.util.Random;
-
-public class Zorg extends BOSSSSS {
-    private final Random random = new Random();
+public class Zorg extends CustomBoss {
 
     public Zorg(final Location location) {
-        super(location.getWorld().spawnEntity(location, EntityType.WITHER_SKELETON));
-        getBossAs().setAI(true);
-        getBossAs().setAware(true);
-        getBossAs().setCustomNameVisible(true);
-
+        super(location.getWorld().spawnEntity(location, EntityType.WITHER_SKELETON), location);
         addAttack(new SonicBoomAttack());
 
         setup();
@@ -42,13 +32,24 @@ public class Zorg extends BOSSSSS {
         equipment.setBoots(new ItemStack(Material.DIAMOND_BOOTS));
         equipment.setItemInMainHand(new ItemBuilder().item(new ItemStack(Material.DIAMOND_SWORD)).enchantment(Enchantment.KNOCKBACK, 2).build());
         getBossAs().setCustomName(ChatFunctions.gradient("#FFADED", "Zorg", true));
+
+        getBossAs().setAI(true);
+        getBossAs().setAware(true);
+        getBossAs().setCustomNameVisible(true);
+    }
+
+    @Override
+    protected void spawn() {
+        super.boss = getSpawnLocation().getWorld().spawnEntity(getSpawnLocation(), EntityType.WITHER_SKELETON);
+        setup();
     }
 
     protected WitherSkeleton getBossAs() {
         return (WitherSkeleton) getBoss();
     }
 
-    public void despawn() {
+    @Override
+    protected void despawn() {
         getBossAs().remove();
     }
 }
