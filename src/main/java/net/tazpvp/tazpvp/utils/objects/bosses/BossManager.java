@@ -1,6 +1,7 @@
 package net.tazpvp.tazpvp.utils.objects.bosses;
 
 import lombok.Getter;
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.objects.bosses.zorg.Zorg;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -49,7 +50,12 @@ public class BossManager {
 
     public static void bossDied() {
         spawnedBoss = null;
-        spawnBoss();
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                spawnBoss();
+            }
+        }.runTaskLater(Tazpvp.getInstance(), 20*30);
     }
 
     public static void addBoss(final CustomBoss p_customBoss) {

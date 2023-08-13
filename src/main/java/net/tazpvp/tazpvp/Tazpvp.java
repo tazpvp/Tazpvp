@@ -132,7 +132,9 @@ public final class Tazpvp extends JavaPlugin {
         spawnNpcs();
         CombatTagFunctions.initCombatTag();
 
-        BossManager.addBoss(new Zorg(new Location(Bukkit.getWorld("arena"), 0, 90, 92))); // TODO: Update location
+        BossManager.addBoss(new Zorg(new Location(Bukkit.getWorld("arena"), -20, 65, 218))); // TODO: Update location
+        BossManager.addBoss(new Zorg(new Location(Bukkit.getWorld("arena"), -19, 65, 198)));
+        BossManager.addBoss(new Zorg(new Location(Bukkit.getWorld("arena"), -3, 65, 198)));
 
         BossManager.spawnBoss();
         BossManager.setupRunnable(this);

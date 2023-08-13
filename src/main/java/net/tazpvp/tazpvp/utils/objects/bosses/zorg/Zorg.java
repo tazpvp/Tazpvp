@@ -50,6 +50,6 @@ public class Zorg extends CustomBoss {
 
     @Override
     protected void despawn() {
-        getBossAs().setHealth(0);
+        getBossAs().remove();
     }
 }
