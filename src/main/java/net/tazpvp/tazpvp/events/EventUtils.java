@@ -41,11 +41,10 @@ import java.util.UUID;
 public final class EventUtils {
 
     public static Event create(String name, List<UUID> playerList) {
-        if (name.equalsIgnoreCase("ffa")) {
-            return new FFA(playerList);
-        } else if (name.equalsIgnoreCase("parkour")) {
-            return new Parkour(playerList);
-        }
-        return null;
+        return switch (name.toLowerCase()){
+            case "ffa" -> new FFA(playerList);
+            case "parkour" -> new Parkour(playerList);
+            default -> null;
+        };
     }
 }

@@ -32,13 +32,20 @@
 
 package net.tazpvp.tazpvp.events.types;
 
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.events.Event;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.entity.Wolf;
+import org.bukkit.scheduler.BukkitTask;
 import world.ntdi.nrcore.NRCore;
+import world.ntdi.nrcore.utils.world.WorldUtil;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 public class FFA extends Event {
 
@@ -48,8 +55,16 @@ public class FFA extends Event {
 
     @Override
     public void begin() {
-        for (UUID uuid : getPlayerList()) {
-            Bukkit.getPlayer(uuid).teleport(NRCore.config.spawn);
-        }
+
+        World world = new WorldUtil().cloneWorld("ffa-base", getUuid() + "-ffa");
+
+        playerList.forEach(uuid -> Bukkit.getPlayer(uuid).sendMessage("You will be teleported in 10 seconds!"));
+
+        Bukkit.getScheduler().runTaskLater(Tazpvp.getInstance(), ()-> {
+            Location loc = new Location(world, 0, 4, 0);
+            for (UUID uuid : getPlayerList()) {
+                Bukkit.getPlayer(uuid).teleport(loc);
+            }
+        }, 10*20);
     }
 }

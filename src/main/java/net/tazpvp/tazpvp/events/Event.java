@@ -33,9 +33,15 @@
 package net.tazpvp.tazpvp.events;
 
 import lombok.Getter;
+import net.tazpvp.tazpvp.Tazpvp;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import world.ntdi.nrcore.NRCore;
+import world.ntdi.nrcore.utils.world.WorldUtil;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -43,9 +49,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Getter
-public abstract class Event {
+public abstract class Event implements Listener {
 
     protected List<UUID> playerList;
+
+    private final UUID uuid;
 
     private final String NAME;
 
@@ -57,27 +65,39 @@ public abstract class Event {
     public Event(@Nonnull final String NAME, @Nonnull List<UUID> playerList) {
         this.NAME = NAME;
         this.playerList = playerList;
+        this.uuid = UUID.randomUUID();
+        Tazpvp.getInstance().getServer().getPluginManager().registerEvents(this, Tazpvp.getInstance());
     }
 
-    public boolean check() {
-        if (getPlayerList().size() <= 2) {
-            UUID winner = getWinner().isPresent() ? getWinner().get() : null;
-            end(winner);
-            return true;
-        } else return false;
+    public void finalizeGame(Player player) {
+        if (getPlayerList().size() < 2) {
+            end(player);
+        }
     }
 
-    public Optional<UUID> getWinner() {
-        return playerList.stream().findFirst();
+    @EventHandler
+    public void onDeath(PlayerDeathEvent event){
+        if(playerList.contains(event.getEntity().getUniqueId())
+                && event.getEntity().getKiller() != null
+                && playerList.contains(event.getEntity().getKiller().getUniqueId())) {
+            Player alivePlayer = event.getEntity().getKiller();
+            finalizeGame(alivePlayer);
+        }
     }
 
+    //ez
     public abstract void begin();
 
-    public void end(UUID winner) {
+    public void end(Player winner) {
         if (winner != null)
-            Bukkit.broadcastMessage(Bukkit.getPlayer(winner).getDisplayName() + " won");
+            Bukkit.broadcastMessage(winner.getDisplayName() + " won");
         else
             Bukkit.broadcastMessage("Nobody won");
+        Bukkit.getServer().getScheduler().runTaskLater(Tazpvp.getInstance(), () -> {
+            playerList.forEach(playerUUID -> Bukkit.getPlayer(playerUUID).teleport(NRCore.config.spawn));
+            Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(Tazpvp.getInstance(), () -> new WorldUtil().deleteWorld(uuid + "-" + getNAME()), 2 * 20);
+        }, 5 * 20);
+        HandlerList.unregisterAll(this);
     }
 
 }
