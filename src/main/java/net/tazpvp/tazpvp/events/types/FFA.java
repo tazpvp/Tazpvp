@@ -55,11 +55,8 @@ public class FFA extends Event {
 
     @Override
     public void begin() {
-
-        Bukkit.getScheduler().runTaskLaterAsynchronously(Tazpvp.getInstance(), ()->new WorldUtil().cloneWorld("ffa-base", getUuid().toString() + "-ffa"), 0);
-        World world = Bukkit.getWorld(getUuid().toString() + "-ffa");
+        World world = new WorldUtil().cloneWorld("ffa-base", getUuid().toString() + "-ffa");
         playerList.forEach(uuid -> Bukkit.getPlayer(uuid).sendMessage("You will be teleported in 5 seconds!"));
-
         Bukkit.getScheduler().runTaskLater(Tazpvp.getInstance(), ()-> {
             Location loc = new Location(world, 8, -60, 8);
             for (UUID uuid : getPlayerList()) {

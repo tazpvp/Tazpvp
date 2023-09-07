@@ -95,7 +95,7 @@ public abstract class Event implements Listener {
             Bukkit.broadcastMessage("Nobody won");
         Bukkit.getServer().getScheduler().runTaskLater(Tazpvp.getInstance(), () -> {
             playerList.forEach(playerUUID -> Bukkit.getPlayer(playerUUID).teleport(NRCore.config.spawn));
-            Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(Tazpvp.getInstance(), () -> new WorldUtil().deleteWorld(uuid + "-" + getNAME()), 2 * 20);
+            new WorldUtil().deleteWorld(uuid + "-" + getNAME());
         }, 5 * 20);
         HandlerList.unregisterAll(this);
     }
