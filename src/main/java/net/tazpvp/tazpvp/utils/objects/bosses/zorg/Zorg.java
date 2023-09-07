@@ -40,7 +40,9 @@ public class Zorg extends CustomBoss {
 
     @Override
     protected void spawn() {
-        super.boss = getSpawnLocation().getWorld().spawnEntity(getSpawnLocation(), EntityType.WITHER_SKELETON);
+        WitherSkeleton skeleton = (WitherSkeleton) getSpawnLocation().getWorld().spawnEntity(getSpawnLocation(), EntityType.WITHER_SKELETON);
+        skeleton.setRemoveWhenFarAway(false);
+        super.boss = skeleton;
         setup();
     }
 

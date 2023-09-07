@@ -24,7 +24,7 @@ public class Move implements Listener {
         PlayerWrapper pw = PlayerWrapper.getPlayer(p);
         Location playerLocation = p.getLocation();
 
-        Location raidus = new Location(Bukkit.getWorld("arena"), 0, 100, NRCore.config.spawn.getZ() + 29);
+        Location launchpadRaidus = new Location(Bukkit.getWorld("arena"), 0, 100, NRCore.config.spawn.getZ() + 29);
         Block b = new Location(p.getWorld(), playerLocation.getX(), playerLocation.getY() - 1, playerLocation.getZ()).getBlock();
 
         if (p.getWorld().equals(Bukkit.getWorld("parkour"))) {
@@ -32,10 +32,22 @@ public class Move implements Listener {
                 ParkourUtil.getCheckpoint(p);
             }
         } else if (p.getWorld().getName().equals("arena")) {
-            if (p.getLocation().distance(raidus) < 5) {
+            if (p.getLocation().distance(launchpadRaidus) < 5) {
                 Launchpad(p);
                 pw.setTimeOfLaunch(System.currentTimeMillis());
                 return;
+            }
+            if (Tazpvp.afkRegion.contains(p.getLocation())) {
+                if (!Tazpvp.afkList.contains(p.getUniqueId())) {
+                    Tazpvp.afkList.add(p.getUniqueId());
+                    p.sendMessage(CC.GREEN + "You are now AFK");
+                }
+                return;
+            } else {
+                if (Tazpvp.afkList.contains(p.getUniqueId())) {
+                    Tazpvp.afkList.remove(p.getUniqueId());
+                    p.sendMessage(CC.RED + "You are no longer AFK");
+                }
             }
             if (pw.isRespawning()) {
                 e.setCancelled(true);

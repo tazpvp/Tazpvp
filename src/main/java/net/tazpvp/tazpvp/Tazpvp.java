@@ -77,6 +77,7 @@ import net.tazpvp.tazpvp.utils.passive.Holograms;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.utils.command.CommandCL;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 import world.ntdi.nrcore.utils.region.Cuboid;
@@ -96,6 +97,7 @@ public final class Tazpvp extends JavaPlugin {
     @Getter
     private List<NPC> npcs = new ArrayList<>();
     public static List<UUID> playerList = new ArrayList<>();
+    public static List<UUID> afkList = new ArrayList<>();
     public static List<String> events = new ArrayList<>();
     public static Event event;
     public static String prefix = "tazpvp.";
@@ -105,6 +107,8 @@ public final class Tazpvp extends JavaPlugin {
 
     @Getter
     public static Cuboid spawnRegion;
+    @Getter
+    public static Cuboid afkRegion;
 
     @Getter
     private static Database database;
@@ -132,18 +136,15 @@ public final class Tazpvp extends JavaPlugin {
         spawnNpcs();
         CombatTagFunctions.initCombatTag();
 
-        BossManager.addBoss(new Zorg(new Location(Bukkit.getWorld("arena"), -20, 65, 218))); // TODO: Update location
-        BossManager.addBoss(new Zorg(new Location(Bukkit.getWorld("arena"), -19, 65, 198)));
-        BossManager.addBoss(new Zorg(new Location(Bukkit.getWorld("arena"), -3, 65, 198)));
-
-        BossManager.spawnBoss();
-        BossManager.setupRunnable(this);
-
         parkourUtil = new ConfigUtil("parkour.yml", this);
 
         spawnRegion = new Cuboid(
                 new Location(Bukkit.getWorld("arena"), 25, 137, -31),
                 new Location(Bukkit.getWorld("arena"), -24, 93, 25)
+        );
+        afkRegion = new Cuboid(
+                new Location(Bukkit.getWorld("arena"), 16, 98, 9),
+                new Location(Bukkit.getWorld("arena"), 11, 95, 4)
         );
 
         connectDatabase(
@@ -264,6 +265,19 @@ public final class Tazpvp extends JavaPlugin {
         npcs.add(new Lorenzo());
         npcs.add(new Bub());
         npcs.add(new Caesar());
+
+        new BukkitRunnable() {
+
+            @Override
+            public void run() {
+                BossManager.addBoss(new Zorg(new Location(Bukkit.getWorld("arena"), -20, 65, 218)));
+                BossManager.addBoss(new Zorg(new Location(Bukkit.getWorld("arena"), -19, 65, 198)));
+                BossManager.addBoss(new Zorg(new Location(Bukkit.getWorld("arena"), -3, 65, 198)));
+
+                BossManager.spawnBoss();
+                BossManager.setupRunnable(Tazpvp.getInstance());
+            }
+        }.runTaskLater(this, 20*30);
     }
 
     private void despawnNpcs() {
