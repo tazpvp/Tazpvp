@@ -138,6 +138,4 @@ public class Damage implements Listener {
             DeathFunctions.death(victim);
         }
     }
-
-    // oh my fg
 }

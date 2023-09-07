@@ -49,15 +49,20 @@ public class PlayerWrapper {
     @Getter @Setter
     private boolean npcDialogue;
     @Getter @Setter
+    private boolean isAfk;
+    @Getter @Setter
     private int coffinCount;
     @Getter @Setter
     private int killCount;
     @Getter @Setter
     private long timeOfLaunch;
     @Getter @Setter
+    private long timeSinceAfk;
+    @Getter @Setter
     private List<Material> blocksPlaced;
     @Getter @Setter
     private String lastMessageSent;
+
 
     /**
      * Should only take UUID, all other values should not have to persist.

@@ -5,6 +5,7 @@ import net.tazpvp.tazpvp.npc.shops.NPC;
 import net.tazpvp.tazpvp.utils.ParkourUtil;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.functions.AfkFunctions;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.*;
@@ -32,22 +33,13 @@ public class Move implements Listener {
                 ParkourUtil.getCheckpoint(p);
             }
         } else if (p.getWorld().getName().equals("arena")) {
+
+            AfkFunctions.setAfk(p);
+
             if (p.getLocation().distance(launchpadRaidus) < 5) {
                 Launchpad(p);
                 pw.setTimeOfLaunch(System.currentTimeMillis());
                 return;
-            }
-            if (Tazpvp.afkRegion.contains(p.getLocation())) {
-                if (!Tazpvp.afkList.contains(p.getUniqueId())) {
-                    Tazpvp.afkList.add(p.getUniqueId());
-                    p.sendMessage(CC.GREEN + "You are now AFK");
-                }
-                return;
-            } else {
-                if (Tazpvp.afkList.contains(p.getUniqueId())) {
-                    Tazpvp.afkList.remove(p.getUniqueId());
-                    p.sendMessage(CC.RED + "You are no longer AFK");
-                }
             }
             if (pw.isRespawning()) {
                 e.setCancelled(true);

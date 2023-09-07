@@ -97,7 +97,6 @@ public final class Tazpvp extends JavaPlugin {
     @Getter
     private List<NPC> npcs = new ArrayList<>();
     public static List<UUID> playerList = new ArrayList<>();
-    public static List<UUID> afkList = new ArrayList<>();
     public static List<String> events = new ArrayList<>();
     public static Event event;
     public static String prefix = "tazpvp.";
