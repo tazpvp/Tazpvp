@@ -21,12 +21,15 @@ public class AfkFunctions {
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     PlayerWrapper pw = PlayerWrapper.getPlayer(p);
                     if (pw.isAfk()) {
-                        p.sendMessage(
-                                ChatFunctions.gradient("#ffc70b", "AFK REWARD: ", true) +
-                                ChatFunctions.gradient("#ffc70b", "1x Reward Keys", false)
-                        );
-                        p.getInventory().addItem(KeyFactory.getFactory().createDailyKey());
-                        p.playSound(p.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
+                        if ((System.currentTimeMillis() - pw.getTimeSinceAfk()) >= 1000 * 60 * 5) {
+                            pw.setTimeSinceAfk(System.currentTimeMillis());
+                            p.sendMessage(
+                                    ChatFunctions.gradient("#ffc70b", "AFK REWARD: ", true) +
+                                            ChatFunctions.gradient("#ffc70b", "1x Reward Keys", false)
+                            );
+                            p.getInventory().addItem(KeyFactory.getFactory().createDailyKey());
+                            p.playSound(p.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
+                        }
                     }
                 }
             }
