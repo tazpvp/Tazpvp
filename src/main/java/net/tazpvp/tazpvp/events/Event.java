@@ -34,18 +34,19 @@ package net.tazpvp.tazpvp.events;
 
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
+@Getter
 public abstract class Event {
 
-    @Getter
     protected List<UUID> playerList;
 
-    @Getter
     private final String NAME;
 
     /**
@@ -58,23 +59,25 @@ public abstract class Event {
         this.playerList = playerList;
     }
 
-    public void check() {
-        if (getPlayerList().size() < 2) {
-            UUID winner = getWinner();
-            end(Bukkit.getPlayer(winner));
-        }
+    public boolean check() {
+        if (getPlayerList().size() <= 2) {
+            UUID winner = getWinner().isPresent() ? getWinner().get() : null;
+            end(winner);
+            return true;
+        } else return false;
     }
 
-    public UUID getWinner() {
-        return playerList.get(0);
+    public Optional<UUID> getWinner() {
+        return playerList.stream().findFirst();
     }
 
     public abstract void begin();
 
-    public void end(Player winner) {
+    public void end(UUID winner) {
         if (winner != null)
-            Bukkit.broadcastMessage(winner.getName() + " won");
+            Bukkit.broadcastMessage(Bukkit.getPlayer(winner).getDisplayName() + " won");
         else
             Bukkit.broadcastMessage("Nobody won");
     }
+
 }
