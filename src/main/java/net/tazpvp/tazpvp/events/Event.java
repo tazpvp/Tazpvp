@@ -85,6 +85,7 @@ public abstract class Event implements Listener {
         }
     }
 
+    //ez
     public abstract void begin();
 
     public void end(Player winner) {
