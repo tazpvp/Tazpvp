@@ -43,7 +43,7 @@ public class EventCommand extends NRCommand {
             }
         } else if (args[0].equalsIgnoreCase("begin")) {
             if (Tazpvp.event != null) {
-                EventUtils.create(Tazpvp.event.getNAME(), Tazpvp.playerList);
+                Tazpvp.event.begin();
                 p.sendMessage("You began the " + Tazpvp.event.getNAME() + " event.");
             }
         } else if (args[0].equalsIgnoreCase("join")) {

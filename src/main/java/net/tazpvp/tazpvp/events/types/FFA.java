@@ -61,7 +61,7 @@ public class FFA extends Event {
         playerList.forEach(uuid -> Bukkit.getPlayer(uuid).sendMessage("You will be teleported in 10 seconds!"));
 
         Bukkit.getScheduler().runTaskLater(Tazpvp.getInstance(), ()-> {
-            Location loc = new Location(world, 0, 4, 0);
+            Location loc = new Location(world, 8, -60, 8);
             for (UUID uuid : getPlayerList()) {
                 Bukkit.getPlayer(uuid).teleport(loc);
             }
