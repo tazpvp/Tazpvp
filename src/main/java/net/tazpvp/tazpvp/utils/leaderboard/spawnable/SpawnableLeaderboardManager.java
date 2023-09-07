@@ -51,9 +51,9 @@ public class SpawnableLeaderboardManager {
 
     public SpawnableLeaderboardManager(Tazpvp tazpvp) {
         this.spawnableLeaderboards = new ArrayList<>();
-        this.spawnableLeaderboards.add(new SpawnableLeaderboard(DataTypes.LEVEL, "Levels", new Location(Bukkit.getWorld("arena"), -5, 101, -1.5)));
-        this.spawnableLeaderboards.add(new SpawnableLeaderboard(DataTypes.KILLS, "Kills", new Location(Bukkit.getWorld("arena"), 0.5, 101, -7)));
-        this.spawnableLeaderboards.add(new SpawnableLeaderboard(DataTypes.DEATHS, "Deaths", new Location(Bukkit.getWorld("arena"), 6, 101, -1.5)));
+        this.spawnableLeaderboards.add(new SpawnableLeaderboard(DataTypes.LEVEL, "Levels", new Location(Bukkit.getWorld("arena"), -6, 101, -1.5)));
+        this.spawnableLeaderboards.add(new SpawnableLeaderboard(DataTypes.KILLS, "Kills", new Location(Bukkit.getWorld("arena"), 0.5, 101, -8)));
+        this.spawnableLeaderboards.add(new SpawnableLeaderboard(DataTypes.DEATHS, "Deaths", new Location(Bukkit.getWorld("arena"), 7, 101, -1.5)));
 
         createScheduler(tazpvp);
     }
