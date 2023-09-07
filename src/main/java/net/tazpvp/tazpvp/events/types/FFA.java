@@ -37,6 +37,7 @@ import net.tazpvp.tazpvp.events.Event;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.bukkit.scheduler.BukkitTask;
 import world.ntdi.nrcore.NRCore;
@@ -59,7 +60,7 @@ public class FFA extends Event {
     @Override
     public void begin() {
         new WorldUtil().cloneWorld("ffa-base", getUuid().toString() + "-ffa");
-        list.forEach(uuid -> Bukkit.getPlayer(uuid).sendMessage("You will be teleported in 5 seconds!"));
+        for(UUID uuid : list) Bukkit.getPlayer(uuid).sendMessage("You will be teleported in 5 seconds!");
         Bukkit.getServer().getScheduler().runTaskLater(Tazpvp.getInstance(), ()-> {
             Location loc = new Location(Bukkit.getWorld(getUuid().toString()+"-ffa"), 8, -60, 8);
             for (UUID uuid : list) {
