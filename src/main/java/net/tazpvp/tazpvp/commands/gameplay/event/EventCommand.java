@@ -31,7 +31,7 @@ public class EventCommand extends NRCommand {
             for (String event : Tazpvp.events) {
                 if (args[1].equalsIgnoreCase(event)) {
                     if (Tazpvp.event == null) {
-                        Tazpvp.event = EventUtils.create(args[1], new ArrayList<>());
+                        Tazpvp.event = EventUtils.create(args[1], Tazpvp.playerList);
                         p.sendMessage("You created a(n) " + args[1] + " event.");
                     }
                     return true;
