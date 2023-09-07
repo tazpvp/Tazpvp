@@ -17,7 +17,7 @@ import java.util.UUID;
 
 public class EventCommand extends NRCommand {
     public EventCommand() {
-        super(new Label("events", "tazpvp.events", ""));
+        super(new Label("event", "tazpvp.events", "events"));
     }
 
     @Override
