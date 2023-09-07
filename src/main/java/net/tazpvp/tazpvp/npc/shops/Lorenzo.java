@@ -47,7 +47,7 @@ import java.util.List;
 public class Lorenzo extends NPC {
 
     public Lorenzo() {
-        super(ChatFunctions.gradient("#fc6400", "Lorenzo", true), new Location(Bukkit.getWorld("arena"), 12.5, 99, 20.5, 135, 0),
+        super(ChatFunctions.gradient("#068fff", "Lorenzo", true), new Location(Bukkit.getWorld("arena"), 12.5, 99, 20.5, 135, 0),
                 Villager.Profession.FLETCHER,
                 Villager.Type.TAIGA,
                 Sound.ITEM_GOAT_HORN_SOUND_0,

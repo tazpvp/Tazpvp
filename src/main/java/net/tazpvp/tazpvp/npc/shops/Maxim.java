@@ -47,7 +47,7 @@ import java.util.List;
 public class Maxim extends NPC {
 
     public Maxim() {
-        super(ChatFunctions.gradient("#fcc100", "Maxim", true), new Location(Bukkit.getWorld("arena"), -11.5, 99, 20.5, -135, 0),
+        super(ChatFunctions.gradient("#fc6400", "Maxim", true), new Location(Bukkit.getWorld("arena"), -11.5, 99, 20.5, -135, 0),
                 Villager.Profession.FARMER,
                 Villager.Type.SAVANNA,
                 Sound.ITEM_GOAT_HORN_SOUND_0,
