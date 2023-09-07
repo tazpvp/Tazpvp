@@ -56,15 +56,15 @@ public class FFA extends Event {
     @Override
     public void begin() {
 
-        World world = new WorldUtil().cloneWorld("ffa-base", getUuid() + "-ffa");
-
-        playerList.forEach(uuid -> Bukkit.getPlayer(uuid).sendMessage("You will be teleported in 10 seconds!"));
+        Bukkit.getScheduler().runTaskLaterAsynchronously(Tazpvp.getInstance(), ()->new WorldUtil().cloneWorld("ffa-base", getUuid().toString() + "-ffa"), 0);
+        World world = Bukkit.getWorld(getUuid().toString() + "-ffa");
+        playerList.forEach(uuid -> Bukkit.getPlayer(uuid).sendMessage("You will be teleported in 5 seconds!"));
 
         Bukkit.getScheduler().runTaskLater(Tazpvp.getInstance(), ()-> {
             Location loc = new Location(world, 0, 4, 0);
             for (UUID uuid : getPlayerList()) {
                 Bukkit.getPlayer(uuid).teleport(loc);
             }
-        }, 10*20);
+        }, 5*20);
     }
 }
