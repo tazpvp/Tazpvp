@@ -44,14 +44,13 @@ import world.ntdi.nrcore.NRCore;
 import world.ntdi.nrcore.utils.world.WorldUtil;
 
 import javax.annotation.Nonnull;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 public abstract class Event implements Listener {
+    public static HashMap<UUID, Boolean> participantList = new HashMap<>();
 
-    protected List<UUID> playerList;
+    protected HashMap<UUID, Boolean> playerList;
 
     private final UUID uuid;
 
@@ -62,7 +61,7 @@ public abstract class Event implements Listener {
      * @param NAME The name of the event
      * @param playerList List of all the players
      */
-    public Event(@Nonnull final String NAME, @Nonnull List<UUID> playerList) {
+    public Event(@Nonnull final String NAME, @Nonnull HashMap<UUID, Boolean> playerList) {
         this.NAME = NAME;
         this.playerList = playerList;
         this.uuid = UUID.randomUUID();
@@ -75,16 +74,6 @@ public abstract class Event implements Listener {
         }
     }
 
-    @EventHandler
-    public void onDeath(PlayerDeathEvent event){
-        if(playerList.contains(event.getEntity().getUniqueId())
-                && event.getEntity().getKiller() != null
-                && playerList.contains(event.getEntity().getKiller().getUniqueId())) {
-            Player alivePlayer = event.getEntity().getKiller();
-            finalizeGame(alivePlayer);
-        }
-    }
-
     //ez
     public abstract void begin();
 
@@ -94,7 +83,9 @@ public abstract class Event implements Listener {
         else
             Bukkit.broadcastMessage("Nobody won");
         Bukkit.getServer().getScheduler().runTaskLater(Tazpvp.getInstance(), () -> {
-            playerList.forEach(playerUUID -> Bukkit.getPlayer(playerUUID).teleport(NRCore.config.spawn));
+            for (UUID id : playerList.keySet()) {
+                Bukkit.getPlayer(id).teleport(NRCore.config.spawn);
+            }
             new WorldUtil().deleteWorld(uuid + "-" + getNAME());
         }, 5 * 20);
         HandlerList.unregisterAll(this);

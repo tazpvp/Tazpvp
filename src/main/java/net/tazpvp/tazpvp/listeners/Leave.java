@@ -34,6 +34,7 @@ package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
+import net.tazpvp.tazpvp.events.Event;
 import net.tazpvp.tazpvp.utils.PlaytimeUtil;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
@@ -54,7 +55,7 @@ public class Leave implements Listener {
         Player p = e.getPlayer();
         UUID id = p.getUniqueId();
 
-        Tazpvp.playerList.remove(p.getUniqueId());
+        Event.participantList.remove(p.getUniqueId());
         PlaytimeUtil.playerLeft(p);
 
         saveInv(p);

@@ -44,15 +44,16 @@ import world.ntdi.nrcore.NRCore;
 import world.ntdi.nrcore.utils.world.WorldUtil;
 
 import javax.annotation.Nonnull;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public class FFA extends Event {
 
-    private final List<UUID> list;
+    private final HashMap<UUID, Boolean> list;
 
-    public FFA(@Nonnull List<UUID> list) {
+    public FFA(@Nonnull HashMap<UUID, Boolean> list) {
         super("FFA", list);
         this.list = list;
     }
@@ -60,10 +61,10 @@ public class FFA extends Event {
     @Override
     public void begin() {
         new WorldUtil().cloneWorld("ffa-base", getUuid().toString() + "-ffa");
-        for(UUID uuid : list) Bukkit.getPlayer(uuid).sendMessage("You will be teleported in 5 seconds!");
+        for(UUID uuid : list.keySet()) Bukkit.getPlayer(uuid).sendMessage("You will be teleported in 5 seconds!");
         Bukkit.getServer().getScheduler().runTaskLater(Tazpvp.getInstance(), ()-> {
             Location loc = new Location(Bukkit.getWorld(getUuid().toString()+"-ffa"), 8, -60, 8);
-            for (UUID uuid : list) {
+            for (UUID uuid : list.keySet()) {
                 Bukkit.getPlayer(uuid).teleport(loc);
             }
         }, 5*20);

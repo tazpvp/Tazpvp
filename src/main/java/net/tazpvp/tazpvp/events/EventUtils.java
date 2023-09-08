@@ -35,12 +35,14 @@ package net.tazpvp.tazpvp.events;
 import net.tazpvp.tazpvp.events.types.FFA;
 import net.tazpvp.tazpvp.events.types.Parkour;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.WeakHashMap;
 
 public final class EventUtils {
 
-    public static Event create(String name, List<UUID> playerList) {
+    public static Event create(String name, HashMap<UUID, Boolean> playerList) {
         return switch (name.toLowerCase()){
             case "ffa" -> new FFA(playerList);
             case "parkour" -> new Parkour(playerList);

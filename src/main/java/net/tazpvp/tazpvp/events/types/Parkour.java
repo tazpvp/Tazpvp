@@ -37,18 +37,19 @@ import net.tazpvp.tazpvp.events.Event;
 import org.bukkit.Bukkit;
 
 import javax.annotation.Nonnull;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 public class Parkour extends Event {
 
-    public Parkour(@Nonnull List<UUID> list) {
+    public Parkour(@Nonnull HashMap<UUID, Boolean> list) {
         super("Parkour", list);
     }
 
     @Override
     public void begin() {
-        for (UUID uuid : getPlayerList()) {
+        for (UUID uuid : getPlayerList().keySet()) {
             Bukkit.getPlayer(uuid).teleport(Tazpvp.getParkourUtil().getLocation("spawn"));
         }
     }

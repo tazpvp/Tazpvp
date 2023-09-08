@@ -2,6 +2,7 @@ package net.tazpvp.tazpvp.commands.gameplay.event;
 
 import lombok.NonNull;
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.events.Event;
 import net.tazpvp.tazpvp.events.EventUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -31,14 +32,14 @@ public class EventCommand extends NRCommand {
             for (String event : Tazpvp.events) {
                 if (args[1].equalsIgnoreCase(event)) {
                     if (Tazpvp.event == null) {
-                        Tazpvp.event = EventUtils.create(args[1], Tazpvp.playerList);
+                        Tazpvp.event = EventUtils.create(args[1], Event.participantList);
                         p.sendMessage("You created a(n) " + args[1] + " event.");
                     }
                     return true;
                 }
             }
         } else if (args[0].equalsIgnoreCase("list")) {
-            for (UUID id : Tazpvp.event.getPlayerList()) {
+            for (UUID id : Tazpvp.event.getPlayerList().keySet()) {
                 p.sendMessage(Bukkit.getPlayer(id).getName());
             }
         } else if (args[0].equalsIgnoreCase("begin")) {
@@ -49,7 +50,7 @@ public class EventCommand extends NRCommand {
         } else if (args[0].equalsIgnoreCase("join")) {
             if (Tazpvp.event != null) {
                 Tazpvp.getObservers().forEach(observer -> observer.event(p));
-                Tazpvp.playerList.add(p.getUniqueId());
+                Event.participantList.put(p.getUniqueId(), true);
                 p.sendMessage("You joined the event: " + Tazpvp.event.getNAME());
             }
         } else {

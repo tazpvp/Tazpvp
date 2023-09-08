@@ -34,6 +34,7 @@ package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.duels.Duel;
+import net.tazpvp.tazpvp.events.Event;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
@@ -46,6 +47,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class Damage implements Listener {
@@ -82,6 +85,23 @@ public class Damage implements Listener {
                 duel.end();
             }
             return;
+        }
+
+        for (UUID id : Event.participantList.keySet()) {
+            if ((victim.getHealth() - finalDamage) <= 0) {
+                if (id.equals(victim.getUniqueId())) {
+                    event.setCancelled(true);
+                    Event.participantList.put(id, false);
+
+                    List<UUID> activePlayerCount = new ArrayList<>();
+                    for (UUID uid : Event.participantList.keySet()) {
+                        if (Event.participantList.get(uid) == true) activePlayerCount.add(uid);
+                    }
+                    if (activePlayerCount.size() <= 1) {
+                        Tazpvp.event.finalizeGame(Bukkit.getPlayer(activePlayerCount.get(0)));
+                    }
+                }
+            }
         }
 
         if (event.getCause() == EntityDamageEvent.DamageCause.FIRE) {
