@@ -29,10 +29,15 @@ public class EventCommand extends NRCommand {
 
         if (args[0].equalsIgnoreCase("create")) {
             if (!PlayerUtils.checkPerms(p, Tazpvp.prefix + "event.host")) return true;
+            if (args.length < 2) {
+                sendIncorrectUsage(p);
+                return true;
+            }
             for (String event : Tazpvp.events) {
                 if (args[1].equalsIgnoreCase(event)) {
                     if (Tazpvp.event == null) {
                         Tazpvp.event = EventUtils.create(args[1], Event.participantList);
+                        Event.participantList.put(p.getUniqueId(), true);
                         p.sendMessage("You created a(n) " + args[1] + " event.");
                     }
                     return true;
@@ -49,6 +54,9 @@ public class EventCommand extends NRCommand {
             }
         } else if (args[0].equalsIgnoreCase("join")) {
             if (Tazpvp.event != null) {
+                if (Event.participantList.containsKey(p.getUniqueId())) {
+                    p.sendMessage("You already joined the event.");
+                }
                 Tazpvp.getObservers().forEach(observer -> observer.event(p));
                 Event.participantList.put(p.getUniqueId(), true);
                 p.sendMessage("You joined the event: " + Tazpvp.event.getNAME());
