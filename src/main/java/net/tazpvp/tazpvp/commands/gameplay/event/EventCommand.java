@@ -56,6 +56,7 @@ public class EventCommand extends NRCommand {
             if (Tazpvp.event != null) {
                 if (Event.participantList.containsKey(p.getUniqueId())) {
                     p.sendMessage("You already joined the event.");
+                    return true;
                 }
                 Tazpvp.getObservers().forEach(observer -> observer.event(p));
                 Event.participantList.put(p.getUniqueId(), true);

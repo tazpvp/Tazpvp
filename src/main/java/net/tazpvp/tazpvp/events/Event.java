@@ -48,6 +48,7 @@ import java.util.*;
 
 @Getter
 public abstract class Event implements Listener {
+    @Getter
     public static HashMap<UUID, Boolean> participantList = new HashMap<>();
 
     protected HashMap<UUID, Boolean> playerList;
@@ -56,11 +57,6 @@ public abstract class Event implements Listener {
 
     private final String NAME;
 
-    /**
-     * Initalize an Event
-     * @param NAME The name of the event
-     * @param playerList List of all the players
-     */
     public Event(@Nonnull final String NAME, @Nonnull HashMap<UUID, Boolean> playerList) {
         this.NAME = NAME;
         this.playerList = playerList;
@@ -69,12 +65,11 @@ public abstract class Event implements Listener {
     }
 
     public void finalizeGame(Player player) {
-        if (getPlayerList().size() < 2) {
+        if (getPlayerList().values().stream().anyMatch(value -> !value)) {
             end(player);
         }
     }
 
-    //ez
     public abstract void begin();
 
     public void end(Player winner) {
@@ -89,6 +84,7 @@ public abstract class Event implements Listener {
             new WorldUtil().deleteWorld(uuid + "-" + getNAME());
         }, 5 * 20);
         HandlerList.unregisterAll(this);
+        participantList.clear();
+        Tazpvp.event = null;
     }
-
 }
