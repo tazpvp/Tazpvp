@@ -32,6 +32,7 @@
 
 package net.tazpvp.tazpvp.utils.functions;
 
+import net.tazpvp.tazpvp.utils.PlaytimeUtil;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
@@ -71,7 +72,14 @@ public class PlayerFunctions {
     }
 
     public static void healPlr(Player p) {
-        if (PersistentData.getInt(p.getUniqueId(), DataTypes.PLAYTIMEUNIX) <= 5 * 60 * 60 * 1000) {
+
+        int playtimeUnix = PersistentData.getInt(p.getUniqueId(), DataTypes.PLAYTIMEUNIX);
+        long playtimeSeconds = playtimeUnix / 1000;
+        String formattedPlaytime = PlaytimeUtil.secondsToDDHHMMSS(playtimeSeconds);
+        Bukkit.broadcastMessage(p.getName() + " " + formattedPlaytime);
+
+        if (PersistentData.getInt(p.getUniqueId(), DataTypes.PLAYTIMEUNIX) >= 5 * 60 * 60 * 1000) {
+            p.sendMessage("new player");
             p.setHealthScale(22.0);
         } else if (getInt(p, DataTypes.REBIRTH) >= 1) {
             p.setHealthScale(22.0);
