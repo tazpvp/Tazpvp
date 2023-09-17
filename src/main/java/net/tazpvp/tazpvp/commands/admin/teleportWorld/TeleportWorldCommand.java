@@ -4,9 +4,13 @@ import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TeleportWorldCommand extends NRCommand {
     public TeleportWorldCommand() {
@@ -30,5 +34,41 @@ public class TeleportWorldCommand extends NRCommand {
             }
             return true;
         });
+    }
+
+    @Override
+    public boolean execute(@NonNull CommandSender sender, @NotNull @NonNull String[] args) {
+        if (!(sender instanceof Player p)) {
+            sendNoPermission(sender);
+            return true;
+        }
+
+        if (args.length < 1) {
+            sendIncorrectUsage(sender, "/teleportworld <world>");
+            return true;
+        }
+
+        final World world = Bukkit.getWorld(args[0]);
+        if (world != null) {
+            p.teleport(new Location(world, 0, 100, 0));
+            return true;
+        } else {
+            p.sendMessage(CC.RED + "That is not a valid world.");
+        }
+
+        return false;
+    }
+
+    @Override
+    public List<String> complete(CommandSender sender, String[] args) {
+        if (args.length == 1) {
+            List<String> worlds = new ArrayList<>();
+            for (World world : Bukkit.getWorlds()) {
+                worlds.add(world.getName());
+            }
+            return worlds;
+        } else {
+            return List.of();
+        }
     }
 }
