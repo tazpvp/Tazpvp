@@ -1,0 +1,97 @@
+package net.tazpvp.tazpvp.utils.objects.bosses.zorg.attacks;
+
+import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.objects.bosses.CustomBoss;
+import net.tazpvp.tazpvp.utils.objects.bosses.attacks.Attack;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Zombie;
+import org.bukkit.inventory.EntityEquipment;
+import org.bukkit.inventory.ItemStack;
+import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
+
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+public class SummonUndeadAttack implements Attack {
+    private final Random random = new Random();
+    private final int MAX_DISTANCE = 3;
+    @Override
+    public void attack(final CustomBoss boss) {
+        for (int i = 0; i < 3; i++) {
+            final Location spawnLocWithinRadius;
+            try {
+                spawnLocWithinRadius = randomLocationWithinRadius(boss.getBoss().getLocation()).get();
+            } catch (InterruptedException | ExecutionException e) {
+                throw new RuntimeException(e);
+            }
+
+            if (spawnLocWithinRadius != null) {
+                spawnUndead(spawnLocWithinRadius);
+            }
+        }
+    }
+
+    private void spawnUndead(final Location spawnLocation) {
+        final Zombie zombie = (Zombie) spawnLocation.getWorld().spawnEntity(spawnLocation, EntityType.ZOMBIE);
+
+        zombie.setCustomName(CC.BLUE + "Undead Slave");
+        applyRandomItem(zombie.getEquipment());
+    }
+
+    private void applyRandomItem(final EntityEquipment equipment) {
+        final List<Material> armors = List.of(Material.LEATHER_CHESTPLATE, Material.LEATHER_HELMET, Material.LEATHER_LEGGINGS, Material.LEATHER_BOOTS);
+
+        final Material randomMaterial = armors.get(random.nextInt(armors.size() - 1));
+        final ItemStack item = ItemBuilder.of(randomMaterial).enchantment(Enchantment.VANISHING_CURSE, 1).build();
+
+        if (randomMaterial.name().endsWith("CHESTPLATE")) {
+            equipment.setChestplate(item);
+        } else if (randomMaterial.name().endsWith("HELMET")) {
+            equipment.setHelmet(item);
+        } else if (randomMaterial.name().endsWith("LEGGINGS")) {
+            equipment.setLeggings(item);
+        } else if (randomMaterial.name().endsWith("BOOTS")) {
+            equipment.setBoots(item);
+        }
+    }
+
+    private Future<Location> randomLocationWithinRadius(final Location targetLocation) {
+        final CompletableFuture<Location> completableFuture = new CompletableFuture<>();
+
+        Executors.newCachedThreadPool().submit(() -> {
+            final int radius = random.nextInt(MAX_DISTANCE);
+            int x = random.nextInt(radius);
+            int z = (int) Math.sqrt(Math.pow(radius, 2) - Math.pow(x, 2));
+
+            if (random.nextBoolean()) {
+                x *= -1;
+            }
+            if (random.nextBoolean()) {
+                z *= -1;
+            }
+
+            final int newX = targetLocation.getBlockX() + x;
+            final int newZ = targetLocation.getBlockZ() + z;
+            final Location spawnLocation = new Location(targetLocation.getWorld(), newX, targetLocation.getY(), newZ);
+
+            if (!spawnLocation.getBlock().getType().isAir()) {
+                try {
+                    completableFuture.complete(randomLocationWithinRadius(targetLocation).get());
+                } catch (InterruptedException | ExecutionException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            completableFuture.complete(spawnLocation);
+        });
+
+        return completableFuture;
+    }
+}

@@ -3,6 +3,7 @@ package net.tazpvp.tazpvp.utils.objects.bosses.zorg;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.objects.bosses.CustomBoss;
 import net.tazpvp.tazpvp.utils.objects.bosses.zorg.attacks.SonicBoomAttack;
+import net.tazpvp.tazpvp.utils.objects.bosses.zorg.attacks.SummonUndeadAttack;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -17,6 +18,7 @@ public class Zorg extends CustomBoss {
     public Zorg(final Location location) {
         super(location.getWorld().spawnEntity(location, EntityType.WITHER_SKELETON), location);
         addAttack(new SonicBoomAttack());
+        addAttack(new SummonUndeadAttack());
 
         setup();
     }
