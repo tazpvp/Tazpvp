@@ -55,7 +55,10 @@ public class Leave implements Listener {
         Player p = e.getPlayer();
         UUID id = p.getUniqueId();
 
-        Event.currentEvent.removeParticipant(p.getUniqueId());
+        if (Event.currentEvent != null) {
+            Event.currentEvent.removeParticipant(p.getUniqueId());
+        }
+
         PlaytimeUtil.playerLeft(p);
 
         saveInv(p);
