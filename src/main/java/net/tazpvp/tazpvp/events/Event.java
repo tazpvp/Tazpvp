@@ -40,6 +40,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.NRCore;
 import world.ntdi.nrcore.utils.world.WorldUtil;
 
@@ -64,30 +65,36 @@ public abstract class Event implements Listener {
         Tazpvp.getInstance().getServer().getPluginManager().registerEvents(this, Tazpvp.getInstance());
     }
 
-    public void finalizeGame(Player player) {
-        if (aliveList.contains(player)) {
-            end(player);
-        } else {
-            end(null);
-        }
-    }
-
     public abstract void begin();
 
-    public void end(@Nullable Player winner) {
-        if (winner != null)
-            Bukkit.broadcastMessage(winner.getDisplayName() + " won");
-        else
-            Bukkit.broadcastMessage("Nobody won");
-        Bukkit.getServer().getScheduler().runTaskLater(Tazpvp.getInstance(), () -> {
-            for (UUID id : participantList) {
-                Bukkit.getPlayer(id).teleport(NRCore.config.spawn);
+    public void endGame(@Nullable Player winner) {
+        if (winner == null) Bukkit.broadcastMessage("Nobody won");
+        else Bukkit.broadcastMessage(winner.getDisplayName() + " won");
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (UUID id : participantList) {
+                    Bukkit.getPlayer(id).teleport(NRCore.config.spawn);
+                }
+
             }
-            new WorldUtil().deleteWorld(uuid + "-" + getNAME());
-        }, 5 * 20);
-        HandlerList.unregisterAll(this);
+        }.runTaskLater(Tazpvp.getInstance(), 20*5);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (UUID id : participantList) {
+                    new WorldUtil().deleteWorld(uuid + "-" + getNAME());
+                }
+
+            }
+        }.runTaskLater(Tazpvp.getInstance(), 20*10);
+
         participantList.clear();
         aliveList.clear();
+
+        HandlerList.unregisterAll(this);
         Tazpvp.event = null;
     }
 }

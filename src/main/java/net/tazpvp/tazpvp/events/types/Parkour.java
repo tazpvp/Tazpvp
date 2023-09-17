@@ -43,13 +43,13 @@ import java.util.UUID;
 
 public class Parkour extends Event {
 
-    public Parkour(@Nonnull List<UUID> list) {
-        super("Parkour", list);
+    public Parkour() {
+        super("Parkour");
     }
 
     @Override
     public void begin() {
-        for (UUID uuid : getPlayerList().keySet()) {
+        for (UUID uuid : Event.participantList) {
             Bukkit.getPlayer(uuid).teleport(Tazpvp.getParkourUtil().getLocation("spawn"));
         }
     }

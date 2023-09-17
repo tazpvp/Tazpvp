@@ -42,7 +42,7 @@ public class EventCommand extends NRCommand {
             for (String event : Tazpvp.events) {
                 if (args[1].equalsIgnoreCase(event)) {
                     if (Tazpvp.event == null) {
-                        Tazpvp.event = EventUtils.create(args[1], Event.participantList);
+                        Tazpvp.event = EventUtils.create(args[1]);
                         Event.participantList.add(p.getUniqueId());
 
                         Bukkit.broadcastMessage("The " + args[1] + "event has begun.");
@@ -64,6 +64,8 @@ public class EventCommand extends NRCommand {
                     Event.aliveList.add(id);
                 }
                 p.sendMessage("You began the " + Tazpvp.event.getNAME() + " event.");
+            } else {
+                p.sendMessage("There is no active event. Create one with /event create");
             }
         } else if (args[0].equalsIgnoreCase("join")) {
             if (Tazpvp.event != null) {
@@ -71,13 +73,13 @@ public class EventCommand extends NRCommand {
                     p.sendMessage("You already joined the event.");
                     return true;
                 }
-                Tazpvp.getObservers().forEach(observer -> observer.event(p));
                 Event.participantList.add(p.getUniqueId());
                 p.sendMessage("You joined the event: " + Tazpvp.event.getNAME());
 
                 for (UUID plr : Event.participantList) {
                     Bukkit.getPlayer(plr).sendMessage(p.getName() + " has joined the event." + "(" + Event.participantList.size() + ")");
                 }
+                Tazpvp.getObservers().forEach(observer -> observer.event(p));
             }
         } else {
             String[] commands = {

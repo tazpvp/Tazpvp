@@ -51,20 +51,17 @@ import java.util.concurrent.CompletableFuture;
 
 public class FFA extends Event {
 
-    private final List<UUID> list;
-
-    public FFA(@Nonnull List<UUID> list) {
-        super("FFA", list);
-        this.list = list;
+    public FFA() {
+        super("FFA");
     }
 
     @Override
     public void begin() {
         new WorldUtil().cloneWorld("ffa-base", getUuid().toString() + "-ffa");
-        for(UUID uuid : list) Bukkit.getPlayer(uuid).sendMessage("You will be teleported in 5 seconds!");
+        for(UUID uuid : Event.participantList) Bukkit.getPlayer(uuid).sendMessage("You will be teleported in 5 seconds!");
         Bukkit.getServer().getScheduler().runTaskLater(Tazpvp.getInstance(), ()-> {
             Location loc = new Location(Bukkit.getWorld(getUuid().toString()+"-ffa"), 8, -60, 8);
-            for (UUID uuid : list) {
+            for (UUID uuid : Event.participantList) {
                 Bukkit.getPlayer(uuid).teleport(loc);
             }
         }, 5*20);
