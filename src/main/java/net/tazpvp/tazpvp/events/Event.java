@@ -128,4 +128,8 @@ public abstract class Event implements Listener {
     public void addParticipant(final UUID uuid) {
         this.participantList.add(uuid);
     }
+
+    public void removeParticipant(final UUID uuid) {
+        this.participantList.remove(uuid);
+    }
 }

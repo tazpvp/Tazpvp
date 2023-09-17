@@ -58,10 +58,12 @@ public class FFA extends Event {
     @Override
     public void begin() {
         new WorldUtil().cloneWorld("ffa-base", getUuid().toString() + "-ffa");
-        for(UUID uuid : Event.participantList) Bukkit.getPlayer(uuid).sendMessage("You will be teleported in 5 seconds!");
+        for(UUID uuid : Event.currentEvent.getParticipantList()) {
+            Bukkit.getPlayer(uuid).sendMessage("You will be teleported in 5 seconds!");
+        }
         Bukkit.getServer().getScheduler().runTaskLater(Tazpvp.getInstance(), ()-> {
             Location loc = new Location(Bukkit.getWorld(getUuid().toString()+"-ffa"), 8, -60, 8);
-            for (UUID uuid : Event.participantList) {
+            for (UUID uuid : Event.currentEvent.getParticipantList()) {
                 Bukkit.getPlayer(uuid).teleport(loc);
             }
         }, 5*20);

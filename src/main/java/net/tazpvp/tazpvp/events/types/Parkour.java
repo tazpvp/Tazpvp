@@ -49,7 +49,7 @@ public class Parkour extends Event {
 
     @Override
     public void begin() {
-        for (UUID uuid : Event.participantList) {
+        for (UUID uuid : Event.currentEvent.getParticipantList()) {
             Bukkit.getPlayer(uuid).teleport(Tazpvp.getParkourUtil().getLocation("spawn"));
         }
     }
