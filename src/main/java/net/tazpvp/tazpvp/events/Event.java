@@ -33,13 +33,12 @@
 package net.tazpvp.tazpvp.events;
 
 import lombok.Getter;
+import lombok.Setter;
 import net.tazpvp.tazpvp.Tazpvp;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.NRCore;
 import world.ntdi.nrcore.utils.world.WorldUtil;
@@ -52,11 +51,14 @@ import java.util.*;
 public abstract class Event implements Listener {
 
     public static List<String> eventTypes = new ArrayList<>();
+    @Getter
+    @Setter
+    public static Event currentEvent;
 
     @Getter
-    public static List<UUID> participantList = new ArrayList<>();
+    private List<UUID> participantList = new ArrayList<>();
     @Getter
-    public static List<UUID> aliveList = new ArrayList<>();
+    private List<UUID> aliveList = new ArrayList<>();
 
     private final UUID uuid;
 
@@ -97,6 +99,33 @@ public abstract class Event implements Listener {
         participantList.clear();
         aliveList.clear();
         HandlerList.unregisterAll(this);
-        Tazpvp.event = null;
+        Event.currentEvent = null;
+    }
+
+    public void checkIfGameOver() {
+        if (getAliveList().size() <= 1) {
+            final Player winner = Bukkit.getPlayer(getAliveList().get(0));
+
+            System.out.println(getAliveList());
+            System.out.println(winner);
+
+            if (winner != null && getAliveList().contains(winner.getUniqueId())) {
+                endGame(winner);
+            } else {
+                endGame(null);
+            }
+        }
+    }
+
+    public void addAliveList(final UUID uuid) {
+        this.aliveList.add(uuid);
+    }
+
+    public void removeAliveList(final UUID uuid) {
+        this.aliveList.remove(uuid);
+    }
+
+    public void addParticipant(final UUID uuid) {
+        this.participantList.add(uuid);
     }
 }

@@ -95,20 +95,12 @@ public class Damage implements Listener {
         UUID victimID = victim.getUniqueId();
 
         //CHECK: Is the player in an event?
-        if (Event.participantList.contains(victimID)) {
+        if (Event.currentEvent.getParticipantList().contains(victimID)) {
             if ((victim.getHealth() - finalDamage) <= 0) {
                 event.setCancelled(true);
-                Event.aliveList.remove(victimID);
+                Event.currentEvent.removeAliveList(victimID);
 
-                if (Event.aliveList.size() <= 1) {
-                    final Player winner = Bukkit.getPlayer(Event.aliveList.get(0));
-
-                    if (winner != null && Event.aliveList.contains(winner.getUniqueId())) {
-                        Tazpvp.event.endGame(winner);
-                    } else {
-                        Tazpvp.event.endGame(null);
-                    }
-                }
+                Event.currentEvent.checkIfGameOver();
                 return;
             }
         }
