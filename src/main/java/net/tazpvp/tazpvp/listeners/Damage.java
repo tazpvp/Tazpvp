@@ -98,7 +98,6 @@ public class Damage implements Listener {
                         if (Event.participantList.get(uid) == true) activePlayerCount.add(uid);
                     }
                     if (activePlayerCount.size() <= 1) {
-                        Bukkit.broadcastMessage("hh winner " + Bukkit.getPlayer(activePlayerCount.get(0)).getName());
                         Tazpvp.event.finalizeGame(Bukkit.getPlayer(activePlayerCount.get(0)));
                     }
                     return;
