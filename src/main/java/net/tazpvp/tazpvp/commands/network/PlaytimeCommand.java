@@ -32,8 +32,7 @@ public class PlaytimeCommand extends NRCommand {
         else
             target = p;
 
-        int playtimeUnix = PersistentData.getInt(target.getUniqueId(), DataTypes.PLAYTIMEUNIX);
-        long playtimeSeconds = playtimeUnix / 1000;
+        long playtimeSeconds = PlaytimeUtil.getPlayTime(target) / 1000;
         String formattedPlaytime = PlaytimeUtil.secondsToDDHHMMSS(playtimeSeconds);
 
         p.sendMessage(CC.GOLD + "" + CC.BOLD + target.getName() + "'s Playtime: " + CC.YELLOW + formattedPlaytime);
