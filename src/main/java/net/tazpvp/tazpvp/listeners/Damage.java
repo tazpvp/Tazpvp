@@ -35,10 +35,12 @@ package net.tazpvp.tazpvp.listeners;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.events.Event;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
@@ -98,8 +100,9 @@ public class Damage implements Listener {
         if (Event.currentEvent != null && Event.currentEvent.getParticipantList().contains(victimID)) {
             if ((victim.getHealth() - finalDamage) <= 0) {
                 event.setCancelled(true);
+                victim.setGameMode(GameMode.SPECTATOR);
+                victim.sendTitle(CC.RED + "" + CC.BOLD + "YOU DIED", CC.RED + "" + CC.BOLD + "DISQUALIFIED", 1, 1, 1);
                 Event.currentEvent.removeAliveList(victimID);
-
                 Event.currentEvent.checkIfGameOver();
                 return;
             }

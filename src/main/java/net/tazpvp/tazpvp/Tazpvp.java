@@ -266,12 +266,11 @@ public final class Tazpvp extends JavaPlugin {
         npcs.add(new Caesar());
 
         new BukkitRunnable() {
-
             @Override
             public void run() {
                 BossManager.addBoss(new Zorg(new Location(Bukkit.getWorld("arena"), -20, 65, 218)));
                 BossManager.addBoss(new Zorg(new Location(Bukkit.getWorld("arena"), -19, 65, 198)));
-                BossManager.addBoss(new Zorg(new Location(Bukkit.getWorld("arena"), -3, 65, 198)));
+                BossManager.addBoss(new Zorg(new Location(Bukkit.getWorld("arena"), -1, 65, 212)));
 
                 BossManager.spawnBoss();
                 BossManager.setupRunnable(Tazpvp.getInstance());

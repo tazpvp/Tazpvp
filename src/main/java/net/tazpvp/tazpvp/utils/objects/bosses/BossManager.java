@@ -55,7 +55,7 @@ public class BossManager {
             public void run() {
                 spawnBoss();
             }
-        }.runTaskLater(Tazpvp.getInstance(), 20*30);
+        }.runTaskLater(Tazpvp.getInstance(), 20*20);
     }
 
     public static void addBoss(final CustomBoss p_customBoss) {

@@ -35,6 +35,7 @@ package net.tazpvp.tazpvp.events;
 import lombok.Getter;
 import lombok.Setter;
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
@@ -76,7 +77,7 @@ public abstract class Event implements Listener {
         if (winner == null) {
             Bukkit.broadcastMessage("Nobody won");
         } else {
-            Bukkit.broadcastMessage(winner.getDisplayName() + " won");
+            Bukkit.broadcastMessage(CC.YELLOW + "" + CC.BOLD + winner.getDisplayName() + " won");
         }
 
         final List<UUID> participantListCopy = new ArrayList<>(getParticipantList());
