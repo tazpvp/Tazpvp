@@ -57,14 +57,14 @@ public class MuteCommand extends NRCommand {
             return true;
         }
 
-        if (args.length < 1) {
+        if (args.length < 2) {
             sendIncorrectUsage(sender);
             return false;
         }
 
         Player target = Bukkit.getPlayer(args[0]);
 
-        BanFunctions.ban(target, args[1], ChatUtils.builder(args, 2));
+        BanFunctions.mute(target, args[1], ChatUtils.builder(args, 2));
 
         target.sendMessage("You've been muted for " + ChatUtils.builder(args, 2));
         return true;
