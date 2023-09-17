@@ -35,7 +35,9 @@ public class BossManager {
             @Override
             public void run() {
                 if (spawnedBoss != null) {
-                    spawnedBoss.getRandomAttack().attack(spawnedBoss);
+                    if (spawnedBoss.getBoss().getNearbyEntities(10, 10, 10).size() > 0) {
+                        spawnedBoss.getRandomAttack().attack(spawnedBoss);
+                    }
                 }
             }
         }.runTaskTimer(p_javaPlugin, 5 * 20, 5 * 20);
