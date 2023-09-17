@@ -79,10 +79,12 @@ public abstract class Event implements Listener {
             Bukkit.broadcastMessage(winner.getDisplayName() + " won");
         }
 
+        final List<UUID> participantListCopy = new ArrayList<>(getParticipantList());
+
         new BukkitRunnable() {
             @Override
             public void run() {
-                for (UUID id : participantList) {
+                for (final UUID id : participantListCopy) {
                     Bukkit.broadcastMessage(Bukkit.getPlayer(id).getName());
                     Bukkit.getPlayer(id).teleport(NRCore.config.spawn);
                 }
