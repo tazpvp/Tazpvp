@@ -57,7 +57,7 @@ public class SummonUndeadAttack implements Attack {
 
     private Location randomLocationWithinRadius(final Location targetLocation) {
         final int radius = random.nextInt(MAX_DISTANCE);
-        int x = random.nextInt(radius);
+        int x = random.nextInt(Math.abs(radius));
         int z = (int) Math.sqrt(Math.pow(radius, 2) - Math.pow(x, 2));
 
         if (random.nextBoolean()) {
