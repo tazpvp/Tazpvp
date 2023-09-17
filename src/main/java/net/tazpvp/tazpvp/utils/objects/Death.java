@@ -40,6 +40,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.guild.GuildUtils;
 import net.tazpvp.tazpvp.utils.data.*;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerInventoryStorage;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.*;
@@ -52,6 +53,7 @@ import world.ntdi.nrcore.utils.item.builders.SkullBuilder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.LinkedList;
 import java.util.Random;
 import java.util.UUID;
 
@@ -130,7 +132,21 @@ public class Death {
     }
 
     public void respawn() {
-        EulerAngleSpectating eulerAngleSpectating = new EulerAngleSpectating(location);
+        EulerAngleSpectating eulerAngleSpectating = null;
+        Location camLoc = location;
+
+        if (killer == null) {
+            if (CombatTagFunctions.getLastAttacker(victim) != null) {
+                Player assistKiller = Bukkit.getPlayer(CombatTagFunctions.getLastAttacker(victim));
+                if (assistKiller != null) {
+                    camLoc = assistKiller.getLocation();
+                }
+            }
+        } else {
+            camLoc = pKiller.getLocation();
+        }
+
+        eulerAngleSpectating = new EulerAngleSpectating(camLoc);
         pVictim.teleport(eulerAngleSpectating.getResult());
         eulerAngleSpectating.faceLocation(pVictim);
         pVictim.setGameMode(GameMode.SPECTATOR);
@@ -177,7 +193,7 @@ public class Death {
                 final int AssistXP = 5;
                 final int AssistCoins = 5;
 
-                assister.sendMessage(CC.DARK_GRAY + "Assist kill: " + CC.GRAY + pVictim.getName() + ": " + CC.DARK_AQUA +  "Experience: " + CC.AQUA +  AssistXP + CC.GOLD + " Coins: " + CC.YELLOW +  AssistCoins);
+                assister.sendMessage(CC.DARK_GRAY + "Assist kill: " + CC.GRAY + pVictim.getName() + ": " + CC.DARK_AQUA +  "Exp: " + CC.AQUA +  AssistXP + CC.GOLD + " Coins: " + CC.YELLOW +  AssistCoins);
                 PersistentData.add(assister, DataTypes.COINS, AssistCoins);
                 PersistentData.add(assister, DataTypes.XP, AssistXP);
             }

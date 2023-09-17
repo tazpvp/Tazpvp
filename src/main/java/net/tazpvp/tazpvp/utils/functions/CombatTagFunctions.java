@@ -59,6 +59,7 @@ public class CombatTagFunctions {
     }
 
     public static UUID getLastAttacker(UUID ID) {
+        if (getTag(ID).getAttackers().size() < 1) return null;
         return getTag(ID).getAttackers().peekLast();
     }
 
