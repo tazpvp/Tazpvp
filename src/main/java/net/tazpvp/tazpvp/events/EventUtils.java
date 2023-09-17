@@ -42,7 +42,7 @@ import java.util.WeakHashMap;
 
 public final class EventUtils {
 
-    public static Event create(String name, HashMap<UUID, Boolean> playerList) {
+    public static Event create(String name, List<UUID> playerList) {
         return switch (name.toLowerCase()){
             case "ffa" -> new FFA(playerList);
             case "parkour" -> new Parkour(playerList);

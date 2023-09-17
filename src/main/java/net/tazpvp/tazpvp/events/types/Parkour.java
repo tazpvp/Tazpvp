@@ -43,7 +43,7 @@ import java.util.UUID;
 
 public class Parkour extends Event {
 
-    public Parkour(@Nonnull HashMap<UUID, Boolean> list) {
+    public Parkour(@Nonnull List<UUID> list) {
         super("Parkour", list);
     }
 

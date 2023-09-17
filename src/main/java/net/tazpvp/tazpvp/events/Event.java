@@ -44,47 +44,50 @@ import world.ntdi.nrcore.NRCore;
 import world.ntdi.nrcore.utils.world.WorldUtil;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.*;
 
 @Getter
 public abstract class Event implements Listener {
     @Getter
-    public static HashMap<UUID, Boolean> participantList = new HashMap<>();
-
-    protected HashMap<UUID, Boolean> playerList;
+    public static List<UUID> participantList = new ArrayList<>();
+    @Getter
+    public static List<UUID> aliveList = new ArrayList<>();
 
     private final UUID uuid;
 
     private final String NAME;
 
-    public Event(@Nonnull final String NAME, @Nonnull HashMap<UUID, Boolean> playerList) {
+    public Event(@Nonnull final String NAME) {
         this.NAME = NAME;
-        this.playerList = playerList;
         this.uuid = UUID.randomUUID();
         Tazpvp.getInstance().getServer().getPluginManager().registerEvents(this, Tazpvp.getInstance());
     }
 
     public void finalizeGame(Player player) {
-        if (getPlayerList().values().stream().anyMatch(value -> !value)) {
+        if (aliveList.contains(player)) {
             end(player);
+        } else {
+            end(null);
         }
     }
 
     public abstract void begin();
 
-    public void end(Player winner) {
+    public void end(@Nullable Player winner) {
         if (winner != null)
             Bukkit.broadcastMessage(winner.getDisplayName() + " won");
         else
             Bukkit.broadcastMessage("Nobody won");
         Bukkit.getServer().getScheduler().runTaskLater(Tazpvp.getInstance(), () -> {
-            for (UUID id : playerList.keySet()) {
+            for (UUID id : participantList) {
                 Bukkit.getPlayer(id).teleport(NRCore.config.spawn);
             }
             new WorldUtil().deleteWorld(uuid + "-" + getNAME());
         }, 5 * 20);
         HandlerList.unregisterAll(this);
         participantList.clear();
+        aliveList.clear();
         Tazpvp.event = null;
     }
 }

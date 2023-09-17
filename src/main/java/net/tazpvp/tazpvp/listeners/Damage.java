@@ -87,18 +87,14 @@ public class Damage implements Listener {
             return;
         }
 
-        for (UUID id : Event.participantList.keySet()) {
+        for (UUID id : Event.participantList) {
             if ((victim.getHealth() - finalDamage) <= 0) {
                 if (id.equals(victim.getUniqueId())) {
                     event.setCancelled(true);
-                    Event.participantList.put(id, false);
+                    Event.aliveList.remove(id);
 
-                    List<UUID> activePlayerCount = new ArrayList<>();
-                    for (UUID uid : Event.participantList.keySet()) {
-                        if (Event.participantList.get(uid) == true) activePlayerCount.add(uid);
-                    }
-                    if (activePlayerCount.size() <= 1) {
-                        Tazpvp.event.finalizeGame(Bukkit.getPlayer(activePlayerCount.get(0)));
+                    if (Event.aliveList.size() <= 1) {
+                        Tazpvp.event.finalizeGame(Bukkit.getPlayer(Event.aliveList.get(0)));
                     }
                     return;
                 }
