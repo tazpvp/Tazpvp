@@ -39,23 +39,24 @@ public class EventCommand extends NRCommand {
                 sendIncorrectUsage(p);
                 return true;
             }
-            for (String event : Tazpvp.events) {
-                if (args[1].equalsIgnoreCase(event)) {
-                    if (Tazpvp.event == null) {
-                        Tazpvp.event = EventUtils.create(args[1]);
-                        Event.participantList.add(p.getUniqueId());
+            if (Event.eventTypes.contains(args[1])) {
+                if (Tazpvp.event == null) {
+                    Tazpvp.event = EventUtils.create(args[1]);
+                    Event.participantList.add(p.getUniqueId());
 
-                        Bukkit.broadcastMessage("The " + args[1] + "event has begun.");
+                    Bukkit.broadcastMessage("The " + args[1] + " event has begun.");
 
-                        TextComponent component = new TextComponent(CC.GREEN + "" + CC.UNDERLINE + "CLICK HERE" + CC.GREEN + "to participate");
-                        component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.GREEN + "Click to join the event").create()));
-                        component.setClickEvent(new net.md_5.bungee.api.chat.ClickEvent(ClickEvent.Action.RUN_COMMAND, "/events join"));
-                        for (Player plr : Bukkit.getOnlinePlayers()) {
-                            plr.spigot().sendMessage(component);
-                        }
+                    TextComponent component = new TextComponent(CC.GREEN + "" + CC.UNDERLINE + "CLICK HERE" + CC.GREEN + "to participate");
+                    component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.GREEN + "Click to join the event").create()));
+                    component.setClickEvent(new net.md_5.bungee.api.chat.ClickEvent(ClickEvent.Action.RUN_COMMAND, "/events join"));
+                    for (Player plr : Bukkit.getOnlinePlayers()) {
+                        plr.spigot().sendMessage(component);
                     }
-                    return true;
                 }
+                return true;
+            } else {
+                p.sendMessage(CC.YELLOW + "'" + args[1] + "'" + CC.RED + " is not a valid event type.");
+                p.sendMessage(CC.RED + "Try: FFA, Parkour");
             }
         } else if (args[0].equalsIgnoreCase("begin")) {
             if (Tazpvp.event != null) {

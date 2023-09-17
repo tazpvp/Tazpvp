@@ -50,6 +50,9 @@ import java.util.*;
 
 @Getter
 public abstract class Event implements Listener {
+
+    public static List<String> eventTypes = new ArrayList<>();
+
     @Getter
     public static List<UUID> participantList = new ArrayList<>();
     @Getter
@@ -75,25 +78,21 @@ public abstract class Event implements Listener {
             @Override
             public void run() {
                 for (UUID id : participantList) {
+                    Bukkit.broadcastMessage(Bukkit.getPlayer(id).getName());
                     Bukkit.getPlayer(id).teleport(NRCore.config.spawn);
                 }
-
             }
         }.runTaskLater(Tazpvp.getInstance(), 20*5);
 
         new BukkitRunnable() {
             @Override
             public void run() {
-                for (UUID id : participantList) {
-                    new WorldUtil().deleteWorld(uuid + "-" + getNAME());
-                }
-
+                new WorldUtil().deleteWorld(uuid + "-" + getNAME());
             }
         }.runTaskLater(Tazpvp.getInstance(), 20*10);
 
         participantList.clear();
         aliveList.clear();
-
         HandlerList.unregisterAll(this);
         Tazpvp.event = null;
     }
