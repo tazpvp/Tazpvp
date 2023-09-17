@@ -1,11 +1,13 @@
 package net.tazpvp.tazpvp.commands.admin.teleportWorld;
 
+import lombok.NonNull;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
@@ -15,25 +17,6 @@ import java.util.List;
 public class TeleportWorldCommand extends NRCommand {
     public TeleportWorldCommand() {
         super(new Label("teleportworld", "tazpvp.worldtp", "tpworld"));
-        setNativeExecutor((sender, args) -> {
-            if (!(sender instanceof Player p)) {
-                sendNoPermission(sender);
-                return true;
-            }
-
-            if (args.length < 1) {
-                sendIncorrectUsage(sender, "/teleportworld <world>");
-                return true;
-            }
-
-            World world = Bukkit.getWorld(args[0]);
-            if (world != null) {
-                p.teleport(new Location(world, 0, 100, 0));
-            } else {
-                p.sendMessage(CC.RED + "That is not a valid world.");
-            }
-            return true;
-        });
     }
 
     @Override
