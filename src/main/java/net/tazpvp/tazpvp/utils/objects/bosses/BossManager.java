@@ -40,7 +40,7 @@ public class BossManager {
                     }
                 }
             }
-        }.runTaskTimer(p_javaPlugin, 3 * 20, 3 * 20);
+        }.runTaskTimer(p_javaPlugin, 5 * 20, 5 * 20);
     }
 
     public static void despawnBoss() {
