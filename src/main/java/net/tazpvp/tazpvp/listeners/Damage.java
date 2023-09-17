@@ -101,8 +101,9 @@ public class Damage implements Listener {
                 Event.aliveList.remove(victimID);
 
                 if (Event.aliveList.size() <= 1) {
-                    Player winner = Bukkit.getPlayer(Event.aliveList.get(0));
-                    if (Event.aliveList.contains(winner)) {
+                    final Player winner = Bukkit.getPlayer(Event.aliveList.get(0));
+
+                    if (winner != null && Event.aliveList.contains(winner.getUniqueId())) {
                         Tazpvp.event.endGame(winner);
                     } else {
                         Tazpvp.event.endGame(null);

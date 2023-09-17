@@ -70,9 +70,12 @@ public abstract class Event implements Listener {
 
     public abstract void begin();
 
-    public void endGame(@Nullable Player winner) {
-        if (winner == null) Bukkit.broadcastMessage("Nobody won");
-        else Bukkit.broadcastMessage(winner.getDisplayName() + " won");
+    public void endGame(@Nullable final Player winner) {
+        if (winner == null) {
+            Bukkit.broadcastMessage("Nobody won");
+        } else {
+            Bukkit.broadcastMessage(winner.getDisplayName() + " won");
+        }
 
         new BukkitRunnable() {
             @Override
