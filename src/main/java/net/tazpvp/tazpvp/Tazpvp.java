@@ -97,7 +97,6 @@ public final class Tazpvp extends JavaPlugin {
     private static List<Observer> observers = new ArrayList<>();
     @Getter
     private List<NPC> npcs = new ArrayList<>();
-    public static List<String> events = new ArrayList<>();
     public static Event event;
     public static String prefix = "tazpvp.";
 
@@ -130,7 +129,7 @@ public final class Tazpvp extends JavaPlugin {
         Generator.generate();
         Holograms.holograms();
         Alerts.alert();
-        events.add("FFA");
+        Event.eventTypes.add("FFA");
         registerObservable();
         spawnNpcs();
         CombatTagFunctions.initCombatTag();

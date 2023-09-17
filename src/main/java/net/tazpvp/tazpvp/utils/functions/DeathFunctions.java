@@ -100,7 +100,6 @@ public class DeathFunctions {
 
                 death.playParticle();
                 death.coffin();
-                death.rewards();
                 death.dropHead();
                 death.storeInventory();
                 PlayerFunctions.addHealth(pKiller, 10);
@@ -113,6 +112,7 @@ public class DeathFunctions {
         LooseData.resetKs(victim);
 
         death.respawn();
+        death.rewards();
         pVictim.getInventory().clear();
         PlayerFunctions.kitPlayer(pVictim);
         PlayerFunctions.healPlr(pVictim);
@@ -140,6 +140,7 @@ public class DeathFunctions {
         LooseData.resetKs(victim);
 
         death.respawn();
+        death.rewards();
         pVictim.getInventory().clear();
         PlayerFunctions.kitPlayer(pVictim);
         PlayerFunctions.resetHealth(pVictim);

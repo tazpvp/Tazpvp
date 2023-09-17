@@ -55,6 +55,8 @@ public class Damage implements Listener {
 
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
+
+        //CHECK: Is the victim a player or a villager?
         if (!(event.getEntity() instanceof Player victim)) {
             if (event.getEntity() instanceof Villager) {
                 event.setCancelled(true);
@@ -64,6 +66,7 @@ public class Damage implements Listener {
 
         PlayerWrapper vw = PlayerWrapper.getPlayer(victim);
 
+        //CHECK: Is the player in spawn?
         if (Tazpvp.spawnRegion.contains(victim.getLocation())) {
             event.setCancelled(true);
             return;
@@ -73,10 +76,12 @@ public class Damage implements Listener {
         boolean isFallingDamage = (event.getCause() == EntityDamageEvent.DamageCause.FALL);
         Duel duel = Duel.getDuel(victim.getUniqueId());
 
+        //CHECK: Is the player currently using the launchpad?
         if (!vw.isLaunching() && compare(event, isFallingDamage)) {
             return;
         }
 
+        //CHECK: Is the player in a duel?
         if (vw.isDueling()) {
             if ((victim.getHealth() - finalDamage) <= 0) {
                 event.setCancelled(true);
@@ -89,6 +94,7 @@ public class Damage implements Listener {
 
         UUID victimID = victim.getUniqueId();
 
+        //CHECK: Is the player in an event?
         if (Event.participantList.contains(victimID)) {
             if ((victim.getHealth() - finalDamage) <= 0) {
                 event.setCancelled(true);
@@ -106,10 +112,12 @@ public class Damage implements Listener {
             }
         }
 
+        //CHECK: If the damage cause was fire.
         if (event.getCause() == EntityDamageEvent.DamageCause.FIRE) {
             Tazpvp.getObservers().forEach(observer -> observer.burn(victim));
         }
 
+        //CHECK: If the damage was done by another entity.
         if (event instanceof EntityDamageByEntityEvent entityDamageByEntityEvent) {
             handleEntityDamageByEntity(victim, entityDamageByEntityEvent, finalDamage);
         } else {

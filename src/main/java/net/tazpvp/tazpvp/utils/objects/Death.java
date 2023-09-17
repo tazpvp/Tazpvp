@@ -167,35 +167,38 @@ public class Death {
     }
 
     public void rewards() {
-        if (killer == victim) return;
-
-        if (GuildUtils.isInGuild(pVictim) && GuildUtils.isInGuild(pKiller)) {
-            if (GuildUtils.getGuildPlayerIn(pVictim) == GuildUtils.getGuildPlayerIn(pKiller)) return;
-        }
-
-        final int xp = 15;
-        final int coins = 26;
-        final int bounty = LooseData.getKs(victim) * 10;
-
-        pKiller.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(CC.DARK_AQUA + "" + CC.BOLD +  "EXP: " + CC.AQUA + "" + CC.BOLD +  xp + CC.GOLD + "" + CC.BOLD + " COINS: " + CC.YELLOW + "" + CC.BOLD +  coins));
-        if (bounty > 0) {
-            pKiller.sendMessage(CC.YELLOW + "You collected " + pVictim.getName() + "'s " + CC.GOLD + "$" + bounty + CC.YELLOW + " bounty.");
-        }
-        PersistentData.add(killer, DataTypes.COINS, coins + bounty);
-        PersistentData.add(killer, DataTypes.XP, xp);
-
         CombatTag tag = CombatTag.tags.get(victim);
-
+        if (tag.getAttackers().size() < 1) {
+            return;
+        }
         for (UUID id : tag.getAttackers()) {
             if (id != killer && id != null) {
                 Player assister = Bukkit.getPlayer(id);
                 final int AssistXP = 5;
                 final int AssistCoins = 5;
 
-                assister.sendMessage(CC.DARK_GRAY + "Assist kill: " + CC.GRAY + pVictim.getName() + ": " + CC.DARK_AQUA +  "EXP: " + CC.AQUA +  AssistXP + CC.GOLD + " COINS: " + CC.YELLOW +  AssistCoins);
+                assister.sendMessage(CC.DARK_GRAY + "Assist kill: " + CC.GRAY + pVictim.getName() + ": " + CC.DARK_AQUA +  "Experience: " + CC.AQUA +  AssistXP + CC.GOLD + " Coins: " + CC.YELLOW +  AssistCoins);
                 PersistentData.add(assister, DataTypes.COINS, AssistCoins);
                 PersistentData.add(assister, DataTypes.XP, AssistXP);
             }
+        }
+        if (killer != null) {
+            if (killer == victim) return;
+
+            if (GuildUtils.isInGuild(pVictim) && GuildUtils.isInGuild(pKiller)) {
+                if (GuildUtils.getGuildPlayerIn(pVictim) == GuildUtils.getGuildPlayerIn(pKiller)) return;
+            }
+
+            final int xp = 15;
+            final int coins = 26;
+            final int bounty = LooseData.getKs(victim) * 10;
+
+            pKiller.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(CC.DARK_AQUA + "" + CC.BOLD +  "Exp: " + CC.AQUA + "" + CC.BOLD +  xp + CC.GOLD + "" + CC.BOLD + " Coins: " + CC.YELLOW + "" + CC.BOLD +  coins));
+            if (bounty > 0) {
+                pKiller.sendMessage(CC.YELLOW + "You collected " + pVictim.getName() + "'s " + CC.GOLD + "$" + bounty + CC.YELLOW + " bounty.");
+            }
+            PersistentData.add(killer, DataTypes.COINS, coins + bounty);
+            PersistentData.add(killer, DataTypes.XP, xp);
         }
     }
 
