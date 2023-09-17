@@ -21,7 +21,7 @@ import java.util.concurrent.Future;
 
 public class SummonUndeadAttack implements Attack {
     private final Random random = new Random();
-    private final int MAX_DISTANCE = 3;
+    private final int MAX_DISTANCE = 4;
     @Override
     public void attack(final CustomBoss boss) {
         for (int i = 0; i < 3; i++) {
@@ -56,8 +56,8 @@ public class SummonUndeadAttack implements Attack {
     }
 
     private Location randomLocationWithinRadius(final Location targetLocation) {
-        final int radius = random.nextInt(MAX_DISTANCE);
-        int x = random.nextInt(Math.abs(radius));
+        final int radius = random.nextInt(1, MAX_DISTANCE);
+        int x = random.nextInt(radius);
         int z = (int) Math.sqrt(Math.pow(radius, 2) - Math.pow(x, 2));
 
         if (random.nextBoolean()) {
