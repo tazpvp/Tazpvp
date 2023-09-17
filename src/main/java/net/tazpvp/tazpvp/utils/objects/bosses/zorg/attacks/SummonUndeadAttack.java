@@ -24,7 +24,7 @@ public class SummonUndeadAttack implements Attack {
     private final int MAX_DISTANCE = 4;
     @Override
     public void attack(final CustomBoss boss) {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             final Location spawnLocWithinRadius = randomLocationWithinRadius(boss.getBoss().getLocation());
 
             spawnUndead(spawnLocWithinRadius);
@@ -33,8 +33,8 @@ public class SummonUndeadAttack implements Attack {
 
     private void spawnUndead(final Location spawnLocation) {
         final Zombie zombie = (Zombie) spawnLocation.getWorld().spawnEntity(spawnLocation, EntityType.ZOMBIE);
-
-        zombie.setCustomName(CC.BLUE + "Undead Slave");
+        zombie.setCustomName(CC.AQUA + "" + CC.BOLD + "Undead Slave");
+        zombie.setCustomNameVisible(true);
         applyRandomItem(zombie.getEquipment());
     }
 

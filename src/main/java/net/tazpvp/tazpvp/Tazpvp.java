@@ -68,6 +68,7 @@ import net.tazpvp.tazpvp.talents.talent.*;
 import net.tazpvp.tazpvp.utils.ConfigUtil;
 import net.tazpvp.tazpvp.utils.crate.CrateManager;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
+import net.tazpvp.tazpvp.utils.functions.LocationFunctions;
 import net.tazpvp.tazpvp.utils.leaderboard.spawnable.SpawnableLeaderboardManager;
 import net.tazpvp.tazpvp.utils.objects.bosses.zorg.Zorg;
 import net.tazpvp.tazpvp.utils.observer.Observer;
@@ -268,9 +269,9 @@ public final class Tazpvp extends JavaPlugin {
         new BukkitRunnable() {
             @Override
             public void run() {
-                BossManager.addBoss(new Zorg(new Location(Bukkit.getWorld("arena"), -20, 65, 218)));
-                BossManager.addBoss(new Zorg(new Location(Bukkit.getWorld("arena"), -19, 65, 198)));
-                BossManager.addBoss(new Zorg(new Location(Bukkit.getWorld("arena"), -1, 65, 212)));
+                Location loc = new Location(Bukkit.getWorld("arena"), -1, 65, 212);
+
+                BossManager.addBoss(new Zorg(LocationFunctions.getRandomLocationAround(loc, 3)));
 
                 BossManager.spawnBoss();
                 BossManager.setupRunnable(Tazpvp.getInstance());
