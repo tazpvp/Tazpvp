@@ -95,7 +95,7 @@ public class Damage implements Listener {
         UUID victimID = victim.getUniqueId();
 
         //CHECK: Is the player in an event?
-        if (Event.currentEvent.getParticipantList().contains(victimID)) {
+        if (Event.currentEvent != null && Event.currentEvent.getParticipantList().contains(victimID)) {
             if ((victim.getHealth() - finalDamage) <= 0) {
                 event.setCancelled(true);
                 Event.currentEvent.removeAliveList(victimID);
