@@ -25,16 +25,9 @@ public class SummonUndeadAttack implements Attack {
     @Override
     public void attack(final CustomBoss boss) {
         for (int i = 0; i < 3; i++) {
-            final Location spawnLocWithinRadius;
-            try {
-                spawnLocWithinRadius = randomLocationWithinRadius(boss.getBoss().getLocation()).get();
-            } catch (InterruptedException | ExecutionException e) {
-                throw new RuntimeException(e);
-            }
+            final Location spawnLocWithinRadius = randomLocationWithinRadius(boss.getBoss().getLocation());
 
-            if (spawnLocWithinRadius != null) {
-                spawnUndead(spawnLocWithinRadius);
-            }
+            spawnUndead(spawnLocWithinRadius);
         }
     }
 
@@ -62,36 +55,26 @@ public class SummonUndeadAttack implements Attack {
         }
     }
 
-    private Future<Location> randomLocationWithinRadius(final Location targetLocation) {
-        final CompletableFuture<Location> completableFuture = new CompletableFuture<>();
+    private Location randomLocationWithinRadius(final Location targetLocation) {
+        final int radius = random.nextInt(MAX_DISTANCE);
+        int x = random.nextInt(radius);
+        int z = (int) Math.sqrt(Math.pow(radius, 2) - Math.pow(x, 2));
 
-        Executors.newCachedThreadPool().submit(() -> {
-            final int radius = random.nextInt(MAX_DISTANCE);
-            int x = random.nextInt(radius);
-            int z = (int) Math.sqrt(Math.pow(radius, 2) - Math.pow(x, 2));
+        if (random.nextBoolean()) {
+            x *= -1;
+        }
+        if (random.nextBoolean()) {
+            z *= -1;
+        }
 
-            if (random.nextBoolean()) {
-                x *= -1;
-            }
-            if (random.nextBoolean()) {
-                z *= -1;
-            }
+        final int newX = targetLocation.getBlockX() + x;
+        final int newZ = targetLocation.getBlockZ() + z;
+        final Location spawnLocation = new Location(targetLocation.getWorld(), newX, targetLocation.getY(), newZ);
 
-            final int newX = targetLocation.getBlockX() + x;
-            final int newZ = targetLocation.getBlockZ() + z;
-            final Location spawnLocation = new Location(targetLocation.getWorld(), newX, targetLocation.getY(), newZ);
+        if (!spawnLocation.getBlock().getType().isAir()) {
+            return randomLocationWithinRadius(targetLocation);
+        }
 
-            if (!spawnLocation.getBlock().getType().isAir()) {
-                try {
-                    completableFuture.complete(randomLocationWithinRadius(targetLocation).get());
-                } catch (InterruptedException | ExecutionException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-
-            completableFuture.complete(spawnLocation);
-        });
-
-        return completableFuture;
+        return spawnLocation;
     }
 }
