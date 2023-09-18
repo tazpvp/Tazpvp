@@ -19,7 +19,7 @@ public class PunishmentFunctions {
     }
 
     public static void mute(Player target, String time) {
-        ban(target, time, "Chat Infraction");
+        mute(target, time, "Chat Infraction");
     }
 
     public static void mute(Player target, String time, String reason) {
