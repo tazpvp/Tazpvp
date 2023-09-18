@@ -65,7 +65,7 @@ public class Join implements Listener {
 
         new PlayerNameTag().initializePlayerNameTag(p);
 
-        if (PunishmentData.isPunished(p.getUniqueId())) {
+        if (PunishmentData.isBanned(p.getUniqueId())) {
             if (PunishmentData.getTimeRemaining(p.getUniqueId()) > 0 || PunishmentData.isPermanentlyPunished(p.getUniqueId()))
                 p.kickPlayer("Xd Bannned xD");
         }
