@@ -44,7 +44,7 @@ public class UnmuteCommand extends NRCommand {
 
         PunishmentFunctions.unmute(target);
 
-        sender.sendMessage("Unmuted " + target);
+        sender.sendMessage("Unmuted " + target.getName());
 
         return true;
     }
