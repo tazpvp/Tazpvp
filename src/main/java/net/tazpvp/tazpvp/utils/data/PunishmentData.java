@@ -93,7 +93,7 @@ public class PunishmentData extends Table {
             if (punishmentData.doesRowExist(uuid.toString())) {
                 Row punishmentRow = new Row(punishmentData, uuid.toString());
                 Column timeColumn = new Column(punishmentRow.getTable(), "time");
-                return System.currentTimeMillis() - (long) punishmentRow.fetch(timeColumn);
+                return (long) punishmentRow.fetch(timeColumn) - System.currentTimeMillis();
             } else {
                 return 0L;
             }
