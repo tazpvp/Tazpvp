@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.commands.gameplay.spawn;
+package net.tazpvp.tazpvp.commands.network.spawn;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.enums.CC;
@@ -20,12 +20,12 @@ public class SpawnCommand extends NRCommand {
             }
 
             if (PlayerWrapper.getPlayer(p).isDueling()) {
-                sendIncorrectUsage(sender, CC.RED + "You cannot use this command while dueling.");
+                p.sendMessage(CC.RED + "You cannot use this command while dueling.");
                 return true;
             }
 
             if (CombatTagFunctions.isInCombat(p.getUniqueId())) {
-                sendIncorrectUsage(sender, CC.RED + "You cannot use this command while in combat.");
+                p.sendMessage(CC.RED + "You cannot use this command while in combat.");
                 return true;
             }
 

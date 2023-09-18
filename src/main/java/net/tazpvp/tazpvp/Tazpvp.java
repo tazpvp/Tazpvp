@@ -51,7 +51,7 @@ import net.tazpvp.tazpvp.commands.gameplay.event.EventCommand;
 import net.tazpvp.tazpvp.commands.gameplay.guild.GuildCommand;
 import net.tazpvp.tazpvp.commands.gameplay.help.HelpCommand;
 import net.tazpvp.tazpvp.commands.gameplay.leaderboard.LeaderboardCommand;
-import net.tazpvp.tazpvp.commands.gameplay.spawn.SpawnCommand;
+import net.tazpvp.tazpvp.commands.network.spawn.SpawnCommand;
 import net.tazpvp.tazpvp.commands.moderation.MuteCommand;
 import net.tazpvp.tazpvp.commands.moderation.ReportViewCommand;
 import net.tazpvp.tazpvp.commands.moderation.RestoreCommand;
@@ -87,7 +87,6 @@ import world.ntdi.postglam.connection.Database;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.logging.Logger;
 
 /*
