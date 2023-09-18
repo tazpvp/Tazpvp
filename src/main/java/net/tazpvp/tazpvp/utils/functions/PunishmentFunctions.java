@@ -4,7 +4,7 @@ import net.tazpvp.tazpvp.utils.TimeToken;
 import net.tazpvp.tazpvp.utils.data.PunishmentData;
 import org.bukkit.entity.Player;
 
-public class BanFunctions {
+public class PunishmentFunctions {
 
     public static void ban(Player target, String time) {
         ban(target, time, "Unfair Advantage");
@@ -26,5 +26,13 @@ public class BanFunctions {
         TimeToken timeToken = new TimeToken(time);
 
         PunishmentData.punish(target.getUniqueId(), PunishmentData.PunishmentType.MUTED, timeToken.getUnixTimestamp());
+    }
+
+    public static void unmute(Player target) {
+        PunishmentData.unpunish(target.getUniqueId());
+    }
+
+    public static void unban(Player target) {
+        PunishmentData.unpunish(target.getUniqueId());
     }
 }

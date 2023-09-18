@@ -32,7 +32,7 @@
 
 package net.tazpvp.tazpvp.commands.moderation.ban;
 
-import net.tazpvp.tazpvp.utils.functions.BanFunctions;
+import net.tazpvp.tazpvp.utils.functions.PunishmentFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -56,7 +56,7 @@ public class BanCommand extends NRCommand {
 
             Player target = Bukkit.getPlayer(args[0]);
 
-            BanFunctions.ban(target, args[1], ChatUtils.builder(args, 2));
+            PunishmentFunctions.ban(target, args[1], ChatUtils.builder(args, 2));
 
             return true;
         });

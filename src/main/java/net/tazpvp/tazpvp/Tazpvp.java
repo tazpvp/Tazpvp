@@ -55,6 +55,7 @@ import net.tazpvp.tazpvp.commands.gameplay.spawn.SpawnCommand;
 import net.tazpvp.tazpvp.commands.moderation.MuteCommand;
 import net.tazpvp.tazpvp.commands.moderation.ReportViewCommand;
 import net.tazpvp.tazpvp.commands.moderation.RestoreCommand;
+import net.tazpvp.tazpvp.commands.moderation.UnmuteCommand;
 import net.tazpvp.tazpvp.commands.moderation.ban.BanCommand;
 import net.tazpvp.tazpvp.commands.network.AdCommand;
 import net.tazpvp.tazpvp.commands.network.ApplyCommand;
@@ -234,7 +235,8 @@ public final class Tazpvp extends JavaPlugin {
                 new EditCommand(),
                 new PremiumCommandFunction(),
                 new PlaytimeCommand(),
-                new EventCommand()
+                new EventCommand(),
+                new UnmuteCommand()
         );
     }
 

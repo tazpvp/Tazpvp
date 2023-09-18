@@ -77,6 +77,17 @@ public class PunishmentData extends Table {
         }
     }
 
+    public static void unpunish(final @NonNull UUID uuid) {
+        try {
+            if (punishmentData.doesRowExist(uuid.toString())) {
+                final Row punishmentRow = new Row(punishmentData, uuid.toString());
+                punishmentRow.drop();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static long getTimeRemaining(final @NonNull UUID uuid) {
         try {
             if (punishmentData.doesRowExist(uuid.toString())) {

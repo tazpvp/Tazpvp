@@ -34,7 +34,7 @@
 package net.tazpvp.tazpvp.commands.moderation;
 
 import lombok.NonNull;
-import net.tazpvp.tazpvp.utils.functions.BanFunctions;
+import net.tazpvp.tazpvp.utils.functions.PunishmentFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -64,7 +64,7 @@ public class MuteCommand extends NRCommand {
 
         Player target = Bukkit.getPlayer(args[0]);
 
-        BanFunctions.mute(target, args[1], ChatUtils.builder(args, 2));
+        PunishmentFunctions.mute(target, args[1], ChatUtils.builder(args, 2));
 
         target.sendMessage("You've been muted for " + ChatUtils.builder(args, 2));
         return true;
