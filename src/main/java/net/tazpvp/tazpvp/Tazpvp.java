@@ -260,6 +260,7 @@ public final class Tazpvp extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Shoot(), this);
         getServer().getPluginManager().registerEvents(new ProjectileLaunch(this), this);
         getServer().getPluginManager().registerEvents(new Death(), this);
+        getServer().getPluginManager().registerEvents(new CommandSend(), this);
     }
 
     private void spawnNpcs() {
