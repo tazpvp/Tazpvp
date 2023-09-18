@@ -71,7 +71,7 @@ public class PunishmentData extends Table {
                 Row punishmentRow = new Row(punishmentData, uuid.toString());
                 punishmentRow.drop();
             }
-            Row punishmentRow = new Row(punishmentData, uuid.toString(), String.valueOf(System.currentTimeMillis() + time), punishmentType.name());
+            Row punishmentRow = new Row(punishmentData, uuid.toString(), String.valueOf(time), punishmentType.name());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
