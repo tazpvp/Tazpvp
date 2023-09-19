@@ -51,18 +51,18 @@ public class Break implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
         Player p = e.getPlayer();
-        Block b = e.getBlock();
-        Material mat = b.getType();
+        Block eventBlock = e.getBlock();
+        Material blockMaterial = eventBlock.getType();
 
         if (!p.getGameMode().equals(GameMode.CREATIVE)) {
             for (Ore ore : BlockFunctions.ores) {
-                if (mat.equals(ore.getMat())) {
+                if (blockMaterial.equals(ore.getMat())) {
                     e.setCancelled(true);
                     Material tool = BlockFunctions.getPickaxe(p).getType();
                     for (Pickaxe pickaxe : BlockFunctions.pickaxes) {
                         if (tool.equals(pickaxe.getItem().getType())) {
                             if (pickaxe.getLevel() >= ore.getLevel()) {
-                                BlockFunctions.respawnOre(p, b, mat, ore.getSmelted(), ore.getTime());
+                                BlockFunctions.respawnOre(p, eventBlock, ore);
                                 LooseData.setMineCount(p.getUniqueId(), LooseData.getChatCount(p.getUniqueId()) + 1);
                             } else {
                                 p.sendMessage("You require at least a " + ore.getPickaxe() + " pickaxe to mine this ore.");
@@ -70,12 +70,12 @@ public class Break implements Listener {
                             }
                         }
                     }
-                } else if (!b.hasMetadata("PlayerPlaced")) {
+                } else if (!eventBlock.hasMetadata("PlayerPlaced")) {
                     e.setCancelled(true);
                 }
             }
         }
 
-        Tazpvp.getObservers().forEach(observer -> observer.mine(p, mat));
+        Tazpvp.getObservers().forEach(observer -> observer.mine(p, blockMaterial));
     }
 }

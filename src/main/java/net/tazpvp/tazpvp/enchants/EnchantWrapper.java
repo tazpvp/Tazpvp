@@ -1,5 +1,6 @@
 package net.tazpvp.tazpvp.enchants;
 
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
@@ -10,8 +11,8 @@ public class EnchantWrapper extends Enchantment {
 
     private final String name;
     private final int maxLevel;
-    public EnchantWrapper(String key, String name, int maxLevel) {
-        super(NamespacedKey.minecraft(key));
+    public EnchantWrapper(NamespacedKey key, String name, int maxLevel) {
+        super(key);
         this.name = name;
         this.maxLevel = maxLevel;
     }
@@ -35,7 +36,7 @@ public class EnchantWrapper extends Enchantment {
     @NotNull
     @Override
     public EnchantmentTarget getItemTarget() {
-        return null;
+        return EnchantmentTarget.TOOL;
     }
 
     @Override
@@ -55,6 +56,6 @@ public class EnchantWrapper extends Enchantment {
 
     @Override
     public boolean canEnchantItem(ItemStack item) {
-        return false;
+        return item.getType() == Material.DIAMOND_PICKAXE || item.getType() == Material.IRON_PICKAXE || item.getType() == Material.STONE_PICKAXE || item.getType() == Material.WOODEN_PICKAXE;
     }
 }

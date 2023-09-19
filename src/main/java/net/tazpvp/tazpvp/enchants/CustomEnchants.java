@@ -1,5 +1,7 @@
 package net.tazpvp.tazpvp.enchants;
 
+import net.tazpvp.tazpvp.Tazpvp;
+import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentWrapper;
 
@@ -11,17 +13,15 @@ import java.util.stream.Collectors;
 
 public class CustomEnchants {
 
-    public static List<Enchantment> enchantList = List.of(
-            new EnchantWrapper("double_ores", "Double Ores", 1),
-            new EnchantWrapper("auto_smelt", "Auto Smelt", 1)
-    );
+    public static Enchantment DOUBLE_ORES = new EnchantWrapper(new NamespacedKey(Tazpvp.getInstance(), "double_ores"), "Double Ores", 1);
+    public static Enchantment AUTO_SMELT = new EnchantWrapper(new NamespacedKey(Tazpvp.getInstance(), "auto_smelt"), "Auto Smelt", 1);
 
     public static void register() {
-        for (Enchantment ench : enchantList) {
-            boolean registered = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(ench);
+        boolean registeredDoubleOres = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(DOUBLE_ORES);
+        boolean registeredAutoSmelt = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(AUTO_SMELT);
 
-            if (!registered) registerEnchant(ench);
-        }
+        if (!registeredDoubleOres) registerEnchant(DOUBLE_ORES);
+        if (!registeredAutoSmelt) registerEnchant(AUTO_SMELT);
     }
 
     public static void registerEnchant(Enchantment enchant) {

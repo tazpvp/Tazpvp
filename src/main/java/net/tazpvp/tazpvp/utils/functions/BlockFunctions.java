@@ -33,6 +33,7 @@
 package net.tazpvp.tazpvp.utils.functions;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.enchants.CustomEnchants;
 import net.tazpvp.tazpvp.utils.objects.Ore;
 import net.tazpvp.tazpvp.utils.objects.Pickaxe;
 import org.bukkit.Material;
@@ -66,9 +67,11 @@ public class BlockFunctions {
             new Pickaxe(new ItemStack(Material.GOLDEN_PICKAXE), 25, 5, Material.GOLDEN_PICKAXE))
     );
 
-    public static void respawnOre(Player p, Block block, Material mat, Material smelted, int time) {
-
-
+    public static void respawnOre(Player p, Block block, Ore ore) {
+        int time = ore.getTime();
+        Material givenItem = ore.getMat();
+        Material smelted = ore.getSmelted();
+        int amount = 1;
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -79,23 +82,18 @@ public class BlockFunctions {
         new BukkitRunnable() {
             @Override
             public void run() {
-                block.setType(mat);
+                block.setType(ore.getMat());
             }
         }.runTaskLater(Tazpvp.getInstance(), time);
 
         if (getPickaxe(p) != null) {
             ItemStack pickaxe = getPickaxe(p);
-            if (pickaxe.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS) && pickaxe.containsEnchantment(Enchantment.SILK_TOUCH)){
-                giveOre(p, smelted, 2);
-            } else if (pickaxe.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)){
-                giveOre(p, mat, 2);
-            } else if (pickaxe.containsEnchantment(Enchantment.SILK_TOUCH)){
-                giveOre(p, mat, 1);
-            }
-            giveOre(p, mat, 1);
-            return;
+            if (pickaxe.getItemMeta().hasEnchant(CustomEnchants.DOUBLE_ORES))
+                amount = 2;
+            else if (pickaxe.getItemMeta().hasEnchant(CustomEnchants.AUTO_SMELT))
+                givenItem = smelted;
         }
-        giveOre(p, mat, 1);
+        giveOre(p, givenItem, amount);
     }
 
     public static ItemStack getPickaxe(Player p) {
