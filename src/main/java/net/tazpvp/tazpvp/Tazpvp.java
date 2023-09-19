@@ -124,8 +124,6 @@ public final class Tazpvp extends JavaPlugin {
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
 
-//        getLogger().info(NRCore.config.FROM_MESSAGE);
-
         registerEvents();
         registerCommands();
         Generator.generate();
