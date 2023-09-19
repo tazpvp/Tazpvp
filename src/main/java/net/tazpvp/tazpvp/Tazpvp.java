@@ -62,6 +62,7 @@ import net.tazpvp.tazpvp.commands.network.DiscordCommand;
 import net.tazpvp.tazpvp.commands.network.PlaytimeCommand;
 import net.tazpvp.tazpvp.discord.bot.BotThread;
 import net.tazpvp.tazpvp.events.Event;
+import net.tazpvp.tazpvp.guis.Mine.CustomEnchantments;
 import net.tazpvp.tazpvp.listeners.*;
 import net.tazpvp.tazpvp.npc.shops.*;
 import net.tazpvp.tazpvp.talents.talent.*;
@@ -131,6 +132,7 @@ public final class Tazpvp extends JavaPlugin {
         Alerts.alert();
         Event.eventTypes.add("FFA");
         registerObservable();
+        CustomEnchantments.registerCustomEnchantments();
         spawnNpcs();
         CombatTagFunctions.initCombatTag();
 

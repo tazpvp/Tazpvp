@@ -39,6 +39,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -58,11 +59,11 @@ public class BlockFunctions {
     ));
 
     public static final List<Pickaxe> pickaxes = new ArrayList<>(Arrays.asList(
-            new Pickaxe(Material.STONE_PICKAXE, 4, 1, Material.IRON_PICKAXE),
-            new Pickaxe(Material.IRON_PICKAXE, 8, 2, Material.DIAMOND_PICKAXE),
-            new Pickaxe(Material.DIAMOND_PICKAXE, 16, 3, Material.NETHERITE_PICKAXE),
-            new Pickaxe(Material.NETHERITE_PICKAXE, 19, 4, Material.GOLDEN_PICKAXE),
-            new Pickaxe(Material.GOLDEN_PICKAXE, 25, 5, Material.GOLDEN_PICKAXE))
+            new Pickaxe(new ItemStack(Material.STONE_PICKAXE), 4, 1, Material.IRON_PICKAXE),
+            new Pickaxe(new ItemStack(Material.IRON_PICKAXE), 8, 2, Material.DIAMOND_PICKAXE),
+            new Pickaxe(new ItemStack(Material.DIAMOND_PICKAXE), 16, 3, Material.NETHERITE_PICKAXE),
+            new Pickaxe(new ItemStack(Material.NETHERITE_PICKAXE), 19, 4, Material.GOLDEN_PICKAXE),
+            new Pickaxe(new ItemStack(Material.GOLDEN_PICKAXE), 25, 5, Material.GOLDEN_PICKAXE))
     );
 
     public static void respawnOre(Player p, Block block, Material mat, Material smelted, int time) {
@@ -99,9 +100,9 @@ public class BlockFunctions {
 
     public static ItemStack getPickaxe(Player p) {
         for (Pickaxe pick : pickaxes) {
-            if (p.getInventory().getItemInMainHand().getType().equals(pick.getMat())) {
+            if (p.getInventory().getItemInMainHand().getType().equals(pick.getItem().getType())) {
                 return p.getInventory().getItemInMainHand();
-            } else if (p.getInventory().getItemInOffHand().getType().equals(pick.getMat())) {
+            } else if (p.getInventory().getItemInOffHand().getType().equals(pick.getItem().getType())) {
                 return p.getInventory().getItemInOffHand();
             }
         }

@@ -35,11 +35,12 @@ package net.tazpvp.tazpvp.utils.objects;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 @AllArgsConstructor
 public class Pickaxe {
     @Getter
-    private final Material mat;
+    private final ItemStack item;
     @Getter
     private final int cost;
     @Getter
