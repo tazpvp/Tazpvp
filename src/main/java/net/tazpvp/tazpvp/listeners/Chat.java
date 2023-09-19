@@ -58,7 +58,9 @@ public class Chat implements Listener {
         PlayerWrapper pw = PlayerWrapper.getPlayer(p);
 
         if (PunishmentData.isMuted(uuid)) {
-            p.sendMessage("You are currently muted for " + TimeUtil.howLongAgo(PunishmentData.getTimeRemaining(uuid)));
+            final String howLongAgo = TimeUtil.howLongAgo(PunishmentData.getTimeRemaining(uuid));
+
+            p.sendMessage("You are currently muted for " + howLongAgo);
             e.setCancelled(true);
             return;
         }

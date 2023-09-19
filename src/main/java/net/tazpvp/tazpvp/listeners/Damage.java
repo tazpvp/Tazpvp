@@ -66,7 +66,7 @@ public class Damage implements Listener {
             return;
         }
 
-        PlayerWrapper vw = PlayerWrapper.getPlayer(victim);
+        final PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(victim);
 
         //CHECK: Is the player in spawn?
         if (Tazpvp.spawnRegion.contains(victim.getLocation())) {
@@ -79,12 +79,12 @@ public class Damage implements Listener {
         Duel duel = Duel.getDuel(victim.getUniqueId());
 
         //CHECK: Is the player currently using the launchpad?
-        if (!vw.isLaunching() && compare(event, isFallingDamage)) {
+        if (!playerWrapper.isLaunching() && compare(event, isFallingDamage)) {
             return;
         }
 
         //CHECK: Is the player in a duel?
-        if (vw.isDueling()) {
+        if (playerWrapper.isDueling()) {
             if ((victim.getHealth() - finalDamage) <= 0) {
                 event.setCancelled(true);
                 duel.setWinner(Duel.getOtherDueler(victim.getUniqueId()));

@@ -71,7 +71,18 @@ public class PunishmentData extends Table {
                 Row punishmentRow = new Row(punishmentData, uuid.toString());
                 punishmentRow.drop();
             }
-            Row punishmentRow = new Row(punishmentData, uuid.toString(), String.valueOf(System.currentTimeMillis() + time), punishmentType.name());
+            Row punishmentRow = new Row(punishmentData, uuid.toString(), String.valueOf(time), punishmentType.name());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void unpunish(final @NonNull UUID uuid) {
+        try {
+            if (punishmentData.doesRowExist(uuid.toString())) {
+                final Row punishmentRow = new Row(punishmentData, uuid.toString());
+                punishmentRow.drop();
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -82,7 +93,7 @@ public class PunishmentData extends Table {
             if (punishmentData.doesRowExist(uuid.toString())) {
                 Row punishmentRow = new Row(punishmentData, uuid.toString());
                 Column timeColumn = new Column(punishmentRow.getTable(), "time");
-                return System.currentTimeMillis() - (long) punishmentRow.fetch(timeColumn);
+                return (long) punishmentRow.fetch(timeColumn) - System.currentTimeMillis();
             } else {
                 return 0L;
             }
@@ -119,6 +130,10 @@ public class PunishmentData extends Table {
 
     public static boolean isMuted(final @NonNull UUID uuid) {
         return isPunished(uuid) && getPunishment(uuid) == PunishmentType.MUTED;
+    }
+
+    public static boolean isBanned(final @NonNull UUID uuid) {
+        return isPunished(uuid) && getPunishment(uuid) == PunishmentType.BANNED;
     }
 
     public enum PunishmentType {
