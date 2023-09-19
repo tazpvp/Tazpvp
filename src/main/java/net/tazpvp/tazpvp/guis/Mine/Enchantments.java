@@ -32,17 +32,14 @@ public class Enchantments extends GUI {
         fill(0, 27, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
         Button autoSmelt = Button.create(ItemBuilder.of(Material.ENCHANTED_BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Auto Smelt").lore(CC.GRAY + "Automatically refine ores.").build(), (e) -> {
-            p.closeInventory();
             applyEnchant(CustomEnchants.AUTO_SMELT, 1);
         });
 
         Button efficiency = Button.create(ItemBuilder.of(Material.ENCHANTED_BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Efficiency").lore(CC.GRAY + "Increase the speed of mining.").build(), (e) -> {
-            p.closeInventory();
             applyEnchant(Enchantment.DIG_SPEED, 1);
         });
 
         Button doubleOres = Button.create(ItemBuilder.of(Material.ENCHANTED_BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Double Ores").lore(CC.GRAY + "Duplicate the ores you mine.").build(), (e) -> {
-            p.closeInventory();
             applyEnchant(CustomEnchants.DOUBLE_ORES, 1);
         });
 
@@ -61,7 +58,8 @@ public class Enchantments extends GUI {
                 if (enchantLevel < enchant.getMaxLevel()) {
                     pickaxe.addEnchantment(enchant, enchantLevel + 1);
                 } else {
-                    p.sendMessage("You've reached the maximum level for this enchantment");
+                    p.sendMessage(CC.RED + "You've reached the maximum level for this enchantment");
+                    p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
                     return;
                 }
             } else {
@@ -70,7 +68,8 @@ public class Enchantments extends GUI {
             p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, 1, 1);
             p.sendMessage("You enchanted your pickaxe with " + enchant.getName());
         } else {
-            p.sendMessage("You do not have enough shards for this upgrade.");
+            p.sendMessage(CC.RED + "You do not have enough shards for this upgrade.");
+            p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
         }
     }
 }
