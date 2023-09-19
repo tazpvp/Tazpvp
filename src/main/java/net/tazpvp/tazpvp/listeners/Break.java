@@ -60,7 +60,7 @@ public class Break implements Listener {
                     e.setCancelled(true);
                     Material tool = BlockFunctions.getPickaxe(p).getType();
                     for (Pickaxe pickaxe : BlockFunctions.pickaxes) {
-                        if (tool.equals(pickaxe.getMat())) {
+                        if (tool.equals(pickaxe.getItem().getType())) {
                             if (pickaxe.getLevel() >= ore.getLevel()) {
                                 BlockFunctions.respawnOre(p, b, mat, ore.getSmelted(), ore.getTime());
                                 LooseData.setMineCount(p.getUniqueId(), LooseData.getChatCount(p.getUniqueId()) + 1);
