@@ -49,6 +49,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
+import javax.annotation.Nullable;
 import java.util.UUID;
 
 public class Damage implements Listener {
@@ -56,7 +57,6 @@ public class Damage implements Listener {
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
 
-        //CHECK: Is the victim a player or a villager?
         if (!(event.getEntity() instanceof Player victim)) {
             if (event.getEntity() instanceof Villager) {
                 event.setCancelled(true);
@@ -66,7 +66,6 @@ public class Damage implements Listener {
 
         final PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(victim);
 
-        //CHECK: Is the player in spawn?
         if (Tazpvp.spawnRegion.contains(victim.getLocation())) {
             event.setCancelled(true);
             return;
@@ -76,12 +75,10 @@ public class Damage implements Listener {
         boolean isFallingDamage = (event.getCause() == EntityDamageEvent.DamageCause.FALL);
         Duel duel = Duel.getDuel(victim.getUniqueId());
 
-        //CHECK: Is the player currently using the launchpad?
         if (!playerWrapper.isLaunching() && compare(event, isFallingDamage)) {
             return;
         }
 
-        //CHECK: Is the player in a duel?
         if (playerWrapper.isDueling()) {
             if ((victim.getHealth() - finalDamage) <= 0) {
                 event.setCancelled(true);
@@ -94,7 +91,6 @@ public class Damage implements Listener {
 
         UUID victimID = victim.getUniqueId();
 
-        //CHECK: Is the player in an event?
         if (Event.currentEvent != null && Event.currentEvent.getParticipantList().contains(victimID)) {
             if ((victim.getHealth() - finalDamage) <= 0) {
                 event.setCancelled(true);
@@ -106,12 +102,10 @@ public class Damage implements Listener {
             }
         }
 
-        //CHECK: If the damage cause was fire.
         if (event.getCause() == EntityDamageEvent.DamageCause.FIRE) {
             Tazpvp.getObservers().forEach(observer -> observer.burn(victim));
         }
 
-        //CHECK: If the damage was done by another entity.
         if (event instanceof EntityDamageByEntityEvent entityDamageByEntityEvent) {
             handleEntityDamageByEntity(victim, entityDamageByEntityEvent, finalDamage);
         } else {
@@ -136,7 +130,7 @@ public class Damage implements Listener {
                 checkDeath(victim.getUniqueId(), pShooter.getUniqueId(), event, finalDamage);
             }
         } else {
-            checkDeath(victim.getUniqueId(), event, finalDamage);
+            checkDeath(victim.getUniqueId(), null, event, finalDamage);
         }
     }
 
@@ -149,17 +143,13 @@ public class Damage implements Listener {
         }
     }
 
-    private void checkDeath(UUID victim, UUID killer, EntityDamageEvent event, double finalDamage) {
+    private void checkDeath(UUID victim, @Nullable UUID killer, EntityDamageEvent event, double finalDamage) {
         if ((Bukkit.getPlayer(victim).getHealth() - finalDamage) <= 0) {
             event.setCancelled(true);
-            DeathFunctions.death(victim, killer);
-        }
-    }
-
-    private void checkDeath(UUID victim, EntityDamageEvent event, double finalDamage) {
-        if ((Bukkit.getPlayer(victim).getHealth() - finalDamage) <= 0) {
-            event.setCancelled(true);
-            DeathFunctions.death(victim);
+            if (killer != null)
+                DeathFunctions.death(victim, killer);
+            else
+                DeathFunctions.death(victim);
         }
     }
 }

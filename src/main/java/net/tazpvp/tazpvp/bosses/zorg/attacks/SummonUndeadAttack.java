@@ -8,15 +8,18 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Zombie;
+import org.bukkit.entity.ZombieVillager;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class SummonUndeadAttack implements Attack {
     private final Random random = new Random();
+    public static List<Zombie> undeadList = new ArrayList<>();
     private final int MAX_DISTANCE = 4;
     @Override
     public void attack(final CustomBoss boss) {
@@ -28,10 +31,13 @@ public class SummonUndeadAttack implements Attack {
     }
 
     private void spawnUndead(final Location spawnLocation) {
-        final Zombie zombie = (Zombie) spawnLocation.getWorld().spawnEntity(spawnLocation, EntityType.ZOMBIE);
-        zombie.setCustomName(CC.AQUA + "" + CC.BOLD + "Undead Slave");
-        zombie.setCustomNameVisible(true);
-        applyRandomItem(zombie.getEquipment());
+        if (undeadList.size() < 5) {
+            final Zombie zombie = (Zombie) spawnLocation.getWorld().spawnEntity(spawnLocation, EntityType.ZOMBIE);
+            undeadList.add(zombie);
+            zombie.setCustomName(CC.AQUA + "" + CC.BOLD + "Undead Slave");
+            zombie.setCustomNameVisible(true);
+            applyRandomItem(zombie.getEquipment());
+        }
     }
 
     private void applyRandomItem(final EntityEquipment equipment) {
@@ -52,25 +58,20 @@ public class SummonUndeadAttack implements Attack {
     }
 
     private Location randomLocationWithinRadius(final Location targetLocation) {
-        final int radius = random.nextInt(1, MAX_DISTANCE);
-        int x = random.nextInt(radius);
-        int z = (int) Math.sqrt(Math.pow(radius, 2) - Math.pow(x, 2));
+        final int radius = random.nextInt(MAX_DISTANCE) + 1;
+        double angle = random.nextDouble() * 2 * Math.PI;
 
-        if (random.nextBoolean()) {
-            x *= -1;
-        }
-        if (random.nextBoolean()) {
-            z *= -1;
-        }
+        int x = (int) (Math.cos(angle) * radius);
+        int z = (int) (Math.sin(angle) * radius);
 
         final int newX = targetLocation.getBlockX() + x;
         final int newZ = targetLocation.getBlockZ() + z;
         final Location spawnLocation = new Location(targetLocation.getWorld(), newX, targetLocation.getY(), newZ);
 
-        if (!spawnLocation.getBlock().getType().isAir()) {
-            return randomLocationWithinRadius(targetLocation);
+        if (spawnLocation.getBlock().getType().isSolid()) {
+            return spawnLocation;
         }
 
-        return spawnLocation;
+        return randomLocationWithinRadius(targetLocation);
     }
 }

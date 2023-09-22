@@ -273,9 +273,7 @@ public final class Tazpvp extends JavaPlugin {
         new BukkitRunnable() {
             @Override
             public void run() {
-                Location loc = new Location(Bukkit.getWorld("arena"), -1, 65, 212);
-
-                BossManager.addBoss(new Zorg(LocationFunctions.getRandomLocationAround(loc, 3)));
+                BossManager.addBoss(new Zorg(new Location(Bukkit.getWorld("arena"), -12, 65, 210)));
 
                 BossManager.spawnBoss();
                 BossManager.setupRunnable(Tazpvp.getInstance());

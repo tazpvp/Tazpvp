@@ -95,15 +95,16 @@ public class Enchantments extends GUI {
 
         int levelToAdd = 1;
         if (pickaxe.getItemMeta().hasEnchant(enchant)) {
-            if (pickaxe.getEnchantmentLevel(enchant) >= enchant.getMaxLevel()) {
+            int currentEnchantLevel = pickaxe.getEnchantmentLevel(enchant);
+            if (currentEnchantLevel >= enchant.getMaxLevel()) {
                 p.sendMessage(CC.RED + "You've reached the maximum level for this enchantment");
                 p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
                 return;
             }
-            levelToAdd ++;
+            levelToAdd = currentEnchantLevel + 1;
         }
         pickaxe.addEnchantment(enchant, levelToAdd);
-
+        PlayerFunctions.takeShards(p, cost);
         p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, 1, 1);
         p.sendMessage("You enchanted your pickaxe with " + enchant.getName());
     }
