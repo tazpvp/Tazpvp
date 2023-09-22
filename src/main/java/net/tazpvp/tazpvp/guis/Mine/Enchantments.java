@@ -37,7 +37,7 @@ public class Enchantments extends GUI {
         Button autoSmelt = Button.create(ItemBuilder.of(Material.ENCHANTED_BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Auto Smelt").lore(CC.GRAY + "Automatically refine ores.").build(), (e) ->
             applyEnchant(Enchants.AUTO_SMELT));
         Button efficiency = Button.create(ItemBuilder.of(Material.ENCHANTED_BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Efficiency").lore(CC.GRAY + "Increase the speed of mining.").build(), (e) ->
-            applyEnchant(Enchants.CUSTOM_EFFICIENCY));
+            applyEnchant(Enchantment.DIG_SPEED, 15));
         Button doubleOres = Button.create(ItemBuilder.of(Material.ENCHANTED_BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Double Ores").lore(CC.GRAY + "Duplicate the ores you mine.").build(), (e) ->
             applyEnchant(Enchants.DOUBLE_ORES));
 
@@ -82,5 +82,29 @@ public class Enchantments extends GUI {
         meta.setLore(lore);
         p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, 1, 1);
         p.sendMessage("You enchanted your pickaxe with " + enchantEnum.getName());
+    }
+
+    private void applyEnchant(Enchantment enchant, int cost) {
+        int shardCount = PlayerFunctions.countShards(p);
+
+        if (shardCount < cost) {
+            p.sendMessage(CC.RED + "You do not have enough shards for this upgrade.");
+            p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+            return;
+        }
+
+        int levelToAdd = 1;
+        if (pickaxe.getItemMeta().hasEnchant(enchant)) {
+            if (pickaxe.getEnchantmentLevel(enchant) >= enchant.getMaxLevel()) {
+                p.sendMessage(CC.RED + "You've reached the maximum level for this enchantment");
+                p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+                return;
+            }
+            levelToAdd ++;
+        }
+        pickaxe.addEnchantment(enchant, levelToAdd);
+
+        p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, 1, 1);
+        p.sendMessage("You enchanted your pickaxe with " + enchant.getName());
     }
 }

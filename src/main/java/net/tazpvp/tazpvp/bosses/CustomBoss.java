@@ -1,7 +1,7 @@
-package net.tazpvp.tazpvp.utils.objects.bosses;
+package net.tazpvp.tazpvp.bosses;
 
 import lombok.Getter;
-import net.tazpvp.tazpvp.utils.objects.bosses.attacks.Attack;
+import net.tazpvp.tazpvp.bosses.attacks.Attack;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 

@@ -1,9 +1,9 @@
-package net.tazpvp.tazpvp.utils.objects.bosses.zorg;
+package net.tazpvp.tazpvp.bosses.zorg;
 
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
-import net.tazpvp.tazpvp.utils.objects.bosses.CustomBoss;
-import net.tazpvp.tazpvp.utils.objects.bosses.zorg.attacks.SonicBoomAttack;
-import net.tazpvp.tazpvp.utils.objects.bosses.zorg.attacks.SummonUndeadAttack;
+import net.tazpvp.tazpvp.bosses.CustomBoss;
+import net.tazpvp.tazpvp.bosses.zorg.attacks.SonicBoomAttack;
+import net.tazpvp.tazpvp.bosses.zorg.attacks.SummonUndeadAttack;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;

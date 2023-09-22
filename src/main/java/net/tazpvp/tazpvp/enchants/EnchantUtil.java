@@ -18,7 +18,6 @@ public class EnchantUtil {
     static {
         customEnchantments.add(new EnchantWrapper(new NamespacedKey(Tazpvp.getInstance(), "double_ores"), "Double Ores", 1));
         customEnchantments.add(new EnchantWrapper(new NamespacedKey(Tazpvp.getInstance(), "auto_smelt"), "Auto Smelt", 1));
-        customEnchantments.add(new EnchantWrapper(new NamespacedKey(Tazpvp.getInstance(), "custom_efficiency"), "Efficiency", 5));
     }
 
     public static void register() {

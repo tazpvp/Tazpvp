@@ -88,7 +88,7 @@ public class BlockFunctions {
             ItemStack pickaxe = getPickaxe(p);
             if (pickaxe.getItemMeta().hasEnchant(Enchants.DOUBLE_ORES.getEnchant()))
                 amount = 2;
-            else if (pickaxe.getItemMeta().hasEnchant(Enchants.AUTO_SMELT.getEnchant()))
+            if (pickaxe.getItemMeta().hasEnchant(Enchants.AUTO_SMELT.getEnchant()))
                 givenItem = smelted;
         }
         giveOre(p, givenItem, amount);

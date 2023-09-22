@@ -1,8 +1,8 @@
-package net.tazpvp.tazpvp.utils.objects.bosses.zorg.attacks;
+package net.tazpvp.tazpvp.bosses.zorg.attacks;
 
 import net.tazpvp.tazpvp.utils.enums.CC;
-import net.tazpvp.tazpvp.utils.objects.bosses.CustomBoss;
-import net.tazpvp.tazpvp.utils.objects.bosses.attacks.Attack;
+import net.tazpvp.tazpvp.bosses.CustomBoss;
+import net.tazpvp.tazpvp.bosses.attacks.Attack;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -17,10 +17,11 @@ import java.util.Random;
 
 public class SummonUndeadAttack implements Attack {
     private final Random random = new Random();
+    private final int MAX_DISTANCE = 4;
     @Override
     public void attack(final CustomBoss boss) {
         for (int i = 0; i < 2; i++) {
-            final Location spawnLocWithinRadius = randomLocationWithinRadius(boss.getBoss().getLocation(), 4);
+            final Location spawnLocWithinRadius = randomLocationWithinRadius(boss.getBoss().getLocation());
 
             spawnUndead(spawnLocWithinRadius);
         }
@@ -50,8 +51,8 @@ public class SummonUndeadAttack implements Attack {
         }
     }
 
-    private Location randomLocationWithinRadius(final Location targetLocation, final int maxDistance) {
-        final int radius = random.nextInt(1, maxDistance);
+    private Location randomLocationWithinRadius(final Location targetLocation) {
+        final int radius = random.nextInt(1, MAX_DISTANCE);
         int x = random.nextInt(radius);
         int z = (int) Math.sqrt(Math.pow(radius, 2) - Math.pow(x, 2));
 
@@ -67,7 +68,7 @@ public class SummonUndeadAttack implements Attack {
         final Location spawnLocation = new Location(targetLocation.getWorld(), newX, targetLocation.getY(), newZ);
 
         if (!spawnLocation.getBlock().getType().isAir()) {
-            return randomLocationWithinRadius(targetLocation, 4);
+            return randomLocationWithinRadius(targetLocation);
         }
 
         return spawnLocation;

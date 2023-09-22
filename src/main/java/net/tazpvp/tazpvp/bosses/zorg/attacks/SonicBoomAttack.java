@@ -1,7 +1,7 @@
-package net.tazpvp.tazpvp.utils.objects.bosses.zorg.attacks;
+package net.tazpvp.tazpvp.bosses.zorg.attacks;
 
-import net.tazpvp.tazpvp.utils.objects.bosses.CustomBoss;
-import net.tazpvp.tazpvp.utils.objects.bosses.attacks.Attack;
+import net.tazpvp.tazpvp.bosses.CustomBoss;
+import net.tazpvp.tazpvp.bosses.attacks.Attack;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Particle;

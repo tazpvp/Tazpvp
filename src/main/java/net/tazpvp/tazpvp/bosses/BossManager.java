@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.utils.objects.bosses;
+package net.tazpvp.tazpvp.bosses;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.Tazpvp;

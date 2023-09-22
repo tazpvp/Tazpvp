@@ -1,6 +1,6 @@
 package net.tazpvp.tazpvp.listeners;
 
-import net.tazpvp.tazpvp.utils.objects.bosses.BossManager;
+import net.tazpvp.tazpvp.bosses.BossManager;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
