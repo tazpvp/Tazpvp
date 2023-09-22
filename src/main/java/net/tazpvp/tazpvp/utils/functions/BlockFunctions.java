@@ -33,14 +33,12 @@
 package net.tazpvp.tazpvp.utils.functions;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.enchants.CustomEnchants;
+import net.tazpvp.tazpvp.enchants.Enchants;
 import net.tazpvp.tazpvp.utils.objects.Ore;
 import net.tazpvp.tazpvp.utils.objects.Pickaxe;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -88,9 +86,9 @@ public class BlockFunctions {
 
         if (getPickaxe(p) != null) {
             ItemStack pickaxe = getPickaxe(p);
-            if (pickaxe.getItemMeta().hasEnchant(CustomEnchants.DOUBLE_ORES))
+            if (pickaxe.getItemMeta().hasEnchant(Enchants.DOUBLE_ORES.getEnchant()))
                 amount = 2;
-            else if (pickaxe.getItemMeta().hasEnchant(CustomEnchants.AUTO_SMELT))
+            else if (pickaxe.getItemMeta().hasEnchant(Enchants.AUTO_SMELT.getEnchant()))
                 givenItem = smelted;
         }
         giveOre(p, givenItem, amount);

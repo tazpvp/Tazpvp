@@ -14,18 +14,13 @@ import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 public class SummonUndeadAttack implements Attack {
     private final Random random = new Random();
-    private final int MAX_DISTANCE = 4;
     @Override
     public void attack(final CustomBoss boss) {
         for (int i = 0; i < 2; i++) {
-            final Location spawnLocWithinRadius = randomLocationWithinRadius(boss.getBoss().getLocation());
+            final Location spawnLocWithinRadius = randomLocationWithinRadius(boss.getBoss().getLocation(), 4);
 
             spawnUndead(spawnLocWithinRadius);
         }
@@ -55,8 +50,8 @@ public class SummonUndeadAttack implements Attack {
         }
     }
 
-    private Location randomLocationWithinRadius(final Location targetLocation) {
-        final int radius = random.nextInt(1, MAX_DISTANCE);
+    private Location randomLocationWithinRadius(final Location targetLocation, final int maxDistance) {
+        final int radius = random.nextInt(1, maxDistance);
         int x = random.nextInt(radius);
         int z = (int) Math.sqrt(Math.pow(radius, 2) - Math.pow(x, 2));
 
@@ -72,7 +67,7 @@ public class SummonUndeadAttack implements Attack {
         final Location spawnLocation = new Location(targetLocation.getWorld(), newX, targetLocation.getY(), newZ);
 
         if (!spawnLocation.getBlock().getType().isAir()) {
-            return randomLocationWithinRadius(targetLocation);
+            return randomLocationWithinRadius(targetLocation, 4);
         }
 
         return spawnLocation;

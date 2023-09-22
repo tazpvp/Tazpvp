@@ -36,18 +36,9 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.events.Event;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Wolf;
-import org.bukkit.scheduler.BukkitTask;
-import world.ntdi.nrcore.NRCore;
 import world.ntdi.nrcore.utils.world.WorldUtil;
 
-import javax.annotation.Nonnull;
-import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 
 public class FFA extends Event {
 

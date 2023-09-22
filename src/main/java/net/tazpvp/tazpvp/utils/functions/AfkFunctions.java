@@ -1,7 +1,6 @@
 package net.tazpvp.tazpvp.utils.functions;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.utils.crate.CrateManager;
 import net.tazpvp.tazpvp.utils.crate.KeyFactory;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
@@ -9,7 +8,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import world.ntdi.nrcore.utils.ChatUtils;
 
 public class AfkFunctions {
 

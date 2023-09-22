@@ -35,11 +35,6 @@ package net.tazpvp.tazpvp.events;
 import net.tazpvp.tazpvp.events.types.FFA;
 import net.tazpvp.tazpvp.events.types.Parkour;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
-import java.util.WeakHashMap;
-
 public final class EventUtils {
 
     public static Event create(String name) {

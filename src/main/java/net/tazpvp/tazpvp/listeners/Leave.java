@@ -32,7 +32,6 @@
 
 package net.tazpvp.tazpvp.listeners;
 
-import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
 import net.tazpvp.tazpvp.events.Event;
 import net.tazpvp.tazpvp.utils.PlaytimeUtil;

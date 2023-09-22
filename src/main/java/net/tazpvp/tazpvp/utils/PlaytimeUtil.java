@@ -2,7 +2,6 @@ package net.tazpvp.tazpvp.utils;
 
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
@@ -11,7 +10,7 @@ import java.util.UUID;
 import java.util.WeakHashMap;
 
 public class PlaytimeUtil {
-    private static WeakHashMap<UUID, Long> loginTime = new WeakHashMap<>();
+    private final static WeakHashMap<UUID, Long> loginTime = new WeakHashMap<>();
 
     public static void playerJoined(@Nonnull final Player p) {
         loginTime.put(p.getUniqueId(), System.currentTimeMillis());
@@ -24,12 +23,10 @@ public class PlaytimeUtil {
     }
 
     public static long getPlayTime(final OfflinePlayer p) {
-
         long currTime = System.currentTimeMillis();
         long timePlayed = currTime - loginTime.get(p.getUniqueId());
-        long newPlayTime = PersistentData.getInt(p.getUniqueId(), DataTypes.PLAYTIMEUNIX) + timePlayed;
 
-        return newPlayTime;
+        return PersistentData.getInt(p.getUniqueId(), DataTypes.PLAYTIMEUNIX) + timePlayed;
     }
 
     public static String secondsToDDHHMMSS(long seconds) {

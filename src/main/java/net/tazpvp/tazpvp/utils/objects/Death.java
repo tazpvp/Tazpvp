@@ -53,17 +53,14 @@ import world.ntdi.nrcore.utils.item.builders.SkullBuilder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.LinkedList;
 import java.util.Random;
 import java.util.UUID;
 
 public class Death {
 
-    @Getter @Setter
     private final UUID victim;
-    @Getter @Setter
     private final UUID killer;
-    private Player pVictim;
+    private final Player pVictim;
     private Player pKiller;
     private final Location location;
     private final Random r = new Random();
@@ -86,7 +83,7 @@ public class Death {
             if (GuildUtils.getGuildPlayerIn(pVictim) == GuildUtils.getGuildPlayerIn(pKiller)) return;
         }
 
-        int chance = new Random().nextInt(10);
+        int chance = r.nextInt(10);
 
         if (PersistentData.getTalents(killer).is("Necromancer")) {
             if (!(chance <= 2)) return;
@@ -105,9 +102,9 @@ public class Death {
 
     public void dropHead() {
         if (PersistentData.getTalents(killer).is("Harvester")) {
-            if (new Random().nextInt(4) != 1) return;
+            if (r.nextInt(4) != 1) return;
         } else {
-            if (new Random().nextInt(6) != 1) return;
+            if (r.nextInt(6) != 1) return;
         }
         World w = location.getWorld();
         w.dropItemNaturally(location.add(0, 1, 0), makeSkull(pVictim));
@@ -115,8 +112,7 @@ public class Death {
     }
 
     private ItemStack makeSkull(@Nonnull final Player p) {
-        ItemStack stack = SkullBuilder.of(1, p.getName()).setHeadTexture(p).build();
-        return stack;
+        return SkullBuilder.of(1, p.getName()).setHeadTexture(p).build();
     }
 
     public void playParticle() {
@@ -132,7 +128,7 @@ public class Death {
     }
 
     public void respawn() {
-        EulerAngleSpectating eulerAngleSpectating = null;
+        EulerAngleSpectating eulerAngleSpectating;
         Location camLoc = location;
 
         if (killer == null) {
@@ -184,7 +180,7 @@ public class Death {
 
     public void rewards() {
         CombatTag tag = CombatTag.tags.get(victim);
-        if (tag.getAttackers().size() < 1) {
+        if (tag.getAttackers().isEmpty()) {
             return;
         }
         for (UUID id : tag.getAttackers()) {

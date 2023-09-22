@@ -49,8 +49,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public class Damage implements Listener {

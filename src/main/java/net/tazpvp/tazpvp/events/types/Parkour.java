@@ -36,9 +36,6 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.events.Event;
 import org.bukkit.Bukkit;
 
-import javax.annotation.Nonnull;
-import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 public class Parkour extends Event {

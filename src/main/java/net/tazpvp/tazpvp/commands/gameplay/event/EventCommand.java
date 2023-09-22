@@ -18,7 +18,6 @@ import world.ntdi.nrcore.utils.PlayerUtils;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
