@@ -78,8 +78,33 @@ public class Enchantments extends GUI {
         }
 
         pickaxe.addUnsafeEnchantment(enchant, levelToAdd);
+        updateLore(pickaxe, enchantEnum.getName(), levelToAdd);
         p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, 1, 1);
         p.sendMessage("You enchanted your pickaxe with " + enchantEnum.getName());
+    }
+
+    private void updateLore(ItemStack itemStack, String enchantPrefix, int level) {
+        final ItemMeta meta = itemStack.getItemMeta();
+
+        final List<String> lore = meta.getLore();
+
+        boolean loreExists = false;
+        final String enchantLine = CC.GRAY + enchantPrefix + " " + ChatFunctions.intToRoman(level);
+
+        for (int i = 0; i < lore.size(); i++) {
+            final String loreLine = lore.get(i);
+
+            if (loreLine.toLowerCase().startsWith(enchantPrefix.toLowerCase())) {
+                   loreExists = true;
+                   lore.set(i, enchantLine);
+            }
+        }
+
+        if (!loreExists) {
+            lore.add(enchantLine);
+        }
+
+        meta.setLore(lore);
     }
 
     private void applyEnchant(Enchantment enchant, int cost) {
