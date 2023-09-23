@@ -92,11 +92,11 @@ public class Caesar extends GUI {
                 if (i != null) {
                     Ore ore = BlockFunctions.getOreFrom(i.getType());
                     int amount = i.getAmount();
-                    if (ore == null) return;
+                    if (ore != null) {
+                        reward += (BlockFunctions.isSmelted(i.getType())) ? (ore.getCost() * amount) : ((ore.getCost() * 2) * amount);
 
-                    reward += (BlockFunctions.isSmelted(i.getType())) ? (ore.getCost() * amount) : ((ore.getCost() * 2) * amount);
-
-                    i.setAmount(0);
+                        i.setAmount(0);
+                    }
                 }
             }
             if (reward == 0) {
