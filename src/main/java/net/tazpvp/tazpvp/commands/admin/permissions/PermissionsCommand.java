@@ -41,6 +41,7 @@ public class PermissionsCommand extends NRCommand {
                 }
             }
         } else if (type.equalsIgnoreCase("prefix")) {
+            targetWrapper.setCustomPrefix(setTo);
             return true;
         } else {
             sendIncorrectUsage(sender, "/"+ super.getLabel() + " <user> <rank|prefix> <rankType|newPrefix>");
