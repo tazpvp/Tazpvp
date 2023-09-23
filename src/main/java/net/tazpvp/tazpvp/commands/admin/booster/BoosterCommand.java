@@ -20,7 +20,7 @@ public class BoosterCommand extends NRCommand {
 
     @Override
     public boolean execute(@NonNull final CommandSender sender, @NotNull final @NonNull String[] args) {
-        if (sender.hasPermission(getLabel().getPermission())) {
+        if (!sender.hasPermission(getLabel().getPermission())) {
             sendNoPermission(sender);
             return false;
         }
