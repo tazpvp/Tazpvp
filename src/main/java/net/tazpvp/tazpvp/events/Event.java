@@ -37,6 +37,7 @@ import lombok.Setter;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
@@ -89,7 +90,9 @@ public abstract class Event implements Listener {
             public void run() {
                 for (final UUID id : participantListCopy) {
                     Bukkit.broadcastMessage(Bukkit.getPlayer(id).getName());
-                    Bukkit.getPlayer(id).teleport(NRCore.config.spawn);
+                    final Player player = Bukkit.getPlayer(id);
+                    player.teleport(NRCore.config.spawn);
+                    player.setGameMode(GameMode.SURVIVAL);
                 }
             }
         }.runTaskLater(Tazpvp.getInstance(), 20*5);
