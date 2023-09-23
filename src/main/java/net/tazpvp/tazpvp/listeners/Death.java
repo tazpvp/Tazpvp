@@ -20,6 +20,9 @@ public class Death implements Listener {
 
         final UUID uuid = entity.getUniqueId();
 
+        event.setDroppedExp(0);
+        event.getDrops().clear();
+
         if (BossManager.getSpawnedBoss() == null) {
             return;
         }
