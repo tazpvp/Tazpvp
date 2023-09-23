@@ -19,6 +19,7 @@ import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Enchantments extends GUI {
 
@@ -65,7 +66,6 @@ public class Enchantments extends GUI {
         int levelToAdd = 1;
 
         if (itemMeta.hasEnchant(enchant)) {
-            Bukkit.broadcastMessage("has Enchant");
             int currentEnchantLevel = pickaxe.getEnchantmentLevel(enchant);
 
             if (currentEnchantLevel >= enchant.getMaxLevel()) {
@@ -86,17 +86,19 @@ public class Enchantments extends GUI {
     private void updateLore(ItemStack itemStack, String enchantPrefix, int level) {
         final ItemMeta meta = itemStack.getItemMeta();
 
-        final List<String> lore = meta.getLore();
+        final List<String> lore = Objects.requireNonNullElse(meta.getLore(), new ArrayList<>());
 
         boolean loreExists = false;
         final String enchantLine = CC.GRAY + enchantPrefix + " " + ChatFunctions.intToRoman(level);
 
-        for (int i = 0; i < lore.size(); i++) {
-            final String loreLine = lore.get(i);
+        if (!lore.isEmpty()) {
+            for (int i = 0; i < lore.size(); i++) {
+                final String loreLine = lore.get(i);
 
-            if (loreLine.toLowerCase().startsWith(enchantPrefix.toLowerCase())) {
-                   loreExists = true;
-                   lore.set(i, enchantLine);
+                if (loreLine.toLowerCase().startsWith(enchantPrefix.toLowerCase())) {
+                    loreExists = true;
+                    lore.set(i, enchantLine);
+                }
             }
         }
 
@@ -105,6 +107,7 @@ public class Enchantments extends GUI {
         }
 
         meta.setLore(lore);
+        pickaxe.setItemMeta(meta);
     }
 
     private void applyEnchant(Enchantment enchant, int cost) {
