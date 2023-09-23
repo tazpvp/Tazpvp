@@ -185,32 +185,31 @@ public class Death {
 
     public void rewards() {
         CombatTag tag = CombatTag.tags.get(victim);
-        if (tag.getAttackers().isEmpty()) {
-            return;
-        }
-        for (UUID uuid : tag.getAttackers()) {
-            if (uuid != killer && uuid != null) {
-                Player assister = Bukkit.getPlayer(uuid);
-                if (assister == null) continue;
+        if (!tag.getAttackers().isEmpty()) {
+            for (UUID uuid : tag.getAttackers()) {
+                if (uuid != killer && uuid != null) {
+                    Player assister = Bukkit.getPlayer(uuid);
+                    if (assister == null) continue;
 
-                final BoosterBonus assistBonus = ActiveBoosterManager.getInstance().calculateBonus(5, List.of(BoosterTypes.XP, BoosterTypes.MEGA));
-                final BoosterBonus coinBonus = ActiveBoosterManager.getInstance().calculateBonus(5, List.of(BoosterTypes.COINS, BoosterTypes.MEGA));
+                    final BoosterBonus assistBonus = ActiveBoosterManager.getInstance().calculateBonus(5, List.of(BoosterTypes.XP, BoosterTypes.MEGA));
+                    final BoosterBonus coinBonus = ActiveBoosterManager.getInstance().calculateBonus(5, List.of(BoosterTypes.COINS, BoosterTypes.MEGA));
 
-                final int assistXP = (int) assistBonus.result();
-                final int assistCoins = (int) coinBonus.result();
+                    final int assistXP = (int) assistBonus.result();
+                    final int assistCoins = (int) coinBonus.result();
 
-                Logger logger = Bukkit.getLogger();
+                    Logger logger = Bukkit.getLogger();
 
-                logger.info(assistBonus.toString());
-                logger.info(coinBonus.toString());
+                    logger.info(assistBonus.toString());
+                    logger.info(coinBonus.toString());
 
-                assister.sendMessage(
-                        CC.DARK_GRAY + "Assist kill:" + CC.GRAY + " (" + pVictim.getName() + ") " +
-                                CC.DARK_AQUA + "Exp: " + CC.AQUA +  assistXP + " " + CC.DARK_AQUA + assistBonus.prettyPercentMultiplier() +
-                                CC.GOLD + " Coins: " + CC.YELLOW +  assistCoins + " " + CC.GOLD + coinBonus.prettyPercentMultiplier()
-                );
-                PersistentData.add(assister, DataTypes.COINS, assistCoins);
-                PersistentData.add(assister, DataTypes.XP, assistXP);
+                    assister.sendMessage(
+                            CC.DARK_GRAY + "Assist kill:" + CC.GRAY + " (" + pVictim.getName() + ") " +
+                                    CC.DARK_AQUA + "Exp: " + CC.AQUA +  assistXP + " " + CC.DARK_AQUA + assistBonus.prettyPercentMultiplier() +
+                                    CC.GOLD + " Coins: " + CC.YELLOW +  assistCoins + " " + CC.GOLD + coinBonus.prettyPercentMultiplier()
+                    );
+                    PersistentData.add(assister, DataTypes.COINS, assistCoins);
+                    PersistentData.add(assister, DataTypes.XP, assistXP);
+                }
             }
         }
         if (killer != null) {
