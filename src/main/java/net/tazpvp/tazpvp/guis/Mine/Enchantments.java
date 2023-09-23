@@ -132,6 +132,7 @@ public class Enchantments extends GUI {
         pickaxe.addEnchantment(enchant, levelToAdd);
         PlayerFunctions.takeShards(p, cost);
         p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, 1, 1);
-        p.sendMessage("You enchanted your pickaxe with " + enchant.getName());
+        String keyName = enchant.getKey().getKey();
+        p.sendMessage("You enchanted your pickaxe with " + keyName.substring(0, 1).toUpperCase() + keyName.substring(1));
     }
 }
