@@ -71,8 +71,7 @@ public class PlayerFunctions {
     }
 
     public static void healPlr(Player p) {
-        if (PersistentData.getInt(p.getUniqueId(), DataTypes.PLAYTIMEUNIX) >= 5 * 60 * 60 * 1000) {
-            p.sendMessage("new player");
+        if (PersistentData.getInt(p.getUniqueId(), DataTypes.PLAYTIMEUNIX) <= 5 * 60 * 60 * 1000) {
             p.setHealthScale(22.0);
         } else if (getInt(p, DataTypes.REBIRTH) >= 1) {
             p.setHealthScale(22.0);
