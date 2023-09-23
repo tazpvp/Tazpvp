@@ -28,9 +28,11 @@ public class Death implements Listener {
 
         if (uuid.equals(bossUUID)) {
             BossManager.bossDied();
-            for (Zombie z : SummonUndeadAttack.undeadList) {
-                SummonUndeadAttack.undeadList.clear();
-                z.setHealth(0);
+            if (!SummonUndeadAttack.undeadList.isEmpty()) {
+                for (Zombie z : SummonUndeadAttack.undeadList) {
+                    SummonUndeadAttack.undeadList.clear();
+                    z.setHealth(0);
+                }
             }
         }
     }
