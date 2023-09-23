@@ -94,7 +94,7 @@ public class Caesar extends GUI {
                     int amount = i.getAmount();
                     if (ore == null) return;
 
-                    reward = (BlockFunctions.isSmelted(i.getType())) ? (ore.getCost() * amount) : ((ore.getCost() * 2) * amount);
+                    reward += (BlockFunctions.isSmelted(i.getType())) ? (ore.getCost() * amount) : ((ore.getCost() * 2) * amount);
 
                     i.setAmount(0);
                 }
