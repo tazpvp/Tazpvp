@@ -42,6 +42,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -87,7 +88,7 @@ public class BlockFunctions {
 
         if (getPickaxe(p) != null) {
             final ItemStack pickaxe = getPickaxe(p);
-            final EnchantmentStorageMeta storageMeta = (EnchantmentStorageMeta) pickaxe.getItemMeta();
+            final ItemMeta storageMeta = pickaxe.getItemMeta();
             if (storageMeta.hasEnchant(Enchants.DOUBLE_ORES.getEnchant()))
                 amount = 2;
             if (storageMeta.hasEnchant(Enchants.AUTO_SMELT.getEnchant()))

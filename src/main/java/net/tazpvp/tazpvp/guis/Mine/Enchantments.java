@@ -53,7 +53,7 @@ public class Enchantments extends GUI {
     private void applyEnchant(Enchants enchantEnum) {
         int shardCount = PlayerFunctions.countShards(p);
         int cost = enchantEnum.getCost();
-        EnchantmentStorageMeta storageMeta = (EnchantmentStorageMeta) pickaxe.getItemMeta();
+        ItemMeta itemMeta = pickaxe.getItemMeta();
 
         if (shardCount < cost) {
             p.sendMessage(CC.RED + "You do not have enough shards for this upgrade.");
@@ -64,7 +64,7 @@ public class Enchantments extends GUI {
         Enchantment enchant = enchantEnum.getEnchant();
         int levelToAdd = 1;
 
-        if (storageMeta.hasEnchant(enchant)) {
+        if (itemMeta.hasEnchant(enchant)) {
             Bukkit.broadcastMessage("has Enchant");
             int currentEnchantLevel = pickaxe.getEnchantmentLevel(enchant);
 
@@ -77,7 +77,7 @@ public class Enchantments extends GUI {
             levelToAdd = currentEnchantLevel + 1;
         }
 
-        storageMeta.addEnchant(enchant, levelToAdd, true);
+        pickaxe.addUnsafeEnchantment(enchant, levelToAdd);
         p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, 1, 1);
         p.sendMessage("You enchanted your pickaxe with " + enchantEnum.getName());
     }
