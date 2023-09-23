@@ -31,14 +31,18 @@ public class ActiveBoosterManager {
 
         timeLeft.put(boosterType, getTimeLeft(boosterType) + millisToAdd);
 
-        Bukkit.getLogger().info(timeLeft.toString());
+        Bukkit.getLogger().info(millisToAdd + " milli to add");
     }
 
     public long getTimeLeft(final BoosterTypes boosterType) {
         final long currentTime = System.currentTimeMillis();
         final long storedTime = timeLeft.get(boosterType);
 
-        return Math.max(currentTime, storedTime);
+        final long maxTime =  Math.max(currentTime, storedTime);
+
+        Bukkit.getLogger().info(maxTime + " maxtime");
+
+        return maxTime;
     }
 
     public boolean isActive(final BoosterTypes boosterType) {
@@ -50,8 +54,10 @@ public class ActiveBoosterManager {
         final List<Double> multipliers = new ArrayList<>();
 
         Bukkit.getLogger().info(timeLeft.toString());
+        Bukkit.getLogger().info(boostersToCalculateWith.toString());
 
         for (final BoosterTypes boosterType : boostersToCalculateWith) {
+            Bukkit.getLogger().info(isActive(boosterType) + " is active");
             if (isActive(boosterType)) {
                 result *= boosterType.getMultiplier();
                 multipliers.add(boosterType.getMultiplier() - 1);
