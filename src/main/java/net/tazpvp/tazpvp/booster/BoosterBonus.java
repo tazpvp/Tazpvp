@@ -9,6 +9,15 @@ public record BoosterBonus(double base, List<Double> percentMultipliers, double 
             stringBuilder.append("+").append((int) (multi * 100)).append("%").append(" ");
         }
 
-        return "(" + stringBuilder.toString().trim() + ")";
+        return percentMultipliers.isEmpty() ? "" : "(" + stringBuilder.toString().trim() + ")";
+    }
+
+    @Override
+    public String toString() {
+        return "BoosterBonus{" +
+                "base=" + base +
+                ", percentMultipliers=" + percentMultipliers +
+                ", result=" + result +
+                '}';
     }
 }

@@ -59,6 +59,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 public class Death {
 
@@ -195,16 +196,21 @@ public class Death {
                 final BoosterBonus assistBonus = ActiveBoosterManager.getInstance().calculateBonus(5, List.of(BoosterTypes.XP, BoosterTypes.MEGA));
                 final BoosterBonus coinBonus = ActiveBoosterManager.getInstance().calculateBonus(5, List.of(BoosterTypes.COINS, BoosterTypes.MEGA));
 
-                final int AssistXP = (int) assistBonus.result();
-                final int AssistCoins = (int) coinBonus.result();
+                final int assistXP = (int) assistBonus.result();
+                final int assistCoins = (int) coinBonus.result();
+
+                Logger logger = Bukkit.getLogger();
+
+                logger.info(assistBonus.toString());
+                logger.info(coinBonus.toString());
 
                 assister.sendMessage(
                         CC.DARK_GRAY + "Assist kill:" + CC.GRAY + " (" + pVictim.getName() + ") " +
-                                CC.DARK_AQUA + "Exp: " + CC.AQUA +  AssistXP + " " + CC.DARK_AQUA + assistBonus.prettyPercentMultiplier() +
-                                CC.GOLD + " Coins: " + CC.YELLOW +  AssistCoins + " " + CC.GOLD + coinBonus.prettyPercentMultiplier()
+                                CC.DARK_AQUA + "Exp: " + CC.AQUA +  assistXP + " " + CC.DARK_AQUA + assistBonus.prettyPercentMultiplier() +
+                                CC.GOLD + " Coins: " + CC.YELLOW +  assistCoins + " " + CC.GOLD + coinBonus.prettyPercentMultiplier()
                 );
-                PersistentData.add(assister, DataTypes.COINS, AssistCoins);
-                PersistentData.add(assister, DataTypes.XP, AssistXP);
+                PersistentData.add(assister, DataTypes.COINS, assistCoins);
+                PersistentData.add(assister, DataTypes.XP, assistXP);
             }
         }
         if (killer != null) {
@@ -216,6 +222,11 @@ public class Death {
 
             final BoosterBonus xpBonus = ActiveBoosterManager.getInstance().calculateBonus(15, List.of(BoosterTypes.XP, BoosterTypes.MEGA));
             final BoosterBonus coinBonus = ActiveBoosterManager.getInstance().calculateBonus(26, List.of(BoosterTypes.COINS, BoosterTypes.MEGA));
+
+            Logger logger = Bukkit.getLogger();
+
+            logger.info(xpBonus.toString());
+            logger.info(coinBonus.toString());
 
             final int xp = (int) xpBonus.result();
             final int coins = (int) coinBonus.result();
