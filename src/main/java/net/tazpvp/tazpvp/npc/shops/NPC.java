@@ -45,7 +45,7 @@ import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
-import org.javatuples.Pair;
+import world.ntdi.postglam.data.Tuple;
 
 import javax.annotation.Nonnull;
 import java.util.UUID;
@@ -110,10 +110,10 @@ public abstract class NPC implements Listener {
     public void onInteract(PlayerInteractAtEntityEvent e) {
         if (e.getRightClicked().getType().equals(EntityType.VILLAGER)) {
             Villager v = (Villager) e.getRightClicked();
-            Pair<Boolean, String> pair = PDCUtil.hasPDC(v, PDCUtil.getNpcKey());
+            Tuple<Boolean, String> pair = PDCUtil.hasPDC(v, PDCUtil.getNpcKey());
 
-            if (pair.getValue0()) {
-                if (pair.getValue1().equals(ID.toString())) {
+            if (pair.getA()) {
+                if (pair.getB().equals(ID.toString())) {
                     interact(e, e.getPlayer());
                 }
             }

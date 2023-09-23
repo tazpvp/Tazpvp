@@ -11,9 +11,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.javatuples.Pair;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
+import world.ntdi.postglam.data.Tuple;
 
 public class DuelAcceptCommand extends NRCommand {
     public DuelAcceptCommand() {
@@ -43,10 +43,10 @@ public class DuelAcceptCommand extends NRCommand {
             return true;
         }
 
-        Pair<Boolean, Duel> duelPair = requested(p);
+        Tuple<Boolean, Duel> duelPair = requested(p);
 
-        if (duelPair.getValue0()) {
-            Duel duel = duelPair.getValue1();
+        if (duelPair.getA()) {
+            Duel duel = duelPair.getB();
 
             duel.initialize();
             new BukkitRunnable() {
@@ -63,12 +63,12 @@ public class DuelAcceptCommand extends NRCommand {
         return true;
     }
 
-    private Pair<Boolean, Duel> requested(Player p) {
+    private Tuple<Boolean, Duel> requested(Player p) {
         for (Duel duel : Duel.duels.keySet()) {
             if (Duel.duels.get(duel) == p.getUniqueId()) {
-                return Pair.with(true, duel);
+                return new Tuple<>(true, duel);
             }
         }
-        return Pair.with(false, null);
+        return new Tuple<>(false, null);
     }
 }

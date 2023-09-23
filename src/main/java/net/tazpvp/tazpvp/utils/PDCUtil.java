@@ -6,7 +6,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.javatuples.Pair;
+import world.ntdi.postglam.data.Tuple;
 
 public class PDCUtil {
     @Getter
@@ -16,13 +16,13 @@ public class PDCUtil {
         e.getPersistentDataContainer().set(key, PersistentDataType.STRING, value);
     }
 
-    public static Pair<Boolean, String> hasPDC(Entity e, NamespacedKey key) {
+    public static Tuple<Boolean, String> hasPDC(Entity e, NamespacedKey key) {
         PersistentDataContainer container  = e.getPersistentDataContainer();
 
         if (container.has(key, PersistentDataType.STRING)) {
-            return Pair.with(true, (container.get(key, PersistentDataType.STRING)));
+            return new Tuple<>(true, (container.get(key, PersistentDataType.STRING)));
         }
-        return Pair.with(false, "");
+        return new Tuple<>(false, "");
     }
 
 }
