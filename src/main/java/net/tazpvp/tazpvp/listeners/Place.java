@@ -25,6 +25,9 @@ public class Place implements Listener {
         PlayerWrapper pw = PlayerWrapper.getPlayer(p);
         int delay;
 
+        if (!p.getWorld().equals(Bukkit.getWorld("arena"))) {
+            return;
+        }
         if (p.getGameMode() != GameMode.CREATIVE) {
 
             Block b = e.getBlockPlaced();
