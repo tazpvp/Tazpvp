@@ -126,12 +126,19 @@ public class BlockFunctions {
 
     public static Ore getOreFrom(Material mat) {
         for (Ore ore : ores) {
-            if (mat.equals(ore.getMat())) {
+            if (mat.equals(ore.getMat()) || mat.equals(ore.getSmelted())) {
                 return ore;
             }
         }
         return null;
     }
 
-
+    public static boolean isSmelted(Material mat) {
+        for (Ore ore : ores) {
+            if (mat.equals(ore.getSmelted())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
