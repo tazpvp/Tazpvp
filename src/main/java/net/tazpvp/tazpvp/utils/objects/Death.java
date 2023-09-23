@@ -37,6 +37,9 @@ import lombok.Setter;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.booster.ActiveBoosterManager;
+import net.tazpvp.tazpvp.booster.BoosterBonus;
+import net.tazpvp.tazpvp.booster.BoosterTypes;
 import net.tazpvp.tazpvp.guild.GuildUtils;
 import net.tazpvp.tazpvp.utils.data.*;
 import net.tazpvp.tazpvp.utils.enums.CC;
@@ -53,6 +56,7 @@ import world.ntdi.nrcore.utils.item.builders.SkullBuilder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -183,13 +187,22 @@ public class Death {
         if (tag.getAttackers().isEmpty()) {
             return;
         }
-        for (UUID id : tag.getAttackers()) {
-            if (id != killer && id != null) {
-                Player assister = Bukkit.getPlayer(id);
-                final int AssistXP = 5;
-                final int AssistCoins = 5;
+        for (UUID uuid : tag.getAttackers()) {
+            if (uuid != killer && uuid != null) {
+                Player assister = Bukkit.getPlayer(uuid);
+                if (assister == null) continue;
 
-                assister.sendMessage(CC.DARK_GRAY + "Assist kill: " + CC.GRAY + pVictim.getName() + ": " + CC.DARK_AQUA +  "Exp: " + CC.AQUA +  AssistXP + CC.GOLD + " Coins: " + CC.YELLOW +  AssistCoins);
+                final BoosterBonus assistBonus = ActiveBoosterManager.getInstance().calculateBonus(5, List.of(BoosterTypes.XP, BoosterTypes.MEGA));
+                final BoosterBonus coinBonus = ActiveBoosterManager.getInstance().calculateBonus(5, List.of(BoosterTypes.COINS, BoosterTypes.MEGA));
+
+                final int AssistXP = (int) assistBonus.result();
+                final int AssistCoins = (int) coinBonus.result();
+
+                assister.sendMessage(
+                        CC.DARK_GRAY + "Assist kill:" + CC.GRAY + " (" + pVictim.getName() + ") " +
+                                CC.DARK_AQUA + "Exp: " + CC.AQUA +  AssistXP + " " + CC.DARK_AQUA + assistBonus.prettyPercentMultiplier() +
+                                CC.GOLD + " Coins: " + CC.YELLOW +  AssistCoins + " " + CC.GOLD + coinBonus.prettyPercentMultiplier()
+                );
                 PersistentData.add(assister, DataTypes.COINS, AssistCoins);
                 PersistentData.add(assister, DataTypes.XP, AssistXP);
             }
@@ -201,11 +214,17 @@ public class Death {
                 if (GuildUtils.getGuildPlayerIn(pVictim) == GuildUtils.getGuildPlayerIn(pKiller)) return;
             }
 
-            final int xp = 15;
-            final int coins = 26;
+            final BoosterBonus xpBonus = ActiveBoosterManager.getInstance().calculateBonus(15, List.of(BoosterTypes.XP, BoosterTypes.MEGA));
+            final BoosterBonus coinBonus = ActiveBoosterManager.getInstance().calculateBonus(26, List.of(BoosterTypes.COINS, BoosterTypes.MEGA));
+
+            final int xp = (int) xpBonus.result();
+            final int coins = (int) coinBonus.result();
             final int bounty = LooseData.getKs(victim) * 10;
 
-            pKiller.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(CC.DARK_AQUA + "" + CC.BOLD +  "Exp: " + CC.AQUA + "" + CC.BOLD +  xp + CC.GOLD + "" + CC.BOLD + " Coins: " + CC.YELLOW + "" + CC.BOLD +  coins));
+            pKiller.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
+                    CC.DARK_AQUA + CC.BOLD.toString() +  "Exp: " + CC.AQUA + CC.BOLD + xp + " " + CC.DARK_AQUA + xpBonus.prettyPercentMultiplier() +
+                            CC.GOLD + CC.BOLD + " Coins: " + CC.YELLOW + CC.BOLD + coins + " " + CC.GOLD + coinBonus.prettyPercentMultiplier()
+            ));
             if (bounty > 0) {
                 pKiller.sendMessage(CC.YELLOW + "You collected " + pVictim.getName() + "'s " + CC.GOLD + "$" + bounty + CC.YELLOW + " bounty.");
             }

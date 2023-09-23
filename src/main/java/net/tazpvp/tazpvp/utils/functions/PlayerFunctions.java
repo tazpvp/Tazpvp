@@ -32,6 +32,9 @@
 
 package net.tazpvp.tazpvp.utils.functions;
 
+import net.tazpvp.tazpvp.booster.ActiveBoosterManager;
+import net.tazpvp.tazpvp.booster.BoosterBonus;
+import net.tazpvp.tazpvp.booster.BoosterTypes;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
@@ -146,10 +149,14 @@ public class PlayerFunctions {
     public static void levelUp(UUID ID, float value) {
         Player p = Bukkit.getPlayer(ID);
         if (value >= LooseData.getExpLeft(ID)) {
+
+            final BoosterBonus coinsBonus = ActiveBoosterManager.getInstance().calculateBonus(100, List.of(BoosterTypes.COINS, BoosterTypes.MEGA));
+            final int coins = (int) coinsBonus.result();
+
             int num = (int) value - LooseData.getExpLeft(ID);
             PersistentData.set(ID, DataTypes.XP, num);
             PersistentData.add(ID, DataTypes.LEVEL);
-            PersistentData.add(ID, DataTypes.COINS, 100);
+            PersistentData.add(ID, DataTypes.COINS, coins);
             p.getInventory().addItem(new ItemStack(Material.AMETHYST_SHARD));
             p.setLevel(PersistentData.getInt(ID, DataTypes.LEVEL));
             p.setExp((float) num / LooseData.getExpLeft(p.getUniqueId()));
@@ -158,7 +165,7 @@ public class PlayerFunctions {
                 p.sendMessage("");
                 p.sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "  LEVEL UP " + ChatColor.DARK_AQUA + "Combat Lvl. " + ChatColor.AQUA + getInt(ID, DataTypes.LEVEL));
                 p.sendMessage("");
-                p.sendMessage(ChatColor.DARK_GRAY + "  ▶ " + ChatColor.GOLD + "100 Coins");
+                p.sendMessage(ChatColor.DARK_GRAY + "  ▶ " + ChatColor.GOLD + coins + " Coins " + coinsBonus.prettyPercentMultiplier());
                 p.sendMessage(ChatColor.DARK_GRAY + "  ▶ " + ChatColor.DARK_AQUA + "1 Shard");
                 p.sendMessage("");
             }
