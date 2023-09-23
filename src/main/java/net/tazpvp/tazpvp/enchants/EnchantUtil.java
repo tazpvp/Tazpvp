@@ -16,8 +16,9 @@ public class EnchantUtil {
     private static final List<Enchantment> customEnchantments = new ArrayList<>();
 
     static {
-        customEnchantments.add(new EnchantWrapper(new NamespacedKey(Tazpvp.getInstance(), "double_ores"), "Double Ores", 1));
-        customEnchantments.add(new EnchantWrapper(new NamespacedKey(Tazpvp.getInstance(), "auto_smelt"), "Auto Smelt", 1));
+        for (Enchants enchant : Enchants.values()) {
+            customEnchantments.add(new EnchantWrapper(new NamespacedKey(Tazpvp.getInstance(), enchant.getKey()), enchant.getName(), enchant.getMaxLevel()));
+        }
     }
 
     public static void register() {

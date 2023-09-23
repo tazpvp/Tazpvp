@@ -41,6 +41,7 @@ import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -85,10 +86,11 @@ public class BlockFunctions {
         }.runTaskLater(Tazpvp.getInstance(), time);
 
         if (getPickaxe(p) != null) {
-            ItemStack pickaxe = getPickaxe(p);
-            if (pickaxe.getItemMeta().hasEnchant(Enchants.DOUBLE_ORES.getEnchant()))
+            final ItemStack pickaxe = getPickaxe(p);
+            final EnchantmentStorageMeta storageMeta = (EnchantmentStorageMeta) pickaxe.getItemMeta();
+            if (storageMeta.hasEnchant(Enchants.DOUBLE_ORES.getEnchant()))
                 amount = 2;
-            if (pickaxe.getItemMeta().hasEnchant(Enchants.AUTO_SMELT.getEnchant()))
+            if (storageMeta.hasEnchant(Enchants.AUTO_SMELT.getEnchant()))
                 givenItem = smelted;
         }
         giveOre(p, givenItem, amount);

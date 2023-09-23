@@ -24,9 +24,7 @@ public class SummonUndeadAttack implements Attack {
     @Override
     public void attack(final CustomBoss boss) {
         for (int i = 0; i < 2; i++) {
-            final Location spawnLocWithinRadius = randomLocationWithinRadius(boss.getBoss().getLocation());
-
-            spawnUndead(spawnLocWithinRadius);
+            spawnUndead(boss.getBoss().getLocation());
         }
     }
 
@@ -57,6 +55,7 @@ public class SummonUndeadAttack implements Attack {
         }
     }
 
+    //TODO: Depricate my ass
     private Location randomLocationWithinRadius(final Location targetLocation) {
         final int radius = random.nextInt(MAX_DISTANCE) + 1;
         double angle = random.nextDouble() * 2 * Math.PI;
