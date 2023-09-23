@@ -35,8 +35,13 @@ public class PlayerNameTag {
 
         team.setDisplayName(p2.getName());
 
-        team.setPrefix(ChatUtils.chat(otherWrapper.getRankPrefix()) + " ");
-        team.setSuffix(" " + otherWrapper.getGuildTag());
+        final String prefix = ChatUtils.chat(otherWrapper.getRankPrefix());
+        final String prefixSeparator = prefix.isBlank() ? "" : " ";
+        final String suffix = otherWrapper.getGuildTag();
+        final String suffixSeparator = suffix.isBlank() ? "" : " ";
+
+        team.setPrefix(prefix + prefixSeparator);
+        team.setSuffix(suffixSeparator + suffix);
         team.setColor(otherWrapper.getRank().getColor());
 
         team.addPlayer(p2);

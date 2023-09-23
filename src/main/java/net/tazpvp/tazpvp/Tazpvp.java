@@ -36,6 +36,7 @@ package net.tazpvp.tazpvp;
 import lombok.Getter;
 import net.tazpvp.tazpvp.achievements.achievement.*;
 import net.tazpvp.tazpvp.commands.admin.PremiumCommandFunction;
+import net.tazpvp.tazpvp.commands.admin.booster.BoosterCommand;
 import net.tazpvp.tazpvp.commands.admin.edit.EditCommand;
 import net.tazpvp.tazpvp.commands.admin.hide.HideCommand;
 import net.tazpvp.tazpvp.commands.admin.kit.KitCommand;
@@ -236,7 +237,8 @@ public final class Tazpvp extends JavaPlugin {
                 new PremiumCommandFunction(),
                 new PlaytimeCommand(),
                 new EventCommand(),
-                new UnmuteCommand()
+                new UnmuteCommand(),
+                new BoosterCommand()
         );
     }
 
