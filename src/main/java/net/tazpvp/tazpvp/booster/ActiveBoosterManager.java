@@ -1,5 +1,7 @@
 package net.tazpvp.tazpvp.booster;
 
+import org.bukkit.Bukkit;
+
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -28,6 +30,8 @@ public class ActiveBoosterManager {
         final long millisToAdd = timeUnit.toMillis(amount);
 
         timeLeft.put(boosterType, getTimeLeft(boosterType) + millisToAdd);
+
+        Bukkit.getLogger().info(timeLeft.toString());
     }
 
     public long getTimeLeft(final BoosterTypes boosterType) {
@@ -44,6 +48,8 @@ public class ActiveBoosterManager {
     public BoosterBonus calculateBonus(final double base, final List<BoosterTypes> boostersToCalculateWith) {
         double result = base;
         final List<Double> multipliers = new ArrayList<>();
+
+        Bukkit.getLogger().info(timeLeft.toString());
 
         for (final BoosterTypes boosterType : boostersToCalculateWith) {
             if (isActive(boosterType)) {
