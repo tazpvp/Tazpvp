@@ -35,8 +35,8 @@ public class PlayerNameTag {
 
         team.setDisplayName(p2.getName());
 
-        team.setPrefix(ChatUtils.chat(otherWrapper.getRankPrefix()));
-        team.setSuffix(otherWrapper.getGuildTag());
+        team.setPrefix(ChatUtils.chat(otherWrapper.getRankPrefix()) + " ");
+        team.setSuffix(" " + otherWrapper.getGuildTag());
         team.setColor(otherWrapper.getRank().getColor());
 
         team.addPlayer(p2);
