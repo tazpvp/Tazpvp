@@ -39,6 +39,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -63,17 +64,12 @@ public class PlayerFunctions {
             Material.STONE_PICKAXE
     );
 
-    public static Integer getMaxHealth(Player p) {
-        if (getInt(p, DataTypes.REBIRTH) >= 1)
-            return 22;
-        else
-            return 20;
+    public static Double getMaxHealth(Player p) {
+        return p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
     }
 
     public static void healPlr(Player p) {
         if (PersistentData.getInt(p.getUniqueId(), DataTypes.PLAYTIMEUNIX) <= 5 * 60 * 60 * 1000) {
-            p.setHealthScale(22.0);
-        } else if (getInt(p, DataTypes.REBIRTH) >= 1) {
             p.setHealthScale(22.0);
         } else {
             p.setHealthScale(20.0);

@@ -43,7 +43,7 @@ public enum DataTypes {
     KILLS("kills", 5, true),
     DEATHS("deaths", 6, true),
     TOPKILLSTREAK("top_ks", 7, true),
-    REBIRTH("rebirth", 8, true),
+    PRESTIGE("rebirth", 8, true),
     DUELWINS("duel_wins", 9, true),
     DIVISION("division", 10, true),
     PLAYTIMEUNIX("playtime", 11, true),
