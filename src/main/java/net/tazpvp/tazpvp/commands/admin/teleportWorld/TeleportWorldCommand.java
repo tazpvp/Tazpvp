@@ -26,6 +26,11 @@ public class TeleportWorldCommand extends NRCommand {
             return true;
         }
 
+        if (!p.hasPermission(getLabel().getPermission())) {
+            sendNoPermission(sender);
+            return false;
+        }
+
         if (args.length < 1) {
             sendIncorrectUsage(sender, "/teleportworld <world>");
             return true;
