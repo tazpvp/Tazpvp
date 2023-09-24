@@ -181,6 +181,7 @@ public final class PlayerRankData {
     public static Particle getMaterial(@Nonnull final UUID uuid, @Nonnull final ParticleMaterial particleMaterial) {
         try {
             String particle = (String) new Row(table, uuid.toString()).fetch(new Column(table, particleMaterial.columnName));
+            if (particle == null) return null;
             return (particle.equals("null") ? null : Particle.valueOf(particle));
         } catch (SQLException e) {
             throw new RuntimeException(e);
