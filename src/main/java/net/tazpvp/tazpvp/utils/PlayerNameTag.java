@@ -42,7 +42,7 @@ public class PlayerNameTag {
 
         team.setPrefix(prefix + prefixSeparator);
         team.setSuffix(suffixSeparator + suffix);
-        team.setColor(otherWrapper.getRank().getColor());
+//        team.setColor(otherWrapper.getRank().getColor());
 
         team.addPlayer(p2);
     }

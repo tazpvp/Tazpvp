@@ -81,7 +81,7 @@ public class Chat implements Listener {
 
         Rank rank = PlayerRankData.getRank(uuid);
 
-        String format = "&GRAY[{LEVEL}&GRAY] {PREFIX}%s{SUFFIX} &GRAY&M%s";
+        String format = "&GRAY[{LEVEL}&GRAY] {PREFIX} %s{SUFFIX} &GRAY&M%s";
         format = format
                 .replace("&GRAY", CC.GRAY.toString())
                 .replace("&GOLD", CC.YELLOW.toString())
