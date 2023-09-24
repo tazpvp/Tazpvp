@@ -47,6 +47,7 @@ import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class CosmeticMenu extends GUI {
@@ -103,7 +104,14 @@ public class CosmeticMenu extends GUI {
 
     private void setCustomPrefix(Player p) {
         new AnvilGUI.Builder()
-                .onComplete((player, text) -> {
+                .onClick((slot, stateSnapshot) -> {
+                    if(slot != AnvilGUI.Slot.OUTPUT) {
+                        return Collections.emptyList();
+                    }
+
+                    String text = stateSnapshot.getText();
+                    final Player player = stateSnapshot.getPlayer();
+
                     if (text.startsWith(">")) {
                         text = text.replaceFirst(">", "");
                     }
@@ -113,16 +121,16 @@ public class CosmeticMenu extends GUI {
                         return AnvilGUI.Response.close();
                     }
 
-                    if (Profanity.sayNoNo(p, text)) return AnvilGUI.Response.close();
+                    if (Profanity.sayNoNo(p, text)) return Arrays.asList(AnvilGUI.ResponseAction.close());
 
                     player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
                     PlayerWrapper.getPlayer(p).setCustomPrefix(text);
                     p.sendMessage(CC.GREEN + "Set custom prefix to: " + CC.YELLOW + text);
 
-                    return AnvilGUI.Response.close();
+                    return Arrays.asList(AnvilGUI.ResponseAction.close());
                 })
-                .onClose(player -> {
-                    player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+                .onClose(stateSnapshot -> {
+                    stateSnapshot.getPlayer().playSound(stateSnapshot.getPlayer().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
                 })
                 .text(">")
                 .itemLeft(ItemBuilder.of(Material.NAME_TAG).name(ChatColor.GREEN + "Custom Prefix < 7").build())

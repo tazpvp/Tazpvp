@@ -48,6 +48,8 @@ import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class GuildEdit extends GUI {
@@ -144,23 +146,30 @@ public class GuildEdit extends GUI {
 
     private void  setDescription(Player p, Guild g) {
         new AnvilGUI.Builder()
-                .onComplete((player, text) -> {
+                .onClick((slot, stateSnapshot) -> {
+                    if(slot != AnvilGUI.Slot.OUTPUT) {
+                        return Collections.emptyList();
+                    }
+
+                    String text = stateSnapshot.getText();
+                    final Player player = stateSnapshot.getPlayer();
+
                     if (text.startsWith(">")) {
                         text = text.replaceFirst(">", "");
                     }
 
 
-                    if (Profanity.sayNoNo(p, text)) return AnvilGUI.Response.close();
+                    if (Profanity.sayNoNo(p, text)) return Arrays.asList(AnvilGUI.ResponseAction.close());
                     player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
 
                     PersistentData.remove(p, DataTypes.COINS, 6000);
 
                     g.setDescription(p.getUniqueId(), text);
 
-                    return AnvilGUI.Response.close();
+                    return Arrays.asList(AnvilGUI.ResponseAction.close());
                 })
-                .onClose(player -> {
-                    player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+                .onClose(stateSnapshot -> {
+                    stateSnapshot.getPlayer().playSound(stateSnapshot.getPlayer().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
                 })
                 .text(">")
                 .itemLeft(ItemBuilder.of(Material.NAME_TAG).name(ChatColor.GREEN + "Guild Description").build())
@@ -171,7 +180,14 @@ public class GuildEdit extends GUI {
 
     private void setTag(Player p, Guild g) {
         new AnvilGUI.Builder()
-                .onComplete((player, text) -> {
+                .onClick((slot, stateSnapshot) -> {
+                    if(slot != AnvilGUI.Slot.OUTPUT) {
+                        return Collections.emptyList();
+                    }
+
+                    String text = stateSnapshot.getText();
+                    final Player player = stateSnapshot.getPlayer();
+
                     if (text.startsWith(">")) {
                         text = text.replaceFirst(">", "");
                     }
@@ -189,8 +205,8 @@ public class GuildEdit extends GUI {
 
                     return AnvilGUI.Response.close();
                 })
-                .onClose(player -> {
-                    player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+                .onClose(stateSnapshot -> {
+                    stateSnapshot.getPlayer().playSound(stateSnapshot.getPlayer().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
                 })
                 .text(">")
                 .itemLeft(ItemBuilder.of(Material.NAME_TAG).name(ChatColor.GREEN + "Guild Tag < 8").build())

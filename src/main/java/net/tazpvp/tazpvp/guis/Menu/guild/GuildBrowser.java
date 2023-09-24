@@ -50,9 +50,7 @@ import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class GuildBrowser extends GUI {
     private int pagesNeeded;
@@ -134,7 +132,13 @@ public class GuildBrowser extends GUI {
 
     private static void nameGuild(Player p) {
         new AnvilGUI.Builder()
-            .onComplete((player, text) -> {
+            .onClick((slot, stateSnapshot) -> {
+                if (slot != AnvilGUI.Slot.OUTPUT) {
+                    return Collections.emptyList();
+                }
+
+                String text = stateSnapshot.getText();
+
                 if (text.startsWith(">")) {
                     text = text.replaceFirst(">", "").replaceAll(" ", "");
                 }
@@ -143,7 +147,7 @@ public class GuildBrowser extends GUI {
 
                 createGuild(text, p.getUniqueId());
                 p.sendMessage("You created a guild! " + GuildUtils.getGuildPlayerIn(p).getName());
-                return AnvilGUI.Response.close();
+                return Arrays.asList(AnvilGUI.ResponseAction.close());
             })
             .text(">")
             .itemLeft(ItemBuilder.of(Material.NAME_TAG).build())
