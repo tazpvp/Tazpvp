@@ -78,7 +78,7 @@ public class ChatFunctions {
         float[] hsl = hexToHSL(hexColorCode);
 
         int length = text.length();
-        float hueStep = -0.006f;
+        float hueStep = -0.01f;
 
         for (int i = 0; i < length; i++) {
             float hue = hsl[0] + hueStep * i;
@@ -91,9 +91,6 @@ public class ChatFunctions {
                 coloredText.append(ChatColor.BOLD);
             }
             coloredText.append(text.charAt(i));
-            if (isBold) {
-                coloredText.append(ChatColor.RESET);
-            }
         }
 
         return coloredText.toString();
@@ -121,6 +118,13 @@ public class ChatFunctions {
         ChatColor finalColor = bold ? color.BOLD : color;
         String formattedText = finalColor + text + ChatColor.RESET;
         return formattedText;
+    }
+
+    public static org.bukkit.ChatColor hexChatColor(String hexCode, boolean bold) {
+        hexCode = hexCode.replace("#", "");
+        org.bukkit.ChatColor color = org.bukkit.ChatColor.valueOf("#" + hexCode);
+        org.bukkit.ChatColor finalColor = bold ? color.BOLD : color;
+        return finalColor;
     }
 
     public static String intToRoman(int num) {

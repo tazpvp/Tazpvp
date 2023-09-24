@@ -34,6 +34,7 @@ package net.tazpvp.tazpvp.utils.data;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.ChatColor;
 
 import java.util.List;
@@ -45,7 +46,7 @@ public enum Rank {
     MODERATOR("moderator", CC.AQUA + "MODERATOR", ChatColor.AQUA, 6, List.of("mute", "tazpvp.ban", "tazpvp.restore")),
     ADMIN("admin", CC.YELLOW + "ADMIN", ChatColor.YELLOW, 5, List.of("mute", "tazpvp.staff", "tazpvp.ban", "tazpvp.restore", "tazpvp.hide", "tazpvp.kit")),
     MANAGER("manager", CC.BLUE + "MANAGER", ChatColor.BLUE, 4, List.of("mute", "tazpvp.staff", "tazpvp.ban", "tazpvp.restore", "tazpvp.hide", "tazpvp.kit", "tazpvp.stats")),
-    OWNER("owner", CC.RED + "OWNER", ChatColor.RED, 1, List.of("is.op"));
+    OWNER("owner", ChatFunctions.gradient("#ff6417", "OWNER", true), ChatColor.RED, 1, List.of("is.op"));
 
     @Getter
     private final String name;
