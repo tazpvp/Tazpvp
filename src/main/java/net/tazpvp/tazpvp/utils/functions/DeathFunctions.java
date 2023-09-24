@@ -144,7 +144,7 @@ public class DeathFunctions {
         pVictim.getInventory().clear();
 
         final String kitSerial = KitData.getSerial(pVictim.getUniqueId());
-        if (kitSerial == null) {
+        if (kitSerial == null || kitSerial.isEmpty()) {
             PlayerFunctions.kitPlayer(pVictim);
         } else {
             SerializableInventory serializableInventory = SerializableInventory.convertFromString(kitSerial);
