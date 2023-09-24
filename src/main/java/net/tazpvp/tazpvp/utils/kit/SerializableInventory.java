@@ -90,7 +90,7 @@ public class SerializableInventory implements Serializable {
      * @param string The serialized inventory in string form
      * @return The serialized inventory returned by deserialization.
      */
-    public SerializableInventory convertFromString(@Nonnull final String string) {
+    public static SerializableInventory convertFromString(@Nonnull final String string) {
         return (SerializableInventory) SerializeObject.getSerializeObject(string);
     }
 

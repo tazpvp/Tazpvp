@@ -36,9 +36,11 @@ import lombok.Getter;
 import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.guild.GuildUtils;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
+import net.tazpvp.tazpvp.utils.data.KitData;
 import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.kit.SerializableInventory;
 import net.tazpvp.tazpvp.utils.objects.Coffin;
 import net.tazpvp.tazpvp.utils.objects.CombatTag;
 import net.tazpvp.tazpvp.utils.objects.Death;
@@ -111,13 +113,7 @@ public class DeathFunctions {
         PersistentData.add(victim, DataTypes.DEATHS);
         LooseData.resetKs(victim);
 
-        death.respawn();
-        death.rewards();
-        pVictim.getInventory().clear();
-        PlayerFunctions.kitPlayer(pVictim);
-        PlayerFunctions.healPlr(pVictim);
-        PlayerFunctions.feedPlr(pVictim);
-        CombatTag.tags.get(victim).endCombat(null, false);
+        combatRespawn(pVictim, death);
     }
 
     public static void death(UUID victim) {
@@ -139,13 +135,25 @@ public class DeathFunctions {
         PersistentData.add(victim, DataTypes.DEATHS);
         LooseData.resetKs(victim);
 
+        combatRespawn(pVictim, death);
+    }
+
+    private static void combatRespawn(final Player pVictim, final Death death) {
         death.respawn();
         death.rewards();
         pVictim.getInventory().clear();
-        PlayerFunctions.kitPlayer(pVictim);
+
+        final String kitSerial = KitData.getSerial(pVictim.getUniqueId());
+        if (kitSerial == null) {
+            PlayerFunctions.kitPlayer(pVictim);
+        } else {
+            SerializableInventory serializableInventory = SerializableInventory.convertFromString(kitSerial);
+            serializableInventory.addItems(pVictim.getInventory(), PlayerFunctions.getKitItems(pVictim));
+        }
+
         PlayerFunctions.resetHealth(pVictim);
         PlayerFunctions.feedPlr(pVictim);
-        CombatTag.tags.get(victim).endCombat(null, false);
+        CombatTag.tags.get(pVictim.getUniqueId()).endCombat(null, false);
     }
 
     public static void acceptClick(PlayerInteractEvent e) {
