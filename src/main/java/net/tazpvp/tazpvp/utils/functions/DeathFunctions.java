@@ -46,9 +46,11 @@ import net.tazpvp.tazpvp.utils.objects.CombatTag;
 import net.tazpvp.tazpvp.utils.objects.Death;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
+import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -149,6 +151,8 @@ public class DeathFunctions {
         } else {
             SerializableInventory serializableInventory = SerializableInventory.convertFromString(kitSerial);
             serializableInventory.addItems(pVictim.getInventory(), PlayerFunctions.getKitItems(pVictim));
+
+            PlayerFunctions.armorPlayer(pVictim);
         }
 
         PlayerFunctions.resetHealth(pVictim);

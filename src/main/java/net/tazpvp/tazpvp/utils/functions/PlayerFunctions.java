@@ -105,10 +105,7 @@ public class PlayerFunctions {
     public static void kitPlayer(Player p) {
         Inventory inv = p.getInventory();
 
-        p.getEquipment().setHelmet(ItemBuilder.of(Material.DIAMOND_HELMET, 1, "Hard Hat").build());
-        p.getEquipment().setChestplate(ItemBuilder.of(Material.DIAMOND_CHESTPLATE, 1, "Tunic").build());
-        p.getEquipment().setLeggings(ItemBuilder.of(Material.DIAMOND_LEGGINGS, 1, "Pants").build());
-        p.getEquipment().setBoots(ItemBuilder.of(Material.DIAMOND_BOOTS, 1, "Sandles").build());
+        armorPlayer(p);
 
         for (ItemStack kitItem : getKitItems(p)) {
             if (kitItem.getType() == Material.ARROW) {
@@ -116,6 +113,13 @@ public class PlayerFunctions {
             }
             inv.addItem(kitItem);
         }
+    }
+
+    public static void armorPlayer(Player p) {
+        p.getEquipment().setHelmet(ItemBuilder.of(Material.DIAMOND_HELMET, 1, "Hard Hat").build());
+        p.getEquipment().setChestplate(ItemBuilder.of(Material.DIAMOND_CHESTPLATE, 1, "Tunic").build());
+        p.getEquipment().setLeggings(ItemBuilder.of(Material.DIAMOND_LEGGINGS, 1, "Pants").build());
+        p.getEquipment().setBoots(ItemBuilder.of(Material.DIAMOND_BOOTS, 1, "Sandles").build());
     }
 
     public static int countShards(Player p) {
