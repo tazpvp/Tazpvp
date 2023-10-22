@@ -33,7 +33,7 @@ public class DuelSendCommand extends NRCommand {
             return true;
         }
 
-        if (PlayerWrapper.getPlayer(p).isDueling()) {
+        if (PlayerWrapper.getPlayer(p).getDuel() != null) {
             p.sendMessage(CC.RED + "You cannot use this command while dueling.");
             return true;
         }

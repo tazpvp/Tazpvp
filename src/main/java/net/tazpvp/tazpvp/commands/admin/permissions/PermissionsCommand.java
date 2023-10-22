@@ -41,7 +41,11 @@ public class PermissionsCommand extends NRCommand {
                 }
             }
         } else if (type.equalsIgnoreCase("prefix")) {
-            targetWrapper.setCustomPrefix(setTo);
+            if (setTo.equalsIgnoreCase("reset")) {
+                targetWrapper.setCustomPrefix(null);
+            } else if (setTo.equalsIgnoreCase("set")) {
+                targetWrapper.setCustomPrefix(setTo);
+            }
             return true;
         } else {
             sendIncorrectUsage(sender, "/"+ super.getLabel() + " <user> <rank|prefix> <rankType|newPrefix>");
@@ -64,6 +68,8 @@ public class PermissionsCommand extends NRCommand {
                     ranks.add(rank.name());
                 }
                 return ranks;
+            } else {
+                return List.of("reset", "set");
             }
         }
         return List.of();

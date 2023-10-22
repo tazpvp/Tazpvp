@@ -73,19 +73,8 @@ public class Damage implements Listener {
 
         double finalDamage = event.getFinalDamage();
         boolean isFallingDamage = (event.getCause() == EntityDamageEvent.DamageCause.FALL);
-        Duel duel = Duel.getDuel(victim.getUniqueId());
 
         if (!playerWrapper.isLaunching() && compare(event, isFallingDamage)) {
-            return;
-        }
-
-        if (playerWrapper.isDueling()) {
-            if ((victim.getHealth() - finalDamage) <= 0) {
-                event.setCancelled(true);
-                duel.setWinner(Duel.getOtherDueler(victim.getUniqueId()));
-                duel.setLoser(victim.getUniqueId());
-                duel.end();
-            }
             return;
         }
 
@@ -144,7 +133,23 @@ public class Damage implements Listener {
     }
 
     private void checkDeath(UUID victim, @Nullable UUID killer, EntityDamageEvent event, double finalDamage) {
-        if ((Bukkit.getPlayer(victim).getHealth() - finalDamage) <= 0) {
+        final PlayerWrapper pw = PlayerWrapper.getPlayer(victim);
+        Player pVictim = Bukkit.getPlayer(victim);
+
+        if (pVictim == null) return;
+        if (pw.getDuel() != null) {
+            Duel duel = pw.getDuel();
+            if ((pVictim.getHealth() - finalDamage) <= 0) {
+                event.setCancelled(true);
+                duel.setWinner(duel.getOtherDueler(victim));
+                duel.setLoser(victim);
+                duel.end();
+            }
+            return;
+        }
+
+
+        if ((pVictim.getHealth() - finalDamage) <= 0) {
             event.setCancelled(true);
             if (killer != null)
                 DeathFunctions.death(victim, killer);

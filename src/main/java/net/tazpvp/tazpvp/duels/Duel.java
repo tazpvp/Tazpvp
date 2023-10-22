@@ -84,32 +84,38 @@ public abstract class Duel {
         final Player winner = Bukkit.getPlayer(getWinner());
         final Player loser = Bukkit.getPlayer(getLoser());
 
+        if (winner == null || loser == null) return;
+
         ChatFunctions.announce(winner.getName() + " won the duel against " + loser.getName());
         ArmorManager.setPlayerContents(loser, true);
         loser.teleport(NRCore.config.spawn);
+        PlayerWrapper.getPlayer(loser).setDuel(null);
+        PlayerFunctions.resetHealth(loser);
 
-        winner.sendTitle("You Won", "");
-
-        DUELERS.forEach(p -> {
-            PlayerWrapper.getPlayer(p).setDueling(false);
-            PlayerFunctions.resetHealth(Bukkit.getPlayer(p));
-        });
+        winner.sendTitle("You Won", "", 1, 1, 1);
 
         new BukkitRunnable() {
             public void run() {
                 ArmorManager.setPlayerContents(winner, true);
                 winner.teleport(NRCore.config.spawn);
 
+                PlayerWrapper pw = PlayerWrapper.getPlayer(winner);
+                pw.setDuel(null);
+                PlayerFunctions.resetHealth(winner);
+
                 new WorldUtil().deleteWorld(getWorldName());
-                duels.remove(this);
+                duels.remove(pw.getDuel());
             }
         }.runTaskLater(Tazpvp.getInstance(), 20*3);
     }
+
     public void abort() {
         DUELERS.forEach(p -> {
             Player plr = Bukkit.getPlayer(p);
-            plr.teleport(NRCore.config.spawn);
-            ArmorManager.setPlayerContents(plr, true);
+            if (plr != null) {
+                plr.teleport(NRCore.config.spawn);
+                ArmorManager.setPlayerContents(plr, true);
+            }
         });
 
         new WorldUtil().deleteWorld(getWorldName());
@@ -117,21 +123,12 @@ public abstract class Duel {
     }
 
     public static WeakHashMap<Duel, UUID> duels = new WeakHashMap<>();
-    public static Duel getDuel(UUID id) {
-        for (Duel duel : duels.keySet()) {
-            if (duel.DUELERS.contains(id)) {
-                return duel;
-            }
-        }
-        return null;
-    }
 
-    public static UUID getOtherDueler(UUID id) {
-        Duel duel = getDuel(id);
-        if (duel.getP1() == id) {
-            return duel.getP2();
+    public UUID getOtherDueler(UUID id) {
+        if (P1 == id) {
+            return P2;
         }
-        return duel.getP1();
+        return P1;
     }
 
 }

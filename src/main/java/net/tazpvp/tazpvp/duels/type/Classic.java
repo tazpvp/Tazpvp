@@ -63,7 +63,7 @@ public class Classic extends Duel {
     public void initialize() {
         new WorldUtil().cloneWorld("duelMap1", super.getWorldName());
 
-        getDUELERS().forEach(uuid -> PlayerWrapper.getPlayer(uuid).setDueling(true));
+        getDUELERS().forEach(uuid -> PlayerWrapper.getPlayer(uuid).setDuel(this));
     }
 
     @Override
