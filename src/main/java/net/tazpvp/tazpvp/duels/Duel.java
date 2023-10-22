@@ -39,6 +39,7 @@ import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.NRCore;
@@ -83,28 +84,36 @@ public abstract class Duel {
     public void end() {
         final Player winner = Bukkit.getPlayer(getWinner());
         final Player loser = Bukkit.getPlayer(getLoser());
+        final OfflinePlayer offlineWinner = Bukkit.getOfflinePlayer(getWinner());
+        final OfflinePlayer offlineLoser = Bukkit.getOfflinePlayer(getLoser());
 
-        if (winner == null || loser == null) return;
+        ChatFunctions.announce(offlineWinner.getName() + " won the duel against " + offlineLoser.getName());
+        if (loser != null) {
+            ArmorManager.setPlayerContents(loser, true);
+            loser.teleport(NRCore.config.spawn);
+            PlayerWrapper.getPlayer(loser).setDuel(null);
+            PlayerFunctions.resetHealth(loser);
+        }
 
-        ChatFunctions.announce(winner.getName() + " won the duel against " + loser.getName());
-        ArmorManager.setPlayerContents(loser, true);
-        loser.teleport(NRCore.config.spawn);
-        PlayerWrapper.getPlayer(loser).setDuel(null);
-        PlayerFunctions.resetHealth(loser);
+        if (winner != null) {
+            winner.sendTitle("You Won", "", 1, 1, 1);
+        }
 
-        winner.sendTitle("You Won", "", 1, 1, 1);
+        final Duel duel = this;
 
         new BukkitRunnable() {
             public void run() {
-                ArmorManager.setPlayerContents(winner, true);
-                winner.teleport(NRCore.config.spawn);
+                if (winner != null) {
+                    ArmorManager.setPlayerContents(winner, true);
+                    winner.teleport(NRCore.config.spawn);
 
-                PlayerWrapper pw = PlayerWrapper.getPlayer(winner);
-                pw.setDuel(null);
-                PlayerFunctions.resetHealth(winner);
+                    PlayerWrapper pw = PlayerWrapper.getPlayer(winner);
+                    pw.setDuel(null);
+                    PlayerFunctions.resetHealth(winner);
+                }
 
                 new WorldUtil().deleteWorld(getWorldName());
-                duels.remove(pw.getDuel());
+                duels.remove(duel);
             }
         }.runTaskLater(Tazpvp.getInstance(), 20*3);
     }
@@ -122,13 +131,9 @@ public abstract class Duel {
         duels.remove(this);
     }
 
-    public static WeakHashMap<Duel, UUID> duels = new WeakHashMap<>();
-
-    public UUID getOtherDueler(UUID id) {
-        if (P1 == id) {
-            return P2;
-        }
-        return P1;
+    public UUID getOtherDueler(final UUID id) {
+        return (P1.equals(id) ? P2 : P1);
     }
 
+    public static WeakHashMap<Duel, UUID> duels = new WeakHashMap<>();
 }

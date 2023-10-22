@@ -73,9 +73,9 @@ public class DeathFunctions {
             return;
         }
 
-        if (killer != victim) {
+        if (!killer.equals(victim)) {
             if (wrapper.getDuel() != null) {
-                Duel duel = wrapper.getDuel();
+                final Duel duel = wrapper.getDuel();
                 duel.setWinner(duel.getOtherDueler(victim));
                 duel.setLoser(victim);
                 duel.end();
@@ -105,8 +105,10 @@ public class DeathFunctions {
             death.coffin();
             death.dropHead();
             death.storeInventory();
-            PlayerFunctions.addHealth(pKiller, 10);
-            pKiller.playSound(pKiller.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
+            if (pKiller != null) {
+                PlayerFunctions.addHealth(pKiller, 10);
+                pKiller.playSound(pKiller.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
+            }
         }
         death.deathMessage();
 

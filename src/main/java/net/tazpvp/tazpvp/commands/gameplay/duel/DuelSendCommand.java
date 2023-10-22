@@ -48,16 +48,19 @@ public class DuelSendCommand extends NRCommand {
             return true;
         }
 
-        Player target = Bukkit.getPlayer(args[0]);
+        final Player target = Bukkit.getPlayer(args[0]);
 
-        if (target == p) {
+        if (target == null) {
+            p.sendMessage(CC.RED + "Cannot find player.");
+            return true;
+        }
+
+        if (target.getUniqueId().equals(p.getUniqueId())) {
             sendIncorrectUsage(sender, "You cannot send a duel to yourself.");
             return true;
         }
 
-        if (target != null) {
-            putInDuel(args[1], p, target);
-        }
+        putInDuel(args[1], p, target);
         return true;
     }
 
