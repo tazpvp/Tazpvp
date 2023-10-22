@@ -35,6 +35,7 @@ package net.tazpvp.tazpvp.duels;
 import lombok.Getter;
 import lombok.Setter;
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
@@ -68,6 +69,8 @@ public abstract class Duel {
     private UUID loser;
     @Getter @Setter
     private String worldName;
+    @Getter @Setter
+    private boolean starting;
 
     public Duel(@Nonnull final UUID P1, @Nonnull final UUID P2, @Nonnull final String NAME) {
         this.P1 = P1;
@@ -102,7 +105,7 @@ public abstract class Duel {
         }
 
         if (winner != null) {
-            winner.sendTitle("You Won", "", 1, 1, 1);
+            winner.sendTitle(CC.BOLD + "" + CC.GOLD + "YOU WIN", "", 20, 20, 20);
         }
 
         final Duel duel = this;
@@ -121,7 +124,7 @@ public abstract class Duel {
                 new WorldUtil().deleteWorld(getWorldName());
                 duels.remove(duel);
             }
-        }.runTaskLater(Tazpvp.getInstance(), 20*3);
+        }.runTaskLater(Tazpvp.getInstance(), 20*5);
     }
 
     public void abort() {
