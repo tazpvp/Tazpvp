@@ -1,6 +1,10 @@
 package net.tazpvp.tazpvp.commands.gameplay.duel;
 
 import lombok.NonNull;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
 import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.duels.type.Classic;
@@ -8,6 +12,7 @@ import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Completer;
@@ -81,6 +86,13 @@ public class DuelSendCommand extends NRCommand {
             return;
         }
         p.sendMessage("You sent a duel request to " + target.getName());
+
+        TextComponent component = new TextComponent(p.getName() + " sent you a duel request. " + CC.GREEN + "[ACCEPT]");
+        component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.GREEN + "Accept Duel Request").create()));
+        component.setClickEvent(new net.md_5.bungee.api.chat.ClickEvent(ClickEvent.Action.RUN_COMMAND, "/duel accept"));
+
+        p.spigot().sendMessage(component);
+
         target.sendMessage(p.getName() + " sent you a duel request.");
     }
 
