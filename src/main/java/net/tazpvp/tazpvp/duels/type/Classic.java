@@ -35,10 +35,7 @@ package net.tazpvp.tazpvp.duels.type;
 import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -75,6 +72,8 @@ public class Classic extends Duel {
             Player p = Bukkit.getPlayer(id);
             ArmorManager.storeAndClearInventory(p);
             PlayerFunctions.resetHealth(p);
+            PlayerFunctions.feedPlr(p);
+            p.setGameMode(GameMode.SURVIVAL);
         });
 
         p1.teleport(new Location(world, 0.5, 10, 14.5, 180, 0));
