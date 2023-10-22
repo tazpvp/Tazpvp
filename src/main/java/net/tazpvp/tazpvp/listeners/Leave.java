@@ -80,7 +80,8 @@ public class Leave implements Listener {
         final PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(p);
         if (playerWrapper.getDuel() != null) {
             final Duel duel = playerWrapper.getDuel();
-
+            duel.setLoser(id);
+            duel.setWinner(duel.getOtherDueler(id));
             duel.end();
         }
     }
