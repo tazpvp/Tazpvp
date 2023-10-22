@@ -81,6 +81,12 @@ public abstract class Duel {
 
     public abstract void initialize();
     public abstract void begin();
+
+    public void end(final UUID loser) {
+        setWinner(getOtherDueler(loser));
+        setLoser(loser);
+        end();
+    }
     public void end() {
         final Player winner = Bukkit.getPlayer(getWinner());
         final Player loser = Bukkit.getPlayer(getLoser());
