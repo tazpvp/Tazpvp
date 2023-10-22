@@ -91,9 +91,7 @@ public class DuelSendCommand extends NRCommand {
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.GREEN + "Accept Duel Request").create()));
         component.setClickEvent(new net.md_5.bungee.api.chat.ClickEvent(ClickEvent.Action.RUN_COMMAND, "/duel accept"));
 
-        p.spigot().sendMessage(component);
-
-        target.sendMessage(p.getName() + " sent you a duel request.");
+        target.spigot().sendMessage(component);
     }
 
     @Override
