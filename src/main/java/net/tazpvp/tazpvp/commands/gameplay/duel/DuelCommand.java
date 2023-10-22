@@ -1,5 +1,6 @@
 package net.tazpvp.tazpvp.commands.gameplay.duel;
 
+import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
@@ -14,7 +15,7 @@ public class DuelCommand extends NRCommand {
                 return true;
             }
 
-            p.sendMessage("Duel Commands:\n" + "/duel <player> <type>\n" + "/duel accept");
+            p.sendMessage(CC.GREEN + "Duel Commands:\n" + "/duel <player> <type>\n" + "/duel accept");
             return true;
         });
 

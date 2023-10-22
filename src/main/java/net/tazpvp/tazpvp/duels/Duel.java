@@ -96,7 +96,7 @@ public abstract class Duel {
         final OfflinePlayer offlineWinner = Bukkit.getOfflinePlayer(getWinner());
         final OfflinePlayer offlineLoser = Bukkit.getOfflinePlayer(getLoser());
 
-        ChatFunctions.announce(offlineWinner.getName() + " won the duel against " + offlineLoser.getName());
+        ChatFunctions.announce(CC.AQUA + offlineWinner.getName() + CC.DARK_AQUA + " won a duel against " + CC.AQUA + offlineLoser.getName());
         if (loser != null) {
             ArmorManager.setPlayerContents(loser, true);
             loser.teleport(NRCore.config.spawn);
@@ -105,7 +105,7 @@ public abstract class Duel {
         }
 
         if (winner != null) {
-            winner.sendTitle(CC.BOLD + "" + CC.GOLD + "YOU WIN", "", 20, 20, 20);
+            winner.sendTitle(CC.GOLD + "" + CC.BOLD + "YOU WIN", "", 20, 20, 20);
         }
 
         final Duel duel = this;

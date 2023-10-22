@@ -73,7 +73,7 @@ public class DuelSendCommand extends NRCommand {
         for (Duel duel : Duel.duels.keySet()) {
             if (Duel.duels.get(duel) == target.getUniqueId()) {
                 if (duel.getP1() == p.getUniqueId()) {
-                    p.sendMessage("You already sent a duel to this person.");
+                    p.sendMessage(CC.RED + "You already sent a duel to this person.");
                     return;
                 }
                 Duel.duels.remove(duel);
@@ -82,12 +82,12 @@ public class DuelSendCommand extends NRCommand {
         if (type.equalsIgnoreCase("classic")) {
             Duel.duels.put(new Classic(p.getUniqueId(), target.getUniqueId()), target.getUniqueId());
         } else {
-            p.sendMessage("Not a valid type");
+            p.sendMessage(CC.RED + "Not a valid duel type!");
             return;
         }
-        p.sendMessage("You sent a duel request to " + target.getName());
+        p.sendMessage(CC.GREEN + "You sent a duel request to " + CC.GOLD +  target.getName());
 
-        TextComponent component = new TextComponent(p.getName() + " sent you a duel request. " + CC.GREEN + "[ACCEPT]");
+        TextComponent component = new TextComponent(CC.GOLD + p.getName() + CC.GREEN + " sent you a duel request. \n" + CC.GREEN + "[Click to Accept]");
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.GREEN + "Accept Duel Request").create()));
         component.setClickEvent(new net.md_5.bungee.api.chat.ClickEvent(ClickEvent.Action.RUN_COMMAND, "/duel accept"));
 

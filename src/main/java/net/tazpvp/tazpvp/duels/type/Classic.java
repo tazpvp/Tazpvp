@@ -110,7 +110,7 @@ public class Classic extends Duel {
                         duelers.forEach(id -> {
                             Player p = Bukkit.getPlayer(id);
                             if (p != null) {
-                                p.sendTitle(CC.BOLD + "" + CC.GOLD + countDown, "", 5, 10, 5);
+                                p.sendTitle(CC.GOLD + "" + CC.BOLD + countDown, "", 5, 10, 5);
                             }
                         });
                         countDown -= 1;
@@ -118,7 +118,7 @@ public class Classic extends Duel {
                         duelers.forEach(id -> {
                             Player p = Bukkit.getPlayer(id);
                             if (p != null) {
-                                p.sendTitle(CC.BOLD + "" + CC.GOLD + "BEGIN", "", 5, 10, 5);
+                                p.sendTitle(CC.GOLD + "" + CC.BOLD + "BEGIN", "", 5, 10, 5);
                             }
                         });
                         setStarting(false);
