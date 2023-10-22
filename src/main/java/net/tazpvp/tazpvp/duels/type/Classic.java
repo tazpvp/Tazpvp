@@ -105,23 +105,25 @@ public class Classic extends Duel {
             int countDown = 5;
             @Override
             public void run() {
-                if (countDown > 0) {
-                    duelers.forEach(id -> {
-                        Player p = Bukkit.getPlayer(id);
-                        if (p != null) {
-                            p.sendTitle(CC.BOLD + "" + CC.GOLD + countDown, "", 5, 10, 5);
-                        }
+                if (isStarting()) {
+                    if (countDown > 0) {
+                        duelers.forEach(id -> {
+                            Player p = Bukkit.getPlayer(id);
+                            if (p != null) {
+                                p.sendTitle(CC.BOLD + "" + CC.GOLD + countDown, "", 5, 10, 5);
+                            }
+                        });
                         countDown -= 1;
-                    });
-                } else {
-                    duelers.forEach(id -> {
-                        Player p = Bukkit.getPlayer(id);
-                        if (p != null) {
-                            p.sendTitle(CC.BOLD + "" + CC.GOLD + "BEGIN", "", 5, 10, 5);
-                        }
-                    });
-                    setStarting(false);
-                    end();
+                    } else {
+                        duelers.forEach(id -> {
+                            Player p = Bukkit.getPlayer(id);
+                            if (p != null) {
+                                p.sendTitle(CC.BOLD + "" + CC.GOLD + "BEGIN", "", 5, 10, 5);
+                            }
+                        });
+                        setStarting(false);
+                        end();
+                    }
                 }
             }
         }.runTaskTimer(Tazpvp.getInstance(), 20, 20);

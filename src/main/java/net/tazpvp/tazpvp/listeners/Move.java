@@ -29,8 +29,10 @@ public class Move implements Listener {
         Block b = new Location(p.getWorld(), playerLocation.getX(), playerLocation.getY() - 1, playerLocation.getZ()).getBlock();
 
         if (pw.getDuel() != null) {
-            e.setCancelled(true);
-            return;
+            if (pw.getDuel().isStarting()) {
+                e.setCancelled(true);
+                return;
+            }
         }
 
         if (p.getWorld().equals(Bukkit.getWorld("parkour"))) {
