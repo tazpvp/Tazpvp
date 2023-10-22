@@ -28,6 +28,11 @@ public class Move implements Listener {
         Location launchpadRaidus = new Location(Bukkit.getWorld("arena"), 0, 100, NRCore.config.spawn.getZ() + 29);
         Block b = new Location(p.getWorld(), playerLocation.getX(), playerLocation.getY() - 1, playerLocation.getZ()).getBlock();
 
+        if (pw.getDuel() != null) {
+            e.setCancelled(true);
+            return;
+        }
+
         if (p.getWorld().equals(Bukkit.getWorld("parkour"))) {
             if (b.getType() == Material.WATER && p.getGameMode() != GameMode.SURVIVAL) {
                 ParkourUtil.getCheckpoint(p);
