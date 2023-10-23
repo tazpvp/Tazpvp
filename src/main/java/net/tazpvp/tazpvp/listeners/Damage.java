@@ -111,11 +111,9 @@ public class Damage implements Listener {
 
     private void handleEntityDamageByEntity(Player victim, EntityDamageByEntityEvent event, double finalDamage) {
         if (event.getDamager() instanceof Player killer) {
-            CombatTagFunctions.putInCombat(victim.getUniqueId(), killer.getUniqueId());
             checkDeath(victim.getUniqueId(), killer.getUniqueId(), event, finalDamage);
         } else if (event.getDamager() instanceof Arrow arrow) {
             if (arrow.getShooter() instanceof Player pShooter) {
-                CombatTagFunctions.putInCombat(victim.getUniqueId(), pShooter.getUniqueId());
                 checkDeath(victim.getUniqueId(), pShooter.getUniqueId(), event, finalDamage);
             }
         } else {
@@ -128,7 +126,9 @@ public class Damage implements Listener {
             event.setCancelled(true);
             DeathFunctions.death(victim.getUniqueId());
         } else {
-            CombatTagFunctions.putInCombat(victim.getUniqueId(), null);
+            if (PlayerWrapper.getPlayer(victim).getDuel() == null) {
+                CombatTagFunctions.putInCombat(victim.getUniqueId(), null);
+            }
         }
     }
 
@@ -147,6 +147,8 @@ public class Damage implements Listener {
             }
             return;
         }
+
+        CombatTagFunctions.putInCombat(victim, killer);
 
 
         if ((pVictim.getHealth() - finalDamage) <= 0) {

@@ -28,7 +28,7 @@ public class Move implements Listener {
         Location launchpadRaidus = new Location(Bukkit.getWorld("arena"), 0, 100, NRCore.config.spawn.getZ() + 29);
         Block b = new Location(p.getWorld(), playerLocation.getX(), playerLocation.getY() - 1, playerLocation.getZ()).getBlock();
 
-        if (pw.getDuel() != null) {
+        if (pw != null && pw.getDuel() != null) {
             if (pw.getDuel().isStarting()) {
                 e.setCancelled(true);
                 return;

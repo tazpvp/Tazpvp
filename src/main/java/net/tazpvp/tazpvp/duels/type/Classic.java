@@ -95,8 +95,10 @@ public class Classic extends Duel {
             p.getEquipment().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
             p.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
             p.getEquipment().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
+            p.getEquipment().setItemInOffHand(new ItemStack(Material.SHIELD));
 
             inv.addItem(new ItemStack(Material.DIAMOND_SWORD));
+            inv.addItem(new ItemStack(Material.DIAMOND_AXE));
             inv.addItem(new ItemStack(Material.GOLDEN_APPLE, 6));
         }
 
