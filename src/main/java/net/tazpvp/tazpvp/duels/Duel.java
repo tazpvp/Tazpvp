@@ -40,6 +40,8 @@ import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -63,6 +65,8 @@ public abstract class Duel {
     private final String NAME;
     @Getter
     private final List<UUID> DUELERS;
+    @Getter
+    private final List<UUID> SPECTATORS;
     @Getter @Setter
     private UUID winner;
     @Getter @Setter
@@ -80,6 +84,8 @@ public abstract class Duel {
         this.DUELERS = new ArrayList<>();
         this.DUELERS.add(P1);
         this.DUELERS.add(P2);
+
+        this.SPECTATORS = new ArrayList<>();
     }
 
     public abstract void initialize();
@@ -121,6 +127,13 @@ public abstract class Duel {
                     PlayerFunctions.resetHealth(winner);
                 }
 
+                SPECTATORS.forEach(p -> {
+                    final Player spectator = Bukkit.getPlayer(p);
+                    if (spectator != null) {
+                        removeSpectator(spectator);
+                    }
+                });
+
                 new WorldUtil().deleteWorld(getWorldName());
                 duels.remove(duel);
             }
@@ -136,8 +149,41 @@ public abstract class Duel {
             }
         });
 
+        SPECTATORS.forEach(p -> {
+            final Player spectator = Bukkit.getPlayer(p);
+            if (spectator != null) {
+                removeSpectator(spectator);
+            }
+        });
+
         new WorldUtil().deleteWorld(getWorldName());
         duels.remove(this);
+    }
+
+    public void addSpectator(final Player player) {
+        final UUID uuid = player.getUniqueId();
+        this.SPECTATORS.add(uuid);
+
+        player.setGameMode(GameMode.SPECTATOR);
+        player.teleport(new Location(Bukkit.getWorld(getWorldName()), 0.5, 6, 0.5));
+
+        for (UUID uuid1 : getDUELERS()) {
+            final Player dueler = Bukkit.getPlayer(uuid1);
+            if (dueler != null) {
+                dueler.sendMessage(player.getName() + " is now spectating.");
+            }
+        }
+    }
+
+    public void removeSpectator(final Player player) {
+        final UUID uuid = player.getUniqueId();
+        this.SPECTATORS.remove(uuid);
+
+        player.teleport(NRCore.config.spawn);
+        player.setGameMode(GameMode.SURVIVAL);
+
+        final PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(player);
+        playerWrapper.setSpectating(null);
     }
 
     public UUID getOtherDueler(final UUID id) {

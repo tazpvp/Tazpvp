@@ -48,6 +48,10 @@ public class DuelSendCommand extends NRCommand {
             return true;
         }
 
+        if (PlayerWrapper.getPlayer(p).getSpectating() != null) {
+            return true;
+        }
+
         if (TazloadCommand.tazloading) {
             p.sendMessage(CC.RED + "This feature is disabled while the server is reloading.");
             return true;

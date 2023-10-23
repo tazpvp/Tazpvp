@@ -63,6 +63,8 @@ public class PlayerWrapper {
     private List<Material> blocksPlaced;
     @Getter @Setter
     private String lastMessageSent;
+    @Getter @Setter
+    private Duel spectating;
 
 
     /**
@@ -85,6 +87,7 @@ public class PlayerWrapper {
         this.timeOfLaunch = 0;
         this.blocksPlaced = new ArrayList<>();
         this.lastMessageSent = "";
+        this.spectating = null;
 
         refreshPermissions();
     }
