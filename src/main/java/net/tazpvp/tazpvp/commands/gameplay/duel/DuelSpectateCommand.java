@@ -38,7 +38,7 @@ public class DuelSpectateCommand extends NRCommand {
             return true;
         }
 
-        if (playerWrapper.getDuel() != null || Event.currentEvent.getParticipantList().contains(p.getUniqueId()) ||
+        if (playerWrapper.getDuel() != null || (Event.currentEvent != null && Event.currentEvent.getParticipantList().contains(p.getUniqueId())) ||
                 CombatTagFunctions.isInCombat(p.getUniqueId()) || p.getGameMode() != GameMode.SURVIVAL || playerWrapper.getSpectating() != null) {
             sendIncorrectUsage(p, "You cannot use this right now.");
             return true;
