@@ -114,6 +114,13 @@ public abstract class Duel {
             winner.sendTitle(CC.GOLD + "" + CC.BOLD + "YOU WIN", "", 20, 20, 20);
         }
 
+        SPECTATORS.forEach(p -> {
+            final Player spectator = Bukkit.getPlayer(p);
+            if (spectator != null) {
+                removeSpectator(spectator);
+            }
+        });
+
         final Duel duel = this;
 
         new BukkitRunnable() {
@@ -127,12 +134,7 @@ public abstract class Duel {
                     PlayerFunctions.resetHealth(winner);
                 }
 
-                SPECTATORS.forEach(p -> {
-                    final Player spectator = Bukkit.getPlayer(p);
-                    if (spectator != null) {
-                        removeSpectator(spectator);
-                    }
-                });
+
 
                 new WorldUtil().deleteWorld(getWorldName());
                 duels.remove(duel);
