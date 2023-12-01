@@ -74,6 +74,11 @@
             <url>https://repo.ntdi.world/releases</url>
         </repository>
         <repository>
+            <id>ntdi-snapshots</id>
+            <name>Ntdi's Repositories</name>
+            <url>https://repo.ntdi.world/snapshots</url>
+        </repository>
+        <repository>
             <id>codemc-snapshots</id>
             <url>https://repo.codemc.io/repository/maven-snapshots/</url>
         </repository>
@@ -99,7 +104,7 @@
         <dependency>
             <groupId>world.ntdi</groupId>
             <artifactId>nrcore</artifactId>
-            <version>2.5.2</version>
+            <version>2.6.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

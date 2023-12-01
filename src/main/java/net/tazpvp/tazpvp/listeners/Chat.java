@@ -71,7 +71,7 @@ public class Chat implements Listener {
             return;
         }
 
-        String message = e.getMessage();
+        final String message = e.getMessage();
         if (Profanity.sayNoNo(p, message)) {
             e.setCancelled(true);
             return;
@@ -79,20 +79,14 @@ public class Chat implements Listener {
 
         pw.setLastMessageSent(message);
 
-        Rank rank = PlayerRankData.getRank(uuid);
-
         String format = "&GRAY[{LEVEL}&GRAY] {PREFIX} %s{SUFFIX} &GRAY&M%s";
         format = format
                 .replace("&GRAY", CC.GRAY.toString())
                 .replace("&GOLD", CC.YELLOW.toString())
-                .replace("&M",
-                        (rank != Rank.DEFAULT
-                                ? CC.WHITE.toString()
-                                : CC.GRAY.toString())
-                )
+                .replace("&M", CC.WHITE.toString())
                 .replace("{LEVEL}", String.valueOf(PersistentData.getInt(uuid, DataTypes.LEVEL)))
                 .replace("{PREFIX}",
-                        pw.getRankPrefix()
+                        CC.trans(pw.getRankPrefix())
                 )
                 .replace("{SUFFIX}", pw.getGuildTag().toUpperCase());
 
