@@ -30,7 +30,7 @@ public class PermissionsCommand extends NRCommand {
         Player target = Bukkit.getPlayer(args[0]);
         PlayerWrapper targetWrapper = PlayerWrapper.getPlayer(target);
         String type = args[1];
-        String setTo = args[2];
+        String setTo = args[3];
 
         if (type.equalsIgnoreCase("rank")) {
             for (Rank rank : Rank.values()) {
