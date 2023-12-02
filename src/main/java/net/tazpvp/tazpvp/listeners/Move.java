@@ -46,6 +46,7 @@ public class Move implements Listener {
             if (p.getLocation().distance(launchpadRaidus) < 5) {
                 Launchpad(p);
                 pw.setTimeOfLaunch(System.currentTimeMillis());
+                p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1, 1);
                 return;
             }
             if (pw.isRespawning()) {

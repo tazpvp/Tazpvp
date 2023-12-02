@@ -120,7 +120,7 @@ public class Maxim extends GUI {
         setButton("Knockback", "Hit players back further.", Material.ENCHANTED_BOOK, 30, 1, Enchantment.KNOCKBACK);
         setButton("Flame", "Shoot and set things on fire.", Material.ENCHANTED_BOOK, 30, 1, Enchantment.ARROW_FIRE);
         setButton("Fire Aspect", "Hit and set things on fire.", Material.ENCHANTED_BOOK, 30, 1, Enchantment.FIRE_ASPECT);
-
+        setButton("Shard", "Valuable gem.", Material.AMETHYST_SHARD, 560, 3);
 
         update();
     }

@@ -41,9 +41,9 @@ public class PermissionsCommand extends NRCommand {
                 }
             }
         } else if (type.equalsIgnoreCase("prefix")) {
-            if (setTo.equalsIgnoreCase("reset")) {
-                targetWrapper.setCustomPrefix(null);
-            } else if (setTo.equalsIgnoreCase("set")) {
+            if (args[2].equalsIgnoreCase("reset")) {
+                targetWrapper.setCustomPrefix("");
+            } else if (args[2].equalsIgnoreCase("set")) {
                 targetWrapper.setCustomPrefix(setTo);
             }
             return true;
