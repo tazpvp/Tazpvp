@@ -1,7 +1,6 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.utils.data.PlayerRankData;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -54,7 +53,7 @@ public class Place implements Listener {
             // Delay in seconds.
             if (mat == Material.COBWEB) {
                 delay = 2;
-            } else if (PlayerRankData.isPremium(p.getUniqueId())) {
+            } else if (pw.getRankEntity().isPremium()) {
                 delay = 20;
             } else {
                 delay = 8;

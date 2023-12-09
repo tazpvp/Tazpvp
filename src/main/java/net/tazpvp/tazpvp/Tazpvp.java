@@ -70,6 +70,8 @@ import net.tazpvp.tazpvp.npc.shops.*;
 import net.tazpvp.tazpvp.talents.talent.*;
 import net.tazpvp.tazpvp.utils.ConfigUtil;
 import net.tazpvp.tazpvp.utils.crate.CrateManager;
+import net.tazpvp.tazpvp.utils.data.RankServiceImpl;
+import net.tazpvp.tazpvp.utils.data.database.PostgresqlDatabase;
 import net.tazpvp.tazpvp.utils.functions.AfkFunctions;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.leaderboard.spawnable.SpawnableLeaderboardManager;
@@ -88,6 +90,7 @@ import world.ntdi.nrcore.utils.command.simple.NRCommand;
 import world.ntdi.nrcore.utils.region.Cuboid;
 import world.ntdi.postglam.connection.Database;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -113,6 +116,8 @@ public final class Tazpvp extends JavaPlugin {
 
     @Getter
     private static Database database;
+    @Getter
+    private static PostgresqlDatabase postgresqlDatabase;
 
     private static final Logger log = Logger.getLogger("Minecraft");
     @Getter
@@ -148,12 +153,16 @@ public final class Tazpvp extends JavaPlugin {
                 new Location(Bukkit.getWorld("arena"), 11, 95, 4)
         );
 
-        connectDatabase(
-                getConfig().getString("sql-host"),
-                getConfig().getInt("sql-port"),
-                getConfig().getString("sql-user"),
-                getConfig().getString("sql-password")
-        );
+        try {
+            connectDatabase(
+                    getConfig().getString("sql-host"),
+                    getConfig().getInt("sql-port"),
+                    getConfig().getString("sql-user"),
+                    getConfig().getString("sql-password")
+            );
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         crateManager = new CrateManager();
 
@@ -163,9 +172,12 @@ public final class Tazpvp extends JavaPlugin {
         spawnableLeaderboardManager = new SpawnableLeaderboardManager(this);
     }
 
-    private static void connectDatabase(String host, int port, String user, String password) {
+    private static void connectDatabase(String host, int port, String user, String password) throws SQLException {
         database = new Database(host, port, user, password);
         database.connect();
+        postgresqlDatabase = new PostgresqlDatabase("jdbc://" + host + ":" + port + "/postgres", user, password);
+
+        new RankServiceImpl().createTableIfNotExists(postgresqlDatabase);
     }
 
     public static void registerObserver(Observer observer) {
@@ -178,6 +190,8 @@ public final class Tazpvp extends JavaPlugin {
         despawnNpcs();
         BossManager.despawnBoss();
         Holograms.removeHolograms();
+
+        postgresqlDatabase.close();
     }
 
     public static Tazpvp getInstance() {

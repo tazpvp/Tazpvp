@@ -35,7 +35,9 @@ package net.tazpvp.tazpvp.guis.Menu.cosmetic;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.Profanity;
-import net.tazpvp.tazpvp.utils.data.PlayerRankData;
+import net.tazpvp.tazpvp.utils.data.RankService;
+import net.tazpvp.tazpvp.utils.data.RankServiceImpl;
+import net.tazpvp.tazpvp.utils.data.entity.RankEntity;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import net.wesjd.anvilgui.AnvilGUI;
@@ -79,14 +81,19 @@ public class CosmeticMenu extends GUI {
     }
 
     private void addItems(Player p) {
+        final RankService rankService = new RankServiceImpl();
+
+        final RankEntity rankEntity = rankService.getOrDefault(p.getUniqueId());
+
+
         fill(0, 3*9, ItemBuilder.of(Material.GRAY_STAINED_GLASS_PANE).name("").build());
 
         addButton(Button.create(ItemBuilder.of(Material.BEETROOT).name(CC.RED + "Death Particles").build(), e -> {
-            updateParticle(p, deathParticles, PlayerRankData.ParticleMaterial.DEATH);
+            updateParticle(p, deathParticles, rankEntity.getDeathParticle(), Type.DEATH);
         }), 10);
 
         addButton(Button.create(ItemBuilder.of(Material.ARROW).name(CC.BLUE + "Arrow Particles").build(), e -> {
-            updateParticle(p, arrowParticles, PlayerRankData.ParticleMaterial.ARROW);
+            updateParticle(p, arrowParticles, rankEntity.getArrowParticle(), Type.ARROW);
         }), 13);
 
         addButton(Button.create(ItemBuilder.of(Material.NAME_TAG).name(CC.GOLD + "Custom Prefix").build(), e -> {
@@ -97,9 +104,21 @@ public class CosmeticMenu extends GUI {
         update();
     }
 
-    private void updateParticle(Player p, List<ParticleSelectionContainer> particles, PlayerRankData.ParticleMaterial particleMaterial) {
+    private void updateParticle(Player p, List<ParticleSelectionContainer> particles, String currentParticle, Type type) {
         p.closeInventory();
-        new MaterialSelectionGui(p, particles, ((player, particleSelectionContainer) -> PlayerRankData.setMaterial(player.getUniqueId(), particleMaterial, particleSelectionContainer.particle())));
+        new MaterialSelectionGui(p, particles, ((player, particleSelectionContainer) -> {
+            final RankService rankService = new RankServiceImpl();
+
+            final RankEntity rankEntity = rankService.getOrDefault(p.getUniqueId());
+
+            if (type == Type.ARROW) {
+                rankEntity.setArrowParticle(particleSelectionContainer.particle().toString());
+            } else {
+                rankEntity.setDeathParticle(particleSelectionContainer.particle().toString());
+            }
+
+            rankService.saveRankEntity(rankEntity);
+        }));
     }
 
     private void setCustomPrefix(Player p) {
@@ -139,4 +158,7 @@ public class CosmeticMenu extends GUI {
                 .open(p);
     }
 
+    enum Type {
+        ARROW, DEATH
+    }
 }

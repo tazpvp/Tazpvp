@@ -8,8 +8,10 @@ import net.tazpvp.tazpvp.guild.Guild;
 import net.tazpvp.tazpvp.guild.GuildUtils;
 import net.tazpvp.tazpvp.npc.shops.NPC;
 import net.tazpvp.tazpvp.utils.PlayerNameTag;
-import net.tazpvp.tazpvp.utils.data.PlayerRankData;
 import net.tazpvp.tazpvp.utils.data.Rank;
+import net.tazpvp.tazpvp.utils.data.RankService;
+import net.tazpvp.tazpvp.utils.data.RankServiceImpl;
+import net.tazpvp.tazpvp.utils.data.entity.RankEntity;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.report.ReportDebounce;
 import net.tazpvp.tazpvp.utils.report.ReportLogger;
@@ -39,8 +41,6 @@ public class PlayerWrapper {
     @Getter @Setter
     private Duel duel;
     @Getter
-    private Rank rank;
-    @Getter
     private final List<ReportDebounce> reportDebouncesList;
     @Getter
     private final List<ReportLogger> reportLoggerList;
@@ -65,6 +65,8 @@ public class PlayerWrapper {
     private String lastMessageSent;
     @Getter @Setter
     private Duel spectating;
+    @Getter
+    private RankEntity rankEntity;
 
 
     /**
@@ -77,7 +79,6 @@ public class PlayerWrapper {
         this.respawning = false;
         this.canRestore = false;
         this.duel = null;
-        this.rank = PlayerRankData.getRank(uuid);
         this.reportDebouncesList = new ArrayList<>();
         this.reportLoggerList = new ArrayList<>();
         this.receivedDialogue = null;
@@ -88,6 +89,9 @@ public class PlayerWrapper {
         this.blocksPlaced = new ArrayList<>();
         this.lastMessageSent = "";
         this.spectating = null;
+
+        final RankService rankService = new RankServiceImpl();
+        this.rankEntity = rankService.getOrDefault(getUuid());
 
         refreshPermissions();
     }
@@ -106,6 +110,10 @@ public class PlayerWrapper {
         return "";
     }
 
+    public Rank getRank() {
+        return Rank.valueOf(rankEntity.getRank());
+    }
+
     public String getRankPrefix() {
         if (getRank().getPrefix() != null) {
             return getRank().getPrefix();
@@ -120,15 +128,12 @@ public class PlayerWrapper {
 
     @Nullable
     public String getCustomPrefix() {
-        return PlayerRankData.getPrefix(getUuid());
+        return rankEntity.getPrefix();
     }
 
     public void setCustomPrefix(String prefix) {
-        PlayerRankData.setPrefix(uuid, prefix);
-    }
-
-    public void removeCustomPrefix() {
-        PlayerRankData.setPrefix(getUuid(), null);
+        rankEntity.setPrefix(prefix);
+        setRankEntity();
     }
 
     /**
@@ -205,9 +210,21 @@ public class PlayerWrapper {
     }
 
     public void setRank(Rank rank) {
-        this.rank = rank;
-        PlayerRankData.setRank(getUuid(), rank);
+        rankEntity.setRank(rank.toString());
+
+        setRankEntity();
+
         refreshPermissions();
+    }
+
+    public void setPremium(final boolean premium) {
+        this.rankEntity.setPremium(premium);
+        setRankEntity();
+    }
+
+    public void setRankEntity() {
+        final RankService rankService = new RankServiceImpl();
+        rankService.saveRankEntity(rankEntity);
     }
 
     public void refreshNametag() {

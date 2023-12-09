@@ -33,8 +33,8 @@
 
 package net.tazpvp.tazpvp.listeners;
 
-import net.tazpvp.tazpvp.utils.data.PlayerRankData;
 import net.tazpvp.tazpvp.utils.data.Rank;
+import net.tazpvp.tazpvp.utils.data.RankServiceImpl;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -72,11 +72,12 @@ public class ProjectileLaunch implements Listener {
     public void onProjectileLaunch(final ProjectileLaunchEvent e) {
         if (e.getEntityType() == EntityType.ARROW) {
             if (e.getEntity().getShooter() instanceof Player p) {
-                if (PlayerWrapper.getPlayer(p).getRank() != Rank.DEFAULT) {
-                    Particle particle = PlayerRankData.getMaterial(p.getUniqueId(), PlayerRankData.ParticleMaterial.ARROW);
+                final PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(p);
+                if (playerWrapper.getRank() != Rank.DEFAULT) {
+                    final String particleText = playerWrapper.getRankEntity().getArrowParticle();
 
-                    if (particle != null) {
-                        arrowsToFollow.put(e.getEntity(), particle);
+                    if (particleText != null) {
+                        arrowsToFollow.put(e.getEntity(), Particle.valueOf(particleText));
                     }
                 }
             }

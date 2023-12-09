@@ -124,10 +124,10 @@ public class Death {
         PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(victim);
 
         if (playerWrapper.getRank() != Rank.DEFAULT) {
-            Particle particle = PlayerRankData.getMaterial(victim, PlayerRankData.ParticleMaterial.DEATH);
+            final String particle = playerWrapper.getRankEntity().getDeathParticle();
 
             if (particle != null) {
-                location.getWorld().spawnParticle(particle, location, 6);
+                location.getWorld().spawnParticle(Particle.valueOf(particle), location, 6);
             }
         }
     }

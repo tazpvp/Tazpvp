@@ -59,7 +59,6 @@ public final class PersistentData {
             setTalents(uuid, new Talents());
             setAchievements(uuid, new Achievements());
 
-            PlayerRankData.initRank(uuid);
             KitData.initRank(uuid);
         }
     }

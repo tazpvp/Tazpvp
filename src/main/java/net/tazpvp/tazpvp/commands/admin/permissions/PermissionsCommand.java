@@ -56,7 +56,7 @@ public class PermissionsCommand extends NRCommand {
             if (updatedName != null) {
                 targetWrapper.setCustomPrefix(updatedName);
             } else if (args[2].equalsIgnoreCase("reset")) {
-                targetWrapper.removeCustomPrefix();
+                targetWrapper.setCustomPrefix(null);
             }
             return true;
         } else {
