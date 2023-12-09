@@ -1,7 +1,9 @@
 package net.tazpvp.tazpvp.commands.gameplay.loadout;
 
 import lombok.NonNull;
-import net.tazpvp.tazpvp.utils.data.KitData;
+import net.tazpvp.tazpvp.utils.data.KitService;
+import net.tazpvp.tazpvp.utils.data.KitServiceImpl;
+import net.tazpvp.tazpvp.utils.data.entity.KitEntity;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.kit.SerializableInventory;
 import org.bukkit.command.CommandSender;
@@ -26,7 +28,13 @@ public class LoadoutCommand extends NRCommand {
 
         final SerializableInventory serializableInventory = SerializableInventory.readHotbar(player.getInventory());
 
-        KitData.setSerial(player.getUniqueId(), SerializableInventory.convertToString(serializableInventory));
+        final KitService kitService = new KitServiceImpl();
+
+        KitEntity kitEntity = kitService.getKitEntity(player.getUniqueId());
+
+        kitEntity.setSerial(SerializableInventory.convertToString(serializableInventory));
+
+        kitService.saveKitEntity(kitEntity);
 
         sender.sendMessage(CC.GREEN + "Saved layout for next time.");
 
