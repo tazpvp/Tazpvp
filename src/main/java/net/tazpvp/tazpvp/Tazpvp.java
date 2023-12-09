@@ -175,7 +175,7 @@ public final class Tazpvp extends JavaPlugin {
     private static void connectDatabase(String host, int port, String user, String password) throws SQLException {
         database = new Database(host, port, user, password);
         database.connect();
-        postgresqlDatabase = new PostgresqlDatabase("jdbc://" + host + ":" + port + "/postgres", user, password);
+        postgresqlDatabase = new PostgresqlDatabase("jdbc:postgresql://" + host + ":" + port + "/postgres", user, password);
 
         new RankServiceImpl().createTableIfNotExists(postgresqlDatabase);
     }
