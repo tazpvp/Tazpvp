@@ -163,7 +163,7 @@ public class PlayerFunctions {
             PersistentData.set(ID, DataTypes.XP, num);
             PersistentData.add(ID, DataTypes.LEVEL);
             PersistentData.add(ID, DataTypes.COINS, coins);
-            p.getInventory().addItem(GameItems.SHARD.getItem());
+            p.getInventory().addItem(GameItems.SHARD.item(1));
             p.setLevel(PersistentData.getInt(ID, DataTypes.LEVEL));
             p.setExp((float) num / LooseData.getExpLeft(p.getUniqueId()));
             ChatFunctions.announce(p, CC.AQUA + "" + CC.BOLD + "  LEVEL UP " + CC.DARK_AQUA + "Combat Lvl. " + CC.AQUA + getInt(ID, DataTypes.LEVEL), Sound.ENTITY_PLAYER_LEVELUP);

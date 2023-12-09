@@ -13,11 +13,13 @@ public enum GameItems {
 
     private final String name;
     private final Material type;
-    private final ItemStack item;
 
     GameItems(String name, Material type) {
         this.name = name;
         this.type = type;
-        this.item = ItemBuilder.of(type, 1, name).build();
+    }
+
+    public ItemStack item(int num) {
+        return ItemBuilder.of(type, num, name).build();
     }
 }
