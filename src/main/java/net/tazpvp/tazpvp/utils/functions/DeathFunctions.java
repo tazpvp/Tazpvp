@@ -35,10 +35,8 @@ package net.tazpvp.tazpvp.utils.functions;
 import lombok.Getter;
 import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.guild.GuildUtils;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
-import net.tazpvp.tazpvp.utils.data.KitData;
-import net.tazpvp.tazpvp.utils.data.LooseData;
-import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.*;
+import net.tazpvp.tazpvp.utils.data.entity.KitEntity;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.kit.SerializableInventory;
 import net.tazpvp.tazpvp.utils.objects.Coffin;
@@ -145,7 +143,10 @@ public class DeathFunctions {
         death.rewards();
         pVictim.getInventory().clear();
 
-        final String kitSerial = KitData.getSerial(pVictim.getUniqueId());
+        final KitService kitService = new KitServiceImpl();
+        final KitEntity kitEntity = kitService.getKitEntity(pVictim.getUniqueId());
+
+        final String kitSerial = kitEntity.getSerial();
         if (kitSerial == null || kitSerial.isEmpty()) {
             PlayerFunctions.kitPlayer(pVictim);
         } else {

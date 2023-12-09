@@ -58,8 +58,6 @@ public final class PersistentData {
                     "'" + uuid + "'", "0", "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "'n'", "'set'", "'set'", "'set'");
             setTalents(uuid, new Talents());
             setAchievements(uuid, new Achievements());
-
-            KitData.initRank(uuid);
         }
     }
 
