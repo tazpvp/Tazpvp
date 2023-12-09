@@ -38,6 +38,8 @@ import net.tazpvp.tazpvp.booster.BoosterTypes;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.enums.GameItems;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -93,9 +95,9 @@ public class PlayerFunctions {
 
     public static ItemStack[] getKitItems(Player p) {
         return new ItemStack[] {
-                ItemBuilder.of(Material.DIAMOND_SWORD, 1, "Sword of Sir " + p.getName()).enchantment(Enchantment.DAMAGE_ALL, 1).build(),
-                ItemBuilder.of(Material.BOW, 1, "Bow").build(),
-                ItemBuilder.of(Material.STONE_PICKAXE, 1, "Pickaxe o' mining").build(),
+                ItemBuilder.of(Material.DIAMOND_SWORD, 1, CC.WHITE + p.getName() + "'s Sword").enchantment(Enchantment.DAMAGE_ALL, 1).build(),
+                ItemBuilder.of(Material.BOW, 1, CC.WHITE + p.getName() + "'s Bow").build(),
+                ItemBuilder.of(Material.STONE_PICKAXE, 1, CC.WHITE + p.getName() + "'s Pickaxe").build(),
                 new ItemStack(Material.COOKED_BEEF, 20),
                 new ItemStack(Material.OAK_PLANKS, 64),
                 new ItemStack(Material.ARROW, 32)
@@ -116,10 +118,10 @@ public class PlayerFunctions {
     }
 
     public static void armorPlayer(Player p) {
-        p.getEquipment().setHelmet(ItemBuilder.of(Material.DIAMOND_HELMET, 1, "Hard Hat").build());
-        p.getEquipment().setChestplate(ItemBuilder.of(Material.DIAMOND_CHESTPLATE, 1, "Tunic").build());
-        p.getEquipment().setLeggings(ItemBuilder.of(Material.DIAMOND_LEGGINGS, 1, "Pants").build());
-        p.getEquipment().setBoots(ItemBuilder.of(Material.DIAMOND_BOOTS, 1, "Sandles").build());
+        p.getEquipment().setHelmet(ItemBuilder.of(Material.DIAMOND_HELMET, 1, CC.WHITE + "Hard Hat").build());
+        p.getEquipment().setChestplate(ItemBuilder.of(Material.DIAMOND_CHESTPLATE, 1, CC.WHITE + "Tunic").build());
+        p.getEquipment().setLeggings(ItemBuilder.of(Material.DIAMOND_LEGGINGS, 1, CC.WHITE + "Pants").build());
+        p.getEquipment().setBoots(ItemBuilder.of(Material.DIAMOND_BOOTS, 1, CC.WHITE + "Sandles").build());
     }
 
     public static int countShards(Player p) {
@@ -152,8 +154,8 @@ public class PlayerFunctions {
 
     public static void levelUp(UUID ID, float value) {
         Player p = Bukkit.getPlayer(ID);
+        if (p == null) return;
         if (value >= LooseData.getExpLeft(ID)) {
-
             final BoosterBonus coinsBonus = ActiveBoosterManager.getInstance().calculateBonus(100, List.of(BoosterTypes.COINS, BoosterTypes.MEGA));
             final int coins = (int) coinsBonus.result();
 
@@ -161,18 +163,13 @@ public class PlayerFunctions {
             PersistentData.set(ID, DataTypes.XP, num);
             PersistentData.add(ID, DataTypes.LEVEL);
             PersistentData.add(ID, DataTypes.COINS, coins);
-            p.getInventory().addItem(new ItemStack(Material.AMETHYST_SHARD));
+            p.getInventory().addItem(GameItems.SHARD.item(1));
             p.setLevel(PersistentData.getInt(ID, DataTypes.LEVEL));
             p.setExp((float) num / LooseData.getExpLeft(p.getUniqueId()));
-            p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-            if (p != null) {
-                p.sendMessage("");
-                p.sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "  LEVEL UP " + ChatColor.DARK_AQUA + "Combat Lvl. " + ChatColor.AQUA + getInt(ID, DataTypes.LEVEL));
-                p.sendMessage("");
-                p.sendMessage(ChatColor.DARK_GRAY + "  ▶ " + ChatColor.GOLD + coins + " Coins " + coinsBonus.prettyPercentMultiplier());
-                p.sendMessage(ChatColor.DARK_GRAY + "  ▶ " + ChatColor.DARK_AQUA + "1 Shard");
-                p.sendMessage("");
-            }
+            ChatFunctions.announce(p, CC.AQUA + "" + CC.BOLD + "  LEVEL UP " + CC.DARK_AQUA + "Combat Lvl. " + CC.AQUA + getInt(ID, DataTypes.LEVEL), Sound.ENTITY_PLAYER_LEVELUP);
+            p.sendMessage(CC.DARK_GRAY + "  ▶ " + CC.GOLD + coins + " Coins " + coinsBonus.prettyPercentMultiplier());
+            p.sendMessage(CC.DARK_GRAY + "  ▶ " + CC.DARK_AQUA + "1 Shard");
+            p.sendMessage("");
         } else {
             p.setExp(value / LooseData.getExpLeft(p.getUniqueId()));
         }

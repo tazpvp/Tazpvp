@@ -33,6 +33,7 @@
 package net.tazpvp.tazpvp.npc.shops;
 
 import net.tazpvp.tazpvp.npc.dialogue.Dialogues;
+import net.tazpvp.tazpvp.utils.enums.GameItems;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -102,7 +103,7 @@ public class Bub extends NPC {
             else p.sendMessage("Here you go, take " + num + " shard.");
 
             item.setAmount(0);
-            p.getInventory().addItem(new ItemStack(Material.AMETHYST_SHARD, num));
+            p.getInventory().addItem(GameItems.SHARD.item(num));
 
         } else {
             p.sendMessage("Right click me with player heads to trade them for shards.");
