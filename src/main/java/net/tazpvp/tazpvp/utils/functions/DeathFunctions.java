@@ -144,18 +144,16 @@ public class DeathFunctions {
         pVictim.getInventory().clear();
 
         final KitService kitService = new KitServiceImpl();
-        final KitEntity kitEntity = kitService.getKitEntity(pVictim.getUniqueId());
+        final KitEntity kitEntity = kitService.getOrDefault(pVictim.getUniqueId());
 
-        if (kitEntity != null) {
-            final String kitSerial = kitEntity.getSerial();
-            if (kitSerial == null || kitSerial.isEmpty()) {
-                PlayerFunctions.kitPlayer(pVictim);
-            } else {
-                SerializableInventory serializableInventory = SerializableInventory.convertFromString(kitSerial);
-                serializableInventory.addItems(pVictim.getInventory(), PlayerFunctions.getKitItems(pVictim));
+        final String kitSerial = kitEntity.getSerial();
+        if (kitSerial == null || kitSerial.isEmpty()) {
+            PlayerFunctions.kitPlayer(pVictim);
+        } else {
+            SerializableInventory serializableInventory = SerializableInventory.convertFromString(kitSerial);
+            serializableInventory.addItems(pVictim.getInventory(), PlayerFunctions.getKitItems(pVictim));
 
-                PlayerFunctions.armorPlayer(pVictim);
-            }
+            PlayerFunctions.armorPlayer(pVictim);
         }
 
         PlayerFunctions.resetHealth(pVictim);
