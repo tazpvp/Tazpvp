@@ -74,6 +74,8 @@ public class PermissionsCommand extends NRCommand {
         } else if (args.length == 2) {
             return List.of("rank", "prefix");
         } else if (args.length == 3) {
+            return List.of("reset", "set");
+        } else if (args.length == 4) {
             if (args[1].equalsIgnoreCase("rank")) {
                 List<String> ranks = new ArrayList<>();
                 for (Rank rank : Rank.values()) {
@@ -81,7 +83,7 @@ public class PermissionsCommand extends NRCommand {
                 }
                 return ranks;
             } else {
-                return List.of("reset", "set");
+                return List.of("<prefix>");
             }
         }
         return List.of();
