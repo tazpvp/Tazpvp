@@ -8,6 +8,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
 import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.duels.type.Classic;
+import net.tazpvp.tazpvp.duels.type.Op;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
@@ -34,7 +35,7 @@ public class DuelSendCommand extends NRCommand {
         }
 
         if (args.length < 2) {
-            sendIncorrectUsage(sender, "Usage: /duel send <player> <type>\n" + "Types: \n" + "- Classic");
+            sendIncorrectUsage(sender, "Usage: /duel send <player> <type>\n" + "Types: \n" + "- Classic" + "\n- Op");
             return true;
         }
 
@@ -85,13 +86,15 @@ public class DuelSendCommand extends NRCommand {
         }
         if (type.equalsIgnoreCase("classic")) {
             Duel.duels.put(new Classic(p.getUniqueId(), target.getUniqueId()), target.getUniqueId());
+        } else if (type.equalsIgnoreCase("op")) {
+            Duel.duels.put(new Op(p.getUniqueId(), target.getUniqueId()), target.getUniqueId());
         } else {
             p.sendMessage(CC.RED + "Not a valid duel type!");
             return;
         }
         p.sendMessage(CC.GREEN + "You sent a duel request to " + CC.GOLD +  target.getName());
 
-        TextComponent component = new TextComponent(CC.GOLD + p.getName() + CC.GREEN + " sent you a duel request. \n" + CC.GREEN + "[Click to Accept]");
+        TextComponent component = new TextComponent(CC.GOLD + p.getName() + CC.GREEN + " sent you a " + CC.RED + type + CC.GREEN + " duel request. \n" + CC.GREEN + "[Click to Accept]");
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.GREEN + "Accept Duel Request").create()));
         component.setClickEvent(new net.md_5.bungee.api.chat.ClickEvent(ClickEvent.Action.RUN_COMMAND, "/duel accept"));
 
@@ -103,7 +106,7 @@ public class DuelSendCommand extends NRCommand {
         if (args.length == 1) {
             return Completer.onlinePlayers(args[0]);
         } else if (args.length == 2) {
-            return List.of("Classic");
+            return List.of("Classic", "Op");
         }
         return List.of();
     }

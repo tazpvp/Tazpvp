@@ -87,21 +87,7 @@ public class Classic extends Duel {
         p1.teleport(new Location(world, 0.5, 10, 14.5, 180, 0));
         p2.teleport(new Location(world, 0.5, 10, -13.5, 0, 0));
 
-        for (UUID id : super.getDUELERS()) {
-            Player p = Bukkit.getPlayer(id);
-            Inventory inv = p.getInventory();
-
-            p.getEquipment().setHelmet(new ItemStack(Material.DIAMOND_HELMET));
-            p.getEquipment().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
-            p.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
-            p.getEquipment().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
-            p.getEquipment().setItemInOffHand(new ItemStack(Material.SHIELD));
-
-            inv.addItem(new ItemStack(Material.DIAMOND_SWORD));
-            inv.addItem(new ItemStack(Material.DIAMOND_AXE));
-            inv.addItem(new ItemStack(Material.GOLDEN_APPLE, 6));
-        }
-
+        super.getDUELERS().forEach(this::addItems);
 
         new BukkitRunnable() {
             int countDown = 5;
@@ -129,5 +115,20 @@ public class Classic extends Duel {
                 }
             }
         }.runTaskTimer(Tazpvp.getInstance(), 20, 20);
+    }
+
+    public void addItems(final UUID duelerUUID) {
+        Player p = Bukkit.getPlayer(duelerUUID);
+        Inventory inv = p.getInventory();
+
+        p.getEquipment().setHelmet(new ItemStack(Material.DIAMOND_HELMET));
+        p.getEquipment().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
+        p.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
+        p.getEquipment().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
+        p.getEquipment().setItemInOffHand(new ItemStack(Material.SHIELD));
+
+        inv.addItem(new ItemStack(Material.DIAMOND_SWORD));
+        inv.addItem(new ItemStack(Material.DIAMOND_AXE));
+        inv.addItem(new ItemStack(Material.GOLDEN_APPLE, 6));
     }
 }
