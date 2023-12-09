@@ -82,14 +82,14 @@ public class Chat implements Listener {
 
         pw.setLastMessageSent(message);
 
-        String format = "&GRAY[{LEVEL}&GRAY] {PREFIX} %s{SUFFIX} &GRAY&M%s";
+        String format = "&GRAY[{LEVEL}&GRAY] {PREFIX}%s{SUFFIX} &GRAY&M%s";
         format = format
                 .replace("&GRAY", CC.GRAY.toString())
                 .replace("&GOLD", CC.YELLOW.toString())
                 .replace("&M", CC.WHITE.toString())
                 .replace("{LEVEL}", String.valueOf(PersistentData.getInt(uuid, DataTypes.LEVEL)))
                 .replace("{PREFIX}",
-                        CC.trans(pw.getRankPrefix())
+                        CC.trans(pw.getRankPrefix() + " ")
                 )
                 .replace("{SUFFIX}", pw.getGuildTag().toUpperCase());
 
