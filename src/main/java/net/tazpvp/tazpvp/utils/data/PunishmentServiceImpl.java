@@ -1,0 +1,91 @@
+package net.tazpvp.tazpvp.utils.data;
+
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.data.entity.PunishmentEntity;
+
+import java.sql.SQLException;
+import java.util.UUID;
+
+public class PunishmentServiceImpl implements PunishmentService {
+    @Override
+    public Dao<PunishmentEntity, UUID> getUserDao() {
+        try {
+            return DaoManager.createDao(Tazpvp.getPostgresqlDatabase().getConnectionSource(), PunishmentEntity.class);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void savePunishmentEntity(final PunishmentEntity rankEntity) {
+        try {
+            getUserDao().createOrUpdate(rankEntity);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public PunishmentEntity getPunishmentEntity(final UUID uuid) {
+        try {
+            return getUserDao().queryForId(uuid);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean punishmentEntityExists(final UUID uuid) {
+        try {
+            return getUserDao().idExists(uuid);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public PunishmentEntity getOrDefault(final UUID uuid) {
+        if (punishmentEntityExists(uuid)) {
+            return getPunishmentEntity(uuid);
+        } else {
+            return new PunishmentEntity(uuid, 0, null);
+        }
+    }
+
+    @Override
+    public void punish(final UUID uuid, final PunishmentType punishmentType, final long time) {
+        unpunish(uuid);
+        savePunishmentEntity(new PunishmentEntity(uuid, time, punishmentType.toString()));
+    }
+
+    @Override
+    public void unpunish(final UUID uuid) {
+        if (punishmentEntityExists(uuid)) {
+            try {
+                getUserDao().deleteById(uuid);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    @Override
+    public long getTimeRemaining(final UUID uuid) {
+        if (punishmentEntityExists(uuid)) {
+            return getOrDefault(uuid).getTimestamp();
+        }
+        return 0;
+    }
+
+    @Override
+    public boolean isPunished(final UUID uuid) {
+        return punishmentEntityExists(uuid);
+    }
+
+    @Override
+    public PunishmentType getPunishment(final UUID uuid) {
+        return PunishmentType.valueOf(getPunishmentEntity(uuid).getPunishmentType());
+    }
+}

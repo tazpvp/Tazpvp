@@ -44,6 +44,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
+@Deprecated
 public class PunishmentData extends Table {
 
     private static final String NAME = "punishments";
