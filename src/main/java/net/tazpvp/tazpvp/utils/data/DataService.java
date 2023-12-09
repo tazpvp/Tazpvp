@@ -8,11 +8,11 @@ import net.tazpvp.tazpvp.utils.data.entity.RankEntity;
 import java.sql.SQLException;
 
 public interface DataService {
-    default void createTableIfNotExists(final PostgresqlDatabase postgresqlDatabase) {
+    default void createTableIfNotExists(final PostgresqlDatabase postgresqlDatabase, final Class<?> clazz) {
         final ConnectionSource connectionSource = postgresqlDatabase.getConnectionSource();
 
         try {
-            TableUtils.createTableIfNotExists(connectionSource, RankEntity.class);
+            TableUtils.createTableIfNotExists(connectionSource, clazz);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

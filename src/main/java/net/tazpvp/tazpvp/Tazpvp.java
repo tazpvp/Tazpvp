@@ -70,8 +70,11 @@ import net.tazpvp.tazpvp.npc.shops.*;
 import net.tazpvp.tazpvp.talents.talent.*;
 import net.tazpvp.tazpvp.utils.ConfigUtil;
 import net.tazpvp.tazpvp.utils.crate.CrateManager;
+import net.tazpvp.tazpvp.utils.data.PunishmentServiceImpl;
 import net.tazpvp.tazpvp.utils.data.RankServiceImpl;
 import net.tazpvp.tazpvp.utils.data.database.PostgresqlDatabase;
+import net.tazpvp.tazpvp.utils.data.entity.PunishmentEntity;
+import net.tazpvp.tazpvp.utils.data.entity.RankEntity;
 import net.tazpvp.tazpvp.utils.functions.AfkFunctions;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.leaderboard.spawnable.SpawnableLeaderboardManager;
@@ -177,7 +180,8 @@ public final class Tazpvp extends JavaPlugin {
         database.connect();
         postgresqlDatabase = new PostgresqlDatabase("jdbc:postgresql://" + host + ":" + port + "/postgres", user, password);
 
-        new RankServiceImpl().createTableIfNotExists(postgresqlDatabase);
+        new RankServiceImpl().createTableIfNotExists(postgresqlDatabase, RankEntity.class);
+        new PunishmentServiceImpl().createTableIfNotExists(postgresqlDatabase, PunishmentEntity.class);
     }
 
     public static void registerObserver(Observer observer) {

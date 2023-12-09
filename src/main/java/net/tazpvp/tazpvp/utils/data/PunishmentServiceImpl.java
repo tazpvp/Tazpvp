@@ -86,6 +86,10 @@ public class PunishmentServiceImpl implements PunishmentService {
 
     @Override
     public PunishmentType getPunishment(final UUID uuid) {
+        final PunishmentEntity punishmentEntity = getPunishmentEntity(uuid);
+        if (punishmentEntity == null) {
+            return null;
+        }
         return PunishmentType.valueOf(getPunishmentEntity(uuid).getPunishmentType());
     }
 }
