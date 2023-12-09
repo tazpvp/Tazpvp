@@ -22,29 +22,41 @@ public class PermissionsCommand extends NRCommand {
     @Override
     public boolean execute(@NonNull CommandSender sender, @NotNull @NonNull String[] args) {
 
-        if (args.length < 3) {
-            sendIncorrectUsage(sender, "/"+ super.getLabel() + " <user> <rank|prefix> <rankType|newPrefix>");
-            return true;
+        if (args.length < 4) {
+            if (!args[2].equalsIgnoreCase("reset")) {
+                sendIncorrectUsage(sender, "/"+ super.getLabel() + " <user> <rank|prefix> <set|reset> <rankType|newPrefix>");
+                return true;
+            }
         }
 
         Player target = Bukkit.getPlayer(args[0]);
         PlayerWrapper targetWrapper = PlayerWrapper.getPlayer(target);
         String type = args[1];
-        String setTo = args[3];
+        String setOrReset = args[2];
+        String updatedName = null;
+        if (args.length > 3 && setOrReset.equalsIgnoreCase("set")) {
+            updatedName = args[3];
+        }
 
         if (type.equalsIgnoreCase("rank")) {
-            for (Rank rank : Rank.values()) {
-                if (setTo.equalsIgnoreCase(rank.getName())) {
-                    targetWrapper.setRank(rank);
-                    Bukkit.getLogger().info(target.getName() + "'s rank was set to " + targetWrapper.getRank().getName() + " by " + sender.getName());
-                    return true;
+            if (updatedName != null) {
+                for (Rank rank : Rank.values()) {
+                    if (updatedName.equalsIgnoreCase(rank.getName())) {
+                        targetWrapper.setRank(rank);
+                        Bukkit.getLogger().info(target.getName() + "'s rank was set to " + targetWrapper.getRank().getName() + " by " + sender.getName());
+                        return true;
+                    }
                 }
+            } else if (setOrReset.equalsIgnoreCase("reset")) {
+                targetWrapper.setRank(Rank.DEFAULT);
+                Bukkit.getLogger().info(target.getName() + "'s rank was set to " + Rank.DEFAULT.getName() + " by " + sender.getName());
+                return true;
             }
         } else if (type.equalsIgnoreCase("prefix")) {
-            if (args[2].equalsIgnoreCase("reset")) {
+            if (updatedName != null) {
+                targetWrapper.setCustomPrefix(updatedName);
+            } else if (args[2].equalsIgnoreCase("reset")) {
                 targetWrapper.removeCustomPrefix();
-            } else if (args[2].equalsIgnoreCase("set")) {
-                targetWrapper.setCustomPrefix(setTo);
             }
             return true;
         } else {
@@ -62,6 +74,8 @@ public class PermissionsCommand extends NRCommand {
         } else if (args.length == 2) {
             return List.of("rank", "prefix");
         } else if (args.length == 3) {
+            return List.of("reset", "set");
+        } else if (args.length == 4) {
             if (args[1].equalsIgnoreCase("rank")) {
                 List<String> ranks = new ArrayList<>();
                 for (Rank rank : Rank.values()) {
@@ -69,7 +83,7 @@ public class PermissionsCommand extends NRCommand {
                 }
                 return ranks;
             } else {
-                return List.of("reset", "set");
+                return List.of("<prefix>");
             }
         }
         return List.of();
