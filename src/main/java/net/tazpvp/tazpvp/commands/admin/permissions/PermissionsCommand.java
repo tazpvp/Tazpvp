@@ -30,7 +30,7 @@ public class PermissionsCommand extends NRCommand {
         Player target = Bukkit.getPlayer(args[0]);
         PlayerWrapper targetWrapper = PlayerWrapper.getPlayer(target);
         String type = args[1];
-        String setTo = args[2];
+        String setTo = args[3];
 
         if (type.equalsIgnoreCase("rank")) {
             for (Rank rank : Rank.values()) {
@@ -41,7 +41,11 @@ public class PermissionsCommand extends NRCommand {
                 }
             }
         } else if (type.equalsIgnoreCase("prefix")) {
-            targetWrapper.setCustomPrefix(setTo);
+            if (args[2].equalsIgnoreCase("reset")) {
+                targetWrapper.setCustomPrefix("");
+            } else if (args[2].equalsIgnoreCase("set")) {
+                targetWrapper.setCustomPrefix(setTo);
+            }
             return true;
         } else {
             sendIncorrectUsage(sender, "/"+ super.getLabel() + " <user> <rank|prefix> <rankType|newPrefix>");
@@ -64,6 +68,8 @@ public class PermissionsCommand extends NRCommand {
                     ranks.add(rank.name());
                 }
                 return ranks;
+            } else {
+                return List.of("reset", "set");
             }
         }
         return List.of();

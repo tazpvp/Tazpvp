@@ -32,19 +32,20 @@
 
 package net.tazpvp.tazpvp.duels.type;
 
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.duels.Duel;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.utils.ArmorManager;
 import world.ntdi.nrcore.utils.world.WorldUtil;
 
+import java.util.List;
 import java.util.UUID;
 
 public class Classic extends Duel {
@@ -63,7 +64,7 @@ public class Classic extends Duel {
     public void initialize() {
         new WorldUtil().cloneWorld("duelMap1", super.getWorldName());
 
-        getDUELERS().forEach(uuid -> PlayerWrapper.getPlayer(uuid).setDueling(true));
+        getDUELERS().forEach(uuid -> PlayerWrapper.getPlayer(uuid).setDuel(this));
     }
 
     @Override
@@ -71,10 +72,16 @@ public class Classic extends Duel {
 
         World world = Bukkit.getWorld(super.getWorldName());
 
-        super.getDUELERS().forEach(id -> {
+        setStarting(true);
+
+        List<UUID> duelers = super.getDUELERS();
+
+        duelers.forEach(id -> {
             Player p = Bukkit.getPlayer(id);
             ArmorManager.storeAndClearInventory(p);
             PlayerFunctions.resetHealth(p);
+            PlayerFunctions.feedPlr(p);
+            p.setGameMode(GameMode.SURVIVAL);
         });
 
         p1.teleport(new Location(world, 0.5, 10, 14.5, 180, 0));
@@ -88,11 +95,39 @@ public class Classic extends Duel {
             p.getEquipment().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
             p.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
             p.getEquipment().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
+            p.getEquipment().setItemInOffHand(new ItemStack(Material.SHIELD));
 
             inv.addItem(new ItemStack(Material.DIAMOND_SWORD));
+            inv.addItem(new ItemStack(Material.DIAMOND_AXE));
             inv.addItem(new ItemStack(Material.GOLDEN_APPLE, 6));
-
-            p.sendMessage("The duel hath begun.");
         }
+
+
+        new BukkitRunnable() {
+            int countDown = 5;
+            @Override
+            public void run() {
+                if (isStarting()) {
+                    if (countDown > 0) {
+                        duelers.forEach(id -> {
+                            Player p = Bukkit.getPlayer(id);
+                            if (p != null) {
+                                p.sendTitle(CC.GOLD + "" + CC.BOLD + countDown, "", 5, 10, 5);
+                            }
+                        });
+                        countDown -= 1;
+                    } else {
+                        duelers.forEach(id -> {
+                            Player p = Bukkit.getPlayer(id);
+                            if (p != null) {
+                                p.sendTitle(CC.GOLD + "" + CC.BOLD + "BEGIN", "", 5, 10, 5);
+                            }
+                        });
+                        setStarting(false);
+                        end();
+                    }
+                }
+            }
+        }.runTaskTimer(Tazpvp.getInstance(), 20, 20);
     }
 }

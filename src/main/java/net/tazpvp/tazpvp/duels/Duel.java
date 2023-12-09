@@ -35,10 +35,14 @@ package net.tazpvp.tazpvp.duels;
 import lombok.Getter;
 import lombok.Setter;
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.NRCore;
@@ -61,12 +65,16 @@ public abstract class Duel {
     private final String NAME;
     @Getter
     private final List<UUID> DUELERS;
+    @Getter
+    private final List<UUID> SPECTATORS;
     @Getter @Setter
     private UUID winner;
     @Getter @Setter
     private UUID loser;
     @Getter @Setter
     private String worldName;
+    @Getter @Setter
+    private boolean starting;
 
     public Duel(@Nonnull final UUID P1, @Nonnull final UUID P2, @Nonnull final String NAME) {
         this.P1 = P1;
@@ -76,62 +84,113 @@ public abstract class Duel {
         this.DUELERS = new ArrayList<>();
         this.DUELERS.add(P1);
         this.DUELERS.add(P2);
+
+        this.SPECTATORS = new ArrayList<>();
     }
 
     public abstract void initialize();
     public abstract void begin();
+
+    public void end(final UUID loser) {
+        setWinner(getOtherDueler(loser));
+        setLoser(loser);
+        end();
+    }
     public void end() {
         final Player winner = Bukkit.getPlayer(getWinner());
         final Player loser = Bukkit.getPlayer(getLoser());
+        final OfflinePlayer offlineWinner = Bukkit.getOfflinePlayer(getWinner());
+        final OfflinePlayer offlineLoser = Bukkit.getOfflinePlayer(getLoser());
 
-        ChatFunctions.announce(winner.getName() + " won the duel against " + loser.getName());
-        ArmorManager.setPlayerContents(loser, true);
-        loser.teleport(NRCore.config.spawn);
+        ChatFunctions.announce(CC.AQUA + offlineWinner.getName() + CC.DARK_AQUA + " won a duel against " + CC.AQUA + offlineLoser.getName());
+        if (loser != null) {
+            ArmorManager.setPlayerContents(loser, true);
+            loser.teleport(NRCore.config.spawn);
+            PlayerWrapper.getPlayer(loser).setDuel(null);
+            PlayerFunctions.resetHealth(loser);
+        }
 
-        winner.sendTitle("You Won", "");
+        if (winner != null) {
+            winner.sendTitle(CC.GOLD + "" + CC.BOLD + "YOU WIN", "", 20, 20, 20);
+        }
 
-        DUELERS.forEach(p -> {
-            PlayerWrapper.getPlayer(p).setDueling(false);
-            PlayerFunctions.resetHealth(Bukkit.getPlayer(p));
+        SPECTATORS.forEach(p -> {
+            final Player spectator = Bukkit.getPlayer(p);
+            if (spectator != null) {
+                removeSpectator(spectator);
+            }
         });
+
+        final Duel duel = this;
 
         new BukkitRunnable() {
             public void run() {
-                ArmorManager.setPlayerContents(winner, true);
-                winner.teleport(NRCore.config.spawn);
+                if (winner != null) {
+                    ArmorManager.setPlayerContents(winner, true);
+                    winner.teleport(NRCore.config.spawn);
+
+                    PlayerWrapper pw = PlayerWrapper.getPlayer(winner);
+                    pw.setDuel(null);
+                    PlayerFunctions.resetHealth(winner);
+                }
+
+
 
                 new WorldUtil().deleteWorld(getWorldName());
-                duels.remove(this);
+                duels.remove(duel);
             }
-        }.runTaskLater(Tazpvp.getInstance(), 20*3);
+        }.runTaskLater(Tazpvp.getInstance(), 20*5);
     }
+
     public void abort() {
         DUELERS.forEach(p -> {
             Player plr = Bukkit.getPlayer(p);
-            plr.teleport(NRCore.config.spawn);
-            ArmorManager.setPlayerContents(plr, true);
+            if (plr != null) {
+                plr.teleport(NRCore.config.spawn);
+                ArmorManager.setPlayerContents(plr, true);
+            }
+        });
+
+        SPECTATORS.forEach(p -> {
+            final Player spectator = Bukkit.getPlayer(p);
+            if (spectator != null) {
+                removeSpectator(spectator);
+            }
         });
 
         new WorldUtil().deleteWorld(getWorldName());
         duels.remove(this);
     }
 
-    public static WeakHashMap<Duel, UUID> duels = new WeakHashMap<>();
-    public static Duel getDuel(UUID id) {
-        for (Duel duel : duels.keySet()) {
-            if (duel.DUELERS.contains(id)) {
-                return duel;
+    public void addSpectator(final Player player) {
+        final UUID uuid = player.getUniqueId();
+        this.SPECTATORS.add(uuid);
+
+        player.setGameMode(GameMode.SPECTATOR);
+        player.teleport(new Location(Bukkit.getWorld(getWorldName()), 0.5, 6, 0.5));
+
+        for (UUID uuid1 : getDUELERS()) {
+            final Player dueler = Bukkit.getPlayer(uuid1);
+            if (dueler != null) {
+                dueler.sendMessage(player.getName() + " is now spectating.");
             }
         }
-        return null;
     }
 
-    public static UUID getOtherDueler(UUID id) {
-        Duel duel = getDuel(id);
-        if (duel.getP1() == id) {
-            return duel.getP2();
-        }
-        return duel.getP1();
+    public void removeSpectator(final Player player) {
+        final UUID uuid = player.getUniqueId();
+        this.SPECTATORS.remove(uuid);
+
+        player.teleport(NRCore.config.spawn);
+        player.setGameMode(GameMode.SURVIVAL);
+
+        final PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(player);
+        playerWrapper.setSpectating(null);
     }
 
+    public UUID getOtherDueler(final UUID id) {
+        return (P1.equals(id) ? P2 : P1);
+    }
+
+    public static WeakHashMap<Duel, UUID> duels = new WeakHashMap<>();
 }

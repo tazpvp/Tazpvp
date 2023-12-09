@@ -1,6 +1,10 @@
 package net.tazpvp.tazpvp.commands.gameplay.duel;
 
 import lombok.NonNull;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
 import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.duels.type.Classic;
@@ -8,6 +12,7 @@ import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Completer;
@@ -33,7 +38,7 @@ public class DuelSendCommand extends NRCommand {
             return true;
         }
 
-        if (PlayerWrapper.getPlayer(p).isDueling()) {
+        if (PlayerWrapper.getPlayer(p).getDuel() != null) {
             p.sendMessage(CC.RED + "You cannot use this command while dueling.");
             return true;
         }
@@ -43,21 +48,28 @@ public class DuelSendCommand extends NRCommand {
             return true;
         }
 
+        if (PlayerWrapper.getPlayer(p).getSpectating() != null) {
+            return true;
+        }
+
         if (TazloadCommand.tazloading) {
             p.sendMessage(CC.RED + "This feature is disabled while the server is reloading.");
             return true;
         }
 
-        Player target = Bukkit.getPlayer(args[0]);
+        final Player target = Bukkit.getPlayer(args[0]);
 
-        if (target == p) {
+        if (target == null) {
+            p.sendMessage(CC.RED + "Cannot find player.");
+            return true;
+        }
+
+        if (target.getUniqueId().equals(p.getUniqueId())) {
             sendIncorrectUsage(sender, "You cannot send a duel to yourself.");
             return true;
         }
 
-        if (target != null) {
-            putInDuel(args[1], p, target);
-        }
+        putInDuel(args[1], p, target);
         return true;
     }
 
@@ -65,7 +77,7 @@ public class DuelSendCommand extends NRCommand {
         for (Duel duel : Duel.duels.keySet()) {
             if (Duel.duels.get(duel) == target.getUniqueId()) {
                 if (duel.getP1() == p.getUniqueId()) {
-                    p.sendMessage("You already sent a duel to this person.");
+                    p.sendMessage(CC.RED + "You already sent a duel to this person.");
                     return;
                 }
                 Duel.duels.remove(duel);
@@ -74,11 +86,16 @@ public class DuelSendCommand extends NRCommand {
         if (type.equalsIgnoreCase("classic")) {
             Duel.duels.put(new Classic(p.getUniqueId(), target.getUniqueId()), target.getUniqueId());
         } else {
-            p.sendMessage("Not a valid type");
+            p.sendMessage(CC.RED + "Not a valid duel type!");
             return;
         }
-        p.sendMessage("You sent a duel request to " + target.getName());
-        target.sendMessage(p.getName() + " sent you a duel request.");
+        p.sendMessage(CC.GREEN + "You sent a duel request to " + CC.GOLD +  target.getName());
+
+        TextComponent component = new TextComponent(CC.GOLD + p.getName() + CC.GREEN + " sent you a duel request. \n" + CC.GREEN + "[Click to Accept]");
+        component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.GREEN + "Accept Duel Request").create()));
+        component.setClickEvent(new net.md_5.bungee.api.chat.ClickEvent(ClickEvent.Action.RUN_COMMAND, "/duel accept"));
+
+        target.spigot().sendMessage(component);
     }
 
     @Override

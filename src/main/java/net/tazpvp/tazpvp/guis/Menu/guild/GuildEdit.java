@@ -38,6 +38,7 @@ import net.tazpvp.tazpvp.utils.Profanity;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.data.PlayerRankData;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -54,7 +55,8 @@ import java.util.List;
 
 public class GuildEdit extends GUI {
 
-    private String noRank = "You do not have premium, visit the store to purchase it.";
+    private final String NO_RANK = CC.RED + "You do not have premium, visit the store to purchase it.";
+    private final String REQ_RANK = CC.DARK_PURPLE + "Requires rank to edit.";
 
     public GuildEdit(Player p, Guild g) {
         super("Guild Edit", 3);
@@ -65,34 +67,34 @@ public class GuildEdit extends GUI {
     private void addItems(Player p, Guild g) {
         fill(0, 3 * 9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE).name(" ").build());
 
-        Button guildIcon = Button.create(ItemBuilder.of(g.getIcon()).name("Edit Guild Icon").lore("Need a rank hgome boy").build(), e -> {
+        Button guildIcon = Button.create(ItemBuilder.of(g.getIcon()).name(CC.GREEN + "Edit Guild Icon").lore(REQ_RANK).build(), e -> {
             if (PlayerRankData.isPremium(p))
                 new Icon(p, g);
             else
-                p.sendMessage(noRank);
+                p.sendMessage(NO_RANK);
         });
 
-        Button guildDescription = Button.create(ItemBuilder.of(Material.WRITABLE_BOOK).name("Change Discription").lore("cost 6k coins yo yo").build(), e -> {
+        Button guildDescription = Button.create(ItemBuilder.of(Material.WRITABLE_BOOK).name(CC.GREEN + "Edit Description").lore(CC.YELLOW + "Costs " + CC.GOLD + "6,000 " + CC.YELLOW + "coins.").build(), e -> {
             if (PersistentData.getInt(p, DataTypes.COINS) > 6000) {
                 setDescription(p, g);
             } else {
-                p.sendMessage(noRank);
+                p.sendMessage(NO_RANK);
             }
         });
 
-        Button guildTag = Button.create(ItemBuilder.of(Material.NAME_TAG).name("Change Tag").lore("need a rank ;)").build(), e -> {
+        Button guildTag = Button.create(ItemBuilder.of(Material.NAME_TAG).name(CC.GREEN + "Edit Tag").lore(REQ_RANK).build(), e -> {
             if (PlayerRankData.isPremium(p)) {
                 setTag(p, g);
             } else {
-                p.sendMessage(noRank);
+                p.sendMessage(NO_RANK);
             }
         });
 
-        String showinbrowserTexxt = (g.isShow_in_browser() ? "Enabled" : "Disabled");
-        Button setShowInBrowser = Button.create(ItemBuilder.of(Material.BELL).name("Show in browser").lore(showinbrowserTexxt).build(), e -> {
+        final String showinbrowserText = (g.isShow_in_browser() ? "Enabled" : "Disabled");
+        Button setShowInBrowser = Button.create(ItemBuilder.of(Material.BELL).name(CC.GREEN + "Show in browser").lore(showinbrowserText).build(), e -> {
            g.setShow_in_browser(p.getUniqueId(), !g.isShow_in_browser());
            p.closeInventory();
-           p.sendMessage((g.isShow_in_browser() ? "Enabled" : "Disabled"));
+           p.sendMessage(CC.RED + "Showing guild in browser is now: " + CC.GOLD + (g.isShow_in_browser() ? "Enabled" : "Disabled"));
            new GuildEdit(p, g);
         });
 

@@ -73,44 +73,44 @@ public class DeathFunctions {
             return;
         }
 
-        if (killer != null) {
-            if (killer != victim) {
-                if (wrapper.isDueling()) {
-                    Duel duel = Duel.getDuel(victim);
-                    duel.setWinner(killer);
-                    duel.setLoser(victim);
-                    duel.end();
-                    return;
-                }
+        if (!killer.equals(victim)) {
+            if (wrapper.getDuel() != null) {
+                final Duel duel = wrapper.getDuel();
+                duel.setWinner(duel.getOtherDueler(victim));
+                duel.setLoser(victim);
+                duel.end();
+                return;
+            }
 
-                PersistentData.add(killer, DataTypes.KILLS);
-                LooseData.addKs(killer);
+            PersistentData.add(killer, DataTypes.KILLS);
+            LooseData.addKs(killer);
 
-                if ((LooseData.getKs(killer) % 5) == 0) {
-                    Bukkit.broadcastMessage(
-                            CC.GOLD + pKiller.getName() + CC.YELLOW + " has a kill streak of " +
-                                    CC.GOLD + LooseData.getKs(killer) + "\n" +
-                                    CC.GOLD + "Bounty: " + CC.YELLOW + "$" + (LooseData.getKs(killer) * 10)
-                    );
-                }
+            if ((LooseData.getKs(killer) % 5) == 0) {
+                Bukkit.broadcastMessage(
+                        CC.GOLD + pKiller.getName() + CC.YELLOW + " has a kill streak of " +
+                                CC.GOLD + LooseData.getKs(killer) + "\n" +
+                                CC.GOLD + "Bounty: " + CC.YELLOW + "$" + (LooseData.getKs(killer) * 10)
+                );
+            }
 
-                if (GuildUtils.isInGuild(pKiller)) {
-                    GuildUtils.getGuildPlayerIn(killer).addKills(1);
-                }
+            if (GuildUtils.isInGuild(pKiller)) {
+                GuildUtils.getGuildPlayerIn(killer).addKills(1);
+            }
 
-                if (GuildUtils.isInGuild(pVictim)) {
-                    GuildUtils.getGuildPlayerIn(victim).addDeaths(1);
-                }
+            if (GuildUtils.isInGuild(pVictim)) {
+                GuildUtils.getGuildPlayerIn(victim).addDeaths(1);
+            }
 
-                death.playParticle();
-                death.coffin();
-                death.dropHead();
-                death.storeInventory();
+            death.playParticle();
+            death.coffin();
+            death.dropHead();
+            death.storeInventory();
+            if (pKiller != null) {
                 PlayerFunctions.addHealth(pKiller, 10);
                 pKiller.playSound(pKiller.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
             }
-            death.deathMessage();
         }
+        death.deathMessage();
 
         PersistentData.add(victim, DataTypes.DEATHS);
         LooseData.resetKs(victim);
@@ -124,9 +124,9 @@ public class DeathFunctions {
         PlayerWrapper wrapper = PlayerWrapper.getPlayer(victim);
         final Player pVictim = Bukkit.getPlayer(victim);
 
-        if (wrapper.isDueling()) {
-            Duel duel = Duel.getDuel(victim);
-            duel.setWinner(Duel.getOtherDueler(victim));
+        if (wrapper.getDuel() != null) {
+            Duel duel = wrapper.getDuel();
+            duel.setWinner(duel.getOtherDueler(victim));
             duel.setLoser(victim);
             duel.end();
             return;

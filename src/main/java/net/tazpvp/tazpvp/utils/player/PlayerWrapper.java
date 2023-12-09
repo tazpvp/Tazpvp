@@ -3,6 +3,7 @@ package net.tazpvp.tazpvp.utils.player;
 import lombok.Getter;
 import lombok.Setter;
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.guild.Guild;
 import net.tazpvp.tazpvp.guild.GuildUtils;
 import net.tazpvp.tazpvp.npc.shops.NPC;
@@ -36,7 +37,7 @@ public class PlayerWrapper {
     @Getter @Setter
     private boolean canRestore;
     @Getter @Setter
-    private boolean dueling;
+    private Duel duel;
     @Getter
     private Rank rank;
     @Getter
@@ -62,6 +63,8 @@ public class PlayerWrapper {
     private List<Material> blocksPlaced;
     @Getter @Setter
     private String lastMessageSent;
+    @Getter @Setter
+    private Duel spectating;
 
 
     /**
@@ -73,7 +76,7 @@ public class PlayerWrapper {
         this.launching = false;
         this.respawning = false;
         this.canRestore = false;
-        this.dueling = false;
+        this.duel = null;
         this.rank = PlayerRankData.getRank(uuid);
         this.reportDebouncesList = new ArrayList<>();
         this.reportLoggerList = new ArrayList<>();
@@ -84,6 +87,7 @@ public class PlayerWrapper {
         this.timeOfLaunch = 0;
         this.blocksPlaced = new ArrayList<>();
         this.lastMessageSent = "";
+        this.spectating = null;
 
         refreshPermissions();
     }

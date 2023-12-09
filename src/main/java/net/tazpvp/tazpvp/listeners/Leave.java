@@ -33,6 +33,7 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
+import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.events.Event;
 import net.tazpvp.tazpvp.utils.PlaytimeUtil;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
@@ -74,6 +75,18 @@ public class Leave implements Listener {
         if (CombatTagFunctions.isInCombat(id)) {
             if (TazloadCommand.tazloading) return;
             DeathFunctions.death(id, CombatTagFunctions.getLastAttacker(id));
+        }
+
+        final PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(p);
+
+        if (playerWrapper.getSpectating() != null) {
+            final Duel duel = playerWrapper.getSpectating();
+            duel.removeSpectator(p);
+        }
+
+        if (playerWrapper.getDuel() != null) {
+            final Duel duel = playerWrapper.getDuel();
+            duel.end(id);
         }
     }
 

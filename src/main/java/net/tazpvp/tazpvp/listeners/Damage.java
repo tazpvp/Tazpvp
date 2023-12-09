@@ -73,19 +73,8 @@ public class Damage implements Listener {
 
         double finalDamage = event.getFinalDamage();
         boolean isFallingDamage = (event.getCause() == EntityDamageEvent.DamageCause.FALL);
-        Duel duel = Duel.getDuel(victim.getUniqueId());
 
         if (!playerWrapper.isLaunching() && compare(event, isFallingDamage)) {
-            return;
-        }
-
-        if (playerWrapper.isDueling()) {
-            if ((victim.getHealth() - finalDamage) <= 0) {
-                event.setCancelled(true);
-                duel.setWinner(Duel.getOtherDueler(victim.getUniqueId()));
-                duel.setLoser(victim.getUniqueId());
-                duel.end();
-            }
             return;
         }
 
@@ -122,11 +111,9 @@ public class Damage implements Listener {
 
     private void handleEntityDamageByEntity(Player victim, EntityDamageByEntityEvent event, double finalDamage) {
         if (event.getDamager() instanceof Player killer) {
-            CombatTagFunctions.putInCombat(victim.getUniqueId(), killer.getUniqueId());
             checkDeath(victim.getUniqueId(), killer.getUniqueId(), event, finalDamage);
         } else if (event.getDamager() instanceof Arrow arrow) {
             if (arrow.getShooter() instanceof Player pShooter) {
-                CombatTagFunctions.putInCombat(victim.getUniqueId(), pShooter.getUniqueId());
                 checkDeath(victim.getUniqueId(), pShooter.getUniqueId(), event, finalDamage);
             }
         } else {
@@ -139,17 +126,38 @@ public class Damage implements Listener {
             event.setCancelled(true);
             DeathFunctions.death(victim.getUniqueId());
         } else {
-            CombatTagFunctions.putInCombat(victim.getUniqueId(), null);
+            if (PlayerWrapper.getPlayer(victim).getDuel() == null) {
+                CombatTagFunctions.putInCombat(victim.getUniqueId(), null);
+            }
         }
     }
 
     private void checkDeath(UUID victim, @Nullable UUID killer, EntityDamageEvent event, double finalDamage) {
-        if ((Bukkit.getPlayer(victim).getHealth() - finalDamage) <= 0) {
+        final PlayerWrapper pw = PlayerWrapper.getPlayer(victim);
+        Player pVictim = Bukkit.getPlayer(victim);
+
+        if (pVictim == null) return;
+        if (pw.getDuel() != null) {
+            Duel duel = pw.getDuel();
+            if ((pVictim.getHealth() - finalDamage) <= 0) {
+                event.setCancelled(true);
+                duel.setWinner(duel.getOtherDueler(victim));
+                duel.setLoser(victim);
+                duel.end();
+            }
+            return;
+        }
+
+        CombatTagFunctions.putInCombat(victim, killer);
+
+
+        if ((pVictim.getHealth() - finalDamage) <= 0) {
             event.setCancelled(true);
-            if (killer != null)
+            if (killer != null) {
                 DeathFunctions.death(victim, killer);
-            else
+            } else {
                 DeathFunctions.death(victim);
+            }
         }
     }
 }
