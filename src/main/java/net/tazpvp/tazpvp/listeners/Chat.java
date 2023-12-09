@@ -93,6 +93,7 @@ public class Chat implements Listener {
                     .replace("{LEVEL}", String.valueOf(PersistentData.getInt(uuid, DataTypes.LEVEL)))
                     .replace("{SUFFIX}", pw.getGuildTag().toUpperCase());
         } else {
+            Bukkit.broadcastMessage("test");
             format = format
                     .replace("&GRAY", CC.GRAY.toString())
                     .replace("&GOLD", CC.YELLOW.toString())
