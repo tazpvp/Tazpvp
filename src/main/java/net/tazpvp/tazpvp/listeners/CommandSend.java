@@ -1,6 +1,7 @@
 package net.tazpvp.tazpvp.listeners;
 
-import net.tazpvp.tazpvp.utils.data.PunishmentData;
+import net.tazpvp.tazpvp.utils.data.PunishmentService;
+import net.tazpvp.tazpvp.utils.data.PunishmentServiceImpl;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,7 +14,7 @@ public class CommandSend implements Listener {
             return;
         }
 
-        if (PunishmentData.isMuted(player.getUniqueId())) {
+        if (new PunishmentServiceImpl().getPunishment(player.getUniqueId()) == PunishmentService.PunishmentType.MUTED) {
             if (playerCommandSendEvent.getCommand().contains("me")) {
                 playerCommandSendEvent.setCancelled(true);
             }

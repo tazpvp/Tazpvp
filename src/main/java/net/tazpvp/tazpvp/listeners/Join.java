@@ -34,10 +34,7 @@ package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.utils.PlayerNameTag;
 import net.tazpvp.tazpvp.utils.PlaytimeUtil;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
-import net.tazpvp.tazpvp.utils.data.LooseData;
-import net.tazpvp.tazpvp.utils.data.PersistentData;
-import net.tazpvp.tazpvp.utils.data.PunishmentData;
+import net.tazpvp.tazpvp.utils.data.*;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.enums.ColorCodes;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
@@ -65,13 +62,17 @@ public class Join implements Listener {
 
         new PlayerNameTag().initializePlayerNameTag(p);
 
-        if (PunishmentData.isBanned(p.getUniqueId())) {
-            if (PunishmentData.getTimeRemaining(p.getUniqueId()) > 0 || PunishmentData.isPermanentlyPunished(p.getUniqueId()))
+        final PunishmentService punishmentService = new PunishmentServiceImpl();
+        final PunishmentService.PunishmentType punishmentType = punishmentService.getPunishment(p.getUniqueId());
+
+        if (punishmentType == PunishmentService.PunishmentType.PERM_BAN) {
+            p.kickPlayer("Xd Bannned xD");
+        } else if (punishmentType == PunishmentService.PunishmentType.BANNED) {
+            if (punishmentService.getTimeRemaining(p.getUniqueId()) > 0)
                 p.kickPlayer("Xd Bannned xD");
         }
 
         PlaytimeUtil.playerJoined(p);
-
 
         PlayerFunctions.resetHealth(p);
         PlayerFunctions.feedPlr(p);

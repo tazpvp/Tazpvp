@@ -1,7 +1,8 @@
 package net.tazpvp.tazpvp.utils.functions;
 
 import net.tazpvp.tazpvp.utils.TimeToken;
-import net.tazpvp.tazpvp.utils.data.PunishmentData;
+import net.tazpvp.tazpvp.utils.data.PunishmentService;
+import net.tazpvp.tazpvp.utils.data.PunishmentServiceImpl;
 import org.bukkit.entity.Player;
 
 public class PunishmentFunctions {
@@ -13,7 +14,8 @@ public class PunishmentFunctions {
     public static void ban(Player target, String time, String reason) {
         TimeToken timeToken = new TimeToken(time);
 
-        PunishmentData.punish(target.getUniqueId(), PunishmentData.PunishmentType.BANNED, timeToken.getUnixTimestamp());
+        final PunishmentService punishmentService = new PunishmentServiceImpl();
+        punishmentService.punish(target.getUniqueId(), PunishmentService.PunishmentType.BANNED, timeToken.getUnixTimestamp());
 
         target.kickPlayer("You got banned xd join discord xd lol \n" + "hello");
     }
@@ -25,14 +27,17 @@ public class PunishmentFunctions {
     public static void mute(Player target, String time, String reason) {
         TimeToken timeToken = new TimeToken(time);
 
-        PunishmentData.punish(target.getUniqueId(), PunishmentData.PunishmentType.MUTED, timeToken.getUnixTimestamp());
+        final PunishmentService punishmentService = new PunishmentServiceImpl();
+        punishmentService.punish(target.getUniqueId(), PunishmentService.PunishmentType.MUTED, timeToken.getUnixTimestamp());
     }
 
     public static void unmute(Player target) {
-        PunishmentData.unpunish(target.getUniqueId());
+        PunishmentService punishmentService = new PunishmentServiceImpl();
+        punishmentService.unpunish(target.getUniqueId());
     }
 
     public static void unban(Player target) {
-        PunishmentData.unpunish(target.getUniqueId());
+        PunishmentService punishmentService = new PunishmentServiceImpl();
+        punishmentService.unpunish(target.getUniqueId());
     }
 }

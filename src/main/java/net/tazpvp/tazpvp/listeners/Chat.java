@@ -36,6 +36,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.Profanity;
 import net.tazpvp.tazpvp.utils.TimeUtil;
 import net.tazpvp.tazpvp.utils.data.*;
+import net.tazpvp.tazpvp.utils.data.entity.PunishmentEntity;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
@@ -57,8 +58,10 @@ public class Chat implements Listener {
         UUID uuid = p.getUniqueId();
         PlayerWrapper pw = PlayerWrapper.getPlayer(p);
 
-        if (PunishmentData.isMuted(uuid)) {
-            final String howLongAgo = TimeUtil.howLongAgo(PunishmentData.getTimeRemaining(uuid));
+        final PunishmentService punishmentService = new PunishmentServiceImpl();
+
+        if (punishmentService.getPunishment(uuid) == PunishmentService.PunishmentType.MUTED) {
+            final String howLongAgo = TimeUtil.howLongAgo(punishmentService.getTimeRemaining(uuid));
 
             p.sendMessage("You are currently muted for " + howLongAgo);
             e.setCancelled(true);

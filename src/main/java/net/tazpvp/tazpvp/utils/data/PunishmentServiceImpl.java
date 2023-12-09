@@ -74,7 +74,7 @@ public class PunishmentServiceImpl implements PunishmentService {
     @Override
     public long getTimeRemaining(final UUID uuid) {
         if (punishmentEntityExists(uuid)) {
-            return getOrDefault(uuid).getTimestamp();
+            return getOrDefault(uuid).getTimestamp() - System.currentTimeMillis();
         }
         return 0;
     }

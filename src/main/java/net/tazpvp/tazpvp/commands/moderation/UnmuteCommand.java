@@ -1,7 +1,8 @@
 package net.tazpvp.tazpvp.commands.moderation;
 
 import lombok.NonNull;
-import net.tazpvp.tazpvp.utils.data.PunishmentData;
+import net.tazpvp.tazpvp.utils.data.PunishmentService;
+import net.tazpvp.tazpvp.utils.data.PunishmentServiceImpl;
 import net.tazpvp.tazpvp.utils.functions.PunishmentFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -37,12 +38,13 @@ public class UnmuteCommand extends NRCommand {
             return false;
         }
 
-        if (!PunishmentData.isMuted(target.getUniqueId())) {
+        final PunishmentService punishmentService = new PunishmentServiceImpl();
+
+        if (punishmentService.getPunishment(target.getUniqueId()) != PunishmentService.PunishmentType.MUTED) {
             sendIncorrectUsage(sender, target.getName() + " is not muted!");
             return false;
         }
-
-        PunishmentFunctions.unmute(target);
+        punishmentService.unpunish(target.getUniqueId());
 
         sender.sendMessage("Unmuted " + target.getName());
 
