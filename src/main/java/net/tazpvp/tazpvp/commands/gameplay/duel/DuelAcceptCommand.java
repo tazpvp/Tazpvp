@@ -50,7 +50,7 @@ public class DuelAcceptCommand extends NRCommand {
 
         Tuple<Boolean, Duel> duelPair = requested(p);
 
-        if (duelPair.getA()) {
+        if (duelPair.getA() != null) {
             Duel duel = duelPair.getB();
 
             duel.initialize();
