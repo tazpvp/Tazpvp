@@ -42,7 +42,7 @@ public class PermissionsCommand extends NRCommand {
             }
         } else if (type.equalsIgnoreCase("prefix")) {
             if (args[2].equalsIgnoreCase("reset")) {
-                targetWrapper.setCustomPrefix("");
+                targetWrapper.removeCustomPrefix();
             } else if (args[2].equalsIgnoreCase("set")) {
                 targetWrapper.setCustomPrefix(setTo);
             }

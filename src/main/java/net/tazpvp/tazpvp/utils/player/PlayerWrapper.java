@@ -127,6 +127,10 @@ public class PlayerWrapper {
         PlayerRankData.setPrefix(uuid, prefix);
     }
 
+    public void removeCustomPrefix() {
+        PlayerRankData.setPrefix(getUuid(), null);
+    }
+
     /**
      * Hide the player from ALL other players.
      */
