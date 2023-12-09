@@ -39,10 +39,7 @@ import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.NRCore;
@@ -102,7 +99,7 @@ public abstract class Duel {
         final OfflinePlayer offlineWinner = Bukkit.getOfflinePlayer(getWinner());
         final OfflinePlayer offlineLoser = Bukkit.getOfflinePlayer(getLoser());
 
-        ChatFunctions.announce(CC.AQUA + offlineWinner.getName() + CC.DARK_AQUA + " won a duel against " + CC.AQUA + offlineLoser.getName());
+        ChatFunctions.announce(CC.AQUA + offlineWinner.getName() + CC.DARK_AQUA + " won a duel against " + CC.AQUA + offlineLoser.getName(), Sound.BLOCK_BELL_RESONATE);
         if (loser != null) {
             ArmorManager.setPlayerContents(loser, true);
             loser.teleport(NRCore.config.spawn);

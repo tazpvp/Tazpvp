@@ -42,17 +42,16 @@ import java.util.regex.Pattern;
 
 public class ChatFunctions {
 
-    public static void announce(String msg) {
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            p.sendMessage(" ", msg, " ");
-        }
-    }
-
     public static void announce(String msg, Sound sound) {
         for (Player p : Bukkit.getOnlinePlayers()) {
             p.sendMessage(" ", msg, " ");
             p.playSound(p.getLocation(), sound, 1, 1);
         }
+    }
+
+    public static void announce(Player p, String msg, Sound sound) {
+        p.sendMessage(" ", msg, " ");
+        p.playSound(p.getLocation(), sound, 1, 1);
     }
 
     private static final Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6}");
