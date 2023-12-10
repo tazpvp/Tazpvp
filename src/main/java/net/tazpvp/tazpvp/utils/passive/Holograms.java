@@ -20,11 +20,17 @@ public class Holograms {
             CC.WHITE + "Welcome to " + ChatFunctions.gradient(ColorCodes.SERVER.toString(), "Tazpvp", true),
             "Type " + ChatFunctions.hexColor(ColorCodes.SERVER.toString(), "/help ", true), "for assistance"
     };
+    private static String[] afkPit = {
+            ChatFunctions.gradient("#8fff17", "AFK PIT", true),
+            ChatFunctions.gradient("#8fff17", "1x Key Rewards", true),
+    };
     public static void holograms() {
         holograms.add(
                 new Hologram(new Location(Bukkit.getWorld("arena"), 0.5, 99, 26.5), false, welcome)
         );
-        holograms.add(new Hologram(ChatFunctions.gradient("#8fff17", "AFK PIT | 1x Key", true), new Location(Bukkit.getWorld("arena"), 14, 99, 7), false));
+        holograms.add(
+                new Hologram(new Location(Bukkit.getWorld("arena"), 14, 99, 7), false, afkPit)
+        );
     }
 
     public static void removeHolograms() {

@@ -65,12 +65,16 @@ public class EventCommand extends NRCommand {
                 }
                 p.sendMessage("You began the " + Event.currentEvent.getNAME() + " event.");
             } else {
-                p.sendMessage("There is no active event. Create one with /event create");
+                p.sendMessage(CC.RED + "There is no active event. Create one with /event create");
             }
         } else if (args[0].equalsIgnoreCase("join")) {
             if (Event.currentEvent != null) {
                 if (Event.currentEvent.getParticipantList().contains(p.getUniqueId())) {
-                    p.sendMessage("You already joined the event.");
+                    p.sendMessage(CC.RED + "You already joined the event.");
+                    return true;
+                }
+                if (!Event.currentEvent.getAliveList().isEmpty()) {
+                    p.sendMessage(CC.RED + "The event has already begun, you can no longer join.");
                     return true;
                 }
                 Event.currentEvent.getParticipantList().add(p.getUniqueId());

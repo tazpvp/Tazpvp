@@ -33,6 +33,7 @@
 package net.tazpvp.tazpvp.utils.functions;
 
 import net.md_5.bungee.api.ChatColor;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -137,5 +138,9 @@ public class ChatFunctions {
             }
         }
         return roman.toString();
+    }
+
+    public static void sendNeedPremium(Player p, String prefix) {
+        p.sendMessage(prefix + CC.DARK_GREEN + "You require a premium subscription for this feature.");
     }
 }

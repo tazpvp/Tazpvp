@@ -1,6 +1,7 @@
 package net.tazpvp.tazpvp.utils.functions;
 
 import net.tazpvp.tazpvp.utils.enums.CC;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
@@ -41,7 +42,7 @@ public class ItemFunctions {
         int newLevel;
         if (equipmentMeta.hasEnchant(enchantment)) {
             int currentLevel = equipmentMeta.getEnchantLevel(enchantment);
-            if (currentLevel >= 3) {
+            if (currentLevel >= 2) {
                 p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
                 p.sendMessage(CC.RED + "This enchantment is already at its maximum level.");
                 return;
@@ -63,7 +64,7 @@ public class ItemFunctions {
 
         p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, 1.0f, 1.0f);
 
-        p.sendMessage(CC.RED + "Enchantment " + enchantment.getKey().getKey() + " applied to the equipment (Level " + newLevel + ").");
+        p.sendMessage(CC.GREEN + "You applied the " + CC.WHITE + enchantment.getKey().getKey() + CC.GREEN + " enchantment. [" + newLevel + "]");
     }
 
     private static boolean ableToApplyEnchantTo(ItemStack i) {
@@ -79,14 +80,27 @@ public class ItemFunctions {
     }
 
     private static boolean acceptableEnchant(ItemStack i, Enchantment e) {
-        String cutName = i.getType().name().split("_")[1];
-        if (acceptable.containsKey(cutName)) {
-            for (String name : acceptable.get(cutName)) {
-                if (e.getKey().toString().equals("minecraft:" + name)) {
-                    return true;
+        String[] splitName = i.getType().name().split("_");
+        if (splitName.length > 1) {
+            String cutName = splitName[1];
+            if (acceptable.containsKey(cutName)) {
+                for (String name : acceptable.get(cutName)) {
+                    if (e.getKey().toString().equals("minecraft:" + name)) {
+                        return true;
+                    }
+                }
+            }
+        } else {
+            String itemName = i.getType().name();
+            if (acceptable.containsKey(itemName)) {
+                for (String name : acceptable.get(itemName)) {
+                    if (e.getKey().toString().equals("minecraft:" + name)) {
+                        return true;
+                    }
                 }
             }
         }
         return false;
     }
+
 }

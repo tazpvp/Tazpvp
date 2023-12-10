@@ -57,10 +57,7 @@ import net.tazpvp.tazpvp.commands.moderation.ReportViewCommand;
 import net.tazpvp.tazpvp.commands.moderation.RestoreCommand;
 import net.tazpvp.tazpvp.commands.moderation.UnmuteCommand;
 import net.tazpvp.tazpvp.commands.moderation.ban.BanCommand;
-import net.tazpvp.tazpvp.commands.network.AdCommand;
-import net.tazpvp.tazpvp.commands.network.ApplyCommand;
-import net.tazpvp.tazpvp.commands.network.DiscordCommand;
-import net.tazpvp.tazpvp.commands.network.PlaytimeCommand;
+import net.tazpvp.tazpvp.commands.network.*;
 import net.tazpvp.tazpvp.commands.network.spawn.SpawnCommand;
 import net.tazpvp.tazpvp.discord.bot.BotThread;
 import net.tazpvp.tazpvp.enchants.EnchantUtil;
@@ -260,7 +257,8 @@ public final class Tazpvp extends JavaPlugin {
                 new EventCommand(),
                 new UnmuteCommand(),
                 new BoosterCommand(),
-                new LoadoutCommand()
+                new LoadoutCommand(),
+                new StoreCommand()
         );
     }
 

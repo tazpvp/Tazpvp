@@ -94,12 +94,12 @@ public class PlayerFunctions {
 
     public static ItemStack[] getKitItems(Player p) {
         return new ItemStack[] {
-                ItemBuilder.of(Material.DIAMOND_SWORD, 1, CC.WHITE + p.getName() + "'s Sword").enchantment(Enchantment.DAMAGE_ALL, 1).build(),
-                ItemBuilder.of(Material.BOW, 1, CC.WHITE + p.getName() + "'s Bow").build(),
-                ItemBuilder.of(Material.STONE_PICKAXE, 1, CC.WHITE + p.getName() + "'s Pickaxe").build(),
-                new ItemStack(Material.COOKED_BEEF, 20),
-                new ItemStack(Material.OAK_PLANKS, 64),
-                new ItemStack(Material.ARROW, 32)
+                ItemBuilder.of(Material.DIAMOND_SWORD, 1, ChatFunctions.gradient("#04f000", p.getName() + "'s Sword", true)).enchantment(Enchantment.DAMAGE_ALL, 1).build(),
+                ItemBuilder.of(Material.BOW, 1, ChatFunctions.gradient("#04f000", p.getName() + "'s Bow", true)).build(),
+                ItemBuilder.of(Material.STONE_PICKAXE, 1, ChatFunctions.gradient("#04f000", p.getName() + "'s Pickaxe", true)).build(),
+                ItemBuilder.of(Material.COOKED_BEEF, 20).name(ChatFunctions.gradient("#db3bff", "Steak", true)).build(),
+                ItemBuilder.of(Material.OAK_PLANKS, 64).name(ChatFunctions.gradient("#db3bff", "Plank", true)).build(),
+                ItemBuilder.of(Material.ARROW, 32).name(ChatFunctions.gradient("#db3bff", "Arrow", true)).build()
         };
     }
 

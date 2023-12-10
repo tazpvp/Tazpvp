@@ -45,7 +45,7 @@ public enum Rank {
     HELPER("helper", ChatFunctions.gradient("#04FF17", "HELPER", true), ChatColor.GREEN, 7, List.of("mute", "tazpvp.staff")),
     MODERATOR("moderator", ChatFunctions.gradient("#04A0FF", "MOD", true), ChatColor.AQUA, 6, List.of("mute", "tazpvp.ban", "tazpvp.restore")),
     ADMIN("admin", ChatFunctions.gradient("#FFE104", "ADMIN", true), ChatColor.YELLOW, 5, List.of("mute", "tazpvp.staff", "tazpvp.ban", "tazpvp.restore", "tazpvp.hide", "tazpvp.kit")),
-    MANAGER("manager", ChatFunctions.gradient("#7204FF", "MANAGER", true), ChatColor.BLUE, 4, List.of("mute", "tazpvp.staff", "tazpvp.ban", "tazpvp.restore", "tazpvp.hide", "tazpvp.kit", "tazpvp.stats")),
+    MANAGER("manager", ChatFunctions.gradient("#db3bff", "MANAGER", true), ChatColor.BLUE, 4, List.of("mute", "tazpvp.staff", "tazpvp.ban", "tazpvp.restore", "tazpvp.hide", "tazpvp.kit", "tazpvp.stats")),
     OWNER("owner", ChatFunctions.gradient("#ff6417", "OWNER", true), ChatColor.RED, 1, List.of("is.op"));
 
     @Getter

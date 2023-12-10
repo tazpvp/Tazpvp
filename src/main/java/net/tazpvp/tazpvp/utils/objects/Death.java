@@ -88,7 +88,7 @@ public class Death {
             if (GuildUtils.getGuildPlayerIn(pVictim) == GuildUtils.getGuildPlayerIn(pKiller)) return;
         }
 
-        int chance = r.nextInt(10);
+        int chance = r.nextInt(4); //TODO: make 10
 
         if (PersistentData.getTalents(killer).is("Necromancer")) {
             if (!(chance <= 2)) return;
