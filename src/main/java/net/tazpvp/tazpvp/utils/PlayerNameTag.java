@@ -1,8 +1,11 @@
 package net.tazpvp.tazpvp.utils;
 
+import net.tazpvp.tazpvp.utils.data.Rank;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
@@ -47,6 +50,12 @@ public class PlayerNameTag {
         } else {
             prefix = ChatUtils.chat(otherWrapper.getRankPrefix());
             prefixSeparator = " ";
+        }
+
+        if (otherWrapper.getRank() == Rank.PREMIUM) {
+            team.setColor(ChatColor.GREEN);
+        } else if (otherWrapper.getRank() == Rank.DEFAULT) {
+            team.setColor(ChatColor.GRAY);
         }
 
         final String suffix = otherWrapper.getGuildTag();
