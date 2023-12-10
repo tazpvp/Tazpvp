@@ -41,11 +41,11 @@ import java.util.List;
 
 public enum Rank {
     DEFAULT("default", null, ChatColor.GRAY, 9, List.of("")),
-    PREMIUM("premium", null, ChatColor.GOLD, 8, List.of("")),
-    HELPER("helper", CC.GREEN + "HELPER", ChatColor.GREEN, 7, List.of("mute", "tazpvp.staff")),
-    MODERATOR("moderator", CC.AQUA + "MODERATOR", ChatColor.AQUA, 6, List.of("mute", "tazpvp.ban", "tazpvp.restore")),
-    ADMIN("admin", CC.YELLOW + "ADMIN", ChatColor.YELLOW, 5, List.of("mute", "tazpvp.staff", "tazpvp.ban", "tazpvp.restore", "tazpvp.hide", "tazpvp.kit")),
-    MANAGER("manager", CC.BLUE + "MANAGER", ChatColor.BLUE, 4, List.of("mute", "tazpvp.staff", "tazpvp.ban", "tazpvp.restore", "tazpvp.hide", "tazpvp.kit", "tazpvp.stats")),
+    PREMIUM("premium", CC.GREEN+"❂", ChatColor.GREEN, 8, List.of("")),
+    HELPER("helper", ChatFunctions.gradient("#04FF17", "HELPER", true), ChatColor.GREEN, 7, List.of("mute", "tazpvp.staff")),
+    MODERATOR("moderator", ChatFunctions.gradient("#04A0FF", "MOD", true), ChatColor.AQUA, 6, List.of("mute", "tazpvp.ban", "tazpvp.restore")),
+    ADMIN("admin", ChatFunctions.gradient("#FFE104", "ADMIN", true), ChatColor.YELLOW, 5, List.of("mute", "tazpvp.staff", "tazpvp.ban", "tazpvp.restore", "tazpvp.hide", "tazpvp.kit")),
+    MANAGER("manager", ChatFunctions.gradient("#7204FF", "MANAGER", true), ChatColor.BLUE, 4, List.of("mute", "tazpvp.staff", "tazpvp.ban", "tazpvp.restore", "tazpvp.hide", "tazpvp.kit", "tazpvp.stats")),
     OWNER("owner", ChatFunctions.gradient("#ff6417", "OWNER", true), ChatColor.RED, 1, List.of("is.op"));
 
     @Getter
