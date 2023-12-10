@@ -12,7 +12,7 @@ import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
 public class StoreCommand extends NRCommand {
-    public StoreCommand(@NonNull Label label) {
+    public StoreCommand() {
         super(new Label("store", null));
         setNativeExecutor((sender, args) -> {
             if (!(sender instanceof Player p)) {
