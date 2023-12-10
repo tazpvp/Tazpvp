@@ -7,8 +7,8 @@ import org.bukkit.enchantments.Enchantment;
 @AllArgsConstructor
 @Getter
 public enum Enchants {
-    DOUBLE_ORES(1,56,"Double Ores", "double_ores"),
-    AUTO_SMELT(1,35,"Auto Smelt", "auto_smelt");
+    DOUBLE_ORES(1,3,"Double Ores", "double_ores"),
+    AUTO_SMELT(1,2,"Auto Smelt", "auto_smelt");
 
     private final int maxLevel;
     private final int cost;
