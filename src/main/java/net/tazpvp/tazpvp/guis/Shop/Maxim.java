@@ -138,7 +138,8 @@ public class Maxim extends GUI {
 
     private void setButton(String name, String text, Material mat, int cost, int amount, Enchantment enchantment) {
         addButton(Button.create(ItemBuilder.of(mat, amount).name(CC.YELLOW + "" + CC.BOLD + name).lore(CC.GOLD + text, " ", CC.GRAY + "Cost: $" + cost).build(), (e) -> {
-            checkMoney(cost, name, mat, amount, enchantment);
+            String name2 = ChatFunctions.gradient("#db3bff", name, true);
+            checkMoney(cost, name2, mat, amount, enchantment);
         }), slotNum);
         calcSlot();
     }
