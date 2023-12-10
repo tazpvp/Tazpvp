@@ -188,10 +188,10 @@ public class Maxim extends GUI {
                 p.getInventory().addItem(new EnchantmentBookBuilder().enchantment(enchantment, 1).build());
             }
 
-            p.sendMessage("you purchased " + name);
+            p.sendMessage(prefix + "You purchased: " + name);
             p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
         } else {
-            p.sendMessage("You don't have enough money");
+            p.sendMessage(prefix + CC.RED + "You don't have enough money");
         }
     }
 
