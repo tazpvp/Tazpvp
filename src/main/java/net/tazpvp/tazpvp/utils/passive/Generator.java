@@ -33,6 +33,7 @@
 package net.tazpvp.tazpvp.utils.passive;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.items.StaticItems;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.*;
 import org.bukkit.entity.Item;
@@ -42,7 +43,7 @@ import org.bukkit.util.Vector;
 
 public class Generator {
 
-    private static ItemStack shard = new ItemStack(Material.AMETHYST_SHARD);
+    private final static ItemStack shard = StaticItems.SHARD.item(1);
 
     public static void generate() {
         new BukkitRunnable() {

@@ -36,8 +36,10 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.items.UsableItem;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.Rank;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
@@ -58,6 +60,7 @@ public class Maxim extends GUI {
     private int slotNum;
     private int num;
     private Player p;
+    private final String prefix = CC.GREEN + "[Maxim] ";
 
     public Maxim(Player p) {
         super("Maxim", 6);
@@ -99,15 +102,15 @@ public class Maxim extends GUI {
         setButton("Lighter", "Set things afire.", Material.FLINT_AND_STEEL, 30, 1);
         setButton("Rusty Shield", "One-time-use shield.", Material.SHIELD, 30, 1);
         setButton("Exp Bottle", "Mend your armor.", Material.EXPERIENCE_BOTTLE, 30, 1);
-        setChangingButton("Wooden Planks", "Placeable Blocks", wood, 30, 64);
+        setChangingButton("Plank", "Placeable Blocks", wood, 30, 64);
 
         setButton("Hatchet", "Break wooden blocks.", Material.GOLDEN_AXE, 30, 1);
-        setButton("Shears", "Break wool blocks.", Material.SHEARS, 30, 1);
-        setButton("Arrows", "Projectiles.", Material.ARROW, 30, 5);
+        setButton("Shear", "Break wool blocks.", Material.SHEARS, 30, 1);
+        setButton("Arrow", "Projectiles.", Material.ARROW, 30, 5);
         setButton("Steak", "We have the meats.", Material.COOKED_BEEF, 30, 5);
         setButton("Gold Carrot", "Good nutrition.", Material.GOLDEN_CARROT, 30, 5);
         setButton("Gold Apple", "Only for rich people.", Material.GOLDEN_APPLE, 30, 1);
-        setChangingButton("RGB Blocks", "RGB Placeable Blocks", wool, 30, 64);
+        setChangingButton("Wool", "Placeable Blocks", wool, 30, 64);
 
         setButton("Spectral Arrow", "Highlight targets.", Material.SPECTRAL_ARROW, 30, 1);
         setButton("Crossbow", "Stronger than the bow.", Material.CROSSBOW, 30, 1);
@@ -159,7 +162,15 @@ public class Maxim extends GUI {
                             .lore(CC.GOLD + text, " ", CC.GRAY + "Cost: " + cost)
                             .build(), (e) -> {
 
+                        PlayerWrapper pw = PlayerWrapper.getPlayer(p);
+                        if (list.contains(Material.RED_WOOL)) {
+                            if (pw.getRank().getRank() > 8) {
+                                ChatFunctions.sendNeedPremium(p, prefix);
+                                return;
+                            }
+                        }
                         checkMoney(cost, name, list.get(num), amount, null);
+
 
                     }), slot);
                 }
