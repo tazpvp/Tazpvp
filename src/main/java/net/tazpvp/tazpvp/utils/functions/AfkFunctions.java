@@ -13,7 +13,6 @@ public class AfkFunctions {
 
     public static void setup() {
         new BukkitRunnable() {
-
             @Override
             public void run() {
                 for (Player p : Bukkit.getOnlinePlayers()) {
