@@ -3,6 +3,7 @@ package net.tazpvp.tazpvp.utils;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
 import world.ntdi.nrcore.utils.ChatUtils;
@@ -43,7 +44,6 @@ public class PlayerNameTag {
 
         team.setPrefix(prefix + prefixSeparator);
         team.setSuffix(suffixSeparator + suffix);
-//        team.setColor(otherWrapper.getRank().getColor());
 
         final String gradient = ChatFunctions.gradient("#c16bff", "l", true);
         final boolean isBold = gradient.toCharArray()[gradient.toCharArray().length-2] == 'b';
