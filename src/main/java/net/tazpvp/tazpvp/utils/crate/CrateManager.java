@@ -41,6 +41,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemStack;
+import world.ntdi.nrcore.utils.item.builders.EnchantmentBookBuilder;
+import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +59,41 @@ public class CrateManager {
 
         getCrates().add(new Crate(
                 new Location(Bukkit.getWorld("arena"), -12, 99, 8), ChatFunctions.gradient("#fcde00", "Daily Crate", true), "daily",
-                Material.ACACIA_PLANKS, Material.BIRCH_PLANKS));
+                    createItem("Azure Vapor", "Extinguish flames.", Material.BLUE_ORCHID, 1),
+                    createItem("Sticky Web", "Slow down your enemies.", Material.COBWEB, 5),
+                    createItem("Ink Splash", "Blind your enemies.", Material.INK_SAC, 3),
+                    createItem("Lighter", "Set things afire.", Material.FLINT_AND_STEEL,  1),
+                    createItem("Rusty Shield", "One-time-use shield.", Material.SHIELD, 1),
+                    createItem("Exp Bottle", "Mend your armor.", Material.EXPERIENCE_BOTTLE, 1),
+                    createItem("Hatchet", "Break wooden blocks.", Material.GOLDEN_AXE, 1),
+                    createItem("Shears", "Break wool blocks.", Material.SHEARS, 1),
+                    createItem("Arrows", "Projectiles.", Material.ARROW, 5),
+                    createItem("Steak", "We have the meats.", Material.COOKED_BEEF, 5),
+                    createItem("Gold Carrot", "Good nutrition.", Material.GOLDEN_CARROT, 5),
+                    createItem("Gold Apple", "Only for rich people.", Material.GOLDEN_APPLE, 1),
+                    createItem("Spectral Arrow", "Highlight targets.", Material.SPECTRAL_ARROW, 1),
+                    createItem("Crossbow", "Stronger than the bow.", Material.CROSSBOW, 1),
+                    createItem(Enchantment.MENDING),
+                    createItem(Enchantment.DAMAGE_ALL),
+                    createItem(Enchantment.DURABILITY),
+                    createItem(Enchantment.PROTECTION_ENVIRONMENTAL),
+                    createItem(Enchantment.PROTECTION_PROJECTILE),
+                    createItem(Enchantment.PROTECTION_FIRE),
+                    createItem(Enchantment.SWEEPING_EDGE),
+                    createItem(Enchantment.ARROW_KNOCKBACK),
+                    createItem(Enchantment.KNOCKBACK),
+                    createItem(Enchantment.ARROW_FIRE),
+                    createItem(Enchantment.FIRE_ASPECT),
+                    createItem("Shard", "Valuable gem.", Material.AMETHYST_SHARD,3)
+                ));
+    }
+
+    public ItemStack createItem(String name, String description, Material material, int amount) {
+        return ItemBuilder.of(material).amount(amount).name(name).build();
+    }
+
+    public ItemStack createItem(Enchantment enchantment) {
+        return new EnchantmentBookBuilder().enchantment(enchantment, 1).build();
     }
 
     public boolean canClaimDaily(OfflinePlayer p) {

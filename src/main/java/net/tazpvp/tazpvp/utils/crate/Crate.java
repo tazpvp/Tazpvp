@@ -58,9 +58,9 @@ public class Crate {
     @Getter
     private final String type;
     @Getter
-    private final Material[] crateDrops;
+    private final ItemStack[] crateDrops;
 
-    public Crate(Location location, String hologramText, String type, Material... crateDrops) {
+    public Crate(Location location, String hologramText, String type, ItemStack... crateDrops) {
         this.location = location;
         Location hologramLocation = new Location(location.getWorld(), location.getX() + 0.5, location.getY(), location.getZ() + 0.5);
         this.hologram = new Hologram(hologramText, hologramLocation, false);
@@ -117,8 +117,8 @@ public class Crate {
 
     private Tuple<String, ItemStack> randomShopItem() {
         Random r = new Random();
-        Material material = crateDrops[r.nextInt(crateDrops.length)];
-        ItemStack i = new ItemStack(material);
+        ItemStack itemStack = crateDrops[r.nextInt(crateDrops.length)];
+        ItemStack i = itemStack.clone();
         String name = i.getType().name().replaceAll("_", "");
         return new Tuple<>(name, i);
     }
