@@ -37,11 +37,11 @@ public class Enchantments extends GUI {
     private void addItems() {
         fill(0, 27, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
-        Button autoSmelt = Button.create(ItemBuilder.of(Material.ENCHANTED_BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Auto Smelt").lore(CC.GRAY + "Automatically refine ores.").build(), (e) ->
+        Button autoSmelt = Button.create(ItemBuilder.of(Material.ENCHANTED_BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Auto Smelt").lore(CC.GRAY + "Automatically refine ores.", CC.LIGHT_PURPLE + String.valueOf(Enchants.AUTO_SMELT.getCost()) + CC.DARK_PURPLE + " Shards").build(), (e) ->
             applyEnchant(Enchants.AUTO_SMELT));
-        Button efficiency = Button.create(ItemBuilder.of(Material.ENCHANTED_BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Efficiency").lore(CC.GRAY + "Increase the speed of mining.").build(), (e) ->
-            applyEnchant(Enchantment.DIG_SPEED, 15));
-        Button doubleOres = Button.create(ItemBuilder.of(Material.ENCHANTED_BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Double Ores").lore(CC.GRAY + "Duplicate the ores you mine.").build(), (e) ->
+        Button efficiency = Button.create(ItemBuilder.of(Material.ENCHANTED_BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Efficiency").lore(CC.GRAY + "Increase the speed of mining.", CC.LIGHT_PURPLE + "2" + CC.DARK_PURPLE + " Shards").build(), (e) ->
+            applyEnchant(Enchantment.DIG_SPEED, 1));
+        Button doubleOres = Button.create(ItemBuilder.of(Material.ENCHANTED_BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Double Ores").lore(CC.GRAY + "Duplicate the ores you mine.", CC.LIGHT_PURPLE + String.valueOf(Enchants.DOUBLE_ORES.getCost()) + CC.DARK_PURPLE + " Shards").build(), (e) ->
             applyEnchant(Enchants.DOUBLE_ORES));
 
         addButton(autoSmelt, 11);
