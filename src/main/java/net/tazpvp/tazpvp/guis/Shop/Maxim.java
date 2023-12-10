@@ -167,7 +167,7 @@ public class Maxim extends GUI {
         if (PersistentData.getInt(p, DataTypes.COINS) >= cost) {
             PersistentData.remove(p, DataTypes.COINS, cost);
             if (enchantment == null) {
-                p.getInventory().addItem(ItemBuilder.of(mat, amount).build());
+                p.getInventory().addItem(ItemBuilder.of(mat, amount).name(name).build());
             } else {
                 p.getInventory().addItem(new EnchantmentBookBuilder().enchantment(enchantment, 1).build());
             }
