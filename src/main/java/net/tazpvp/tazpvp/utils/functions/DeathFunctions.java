@@ -164,7 +164,7 @@ public class DeathFunctions {
     public static void acceptClick(PlayerInteractEvent e) {
         for (Coffin coffin : getCoffins()) {
             if (e.getClickedBlock() != null) {
-                if (e.getClickedBlock().getLocation().distance(coffin.getLocation()) < 1D) {
+                if (e.getClickedBlock().getLocation().distance(coffin.getLocation()) < 2D) {
                     coffin.doTheDo(e.getPlayer());
                 }
             }
