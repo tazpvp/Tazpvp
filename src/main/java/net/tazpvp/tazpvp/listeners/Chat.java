@@ -82,17 +82,25 @@ public class Chat implements Listener {
 
         pw.setLastMessageSent(message);
 
-        String format = "&GRAY[{LEVEL}&GRAY] {PREFIX}%s{SUFFIX} &GRAY&M%s";
-        format = format
-                .replace("&GRAY", CC.GRAY.toString())
-                .replace("&GOLD", CC.YELLOW.toString())
-                .replace("&M", CC.WHITE.toString())
-                .replace("{LEVEL}", String.valueOf(PersistentData.getInt(uuid, DataTypes.LEVEL)))
-                .replace("{PREFIX}",
-                        CC.trans(pw.getRankPrefix() + " ")
-                )
-                .replace("{SUFFIX}", pw.getGuildTag().toUpperCase());
+        String format = "&GRAY[{LEVEL}&GRAY] {PREFIX} %s{SUFFIX} &GRAY&M%s";
 
+        if (pw.getRankPrefix() == null) {
+            String tempFormat = "&GRAY[{LEVEL}&GRAY] %s{SUFFIX} &GRAY&M%s";
+            format = tempFormat
+                    .replace("&GRAY", CC.GRAY.toString())
+                    .replace("&GOLD", CC.YELLOW.toString())
+                    .replace("&M", CC.WHITE.toString())
+                    .replace("{LEVEL}", String.valueOf(PersistentData.getInt(uuid, DataTypes.LEVEL)))
+                    .replace("{SUFFIX}", pw.getGuildTag().toUpperCase());
+        } else {
+            format = format
+                    .replace("&GRAY", CC.GRAY.toString())
+                    .replace("&GOLD", CC.YELLOW.toString())
+                    .replace("&M", CC.WHITE.toString())
+                    .replace("{LEVEL}", String.valueOf(PersistentData.getInt(uuid, DataTypes.LEVEL)))
+                    .replace("{PREFIX}", CC.trans(pw.getRankPrefix()))
+                    .replace("{SUFFIX}", pw.getGuildTag().toUpperCase());
+        }
 
         for (Player h : Bukkit.getOnlinePlayers()) {
             Pattern pattern = Pattern.compile(h.getName(), Pattern.CASE_INSENSITIVE);

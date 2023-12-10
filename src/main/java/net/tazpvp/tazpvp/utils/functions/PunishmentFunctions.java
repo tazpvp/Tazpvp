@@ -17,7 +17,7 @@ public class PunishmentFunctions {
         final PunishmentService punishmentService = new PunishmentServiceImpl();
         punishmentService.punish(target.getUniqueId(), PunishmentService.PunishmentType.BANNED, timeToken.getUnixTimestamp());
 
-        target.kickPlayer("You got banned xd join discord xd lol \n" + "hello");
+        target.kickPlayer(reason);
     }
 
     public static void mute(Player target, String time) {

@@ -44,9 +44,10 @@ public class Move implements Listener {
             AfkFunctions.setAfk(p);
 
             if (p.getLocation().distance(launchpadRaidus) < 5) {
-                Launchpad(p);
-                pw.setTimeOfLaunch(System.currentTimeMillis());
-                p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1, 1);
+                if (p.getGameMode().equals(GameMode.SURVIVAL)){
+                    Launchpad(p);
+                    pw.setTimeOfLaunch(System.currentTimeMillis());
+                }
                 return;
             }
             if (pw.isRespawning()) {
@@ -91,15 +92,13 @@ public class Move implements Listener {
                     pw.setLaunching(false);
                 }
             }.runTaskLater(Tazpvp.getInstance(), 20);
-            if (p.getGameMode().equals(GameMode.SURVIVAL)){
-                p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1, 1);
-                if (PersistentData.getTalents(p.getUniqueId()).is("Glide")) {
-                    p.setVelocity(new Vector(0, 1.7, 8));
-                } else {
-                    p.setVelocity(new Vector(0, 1.2, 3));
-                }
-                Tazpvp.getObservers().forEach(o -> o.launch(p));
+            p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1, 1);
+            if (PersistentData.getTalents(p.getUniqueId()).is("Glide")) {
+                p.setVelocity(new Vector(0, 1.7, 8));
+            } else {
+                p.setVelocity(new Vector(0, 1.2, 3));
             }
+            Tazpvp.getObservers().forEach(o -> o.launch(p));
         }
     }
 }

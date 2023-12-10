@@ -2,6 +2,8 @@ package net.tazpvp.tazpvp.commands.admin.permissions;
 
 import lombok.NonNull;
 import net.tazpvp.tazpvp.utils.data.Rank;
+import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -21,10 +23,12 @@ public class PermissionsCommand extends NRCommand {
 
     @Override
     public boolean execute(@NonNull CommandSender sender, @NotNull @NonNull String[] args) {
+        String incorrectUsage = CC.RED + "Incorrect Usage:\n" +
+                CC.YELLOW + "/permissions <user> <rank|prefix> <set|reset> <rankType|newPrefix> <hex color-code> <bold?>";
 
         if (args.length < 4) {
             if (!args[2].equalsIgnoreCase("reset")) {
-                sendIncorrectUsage(sender, "/"+ super.getLabel() + " <user> <rank|prefix> <set|reset> <rankType|newPrefix>");
+                sender.sendMessage(incorrectUsage);
                 return true;
             }
         }
@@ -36,6 +40,15 @@ public class PermissionsCommand extends NRCommand {
         String updatedName = null;
         if (args.length > 3 && setOrReset.equalsIgnoreCase("set")) {
             updatedName = args[3];
+            if (args.length > 5) {
+                String colorCode = args[4];
+                boolean isBold = Boolean.parseBoolean(args[5]);
+                if (colorCode.charAt(0) == '#' && colorCode.length() == 7) {
+                    updatedName = ChatFunctions.gradient(colorCode, updatedName, isBold);
+                } else {
+                    sender.sendMessage(incorrectUsage);
+                }
+            }
         }
 
         if (type.equalsIgnoreCase("rank")) {
@@ -60,7 +73,7 @@ public class PermissionsCommand extends NRCommand {
             }
             return true;
         } else {
-            sendIncorrectUsage(sender, "/"+ super.getLabel() + " <user> <rank|prefix> <rankType|newPrefix>");
+            sender.sendMessage(incorrectUsage);
             return true;
         }
 
@@ -85,6 +98,10 @@ public class PermissionsCommand extends NRCommand {
             } else {
                 return List.of("<prefix>");
             }
+        } else if (args.length == 5) {
+            return List.of("<hex color>");
+        } else if (args.length == 6) {
+            return List.of("true", "false");
         }
         return List.of();
     }
