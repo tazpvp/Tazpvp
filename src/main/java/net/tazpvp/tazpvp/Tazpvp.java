@@ -65,12 +65,12 @@ import net.tazpvp.tazpvp.commands.network.spawn.SpawnCommand;
 import net.tazpvp.tazpvp.discord.bot.BotThread;
 import net.tazpvp.tazpvp.enchants.EnchantUtil;
 import net.tazpvp.tazpvp.events.Event;
+import net.tazpvp.tazpvp.items.UsableItem;
 import net.tazpvp.tazpvp.listeners.*;
 import net.tazpvp.tazpvp.npc.shops.*;
 import net.tazpvp.tazpvp.talents.talent.*;
 import net.tazpvp.tazpvp.utils.ConfigUtil;
 import net.tazpvp.tazpvp.utils.crate.CrateManager;
-import net.tazpvp.tazpvp.utils.data.KitService;
 import net.tazpvp.tazpvp.utils.data.KitServiceImpl;
 import net.tazpvp.tazpvp.utils.data.PunishmentServiceImpl;
 import net.tazpvp.tazpvp.utils.data.RankServiceImpl;
@@ -135,7 +135,6 @@ public final class Tazpvp extends JavaPlugin {
     public void onEnable() {
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
-
         registerEvents();
         registerCommands();
         Generator.generate();
@@ -147,6 +146,7 @@ public final class Tazpvp extends JavaPlugin {
         spawnNpcs();
         CombatTagFunctions.initCombatTag();
         AfkFunctions.setup();
+        UsableItem.registerCustomItems();
 
         parkourUtil = new ConfigUtil("parkour.yml", this);
 
