@@ -42,7 +42,7 @@ public class SonicBoomAttack implements Attack {
                 origin.getWorld().playSound(origin, Sound.ENTITY_SQUID_SQUIRT, 1.0f, 1.0f);
                 origin.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, origin, 1, 0, 0, 0, 0.05);
 
-                target.damage(random.nextInt(2, 4));
+                target.damage(random.nextInt(2) + 2);
             }
         }
     }
