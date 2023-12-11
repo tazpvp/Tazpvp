@@ -17,6 +17,10 @@ public class AfkFunctions {
             public void run() {
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     PlayerWrapper pw = PlayerWrapper.getPlayer(p);
+                    if (pw == null) {
+                        Bukkit.getLogger().severe("GRAHH JUST WANNA ROCK - NTDI, PLYAER NAME: " + p.getName());
+                        continue;
+                    }
                     if (pw.isAfk()) {
                         if ((System.currentTimeMillis() - pw.getTimeSinceAfk()) >= 1000 * 60 * 5) {
                             pw.setTimeSinceAfk(System.currentTimeMillis());
