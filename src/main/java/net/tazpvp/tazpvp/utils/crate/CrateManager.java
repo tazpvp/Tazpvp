@@ -63,7 +63,6 @@ public class CrateManager {
                     createItem("Sticky Web", "Slow down your enemies.", Material.COBWEB, 5),
                     createItem("Ink Splash", "Blind your enemies.", Material.INK_SAC, 3),
                     createItem("Lighter", "Set things afire.", Material.FLINT_AND_STEEL,  1),
-                    createItem("Rusty Shield", "One-time-use shield.", Material.SHIELD, 1),
                     createItem("Exp Bottle", "Mend your armor.", Material.EXPERIENCE_BOTTLE, 1),
                     createItem("Hatchet", "Break wooden blocks.", Material.GOLDEN_AXE, 1),
                     createItem("Shears", "Break wool blocks.", Material.SHEARS, 1),
