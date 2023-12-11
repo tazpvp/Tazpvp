@@ -100,7 +100,7 @@ public class DeathFunctions {
             }
 
             death.playParticle();
-            death.coffin();
+//            death.coffin();
             death.dropHead();
             death.storeInventory();
             if (pKiller != null) {

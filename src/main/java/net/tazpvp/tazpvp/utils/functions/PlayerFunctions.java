@@ -73,11 +73,22 @@ public class PlayerFunctions {
     }
 
     public static void healPlr(Player p) {
-        if (PersistentData.getInt(p.getUniqueId(), DataTypes.PLAYTIMEUNIX) <= 5 * 60 * 60 * 1000) {
-            p.setHealthScale(22.0);
+        int playTime = PersistentData.getInt(p.getUniqueId(), DataTypes.PLAYTIMEUNIX);
+        int thirtyMinutesInMs = 30 * 60 * 1000;
+
+        if (playTime <= thirtyMinutesInMs) {
+            int remainingTimeInMs = thirtyMinutesInMs - playTime;
+            int remainingMinutes = remainingTimeInMs / (60 * 1000);
+
+            p.sendMessage("");
+            p.sendMessage(CC.YELLOW + "You now have " + remainingMinutes + " minutes of starter health buff.");
+            p.sendMessage("");
+
+            p.setHealthScale(24.0);
         } else {
             p.setHealthScale(20.0);
         }
+
         p.setHealth(getMaxHealth(p));
     }
 
