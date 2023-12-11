@@ -27,6 +27,9 @@ public class Interact implements Listener {
                 }
                 return;
             }
+            if (e.getClickedBlock().getType() == Material.CHEST) {
+                e.setCancelled(true);
+            }
         }
         if (e.getItem() == null) return;
         if (getCustomItem(e.getItem()) == null) return;

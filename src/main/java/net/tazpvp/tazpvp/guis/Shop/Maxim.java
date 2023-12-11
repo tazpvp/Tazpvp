@@ -104,12 +104,12 @@ public class Maxim extends GUI {
         setButton("Exp Bottle", "Mend your armor.", Material.EXPERIENCE_BOTTLE, 64, 32);
         setChangingButton("Plank", "Placeable Blocks", wood, 30, 64);
 
-        setButton("Hatchet", "Break wooden blocks.", Material.GOLDEN_AXE, 30, 1);
-        setButton("Shear", "Break wool blocks.", Material.SHEARS, 30, 1);
-        setButton("Arrow", "Projectiles.", Material.ARROW, 30, 5);
+        setButton("Hatchet", "Break wooden blocks.", Material.GOLDEN_AXE, 40, 1);
+        setButton("Shear", "Break wool blocks.", Material.SHEARS, 20, 1);
+        setButton("Arrow", "Projectiles.", Material.ARROW, 50, 5);
         setButton("Steak", "We have the meats.", Material.COOKED_BEEF, 30, 5);
         setButton("Gold Carrot", "Good nutrition.", Material.GOLDEN_CARROT, 30, 5);
-        setButton("Gold Apple", "Only for rich people.", Material.GOLDEN_APPLE, 30, 1);
+        setButton("Gold Apple", "Only for rich people.", Material.GOLDEN_APPLE, 170, 1);
         setChangingButton("Wool", "Placeable Blocks", wool, 30, 64);
 
         setButton("Spectral Arrow", "Highlight targets.", Material.SPECTRAL_ARROW, 30, 1);
@@ -169,7 +169,8 @@ public class Maxim extends GUI {
                                 return;
                             }
                         }
-                        checkMoney(cost, ItemBuilder.of(list.get(num), amount).name(name).build(), name, null);
+                        String name2 = ChatFunctions.gradient("#db3bff", name, true);
+                        checkMoney(cost, ItemBuilder.of(list.get(num), amount).name(name2).build(), name, null);
 
 
                     }), slot);
