@@ -1,10 +1,8 @@
 package net.tazpvp.tazpvp.commands.gameplay.duel;
 
 import lombok.NonNull;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.*;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
 import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.duels.type.Classic;
@@ -94,11 +92,16 @@ public class DuelSendCommand extends NRCommand {
         }
         p.sendMessage(CC.GREEN + "You sent a duel request to " + CC.GOLD +  target.getName());
 
-        TextComponent component = new TextComponent(CC.GOLD + p.getName() + CC.GREEN + " sent you a " + CC.RED + type + CC.GREEN + " duel request. \n" + CC.GREEN + "[Click to Accept]");
-        component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.GREEN + "Accept Duel Request").create()));
-        component.setClickEvent(new net.md_5.bungee.api.chat.ClickEvent(ClickEvent.Action.RUN_COMMAND, "/duel accept"));
+        BaseComponent[] baseComponents = new ComponentBuilder(p.getName()).color(net.md_5.bungee.api.ChatColor.GOLD).append(" sent you a ").color(net.md_5.bungee.api.ChatColor.GREEN)
+                        .append(type).color(net.md_5.bungee.api.ChatColor.RED).append(" duel request").color(net.md_5.bungee.api.ChatColor.GREEN)
+                        .append("\n[Click to Accept]").create();
 
-        target.spigot().sendMessage(component);
+        baseComponents[4].setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/duel accept"));
+        baseComponents[4].setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(CC.GREEN + "Accept Duel Request")));
+
+
+
+        target.spigot().sendMessage(baseComponents);
     }
 
     @Override
