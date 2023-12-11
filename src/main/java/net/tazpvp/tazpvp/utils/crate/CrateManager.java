@@ -88,7 +88,8 @@ public class CrateManager {
     }
 
     public ItemStack createItem(String name, String description, Material material, int amount) {
-        return ItemBuilder.of(material).amount(amount).name(name).build();
+        String name2 = ChatFunctions.gradient("#db3bff", name, true);
+        return ItemBuilder.of(material).amount(amount).name(name2).build();
     }
 
     public ItemStack createItem(Enchantment enchantment) {
