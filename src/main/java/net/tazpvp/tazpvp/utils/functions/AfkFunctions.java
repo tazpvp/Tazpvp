@@ -34,7 +34,7 @@ public class AfkFunctions {
                     }
                 }
             }
-        }.runTaskTimer(Tazpvp.getInstance(), 0, 20*60*5);
+        }.runTaskTimer(Tazpvp.getInstance(), 0, 20*60*10);
     }
 
     public static void setAfk(Player p) {

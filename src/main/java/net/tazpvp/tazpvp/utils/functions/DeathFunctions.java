@@ -47,6 +47,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
@@ -100,7 +101,7 @@ public class DeathFunctions {
             }
 
             death.playParticle();
-//            death.coffin();
+            death.coffin();
             death.dropHead();
             death.storeInventory();
             if (pKiller != null) {
@@ -161,12 +162,10 @@ public class DeathFunctions {
         CombatTag.tags.get(pVictim.getUniqueId()).endCombat(null, false);
     }
 
-    public static void acceptClick(PlayerInteractEvent e) {
+    public static void acceptClick(BlockBreakEvent e) {
         for (Coffin coffin : getCoffins()) {
-            if (e.getClickedBlock() != null) {
-                if (e.getClickedBlock().getLocation().distance(coffin.getLocation()) < 2D) {
-                    coffin.doTheDo(e.getPlayer());
-                }
+            if (e.getBlock().getLocation().distance(coffin.getLocation()) < 2D) {
+                coffin.doTheDo(e.getPlayer());
             }
         }
     }
