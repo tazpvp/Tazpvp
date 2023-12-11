@@ -27,12 +27,6 @@ public class Interact implements Listener {
                 }
                 return;
             }
-
-            if (e.getClickedBlock().getType() == Material.CHEST) {
-                e.setCancelled(true);
-                DeathFunctions.acceptClick(e);
-                Tazpvp.getObservers().forEach(observer -> observer.open_coffin(p));
-            }
         }
         if (e.getItem() == null) return;
         if (getCustomItem(e.getItem()) == null) return;
