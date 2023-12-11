@@ -86,11 +86,11 @@ public class CosmeticMenu extends GUI {
         final RankEntity rankEntity = rankService.getOrDefault(p.getUniqueId());
 
 
-        fill(0, 3*9, ItemBuilder.of(Material.GRAY_STAINED_GLASS_PANE).name("").build());
+        fill(0, 3*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE).name("").build());
 
         addButton(Button.create(ItemBuilder.of(Material.BEETROOT).name(CC.RED + "Death Particles").build(), e -> {
             updateParticle(p, deathParticles, rankEntity.getDeathParticle(), Type.DEATH);
-        }), 10);
+        }), 11);
 
         addButton(Button.create(ItemBuilder.of(Material.ARROW).name(CC.BLUE + "Arrow Particles").build(), e -> {
             updateParticle(p, arrowParticles, rankEntity.getArrowParticle(), Type.ARROW);
@@ -98,8 +98,13 @@ public class CosmeticMenu extends GUI {
 
         addButton(Button.create(ItemBuilder.of(Material.NAME_TAG).name(CC.GOLD + "Custom Prefix").build(), e -> {
             p.closeInventory();
+            PlayerWrapper pw = PlayerWrapper.getPlayer(p);
+            if (pw.getRank().getRank() > 8) {
+                p.sendMessage(CC.GREEN + "[Lorenzo]" + CC.RED + "You require a premium subscription for this feature.");
+                return;
+            }
             setCustomPrefix(p);
-        }), 16);
+        }), 15);
 
         update();
     }
