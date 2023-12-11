@@ -10,6 +10,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -48,6 +49,12 @@ public class Place implements Listener {
             if (mat == Material.PLAYER_HEAD) {
                 e.setCancelled(true);
                 p.sendMessage("Trade player heads with bub at the tree.");
+            }
+
+            if (mat == Material.TNT) {
+                e.setCancelled(true);
+                b.getWorld().spawn(b.getLocation().add(0.5, 0, 0.5), TNTPrimed.class);
+                return;
             }
 
             // Delay in seconds.
