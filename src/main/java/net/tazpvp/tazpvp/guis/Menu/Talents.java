@@ -60,20 +60,20 @@ public class Talents extends GUI {
     private void addItems(Player p) {
         fill(0, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
-        setButton(p, 10, Material.NETHERITE_SWORD, 8, "Revenge", "Set the player who killed you on fire.");
-        setButton(p, 11, Material.WATER_BUCKET, 9, "Moist", "You can no longer be set on fire.");
-        setButton(p, 12, Material.SHIELD, 12, "Resilient", "Gain 2 absorption hearts on kill.");
-        setButton(p, 13, Material.GOLDEN_PICKAXE,8, "Excavator", "Mining gives you experience.");
-        setButton(p, 14, Material.CRAFTING_TABLE,6, "Architect", "A chance to reclaim the block you placed.");
-        setButton(p, 15, Material.BOW,8, "Hunter", "A chance to reclaim the arrow you shot.");
-        setButton(p, 16, Material.ROTTEN_FLESH,9, "Cannibal", "Replenish your hunger on kill.");
+        setButton(p, 10, Material.NETHERITE_SWORD, 800, "Revenge", "Set the player who killed you on fire.");
+        setButton(p, 11, Material.WATER_BUCKET, 900, "Moist", "You can no longer be set on fire.");
+        setButton(p, 12, Material.SHIELD, 1200, "Resilient", "Gain 2 absorption hearts on kill.");
+        setButton(p, 13, Material.GOLDEN_PICKAXE,800, "Excavator", "Mining gives you experience.");
+        setButton(p, 14, Material.CRAFTING_TABLE,600, "Architect", "A chance to reclaim the block you placed.");
+        setButton(p, 15, Material.BOW,800, "Hunter", "A chance to reclaim the arrow you shot.");
+        setButton(p, 16, Material.ROTTEN_FLESH,900, "Cannibal", "Replenish your hunger on kill.");
 
-        setButton(p, 19, Material.FEATHER,14, "Agile", "Gain a speed boost on kill.");
-        setButton(p, 20, Material.SHEARS,11, "Harvester", "Better chance that players drop heads.");
-        setButton(p, 21, Material.NETHERITE_HOE,15, "Necromancer", "Gain more from player coffins.");
-        setButton(p, 22, Material.GOLDEN_APPLE,20, "Blessed", "A chance of getting a golden apple from a kill.");
-        setButton(p, 23, Material.ELYTRA,6, "Glide", "The launch pad pushes you further.");
-        setButton(p, 24, Material.EXPERIENCE_BOTTLE,9, "Proficient", "Gain experience from duels.");
+        setButton(p, 19, Material.FEATHER,1400, "Agile", "Gain a speed boost on kill.");
+        setButton(p, 20, Material.SHEARS,1100, "Harvester", "Better chance that players drop heads.");
+        setButton(p, 21, Material.NETHERITE_HOE,1500, "Necromancer", "Gain more from player coffins.");
+        setButton(p, 22, Material.GOLDEN_APPLE,2000, "Blessed", "A chance of getting a golden apple from a kill.");
+        setButton(p, 23, Material.ELYTRA,600, "Glide", "The launch pad pushes you further.");
+        setButton(p, 24, Material.EXPERIENCE_BOTTLE,900, "Proficient", "Gain experience from duels.");
         setButton(p, 25, PotionBuilder.of(PotionBuilder.PotionType.SPLASH).setColor(Color.PURPLE).build().getType(),10, "Medic", "Heal nearby guild mates on kill.");
     }
 
