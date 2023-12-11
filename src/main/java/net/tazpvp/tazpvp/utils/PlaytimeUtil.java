@@ -17,6 +17,10 @@ public class PlaytimeUtil {
     }
 
     public static void playerLeft(@Nonnull final Player p) {
+        if (!loginTime.containsKey(p.getUniqueId())) {
+            return;
+        }
+
         long currentTime = System.currentTimeMillis();
         long timePlayed = currentTime - loginTime.get(p.getUniqueId());
         PersistentData.set(p, DataTypes.PLAYTIMEUNIX, PersistentData.getInt(p, DataTypes.PLAYTIMEUNIX) + timePlayed);
