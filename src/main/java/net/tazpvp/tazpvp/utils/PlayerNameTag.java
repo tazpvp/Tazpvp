@@ -29,6 +29,10 @@ public class PlayerNameTag {
 
     private void updateScoreboard(Player p1, Player p2) {
         PlayerWrapper otherWrapper = PlayerWrapper.getPlayer(p2);
+        if (otherWrapper == null) {
+            Bukkit.getLogger().severe("GYATT! NTDI BIG ERROR! Player 1 " + p1.getName() + " Player 2 " + p2.getName());
+            return;
+        }
 
         String teamName = "" + otherWrapper.getRank().getRank() + p2.getUniqueId();
         Team team = p1.getScoreboard().getTeam(teamName);
