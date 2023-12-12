@@ -96,6 +96,10 @@ public class Damage implements Listener {
 
         if (event.getCause() == EntityDamageEvent.DamageCause.FIRE) {
             Tazpvp.getObservers().forEach(observer -> observer.burn(victim));
+            return;
+        } else if (event.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION || event.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION) {
+            event.setCancelled(true);
+            return;
         }
 
         if (event instanceof EntityDamageByEntityEvent entityDamageByEntityEvent) {

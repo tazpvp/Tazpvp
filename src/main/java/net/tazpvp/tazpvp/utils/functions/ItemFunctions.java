@@ -19,7 +19,7 @@ public class ItemFunctions {
     private static final Map<String, List<String>> acceptable = new HashMap<>(){{
         put("BOW", List.of("power", "punch", "flame", "infinity", "unbreaking"));
         put("CROSSBOW", List.of("piercing", "quick_charge", "multishot", "unbreaking"));
-        put("SWORD", List.of("sharpness", "smite", "bane_of_arthropods", "knockback", "fire_aspect", "looting", "sweeping_edge", "unbreaking"));
+        put("SWORD", List.of("sharpness", "smite", "bane_of_arthropods", "knockback", "fire_aspect", "looting", "sweeping", "unbreaking"));
         put("HELMET", List.of("protection", "fire_protection", "feather_falling", "blast_protection", "projectile_protection", "respiration", "aqua_affinity", "thorns", "unbreaking", "mending", "vanishing_curse"));
         put("CHESTPLATE", List.of("protection", "fire_protection", "blast_protection", "projectile_protection", "thorns", "unbreaking", "mending", "vanishing_curse"));
         put("LEGGINGS", List.of("protection", "fire_protection", "blast_protection", "projectile_protection", "thorns", "unbreaking", "mending", "vanishing_curse"));

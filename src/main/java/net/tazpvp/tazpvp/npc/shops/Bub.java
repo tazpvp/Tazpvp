@@ -111,7 +111,7 @@ public class Bub extends NPC {
             return;
         }
 
-        p.sendMessage(CC.GREEN + "[Bub]" + CC.WHITE + " Pleasure doing business." + CC.GOLD + "+ $" + num);
+        p.sendMessage(CC.GREEN + "[Bub]" + CC.WHITE + " Pleasure doing business." + CC.GOLD + " + $" + reward);
         item.setAmount(0);
         PersistentData.add(p, DataTypes.COINS, reward);
         p.playSound(p.getLocation(), Sound.UI_STONECUTTER_TAKE_RESULT, 1, 1);
