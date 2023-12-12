@@ -33,6 +33,7 @@
 package net.tazpvp.tazpvp.guis.Menu;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
@@ -57,60 +58,58 @@ public class Talents extends GUI {
     }
 
     private void addItems(Player p) {
-        net.tazpvp.tazpvp.talents.Talents talents = PersistentData.getTalents(p.getUniqueId());
-
         fill(0, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
-        setButton(p, 10, Material.NETHERITE_SWORD, 8, "Revenge", "Set the player who killed you on fire.", talents.is("Revenge"));
-        setButton(p, 11, Material.WATER_BUCKET, 9, "Moist", "You can no longer be set on fire.", talents.is("Moist"));
-        setButton(p, 12, Material.SHIELD, 12, "Resilient", "Gain 2 absorption hearts on kill.", talents.is("Resilient"));
-        setButton(p, 13, Material.GOLDEN_PICKAXE,8, "Excavator", "Mining gives you experience.", talents.is("Excavator"));
-        setButton(p, 14, Material.CRAFTING_TABLE,6, "Architect", "A chance to reclaim the block you placed.", talents.is("Architect"));
-        setButton(p, 15, Material.BOW,8, "Hunter", "A chance to reclaim the arrow you shot.", talents.is("Hunter"));
-        setButton(p, 16, Material.ROTTEN_FLESH,9, "Cannibal", "Replenish your hunger on kill.", talents.is("Cannibal"));
+        setButton(p, 10, Material.NETHERITE_SWORD, 800, "Revenge", "Set the player who killed you on fire.");
+        setButton(p, 11, Material.WATER_BUCKET, 900, "Moist", "You can no longer be set on fire.");
+        setButton(p, 12, Material.SHIELD, 1200, "Resilient", "Gain 2 absorption hearts on kill.");
+        setButton(p, 13, Material.GOLDEN_PICKAXE,800, "Excavator", "Mining gives you experience.");
+        setButton(p, 14, Material.CRAFTING_TABLE,600, "Architect", "A chance to reclaim the block you placed.");
+        setButton(p, 15, Material.BOW,800, "Hunter", "A chance to reclaim the arrow you shot.");
+        setButton(p, 16, Material.ROTTEN_FLESH,900, "Cannibal", "Replenish your hunger on kill.");
 
-        setButton(p, 19, Material.FEATHER,14, "Agile", "Gain a speed boost on kill.", talents.is("Agile"));
-        setButton(p, 20, Material.SHEARS,11, "Harvester", "Better chance that players drop heads.", talents.is("Harvester"));
-        setButton(p, 21, Material.NETHERITE_HOE,15, "Necromancer", "Gain more from player coffins.", talents.is("Necromancer"));
-        setButton(p, 22, Material.GOLDEN_APPLE,20, "Blessed", "A chance of getting a golden apple from a kill.", talents.is("Blessed"));
-        setButton(p, 23, Material.ELYTRA,6, "Glide", "The launch pad pushes you further.", talents.is("Glide"));
-        setButton(p, 24, Material.EXPERIENCE_BOTTLE,9, "Proficient", "Gain experience from duels.", talents.is("Proficient"));
-        setButton(p, 25, PotionBuilder.of(PotionBuilder.PotionType.SPLASH).setColor(Color.PURPLE).build().getType(),10, "Medic", "Heal nearby guild mates on kill.", talents.is("Medic"));
+        setButton(p, 19, Material.FEATHER,1400, "Agile", "Gain a speed boost on kill.");
+        setButton(p, 20, Material.SHEARS,1100, "Harvester", "Better chance that players drop heads.");
+        setButton(p, 21, Material.NETHERITE_HOE,1500, "Necromancer", "Gain more from player coffins.");
+        setButton(p, 22, Material.GOLDEN_APPLE,2000, "Blessed", "A chance of getting a golden apple from a kill.");
+        setButton(p, 23, Material.ELYTRA,600, "Glide", "The launch pad pushes you further.");
+        setButton(p, 24, Material.EXPERIENCE_BOTTLE,900, "Proficient", "Gain experience from duels.");
+        setButton(p, 25, PotionBuilder.of(PotionBuilder.PotionType.SPLASH).setColor(Color.PURPLE).build().getType(),10, "Medic", "Heal nearby guild mates on kill.");
     }
 
-    private void setButton(Player p, int slot, Material mat, int cost, String name, String lore, boolean completed) {
+    private void setButton(Player p, int slot, Material mat, int cost, String name, String lore) {
+        boolean active = PersistentData.getTalents(p.getUniqueId()).is(name);
 
-        String complete = completed ? CC.GREEN + "Active" : CC.RED + "Inactive";
+        String complete = active ? CC.GREEN + "Active" : CC.RED + "Inactive";
 
         addButton(Button.create(ItemBuilder.of(mat, 1)
                 .name(CC.AQUA +  "" + CC.BOLD +name)
-                .lore(CC.DARK_AQUA + lore, " ",CC.GRAY + "Cost: " + cost + " Shards", " ", complete)
+                .lore(CC.DARK_AQUA + lore, " ",CC.GRAY + "Cost: " + cost + " Coins", " ", complete)
                 .flag(ItemFlag.HIDE_POTION_EFFECTS).flag(ItemFlag.HIDE_ATTRIBUTES)
                 .build(), (e) -> {
 
-            if (!completed) {
-
-                shardCount = PlayerFunctions.countShards(p);
-
-                if (shardCount >= cost) {
-
-                    PlayerFunctions.takeShards(p, cost);
+            if (!active) {
+                if (PersistentData.getInt(p.getUniqueId(), DataTypes.COINS) >= cost) {
 
                     net.tazpvp.tazpvp.talents.Talents talents = PersistentData.getTalents(p);
+
+                    PersistentData.remove(p.getUniqueId(), DataTypes.COINS, cost);
 
                     talents.set(name, true); // TODO: Add handlers incase of errors that may occur when changing invalid name, for now this should work tho so shrug.
 
                     PersistentData.setTalents(p, talents);
                     p.closeInventory();
-                    p.sendTitle("New Talent",  name, 10, 20, 10);
+                    p.sendTitle(CC.AQUA + "" + CC.BOLD + "New Talent",  CC.DARK_AQUA + name, 10, 20, 10);
                     p.playSound(p.getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN, 1, 1);
 
                     Tazpvp.getObservers().forEach(observer -> observer.talent(p));
                 } else {
-                    p.sendMessage("You do not have enough shards.");
+                    p.sendMessage(CC.GREEN + "[Lorenzo]" + CC.RED + " You do not have enough coins.");
+                    p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
                 }
             } else {
-                p.sendMessage("You already own this talent");
+                p.sendMessage(CC.GREEN + "[Lorenzo]" + CC.RED + " You already own this talent");
+                p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
             }
 
         }), slot);

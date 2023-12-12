@@ -32,6 +32,8 @@ public class LoadoutCommand extends NRCommand {
 
         KitEntity kitEntity = kitService.getKitEntity(player.getUniqueId());
 
+        if (kitEntity == null) return false;
+
         kitEntity.setSerial(SerializableInventory.convertToString(serializableInventory));
 
         kitService.saveKitEntity(kitEntity);

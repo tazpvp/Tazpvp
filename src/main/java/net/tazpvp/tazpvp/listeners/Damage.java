@@ -32,9 +32,12 @@
 
 package net.tazpvp.tazpvp.listeners;
 
+import com.j256.ormlite.field.DataType;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.events.Event;
+import net.tazpvp.tazpvp.talents.Talents;
+import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
@@ -93,6 +96,10 @@ public class Damage implements Listener {
 
         if (event.getCause() == EntityDamageEvent.DamageCause.FIRE) {
             Tazpvp.getObservers().forEach(observer -> observer.burn(victim));
+            return;
+        } else if (event.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION || event.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION) {
+            event.setCancelled(true);
+            return;
         }
 
         if (event instanceof EntityDamageByEntityEvent entityDamageByEntityEvent) {

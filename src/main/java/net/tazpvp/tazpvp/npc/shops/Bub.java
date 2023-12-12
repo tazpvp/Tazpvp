@@ -34,6 +34,9 @@ package net.tazpvp.tazpvp.npc.shops;
 
 import net.tazpvp.tazpvp.npc.dialogue.Dialogues;
 import net.tazpvp.tazpvp.items.StaticItems;
+import net.tazpvp.tazpvp.utils.data.DataTypes;
+import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -56,7 +59,7 @@ public class Bub extends NPC {
                 Villager.Type.SNOW,
                 Sound.ITEM_GOAT_HORN_SOUND_0,
                 new Dialogues(
-                        "Bub",
+                        CC.AQUA + "[Bub] " + CC.DARK_AQUA,
                         List.of(
                                 "Showed off my shards to Caesar, he stole a few and ran.",
                                 "Killing is so much better when you're rewarded for it..",
@@ -91,22 +94,27 @@ public class Bub extends NPC {
 
     @Override
     public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
-        sellHead(p);
+        sellItem(p);
     }
 
-    public static void sellHead(Player p) {
+    public static void sellItem(Player p) {
         ItemStack item = p.getInventory().getItemInMainHand();
-        if (item.getType().equals(Material.PLAYER_HEAD)) {
-            int num = item.getAmount();
+        int num = item.getAmount();
+        int reward;
 
-            if (num > 1) p.sendMessage("Here you go, take " + num + " shards.");
-            else p.sendMessage("Here you go, take " + num + " shard.");
-
-            item.setAmount(0);
-            p.getInventory().addItem(StaticItems.SHARD.item(num));
-
+        if (item.getType() == Material.PLAYER_HEAD) {
+            reward = num * 30;
+        } else if (item.getType() == Material.AMETHYST_SHARD) {
+            reward = num * 100;
         } else {
-            p.sendMessage("Right click me with player heads to trade them for shards.");
+            p.sendMessage(CC.GREEN + "[Bub]" + CC.WHITE + " Right click me with player heads or shards and I'll give you money.");
+            return;
         }
+
+        p.sendMessage(CC.GREEN + "[Bub]" + CC.WHITE + " Pleasure doing business." + CC.GOLD + " + $" + reward);
+        item.setAmount(0);
+        PersistentData.add(p, DataTypes.COINS, reward);
+        p.playSound(p.getLocation(), Sound.UI_STONECUTTER_TAKE_RESULT, 1, 1);
     }
+
 }

@@ -38,6 +38,7 @@ import net.tazpvp.tazpvp.utils.Profanity;
 import net.tazpvp.tazpvp.utils.data.*;
 import net.tazpvp.tazpvp.utils.data.entity.RankEntity;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -70,7 +71,7 @@ public class GuildEdit extends GUI {
         final RankEntity rankEntity = rankService.getOrDefault(p.getUniqueId());
 
         Button guildIcon = Button.create(ItemBuilder.of(g.getIcon()).name(CC.GREEN + "Edit Guild Icon").lore(REQ_RANK).build(), e -> {
-            if (rankEntity.isPremium()) {
+            if (PlayerWrapper.getPlayer(p.getUniqueId()).getRank().getRank() <= 8) {
                 new Icon(p, g);
             } else {
                 p.sendMessage(NO_RANK);
@@ -86,7 +87,7 @@ public class GuildEdit extends GUI {
         });
 
         Button guildTag = Button.create(ItemBuilder.of(Material.NAME_TAG).name(CC.GREEN + "Edit Tag").lore(REQ_RANK).build(), e -> {
-            if (rankEntity.isPremium()) {
+            if (PlayerWrapper.getPlayer(p.getUniqueId()).getRank().getRank() <= 8) {
                 setTag(p, g);
             } else {
                 p.sendMessage(NO_RANK);

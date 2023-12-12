@@ -34,10 +34,12 @@ package net.tazpvp.tazpvp.utils.functions;
 
 import net.md_5.bungee.api.ChatColor;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
+import javax.annotation.Nullable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -140,7 +142,17 @@ public class ChatFunctions {
         return roman.toString();
     }
 
-    public static void sendNeedPremium(Player p, String prefix) {
-        p.sendMessage(prefix + CC.DARK_GREEN + "You require a premium subscription for this feature.");
+    public static boolean requiresPremium(Player p, @Nullable String prefix) {
+        PlayerWrapper pw = PlayerWrapper.getPlayer(p);
+        if (pw.getRank().getRank() > 8) {
+            if (prefix != null) {
+                p.sendMessage(prefix + "You require a premium subscription for this feature.");
+            } else {
+                p.sendMessage(CC.RED + "You require a premium subscription for this feature.");
+            }
+            p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+            return false;
+        }
+        return true;
     }
 }

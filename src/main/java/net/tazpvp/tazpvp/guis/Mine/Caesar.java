@@ -30,7 +30,7 @@ public class Caesar extends GUI {
         fill(0, 27, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
         ItemStack tool = BlockFunctions.getPickaxe(p);
-        int shardCount = PlayerFunctions.countShards(p);
+        int balance = PersistentData.getInt(p.getUniqueId(), DataTypes.COINS);
 
         Pickaxe currentPickaxe = BlockFunctions.pickaxes.stream()
                 .filter(pickaxe -> pickaxe.getItem().getType() == tool.getType())
@@ -47,7 +47,7 @@ public class Caesar extends GUI {
                 .name(CC.YELLOW + "" + CC.BOLD + "Upgrade Pickaxe")
                 .flag(ItemFlag.HIDE_ATTRIBUTES);
 
-        String[] lore = {CC.GRAY + "Click to upgrade pickaxe material.", CC.GRAY + "Cost: " + CC.DARK_AQUA + cost + " Shards"};
+        String[] lore = {CC.GRAY + "Click to upgrade pickaxe material.", CC.GRAY + "Cost: " + CC.GOLD + "$" + cost};
         upgradeButtonBuilder.lore(lore);
 
         ItemStack upgradeButton = upgradeButtonBuilder.build();
@@ -59,13 +59,13 @@ public class Caesar extends GUI {
                 return;
             }
 
-            if (shardCount < cost) {
-                sendNPCMessage(p, "You do not have enough shards. You need " + (cost - shardCount) + " more shards.");
+            if (balance < cost) {
+                sendNPCMessage(p, "You do not have enough coins. You need " + (cost - balance) + " more coins.");
                 return;
             }
 
             tool.setType(currentPickaxe.getUpgrade());
-            PlayerFunctions.takeShards(p, cost);
+            PersistentData.remove(p.getUniqueId(), DataTypes.COINS, cost);
 
             sendNPCMessage(p, "Thanks, here is your new pickaxe.");
             p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, 1, 1);
@@ -74,7 +74,7 @@ public class Caesar extends GUI {
 
             Tazpvp.getObservers().forEach(observer -> observer.talent(p));
 
-            String[] lore2 = {CC.GRAY + "Click to upgrade its material.", CC.GRAY + "Cost: " + CC.DARK_AQUA + cost + " Shards"};
+            String[] lore2 = {CC.GRAY + "Click to upgrade its material.", CC.GRAY + "Cost: " + CC.GOLD + "$" + cost};
             upgradeButtonBuilder.lore(lore2);
             upgradeButton.setItemMeta(upgradeButtonBuilder.build().getItemMeta());
 

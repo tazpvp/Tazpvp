@@ -26,6 +26,10 @@ public class Interact implements Listener {
                     crate.acceptClick(e);
                 }
                 return;
+            } else if (e.getClickedBlock().getType() == Material.CHEST) {
+                e.setCancelled(true);
+            } else if (e.getClickedBlock().getType() == Material.ANVIL) {
+                e.setCancelled(true);
             }
         }
         if (e.getItem() == null) return;

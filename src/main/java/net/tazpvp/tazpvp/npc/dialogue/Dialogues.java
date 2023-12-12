@@ -61,7 +61,7 @@ public class Dialogues {
     }
 
     private String formatDialogue(String dialogue) {
-        return CC.GREEN + "[" + name + "] " + CC.WHITE + dialogue;
+        return name + dialogue;
     }
 
     private String dialogueFromList(List<String> dialogues) {

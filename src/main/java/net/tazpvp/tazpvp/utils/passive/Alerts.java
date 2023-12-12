@@ -52,7 +52,7 @@ public class Alerts {
             "Want to support us? Get our advertisement: &3/ad",
             "Think someone is hacking? Report them: &3/report",
             "You can hop in the AFK pit at spawn to claim rewards.",
-            "Died to a cheater? Restore your inventory: &3/restore "
+            "Died to a cheater? type &3/discord &7and ask for an inventory restore."
     ));
 
     public static void alert() {

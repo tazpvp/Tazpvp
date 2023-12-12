@@ -32,7 +32,7 @@
 
 package net.tazpvp.tazpvp.guis.Menu;
 
-import net.tazpvp.tazpvp.guis.Menu.cosmetic.CosmeticMenu;
+import net.tazpvp.tazpvp.guis.Menu.cosmetic.PremiumMenu;
 import net.tazpvp.tazpvp.guis.Menu.guild.GuildBrowser;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Material;
@@ -52,20 +52,20 @@ public class Lorenzo extends GUI {
     private void addItems(Player p) {
         fill(0, 3*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
-        addButton(Button.create(ItemBuilder.of(Material.BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Achievements").lore(CC.GRAY + "Check your achievements").build(), (e) -> {
+        addButton(Button.create(ItemBuilder.of(Material.BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Achievements").lore(CC.GRAY + "Complete these for cash rewards").build(), (e) -> {
             new Achievements(p);
         }), 10);
 
-        addButton(Button.create(ItemBuilder.of(Material.LECTERN, 1).name(CC.GREEN + "" + CC.BOLD + "Talents").lore(CC.GRAY + "Check your talents").build(), (e) -> {
+        addButton(Button.create(ItemBuilder.of(Material.LECTERN, 1).name(CC.GREEN + "" + CC.BOLD + "Talents").lore(CC.GRAY + "PvP and PvE buffs in the arena").build(), (e) -> {
             new Talents(p);
         }), 12);
 
-        addButton(Button.create(ItemBuilder.of(Material.TOTEM_OF_UNDYING, 1).name(CC.GREEN + "" + CC.BOLD + "Guilds").lore(CC.GRAY + "Browse guilds").build(), (e) -> {
+        addButton(Button.create(ItemBuilder.of(Material.TOTEM_OF_UNDYING, 1).name(CC.GREEN + "" + CC.BOLD + "Guilds").lore(CC.GRAY + "Create guilds and compete with rivals").build(), (e) -> {
             new GuildBrowser(p);
         }), 14);
 
-        addButton(Button.create(ItemBuilder.of(Material.FIRE_CHARGE, 1).name(CC.GREEN + "" + CC.BOLD + "Cosmetics").lore(CC.GRAY + "Premium features").build(), (e) -> {
-            new CosmeticMenu(p);
+        addButton(Button.create(ItemBuilder.of(Material.FIRE_CHARGE, 1).name(CC.GREEN + "" + CC.BOLD + "Premium").lore(CC.GRAY + "All of the premium cosmetic features").build(), (e) -> {
+            new PremiumMenu(p);
         }), 16);
 
         update();

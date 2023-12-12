@@ -20,14 +20,16 @@ public class DailyCommand extends NRCommand {
     @Override
     public boolean execute(@NonNull CommandSender sender, @NonNull String[] args) {
         if (sender instanceof Player p) {
-            if (Tazpvp.getCrateManager().canClaimDaily(p)) {
+            if (p.isOp()) {
+                p.getInventory().addItem(KeyFactory.getFactory().createDailyKey());
+            }  else if (Tazpvp.getCrateManager().canClaimDaily(p)) {
                 p.getInventory().addItem(KeyFactory.getFactory().createDailyKey());
                 p.sendMessage(CC.GREEN + "Claimed " + CC.GOLD + "DAILY " + CC.GREEN + "crate key!");
                 p.playSound(p.getLocation(), Sound.ITEM_BOTTLE_FILL_DRAGONBREATH, 1F, 1F);
 
                 PersistentData.set(p, DataTypes.DAILYCRATEUNIX, System.currentTimeMillis());
             } else {
-                p.sendMessage(CC.RED + "Unable to claim " + CC.GOLD + "DAILY " + CC.RED + "crate key!");
+                p.sendMessage(CC.RED + "Please wait until you can claim your crate key again.");
                 p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_HURT, 1F, 1F);
             }
         }
