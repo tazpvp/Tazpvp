@@ -111,7 +111,7 @@ public class Crate {
             i.setAmount(i.getAmount() - 1);
             p.getInventory().setItemInMainHand(i);
         } else {
-            p.getInventory().remove(i);
+            i.setType(Material.AIR);
         }
     }
 
