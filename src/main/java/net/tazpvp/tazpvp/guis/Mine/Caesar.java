@@ -47,7 +47,7 @@ public class Caesar extends GUI {
                 .name(CC.YELLOW + "" + CC.BOLD + "Upgrade Pickaxe")
                 .flag(ItemFlag.HIDE_ATTRIBUTES);
 
-        String[] lore = {CC.GRAY + "Click to upgrade pickaxe material.", CC.GRAY + "Cost: " + CC.DARK_AQUA + cost + " Coins"};
+        String[] lore = {CC.GRAY + "Click to upgrade pickaxe material.", CC.GRAY + "Cost: " + CC.GOLD + "$" + cost};
         upgradeButtonBuilder.lore(lore);
 
         ItemStack upgradeButton = upgradeButtonBuilder.build();
@@ -74,7 +74,7 @@ public class Caesar extends GUI {
 
             Tazpvp.getObservers().forEach(observer -> observer.talent(p));
 
-            String[] lore2 = {CC.GRAY + "Click to upgrade its material.", CC.GRAY + "Cost: " + CC.DARK_AQUA + cost + " Coins"};
+            String[] lore2 = {CC.GRAY + "Click to upgrade its material.", CC.GRAY + "Cost: " + CC.GOLD + "$" + cost};
             upgradeButtonBuilder.lore(lore2);
             upgradeButton.setItemMeta(upgradeButtonBuilder.build().getItemMeta());
 
