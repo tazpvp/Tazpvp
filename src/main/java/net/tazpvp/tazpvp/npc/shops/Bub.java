@@ -59,7 +59,7 @@ public class Bub extends NPC {
                 Villager.Type.SNOW,
                 Sound.ITEM_GOAT_HORN_SOUND_0,
                 new Dialogues(
-                        "Bub",
+                        CC.AQUA + "[Bub] " + CC.DARK_AQUA,
                         List.of(
                                 "Showed off my shards to Caesar, he stole a few and ran.",
                                 "Killing is so much better when you're rewarded for it..",

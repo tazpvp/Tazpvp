@@ -33,6 +33,7 @@
 package net.tazpvp.tazpvp.npc.shops;
 
 import net.tazpvp.tazpvp.npc.dialogue.Dialogues;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -52,7 +53,7 @@ public class Lorenzo extends NPC {
                 Villager.Type.TAIGA,
                 Sound.ITEM_GOAT_HORN_SOUND_0,
                 new Dialogues(
-                        "Lorenzo",
+                        CC.DARK_AQUA + "[Lorenzo] " + CC.AQUA,
                         List.of(
                                 "If you need an advantage, buy it here I guess..",
                                 "Why do I reward you for playing the game?",

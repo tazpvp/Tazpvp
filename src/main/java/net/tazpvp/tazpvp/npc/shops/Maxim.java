@@ -33,6 +33,7 @@
 package net.tazpvp.tazpvp.npc.shops;
 
 import net.tazpvp.tazpvp.npc.dialogue.Dialogues;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -52,7 +53,7 @@ public class Maxim extends NPC {
                 Villager.Type.SAVANNA,
                 Sound.ITEM_GOAT_HORN_SOUND_0,
                 new Dialogues(
-                        "Maxim",
+                        CC.RED + "[Lorenzo] " + CC.WHITE,
                         List.of(
                                 "I sell stuff I guess..",
                                 "erhm.",

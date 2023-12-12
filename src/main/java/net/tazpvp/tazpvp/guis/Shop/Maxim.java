@@ -62,7 +62,7 @@ public class Maxim extends GUI {
     private int slotNum;
     private int num;
     private Player p;
-    private final String prefix = CC.GREEN + "[Maxim] ";
+    private final String prefix = CC.RED + "[Maxim] " + CC.WHITE;
 
     public Maxim(Player p) {
         super("Maxim", 6);
@@ -170,7 +170,7 @@ public class Maxim extends GUI {
                 .name(CC.YELLOW + "" + CC.BOLD + name)
                 .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: $" + cost)
                 .build(), (e) -> {
-            checkMoney(cost, item, enchant);
+            checkMoney(name2, cost, item, enchant);
         }), slotNum);
         calcSlot();
     }
@@ -192,13 +192,12 @@ public class Maxim extends GUI {
 
                         PlayerWrapper pw = PlayerWrapper.getPlayer(p);
                         if (list.contains(Material.RED_WOOL)) {
-                            if (pw.getRank().getRank() > 8) {
-                                ChatFunctions.sendNeedPremium(p, prefix);
+                            if (ChatFunctions.requiresPremium(p, prefix)) {
                                 return;
                             }
                         }
                         String name2 = ChatFunctions.gradient("#db3bff", name, true);
-                        checkMoney(cost, ItemBuilder.of(list.get(num), amount).name(name2).build(), null);
+                        checkMoney(name2, cost, ItemBuilder.of(list.get(num), amount).name(name2).build(), null);
 
 
                     }), slot);
@@ -208,7 +207,7 @@ public class Maxim extends GUI {
         calcSlot();
     }
 
-    private void checkMoney(int cost, ItemStack item, @Nullable Enchantment enchantment) {
+    private void checkMoney(String name, int cost, ItemStack item, @Nullable Enchantment enchantment) {
         if (PersistentData.getInt(p, DataTypes.COINS) >= cost) {
             PersistentData.remove(p, DataTypes.COINS, cost);
             if (enchantment == null) {
@@ -216,10 +215,10 @@ public class Maxim extends GUI {
             } else {
                 p.getInventory().addItem(new EnchantmentBookBuilder().enchantment(enchantment, 1).build());
             }
-            p.sendMessage(prefix + "You purchased: " + item.getItemMeta().getDisplayName());
+            p.sendMessage(prefix + "You purchased: " + name);
             p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
         } else {
-            p.sendMessage(prefix + CC.RED + "You don't have enough money");
+            p.sendMessage(prefix + "You don't have enough money");
         }
     }
 

@@ -39,6 +39,7 @@ import net.tazpvp.tazpvp.utils.data.RankService;
 import net.tazpvp.tazpvp.utils.data.RankServiceImpl;
 import net.tazpvp.tazpvp.utils.data.entity.RankEntity;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.*;
@@ -52,7 +53,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class CosmeticMenu extends GUI {
+public class PremiumMenu extends GUI {
+
+    private final String prefix = CC.DARK_AQUA + "[Lorenzo] " + CC.AQUA;
+    private final String noPerms = ;
+
+
 
     private final List<ParticleSelectionContainer> deathParticles = new ArrayList<>(Arrays.asList(
             new ParticleSelectionContainer(Material.REDSTONE, Particle.REDSTONE, CC.RED + "Redstone", "Forge from the stone of Asia."),
@@ -74,8 +80,8 @@ public class CosmeticMenu extends GUI {
             new ParticleSelectionContainer(Material.ENCHANTING_TABLE, Particle.ENCHANTMENT_TABLE, CC.YELLOW + "Enchant", "Enchantingly ugly.")
     ));
 
-    public CosmeticMenu(Player p) {
-        super(Bukkit.createInventory(null, 3 * 9, CC.GREEN + "Cosmetics"));
+    public PremiumMenu(Player p) {
+        super(Bukkit.createInventory(null, 3 * 9, "Premium"));
         addItems(p);
         this.open(p);
     }
@@ -88,21 +94,30 @@ public class CosmeticMenu extends GUI {
 
         fill(0, 3*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE).name("").build());
 
-        addButton(Button.create(ItemBuilder.of(Material.BEETROOT).name(CC.RED + "Death Particles").build(), e -> {
+        addButton(Button.create(ItemBuilder.of(Material.FERMENTED_SPIDER_EYE)
+                .glow(true)
+                .name(CC.RED + "" + CC.BOLD + "Death Particles")
+                .lore(CC.GRAY + "Particles that appear from", CC.GRAY + "your body when you die.")
+                .build(), e -> {
+            if (ChatFunctions.requiresPremium(p, prefix)) return;
             updateParticle(p, deathParticles, rankEntity.getDeathParticle(), Type.DEATH);
         }), 11);
 
-        addButton(Button.create(ItemBuilder.of(Material.ARROW).name(CC.BLUE + "Arrow Particles").build(), e -> {
+        addButton(Button.create(ItemBuilder.of(Material.NETHER_STAR)
+                .glow(true)
+                .name(CC.BLUE + "" + CC.BOLD + "Arrow Particles")
+                .lore(CC.GRAY + "Particles that appear from", CC.GRAY + "the back of your arrows.")
+                .build(), e -> {
+            if (ChatFunctions.requiresPremium(p, prefix)) return;
             updateParticle(p, arrowParticles, rankEntity.getArrowParticle(), Type.ARROW);
         }), 13);
 
-        addButton(Button.create(ItemBuilder.of(Material.NAME_TAG).name(CC.GOLD + "Custom Prefix").build(), e -> {
+        addButton(Button.create(ItemBuilder.of(Material.NAME_TAG)
+                .glow(true)
+                .name(CC.GOLD + "" + CC.BOLD + "Custom Prefix").lore(CC.GRAY + "Change your chat prefix")
+                .build(), e -> {
+            if (ChatFunctions.requiresPremium(p, prefix)) return;
             p.closeInventory();
-            PlayerWrapper pw = PlayerWrapper.getPlayer(p);
-            if (pw.getRank().getRank() > 8) {
-                p.sendMessage(CC.GREEN + "[Lorenzo]" + CC.RED + "You require a premium subscription for this feature.");
-                return;
-            }
             setCustomPrefix(p);
         }), 15);
 

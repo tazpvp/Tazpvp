@@ -55,7 +55,7 @@ public class Caesar extends NPC {
                 Villager.Type.JUNGLE,
                 Sound.ITEM_GOAT_HORN_SOUND_0,
                 new Dialogues(
-                        "Caesar",
+                        CC.GOLD + "[Caesar] " + CC.YELLOW,
                         List.of(
                                 "I've made some enemies in my time. Good thing Ores can't speak..",
                                 "Need to sell? HMU ig.",
