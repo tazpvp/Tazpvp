@@ -56,9 +56,6 @@ import java.util.List;
 public class PremiumMenu extends GUI {
 
     private final String prefix = CC.DARK_AQUA + "[Lorenzo] " + CC.AQUA;
-    private final String noPerms = ;
-
-
 
     private final List<ParticleSelectionContainer> deathParticles = new ArrayList<>(Arrays.asList(
             new ParticleSelectionContainer(Material.REDSTONE, Particle.REDSTONE, CC.RED + "Redstone", "Forge from the stone of Asia."),
