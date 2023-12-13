@@ -69,7 +69,8 @@ public class Classic extends Duel {
 
     @Override
     public void begin() {
-
+        Tazpvp.getObservers().forEach(observer -> observer.duel(Bukkit.getPlayer(getP1())));
+        Tazpvp.getObservers().forEach(observer -> observer.duel(Bukkit.getPlayer(getP2())));
         World world = Bukkit.getWorld(super.getWorldName());
 
         setStarting(true);

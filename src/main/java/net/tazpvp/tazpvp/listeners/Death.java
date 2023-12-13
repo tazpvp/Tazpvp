@@ -1,5 +1,6 @@
 package net.tazpvp.tazpvp.listeners;
 
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.bosses.BossManager;
 import net.tazpvp.tazpvp.bosses.zorg.attacks.SummonUndeadAttack;
 import net.tazpvp.tazpvp.duels.Duel;
@@ -43,6 +44,10 @@ public class Death implements Listener {
         final UUID bossUUID = BossManager.getSpawnedBoss().getBoss().getUniqueId();
 
         if (uuid.equals(bossUUID)) {
+            if (event.getEntity().getKiller() != null) {
+                Tazpvp.getObservers().forEach(observer -> observer.kill_zorg(event.getEntity().getKiller()));
+            }
+
             BossManager.bossDied();
             if (!SummonUndeadAttack.undeadList.isEmpty()) {
                 for (Zombie z : SummonUndeadAttack.undeadList) {

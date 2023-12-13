@@ -40,6 +40,7 @@ import net.tazpvp.tazpvp.utils.data.Rank;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
@@ -69,6 +70,7 @@ public class Maxim extends GUI {
         this.p = p;
         addItems();
         open(p);
+        Tazpvp.getObservers().forEach(observer -> observer.gui(p, prefix));
     }
 
     private void addItems() {
