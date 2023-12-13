@@ -32,10 +32,12 @@
 
 package net.tazpvp.tazpvp.commands.moderation.ban;
 
+import lombok.NonNull;
 import net.tazpvp.tazpvp.utils.functions.PunishmentFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 import world.ntdi.nrcore.utils.ChatUtils;
 import world.ntdi.nrcore.utils.command.simple.Completer;
 import world.ntdi.nrcore.utils.command.simple.Label;
@@ -47,27 +49,34 @@ public class BanCommand extends NRCommand {
 
     public BanCommand() {
         super(new Label("ban", "tazpvp.ban"));
+    }
 
-        setNativeExecutor((sender, args) -> {
-            if (args.length <= 1) {
-                sendIncorrectUsage(sender, "/ban <user> <time (m, h, d)> <reason>");
-                return true;
-            }
-
-            Player target = Bukkit.getPlayer(args[0]);
-
-            PunishmentFunctions.ban(target, args[1], ChatUtils.builder(args, 2));
-
+    @Override
+    public boolean execute(@NonNull CommandSender sender, @NotNull @NonNull String[] args) {
+        if (args.length <= 1) {
+            sendIncorrectUsage(sender, "/ban <user> <time> <reason>");
             return true;
-        });
+        }
+
+        Player target = Bukkit.getPlayer(args[0]);
+
+        if (target == null) return true;
+
+        if (args.length < 3) {
+            PunishmentFunctions.ban(target, args[1]);
+        } else {
+            PunishmentFunctions.ban(target, args[1], ChatUtils.builder(args, 2));
+        }
+
+        return true;
     }
 
     @Override
     public List<String> complete(CommandSender sender, String[] args) {
         if (args.length == 1) {
-            return Completer.onlinePlayers(args[0]);
+            return Completer.onlinePlayers(String.valueOf(args[0].charAt(0)));
         } else if (args.length == 2) {
-            return List.of("30m", "12h", "128d", "permanent");
+            return List.of("30m", "12h", "128d", "Perm");
         }
         return List.of("");
     }

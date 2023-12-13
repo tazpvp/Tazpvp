@@ -67,12 +67,13 @@ public class Join implements Listener {
         final PunishmentService punishmentService = new PunishmentServiceImpl();
         final PunishmentService.PunishmentType punishmentType = punishmentService.getPunishment(p.getUniqueId());
 
+        TextComponent component = new TextComponent(CC.GREEN + "Join the discord to appeal [Click here]");
+        component.setClickEvent(new net.md_5.bungee.api.chat.ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/56rdkbSqa8"));
+
         if (punishmentType == PunishmentService.PunishmentType.PERM_BAN) {
             p.setGameMode(GameMode.SPECTATOR);
             ChatFunctions.announce(p, CC.RED + "You've been banned.", Sound.BLOCK_ANVIL_LAND);
 
-            TextComponent component = new TextComponent(CC.GREEN + "Join the discord to appeal [Click here]");
-            component.setClickEvent(new net.md_5.bungee.api.chat.ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/56rdkbSqa8"));
             p.spigot().sendMessage(component);
             p.sendMessage("");
         } else if (punishmentType == PunishmentService.PunishmentType.BANNED) {
@@ -80,8 +81,6 @@ public class Join implements Listener {
                 p.setGameMode(GameMode.SPECTATOR);
                 ChatFunctions.announce(p, CC.RED + "You've been banned.", Sound.BLOCK_ANVIL_LAND);
 
-                TextComponent component = new TextComponent(CC.GREEN + "Join the discord to appeal [Click here]");
-                component.setClickEvent(new net.md_5.bungee.api.chat.ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/56rdkbSqa8"));
                 p.spigot().sendMessage(component);
                 p.sendMessage("");
             }
@@ -126,7 +125,6 @@ public class Join implements Listener {
 
 
         final String name = p.getName();
-
         final String plus = CC.GREEN + "[" + CC.GOLD + "+" + CC.GREEN + "]";
         final String message = plus + " " + name;
 

@@ -31,7 +31,7 @@
  *
  */
 
-package net.tazpvp.tazpvp.commands.moderation;
+package net.tazpvp.tazpvp.commands.moderation.mute;
 
 import lombok.NonNull;
 import net.tazpvp.tazpvp.utils.functions.PunishmentFunctions;
