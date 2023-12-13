@@ -54,8 +54,10 @@ public class CombatTag {
         if (player != null) {
             if (!attackers.contains(player)) {
                 attackers.add(player);
-
                 Bukkit.getPlayer(id).sendMessage(CC.RED + "You are now in combat with " + CC.BOLD + Bukkit.getPlayer(player).getName());
+            } else {
+                attackers.remove(player);
+                attackers.add(player);
             }
         }
         if (countdown <= 0) {
