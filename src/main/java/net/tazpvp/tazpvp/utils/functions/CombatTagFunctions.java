@@ -74,9 +74,7 @@ public class CombatTagFunctions {
     }
 
     public static boolean isInCombat(UUID ID) {
-        if (getTag(ID).getAttackers().size() >= 1) {
-            return true;
-        }
-        return false;
+        if (getTag(ID) == null) return false;
+        return !getTag(ID).getAttackers().isEmpty();
     }
 }

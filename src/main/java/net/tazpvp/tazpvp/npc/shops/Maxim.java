@@ -53,7 +53,7 @@ public class Maxim extends NPC {
                 Villager.Type.SAVANNA,
                 Sound.ITEM_GOAT_HORN_SOUND_0,
                 new Dialogues(
-                        CC.RED + "[Lorenzo] " + CC.WHITE,
+                        CC.RED + "[Maxim] " + CC.WHITE,
                         List.of(
                                 "I sell stuff I guess..",
                                 "erhm.",
