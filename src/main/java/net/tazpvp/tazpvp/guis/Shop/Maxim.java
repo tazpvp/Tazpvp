@@ -99,36 +99,36 @@ public class Maxim extends GUI {
         fill(0, 6*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
         setButton(1, "Azure Vapor", "Extinguish flames.", Material.BLUE_ORCHID, 10, true);
-        setButton(5, "Sticky Web", "Slow down your enemies.", Material.BLUE_ORCHID, 10,false);
-        setButton(3, "Ink Splash", "Blind your enemies.", Material.BLUE_ORCHID, 40, true);
-        setButton(1, "Lighter", "Set things afire.", Material.BLUE_ORCHID, 100, false);
-        setButton(3, "Chorus Fruit", "Teleport?", Material.BLUE_ORCHID, 20, false);
-        setButton(32, "Exp Bottle", "Mend your armor.", Material.BLUE_ORCHID, 64, false);
+        setButton(5, "Sticky Web", "Slow down your enemies.", Material.COBWEB, 10,false);
+        setButton(3, "Ink Splash", "Blind your enemies.", Material.INK_SAC, 40, true);
+        setButton(1, "Lighter", "Set things afire.", Material.FLINT_AND_STEEL, 100, false);
+        setButton(3, "Chorus Fruit", "Teleport?", Material.CHORUS_FRUIT, 20, false);
+        setButton(32, "Exp Bottle", "Mend your armor.", Material.EXPERIENCE_BOTTLE, 64, false);
         setChangingButton("Plank", "Placeable Blocks", wood, 30, 64);
 
-        setButton(1, "Hatchet", "Break wooden blocks.", Material.BLUE_ORCHID, 40, false);
-        setButton(1, "Shear", "Break wool blocks.", Material.BLUE_ORCHID, 20, false);
-        setButton(5, "Arrow", "Projectiles.", Material.BLUE_ORCHID, 50, false);
-        setButton(5, "Steak", "We have the meats.", Material.BLUE_ORCHID, 30, false);
-        setButton(5, "Gold Carrot", "Good nutrition.", Material.BLUE_ORCHID, 30, false);
-        setButton(1, "Gold Apple", "Only for rich people.", Material.BLUE_ORCHID, 170, false);
+        setButton(1, "Hatchet", "Break wooden blocks.", Material.GOLDEN_AXE, 40, false);
+        setButton(1, "Shear", "Break wool blocks.", Material.SHEARS, 20, false);
+        setButton(5, "Arrow", "Projectiles.", Material.ARROW, 50, false);
+        setButton(5, "Steak", "We have the meats.", Material.COOKED_BEEF, 30, false);
+        setButton(5, "Gold Carrot", "Good nutrition.", Material.GOLDEN_CARROT, 30, false);
+        setButton(1, "Gold Apple", "Only for rich people.", Material.GOLDEN_APPLE, 170, false);
         setChangingButton("Wool", "Placeable Blocks", wool, 30, 64);
 
-        setButton(5, "Spectral Arrow", "Highlight targets.", Material.BLUE_ORCHID, 90, false);
-        setButton(1, "Crossbow", "Stronger than the bow.", Material.BLUE_ORCHID, 30, false);
-        setButton(5, "Push Bomb", "Instantly push everyone away from you.", Material.BLUE_ORCHID, 225, true);
-        setButton(1, "Sharpness", "Deal more sword damage.", Material.BLUE_ORCHID, 230, Enchantment.DAMAGE_ALL);
-        setButton(1, "Unbreaking", "Fortify your tools.", Material.BLUE_ORCHID, 30, Enchantment.DURABILITY);
-        setButton(1, "Protection", "Take less damage.", Material.BLUE_ORCHID, 70, Enchantment.PROTECTION_ENVIRONMENTAL);
-        setButton(1, "Projectile Protection", "Take less projectile damage.", Material.BLUE_ORCHID, 30, Enchantment.PROTECTION_PROJECTILE);
+        setButton(5, "Spectral Arrow", "Highlight targets.", Material.SPECTRAL_ARROW, 90, false);
+        setButton(1, "Crossbow", "Stronger than the bow.", Material.CROSSBOW, 30, false);
+        setButton(5, "Push Bomb", "Instantly push everyone away from you.", Material.TNT, 225, true);
+        setButton(1, "Sharpness", "Deal more sword damage.", Material.ENCHANTED_BOOK, 230, Enchantment.DAMAGE_ALL);
+        setButton(1, "Unbreaking", "Fortify your tools.", Material.ENCHANTED_BOOK, 30, Enchantment.DURABILITY);
+        setButton(1, "Protection", "Take less damage.", Material.ENCHANTED_BOOK, 70, Enchantment.PROTECTION_ENVIRONMENTAL);
+        setButton(1, "Projectile Protection", "Take less projectile damage.", Material.ENCHANTED_BOOK, 30, Enchantment.PROTECTION_PROJECTILE);
 
-        setButton(1, "Fire Protection", "Take less damage to fire.", Material.BLUE_ORCHID, 30, Enchantment.PROTECTION_FIRE);
-        setButton(1, "Sweeping Edge", "Increase attack range.", Material.BLUE_ORCHID, 120, Enchantment.SWEEPING_EDGE);
-        setButton(1, "Punch", "Shoot players back further.", Material.BLUE_ORCHID, 150, Enchantment.ARROW_KNOCKBACK);
-        setButton(1, "Knockback", "Hit players back further.", Material.BLUE_ORCHID, 175, Enchantment.KNOCKBACK);
-        setButton(1, "Flame", "Shoot and set things on fire.", Material.BLUE_ORCHID, 250, Enchantment.ARROW_FIRE);
-        setButton(1, "Fire Aspect", "Hit and set things on fire.", Material.BLUE_ORCHID, 250, Enchantment.FIRE_ASPECT);
-        setButton(1, "Mending", "Heal armor with xp bottles.", Material.BLUE_ORCHID, 40, Enchantment.MENDING);
+        setButton(1, "Fire Protection", "Take less damage to fire.", Material.ENCHANTED_BOOK, 30, Enchantment.PROTECTION_FIRE);
+        setButton(1, "Sweeping Edge", "Increase attack range.", Material.ENCHANTED_BOOK, 120, Enchantment.SWEEPING_EDGE);
+        setButton(1, "Punch", "Shoot players back further.", Material.ENCHANTED_BOOK, 150, Enchantment.ARROW_KNOCKBACK);
+        setButton(1, "Knockback", "Hit players back further.", Material.ENCHANTED_BOOK, 175, Enchantment.KNOCKBACK);
+        setButton(1, "Flame", "Shoot and set things on fire.", Material.ENCHANTED_BOOK, 250, Enchantment.ARROW_FIRE);
+        setButton(1, "Fire Aspect", "Hit and set things on fire.", Material.ENCHANTED_BOOK, 250, Enchantment.FIRE_ASPECT);
+        setButton(1, "Mending", "Heal armor with xp bottles.", Material.ENCHANTED_BOOK, 40, Enchantment.MENDING);
 
         update();
     }
