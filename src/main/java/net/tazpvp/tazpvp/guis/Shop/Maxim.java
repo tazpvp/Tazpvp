@@ -121,7 +121,7 @@ public class Maxim extends GUI {
         setButton("Arrow", "Projectiles.", 50, null,
                 ItemBuilder.of(Material.ARROW, 5).build());
         setButton("Steak", "We have the meats.", 30, null,
-                ItemBuilder.of(Material.BEEF, 5).build());
+                ItemBuilder.of(Material.COOKED_BEEF, 5).build());
         setButton("Gold Carrot", "Good nutrition.", 30, null,
                 ItemBuilder.of(Material.GOLDEN_CARROT, 5).build());
         setButton("Gold Apple", "Only for rich people.", 170, null,
