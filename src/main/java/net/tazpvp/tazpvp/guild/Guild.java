@@ -191,7 +191,7 @@ public class Guild implements Serializable {
     public void invitePlayer(UUID invited, UUID inviter) {
         if (hasElevatedPerms(inviter)) {
             this.invited.add(invited);
-            sendAll(Bukkit.getOfflinePlayer(inviter).getName() + " has invited " + Bukkit.getOfflinePlayer(invited) + " to the guild");
+            sendAll(Bukkit.getOfflinePlayer(inviter).getName() + " has invited " + Bukkit.getOfflinePlayer(invited).getName() + " to the guild");
         }
         GuildData.setGuild(getID(), this);
     }

@@ -56,7 +56,7 @@ public class GuildBrowser extends GUI {
     private int pagesNeeded;
     private int numNum;
     public GuildBrowser(Player p) {
-        super("Guild Browser", 5);
+        super("Guild Browser", 6);
         this.pagesNeeded = (int) Math.ceil(GuildUtils.getSortedGuilds().size() / (double) (4 * 7));
         listGuilds(p);
         open(p);
@@ -65,7 +65,7 @@ public class GuildBrowser extends GUI {
     public void listGuilds(Player p) {
         defaults(p);
 
-        int index = 10;
+        int index = 19;
         LinkedHashMap<UUID, Integer> guilds = GuildUtils.getSortedGuilds();
 
         for (Map.Entry<UUID, Integer> guild : guilds.entrySet()) {
@@ -80,12 +80,12 @@ public class GuildBrowser extends GUI {
                     ChatColor.GRAY + "-" + Bukkit.getOfflinePlayer(g.getGuildLeader()).getName(),
                     "",
                     CC.GRAY + "Members: " + CC.WHITE + g.getAllMembers().length,
-                    CC.GRAY + "Kills: " + CC.WHITE + (int) g.getKills()
+                    CC.GRAY + "Kills: " + CC.WHITE + g.getKills()
             ).build(), (e) -> {});
 
             addButton(guildView, index);
 
-            if (index == 16 || index == 25) {
+            if (index == 34 || index == 25) {
                 index += 2;
             }
             index++;
@@ -95,14 +95,15 @@ public class GuildBrowser extends GUI {
 
     private void defaults(Player p) {
         clear();
-        fill(0, 5 * 9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE).name(" ").build());
+        fill(0, 6 * 9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE).name(" ").build());
 
         Button playerGuild;
         if (GuildUtils.isInGuild(p)) {
             Guild g = GuildUtils.getGuildPlayerIn(p);
             playerGuild = Button.create(ItemBuilder.of(g.getIcon())
                     .name(CC.GREEN + "" + CC.BOLD + g.getName())
-                    .lore(CC.DARK_GREEN + "View your guild.")
+                    .lore(CC.DARK_GREEN + "Click to view and", CC.DARK_GREEN + "edit your guild.")
+                    .glow(true)
             .build(), (e) -> {
                 p.closeInventory();
                 new BukkitRunnable() {
@@ -116,6 +117,7 @@ public class GuildBrowser extends GUI {
             playerGuild = Button.create(ItemBuilder.of(Material.MINECART)
                     .name(CC.GREEN + "" + CC.BOLD + "Purchase Guild")
                     .lore(CC.DARK_GREEN + "Click to buy a guild.", " ", CC.GRAY + "Cost: $6,000")
+                    .glow(true)
             .build(), (e) -> {
                 p.closeInventory();
                 if (PersistentData.getInt(p, DataTypes.COINS) >= 6000) {
@@ -125,7 +127,7 @@ public class GuildBrowser extends GUI {
                 }
             });
         }
-        addButton(playerGuild, 4);
+        addButton(playerGuild, 13);
 
         update();
     }

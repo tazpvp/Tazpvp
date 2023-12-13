@@ -8,7 +8,7 @@ import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
 public class AdCommand extends NRCommand {
-    final String ad = "/ad Tazpvp &bDUELS &f/ &3PVP &f/ &bFFA &f/ &bEVENTS";
+    final String ad = "/ad Tazpvp DUELS / PVP / FFA / EVENTS";
     public AdCommand() {
         super(new Label("advertise", null, "ad"));
         setNativeExecutor((sender, args) -> {

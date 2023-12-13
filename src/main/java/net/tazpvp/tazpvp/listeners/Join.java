@@ -32,6 +32,8 @@
 
 package net.tazpvp.tazpvp.listeners;
 
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.tazpvp.tazpvp.utils.PlayerNameTag;
 import net.tazpvp.tazpvp.utils.PlaytimeUtil;
 import net.tazpvp.tazpvp.utils.data.*;
@@ -42,6 +44,8 @@ import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.functions.ScoreboardFunctions;
 import net.tazpvp.tazpvp.utils.objects.CombatTag;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
+import org.bukkit.GameMode;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -55,9 +59,7 @@ public class Join implements Listener {
         Player p = e.getPlayer();
 
         PersistentData.initPlayer(p);
-
         ScoreboardFunctions.initScoreboard(p);
-
         PlayerWrapper.addPlayer(p);
 
         new PlayerNameTag().initializePlayerNameTag(p);
@@ -66,14 +68,26 @@ public class Join implements Listener {
         final PunishmentService.PunishmentType punishmentType = punishmentService.getPunishment(p.getUniqueId());
 
         if (punishmentType == PunishmentService.PunishmentType.PERM_BAN) {
-            p.kickPlayer("Xd Bannned xD");
+            p.setGameMode(GameMode.SPECTATOR);
+            ChatFunctions.announce(p, CC.RED + "You've been banned.", Sound.BLOCK_ANVIL_LAND);
+
+            TextComponent component = new TextComponent(CC.GREEN + "Join the discord to appeal [Click here]");
+            component.setClickEvent(new net.md_5.bungee.api.chat.ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/56rdkbSqa8"));
+            p.spigot().sendMessage(component);
+            p.sendMessage("");
         } else if (punishmentType == PunishmentService.PunishmentType.BANNED) {
-            if (punishmentService.getTimeRemaining(p.getUniqueId()) > 0)
-                p.kickPlayer("Xd Bannned xD");
+            if (punishmentService.getTimeRemaining(p.getUniqueId()) > 0) {
+                p.setGameMode(GameMode.SPECTATOR);
+                ChatFunctions.announce(p, CC.RED + "You've been banned.", Sound.BLOCK_ANVIL_LAND);
+
+                TextComponent component = new TextComponent(CC.GREEN + "Join the discord to appeal [Click here]");
+                component.setClickEvent(new net.md_5.bungee.api.chat.ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/56rdkbSqa8"));
+                p.spigot().sendMessage(component);
+                p.sendMessage("");
+            }
         }
 
         PlaytimeUtil.playerJoined(p);
-
         PlayerFunctions.resetHealth(p);
         PlayerFunctions.feedPlr(p);
 

@@ -1,6 +1,8 @@
 package net.tazpvp.tazpvp.guis.Mine;
 
 import net.tazpvp.tazpvp.enchants.Enchants;
+import net.tazpvp.tazpvp.utils.data.DataTypes;
+import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
@@ -17,6 +19,7 @@ import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -52,12 +55,11 @@ public class Enchantments extends GUI {
     }
 
     private void applyEnchant(Enchants enchantEnum) {
-        int shardCount = PlayerFunctions.countShards(p);
         int cost = enchantEnum.getCost();
         ItemMeta itemMeta = pickaxe.getItemMeta();
 
-        if (shardCount < cost) {
-            p.sendMessage(CC.RED + "You do not have enough shards for this upgrade.");
+        if (PersistentData.getInt(p.getUniqueId(), DataTypes.COINS) < cost) {
+            p.sendMessage(CC.RED + "You do not have enough money for this upgrade.");
             p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
             return;
         }
@@ -78,9 +80,35 @@ public class Enchantments extends GUI {
         }
 
         pickaxe.addUnsafeEnchantment(enchant, levelToAdd);
+        PersistentData.remove(p.getUniqueId(), DataTypes.COINS, cost);
         updateLore(pickaxe, enchantEnum.getName(), levelToAdd);
         p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, 1, 1);
         p.sendMessage("You enchanted your pickaxe with " + enchantEnum.getName());
+    }
+
+    private void applyEnchant(Enchantment enchant, int cost) {
+
+        if (PersistentData.getInt(p.getUniqueId(), DataTypes.COINS) < cost) {
+            p.sendMessage(CC.RED + "You do not have enough money for this upgrade.");
+            p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+            return;
+        }
+
+        int levelToAdd = 1;
+        if (pickaxe.getItemMeta().hasEnchant(enchant)) {
+            int currentEnchantLevel = pickaxe.getEnchantmentLevel(enchant);
+            if (currentEnchantLevel >= enchant.getMaxLevel()) {
+                p.sendMessage(CC.RED + "You've reached the maximum level for this enchantment");
+                p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+                return;
+            }
+            levelToAdd = currentEnchantLevel + 1;
+        }
+        pickaxe.addEnchantment(enchant, levelToAdd);
+        PersistentData.remove(p.getUniqueId(), DataTypes.COINS, cost);
+        p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, 1, 1);
+        String keyName = enchant.getKey().getKey();
+        p.sendMessage("You enchanted your pickaxe with " + keyName.substring(0, 1).toUpperCase() + keyName.substring(1));
     }
 
     private void updateLore(ItemStack itemStack, String enchantPrefix, int level) {
@@ -108,31 +136,5 @@ public class Enchantments extends GUI {
 
         meta.setLore(lore);
         pickaxe.setItemMeta(meta);
-    }
-
-    private void applyEnchant(Enchantment enchant, int cost) {
-        int shardCount = PlayerFunctions.countShards(p);
-
-        if (shardCount < cost) {
-            p.sendMessage(CC.RED + "You do not have enough shards for this upgrade.");
-            p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
-            return;
-        }
-
-        int levelToAdd = 1;
-        if (pickaxe.getItemMeta().hasEnchant(enchant)) {
-            int currentEnchantLevel = pickaxe.getEnchantmentLevel(enchant);
-            if (currentEnchantLevel >= enchant.getMaxLevel()) {
-                p.sendMessage(CC.RED + "You've reached the maximum level for this enchantment");
-                p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
-                return;
-            }
-            levelToAdd = currentEnchantLevel + 1;
-        }
-        pickaxe.addEnchantment(enchant, levelToAdd);
-        PlayerFunctions.takeShards(p, cost);
-        p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, 1, 1);
-        String keyName = enchant.getKey().getKey();
-        p.sendMessage("You enchanted your pickaxe with " + keyName.substring(0, 1).toUpperCase() + keyName.substring(1));
     }
 }
