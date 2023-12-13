@@ -39,9 +39,7 @@ import net.tazpvp.tazpvp.utils.Sorting;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class Leaderboard {
     @Getter
@@ -56,36 +54,21 @@ public class Leaderboard {
             throw new IllegalArgumentException("Must be quantitative integer");
         }
 
-        Map<UUID, Integer> unsortedMap = putFirstEntries(10, PersistentData.getWithId(dataTypes));
+        Map<UUID, Integer> unsortedMap = PersistentData.getWithId(dataTypes);
 
-        this.sortedPlacement = Sorting.sortByValueDesc(unsortedMap);
-    }
+        final List<Map.Entry<UUID, Integer>> entryList = new ArrayList<>(unsortedMap.entrySet());
 
-    public <K,V> Map<K,V> putFirstEntries(int max, Map<K,V> source) {
-        int count = 0;
-        Map<K,V> target = new HashMap<K,V>();
-        for (Map.Entry<K,V> entry:source.entrySet()) {
-            if (count >= max) break;
+        entryList.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
 
-            target.put(entry.getKey(), entry.getValue());
-            count++;
+        final Map<UUID, Integer> sortedMap = new LinkedHashMap<>();
+
+        int limit = 10;
+        for (int i = 0; i < Math.min(limit, entryList.size()); i++) {
+            Map.Entry<UUID, Integer> entry = entryList.get(i);
+            sortedMap.put(entry.getKey(), entry.getValue());
         }
-        return target;
-    }
 
-
-
-    @AllArgsConstructor
-    public static class Placement implements Comparable<Placement> {
-        @Getter
-        private final int points;
-        @Getter
-        private final UUID uuid;
-
-        @Override
-        public int compareTo(Placement placement) {
-            return getPoints() - placement.getPoints();
-        }
+        this.sortedPlacement = sortedMap;
     }
 
     public enum LeaderboardEnum {
@@ -95,6 +78,7 @@ public class Leaderboard {
         LEVELS(DataTypes.LEVEL, "Levels");
 
         private final DataTypes dataTypes;
+        @Getter
         private final String type;
 
         LeaderboardEnum(DataTypes dataTypes, String type) {
@@ -106,8 +90,5 @@ public class Leaderboard {
             return new Leaderboard(dataTypes);
         }
 
-        public String getType() {
-            return type;
-        }
     }
 }
