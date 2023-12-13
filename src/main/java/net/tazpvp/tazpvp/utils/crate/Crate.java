@@ -112,6 +112,7 @@ public class Crate {
             p.getInventory().setItemInMainHand(i);
         } else {
             i.setType(Material.AIR);
+            p.getInventory().setItemInMainHand(i);
         }
     }
 
