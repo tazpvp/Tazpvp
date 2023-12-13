@@ -179,7 +179,7 @@ public final class PersistentData {
      * @return the Object value of the requested column
      */
     public static int getInt(@Nonnull final UUID ID, final int columnIndex) {
-        return SQLHelper.getInt(NAME, ID_COLUMN, "'" + ID.toString() + "'", columnIndex);
+        return SQLHelper.getInt(NAME, ID_COLUMN, "'" + ID + "'", columnIndex);
     }
 
     /**
