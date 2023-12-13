@@ -16,6 +16,6 @@ public class KitEntity {
     @DatabaseField(id = true)
     private UUID uuid;
 
-    @DatabaseField
+    @DatabaseField(width = 10_000)
     private String serial;
 }
