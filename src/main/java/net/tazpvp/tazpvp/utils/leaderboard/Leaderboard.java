@@ -70,4 +70,25 @@ public class Leaderboard {
 
         this.sortedPlacement = sortedMap;
     }
+
+    public enum LeaderboardEnum {
+        COINS(DataTypes.COINS, "Coins"),
+        DEATHS(DataTypes.DEATHS, "Deaths"),
+        KILLS(DataTypes.KILLS, "Kills"),
+        LEVELS(DataTypes.LEVEL, "Levels");
+
+        private final DataTypes dataTypes;
+        @Getter
+        private final String type;
+
+        LeaderboardEnum(DataTypes dataTypes, String type) {
+            this.dataTypes = dataTypes;
+            this.type = type;
+        }
+
+        public Leaderboard getLeaderboard() {
+            return new Leaderboard(dataTypes);
+        }
+
+    }
 }
