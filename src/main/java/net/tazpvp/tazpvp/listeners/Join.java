@@ -36,7 +36,9 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.tazpvp.tazpvp.utils.PlayerNameTag;
 import net.tazpvp.tazpvp.utils.PlaytimeUtil;
+import net.tazpvp.tazpvp.utils.TimeUtil;
 import net.tazpvp.tazpvp.utils.data.*;
+import net.tazpvp.tazpvp.utils.data.entity.PunishmentEntity;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.enums.ColorCodes;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
@@ -52,6 +54,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import world.ntdi.nrcore.NRCore;
 
+import java.util.UUID;
+
 public class Join implements Listener {
 
     @EventHandler
@@ -65,24 +69,22 @@ public class Join implements Listener {
         new PlayerNameTag().initializePlayerNameTag(p);
 
         final PunishmentService punishmentService = new PunishmentServiceImpl();
+        final PunishmentEntity punishmentEntity = punishmentService.getOrDefault(p.getUniqueId());
         final PunishmentService.PunishmentType punishmentType = punishmentService.getPunishment(p.getUniqueId());
 
         TextComponent component = new TextComponent(CC.GREEN + "Join the discord to appeal [Click here]");
         component.setClickEvent(new net.md_5.bungee.api.chat.ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/56rdkbSqa8"));
 
-        if (punishmentType == PunishmentService.PunishmentType.PERM_BAN) {
-            p.setGameMode(GameMode.SPECTATOR);
-            ChatFunctions.announce(p, CC.RED + "You've been banned.", Sound.BLOCK_ANVIL_LAND);
-
-            p.spigot().sendMessage(component);
-            p.sendMessage("");
-        } else if (punishmentType == PunishmentService.PunishmentType.BANNED) {
+        if (punishmentType == PunishmentService.PunishmentType.BANNED) {
             if (punishmentService.getTimeRemaining(p.getUniqueId()) > 0) {
-                p.setGameMode(GameMode.SPECTATOR);
-                ChatFunctions.announce(p, CC.RED + "You've been banned.", Sound.BLOCK_ANVIL_LAND);
-
-                p.spigot().sendMessage(component);
-                p.sendMessage("");
+//                p.setGameMode(GameMode.SPECTATOR);
+//                ChatFunctions.announce(p, CC.RED + "You've been banned.", Sound.BLOCK_ANVIL_LAND);
+//
+//                p.spigot().sendMessage(component);
+//                p.sendMessage("");
+                p.kickPlayer("You've been banned for " + punishmentEntity.getReason() + " for " + TimeUtil.howLongAgo(punishmentService.getTimeRemaining(UUID.randomUUID())));
+            } else {
+                punishmentService.unpunish(p.getUniqueId());
             }
         }
 

@@ -21,4 +21,7 @@ public class PunishmentEntity {
 
     @DatabaseField(columnName = "punishment_type")
     private String punishmentType;
+
+    @DatabaseField
+    private String reason;
 }

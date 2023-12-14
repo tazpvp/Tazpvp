@@ -10,8 +10,6 @@ public class TimeToken {
     private final String untokenized;
     @Getter
     private final long unixTimestamp;
-    @Getter
-    private final boolean permanent;
 
     private final String[] conversionText = {"d", "h", "m"};
     private final int[] conversionMultiplier = {24 * 60 * 60 * 1000, 60 * 60 * 1000, 60 * 1000};
@@ -20,12 +18,9 @@ public class TimeToken {
         this.untokenized = untokenized.toLowerCase(Locale.ROOT);
 
         if (getUntokenized().equals("perm") || getUntokenized().equals("permanent")) {
-            permanent = true;
             unixTimestamp = 0L;
             return;
         }
-
-        permanent = false;
 
         final int time = Integer.parseInt(getUntokenized().replaceAll("[^0-9]", ""));
         final String period = getUntokenized().replaceAll("[^A-Za-z]", "");

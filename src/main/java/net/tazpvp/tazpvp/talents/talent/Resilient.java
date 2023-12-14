@@ -43,6 +43,7 @@ public class Resilient extends Observable {
         if (victim != killer) {
             if (PersistentData.getTalents(killer.getUniqueId()).is("Resilient")) {
                 killer.setAbsorptionAmount(4);
+                System.out.println("here");
             }
         }
     }

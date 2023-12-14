@@ -76,8 +76,8 @@ public class BanCommand extends NRCommand {
         if (args.length == 1) {
             return Completer.onlinePlayers(String.valueOf(args[0].charAt(0)));
         } else if (args.length == 2) {
-            return List.of("30m", "12h", "128d", "Perm");
+            return List.of("30m", "12h", "128d");
         }
-        return List.of("");
+        return List.of("<reason>");
     }
 }

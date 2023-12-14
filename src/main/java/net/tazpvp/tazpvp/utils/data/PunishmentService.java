@@ -12,13 +12,13 @@ public interface PunishmentService extends DataService {
     PunishmentEntity getPunishmentEntity(UUID uuid);
     boolean punishmentEntityExists(UUID uuid);
     PunishmentEntity getOrDefault(UUID uuid);
-    void punish(UUID uuid, PunishmentType punishmentType, final long time);
+    void punish(UUID uuid, PunishmentType punishmentType, final long time, final String reason);
     void unpunish(UUID uuid);
     long getTimeRemaining(UUID uuid);
     boolean isPunished(UUID uuid);
     PunishmentType getPunishment(UUID uuid);
 
     enum PunishmentType {
-        MUTED, BANNED, PERM_BAN
+        MUTED, BANNED
     }
 }

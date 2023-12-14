@@ -23,7 +23,7 @@ public class PunishmentFunctions {
         TimeToken timeToken = new TimeToken(time);
 
         final PunishmentService punishmentService = new PunishmentServiceImpl();
-        punishmentService.punish(target.getUniqueId(), PunishmentService.PunishmentType.BANNED, timeToken.getUnixTimestamp());
+        punishmentService.punish(target.getUniqueId(), PunishmentService.PunishmentType.BANNED, timeToken.getUnixTimestamp(), reason);
 
         target.setGameMode(GameMode.SPECTATOR);
 
@@ -32,6 +32,8 @@ public class PunishmentFunctions {
         component.setClickEvent(new net.md_5.bungee.api.chat.ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/56rdkbSqa8"));
         target.spigot().sendMessage(component);
         target.sendMessage("");
+
+        target.kickPlayer(CC.GRAY + "You've been banned for: " + CC.RED + reason);
     }
 
     public static void mute(Player target, String time) {
@@ -42,7 +44,7 @@ public class PunishmentFunctions {
         TimeToken timeToken = new TimeToken(time);
 
         final PunishmentService punishmentService = new PunishmentServiceImpl();
-        punishmentService.punish(target.getUniqueId(), PunishmentService.PunishmentType.MUTED, timeToken.getUnixTimestamp());
+        punishmentService.punish(target.getUniqueId(), PunishmentService.PunishmentType.MUTED, timeToken.getUnixTimestamp(), reason);
     }
 
     public static void unmute(Player target) {

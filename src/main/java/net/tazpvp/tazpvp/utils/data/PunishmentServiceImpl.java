@@ -50,14 +50,14 @@ public class PunishmentServiceImpl implements PunishmentService {
         if (punishmentEntityExists(uuid)) {
             return getPunishmentEntity(uuid);
         } else {
-            return new PunishmentEntity(uuid, 0, null);
+            return new PunishmentEntity(uuid, 0, null, null);
         }
     }
 
     @Override
-    public void punish(final UUID uuid, final PunishmentType punishmentType, final long time) {
+    public void punish(final UUID uuid, final PunishmentType punishmentType, final long time, final String reason) {
         unpunish(uuid);
-        savePunishmentEntity(new PunishmentEntity(uuid, time, punishmentType.toString()));
+        savePunishmentEntity(new PunishmentEntity(uuid, time, punishmentType.toString(), reason));
     }
 
     @Override
