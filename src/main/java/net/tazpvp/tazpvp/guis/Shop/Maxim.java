@@ -100,7 +100,7 @@ public class Maxim extends GUI {
 
         setButton(1, "Azure Vapor", "Extinguish flames.", Material.BLUE_ORCHID, 10, true);
         setButton(5, "Sticky Web", "Slow down your enemies.", Material.COBWEB, 10,false);
-        setButton(3, "Ink Splash", "Blind your enemies.", Material.INK_SAC, 40, true);
+        setButton(3, "Inker", "Blind the enemies you slap.", Material.INK_SAC, 40, true);
         setButton(1, "Lighter", "Set things afire.", Material.FLINT_AND_STEEL, 100, false);
         setButton(3, "Chorus Fruit", "Teleport?", Material.CHORUS_FRUIT, 20, false);
         setButton(32, "Exp Bottle", "Mend your armor.", Material.EXPERIENCE_BOTTLE, 64, false);
@@ -116,7 +116,7 @@ public class Maxim extends GUI {
 
         setButton(5, "Spectral Arrow", "Highlight targets.", Material.SPECTRAL_ARROW, 90, false);
         setButton(1, "Crossbow", "Stronger than the bow.", Material.CROSSBOW, 30, false);
-        setButton(5, "Push Bomb", "Instantly push everyone away from you.", Material.TNT, 225, true);
+        setButton(5, "Push Bomb", "Push everyone away from you.", Material.TNT, 225, true);
         setButton(1, "Sharpness", "Deal more sword damage.", Material.ENCHANTED_BOOK, 230, Enchantment.DAMAGE_ALL);
         setButton(1, "Unbreaking", "Fortify your tools.", Material.ENCHANTED_BOOK, 30, Enchantment.DURABILITY);
         setButton(1, "Protection", "Take less damage.", Material.ENCHANTED_BOOK, 70, Enchantment.PROTECTION_ENVIRONMENTAL);

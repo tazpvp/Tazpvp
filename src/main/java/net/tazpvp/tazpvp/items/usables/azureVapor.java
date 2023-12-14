@@ -1,14 +1,16 @@
 package net.tazpvp.tazpvp.items.usables;
 
 import net.tazpvp.tazpvp.items.UsableItem;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class azureVapor extends UsableItem {
     public azureVapor() {
-        super("Azure Vapor", new String[]{"g"}, Material.BLUE_ORCHID);
+        super(ChatFunctions.gradient("#db3bff", "Azure Vapor", true), null, Material.BLUE_ORCHID);
     }
 
     @Override
@@ -25,5 +27,13 @@ public class azureVapor extends UsableItem {
             p.setFireTicks(0);
             item.setAmount(item.getAmount() - 1);
         }
+    }
+
+    @Override
+    public void onLeftClick(Player p, ItemStack item, Player target) {
+    }
+
+    @Override
+    public void onLeftClick(Player p, ItemStack item, Block b) {
     }
 }

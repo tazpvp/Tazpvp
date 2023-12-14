@@ -33,23 +33,17 @@ public class Interact implements Listener {
             }
         }
         if (e.getItem() == null) return;
-        if (getCustomItem(e.getItem()) == null) return;
-        UsableItem item = getCustomItem(e.getItem());
-        if (item == null) return;
-        if (e.getAction() == Action.LEFT_CLICK_AIR) {
-            item.onLeftClick(p, e.getItem());
-        } else if (e.getAction() == Action.RIGHT_CLICK_AIR) {
-            item.onRightClick(p, e.getItem());
-        }
-    }
-
-    private UsableItem getCustomItem(ItemStack item) {
-        for (UsableItem customItem : UsableItem.customItemList) {
-            if (item.getItemMeta() == null) return null;
-            if (customItem.getMaterial() == item.getType() && customItem.getName().equalsIgnoreCase(item.getItemMeta().getDisplayName())) {
-                return customItem;
+        if (UsableItem.getCustomItem(e.getItem()) != null) {
+            UsableItem item = UsableItem.getCustomItem(e.getItem());
+            if (item == null) return;
+            if (e.getAction() == Action.LEFT_CLICK_AIR) {
+                item.onLeftClick(p, e.getItem());
+            } else if (e.getAction() == Action.RIGHT_CLICK_AIR) {
+                item.onRightClick(p, e.getItem());
             }
         }
-        return null;
+
     }
+
+
 }
