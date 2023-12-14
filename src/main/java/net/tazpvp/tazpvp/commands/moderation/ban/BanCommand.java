@@ -74,7 +74,7 @@ public class BanCommand extends NRCommand {
     @Override
     public List<String> complete(CommandSender sender, String[] args) {
         if (args.length == 1) {
-            return Completer.onlinePlayers(String.valueOf(args[0].charAt(0)));
+            return Completer.onlinePlayers();
         } else if (args.length == 2) {
             return List.of("30m", "12h", "128d");
         }
