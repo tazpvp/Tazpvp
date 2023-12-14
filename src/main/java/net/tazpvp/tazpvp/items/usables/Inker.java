@@ -13,7 +13,7 @@ import org.bukkit.potion.PotionType;
 
 public class Inker extends UsableItem {
     public Inker() {
-        super(ChatFunctions.gradient("#db3bff", "Inker", true), null, Material.INK_SAC);
+        super("Inker", null, Material.INK_SAC);
     }
 
     @Override

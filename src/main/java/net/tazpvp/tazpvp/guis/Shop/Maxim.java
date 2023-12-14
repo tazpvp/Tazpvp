@@ -135,7 +135,7 @@ public class Maxim extends GUI {
 
     private void setButton(int amount, String name, String lore, Material material, int cost, boolean glow) {
         String name2 = ChatFunctions.gradient("#db3bff", name, true);
-        ItemStack item = ItemBuilder.of(material, amount).name(name2).lore(lore).glow(glow).build();
+        ItemStack item = ItemBuilder.of(material, amount).name(name2).lore(CC.GRAY + lore).glow(glow).build();
 
         addButton(Button.create(ItemBuilder.of(item.getType(), item.getAmount())
                 .name(CC.YELLOW + "" + CC.BOLD + name)
@@ -149,7 +149,7 @@ public class Maxim extends GUI {
 
     private void setButton(int amount, String name, String lore, Material material, int cost, Enchantment enchant) {
         String name2 = ChatFunctions.gradient("#db3bff", name, true);
-        ItemStack item = ItemBuilder.of(material, amount).name(name).lore(lore).build();
+        ItemStack item = ItemBuilder.of(material, amount).name(name).build();
 
         addButton(Button.create(ItemBuilder.of(item.getType(), item.getAmount())
                 .name(CC.YELLOW + "" + CC.BOLD + name)

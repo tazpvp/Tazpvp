@@ -2,7 +2,9 @@ package net.tazpvp.tazpvp.items;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.tazpvp.tazpvp.items.usables.Inker;
 import net.tazpvp.tazpvp.items.usables.azureVapor;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -34,13 +36,12 @@ public abstract class UsableItem {
 
     public static void registerCustomItems() {
         customItemList.add(new azureVapor());
+        customItemList.add(new Inker());
     }
 
     public static UsableItem getCustomItem(ItemStack item) {
         for (UsableItem customItem : UsableItem.customItemList) {
-            if (item.getItemMeta() == null) return null;
-            Bukkit.broadcastMessage(item.getItemMeta().getDisplayName());
-            if (customItem.getMaterial() == item.getType() && customItem.getName().equalsIgnoreCase(item.getItemMeta().getDisplayName())) {
+            if (customItem.getMaterial() == item.getType()) {
                 return customItem;
             }
         }

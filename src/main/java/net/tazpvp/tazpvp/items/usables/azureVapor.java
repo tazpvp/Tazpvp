@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class azureVapor extends UsableItem {
     public azureVapor() {
-        super(ChatFunctions.gradient("#db3bff", "Azure Vapor", true), null, Material.BLUE_ORCHID);
+        super("Azure Vapor", null, Material.BLUE_ORCHID);
     }
 
     @Override

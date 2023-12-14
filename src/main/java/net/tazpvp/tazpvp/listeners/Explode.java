@@ -1,7 +1,9 @@
 package net.tazpvp.tazpvp.listeners;
 
+import kotlin.Metadata;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
@@ -13,8 +15,8 @@ public class Explode implements Listener {
             e.blockList().clear();
 
             for (Entity entity : e.getEntity().getNearbyEntities(4, 4, 4)) {
-                if (entity instanceof Player) {
-                    entity.setVelocity(entity.getLocation().toVector().subtract(e.getLocation().toVector()).normalize().multiply(1.5));
+                if (entity instanceof Player p) {
+                    p.setVelocity(p.getLocation().toVector().subtract(e.getLocation().toVector()).normalize().multiply(2));
                 }
             }
         }

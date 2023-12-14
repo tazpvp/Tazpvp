@@ -52,7 +52,7 @@ public class Place implements Listener {
             }
 
             if (mat == Material.TNT) {
-                e.setCancelled(true);
+                b.setType(Material.AIR);
                 b.getWorld().spawn(b.getLocation().add(0.5, 0, 0.5), TNTPrimed.class);
                 return;
             }
@@ -69,6 +69,7 @@ public class Place implements Listener {
             new BukkitRunnable() {
                 @Override
                 public void run() {
+                    e.getBlock().removeMetadata("PlayerPlaced", Tazpvp.getInstance());
                     e.getBlock().setType(previousBlock.getType());
                     e.getBlock().setBlockData(previousBlockBlockData);
                 }
