@@ -96,7 +96,7 @@ public class PremiumMenu extends GUI {
                 .name(CC.RED + "" + CC.BOLD + "Death Particles")
                 .lore(CC.GRAY + "Particles that appear from", CC.GRAY + "your body when you die.")
                 .build(), e -> {
-            if (ChatFunctions.requiresPremium(p, prefix)) return;
+            if (!ChatFunctions.hasPremium(p, prefix)) return;
             updateParticle(p, deathParticles, rankEntity.getDeathParticle(), Type.DEATH);
         }), 11);
 
@@ -105,7 +105,7 @@ public class PremiumMenu extends GUI {
                 .name(CC.BLUE + "" + CC.BOLD + "Arrow Particles")
                 .lore(CC.GRAY + "Particles that appear from", CC.GRAY + "the back of your arrows.")
                 .build(), e -> {
-            if (ChatFunctions.requiresPremium(p, prefix)) return;
+            if (!ChatFunctions.hasPremium(p, prefix)) return;
             updateParticle(p, arrowParticles, rankEntity.getArrowParticle(), Type.ARROW);
         }), 13);
 
@@ -113,7 +113,7 @@ public class PremiumMenu extends GUI {
                 .glow(true)
                 .name(CC.GOLD + "" + CC.BOLD + "Custom Prefix").lore(CC.GRAY + "Change your chat prefix")
                 .build(), e -> {
-            if (ChatFunctions.requiresPremium(p, prefix)) return;
+            if (!ChatFunctions.hasPremium(p, prefix)) return;
             p.closeInventory();
             setCustomPrefix(p);
         }), 15);

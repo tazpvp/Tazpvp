@@ -36,6 +36,7 @@ import com.j256.ormlite.field.DataType;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.events.Event;
+import net.tazpvp.tazpvp.items.UsableItem;
 import net.tazpvp.tazpvp.talents.Talents;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
@@ -49,8 +50,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -118,6 +121,12 @@ public class Damage implements Listener {
     private void handleEntityDamageByEntity(Player victim, EntityDamageByEntityEvent event, double finalDamage) {
         if (event.getDamager() instanceof Player killer) {
             checkDeath(victim.getUniqueId(), killer.getUniqueId(), event, finalDamage);
+            ItemStack weapon = killer.getInventory().getItemInMainHand();
+            if (UsableItem.getCustomItem(weapon) != null) {
+                UsableItem item = UsableItem.getCustomItem(weapon);
+                if (item == null) return;
+                item.onLeftClick(killer, weapon, victim);
+            }
         } else if (event.getDamager() instanceof Arrow arrow) {
             if (arrow.getShooter() instanceof Player pShooter) {
                 checkDeath(victim.getUniqueId(), pShooter.getUniqueId(), event, finalDamage);

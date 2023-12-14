@@ -142,7 +142,7 @@ public class ChatFunctions {
         return roman.toString();
     }
 
-    public static boolean requiresPremium(Player p, @Nullable String prefix) {
+    public static boolean hasPremium(Player p, @Nullable String prefix) {
         PlayerWrapper pw = PlayerWrapper.getPlayer(p);
         if (pw.getRank().getRank() > 8) {
             if (prefix != null) {

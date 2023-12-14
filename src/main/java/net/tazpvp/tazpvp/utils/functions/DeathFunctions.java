@@ -164,7 +164,7 @@ public class DeathFunctions {
 
     public static void acceptClick(BlockBreakEvent e) {
         for (Coffin coffin : getCoffins()) {
-            if (e.getBlock().getLocation().distance(coffin.getLocation()) < 2D) {
+            if (e.getBlock() == coffin.getLocation().getBlock()) {
                 coffin.doTheDo(e.getPlayer());
             }
         }

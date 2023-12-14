@@ -90,11 +90,9 @@ public class Join implements Listener {
         PlayerFunctions.resetHealth(p);
         PlayerFunctions.feedPlr(p);
 
-        if (!p.hasPlayedBefore()) {
-            PlayerFunctions.kitPlayer(p);
+        if (!p.getWorld().getName().equalsIgnoreCase("arena")) {
+            p.teleport(NRCore.config.spawn);
         }
-
-        p.teleport(NRCore.config.spawn);
 
         CombatTag.tags.put(p.getUniqueId(), new CombatTag(p.getUniqueId()));
 
@@ -125,9 +123,16 @@ public class Join implements Listener {
 
 
         final String name = p.getName();
-        final String plus = CC.GREEN + "[" + CC.GOLD + "+" + CC.GREEN + "]";
-        final String message = plus + " " + name;
+        final String plus;
 
+        if (!p.hasPlayedBefore()) {
+            PlayerFunctions.kitPlayer(p);
+            plus = CC.YELLOW + "[" + CC.GOLD + "+" + CC.YELLOW + "]";
+        } else {
+            plus = CC.GREEN + "[" + CC.GOLD + "+" + CC.GREEN + "]";
+        }
+
+        final String message = plus + " " + name;
         e.setJoinMessage(message);
     }
 }
