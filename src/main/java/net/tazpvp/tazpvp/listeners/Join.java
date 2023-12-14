@@ -83,6 +83,7 @@ public class Join implements Listener {
 //                p.spigot().sendMessage(component);
 //                p.sendMessage("");
                 p.kickPlayer("You've been banned for " + punishmentEntity.getReason() + " for " + TimeUtil.howLongAgo(punishmentService.getTimeRemaining(UUID.randomUUID())));
+                return;
             } else {
                 punishmentService.unpunish(p.getUniqueId());
             }
