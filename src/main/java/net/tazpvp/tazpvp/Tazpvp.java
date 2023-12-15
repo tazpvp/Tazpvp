@@ -218,7 +218,10 @@ public final class Tazpvp extends JavaPlugin {
         new Superior();
         new Zorgin();
         new Harvester();
-        new Error();
+        new Artisan();
+        new Harvester();
+        new Speedrunner();
+//        new Error();
 
         new Revenge();
         new Moist();

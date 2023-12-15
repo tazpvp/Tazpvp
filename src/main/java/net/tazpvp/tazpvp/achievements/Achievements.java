@@ -58,14 +58,6 @@ public class Achievements extends ContainerData implements Serializable {
             put("Harvester", false);
             put("Speedrunner", false);
             put("Artisan", false);
-            put("Error", false);
         }});
-    }
-
-    public static void announce(Player p, String name) {
-        p.sendMessage("");
-        p.sendMessage(CC.DARK_AQUA + "" + CC.BOLD + "Achievement Unlocked: " + CC.RED + "" + CC.BOLD + name);
-        p.sendMessage("");
-        p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
     }
 }

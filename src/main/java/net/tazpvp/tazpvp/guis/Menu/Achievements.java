@@ -51,7 +51,7 @@ public class Achievements extends GUI {
     private void addItems(Player p) {
         net.tazpvp.tazpvp.achievements.Achievements ACH = PersistentData.getAchievements(p.getUniqueId());
 
-        fill(0, 5*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
+        fill(0, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
         setButton(p,  10, "Adept", "Learn every talent.", ACH.is("Adept"));
         setButton(p,  11, "Bowling", "Get a kill streak of 50.", ACH.is("Bowling"));
@@ -67,9 +67,11 @@ public class Achievements extends GUI {
         setButton(p,  22, "Grinder", "Mine 100 ores.", ACH.is("Grinder"));
         setButton(p,  23, "Artisan", "Place every type of wood plank.", ACH.is("Artisan"));
         setButton(p,  24, "Harvester", "Collect a player coffin.", ACH.is("Harvester"));
-        setButton(p,  25, "Error", "Die 500 times.", ACH.is("Error"));
+        setButton(p,  25, "Speedrunner", "Get a kill within 30 seconds of launch.", ACH.is("Speedrunner"));
 
-        setButton(p,  28, "Speedrunner", "Get a kill within 30 seconds of launch.", ACH.is("Speedrunner"));
+//        setButton(p,  28, "Error", "Die 500 times.", ACH.is("Error"));
+
+
 
         update();
     }

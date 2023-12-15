@@ -34,6 +34,7 @@ package net.tazpvp.tazpvp.achievements.achievement;
 
 import net.tazpvp.tazpvp.achievements.Achievements;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import org.bukkit.entity.Player;
 
@@ -45,7 +46,7 @@ public class Craftsman extends Observable {
             Achievements ach = PersistentData.getAchievements(p.getUniqueId());
             ach.set("Craftsman", true);
             PersistentData.setAchievements(p, ach);
-            Achievements.announce(p, "Craftsman");
+            ChatFunctions.achievement(p, "Craftsman");
         }
     }
 }

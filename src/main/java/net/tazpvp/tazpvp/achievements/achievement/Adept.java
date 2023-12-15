@@ -35,6 +35,7 @@ package net.tazpvp.tazpvp.achievements.achievement;
 import net.tazpvp.tazpvp.achievements.Achievements;
 import net.tazpvp.tazpvp.talents.Talents;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import org.bukkit.entity.Player;
 
@@ -50,7 +51,7 @@ public class Adept extends Observable {
             }
             ach.set("Adept", true);
             PersistentData.setAchievements(p, ach);
-            Achievements.announce(p, "Adept");
+            ChatFunctions.achievement(p, "Adept");
         }
     }
 }

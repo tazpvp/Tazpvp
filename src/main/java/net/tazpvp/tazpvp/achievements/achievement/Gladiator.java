@@ -35,6 +35,7 @@ package net.tazpvp.tazpvp.achievements.achievement;
 import net.tazpvp.tazpvp.achievements.Achievements;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import org.bukkit.entity.Player;
 
@@ -46,7 +47,7 @@ public class Gladiator extends Observable {
                 Achievements ach = PersistentData.getAchievements(p.getUniqueId());
                 ach.set("Gladiator", true);
                 PersistentData.setAchievements(p, ach);
-                Achievements.announce(p, "Gladiator");
+                ChatFunctions.achievement(p, "Gladiator");
             }
         }
     }

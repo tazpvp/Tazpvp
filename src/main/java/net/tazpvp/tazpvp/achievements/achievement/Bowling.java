@@ -35,6 +35,7 @@ package net.tazpvp.tazpvp.achievements.achievement;
 import net.tazpvp.tazpvp.achievements.Achievements;
 import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import org.bukkit.entity.Player;
 
@@ -50,7 +51,7 @@ public class Bowling extends Observable {
                 Achievements ach = PersistentData.getAchievements(killer.getUniqueId());
                 ach.set("Bowling", true);
                 PersistentData.setAchievements(killer, ach);
-                Achievements.announce(killer, "Bowling");
+                ChatFunctions.achievement(killer, "Bowling");
             }
         }
     }

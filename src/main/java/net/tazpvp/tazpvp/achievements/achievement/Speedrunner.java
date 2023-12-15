@@ -2,6 +2,7 @@ package net.tazpvp.tazpvp.achievements.achievement;
 
 import net.tazpvp.tazpvp.achievements.Achievements;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
@@ -16,7 +17,7 @@ public class Speedrunner extends Observable {
                     Achievements ach = PersistentData.getAchievements(killer.getUniqueId());
                     ach.set("Speedrunner", true);
                     PersistentData.setAchievements(killer, ach);
-                    Achievements.announce(killer, "Speedrunner");
+                    ChatFunctions.achievement(killer, "Speedrunner");
                 } else {
                     pw.setKillCount(pw.getKillCount() + 1);
                 }
