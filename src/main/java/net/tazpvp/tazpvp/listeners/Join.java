@@ -89,6 +89,7 @@ public class Join implements Listener {
             }
         }
 
+
         PlaytimeUtil.playerJoined(p);
         PlayerFunctions.resetHealth(p);
         PlayerFunctions.feedPlr(p);
