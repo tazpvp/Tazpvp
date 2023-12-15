@@ -32,6 +32,8 @@
 
 package net.tazpvp.tazpvp.listeners;
 
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.Profanity;
 import net.tazpvp.tazpvp.utils.TimeUtil;
@@ -40,6 +42,7 @@ import net.tazpvp.tazpvp.utils.data.entity.PunishmentEntity;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -59,13 +62,25 @@ public class Chat implements Listener {
         PlayerWrapper pw = PlayerWrapper.getPlayer(p);
 
         final PunishmentService punishmentService = new PunishmentServiceImpl();
+        TextComponent component = new TextComponent(CC.GRAY + "Join the discord to appeal [Click here]");
+        component.setClickEvent(new net.md_5.bungee.api.chat.ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/56rdkbSqa8"));
 
         if (punishmentService.getPunishment(uuid) == PunishmentService.PunishmentType.MUTED) {
             final String howLongAgo = TimeUtil.howLongAgo(punishmentService.getTimeRemaining(uuid));
 
             p.sendMessage("You are currently muted for " + howLongAgo);
+            p.spigot().sendMessage(component);
             e.setCancelled(true);
             return;
+        }
+
+        if (punishmentService.getPunishment(uuid) == PunishmentService.PunishmentType.BANNED) {
+            if (punishmentService.getTimeRemaining(p.getUniqueId()) > 0) {
+                p.sendMessage(CC.RED + "You cannot chat while banned.");
+                p.spigot().sendMessage(component);
+                e.setCancelled(true);
+                return;
+            }
         }
 
         if (pw.getRank() == Rank.DEFAULT && pw.getLastMessageSent().equalsIgnoreCase(e.getMessage())) {

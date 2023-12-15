@@ -77,12 +77,15 @@ public class Join implements Listener {
 
         if (punishmentType == PunishmentService.PunishmentType.BANNED) {
             if (punishmentService.getTimeRemaining(p.getUniqueId()) > 0) {
-//                p.setGameMode(GameMode.SPECTATOR);
-//                ChatFunctions.announce(p, CC.RED + "You've been banned.", Sound.BLOCK_ANVIL_LAND);
-//
-//                p.spigot().sendMessage(component);
-//                p.sendMessage("");
-                p.kickPlayer("You've been banned for " + punishmentEntity.getReason() + " for " + TimeUtil.howLongAgo(punishmentService.getTimeRemaining(UUID.randomUUID())));
+                p.setGameMode(GameMode.SPECTATOR);
+
+                p.sendMessage("");
+                p.sendMessage(CC.RED + "You've been banned.");
+                p.sendMessage(CC.GRAY + "Reason: " + CC.WHITE + punishmentEntity.getReason());
+                p.sendMessage(CC.GRAY + "Time left: " + CC.WHITE + TimeUtil.howLongAgo(punishmentService.getTimeRemaining(UUID.randomUUID())));
+                p.sendMessage("");
+
+                p.spigot().sendMessage(component);
                 return;
             } else {
                 punishmentService.unpunish(p.getUniqueId());

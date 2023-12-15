@@ -25,7 +25,7 @@ public class PunishmentFunctions {
         final PunishmentService punishmentService = new PunishmentServiceImpl();
         punishmentService.punish(target.getUniqueId(), PunishmentService.PunishmentType.BANNED, timeToken.getUnixTimestamp(), reason);
 
-        target.setGameMode(GameMode.SPECTATOR);
+
 
         ChatFunctions.announce(target, CC.GRAY + "You've been banned for: " + CC.RED + reason, Sound.BLOCK_ANVIL_LAND);
         TextComponent component = new TextComponent(CC.GREEN + "Join the discord to appeal [Click here]");
@@ -33,7 +33,7 @@ public class PunishmentFunctions {
         target.spigot().sendMessage(component);
         target.sendMessage("");
 
-        target.kickPlayer(CC.GRAY + "You've been banned for: " + CC.RED + reason);
+        target.setGameMode(GameMode.SPECTATOR);
     }
 
     public static void mute(Player target, String time) {

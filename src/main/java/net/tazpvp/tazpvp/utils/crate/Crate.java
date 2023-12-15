@@ -34,6 +34,7 @@
 package net.tazpvp.tazpvp.utils.crate;
 
 import lombok.Getter;
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -43,6 +44,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.utils.holograms.Hologram;
 import world.ntdi.postglam.data.Tuple;
 
@@ -68,6 +70,7 @@ public class Crate {
         this.block = getLocation().getBlock().getType();
         getLocation().getBlock().setType(Material.BEACON);
         this.crateDrops = crateDrops;
+        generateSpiralParticles(getLocation());
     }
 
     public void acceptClick(PlayerInteractEvent e) {
@@ -122,5 +125,33 @@ public class Crate {
         ItemStack i = itemStack.clone();
         String name = i.getType().name().replaceAll("_", "");
         return new Tuple<>(name, i);
+    }
+
+    private void generateSpiralParticles(Location center) {
+        new BukkitRunnable() {
+            double angle = 0;
+            double y = 0;
+            double radius = 1.5;
+            double height = 3.0;
+            double yIncrease = 0.1;
+            double angleIncrease = Math.PI / 16;
+
+            @Override
+            public void run() {
+                if (y < height) {
+                    double x = radius * Math.cos(angle);
+                    double z = radius * Math.sin(angle);
+
+                    Location particleLoc = center.clone().add(x, y, z);
+
+                    center.getWorld().spawnParticle(Particle.FLAME, particleLoc, 1);
+
+                    angle += angleIncrease;
+                    y += yIncrease;
+                } else {
+                    cancel();
+                }
+            }
+        }.runTaskTimer(Tazpvp.getInstance(), 0L, 1L);
     }
 }
