@@ -36,6 +36,7 @@ package net.tazpvp.tazpvp.utils.crate;
 import lombok.Getter;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -53,6 +54,25 @@ public class KeyFactory {
 
     public ItemStack createDailyKey() {
         ItemStack i = ItemBuilder.of(Material.TRIPWIRE_HOOK, 1, CC.GOLD + "Daily Crate Key").lore(CC.GRAY + "Use this at your nearest daily crate!").build();
+        i = setCrateKey(i, "daily");
+        return i;
+    }
+
+    public ItemStack createCommonKey() {
+        ItemStack i = ItemBuilder.of(Material.TRIPWIRE_HOOK, 1, ChatFunctions.gradient("#03fc39", "Common Key", true))
+                .lore(CC.GRAY + "Right-click the crate.").build();
+        i = setCrateKey(i, "daily");
+        return i;
+    }
+    public ItemStack createRareKey() {
+        ItemStack i = ItemBuilder.of(Material.TRIPWIRE_HOOK, 1, ChatFunctions.gradient("#039dfc", "Rare Key", true))
+                .lore(CC.GRAY + "Right-click the crate.").build();
+        i = setCrateKey(i, "daily");
+        return i;
+    }
+    public ItemStack createMythicKey() {
+        ItemStack i = ItemBuilder.of(Material.TRIPWIRE_HOOK, 1, ChatFunctions.gradient("#db3bff", "Mythic Key", true))
+                .lore(CC.GRAY + "Right-click the crate.").build();
         i = setCrateKey(i, "daily");
         return i;
     }

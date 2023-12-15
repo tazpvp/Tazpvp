@@ -153,6 +153,6 @@ public class Crate {
                     cancel();
                 }
             }
-        }.runTaskTimer(Tazpvp.getInstance(), 0L, 1L);
+        }.runTaskTimer(Tazpvp.getInstance(), 0L, 5L);
     }
 }

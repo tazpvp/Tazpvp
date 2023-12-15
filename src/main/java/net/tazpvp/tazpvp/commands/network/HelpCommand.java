@@ -35,6 +35,7 @@ package net.tazpvp.tazpvp.commands.network;
 
 import lombok.NonNull;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -59,14 +60,11 @@ public class HelpCommand extends NRCommand {
         String highlight = CC.YELLOW + "";
 
         if (args.length < 1) {
-            p.sendMessage(title + "NEED HELP?");
+            p.sendMessage("");
+            p.sendMessage(title + "Helpful Information");
+            p.sendMessage("");
             p.sendMessage(text + "Type the command again with a category like so:");
-            p.sendMessage(text + "/help <type>");
-            p.sendMessage(title + "Categories");
-            p.sendMessage(highlight + "- " + text + "Money");
-            p.sendMessage(highlight + "- " + text + "Enchants");
-            p.sendMessage(highlight + "- " + text + "Talents");
-            p.sendMessage(highlight + "- " + text + "Achievements");
+            p.sendMessage(highlight + "/help <category>");
             p.sendMessage("");
             return true;
         }
@@ -75,26 +73,32 @@ public class HelpCommand extends NRCommand {
 
         if (type.equalsIgnoreCase("money")) {
             p.sendMessage(title + "Economy");
+            p.sendMessage("");
             p.sendMessage(text + "Ways to get coins:");
             p.sendMessage(highlight + "- " + text + "Killing & Kill assisting");
-            p.sendMessage(highlight + "- " + text + "Selling Shards to " + highlight + "Bub");
-            p.sendMessage(highlight + "- " + text + "Mining and selling ores");
+            p.sendMessage(highlight + "- " + text + "Collecting bounties");
+            p.sendMessage(highlight + "- " + text + "Selling " + ChatFunctions.gradient("#db3bff", "Shards", true) + text + " to " + highlight + "Bub");
+            p.sendMessage(highlight + "- " + text + "Mining and selling ores to " + highlight + "Caesar");
             p.sendMessage(highlight + "- " + text + "Opening crates");
             p.sendMessage("");
         } else if(type.equalsIgnoreCase("enchants")) {
             p.sendMessage(title + "Enchantments");
+            p.sendMessage("");
             p.sendMessage(text + "To enchant your items, simply click and drag enchantments onto an item.");
             p.sendMessage("");
         } else if(type.equalsIgnoreCase("talents")) {
             p.sendMessage(title + "Talents");
+            p.sendMessage("");
             p.sendMessage(text + "These perks will give you a slight advantage in PvP for a cost.");
             p.sendMessage("");
         } else if(type.equalsIgnoreCase("achievements")) {
             p.sendMessage(title + "Achievements");
+            p.sendMessage("");
             p.sendMessage(text + "A way to measure progress and get prizes.");
             p.sendMessage("");
         } else if(type.equalsIgnoreCase("commands")) {
             p.sendMessage(title + "Commands");
+            p.sendMessage("");
             p.sendMessage(highlight + "/duel" + text + "- Request a duel from other players");
             p.sendMessage(highlight + "/spawn" + text + "- Return to the server spawn");
             p.sendMessage(highlight + "/loadout" + text + "- Respawn with your own item positions");
@@ -109,13 +113,13 @@ public class HelpCommand extends NRCommand {
             p.sendMessage("");
         } else if(type.equalsIgnoreCase("rewards")) {
             p.sendMessage(title + "Rewards");
+            p.sendMessage("");
             p.sendMessage(text + "Ways to get free rewards:");
             p.sendMessage(highlight + "- " + text + "Boosting the discord server will give you premium for free");
             p.sendMessage(highlight + "- " + text + "The AFK pit will give you a key and money every 10 minutes");
             p.sendMessage(highlight + "- " + text + "Voting for the server using /vote will give you a key");
             p.sendMessage("");
         }
-
         return true;
     }
 

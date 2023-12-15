@@ -137,7 +137,7 @@ public class Maxim extends GUI {
         String name2 = ChatFunctions.gradient("#db3bff", name, true);
         ItemStack item;
         if (custom) {
-            item = ItemBuilder.of(material, amount).name(name2).build();
+            item = ItemBuilder.of(material, amount).name(name2).lore(CC.GRAY + lore).build();
         } else {
             item = ItemBuilder.of(material, amount).build();
         }

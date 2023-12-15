@@ -11,9 +11,12 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Random;
+
 public class AfkFunctions {
 
     public static void setup() {
+        final Random random = new Random();
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -26,12 +29,29 @@ public class AfkFunctions {
                     if (pw.isAfk()) {
                         if ((System.currentTimeMillis() - pw.getTimeSinceAfk()) >= 1000 * 60 * 5) {
                             pw.setTimeSinceAfk(System.currentTimeMillis());
+
+
+                            double probability = random.nextDouble() * 100;
+                            String keyType;
+
+                            if (probability < 70) {
+                                keyType = ChatFunctions.gradient("#03fc39", "Common", true);
+                                p.getInventory().addItem(KeyFactory.getFactory().createDailyKey());
+                            } else if (probability < 95) {
+                                keyType = ChatFunctions.gradient("#039dfc", "Rare", true);
+                                p.getInventory().addItem(KeyFactory.getFactory().createDailyKey());
+                            } else {
+                                keyType = ChatFunctions.gradient("#db3bff", "Mythic", true);
+                                p.getInventory().addItem(KeyFactory.getFactory().createDailyKey());
+                            }
+
                             p.sendMessage(
-                                    ChatFunctions.gradient("#ffc70b", "AFK REWARD: \n", true) +
-                                    CC.GRAY + "+ 1 Key\n" +
+                                    ChatFunctions.gradient("#ffc70b", "AFK Rewards: \n", true) +
+                                            "\n" +
+                                    CC.GRAY + "+ 1 " + keyType + " Key\n" +
                                     CC.GRAY + "+ $100 Coins\n"
                             );
-                            p.getInventory().addItem(KeyFactory.getFactory().createDailyKey());
+
                             PersistentData.add(p.getUniqueId(), DataTypes.COINS, 100);
                             p.playSound(p.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
                         }

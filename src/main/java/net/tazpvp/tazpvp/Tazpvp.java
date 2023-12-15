@@ -44,7 +44,7 @@ import net.tazpvp.tazpvp.commands.admin.permissions.PermissionsCommand;
 import net.tazpvp.tazpvp.commands.admin.stats.StatCommand;
 import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
 import net.tazpvp.tazpvp.commands.admin.teleportWorld.TeleportWorldCommand;
-import net.tazpvp.tazpvp.commands.gameplay.DailyCommand;
+import net.tazpvp.tazpvp.commands.network.DailyCommand;
 import net.tazpvp.tazpvp.commands.gameplay.ReportCommand;
 import net.tazpvp.tazpvp.commands.gameplay.duel.DuelCommand;
 import net.tazpvp.tazpvp.commands.gameplay.event.EventCommand;
