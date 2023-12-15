@@ -50,6 +50,7 @@ public class Adept extends Observable {
             }
             ach.set("Adept", true);
             PersistentData.setAchievements(p, ach);
+            Achievements.announce(p, "Adept");
         }
     }
 }

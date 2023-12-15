@@ -65,6 +65,11 @@ public class Achievements extends GUI {
         setButton(p,  20, "Superior", "Win an event.", ACH.is("Superior"));
         setButton(p,  21, "Zorgin", "Kill Zorg in the mines.", ACH.is("Zorgin"));
         setButton(p,  22, "Grinder", "Mine 100 ores.", ACH.is("Grinder"));
+        setButton(p,  23, "Artisan", "Place every type of wood plank.", ACH.is("Artisan"));
+        setButton(p,  24, "Harvester", "Collect a player coffin.", ACH.is("Harvester"));
+        setButton(p,  25, "Error", "Die 500 times.", ACH.is("Error"));
+
+        setButton(p,  28, "Speedrunner", "Get a kill within 30 seconds of launch.", ACH.is("Speedrunner"));
 
         update();
     }

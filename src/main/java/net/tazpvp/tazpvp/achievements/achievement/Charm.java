@@ -47,6 +47,7 @@ public class Charm extends Observable {
                 Achievements ach = PersistentData.getAchievements(p.getUniqueId());
                 ach.set("Charm", true);
                 PersistentData.setAchievements(p, ach);
+                Achievements.announce(p, "Charm");
             }
         }
     }

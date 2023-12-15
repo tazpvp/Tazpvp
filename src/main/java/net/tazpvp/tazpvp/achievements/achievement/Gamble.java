@@ -46,6 +46,7 @@ public class Gamble extends Observable {
                 Achievements ach = PersistentData.getAchievements(killer.getUniqueId());
                 ach.set("Gamble", true);
                 PersistentData.setAchievements(killer, ach);
+                Achievements.announce(killer, "Error");
             }
         }
     }

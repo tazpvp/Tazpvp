@@ -10,11 +10,11 @@ public class Merchant extends Observable {
     @Override
     public void gui(Player p, String name) {
         if (!PersistentData.getAchievements(p.getUniqueId()).is("Merchant")) {
-            //TODO: Connect to Caesar GUI
-            if (name.equalsIgnoreCase("maxim")) {
+            if (name.equalsIgnoreCase("Caesar")) {
                 Achievements ach = PersistentData.getAchievements(p.getUniqueId());
                 ach.set("Merchant", true);
                 PersistentData.setAchievements(p, ach);
+                Achievements.announce(p, "Merchant");
             }
         }
     }

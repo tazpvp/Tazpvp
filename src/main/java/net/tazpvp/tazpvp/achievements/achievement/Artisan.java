@@ -33,6 +33,7 @@ public class Artisan extends Observable {
             Achievements ach = PersistentData.getAchievements(p.getUniqueId());
             ach.set("Artisan", true);
             PersistentData.setAchievements(p, ach);
+            Achievements.announce(p, "Artisan");
         }
     }
 }

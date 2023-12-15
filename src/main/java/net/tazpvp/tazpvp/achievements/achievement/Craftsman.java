@@ -45,6 +45,7 @@ public class Craftsman extends Observable {
             Achievements ach = PersistentData.getAchievements(p.getUniqueId());
             ach.set("Craftsman", true);
             PersistentData.setAchievements(p, ach);
+            Achievements.announce(p, "Craftsman");
         }
     }
 }

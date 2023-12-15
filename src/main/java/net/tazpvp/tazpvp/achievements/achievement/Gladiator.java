@@ -32,12 +32,22 @@
 
 package net.tazpvp.tazpvp.achievements.achievement;
 
+import net.tazpvp.tazpvp.achievements.Achievements;
+import net.tazpvp.tazpvp.utils.data.DataTypes;
+import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import org.bukkit.entity.Player;
 
 public class Gladiator extends Observable {
     @Override
     public void duel(Player p) {
-        // TODO: Duels stats
+        if (!PersistentData.getAchievements(p.getUniqueId()).is("Gladiator")) {
+            if (PersistentData.getInt(p.getUniqueId(), DataTypes.DUELWINS) >= 35) {
+                Achievements ach = PersistentData.getAchievements(p.getUniqueId());
+                ach.set("Gladiator", true);
+                PersistentData.setAchievements(p, ach);
+                Achievements.announce(p, "Gladiator");
+            }
+        }
     }
 }

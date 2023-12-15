@@ -12,6 +12,7 @@ public class Zorgin extends Observable {
             Achievements achievements = PersistentData.getAchievements(p.getUniqueId());
             achievements.set("Zorgin", true);
             PersistentData.setAchievements(p, achievements);
+            Achievements.announce(p, "Zorgin");
         }
     }
 }

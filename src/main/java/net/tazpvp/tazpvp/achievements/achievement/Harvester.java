@@ -16,6 +16,7 @@ public class Harvester extends Observable {
                 Achievements ach = PersistentData.getAchievements(p.getUniqueId());
                 ach.set("Harvester", true);
                 PersistentData.setAchievements(p, ach);
+                Achievements.announce(p, "Harvester");
             }
         }
     }

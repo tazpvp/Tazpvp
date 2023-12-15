@@ -50,6 +50,7 @@ public class Bowling extends Observable {
                 Achievements ach = PersistentData.getAchievements(killer.getUniqueId());
                 ach.set("Bowling", true);
                 PersistentData.setAchievements(killer, ach);
+                Achievements.announce(killer, "Bowling");
             }
         }
     }

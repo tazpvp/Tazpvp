@@ -45,6 +45,7 @@ public class Superior extends Observable {
             Achievements ach = PersistentData.getAchievements(p.getUniqueId());
             ach.set("Superior", true);
             PersistentData.setAchievements(p, ach);
+            Achievements.announce(p, "Superior");
         }
     }
 }

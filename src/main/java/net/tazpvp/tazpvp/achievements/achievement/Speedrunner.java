@@ -11,11 +11,12 @@ public class Speedrunner extends Observable {
     public void death(Player victim, Player killer) {
         if (!PersistentData.getAchievements(killer.getUniqueId()).is("Speedrunner")) {
             PlayerWrapper pw = PlayerWrapper.getPlayer(killer);
-            if (System.currentTimeMillis() - pw.getTimeOfLaunch() <= 60*1000) {
+            if (System.currentTimeMillis() - pw.getTimeOfLaunch() <= 30*1000) {
                 if (pw.getKillCount() >= 10) {
                     Achievements ach = PersistentData.getAchievements(killer.getUniqueId());
                     ach.set("Speedrunner", true);
                     PersistentData.setAchievements(killer, ach);
+                    Achievements.announce(killer, "Speedrunner");
                 } else {
                     pw.setKillCount(pw.getKillCount() + 1);
                 }

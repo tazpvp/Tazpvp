@@ -106,6 +106,7 @@ public class Caesar extends GUI {
                 PersistentData.add(p.getUniqueId(), DataTypes.COINS, reward);
                 sendNPCMessage(p, "Great doing business!" + CC.GREEN + " + $" + reward);
                 p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
+                Tazpvp.getObservers().forEach(observer -> observer.gui(p, "Caesar"));
             }
         }), 15);
 

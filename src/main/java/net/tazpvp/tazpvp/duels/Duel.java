@@ -35,6 +35,8 @@ package net.tazpvp.tazpvp.duels;
 import lombok.Getter;
 import lombok.Setter;
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.data.DataTypes;
+import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
@@ -100,6 +102,7 @@ public abstract class Duel {
         final OfflinePlayer offlineLoser = Bukkit.getOfflinePlayer(getLoser());
 
         ChatFunctions.announce(CC.AQUA + offlineWinner.getName() + CC.DARK_AQUA + " won a duel against " + CC.AQUA + offlineLoser.getName(), Sound.BLOCK_BELL_RESONATE);
+        PersistentData.add(winner.getUniqueId(), DataTypes.DUELWINS, 1);
         if (loser != null) {
             ArmorManager.setPlayerContents(loser, true);
             loser.teleport(NRCore.config.spawn);
@@ -107,9 +110,7 @@ public abstract class Duel {
             PlayerFunctions.resetHealth(loser);
         }
 
-        if (winner != null) {
-            winner.sendTitle(CC.GOLD + "" + CC.BOLD + "YOU WIN", "", 20, 20, 20);
-        }
+        winner.sendTitle(CC.GOLD + "" + CC.BOLD + "YOU WIN", "", 20, 20, 20);
 
         SPECTATORS.forEach(p -> {
             final Player spectator = Bukkit.getPlayer(p);
@@ -122,15 +123,12 @@ public abstract class Duel {
 
         new BukkitRunnable() {
             public void run() {
-                if (winner != null) {
-                    ArmorManager.setPlayerContents(winner, true);
-                    winner.teleport(NRCore.config.spawn);
+                ArmorManager.setPlayerContents(winner, true);
+                winner.teleport(NRCore.config.spawn);
 
-                    PlayerWrapper pw = PlayerWrapper.getPlayer(winner);
-                    pw.setDuel(null);
-                    PlayerFunctions.resetHealth(winner);
-                }
-
+                PlayerWrapper pw = PlayerWrapper.getPlayer(winner);
+                pw.setDuel(null);
+                PlayerFunctions.resetHealth(winner);
 
 
                 new WorldUtil().deleteWorld(getWorldName());

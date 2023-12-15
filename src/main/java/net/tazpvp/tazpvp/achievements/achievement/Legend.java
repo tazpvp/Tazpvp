@@ -44,6 +44,7 @@ public class Legend extends Observable {
             Achievements ach = PersistentData.getAchievements(p.getUniqueId());
             ach.set("Legend", true);
             PersistentData.setAchievements(p, ach);
+            Achievements.announce(p, "Legend");
         }
 
     }
