@@ -54,7 +54,7 @@ public class Caesar extends GUI {
 
         addButton(Button.create(upgradeButton, (e) -> {
 
-            if (tool.getType() == Material.GOLDEN_PICKAXE) {
+            if (tool.getType() == Material.NETHERITE_PICKAXE) {
                 sendNPCMessage(p, "You already have the best upgrade.");
                 return;
             }
@@ -93,7 +93,7 @@ public class Caesar extends GUI {
                     Ore ore = BlockFunctions.getOreFrom(i.getType());
                     int amount = i.getAmount();
                     if (ore != null) {
-                        reward += (BlockFunctions.isSmelted(i.getType())) ? (ore.getCost() * amount) : ((ore.getCost() * 2) * amount);
+                        reward += (BlockFunctions.isSmelted(i.getType())) ? ((ore.getCost() * 2) * amount) : (ore.getCost() * amount);
 
                         i.setAmount(0);
                     }

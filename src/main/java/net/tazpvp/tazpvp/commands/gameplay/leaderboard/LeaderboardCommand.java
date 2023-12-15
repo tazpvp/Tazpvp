@@ -26,28 +26,20 @@ public class LeaderboardCommand extends NRCommand {
         }
 
         if (args.length >= 2) {
-            String request = args[0];
-            String type = args[1];
+            String type = args[0];
 
-            if (!List.of("view").contains(request)) {
-                sendIncorrectUsage(sender);
-                return true;
-            }
+            for (Leaderboard.LeaderboardEnum leaderboardEnum : Leaderboard.LeaderboardEnum.values()) {
+                if (type.equalsIgnoreCase(leaderboardEnum.getType())) {
+                    int count = 1;
+                    Map<UUID, Integer> sortedMap = leaderboardEnum.getLeaderboard().getSortedPlacement();
 
-            if (request.equalsIgnoreCase("view")) {
-                for (Leaderboard.LeaderboardEnum leaderboardEnum : Leaderboard.LeaderboardEnum.values()) {
-                    if (type.equalsIgnoreCase(leaderboardEnum.getType())) {
-                        int count = 1;
-                        Map<UUID, Integer> sortedMap = leaderboardEnum.getLeaderboard().getSortedPlacement();
+                    p.sendMessage( CC.DARK_AQUA + "" + CC.BOLD + leaderboardEnum.getType() + " Leaderboard");
 
-                        p.sendMessage( CC.DARK_AQUA + "" + CC.BOLD + leaderboardEnum.getType() + " Leaderboard");
-
-                        for (Map.Entry<UUID, Integer> entry : sortedMap.entrySet()) {
-                            p.sendMessage(count + ". " + CC.GRAY + Bukkit.getOfflinePlayer(entry.getKey()).getName() + " " + CC.GOLD + entry.getValue());
-                            count++;
-                        }
-                        return true;
+                    for (Map.Entry<UUID, Integer> entry : sortedMap.entrySet()) {
+                        p.sendMessage(count + ". " + CC.GRAY + Bukkit.getOfflinePlayer(entry.getKey()).getName() + " " + CC.GOLD + entry.getValue());
+                        count++;
                     }
+                    return true;
                 }
             }
         }
@@ -57,11 +49,8 @@ public class LeaderboardCommand extends NRCommand {
     @Override
     public List<String> complete(CommandSender sender, String[] args) {
         if (args.length == 1) {
-            return List.of("view");
-        } else if (args.length == 2) {
             return List.of("coins", "deaths", "kills", "levels");
-        } else {
-            return List.of();
         }
+        return List.of();
     }
 }

@@ -55,17 +55,16 @@ public class BlockFunctions {
             new Ore(20*9, 2, 1, Material.COAL_ORE, Material.COAL, "stone"),
             new Ore(20*13, 3, 2, Material.GOLD_ORE, Material.RAW_GOLD, "iron"),
             new Ore(20*16, 4, 3, Material.LAPIS_ORE, Material.LAPIS_LAZULI, "diamond"),
-            new Ore(20*21, 5, 4, Material.DIAMOND_ORE, Material.DIAMOND, "netherite"),
-            new Ore(20*25, 6, 5, Material.EMERALD_ORE, Material.EMERALD, "gold")
+            new Ore(20*21, 10, 4, Material.DIAMOND_ORE, Material.DIAMOND, "netherite"),
+            new Ore(20*25, 15, 4, Material.EMERALD_ORE, Material.EMERALD, "netherite")
     ));
 
     public static final List<Pickaxe> pickaxes = new ArrayList<>(Arrays.asList(
             new Pickaxe(new ItemStack(Material.STONE_PICKAXE), 400, 1, Material.IRON_PICKAXE),
-            new Pickaxe(new ItemStack(Material.IRON_PICKAXE), 600, 2, Material.DIAMOND_PICKAXE),
-            new Pickaxe(new ItemStack(Material.DIAMOND_PICKAXE), 800, 3, Material.NETHERITE_PICKAXE),
-            new Pickaxe(new ItemStack(Material.NETHERITE_PICKAXE), 900, 4, Material.GOLDEN_PICKAXE),
-            new Pickaxe(new ItemStack(Material.GOLDEN_PICKAXE), 1500, 5, Material.GOLDEN_PICKAXE))
-    );
+            new Pickaxe(new ItemStack(Material.IRON_PICKAXE), 700, 2, Material.DIAMOND_PICKAXE),
+            new Pickaxe(new ItemStack(Material.DIAMOND_PICKAXE), 1000, 3, Material.NETHERITE_PICKAXE),
+            new Pickaxe(new ItemStack(Material.NETHERITE_PICKAXE), 1500, 4, Material.NETHERITE_PICKAXE)
+    ));
 
     public static void respawnOre(Player p, Block block, Ore ore) {
         int time = ore.getTime();

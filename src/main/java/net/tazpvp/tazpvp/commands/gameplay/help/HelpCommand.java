@@ -35,6 +35,8 @@ package net.tazpvp.tazpvp.commands.gameplay.help;
 
 import lombok.NonNull;
 import org.bukkit.command.CommandSender;
+import org.checkerframework.checker.units.qual.K;
+import org.jetbrains.annotations.NotNull;
 import world.ntdi.nrcore.utils.command.simple.Completer;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
@@ -43,41 +45,17 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class HelpCommand extends NRCommand {
-    private final List<HelpPage> helpPages = new LinkedList<>();
-
     public HelpCommand() {
-        super(new Label("help", null, "h"));
-
-        helpPages.add(new HelpPage("LALALALA", "im &cRED"));
+        super(new Label("help", null));
     }
 
     @Override
-    public boolean execute(@NonNull CommandSender sender, @NonNull String[] args) {
-        if (args.length < 1) {
-            sender.sendMessage(helpPages.get(0).getFormattedMessage());
-            return true;
-        }
-
-        final String targetPage = args[0];
-
-        try {
-            final int pageNumber = Integer.parseInt(targetPage) + 1; // We add one because help doesn't start at 0, but arrays do.
-            final String page = helpPages.get(pageNumber).getFormattedMessage();
-
-            sender.sendMessage(page);
-        } catch (NumberFormatException e) {
-            sendIncorrectUsage(sender, "Not a valid number!");
-            return false;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            sendIncorrectUsage(sender, "Page number does not exist!");
-            return false;
-        }
-
-        return true;
+    public boolean execute(@NonNull CommandSender sender, @NotNull @NonNull String[] args) {
+        return super.execute(sender, args);
     }
 
     @Override
     public List<String> complete(CommandSender sender, String[] args) {
-        return Completer.intRange(1, this.helpPages.size(), 1);
+        return super.complete(sender, args);
     }
 }

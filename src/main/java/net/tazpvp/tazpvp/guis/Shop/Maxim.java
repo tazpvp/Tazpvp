@@ -98,46 +98,51 @@ public class Maxim extends GUI {
 
         fill(0, 6*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
-        setButton(1, "Azure Vapor", "Extinguish flames.", Material.BLUE_ORCHID, 10, true);
-        setButton(5, "Sticky Web", "Slow down your enemies.", Material.COBWEB, 10,false);
-        setButton(3, "Inker", "Blind the enemies you slap.", Material.INK_SAC, 40, true);
-        setButton(1, "Lighter", "Set things afire.", Material.FLINT_AND_STEEL, 100, false);
-        setButton(3, "Chorus Fruit", "Teleport?", Material.CHORUS_FRUIT, 20, false);
-        setButton(32, "Exp Bottle", "Mend your armor.", Material.EXPERIENCE_BOTTLE, 64, false);
+        setButton(1, "Azure Vapor", "Extinguish flames.", Material.BLUE_ORCHID, 10, true, true);
+        setButton(5, "Sticky Web", "Slow down your enemies.", Material.COBWEB, 10,false, false);
+        setButton(3, "Inker", "Blind the enemies you slap.", Material.INK_SAC, 40, true, true);
+        setButton(1, "Lighter", "Set things afire.", Material.FLINT_AND_STEEL, 100, false, true);
+        setButton(1, "Shulker", "Extra Storage.", Material.SHULKER_BOX, 2500, false, false);
+        setButton(32, "Exp Bottle", "Mend your armor.", Material.EXPERIENCE_BOTTLE, 64, false, false);
         setChangingButton("Plank", "Placeable Blocks", wood, 30, 64);
 
-        setButton(1, "Hatchet", "Break wooden blocks.", Material.GOLDEN_AXE, 40, false);
-        setButton(1, "Shear", "Break wool blocks.", Material.SHEARS, 20, false);
-        setButton(5, "Arrow", "Projectiles.", Material.ARROW, 50, false);
-        setButton(5, "Steak", "We have the meats.", Material.COOKED_BEEF, 30, false);
-        setButton(5, "Gold Carrot", "Good nutrition.", Material.GOLDEN_CARROT, 30, false);
-        setButton(1, "Gold Apple", "Only for rich people.", Material.GOLDEN_APPLE, 170, false);
+        setButton(1, "Hatchet", "Break wooden blocks.", Material.GOLDEN_AXE, 40, false, true);
+        setButton(1, "Shear", "Break wool blocks.", Material.SHEARS, 20, false, true);
+        setButton(5, "Arrow", "Projectiles.", Material.ARROW, 50, false, false);
+        setButton(5, "Steak", "We have the meats.", Material.COOKED_BEEF, 30, false, false);
+        setButton(5, "Gold Carrot", "Good nutrition.", Material.GOLDEN_CARROT, 100, false, false);
+        setButton(1, "Gold Apple", "Only for rich people.", Material.GOLDEN_APPLE, 300, false, false);
         setChangingButton("Wool", "Placeable Blocks", wool, 30, 64);
 
-        setButton(5, "Spectral Arrow", "Highlight targets.", Material.SPECTRAL_ARROW, 90, false);
-        setButton(1, "Crossbow", "Stronger than the bow.", Material.CROSSBOW, 30, false);
-        setButton(5, "Push Bomb", "Push everyone away from you.", Material.TNT, 225, true);
+        setButton(5, "Spectral Arrow", "Highlight targets.", Material.SPECTRAL_ARROW, 90, false, false);
+        setButton(1, "Crossbow", "Stronger than the bow.", Material.CROSSBOW, 90, false, false);
+        setButton(5, "Push Bomb", "Push everyone away from you.", Material.TNT, 225, true, true);
         setButton(1, "Sharpness", "Deal more sword damage.", Material.ENCHANTED_BOOK, 230, Enchantment.DAMAGE_ALL);
-        setButton(1, "Unbreaking", "Fortify your tools.", Material.ENCHANTED_BOOK, 30, Enchantment.DURABILITY);
-        setButton(1, "Protection", "Take less damage.", Material.ENCHANTED_BOOK, 70, Enchantment.PROTECTION_ENVIRONMENTAL);
-        setButton(1, "Projectile Protection", "Take less projectile damage.", Material.ENCHANTED_BOOK, 30, Enchantment.PROTECTION_PROJECTILE);
+        setButton(1, "Unbreaking", "Fortify your tools.", Material.ENCHANTED_BOOK, 160, Enchantment.DURABILITY);
+        setButton(1, "Protection", "Take less damage.", Material.ENCHANTED_BOOK, 375, Enchantment.PROTECTION_ENVIRONMENTAL);
+        setButton(1, "Projectile Protection", "Take less projectile damage.", Material.ENCHANTED_BOOK, 225, Enchantment.PROTECTION_PROJECTILE);
 
-        setButton(1, "Fire Protection", "Take less damage to fire.", Material.ENCHANTED_BOOK, 30, Enchantment.PROTECTION_FIRE);
-        setButton(1, "Sweeping Edge", "Increase attack range.", Material.ENCHANTED_BOOK, 120, Enchantment.SWEEPING_EDGE);
-        setButton(1, "Punch", "Shoot players back further.", Material.ENCHANTED_BOOK, 150, Enchantment.ARROW_KNOCKBACK);
-        setButton(1, "Knockback", "Hit players back further.", Material.ENCHANTED_BOOK, 175, Enchantment.KNOCKBACK);
-        setButton(1, "Flame", "Shoot and set things on fire.", Material.ENCHANTED_BOOK, 250, Enchantment.ARROW_FIRE);
-        setButton(1, "Fire Aspect", "Hit and set things on fire.", Material.ENCHANTED_BOOK, 250, Enchantment.FIRE_ASPECT);
-        setButton(1, "Mending", "Heal armor with xp bottles.", Material.ENCHANTED_BOOK, 40, Enchantment.MENDING);
+        setButton(1, "Fire Protection", "Take less damage to fire.", Material.ENCHANTED_BOOK, 225, Enchantment.PROTECTION_FIRE);
+        setButton(1, "Sweeping Edge", "Increase attack range.", Material.ENCHANTED_BOOK, 220, Enchantment.SWEEPING_EDGE);
+        setButton(1, "Punch", "Shoot players back further.", Material.ENCHANTED_BOOK, 350, Enchantment.ARROW_KNOCKBACK);
+        setButton(1, "Knockback", "Hit players back further.", Material.ENCHANTED_BOOK, 275, Enchantment.KNOCKBACK);
+        setButton(1, "Flame", "Shoot and set things on fire.", Material.ENCHANTED_BOOK, 450, Enchantment.ARROW_FIRE);
+        setButton(1, "Fire Aspect", "Hit and set things on fire.", Material.ENCHANTED_BOOK, 450, Enchantment.FIRE_ASPECT);
+        setButton(1, "Mending", "Heal armor with xp bottles.", Material.ENCHANTED_BOOK, 100, Enchantment.MENDING);
 
         update();
     }
 
-    private void setButton(int amount, String name, String lore, Material material, int cost, boolean glow) {
+    private void setButton(int amount, String name, String lore, Material material, int cost, boolean glow, boolean custom) {
         String name2 = ChatFunctions.gradient("#db3bff", name, true);
-        ItemStack item = ItemBuilder.of(material, amount).name(name2).lore(CC.GRAY + lore).glow(glow).build();
+        ItemStack item;
+        if (custom) {
+            item = ItemBuilder.of(material, amount).name(name2).build();
+        } else {
+            item = ItemBuilder.of(material, amount).build();
+        }
 
-        addButton(Button.create(ItemBuilder.of(item.getType(), item.getAmount())
+        addButton(Button.create(ItemBuilder.of(material, amount)
                 .name(CC.YELLOW + "" + CC.BOLD + name)
                 .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: $" + cost)
                 .glow(glow)
@@ -149,13 +154,12 @@ public class Maxim extends GUI {
 
     private void setButton(int amount, String name, String lore, Material material, int cost, Enchantment enchant) {
         String name2 = ChatFunctions.gradient("#db3bff", name, true);
-        ItemStack item = ItemBuilder.of(material, amount).name(name).build();
 
-        addButton(Button.create(ItemBuilder.of(item.getType(), item.getAmount())
+        addButton(Button.create(ItemBuilder.of(material, amount)
                 .name(CC.YELLOW + "" + CC.BOLD + name)
-                .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: $" + cost)
+                .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: $" + cost, CC.RED + "Drag the enchant onto", CC.RED + "an item to combine")
                 .build(), (e) -> {
-            checkMoney(name2, cost, item, enchant);
+            checkMoney(name2, cost, ItemBuilder.of(material, amount).build(), enchant);
         }), slotNum);
         calcSlot();
     }
@@ -179,7 +183,7 @@ public class Maxim extends GUI {
                             if (!ChatFunctions.hasPremium(p, prefix)) return;
                         }
                         String name2 = ChatFunctions.gradient("#db3bff", name, true);
-                        checkMoney(name2, cost, ItemBuilder.of(list.get(num), amount).name(name2).build(), null);
+                        checkMoney(name2, cost, ItemBuilder.of(list.get(num), amount).build(), null);
                     }), slot);
                 }
             }

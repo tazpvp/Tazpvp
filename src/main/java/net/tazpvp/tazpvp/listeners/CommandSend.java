@@ -8,14 +8,13 @@ import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.server.ServerCommandEvent;
 
 public class CommandSend implements Listener {
     @EventHandler
-    public void onCommand(ServerCommandEvent e) {
-        if (!(e.getSender() instanceof Player p)) {
-            return;
-        }
+    public void onCommand(PlayerCommandPreprocessEvent e) {
+        Player p = e.getPlayer();
 
         final PunishmentService punishmentService = new PunishmentServiceImpl();
         TextComponent component = new TextComponent(CC.GRAY + "Join the discord to appeal [Click here]");
@@ -23,13 +22,13 @@ public class CommandSend implements Listener {
 
 
         if (punishmentService.getPunishment(p.getUniqueId()) == PunishmentService.PunishmentType.MUTED) {
-            if (e.getCommand().contains("me")) {
+            if (e.getMessage().contains("me")) {
                 e.setCancelled(true);
             }
         }
 
         if (punishmentService.getPunishment(p.getUniqueId()) == PunishmentService.PunishmentType.BANNED) {
-            if (e.getCommand().contains("me")) {
+            if (e.getMessage().contains("me")) {
                 e.setCancelled(true);
             }
             if (punishmentService.getTimeRemaining(p.getUniqueId()) > 0) {

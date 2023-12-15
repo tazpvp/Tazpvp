@@ -34,6 +34,7 @@ package net.tazpvp.tazpvp.listeners;
 
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.PlayerNameTag;
 import net.tazpvp.tazpvp.utils.PlaytimeUtil;
 import net.tazpvp.tazpvp.utils.TimeUtil;
@@ -52,6 +53,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.NRCore;
 
 import java.util.UUID;
@@ -77,7 +79,12 @@ public class Join implements Listener {
 
         if (punishmentType == PunishmentService.PunishmentType.BANNED) {
             if (punishmentService.getTimeRemaining(p.getUniqueId()) > 0) {
-                p.setGameMode(GameMode.SPECTATOR);
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        p.setGameMode(GameMode.SPECTATOR);
+                    }
+                }.runTaskLater(Tazpvp.getInstance(), 20);
 
                 p.sendMessage("");
                 p.sendMessage(CC.RED + "You've been banned.");
@@ -86,12 +93,10 @@ public class Join implements Listener {
                 p.sendMessage("");
 
                 p.spigot().sendMessage(component);
-                return;
             } else {
                 punishmentService.unpunish(p.getUniqueId());
             }
         }
-
 
         PlaytimeUtil.playerJoined(p);
         PlayerFunctions.resetHealth(p);

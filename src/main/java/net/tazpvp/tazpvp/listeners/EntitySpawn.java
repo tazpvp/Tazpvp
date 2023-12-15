@@ -10,7 +10,7 @@ public class EntitySpawn implements Listener {
     public void onTNTSpawn(EntitySpawnEvent e) {
         if (e.getEntity() instanceof TNTPrimed) {
             TNTPrimed tnt = (TNTPrimed) e.getEntity();
-            tnt.setFuseTicks(20);
+            tnt.setFuseTicks(30);
         }
     }
 }

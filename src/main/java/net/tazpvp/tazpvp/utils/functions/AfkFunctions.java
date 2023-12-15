@@ -2,6 +2,8 @@ package net.tazpvp.tazpvp.utils.functions;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.crate.KeyFactory;
+import net.tazpvp.tazpvp.utils.data.DataTypes;
+import net.tazpvp.tazpvp.utils.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
@@ -25,10 +27,12 @@ public class AfkFunctions {
                         if ((System.currentTimeMillis() - pw.getTimeSinceAfk()) >= 1000 * 60 * 5) {
                             pw.setTimeSinceAfk(System.currentTimeMillis());
                             p.sendMessage(
-                                    ChatFunctions.gradient("#ffc70b", "AFK REWARD: ", true) +
-                                            ChatFunctions.gradient("#ffc70b", "1x Reward Keys", false)
+                                    ChatFunctions.gradient("#ffc70b", "AFK REWARD: \n", true) +
+                                    CC.GRAY + "+ 1 Key\n" +
+                                    CC.GRAY + "+ $100 Coins\n"
                             );
                             p.getInventory().addItem(KeyFactory.getFactory().createDailyKey());
+                            PersistentData.add(p.getUniqueId(), DataTypes.COINS, 100);
                             p.playSound(p.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
                         }
                     }

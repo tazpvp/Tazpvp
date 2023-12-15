@@ -8,8 +8,11 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import world.ntdi.nrcore.utils.command.simple.Completer;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
+
+import java.util.List;
 
 public class PlaytimeCommand extends NRCommand {
     public PlaytimeCommand() {
@@ -36,5 +39,13 @@ public class PlaytimeCommand extends NRCommand {
         p.sendMessage(CC.GOLD + "" + CC.BOLD + target.getName() + "'s Playtime: " + CC.YELLOW + formattedPlaytime);
 
         return true;
+    }
+
+    @Override
+    public List<String> complete(CommandSender sender, String[] args) {
+        if (args.length == 1) {
+            return Completer.onlinePlayers();
+        }
+        return List.of();
     }
 }

@@ -55,7 +55,6 @@ public class Coffin {
     private final Location location;
     @Getter
     private final Hologram hologram;
-    private final Random r = new Random();
 
     public Coffin(Location location, Hologram hologram) {
         this.location = location;
@@ -107,12 +106,8 @@ public class Coffin {
                 Enchantment.ARROW_DAMAGE,
                 Enchantment.PROTECTION_ENVIRONMENTAL,
                 Enchantment.MENDING,
-                Enchantment.PROTECTION_FIRE,
-                Enchantment.PROTECTION_PROJECTILE,
                 Enchantment.ARROW_FIRE,
                 Enchantment.FIRE_ASPECT,
-                Enchantment.SWEEPING_EDGE,
-                Enchantment.KNOCKBACK,
                 Enchantment.DURABILITY
         );
 
