@@ -26,7 +26,7 @@ public class PunishmentFunctions {
         punishmentService.punish(target.getUniqueId(), PunishmentService.PunishmentType.BANNED, timeToken.getUnixTimestamp(), reason);
 
 
-
+        ChatFunctions.announce(CC.RED + target.getName() + " has been banned.", Sound.BLOCK_STONE_BUTTON_CLICK_OFF);
         ChatFunctions.announce(target, CC.GRAY + "You've been banned for: " + CC.RED + reason, Sound.BLOCK_ANVIL_LAND);
         TextComponent component = new TextComponent(CC.GREEN + "Join the discord to appeal [Click here]");
         component.setClickEvent(new net.md_5.bungee.api.chat.ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/56rdkbSqa8"));

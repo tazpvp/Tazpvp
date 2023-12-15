@@ -55,7 +55,7 @@ public class VanishCommand extends NRCommand {
             }
         } else {
             pw.setVanished(true);
-            p.sendMessage(CC.LIGHT_PURPLE + "You are no longer in vanish.");
+            p.sendMessage(CC.LIGHT_PURPLE + "You are now in vanish.");
             for (Player op : Bukkit.getOnlinePlayers()) {
                 op.hidePlayer(Tazpvp.getInstance(), p);
             }

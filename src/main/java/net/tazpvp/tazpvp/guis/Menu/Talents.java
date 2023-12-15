@@ -104,11 +104,11 @@ public class Talents extends GUI {
 
                     Tazpvp.getObservers().forEach(observer -> observer.talent(p));
                 } else {
-                    p.sendMessage(prefix + " You do not have enough coins.");
+                    p.sendMessage(prefix + "You do not have enough coins.");
                     p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
                 }
             } else {
-                p.sendMessage(prefix + " You already own this talent");
+                p.sendMessage(prefix + "You already own this talent");
                 p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
             }
 

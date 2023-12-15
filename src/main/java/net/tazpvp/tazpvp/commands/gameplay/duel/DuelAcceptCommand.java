@@ -53,6 +53,8 @@ public class DuelAcceptCommand extends NRCommand {
         if (duelPair.getA() != null) {
             Duel duel = duelPair.getB();
 
+            if (duel == null) return true;
+
             duel.initialize();
             new BukkitRunnable() {
                 public void run() {
