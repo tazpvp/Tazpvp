@@ -49,7 +49,7 @@ import world.ntdi.nrcore.utils.item.builders.PotionBuilder;
 
 public class Talents extends GUI {
 
-    int shardCount;
+    String prefix = CC.DARK_AQUA + "[Lorenzo] " + CC.AQUA;
 
     public Talents(Player p) {
         super("Talents", 4);
@@ -104,11 +104,11 @@ public class Talents extends GUI {
 
                     Tazpvp.getObservers().forEach(observer -> observer.talent(p));
                 } else {
-                    p.sendMessage(CC.GREEN + "[Lorenzo]" + CC.RED + " You do not have enough coins.");
+                    p.sendMessage(prefix + " You do not have enough coins.");
                     p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
                 }
             } else {
-                p.sendMessage(CC.GREEN + "[Lorenzo]" + CC.RED + " You already own this talent");
+                p.sendMessage(prefix + " You already own this talent");
                 p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
             }
 

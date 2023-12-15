@@ -144,7 +144,7 @@ public class Maxim extends GUI {
 
         addButton(Button.create(ItemBuilder.of(material, amount)
                 .name(CC.YELLOW + "" + CC.BOLD + name)
-                .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: $" + cost)
+                .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: " + cost + " Coins")
                 .glow(glow)
                 .build(), (e) -> {
             checkMoney(name2, cost, item, null);
@@ -157,7 +157,7 @@ public class Maxim extends GUI {
 
         addButton(Button.create(ItemBuilder.of(material, amount)
                 .name(CC.YELLOW + "" + CC.BOLD + name)
-                .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: $" + cost, CC.RED + "Drag the enchant onto", CC.RED + "an item to combine")
+                .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: " + cost + " Coins", CC.RED + "Drag the enchant onto", CC.RED + "an item to combine")
                 .build(), (e) -> {
             checkMoney(name2, cost, ItemBuilder.of(material, amount).build(), enchant);
         }), slotNum);
@@ -176,7 +176,7 @@ public class Maxim extends GUI {
                     int num = new Random().nextInt(list.size());
                     addButton(Button.create(ItemBuilder.of(list.get(num), 1)
                             .name(CC.YELLOW + "" + CC.BOLD + name)
-                            .lore(CC.GOLD + text, " ", CC.GRAY + "Cost: " + cost)
+                            .lore(CC.GOLD + text, " ", CC.GRAY + "Cost: " + cost + " Coins")
                             .build(), (e) -> {
 
                         if (list.contains(Material.RED_WOOL)) {
