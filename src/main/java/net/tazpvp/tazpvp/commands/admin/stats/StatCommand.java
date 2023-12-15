@@ -72,11 +72,11 @@ public class StatCommand extends NRCommand {
         } else if (args.length == 2) {
             List<String> values = new ArrayList<>();
             for (DataTypes dataTypes : dataTypes) {
-                values.add(dataTypes.name());
+                values.add(dataTypes.name().toLowerCase());
             }
             return values;
         } else if (args.length == 3) {
-            return Completer.intRange(1, 10, 1);
+            return List.of("<amount>");
         } else if (args.length == 4) {
             return Completer.onlinePlayers(args[3]);
         }

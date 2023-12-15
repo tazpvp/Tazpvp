@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.commands.network.spawn;
+package net.tazpvp.tazpvp.commands.network;
 
 import lombok.NonNull;
 import net.tazpvp.tazpvp.Tazpvp;

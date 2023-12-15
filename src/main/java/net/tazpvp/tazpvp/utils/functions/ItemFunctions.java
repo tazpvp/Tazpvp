@@ -42,7 +42,7 @@ public class ItemFunctions {
         int newLevel;
         if (equipmentMeta.hasEnchant(enchantment)) {
             int currentLevel = equipmentMeta.getEnchantLevel(enchantment);
-            if (currentLevel >= 2) {
+            if (currentLevel >= 2 || currentLevel >= enchantment.getMaxLevel()) {
                 p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
                 p.sendMessage(CC.RED + "This enchantment is already at its maximum level.");
                 return;

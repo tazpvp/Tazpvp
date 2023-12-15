@@ -36,6 +36,7 @@ package net.tazpvp.tazpvp.utils.crate;
 import lombok.Getter;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -86,7 +87,7 @@ public class Crate {
             } else { // YEET the player backwards
                 p.setVelocity(p.getLocation().getDirection().multiply(-1));
                 p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1F, 1F);
-                p.sendMessage(CC.RED + "No crate key!");
+                p.sendTitle(ChatFunctions.hexColor("#8724e3", "Error", true), ChatFunctions.hexColor("#8724e3", "No Crate Key In Hand", true), 10,20,10);
             }
         }
     }
