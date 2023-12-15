@@ -35,6 +35,7 @@ package net.tazpvp.tazpvp;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.achievements.achievement.*;
+import net.tazpvp.tazpvp.achievements.achievement.Error;
 import net.tazpvp.tazpvp.commands.admin.booster.BoosterCommand;
 import net.tazpvp.tazpvp.commands.admin.edit.EditCommand;
 import net.tazpvp.tazpvp.commands.admin.hide.HideCommand;
@@ -44,6 +45,7 @@ import net.tazpvp.tazpvp.commands.admin.permissions.PermissionsCommand;
 import net.tazpvp.tazpvp.commands.admin.stats.StatCommand;
 import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
 import net.tazpvp.tazpvp.commands.admin.teleportWorld.TeleportWorldCommand;
+import net.tazpvp.tazpvp.commands.moderation.vanish.VanishCommand;
 import net.tazpvp.tazpvp.commands.network.DailyCommand;
 import net.tazpvp.tazpvp.commands.gameplay.ReportCommand;
 import net.tazpvp.tazpvp.commands.gameplay.duel.DuelCommand;
@@ -216,6 +218,7 @@ public final class Tazpvp extends JavaPlugin {
         new Superior();
         new Zorgin();
         new Harvester();
+        new Error();
 
         new Revenge();
         new Moist();
@@ -260,7 +263,8 @@ public final class Tazpvp extends JavaPlugin {
                 new BoosterCommand(),
                 new LoadoutCommand(),
                 new StoreCommand(),
-                new UnbanCommand()
+                new UnbanCommand(),
+                new VanishCommand()
         );
     }
 

@@ -47,6 +47,7 @@ import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.functions.ScoreboardFunctions;
 import net.tazpvp.tazpvp.utils.objects.CombatTag;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -116,6 +117,16 @@ public class Join implements Listener {
             PersistentData.set(p.getUniqueId(), DataTypes.XP, 0);
         } else {
             p.setExp(PersistentData.getFloat(p.getUniqueId(), DataTypes.XP) / LooseData.getExpLeft(p.getUniqueId()));
+        }
+
+
+        for (Player vp : Bukkit.getOnlinePlayers()) {
+            PlayerWrapper vpw = PlayerWrapper.getPlayer(vp);
+            if (vpw.isVanished()) {
+                for (Player op : Bukkit.getOnlinePlayers()) {
+                    op.hidePlayer(Tazpvp.getInstance(), vp);
+                }
+            }
         }
 
 

@@ -67,6 +67,8 @@ public class PlayerWrapper {
     private Duel spectating;
     @Getter
     private RankEntity rankEntity;
+    @Getter @Setter
+    private boolean vanished;
 
 
     /**

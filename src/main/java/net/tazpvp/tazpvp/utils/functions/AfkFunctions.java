@@ -63,17 +63,16 @@ public class AfkFunctions {
 
     public static void setAfk(Player p) {
         PlayerWrapper pw = PlayerWrapper.getPlayer(p);
+        if (pw == null) return;
         if (Tazpvp.afkRegion.contains(p.getLocation())) {
             if (!pw.isAfk()) {
                 pw.setAfk(true);
                 pw.setTimeSinceAfk(System.currentTimeMillis());
                 p.sendMessage(CC.GREEN + "You are now AFK");
             }
-        } else {
-            if (pw.isAfk()) {
-                pw.setAfk(false);
-                p.sendMessage(CC.RED + "You are no longer AFK");
-            }
+        } else if (pw.isAfk()){
+            pw.setAfk(false);
+            p.sendMessage(CC.RED + "You are no longer AFK");
         }
     }
 }

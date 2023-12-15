@@ -61,7 +61,7 @@ public class Move implements Listener {
                 }
             }
 
-            if (pw != null) pw.setReceivedDialogue(null);
+            pw.setReceivedDialogue(null);
             for (NPC npc : Tazpvp.getInstance().getNpcs()) {
                 if (npc.withinRange(playerLocation)) {
                     pw.setReceivedDialogue(npc);
