@@ -71,7 +71,6 @@ public class Crate {
         this.block = getLocation().getBlock().getType();
         getLocation().getBlock().setType(Material.BEACON);
         this.crateDrops = crateDrops;
-        generateSpiralParticles(getLocation());
     }
 
     public void acceptClick(PlayerInteractEvent e) {
@@ -87,7 +86,7 @@ public class Crate {
             } else { // YEET the player backwards
                 p.setVelocity(p.getLocation().getDirection().multiply(-1));
                 p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1F, 1F);
-                p.sendTitle(ChatFunctions.hexColor("#8724e3", "Error", true), ChatFunctions.hexColor("#8724e3", "No Crate Key In Hand", true), 10,20,10);
+                p.sendTitle(CC.BLUE + "Error", CC.BLUE + "No Crate Key In Hand", 10,20,10);
             }
         }
     }
@@ -126,33 +125,5 @@ public class Crate {
         ItemStack i = itemStack.clone();
         String name = i.getType().name().replaceAll("_", "");
         return new Tuple<>(name, i);
-    }
-
-    private void generateSpiralParticles(Location center) {
-        new BukkitRunnable() {
-            double angle = 0;
-            double y = 0;
-            double radius = 1.5;
-            double height = 3.0;
-            double yIncrease = 0.1;
-            double angleIncrease = Math.PI / 16;
-
-            @Override
-            public void run() {
-                if (y < height) {
-                    double x = radius * Math.cos(angle);
-                    double z = radius * Math.sin(angle);
-
-                    Location particleLoc = center.clone().add(x, y, z);
-
-                    center.getWorld().spawnParticle(Particle.FLAME, particleLoc, 1);
-
-                    angle += angleIncrease;
-                    y += yIncrease;
-                } else {
-                    cancel();
-                }
-            }
-        }.runTaskTimer(Tazpvp.getInstance(), 0L, 5L);
     }
 }

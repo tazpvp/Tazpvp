@@ -36,13 +36,13 @@ public class AfkFunctions {
 
                             if (probability < 70) {
                                 keyType = ChatFunctions.gradient("#03fc39", "Common", true);
-                                p.getInventory().addItem(KeyFactory.getFactory().createDailyKey());
+                                p.getInventory().addItem(KeyFactory.getFactory().createCommonKey());
                             } else if (probability < 95) {
                                 keyType = ChatFunctions.gradient("#039dfc", "Rare", true);
-                                p.getInventory().addItem(KeyFactory.getFactory().createDailyKey());
+                                p.getInventory().addItem(KeyFactory.getFactory().createRareKey());
                             } else {
                                 keyType = ChatFunctions.gradient("#db3bff", "Mythic", true);
-                                p.getInventory().addItem(KeyFactory.getFactory().createDailyKey());
+                                p.getInventory().addItem(KeyFactory.getFactory().createMythicKey());
                             }
 
                             p.sendMessage(

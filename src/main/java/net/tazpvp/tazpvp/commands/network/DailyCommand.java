@@ -26,6 +26,8 @@ public class DailyCommand extends NRCommand {
 
             if (p.isOp()) {
                 p.getInventory().addItem(KeyFactory.getFactory().createCommonKey());
+                p.getInventory().addItem(KeyFactory.getFactory().createRareKey());
+                p.getInventory().addItem(KeyFactory.getFactory().createMythicKey());
             } else if (Tazpvp.getCrateManager().canClaimDaily(p)) {
                 p.getInventory().addItem(KeyFactory.getFactory().createCommonKey());
                 p.sendMessage(CC.GREEN + "You claimed your daily " + ChatFunctions.gradient("#03fc39", "Common Key", true));
