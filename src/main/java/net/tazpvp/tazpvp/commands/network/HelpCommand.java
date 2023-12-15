@@ -95,12 +95,17 @@ public class HelpCommand extends NRCommand {
             p.sendMessage("");
         } else if(type.equalsIgnoreCase("commands")) {
             p.sendMessage(title + "Commands");
-            p.sendMessage(highlight + "/spawn" + text + "- Teleport to the server spawn");
-            p.sendMessage(highlight + "/report <player>" + text + "- Tell staff members about a cheater");
-            p.sendMessage(highlight + "/" + text + "- ");
-            p.sendMessage(highlight + "/" + text + "- ");
-            p.sendMessage(highlight + "/" + text + "- ");
-            p.sendMessage(highlight + "/" + text + "- ");
+            p.sendMessage(highlight + "/duel" + text + "- Request a duel from other players");
+            p.sendMessage(highlight + "/spawn" + text + "- Return to the server spawn");
+            p.sendMessage(highlight + "/loadout" + text + "- Respawn with your own item positions");
+            p.sendMessage(highlight + "/report" + text + "- Tell staff members about a cheater");
+            p.sendMessage(highlight + "/guild " + text + "- A selection of guild related functions");
+            p.sendMessage(highlight + "/daily " + text + "- Receive your daily crate key");
+            p.sendMessage(highlight + "/leaderboard" + text + "- View all kinds of stats for all players");
+            p.sendMessage(highlight + "/ad" + text + "- Copy our advertisement to help raise our player count");
+            p.sendMessage(highlight + "/store" + text + "- View what we offer in our server store");
+            p.sendMessage(highlight + "/discord" + text + "- Discord link to apply for staff or appeal bans");
+            p.sendMessage(highlight + "/playtime" + text + "- View how much time you played");
             p.sendMessage("");
         } else if(type.equalsIgnoreCase("rewards")) {
             p.sendMessage(title + "Rewards");
