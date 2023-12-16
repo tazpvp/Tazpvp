@@ -103,7 +103,7 @@ public class Bub extends NPC {
         int reward;
 
         if (item.getType() == Material.PLAYER_HEAD) {
-            reward = num * 30;
+            reward = num * 200;
         } else if (item.getType() == Material.AMETHYST_SHARD) {
             reward = num * 100;
         } else {

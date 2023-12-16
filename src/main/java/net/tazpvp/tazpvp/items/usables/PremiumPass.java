@@ -3,7 +3,10 @@ package net.tazpvp.tazpvp.items.usables;
 import net.tazpvp.tazpvp.items.UsableItem;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.Rank;
+import net.tazpvp.tazpvp.utils.data.entity.RankEntity;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -16,6 +19,11 @@ public class PremiumPass extends UsableItem {
 
     @Override
     public void onRightClick(Player p, ItemStack item) {
+//        PlayerWrapper pw = PlayerWrapper.getPlayer(p);
+//        RankEntity rank = pw.getRankEntity();
+//        if (Rank.valueOf(rank.getRank()) == Rank.PREMIUM) {
+//
+//        }
     }
 
     @Override

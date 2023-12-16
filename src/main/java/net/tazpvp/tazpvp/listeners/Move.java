@@ -28,7 +28,9 @@ public class Move implements Listener {
         Location launchpadRaidus = new Location(Bukkit.getWorld("arena"), 0, 100, NRCore.config.spawn.getZ() + 29);
         Block b = new Location(p.getWorld(), playerLocation.getX(), playerLocation.getY() - 1, playerLocation.getZ()).getBlock();
 
-        if (pw != null && pw.getDuel() != null) {
+        if (pw == null) return;
+
+        if (pw.getDuel() != null) {
             if (pw.getDuel().isStarting()) {
                 e.setCancelled(true);
                 return;
@@ -54,8 +56,13 @@ public class Move implements Listener {
                 e.setCancelled(true);
                 return;
             }
-            if (p.getLocation().getY() < 78 && p.getLocation().getZ() < 133) {
-                if (p.getGameMode() == GameMode.SURVIVAL) {
+
+            if (p.getGameMode() == GameMode.SURVIVAL) {
+                if (p.getLocation().getY() < 78 && p.getLocation().getZ() < 133) {
+                    DeathFunctions.death(p.getUniqueId());
+                    return;
+                }
+                if (p.getLocation().getY() < 64) {
                     DeathFunctions.death(p.getUniqueId());
                     return;
                 }

@@ -76,12 +76,12 @@ public class Crate {
     public void acceptClick(PlayerInteractEvent e) {
         Player p = e.getPlayer();
         if (isCrate(e)) {
-            if (hasKey(p)) { // Only runs if the player interacts with a crate and has the proper key
+            if (hasKey(p)) {
                 getLocation().getWorld().spawnParticle(Particle.EXPLOSION_NORMAL, getLocation(), 1);
                 removeOne(p);
                 p.playSound(p.getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN, 1F, 1F);
                 Tuple<String, ItemStack> randomShopItem = randomShopItem();
-                p.sendMessage(CC.GREEN + "You got " + randomShopItem.getA() + "!");
+                p.sendTitle(CC.GREEN + "" + CC.BOLD + "REWARD", CC.GREEN + "You won: " + CC.WHITE + randomShopItem.getA(), 5, 10, 5);
                 p.getInventory().addItem(randomShopItem.getB());
             } else { // YEET the player backwards
                 p.setVelocity(p.getLocation().getDirection().multiply(-1));

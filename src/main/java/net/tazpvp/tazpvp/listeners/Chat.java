@@ -68,7 +68,7 @@ public class Chat implements Listener {
         if (punishmentService.getPunishment(uuid) == PunishmentService.PunishmentType.MUTED) {
             final String howLongAgo = TimeUtil.howLongAgo(punishmentService.getTimeRemaining(uuid));
 
-            p.sendMessage("You are currently muted for " + howLongAgo);
+            p.sendMessage(CC.RED + "You are currently muted for " + howLongAgo);
             p.spigot().sendMessage(component);
             e.setCancelled(true);
             return;

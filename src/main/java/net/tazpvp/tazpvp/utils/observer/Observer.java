@@ -35,6 +35,7 @@ package net.tazpvp.tazpvp.utils.observer;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityCombustEvent;
 
 public interface Observer {
 
@@ -57,7 +58,7 @@ public interface Observer {
 
     void chat(Player p, String chat);
 
-    void burn(Player p);
+    void burn(Player p, EntityCombustEvent event);
 
     void place(Player p, Block b);
 

@@ -74,6 +74,7 @@ public class Leave implements Listener {
 
         if (CombatTagFunctions.isInCombat(id)) {
             if (TazloadCommand.tazloading) return;
+            if (CombatTagFunctions.getLastAttacker(id) == null) return;
             DeathFunctions.death(id, CombatTagFunctions.getLastAttacker(id));
         }
 

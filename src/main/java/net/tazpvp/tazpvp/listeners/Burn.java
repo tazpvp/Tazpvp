@@ -11,7 +11,7 @@ public class Burn implements Listener {
     @EventHandler
     private void onBurn(EntityCombustEvent e) {
         if (e.getEntity() instanceof Player p) {
-            Tazpvp.getObservers().forEach(observer -> observer.burn(p));
+            Tazpvp.getObservers().forEach(observer -> observer.burn(p, e));
         }
     }
 }
