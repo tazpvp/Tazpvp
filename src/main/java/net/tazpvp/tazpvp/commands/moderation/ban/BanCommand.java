@@ -58,6 +58,11 @@ public class BanCommand extends NRCommand {
             return true;
         }
 
+        if (!sender.hasPermission(getLabel().getPermission())) {
+            sendNoPermission(sender);
+            return true;
+        }
+
         Player target = Bukkit.getPlayer(args[0]);
 
         if (target == null) return true;
