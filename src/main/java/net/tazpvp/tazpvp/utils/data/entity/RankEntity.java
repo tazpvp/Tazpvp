@@ -25,4 +25,6 @@ public class RankEntity {
     private String deathParticle;
     @DatabaseField(columnName = "arrow_particle")
     private String arrowParticle;
+    @DatabaseField(columnName = "time_rank_updated")
+    private long timeRankedUpdated;
 }
