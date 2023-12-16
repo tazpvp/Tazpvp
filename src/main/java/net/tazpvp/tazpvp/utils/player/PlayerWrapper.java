@@ -208,6 +208,7 @@ public class PlayerWrapper {
 
     public void setRank(Rank rank) {
         rankEntity.setRank(rank.toString());
+        rankEntity.setTimeRankedUpdated(System.currentTimeMillis());
 
         setRankEntity();
 
