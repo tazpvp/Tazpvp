@@ -57,7 +57,7 @@ public final class PersistentData {
                     "ID, COINS, XP, LEVEL, KILLS, DEATHS, TOP_KS, REBIRTH, DUEL_WINS, DIVISION, PLAYTIME, DAILY_CRATE, GUILD_ID, TALENTS, ACHIEVEMENTS, LOADOUT",
                     "'" + uuid + "'", "0", "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "'n'", "'set'", "'set'", "'set'");
             setTalents(uuid, new Talents());
-            setAchievements(uuid, new Achievements());
+//            setAchievements(uuid, new Achievements());
         }
     }
 
@@ -117,6 +117,7 @@ public final class PersistentData {
         return (Talents) getSerializeObject(uuid, DataTypes.TALENTS);
     }
 
+    @Deprecated
     public static Achievements getAchievements(@Nonnull final UUID uuid) {
         return (Achievements) getSerializeObject(uuid, DataTypes.ACHIEVEMENTS);
     }
@@ -278,6 +279,7 @@ public final class PersistentData {
      * @param p the targeted player
      * @param achievements the talents object
      */
+    @Deprecated
     public static void setAchievements(@Nonnull final OfflinePlayer p, @Nonnull final Achievements achievements) {
         setAchievements(p.getUniqueId(), achievements);
     }
@@ -287,6 +289,7 @@ public final class PersistentData {
      * @param uuid the targeted uuid
      * @param achievements the talents object
      */
+    @Deprecated
     public static void setAchievements(@Nonnull final UUID uuid, @Nonnull final Achievements achievements) {
         setSerializedObject(uuid, achievements, DataTypes.ACHIEVEMENTS);
     }

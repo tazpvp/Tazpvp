@@ -8,15 +8,15 @@ import net.tazpvp.tazpvp.guild.Guild;
 import net.tazpvp.tazpvp.guild.GuildUtils;
 import net.tazpvp.tazpvp.npc.shops.NPC;
 import net.tazpvp.tazpvp.utils.PlayerNameTag;
-import net.tazpvp.tazpvp.utils.data.Rank;
-import net.tazpvp.tazpvp.utils.data.RankService;
-import net.tazpvp.tazpvp.utils.data.RankServiceImpl;
+import net.tazpvp.tazpvp.utils.data.*;
+import net.tazpvp.tazpvp.utils.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.utils.data.entity.RankEntity;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.report.ReportDebounce;
 import net.tazpvp.tazpvp.utils.report.ReportLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 
@@ -67,6 +67,8 @@ public class PlayerWrapper {
     private Duel spectating;
     @Getter
     private RankEntity rankEntity;
+    @Getter
+    private AchievementEntity achievementEntity;
     @Getter @Setter
     private boolean vanished;
 
@@ -94,6 +96,9 @@ public class PlayerWrapper {
 
         final RankService rankService = new RankServiceImpl();
         this.rankEntity = rankService.getOrDefault(getUuid());
+
+        final AchievementService achievementService = new AchievementServiceImpl();
+        this.achievementEntity = achievementService.getOrDefault(getUuid());
 
         refreshPermissions();
     }
@@ -198,6 +203,10 @@ public class PlayerWrapper {
     }
 
     private void refreshPermissions() {
+        if (Bukkit.getPlayer(getUuid()) == null) {
+            return;
+        }
+
         if (this.permissionAttachment != null) {
             this.permissionAttachment.remove();
         }
@@ -223,6 +232,11 @@ public class PlayerWrapper {
     public void setRankEntity() {
         final RankService rankService = new RankServiceImpl();
         rankService.saveRankEntity(rankEntity);
+    }
+
+    public void setAchievementEntity(final AchievementEntity achievementEntity) {
+        final AchievementService achievementService = new AchievementServiceImpl();
+        achievementService.saveAchievementEntity(achievementEntity);
     }
 
     public void refreshNametag() {

@@ -34,20 +34,24 @@ package net.tazpvp.tazpvp.achievements.achievement;
 
 import net.tazpvp.tazpvp.achievements.Achievements;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.observer.Observable;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
 
 public class Gamble extends Observable {
 
     @Override
     public void death(Player victim, Player killer) {
-        if (!PersistentData.getAchievements(killer.getUniqueId()).is("Gamble")) {
+        final PlayerWrapper playerWrapper = new PlayerWrapper(killer.getUniqueId());
+        final AchievementEntity achievementEntity = playerWrapper.getAchievementEntity();
+
+        if (!achievementEntity.isGamble()) {
             if (killer.getHealth() <= 1) {
-                Achievements ach = PersistentData.getAchievements(killer.getUniqueId());
-                ach.set("Gamble", true);
-                PersistentData.setAchievements(killer, ach);
-                ChatFunctions.achievement(killer, "Error");
+                achievementEntity.setGamble(true);
+                playerWrapper.setAchievementEntity(achievementEntity);
+                ChatFunctions.achievement(killer, "Gamble");
             }
         }
     }

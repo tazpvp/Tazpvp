@@ -2,6 +2,7 @@ package net.tazpvp.tazpvp.achievements.achievement;
 
 import net.tazpvp.tazpvp.achievements.Achievements;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
@@ -14,8 +15,10 @@ import java.util.List;
 public class Artisan extends Observable {
     @Override
     public void place(Player p, Block b) {
-        if (!PersistentData.getAchievements(p.getUniqueId()).is("Artisan")) {
-            PlayerWrapper pw = PlayerWrapper.getPlayer(p);
+        final PlayerWrapper playerWrapper = new PlayerWrapper(p.getUniqueId());
+        final AchievementEntity achievementEntity = playerWrapper.getAchievementEntity();
+
+        if (!achievementEntity.isArtisan()) {
             List<Material> woods = List.of(
                     Material.OAK_PLANKS,
                     Material.SPRUCE_PLANKS,
@@ -27,13 +30,13 @@ public class Artisan extends Observable {
                     Material.WARPED_PLANKS
             );
             for (Material wood : woods) {
-                if (!pw.getBlocksPlaced().contains(wood)) {
+                if (!playerWrapper.getBlocksPlaced().contains(wood)) {
                     return;
                 }
             }
-            Achievements ach = PersistentData.getAchievements(p.getUniqueId());
-            ach.set("Artisan", true);
-            PersistentData.setAchievements(p, ach);
+
+            achievementEntity.setArtisan(true);
+            playerWrapper.setAchievementEntity(achievementEntity);
             ChatFunctions.achievement(p, "Artisan");
         }
     }

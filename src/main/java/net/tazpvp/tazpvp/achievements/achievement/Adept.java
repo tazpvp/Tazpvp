@@ -35,22 +35,33 @@ package net.tazpvp.tazpvp.achievements.achievement;
 import net.tazpvp.tazpvp.achievements.Achievements;
 import net.tazpvp.tazpvp.talents.Talents;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.observer.Observable;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
+
+import java.util.UUID;
 
 public class Adept extends Observable {
 
     @Override
     public void talent(Player p) {
-        if (!PersistentData.getAchievements(p.getUniqueId()).is("Adept")) {
-            Talents talents = PersistentData.getTalents(p.getUniqueId());
-            Achievements ach = PersistentData.getAchievements(p.getUniqueId());
-            for (boolean value : talents.getData().values()) {
-                if (!value) return;
+        final UUID uuid = p.getUniqueId();
+        final PlayerWrapper playerWrapper = new PlayerWrapper(uuid);
+        final AchievementEntity achievementEntity = playerWrapper.getAchievementEntity();
+
+        if (!achievementEntity.isAdept()) {
+            final Talents talents = PersistentData.getTalents(uuid);
+            for (boolean value : talents.getData().values()){
+                if (!value) {
+                    return;
+                }
             }
-            ach.set("Adept", true);
-            PersistentData.setAchievements(p, ach);
+
+            achievementEntity.setAdept(true);
+            playerWrapper.setAchievementEntity(achievementEntity);
+
             ChatFunctions.achievement(p, "Adept");
         }
     }

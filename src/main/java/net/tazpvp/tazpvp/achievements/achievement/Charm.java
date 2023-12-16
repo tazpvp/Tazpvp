@@ -35,19 +35,23 @@ package net.tazpvp.tazpvp.achievements.achievement;
 import net.tazpvp.tazpvp.achievements.Achievements;
 import net.tazpvp.tazpvp.utils.data.LooseData;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.observer.Observable;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
 
 public class Charm extends Observable {
 
     @Override
     public void chat(Player p, String chat) {
-        if (!PersistentData.getAchievements(p.getUniqueId()).is("Charm")) {
+        final PlayerWrapper playerWrapper = new PlayerWrapper(p.getUniqueId());
+        final AchievementEntity achievementEntity = playerWrapper.getAchievementEntity();
+
+        if (!achievementEntity.isCharm()) {
             if (LooseData.getChatCount(p.getUniqueId()) >= 100) {
-                Achievements ach = PersistentData.getAchievements(p.getUniqueId());
-                ach.set("Charm", true);
-                PersistentData.setAchievements(p, ach);
+                achievementEntity.setCharm(true);
+                playerWrapper.setAchievementEntity(achievementEntity);
                 ChatFunctions.achievement(p, "Charm");
             }
         }

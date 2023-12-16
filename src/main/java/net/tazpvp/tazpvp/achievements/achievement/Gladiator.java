@@ -35,13 +35,25 @@ package net.tazpvp.tazpvp.achievements.achievement;
 import net.tazpvp.tazpvp.achievements.Achievements;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.observer.Observable;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
 
 public class Gladiator extends Observable {
     @Override
     public void duel(Player p) {
+        final PlayerWrapper playerWrapper = new PlayerWrapper(p.getUniqueId());
+        final AchievementEntity achievementEntity = playerWrapper.getAchievementEntity();
+
+        if (!achievementEntity.isGladiator()) {
+            if (PersistentData.getInt(p.getUniqueId(), DataTypes.DUELWINS) >= 35) {
+                achievementEntity.setGladiator(true);
+                playerWrapper.setAchievementEntity(achievementEntity);
+            }
+        }
+
         if (!PersistentData.getAchievements(p.getUniqueId()).is("Gladiator")) {
             if (PersistentData.getInt(p.getUniqueId(), DataTypes.DUELWINS) >= 35) {
                 Achievements ach = PersistentData.getAchievements(p.getUniqueId());

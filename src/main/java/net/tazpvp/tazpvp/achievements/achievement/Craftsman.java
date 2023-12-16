@@ -34,18 +34,22 @@ package net.tazpvp.tazpvp.achievements.achievement;
 
 import net.tazpvp.tazpvp.achievements.Achievements;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.observer.Observable;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
 
 public class Craftsman extends Observable {
 
     @Override
     public void enchant(Player p) {
-        if (!PersistentData.getAchievements(p.getUniqueId()).is("Craftsman")) {
-            Achievements ach = PersistentData.getAchievements(p.getUniqueId());
-            ach.set("Craftsman", true);
-            PersistentData.setAchievements(p, ach);
+        final PlayerWrapper playerWrapper = new PlayerWrapper(p.getUniqueId());
+        final AchievementEntity achievementEntity = playerWrapper.getAchievementEntity();
+
+        if (!achievementEntity.isCraftsman()) {
+            achievementEntity.setCraftsman(true);
+            playerWrapper.setAchievementEntity(achievementEntity);
             ChatFunctions.achievement(p, "Craftsman");
         }
     }

@@ -40,6 +40,7 @@ import org.bukkit.entity.Player;
 import java.io.Serializable;
 import java.util.HashMap;
 
+@Deprecated
 public class Achievements extends ContainerData implements Serializable {
     public Achievements() {
         super(new HashMap<>() {{
