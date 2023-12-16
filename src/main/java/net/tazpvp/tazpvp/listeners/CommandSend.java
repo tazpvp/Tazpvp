@@ -22,12 +22,14 @@ public class CommandSend implements Listener {
 
 
         if (punishmentService.getPunishment(p.getUniqueId()) == PunishmentService.PunishmentType.MUTED) {
+            if (p.isOp()) return;
             if (e.getMessage().contains("me")) {
                 e.setCancelled(true);
             }
         }
 
         if (punishmentService.getPunishment(p.getUniqueId()) == PunishmentService.PunishmentType.BANNED) {
+            if (p.isOp()) return;
             if (e.getMessage().contains("me")) {
                 e.setCancelled(true);
             }
