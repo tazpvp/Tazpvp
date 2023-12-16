@@ -55,13 +55,6 @@ public class Break implements Listener {
         Block eventBlock = e.getBlock();
         Material blockMaterial = eventBlock.getType();
 
-        if (eventBlock.getType() == Material.CHEST) {
-            e.setCancelled(true);
-            eventBlock.setType(Material.AIR);
-            DeathFunctions.acceptClick(e);
-            Tazpvp.getObservers().forEach(observer -> observer.open_coffin(p));
-        }
-
         if (!p.getGameMode().equals(GameMode.CREATIVE)) {
             for (Ore ore : BlockFunctions.ores) {
                 if (blockMaterial.equals(ore.getMat())) {

@@ -8,6 +8,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import world.ntdi.nrcore.utils.command.simple.Completer;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 import world.ntdi.nrcore.utils.command.simple.builder.LabelBuilder;
@@ -48,6 +49,6 @@ public class UnbanCommand extends NRCommand {
 
     @Override
     public List<String> complete(final CommandSender sender, final String[] args) {
-        return List.of("<username>");
+        return Completer.onlinePlayers(args[0]);
     }
 }

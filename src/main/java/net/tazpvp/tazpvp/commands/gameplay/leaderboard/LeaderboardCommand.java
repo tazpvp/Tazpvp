@@ -29,7 +29,7 @@ public class LeaderboardCommand extends NRCommand {
             String type = args[0];
 
             for (Leaderboard.LeaderboardEnum leaderboardEnum : Leaderboard.LeaderboardEnum.values()) {
-                if (type.equalsIgnoreCase(leaderboardEnum.getType())) {
+                if (type.equals(leaderboardEnum.getType())) {
                     int count = 1;
                     Map<UUID, Integer> sortedMap = leaderboardEnum.getLeaderboard().getSortedPlacement();
 
@@ -49,7 +49,7 @@ public class LeaderboardCommand extends NRCommand {
     @Override
     public List<String> complete(CommandSender sender, String[] args) {
         if (args.length == 1) {
-            return List.of("coins", "deaths", "kills", "levels");
+            return List.of("Coins", "Deaths", "Kills", "Levels");
         }
         return List.of();
     }

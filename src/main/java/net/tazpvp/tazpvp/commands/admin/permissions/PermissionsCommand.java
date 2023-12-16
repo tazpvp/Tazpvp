@@ -6,6 +6,7 @@ import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -33,49 +34,57 @@ public class PermissionsCommand extends NRCommand {
             }
         }
 
-        Player target = Bukkit.getPlayer(args[0]);
-        PlayerWrapper targetWrapper = PlayerWrapper.getPlayer(target);
-        String type = args[1];
-        String setOrReset = args[2];
-        String updatedName = null;
-        if (args.length > 3 && setOrReset.equalsIgnoreCase("set")) {
-            updatedName = args[3];
-            if (args.length > 5) {
-                String colorCode = args[4];
-                boolean isBold = Boolean.parseBoolean(args[5]);
-                if (colorCode.charAt(0) == '#' && colorCode.length() == 7) {
-                    updatedName = ChatFunctions.gradient(colorCode, updatedName, isBold);
-                } else {
-                    sender.sendMessage(incorrectUsage);
-                }
-            }
-        }
+        OfflinePlayer offlineTarget = Bukkit.getOfflinePlayer(args[0]);
 
-        if (type.equalsIgnoreCase("rank")) {
-            if (updatedName != null) {
-                for (Rank rank : Rank.values()) {
-                    if (updatedName.equalsIgnoreCase(rank.getName())) {
-                        targetWrapper.setRank(rank);
-                        Bukkit.getLogger().info(target.getName() + "'s rank was set to " + targetWrapper.getRank().getName() + " by " + sender.getName());
-                        return true;
+        if (offlineTarget.isOnline()) {
+            Player target = Bukkit.getPlayer(args[0]);
+
+            PlayerWrapper targetWrapper = PlayerWrapper.getPlayer(target);
+            String type = args[1];
+            String setOrReset = args[2];
+            String updatedName = null;
+            if (args.length > 3 && setOrReset.equalsIgnoreCase("set")) {
+                updatedName = args[3];
+                if (args.length > 5) {
+                    String colorCode = args[4];
+                    boolean isBold = Boolean.parseBoolean(args[5]);
+                    if (colorCode.charAt(0) == '#' && colorCode.length() == 7) {
+                        updatedName = ChatFunctions.gradient(colorCode, updatedName, isBold);
+                    } else {
+                        sender.sendMessage(incorrectUsage);
                     }
                 }
-            } else if (setOrReset.equalsIgnoreCase("reset")) {
-                targetWrapper.setRank(Rank.DEFAULT);
-                Bukkit.getLogger().info(target.getName() + "'s rank was set to " + Rank.DEFAULT.getName() + " by " + sender.getName());
+            }
+
+            if (type.equalsIgnoreCase("rank")) {
+                if (updatedName != null) {
+                    for (Rank rank : Rank.values()) {
+                        if (updatedName.equalsIgnoreCase(rank.getName())) {
+                            targetWrapper.setRank(rank);
+                            Bukkit.getLogger().info(target.getName() + "'s rank was set to " + targetWrapper.getRank().getName() + " by " + sender.getName());
+                            return true;
+                        }
+                    }
+                } else if (setOrReset.equalsIgnoreCase("reset")) {
+                    targetWrapper.setRank(Rank.DEFAULT);
+                    Bukkit.getLogger().info(target.getName() + "'s rank was set to " + Rank.DEFAULT.getName() + " by " + sender.getName());
+                    return true;
+                }
+            } else if (type.equalsIgnoreCase("prefix")) {
+                if (updatedName != null) {
+                    targetWrapper.setCustomPrefix(updatedName);
+                } else if (args[2].equalsIgnoreCase("reset")) {
+                    targetWrapper.setCustomPrefix(null);
+                }
+                return true;
+            } else {
+                sender.sendMessage(incorrectUsage);
                 return true;
             }
-        } else if (type.equalsIgnoreCase("prefix")) {
-            if (updatedName != null) {
-                targetWrapper.setCustomPrefix(updatedName);
-            } else if (args[2].equalsIgnoreCase("reset")) {
-                targetWrapper.setCustomPrefix(null);
-            }
-            return true;
-        } else {
-            sender.sendMessage(incorrectUsage);
-            return true;
+
         }
+
+
 
         return true;
     }
