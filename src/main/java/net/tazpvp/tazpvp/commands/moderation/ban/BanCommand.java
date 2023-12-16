@@ -33,6 +33,7 @@
 package net.tazpvp.tazpvp.commands.moderation.ban;
 
 import lombok.NonNull;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.PunishmentFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -62,6 +63,12 @@ public class BanCommand extends NRCommand {
 
         if (target == null) return true;
 
+        if (sender instanceof Player p) {
+            if (target.hasPermission("tazpvp.ban")) {
+                p.sendMessage(CC.RED + "You cannot ban this person.");
+            }
+        }
+
         if (args.length < 3) {
             PunishmentFunctions.ban(target, args[1]);
         } else {
@@ -74,7 +81,7 @@ public class BanCommand extends NRCommand {
     @Override
     public List<String> complete(CommandSender sender, String[] args) {
         if (args.length == 1) {
-            return Completer.onlinePlayers();
+            return Completer.onlinePlayers(args[0]);
         } else if (args.length == 2) {
             return List.of("30m", "12h", "128d");
         }

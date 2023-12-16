@@ -41,23 +41,32 @@ import net.tazpvp.tazpvp.booster.ActiveBoosterManager;
 import net.tazpvp.tazpvp.booster.BoosterBonus;
 import net.tazpvp.tazpvp.booster.BoosterTypes;
 import net.tazpvp.tazpvp.guild.GuildUtils;
+import net.tazpvp.tazpvp.items.StaticItems;
 import net.tazpvp.tazpvp.utils.data.*;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.enums.ColorCodes;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
+import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerInventoryStorage;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.*;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionData;
+import org.bukkit.potion.PotionType;
 import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.NRCore;
 import world.ntdi.nrcore.utils.holograms.Hologram;
+import world.ntdi.nrcore.utils.item.builders.EnchantmentBookBuilder;
+import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 import world.ntdi.nrcore.utils.item.builders.SkullBuilder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -83,32 +92,24 @@ public class Death {
         }
     }
 
-    public void coffin() {
+    public void dropItems() {
         if (killer == victim) return;
 
         if (GuildUtils.isInGuild(pVictim) && GuildUtils.isInGuild(pKiller)) {
             if (GuildUtils.getGuildPlayerIn(pVictim) == GuildUtils.getGuildPlayerIn(pKiller)) return;
         }
 
-        int chance = r.nextInt(4); //TODO: make 10
+        int chance = r.nextInt(10);
 
-        if (PersistentData.getTalents(killer).is("Necromancer")) {
-            if (!(chance <= 2)) return;
-        } else if (chance != 1) return;
+        if (chance <= 4) {
+            World world = location.getWorld();
 
-        String[] coffinText = {
-                CC.RED + "" + CC.BOLD + pVictim.getName() + " Coffin",
-                CC.GRAY + "Break to collect reward"
-        };
-
-        Coffin coffin = new Coffin(location, new Hologram(location.getBlock().getLocation().add(0.5, 0, 0.5).subtract(0, 0.5, 0), false, coffinText));
-
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                coffin.destroy();
+            if (PersistentData.getTalents(killer).is("Necromancer")) {
+                world.dropItemNaturally(location.add(0, 1, 0), deathItem());
             }
-        }.runTaskLater(Tazpvp.getInstance(), 20 * 10);
+            world.dropItemNaturally(location.add(0, 1, 0), deathItem());
+        }
+
     }
 
     public void dropHead() {
@@ -241,5 +242,32 @@ public class Death {
 
     public void storeInventory() {
         PlayerInventoryStorage.updateStorage(victim, killer);
+    }
+
+    private ItemStack deathItem() {
+        Random r = new Random();
+
+        List<Enchantment> enchants = List.of(
+                Enchantment.DAMAGE_ALL,
+                Enchantment.ARROW_DAMAGE,
+                Enchantment.PROTECTION_ENVIRONMENTAL,
+                Enchantment.MENDING,
+                Enchantment.ARROW_FIRE,
+                Enchantment.FIRE_ASPECT,
+                Enchantment.DURABILITY
+        );
+
+        List<ItemStack> items = Arrays.asList(
+                ItemBuilder.of(Material.AMETHYST_SHARD, 2).name(StaticItems.SHARD.getName()).build()
+        );
+
+        int randomItemChance = r.nextInt(10);
+
+        if (randomItemChance < 8) {
+            Enchantment enchant = enchants.get(r.nextInt(enchants.size()));
+            return new EnchantmentBookBuilder().enchantment(enchant, 1).build();
+        } else {
+            return items.get(r.nextInt(items.size()));
+        }
     }
 }
