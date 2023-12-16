@@ -1,15 +1,13 @@
 package net.tazpvp.tazpvp.items.usables;
 
 import net.tazpvp.tazpvp.items.UsableItem;
-import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class azureVapor extends UsableItem {
-    public azureVapor() {
+public class AzureVapor extends UsableItem {
+    public AzureVapor() {
         super("Azure Vapor", null, Material.BLUE_ORCHID);
     }
 

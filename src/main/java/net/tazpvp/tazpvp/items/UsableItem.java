@@ -3,9 +3,7 @@ package net.tazpvp.tazpvp.items;
 import lombok.Getter;
 import lombok.Setter;
 import net.tazpvp.tazpvp.items.usables.Inker;
-import net.tazpvp.tazpvp.items.usables.azureVapor;
-import net.tazpvp.tazpvp.utils.enums.CC;
-import org.bukkit.Bukkit;
+import net.tazpvp.tazpvp.items.usables.AzureVapor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -35,7 +33,7 @@ public abstract class UsableItem {
     public abstract void onLeftClick(Player p, ItemStack item, Block b);
 
     public static void registerCustomItems() {
-        customItemList.add(new azureVapor());
+        customItemList.add(new AzureVapor());
         customItemList.add(new Inker());
     }
 

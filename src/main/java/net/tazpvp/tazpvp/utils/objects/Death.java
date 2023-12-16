@@ -43,6 +43,8 @@ import net.tazpvp.tazpvp.booster.BoosterTypes;
 import net.tazpvp.tazpvp.guild.GuildUtils;
 import net.tazpvp.tazpvp.utils.data.*;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.enums.ColorCodes;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerInventoryStorage;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
@@ -94,8 +96,12 @@ public class Death {
             if (!(chance <= 2)) return;
         } else if (chance != 1) return;
 
+        String[] coffinText = {
+                CC.RED + "" + CC.BOLD + pVictim.getName() + " Coffin",
+                CC.GRAY + "Break to collect reward"
+        };
 
-        Coffin coffin = new Coffin(location, new Hologram(new String[]{"&3&l" + pVictim.getName() + "'s Coffin"}, location.getBlock().getLocation().add(0.5, 0, 0.5).subtract(0, 0.5, 0), false));
+        Coffin coffin = new Coffin(location, new Hologram(location.getBlock().getLocation().add(0.5, 0, 0.5).subtract(0, 0.5, 0), false, coffinText));
 
         new BukkitRunnable() {
             @Override
