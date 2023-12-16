@@ -249,7 +249,7 @@ public final class Tazpvp extends JavaPlugin {
                 new ReportCommand(),
                 new TazloadCommand(),
                 new ReportCommand(),
-                new GuildCommand(),
+//                new GuildCommand(),
                 new ReportViewCommand(),
                 new ReportCommand(),
                 new HelpCommand(),
