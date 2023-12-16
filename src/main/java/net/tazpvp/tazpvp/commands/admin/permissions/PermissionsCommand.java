@@ -6,6 +6,7 @@ import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -33,7 +34,15 @@ public class PermissionsCommand extends NRCommand {
             }
         }
 
-        Player target = Bukkit.getPlayer(args[0]);
+        OfflinePlayer offlineTarget = Bukkit.getOfflinePlayer(args[0]);
+
+        if (offlineTarget.isOnline()) {
+            Player target = Bukkit.getPlayer(args[0]);
+        } else {
+
+        }
+
+
         PlayerWrapper targetWrapper = PlayerWrapper.getPlayer(target);
         String type = args[1];
         String setOrReset = args[2];
