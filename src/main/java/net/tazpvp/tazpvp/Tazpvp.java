@@ -36,6 +36,7 @@ package net.tazpvp.tazpvp;
 import lombok.Getter;
 import net.tazpvp.tazpvp.achievements.achievement.*;
 import net.tazpvp.tazpvp.achievements.achievement.Error;
+import net.tazpvp.tazpvp.commands.admin.BroadcastCommand;
 import net.tazpvp.tazpvp.commands.admin.KeyallCommand;
 import net.tazpvp.tazpvp.commands.admin.ResetStatsCommand;
 import net.tazpvp.tazpvp.commands.admin.booster.BoosterCommand;
@@ -272,7 +273,8 @@ public final class Tazpvp extends JavaPlugin {
                 new UnbanCommand(),
                 new VanishCommand(),
                 new KeyallCommand(),
-                new ResetStatsCommand()
+                new ResetStatsCommand(),
+                new BroadcastCommand()
         );
     }
 
