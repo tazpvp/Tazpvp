@@ -20,6 +20,10 @@ public class ResetStatsCommand extends NRCommand {
 
     @Override
     public boolean execute(@NonNull CommandSender sender, @NotNull @NonNull String[] args) {
+        if (!sender.hasPermission(getLabel().getPermission())) {
+            sendNoPermission(sender);
+            return true;
+        }
         return true;
     }
 

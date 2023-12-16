@@ -13,11 +13,17 @@ import java.util.List;
 
 public class KeyallCommand extends NRCommand {
     public KeyallCommand() {
-        super(new Label("keyall", "tazpvp.key"));
+        super(new Label("keyall", "tazpvp.keyall"));
     }
 
     @Override
     public boolean execute(@NonNull CommandSender sender, @NotNull @NonNull String[] args) {
+
+        if (!sender.hasPermission(getLabel().getPermission())) {
+            sendNoPermission(sender);
+            return true;
+        }
+
         if (!(sender instanceof Player p)) {
             return true;
         }

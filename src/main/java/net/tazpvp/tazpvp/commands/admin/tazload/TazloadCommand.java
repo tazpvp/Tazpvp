@@ -11,6 +11,12 @@ public class TazloadCommand extends NRCommand {
     public TazloadCommand() {
         super(new Label("tazload", "tazpvp.tazload"));
         setNativeExecutor((sender, args) -> {
+
+            if (!sender.hasPermission(getLabel().getPermission())) {
+                sendNoPermission(sender);
+                return true;
+            }
+
             tazloading = true;
             Bukkit.broadcastMessage("Server reloading");
             for (Duel duel : Duel.duels.keySet()) {

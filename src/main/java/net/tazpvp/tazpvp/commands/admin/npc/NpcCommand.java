@@ -54,6 +54,11 @@ public class NpcCommand extends NRCommand {
                 return true;
             }
 
+            if (!sender.hasPermission(getLabel().getPermission())) {
+                sendNoPermission(sender);
+                return true;
+            }
+
             if (args[0].equalsIgnoreCase("maxim")) {
                 new Maxim();
             } else if (args[0].equalsIgnoreCase("lorenzo")) {

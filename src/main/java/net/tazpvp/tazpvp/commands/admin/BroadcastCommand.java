@@ -18,6 +18,11 @@ public class BroadcastCommand extends NRCommand {
     @Override
     public boolean execute(@NonNull CommandSender sender, @NotNull @NonNull String[] args) {
 
+        if (!sender.hasPermission(getLabel().getPermission())) {
+            sendNoPermission(sender);
+            return true;
+        }
+
         if (args.length < 1) {
             sender.sendMessage(ChatColor.RED + "Usage: /broadcast <message>");
             return true;

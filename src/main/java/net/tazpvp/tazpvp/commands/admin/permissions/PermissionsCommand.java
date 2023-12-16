@@ -24,6 +24,11 @@ public class PermissionsCommand extends NRCommand {
 
     @Override
     public boolean execute(@NonNull CommandSender sender, @NotNull @NonNull String[] args) {
+        if (!sender.hasPermission(getLabel().getPermission())) {
+            sendNoPermission(sender);
+            return true;
+        }
+
         String incorrectUsage = CC.RED + "Incorrect Usage:\n" +
                 CC.YELLOW + "/permissions <user> <rank|prefix> <set|reset> <rankType|newPrefix> <hex color-code> <bold?>";
 
