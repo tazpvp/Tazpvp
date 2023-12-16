@@ -34,19 +34,22 @@ package net.tazpvp.tazpvp.achievements.achievement;
 
 import net.tazpvp.tazpvp.achievements.Achievements;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.observer.Observable;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
 
 public class Legend extends Observable {
     @Override
     public void rebirth(Player p) {
-        if (!PersistentData.getAchievements(p.getUniqueId()).is("Legend")) {
-            Achievements ach = PersistentData.getAchievements(p.getUniqueId());
-            ach.set("Legend", true);
-            PersistentData.setAchievements(p, ach);
+        final PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(p);
+        final AchievementEntity achievementEntity = playerWrapper.getAchievementEntity();
+
+        if (!achievementEntity.isLegend()) {
+            achievementEntity.setLegend(true);
+            playerWrapper.setAchievementEntity(achievementEntity);
             ChatFunctions.achievement(p, "Legend");
         }
-
     }
 }

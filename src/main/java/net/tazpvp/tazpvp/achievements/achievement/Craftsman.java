@@ -44,7 +44,7 @@ public class Craftsman extends Observable {
 
     @Override
     public void enchant(Player p) {
-        final PlayerWrapper playerWrapper = new PlayerWrapper(p.getUniqueId());
+        final PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(p);
         final AchievementEntity achievementEntity = playerWrapper.getAchievementEntity();
 
         if (!achievementEntity.isCraftsman()) {

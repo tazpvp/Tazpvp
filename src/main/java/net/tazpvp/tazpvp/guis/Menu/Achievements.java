@@ -33,7 +33,9 @@
 package net.tazpvp.tazpvp.guis.Menu;
 
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.gui.Button;
@@ -49,27 +51,28 @@ public class Achievements extends GUI {
     }
 
     private void addItems(Player p) {
-        net.tazpvp.tazpvp.achievements.Achievements ACH = PersistentData.getAchievements(p.getUniqueId());
+        final PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(p);
+        AchievementEntity achievementEntity = playerWrapper.getAchievementEntity();
 
         fill(0, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
-        setButton(p,  10, "Adept", "Learn every talent.", ACH.is("Adept"));
-        setButton(p,  11, "Bowling", "Get a kill streak of 50.", ACH.is("Bowling"));
-        setButton(p,  12, "Charm", "Chat 100 times before leaving.", ACH.is("Charm"));
-        setButton(p,  13, "Craftsman", "Combine your sword with an enchantment.", ACH.is("Craftsman"));
-        setButton(p,  14, "Gamble", "Kill a player while at low health.", ACH.is("Gamble"));
-        setButton(p,  15, "Gladiator", "Win 35 duels.", ACH.is("Gladiator"));
-        setButton(p,  16, "Legend", "Rebirth your character.", ACH.is("Legend"));
+        setButton(p,  10, "Adept", "Learn every talent.", achievementEntity.isAdept());
+        setButton(p,  11, "Bowling", "Get a kill streak of 50.", achievementEntity.isBowling());
+        setButton(p,  12, "Charm", "Chat 100 times before leaving.", achievementEntity.isCharm());
+        setButton(p,  13, "Craftsman", "Combine your sword with an enchantment.", achievementEntity.isCraftsman());
+        setButton(p,  14, "Gamble", "Kill a player while at low health.", achievementEntity.isGamble());
+        setButton(p,  15, "Gladiator", "Win 35 duels.", achievementEntity.isGladiator());
+        setButton(p,  16, "Legend", "Rebirth your character.", achievementEntity.isLegend());
 
-        setButton(p,  19, "Merchant", "Trade with Caesar at the mines.", ACH.is("Merchant"));
-        setButton(p,  20, "Superior", "Win an event.", ACH.is("Superior"));
-        setButton(p,  21, "Zorgin", "Kill Zorg in the mines.", ACH.is("Zorgin"));
-        setButton(p,  22, "Grinder", "Mine 100 ores.", ACH.is("Grinder"));
-        setButton(p,  23, "Artisan", "Place every type of wood plank.", ACH.is("Artisan"));
-        setButton(p,  24, "Harvester", "Collect a player coffin.", ACH.is("Harvester"));
-        setButton(p,  25, "Speedrunner", "Get a kill within 30 seconds of launch.", ACH.is("Speedrunner"));
+        setButton(p,  19, "Merchant", "Trade with Caesar at the mines.", achievementEntity.isMerchant());
+        setButton(p,  20, "Superior", "Win an event.", achievementEntity.isSuperior());
+        setButton(p,  21, "Zorgin", "Kill Zorg in the mines.", achievementEntity.isZorgin());
+        setButton(p,  22, "Grinder", "Mine 100 ores.", achievementEntity.isGrinder());
+        setButton(p,  23, "Artisan", "Place every type of wood plank.", achievementEntity.isArtisan());
+        setButton(p,  24, "Harvester", "Collect a player coffin.", achievementEntity.isHarvester());
+        setButton(p,  25, "Speedrunner", "Get a kill within 30 seconds of launch.", achievementEntity.isSpeedrunner());
 
-//        setButton(p,  28, "Error", "Die 500 times.", ACH.is("Error"));
+        setButton(p,  28, "Error", "Die 500 times.", achievementEntity.isError());
 
 
 

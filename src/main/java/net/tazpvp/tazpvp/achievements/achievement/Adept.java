@@ -48,7 +48,7 @@ public class Adept extends Observable {
     @Override
     public void talent(Player p) {
         final UUID uuid = p.getUniqueId();
-        final PlayerWrapper playerWrapper = new PlayerWrapper(uuid);
+        final PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(p);
         final AchievementEntity achievementEntity = playerWrapper.getAchievementEntity();
 
         if (!achievementEntity.isAdept()) {

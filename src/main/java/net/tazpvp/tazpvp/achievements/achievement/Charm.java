@@ -45,7 +45,7 @@ public class Charm extends Observable {
 
     @Override
     public void chat(Player p, String chat) {
-        final PlayerWrapper playerWrapper = new PlayerWrapper(p.getUniqueId());
+        final PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(p);
         final AchievementEntity achievementEntity = playerWrapper.getAchievementEntity();
 
         if (!achievementEntity.isCharm()) {

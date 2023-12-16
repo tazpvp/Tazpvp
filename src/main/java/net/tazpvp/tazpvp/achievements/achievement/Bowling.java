@@ -48,7 +48,7 @@ public class Bowling extends Observable {
             return;
         }
 
-        final PlayerWrapper playerWrapper = new PlayerWrapper(killer.getUniqueId());
+        final PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(killer);
         final AchievementEntity achievementEntity = playerWrapper.getAchievementEntity();
 
         if (!achievementEntity.isBowling()) {

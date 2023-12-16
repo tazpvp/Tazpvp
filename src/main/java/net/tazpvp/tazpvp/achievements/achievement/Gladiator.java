@@ -44,21 +44,13 @@ import org.bukkit.entity.Player;
 public class Gladiator extends Observable {
     @Override
     public void duel(Player p) {
-        final PlayerWrapper playerWrapper = new PlayerWrapper(p.getUniqueId());
+        final PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(p);
         final AchievementEntity achievementEntity = playerWrapper.getAchievementEntity();
 
         if (!achievementEntity.isGladiator()) {
             if (PersistentData.getInt(p.getUniqueId(), DataTypes.DUELWINS) >= 35) {
                 achievementEntity.setGladiator(true);
                 playerWrapper.setAchievementEntity(achievementEntity);
-            }
-        }
-
-        if (!PersistentData.getAchievements(p.getUniqueId()).is("Gladiator")) {
-            if (PersistentData.getInt(p.getUniqueId(), DataTypes.DUELWINS) >= 35) {
-                Achievements ach = PersistentData.getAchievements(p.getUniqueId());
-                ach.set("Gladiator", true);
-                PersistentData.setAchievements(p, ach);
                 ChatFunctions.achievement(p, "Gladiator");
             }
         }
