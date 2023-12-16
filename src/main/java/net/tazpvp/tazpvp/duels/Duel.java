@@ -135,6 +135,8 @@ public abstract class Duel {
                 duels.remove(duel);
             }
         }.runTaskLater(Tazpvp.getInstance(), 20*5);
+
+        Tazpvp.getObservers().forEach(observer -> observer.duel_end(winner, loser));
     }
 
     public void abort() {

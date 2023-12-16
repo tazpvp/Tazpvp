@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.listeners;
+package net.tazpvp.tazpvp.talents.talent;
 
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
@@ -39,10 +39,10 @@ import org.bukkit.entity.Player;
 
 public class Proficient extends Observable {
     @Override
-    public void duel(Player p) {
-        if (PersistentData.getTalents(p.getUniqueId()).is("Proficient")) {
-            PersistentData.add(p.getUniqueId(), DataTypes.XP, 50);
-            p.sendMessage("Proficient Talent: + 50 EXP");
+    public void duel_end(Player winner, Player loser) {
+        if (PersistentData.getTalents(winner.getUniqueId()).is("Proficient")) {
+            PersistentData.add(winner.getUniqueId(), DataTypes.XP, 50);
+            winner.sendMessage("Proficient Talent: + 50 EXP");
         }
     }
 }

@@ -36,6 +36,8 @@ package net.tazpvp.tazpvp;
 import lombok.Getter;
 import net.tazpvp.tazpvp.achievements.achievement.*;
 import net.tazpvp.tazpvp.achievements.achievement.Error;
+import net.tazpvp.tazpvp.commands.admin.KeyallCommand;
+import net.tazpvp.tazpvp.commands.admin.ResetStatsCommand;
 import net.tazpvp.tazpvp.commands.admin.booster.BoosterCommand;
 import net.tazpvp.tazpvp.commands.admin.edit.EditCommand;
 import net.tazpvp.tazpvp.commands.admin.hide.HideCommand;
@@ -232,6 +234,7 @@ public final class Tazpvp extends JavaPlugin {
         new Excavator();
         new Hunter();
         new Resilient();
+        new Proficient();
     }
 
     public void registerCommands() {
@@ -245,7 +248,7 @@ public final class Tazpvp extends JavaPlugin {
                 new DiscordCommand(),
                 new StatCommand(),
                 new DailyCommand(),
-                new DuelCommand(),
+//                new DuelCommand(),
                 new ReportCommand(),
                 new TazloadCommand(),
                 new ReportCommand(),
@@ -267,7 +270,9 @@ public final class Tazpvp extends JavaPlugin {
                 new LoadoutCommand(),
                 new StoreCommand(),
                 new UnbanCommand(),
-                new VanishCommand()
+                new VanishCommand(),
+                new KeyallCommand(),
+                new ResetStatsCommand()
         );
     }
 
@@ -295,6 +300,7 @@ public final class Tazpvp extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Craft(), this);
         getServer().getPluginManager().registerEvents(new Explode(), this);
         getServer().getPluginManager().registerEvents(new EntitySpawn(), this);
+        getServer().getPluginManager().registerEvents(new Burn(), this);
     }
 
     private void spawnNpcs() {

@@ -66,4 +66,5 @@ public interface Observer {
     void kill_zorg(Player p);
 
     void open_coffin(Player p);
+    void duel_end(Player winner, Player loser);
 }

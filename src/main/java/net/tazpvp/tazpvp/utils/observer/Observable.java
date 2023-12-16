@@ -75,4 +75,6 @@ public class Observable implements Observer {
     public void kill_zorg(Player shooter) {}
     @Override
     public void open_coffin(Player p) {}
+    @Override
+    public void duel_end(Player winner, Player loser) {}
 }
