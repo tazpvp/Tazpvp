@@ -211,7 +211,12 @@ public class PlayerWrapper {
             this.permissionAttachment.remove();
         }
         this.permissionAttachment = getPlayer().addAttachment(Tazpvp.getInstance());
-        getRank().getPermissions().forEach(perm -> this.permissionAttachment.setPermission(perm, true));
+//        getRank().getPermissions().forEach(perm -> this.permissionAttachment.setPermission(perm, true));
+        for (Rank rank : Rank.values()) {
+            if (rank.getRank() >= getRank().getRank()) {
+                rank.getPermissions().forEach(perm -> this.permissionAttachment.setPermission(perm, true));
+            }
+        }
         this.permissionAttachment.getPermissible().recalculatePermissions();
     }
 

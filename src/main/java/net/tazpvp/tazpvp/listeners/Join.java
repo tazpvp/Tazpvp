@@ -42,6 +42,7 @@ import net.tazpvp.tazpvp.utils.data.*;
 import net.tazpvp.tazpvp.utils.data.entity.PunishmentEntity;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.enums.ColorCodes;
+import net.tazpvp.tazpvp.utils.functions.AfkFunctions;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.functions.ScoreboardFunctions;
@@ -157,5 +158,7 @@ public class Join implements Listener {
 
         final String message = plus + " " + name;
         e.setJoinMessage(message);
+
+        AfkFunctions.setAfk(p);
     }
 }

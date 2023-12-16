@@ -4,6 +4,7 @@ import lombok.NonNull;
 import net.tazpvp.tazpvp.utils.data.PunishmentService;
 import net.tazpvp.tazpvp.utils.data.PunishmentServiceImpl;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -41,6 +42,10 @@ public class UnbanCommand extends NRCommand {
             return false;
         }
         punishmentService.unpunish(target.getUniqueId());
+        if (target.isOnline()) {
+            Player p = target.getPlayer();
+            p.setGameMode(GameMode.SURVIVAL);
+        }
 
         sender.sendMessage("Unbanned " + target.getName());
 

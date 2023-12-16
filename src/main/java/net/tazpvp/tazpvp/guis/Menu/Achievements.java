@@ -45,7 +45,7 @@ import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 public class Achievements extends GUI {
 
     public Achievements(Player p) {
-        super("Achievements", 4);
+        super("Achievements", 5);
         addItems(p);
         open(p);
     }
@@ -54,7 +54,7 @@ public class Achievements extends GUI {
         final PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(p);
         AchievementEntity achievementEntity = playerWrapper.getAchievementEntity();
 
-        fill(0, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
+        fill(0, 5*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
         setButton(p,  10, "Adept", "Learn every talent.", achievementEntity.isAdept());
         setButton(p,  11, "Bowling", "Get a kill streak of 50.", achievementEntity.isBowling());
@@ -73,9 +73,7 @@ public class Achievements extends GUI {
         setButton(p,  25, "Speedrunner", "Get a kill within 30 seconds of launch.", achievementEntity.isSpeedrunner());
 
         setButton(p,  28, "Error", "Die 500 times.", achievementEntity.isError());
-
-
-
+        setButton(p,  29, "Skilled", "Get level 100 without talents.", achievementEntity.isSkilled());
         update();
     }
 

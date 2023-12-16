@@ -10,16 +10,17 @@ import net.tazpvp.tazpvp.utils.data.PunishmentServiceImpl;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 public class PunishmentFunctions {
 
-    public static void ban(Player target, String time) {
+    public static void ban(OfflinePlayer target, String time) {
         ban(target, time, "Unfair Advantage");
     }
 
-    public static void ban(Player target, String time, String reason) {
+    public static void ban(OfflinePlayer target, String time, String reason) {
         TimeToken timeToken = new TimeToken(time);
 
         final PunishmentService punishmentService = new PunishmentServiceImpl();
@@ -27,13 +28,17 @@ public class PunishmentFunctions {
 
 
         ChatFunctions.announce(CC.RED + target.getName() + " has been banned.", Sound.BLOCK_STONE_BUTTON_CLICK_OFF);
-        ChatFunctions.announce(target, CC.GRAY + "You've been banned for: " + CC.RED + reason, Sound.BLOCK_ANVIL_LAND);
-        TextComponent component = new TextComponent(CC.GREEN + "Join the discord to appeal [Click here]");
-        component.setClickEvent(new net.md_5.bungee.api.chat.ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/56rdkbSqa8"));
-        target.spigot().sendMessage(component);
-        target.sendMessage("");
+        if (target.isOnline()) {
+            Player banned = target.getPlayer();
+            if (banned == null) return;
+            ChatFunctions.announce(banned, CC.GRAY + "You've been banned for: " + CC.RED + reason, Sound.BLOCK_ANVIL_LAND);
+            TextComponent component = new TextComponent(CC.GREEN + "Join the discord to appeal [Click here]");
+            component.setClickEvent(new net.md_5.bungee.api.chat.ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/56rdkbSqa8"));
+            banned.spigot().sendMessage(component);
+            banned.sendMessage("");
 
-        target.setGameMode(GameMode.SPECTATOR);
+            banned.setGameMode(GameMode.SPECTATOR);
+        }
     }
 
     public static void mute(Player target, String time) {

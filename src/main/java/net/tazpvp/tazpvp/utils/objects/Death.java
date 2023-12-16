@@ -119,8 +119,10 @@ public class Death {
             if (r.nextInt(6) != 1) return;
         }
         World w = location.getWorld();
-        w.dropItemNaturally(location.add(0, 1, 0), makeSkull(pVictim));
-
+        ItemStack skull = makeSkull(pVictim);
+        if (skull == null) return;
+        if (w == null) return;
+        w.dropItemNaturally(location.add(0, 1, 0), skull);
     }
 
     private ItemStack makeSkull(@Nonnull final Player p) {

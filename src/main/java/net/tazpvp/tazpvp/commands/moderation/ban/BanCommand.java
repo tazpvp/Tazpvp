@@ -36,6 +36,7 @@ import lombok.NonNull;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.PunishmentFunctions;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -64,15 +65,15 @@ public class BanCommand extends NRCommand {
             return true;
         }
 
-        Player target = Bukkit.getPlayer(args[0]);
+        OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
 
-        if (target == null) return true;
-
-        if (sender instanceof Player p) {
-            if (target.hasPermission("tazpvp.ban")) {
-                p.sendMessage(CC.RED + "You cannot ban this person.");
+        if (target.isOnline()) {
+            Player target2 = target.getPlayer();
+            if (target2.hasPermission("tazpvp.ban")) {
+                sender.sendMessage(CC.RED + "You cannot ban this person.");
             }
         }
+
 
         if (args.length < 3) {
             PunishmentFunctions.ban(target, args[1]);

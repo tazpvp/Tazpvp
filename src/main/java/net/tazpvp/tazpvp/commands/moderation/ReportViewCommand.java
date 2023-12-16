@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import world.ntdi.nrcore.utils.command.simple.Completer;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
@@ -48,6 +49,14 @@ public class ReportViewCommand  extends NRCommand {
         sender.sendMessage(CC.GOLD.toString() + CC.STRIKETHROUGH + "                      ");
 
         return true;
+    }
+
+    @Override
+    public List<String> complete(CommandSender sender, String[] args) {
+        if (args.length == 1) {
+            return Completer.onlinePlayers(args[0]);
+        }
+        return List.of();
     }
 }
 
