@@ -18,7 +18,7 @@ import java.util.List;
 
 public class UnbanCommand extends NRCommand {
     public UnbanCommand() {
-        super(LabelBuilder.of("unban", "tazpvp.unban").build().make());
+        super(LabelBuilder.of("unban", "tazpvp.ban").build().make());
     }
 
     @Override

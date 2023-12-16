@@ -25,6 +25,8 @@ public class ApplyCommand extends NRCommand {
             component.setClickEvent(new net.md_5.bungee.api.chat.ClickEvent(ClickEvent.Action.OPEN_URL, discordLink));
 
             p.spigot().sendMessage(component);
+            p.sendMessage(CC.GRAY + "If the link doesn't work, visit the " + CC.WHITE +"discord.tazpvp.net" + CC.GRAY + " website.");
+
 
             return true;
         });

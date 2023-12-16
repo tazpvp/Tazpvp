@@ -16,7 +16,7 @@ import java.util.List;
 
 public class UnmuteCommand extends NRCommand {
     public UnmuteCommand() {
-        super(new Label("unmute", "tazpvp.unmute"));
+        super(new Label("unmute", "tazpvp.mute"));
     }
 
     @Override

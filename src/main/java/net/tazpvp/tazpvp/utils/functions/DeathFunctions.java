@@ -105,7 +105,7 @@ public class DeathFunctions {
             death.dropHead();
             death.storeInventory();
             if (pKiller != null) {
-                PlayerFunctions.addHealth(pKiller, 10);
+                PlayerFunctions.addHealth(pKiller, 4);
                 pKiller.playSound(pKiller.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
             }
         }
