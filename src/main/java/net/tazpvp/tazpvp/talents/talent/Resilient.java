@@ -33,7 +33,9 @@
 package net.tazpvp.tazpvp.talents.talent;
 
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.utils.observer.Observable;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -42,10 +44,15 @@ public class Resilient extends Observable {
 
     @Override
     public void death(Player victim, Player killer) {
-        if (victim != killer) {
-            if (PersistentData.getTalents(killer.getUniqueId()).is("Resilient")) {
+        final PlayerWrapper pw = PlayerWrapper.getPlayer(killer);
+        final TalentEntity talentEntity = pw.getTalentEntity();
+
+        if (talentEntity.isResilient()) {
+            if (victim != killer) {
                 killer.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 20 * 5, 0));
             }
         }
+
+
     }
 }

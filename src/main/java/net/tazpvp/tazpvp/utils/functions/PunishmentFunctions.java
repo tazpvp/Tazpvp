@@ -1,14 +1,11 @@
 package net.tazpvp.tazpvp.utils.functions;
 
 import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.tazpvp.tazpvp.utils.TimeToken;
-import net.tazpvp.tazpvp.utils.data.PunishmentService;
-import net.tazpvp.tazpvp.utils.data.PunishmentServiceImpl;
+import net.tazpvp.tazpvp.utils.data.services.PunishmentService;
+import net.tazpvp.tazpvp.utils.data.implementations.PunishmentServiceImpl;
 import net.tazpvp.tazpvp.utils.enums.CC;
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;

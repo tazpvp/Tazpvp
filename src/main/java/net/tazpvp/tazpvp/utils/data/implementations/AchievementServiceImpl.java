@@ -1,14 +1,15 @@
-package net.tazpvp.tazpvp.utils.data;
+package net.tazpvp.tazpvp.utils.data.implementations;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.data.entity.AchievementEntity;
+import net.tazpvp.tazpvp.utils.data.services.AchievementService;
 
 import java.sql.SQLException;
 import java.util.UUID;
 
-public class AchievementServiceImpl implements AchievementService{
+public class AchievementServiceImpl implements AchievementService {
     @Override
     public Dao<AchievementEntity, UUID> getUserDao() {
         try {

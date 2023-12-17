@@ -33,7 +33,10 @@
 package net.tazpvp.tazpvp.talents.talent;
 
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.entity.AchievementEntity;
+import net.tazpvp.tazpvp.utils.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.utils.observer.Observable;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -41,7 +44,10 @@ import org.bukkit.potion.PotionEffectType;
 public class Agile extends Observable {
     @Override
     public void death(Player victim, Player killer) {
-        if (PersistentData.getTalents(killer.getUniqueId()).is("Agile")) {
+        final PlayerWrapper pw = PlayerWrapper.getPlayer(killer);
+        final TalentEntity talentEntity = pw.getTalentEntity();
+
+        if (talentEntity.isAgile()) {
             killer.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*3, 1, false, true));
         }
     }

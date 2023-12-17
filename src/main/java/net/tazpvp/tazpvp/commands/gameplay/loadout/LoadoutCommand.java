@@ -1,8 +1,8 @@
 package net.tazpvp.tazpvp.commands.gameplay.loadout;
 
 import lombok.NonNull;
-import net.tazpvp.tazpvp.utils.data.KitService;
-import net.tazpvp.tazpvp.utils.data.KitServiceImpl;
+import net.tazpvp.tazpvp.utils.data.services.KitService;
+import net.tazpvp.tazpvp.utils.data.implementations.KitServiceImpl;
 import net.tazpvp.tazpvp.utils.data.entity.KitEntity;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.kit.SerializableInventory;

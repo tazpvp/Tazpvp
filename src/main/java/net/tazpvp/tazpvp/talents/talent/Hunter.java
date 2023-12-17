@@ -33,7 +33,9 @@
 package net.tazpvp.tazpvp.talents.talent;
 
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.utils.observer.Observable;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -43,7 +45,12 @@ import java.util.Random;
 public class Hunter extends Observable {
     @Override
     public void shoot(Player shooter) {
-        if (PersistentData.getTalents(shooter.getUniqueId()).is("Hunter")) {
+        final PlayerWrapper pw = PlayerWrapper.getPlayer(shooter);
+        final TalentEntity talentEntity = pw.getTalentEntity();
+
+        if (talentEntity.isHunter()) {
+
+
             if (new Random().nextInt(11) > 8) {
                 shooter.getInventory().addItem(new ItemStack(Material.ARROW));
             }

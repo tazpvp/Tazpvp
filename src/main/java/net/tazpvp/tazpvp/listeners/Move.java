@@ -4,6 +4,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.npc.shops.NPC;
 import net.tazpvp.tazpvp.utils.ParkourUtil;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.AfkFunctions;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
@@ -100,7 +101,9 @@ public class Move implements Listener {
                 }
             }.runTaskLater(Tazpvp.getInstance(), 20);
             p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1, 1);
-            if (PersistentData.getTalents(p.getUniqueId()).is("Glide")) {
+
+            final TalentEntity talentEntity = pw.getTalentEntity();
+            if (talentEntity.isGlide()) {
                 p.setVelocity(new Vector(0, 1.7, 8));
             } else {
                 p.setVelocity(new Vector(0, 1.2, 3));

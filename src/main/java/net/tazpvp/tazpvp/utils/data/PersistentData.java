@@ -56,7 +56,7 @@ public final class PersistentData {
             SQLHelper.initializeValues(NAME,
                     "ID, COINS, XP, LEVEL, KILLS, DEATHS, TOP_KS, REBIRTH, DUEL_WINS, DIVISION, PLAYTIME, DAILY_CRATE, GUILD_ID, TALENTS, ACHIEVEMENTS, LOADOUT",
                     "'" + uuid + "'", "0", "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "'n'", "'set'", "'set'", "'set'");
-            setTalents(uuid, new Talents());
+//            setTalents(uuid, new Talents());
 //            setAchievements(uuid, new Achievements());
         }
     }
@@ -104,6 +104,7 @@ public final class PersistentData {
      * @param p The targeted player
      * @return The Talents object stored in the column
      */
+    @Deprecated
     public static Talents getTalents(@Nonnull final OfflinePlayer p) {
         return getTalents(p.getUniqueId());
     }
@@ -113,6 +114,7 @@ public final class PersistentData {
      * @param uuid the targeted uuid
      * @return The Talents object stored in the column
      */
+    @Deprecated
     public static Talents getTalents(@Nonnull final UUID uuid) {
         return (Talents) getSerializeObject(uuid, DataTypes.TALENTS);
     }
@@ -122,6 +124,7 @@ public final class PersistentData {
         return (Achievements) getSerializeObject(uuid, DataTypes.ACHIEVEMENTS);
     }
 
+    @Deprecated
     public static SerializableInventory getLoadout(@Nonnull final UUID uuid) {
         if (!hasCustomLoadout(uuid)) return null;
 
@@ -261,6 +264,7 @@ public final class PersistentData {
      * @param p the targeted player
      * @param talents the talents object
      */
+    @Deprecated
     public static void setTalents(@Nonnull final OfflinePlayer p, @Nonnull final Talents talents) {
         setTalents(p.getUniqueId(), talents);
     }
@@ -270,6 +274,7 @@ public final class PersistentData {
      * @param uuid the targeted uuid
      * @param talents the talents object
      */
+    @Deprecated
     public static void setTalents(@Nonnull final UUID uuid, @Nonnull final Talents talents) {
         setSerializedObject(uuid, talents, DataTypes.TALENTS);
     }

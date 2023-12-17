@@ -33,7 +33,9 @@
 package net.tazpvp.tazpvp.talents.talent;
 
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.utils.observer.Observable;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -43,7 +45,10 @@ import java.util.Random;
 public class Blessed extends Observable {
     @Override
     public void death(Player victim, Player killer) {
-        if (PersistentData.getTalents(killer.getUniqueId()).is("Blessed")) {
+        final PlayerWrapper pw = PlayerWrapper.getPlayer(killer);
+        final TalentEntity talentEntity = pw.getTalentEntity();
+
+        if (talentEntity.isBlessed()) {
             if (new Random().nextInt(5) == 1) {
                 killer.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE));
             }

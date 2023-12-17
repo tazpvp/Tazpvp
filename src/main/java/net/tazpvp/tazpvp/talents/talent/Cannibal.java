@@ -33,13 +33,18 @@
 package net.tazpvp.tazpvp.talents.talent;
 
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.utils.observer.Observable;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
 
 public class Cannibal extends Observable {
     @Override
     public void death(Player victim, Player killer) {
-        if (PersistentData.getTalents(killer.getUniqueId()).is("Cannibal")) {
+        final PlayerWrapper pw = PlayerWrapper.getPlayer(killer);
+        final TalentEntity talentEntity = pw.getTalentEntity();
+
+        if (talentEntity.isCannibal()) {
             killer.setFoodLevel(20);
             killer.setSaturation(20f);
         }

@@ -43,6 +43,7 @@ import net.tazpvp.tazpvp.booster.BoosterTypes;
 import net.tazpvp.tazpvp.guild.GuildUtils;
 import net.tazpvp.tazpvp.items.StaticItems;
 import net.tazpvp.tazpvp.utils.data.*;
+import net.tazpvp.tazpvp.utils.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.enums.ColorCodes;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
@@ -104,8 +105,9 @@ public class Death {
         if (chance <= 4) {
             World world = location.getWorld();
 
-            if (PersistentData.getTalents(killer).is("Necromancer")) {
-                world.dropItemNaturally(location.add(0, 1, 0), deathItem());
+            PlayerWrapper killerWrapper = PlayerWrapper.getPlayer(killer);
+            if (killerWrapper.getTalentEntity().isNecromancer()) {
+                world.dropItemNaturally(location.add(0, 2, 0), deathItem());
             }
             world.dropItemNaturally(location.add(0, 1, 0), deathItem());
         }
@@ -113,10 +115,11 @@ public class Death {
     }
 
     public void dropHead() {
-        if (PersistentData.getTalents(killer).is("Harvester")) {
-            if (r.nextInt(4) != 1) return;
+        PlayerWrapper killerWrapper = PlayerWrapper.getPlayer(killer);
+        if (killerWrapper.getTalentEntity().isHarvester()) {
+            if (r.nextInt(10) < 3) return;
         } else {
-            if (r.nextInt(6) != 1) return;
+            if (r.nextInt(10) < 6) return;
         }
         World w = location.getWorld();
         ItemStack skull = makeSkull(pVictim);

@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+@Deprecated
 public class Talents extends ContainerData implements Serializable {
 
     public Talents() {

@@ -1,9 +1,8 @@
 package net.tazpvp.tazpvp.commands.moderation.mute;
 
 import lombok.NonNull;
-import net.tazpvp.tazpvp.utils.data.PunishmentService;
-import net.tazpvp.tazpvp.utils.data.PunishmentServiceImpl;
-import net.tazpvp.tazpvp.utils.functions.PunishmentFunctions;
+import net.tazpvp.tazpvp.utils.data.services.PunishmentService;
+import net.tazpvp.tazpvp.utils.data.implementations.PunishmentServiceImpl;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

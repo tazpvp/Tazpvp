@@ -1,7 +1,7 @@
-package net.tazpvp.tazpvp.utils.data;
+package net.tazpvp.tazpvp.utils.data.services;
 
 import com.j256.ormlite.dao.Dao;
-import net.tazpvp.tazpvp.utils.data.entity.AchievementEntity;
+import net.tazpvp.tazpvp.utils.data.DataService;
 import net.tazpvp.tazpvp.utils.data.entity.AchievementEntity;
 
 import java.util.UUID;

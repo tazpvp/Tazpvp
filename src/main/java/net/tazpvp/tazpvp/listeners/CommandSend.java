@@ -2,14 +2,13 @@ package net.tazpvp.tazpvp.listeners;
 
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.tazpvp.tazpvp.utils.data.PunishmentService;
-import net.tazpvp.tazpvp.utils.data.PunishmentServiceImpl;
+import net.tazpvp.tazpvp.utils.data.services.PunishmentService;
+import net.tazpvp.tazpvp.utils.data.implementations.PunishmentServiceImpl;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.server.ServerCommandEvent;
 
 public class CommandSend implements Listener {
     @EventHandler

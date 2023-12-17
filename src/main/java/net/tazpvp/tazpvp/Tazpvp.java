@@ -35,7 +35,6 @@ package net.tazpvp.tazpvp;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.achievements.achievement.*;
-import net.tazpvp.tazpvp.achievements.achievement.Error;
 import net.tazpvp.tazpvp.commands.admin.BroadcastCommand;
 import net.tazpvp.tazpvp.commands.admin.KeyallCommand;
 import net.tazpvp.tazpvp.commands.admin.ResetStatsCommand;
@@ -51,9 +50,7 @@ import net.tazpvp.tazpvp.commands.admin.teleportWorld.TeleportWorldCommand;
 import net.tazpvp.tazpvp.commands.moderation.vanish.VanishCommand;
 import net.tazpvp.tazpvp.commands.network.DailyCommand;
 import net.tazpvp.tazpvp.commands.gameplay.ReportCommand;
-import net.tazpvp.tazpvp.commands.gameplay.duel.DuelCommand;
 import net.tazpvp.tazpvp.commands.gameplay.event.EventCommand;
-import net.tazpvp.tazpvp.commands.gameplay.guild.GuildCommand;
 import net.tazpvp.tazpvp.commands.network.HelpCommand;
 import net.tazpvp.tazpvp.commands.gameplay.leaderboard.LeaderboardCommand;
 import net.tazpvp.tazpvp.commands.gameplay.loadout.LoadoutCommand;
@@ -74,12 +71,9 @@ import net.tazpvp.tazpvp.npc.shops.*;
 import net.tazpvp.tazpvp.talents.talent.*;
 import net.tazpvp.tazpvp.utils.ConfigUtil;
 import net.tazpvp.tazpvp.utils.crate.CrateManager;
-import net.tazpvp.tazpvp.utils.data.*;
 import net.tazpvp.tazpvp.utils.data.database.PostgresqlDatabase;
-import net.tazpvp.tazpvp.utils.data.entity.AchievementEntity;
-import net.tazpvp.tazpvp.utils.data.entity.KitEntity;
-import net.tazpvp.tazpvp.utils.data.entity.PunishmentEntity;
-import net.tazpvp.tazpvp.utils.data.entity.RankEntity;
+import net.tazpvp.tazpvp.utils.data.entity.*;
+import net.tazpvp.tazpvp.utils.data.implementations.*;
 import net.tazpvp.tazpvp.utils.functions.AfkFunctions;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.leaderboard.spawnable.SpawnableLeaderboardManager;
@@ -189,6 +183,7 @@ public final class Tazpvp extends JavaPlugin {
         new PunishmentServiceImpl().createTableIfNotExists(postgresqlDatabase, PunishmentEntity.class);
         new KitServiceImpl().createTableIfNotExists(postgresqlDatabase, KitEntity.class);
         new AchievementServiceImpl().createTableIfNotExists(postgresqlDatabase, AchievementEntity.class);
+        new TalentServiceImpl().createTableIfNotExists(postgresqlDatabase, TalentEntity.class);
     }
 
     public static void registerObserver(Observer observer) {

@@ -11,12 +11,18 @@ import net.tazpvp.tazpvp.utils.PlayerNameTag;
 import net.tazpvp.tazpvp.utils.data.*;
 import net.tazpvp.tazpvp.utils.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.utils.data.entity.RankEntity;
+import net.tazpvp.tazpvp.utils.data.entity.TalentEntity;
+import net.tazpvp.tazpvp.utils.data.implementations.AchievementServiceImpl;
+import net.tazpvp.tazpvp.utils.data.implementations.RankServiceImpl;
+import net.tazpvp.tazpvp.utils.data.implementations.TalentServiceImpl;
+import net.tazpvp.tazpvp.utils.data.services.AchievementService;
+import net.tazpvp.tazpvp.utils.data.services.RankService;
+import net.tazpvp.tazpvp.utils.data.services.TalentService;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.report.ReportDebounce;
 import net.tazpvp.tazpvp.utils.report.ReportLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 
@@ -69,6 +75,8 @@ public class PlayerWrapper {
     private RankEntity rankEntity;
     @Getter
     private AchievementEntity achievementEntity;
+    @Getter
+    private TalentEntity talentEntity;
     @Getter @Setter
     private boolean vanished;
 
@@ -99,6 +107,9 @@ public class PlayerWrapper {
 
         final AchievementService achievementService = new AchievementServiceImpl();
         this.achievementEntity = achievementService.getOrDefault(getUuid());
+
+        final TalentService talentService = new TalentServiceImpl();
+        this.talentEntity = talentService.getOrDefault(getUuid());
 
         refreshPermissions();
     }
@@ -242,6 +253,11 @@ public class PlayerWrapper {
     public void setAchievementEntity(final AchievementEntity achievementEntity) {
         final AchievementService achievementService = new AchievementServiceImpl();
         achievementService.saveAchievementEntity(achievementEntity);
+    }
+
+    public void setTalentEntity(final TalentEntity talentEntity) {
+        final TalentService talentService = new TalentServiceImpl();
+        talentService.saveTalentEntity(talentEntity);
     }
 
     public void refreshNametag() {

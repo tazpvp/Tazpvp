@@ -34,9 +34,11 @@ package net.tazpvp.tazpvp.talents.talent;
 
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.utils.functions.BlockFunctions;
 import net.tazpvp.tazpvp.utils.objects.Ore;
 import net.tazpvp.tazpvp.utils.observer.Observable;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -45,8 +47,11 @@ public class Excavator extends Observable {
 
     @Override
     public void mine(Player p, Material material) {
-        if (p.getGameMode() == GameMode.SURVIVAL) {
-            if (PersistentData.getTalents(p.getUniqueId()).is("Excavator")) {
+        final PlayerWrapper pw = PlayerWrapper.getPlayer(p);
+        final TalentEntity talentEntity = pw.getTalentEntity();
+
+        if (talentEntity.isExcavator()) {
+            if (p.getGameMode() == GameMode.SURVIVAL) {
                 for (Ore ore : BlockFunctions.ores) {
                     if (ore.getMat() == material) {
                         PersistentData.add(p, DataTypes.XP, 1);
@@ -54,5 +59,8 @@ public class Excavator extends Observable {
                 }
             }
         }
+
+
+
     }
 }

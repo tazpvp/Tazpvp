@@ -34,13 +34,18 @@ package net.tazpvp.tazpvp.talents.talent;
 
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.utils.observer.Observable;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
 
 public class Proficient extends Observable {
     @Override
     public void duel_end(Player winner, Player loser) {
-        if (PersistentData.getTalents(winner.getUniqueId()).is("Proficient")) {
+        final PlayerWrapper pw = PlayerWrapper.getPlayer(winner);
+        final TalentEntity talentEntity = pw.getTalentEntity();
+
+        if (talentEntity.isProficient()) {
             PersistentData.add(winner.getUniqueId(), DataTypes.XP, 50);
             winner.sendMessage("Proficient Talent: + 50 EXP");
         }

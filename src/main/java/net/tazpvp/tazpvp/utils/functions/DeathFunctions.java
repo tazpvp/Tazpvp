@@ -33,10 +33,13 @@
 package net.tazpvp.tazpvp.utils.functions;
 
 import lombok.Getter;
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.duels.Duel;
 import net.tazpvp.tazpvp.guild.GuildUtils;
 import net.tazpvp.tazpvp.utils.data.*;
 import net.tazpvp.tazpvp.utils.data.entity.KitEntity;
+import net.tazpvp.tazpvp.utils.data.implementations.KitServiceImpl;
+import net.tazpvp.tazpvp.utils.data.services.KitService;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.kit.SerializableInventory;
 import net.tazpvp.tazpvp.utils.objects.Coffin;
@@ -44,12 +47,9 @@ import net.tazpvp.tazpvp.utils.objects.CombatTag;
 import net.tazpvp.tazpvp.utils.objects.Death;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,6 +108,7 @@ public class DeathFunctions {
                 PlayerFunctions.addHealth(pKiller, 6);
                 pKiller.playSound(pKiller.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
             }
+            Tazpvp.getObservers().forEach(observer -> observer.death(pVictim, pKiller));
         }
         death.deathMessage();
 

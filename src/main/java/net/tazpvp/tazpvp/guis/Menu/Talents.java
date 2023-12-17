@@ -35,17 +35,22 @@ package net.tazpvp.tazpvp.guis.Menu;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.data.DataTypes;
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
 import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 import world.ntdi.nrcore.utils.item.builders.PotionBuilder;
+
+import java.util.function.Consumer;
 
 public class Talents extends GUI {
 
@@ -60,24 +65,25 @@ public class Talents extends GUI {
     private void addItems(Player p) {
         fill(0, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
-        setButton(p, 10, Material.NETHERITE_SWORD, 8000, "Revenge", "Set the player who killed you on fire.");
-        setButton(p, 11, Material.WATER_BUCKET, 9000, "Moist", "You can no longer be set on fire.");
-        setButton(p, 12, Material.SHIELD, 12000, "Resilient", "Gain 2 absorption hearts on kill.");
-        setButton(p, 13, Material.GOLDEN_PICKAXE,8000, "Excavator", "Mining gives you experience.");
-        setButton(p, 14, Material.CRAFTING_TABLE,6000, "Architect", "A chance to reclaim the block you placed.");
-        setButton(p, 15, Material.BOW,8000, "Hunter", "A chance to reclaim the arrow you shot.");
-        setButton(p, 16, Material.ROTTEN_FLESH,9000, "Cannibal", "Replenish your hunger on kill.");
+        setButton(p, 10, Material.NETHERITE_SWORD, 8000, "Revenge", "Set the player who killed you on fire.", (talentEntity -> talentEntity.setRevenge(true)));
+        setButton(p, 11, Material.WATER_BUCKET, 9000, "Moist", "You can no longer be set on fire.", (talentEntity -> talentEntity.setMoist(true)));
+        setButton(p, 12, Material.SHIELD, 12000, "Resilient", "Gain 2 absorption hearts on kill.", (talentEntity -> talentEntity.setResilient(true)));
+        setButton(p, 13, Material.GOLDEN_PICKAXE,8000, "Excavator", "Mining gives you experience.", (talentEntity -> talentEntity.setExcavator(true)));
+        setButton(p, 14, Material.CRAFTING_TABLE,6000, "Architect", "A chance to reclaim the block you placed.", (talentEntity -> talentEntity.setArchitect(true)));
+        setButton(p, 15, Material.BOW,8000, "Hunter", "A chance to reclaim the arrow you shot.", (talentEntity -> talentEntity.setHunter(true)));
+        setButton(p, 16, Material.ROTTEN_FLESH,9000, "Cannibal", "Replenish your hunger on kill.", (talentEntity -> talentEntity.setCannibal(true)));
 
-        setButton(p, 19, Material.FEATHER,14000, "Agile", "Gain a speed boost on kill.");
-        setButton(p, 20, Material.SHEARS,11000, "Harvester", "Better chance that players drop heads.");
-        setButton(p, 21, Material.NETHERITE_HOE,15000, "Necromancer", "Gain more from player coffins.");
-        setButton(p, 22, Material.GOLDEN_APPLE,20000, "Blessed", "A chance of getting a golden apple from a kill.");
-        setButton(p, 23, Material.ELYTRA,6000, "Glide", "The launch pad pushes you further.");
-        setButton(p, 24, Material.EXPERIENCE_BOTTLE,9000, "Proficient", "Gain experience from duels.");
-        setButton(p, 25, PotionBuilder.of(PotionBuilder.PotionType.SPLASH).setColor(Color.PURPLE).build().getType(),10, "Medic", "Heal nearby guild mates on kill.");
+        setButton(p, 19, Material.FEATHER,14000, "Agile", "Gain a speed boost on kill.", (talentEntity -> talentEntity.setAgile(true)));
+        setButton(p, 20, Material.SHEARS,11000, "Harvester", "Better chance that players drop heads.", (talentEntity -> talentEntity.setHarvester(true)));
+        setButton(p, 21, Material.NETHERITE_HOE,15000, "Necromancer", "Double the items that drop from kills.", (talentEntity -> talentEntity.setNecromancer(true)));
+        setButton(p, 22, Material.GOLDEN_APPLE,20000, "Blessed", "A chance of getting a golden apple from a kill.", (talentEntity -> talentEntity.setBlessed(true)));
+        setButton(p, 23, Material.ELYTRA,6000, "Glide", "The launch pad pushes you further.", (talentEntity -> talentEntity.setGlide(true)));
+        setButton(p, 24, Material.EXPERIENCE_BOTTLE,9000, "Proficient", "Gain experience from duels.", (talentEntity -> talentEntity.setProficient(true)));
+        ItemStack potion = PotionBuilder.of(PotionBuilder.PotionType.SPLASH).setColor(Color.PURPLE).build();
+        setButton(p, 25, potion.getType(),10, "Medic", "Heal nearby guild mates on kill.", (talentEntity -> talentEntity.setMedic(true)));
     }
 
-    private void setButton(Player p, int slot, Material mat, int cost, String name, String lore) {
+    private void setButton(Player p, int slot, Material mat, int cost, String name, String lore, Consumer<TalentEntity> talentEntityConsumer) {
         boolean active = PersistentData.getTalents(p.getUniqueId()).is(name);
 
         String complete = active ? CC.GREEN + "Active" : CC.RED + "Inactive";
@@ -91,13 +97,14 @@ public class Talents extends GUI {
             if (!active) {
                 if (PersistentData.getInt(p.getUniqueId(), DataTypes.COINS) >= cost) {
 
-                    net.tazpvp.tazpvp.talents.Talents talents = PersistentData.getTalents(p);
+                    PlayerWrapper pw = PlayerWrapper.getPlayer(p);
+
+                    TalentEntity talentEntity = pw.getTalentEntity();
+                    talentEntityConsumer.accept(talentEntity);
+                    pw.setTalentEntity(talentEntity);
+
 
                     PersistentData.remove(p.getUniqueId(), DataTypes.COINS, cost);
-
-                    talents.set(name, true); // TODO: Add handlers incase of errors that may occur when changing invalid name, for now this should work tho so shrug.
-
-                    PersistentData.setTalents(p, talents);
                     p.closeInventory();
                     p.sendTitle(CC.AQUA + "" + CC.BOLD + "New Talent",  CC.DARK_AQUA + name, 10, 20, 10);
                     p.playSound(p.getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN, 1, 1);

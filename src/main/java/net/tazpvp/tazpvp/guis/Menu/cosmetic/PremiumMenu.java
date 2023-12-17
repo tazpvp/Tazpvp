@@ -35,8 +35,8 @@ package net.tazpvp.tazpvp.guis.Menu.cosmetic;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.Profanity;
-import net.tazpvp.tazpvp.utils.data.RankService;
-import net.tazpvp.tazpvp.utils.data.RankServiceImpl;
+import net.tazpvp.tazpvp.utils.data.services.RankService;
+import net.tazpvp.tazpvp.utils.data.implementations.RankServiceImpl;
 import net.tazpvp.tazpvp.utils.data.entity.RankEntity;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;

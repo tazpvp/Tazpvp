@@ -1,9 +1,10 @@
-package net.tazpvp.tazpvp.utils.data;
+package net.tazpvp.tazpvp.utils.data.implementations;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.data.entity.PunishmentEntity;
+import net.tazpvp.tazpvp.utils.data.services.PunishmentService;
 
 import java.sql.SQLException;
 import java.util.UUID;

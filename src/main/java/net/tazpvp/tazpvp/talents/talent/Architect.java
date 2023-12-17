@@ -33,7 +33,9 @@
 package net.tazpvp.tazpvp.talents.talent;
 
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.utils.observer.Observable;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -43,7 +45,10 @@ import java.util.Random;
 public class Architect extends Observable {
     @Override
     public void place(Player p, Block b) {
-        if (PersistentData.getTalents(p.getUniqueId()).is("Architect")) {
+        final PlayerWrapper pw = PlayerWrapper.getPlayer(p);
+        final TalentEntity talentEntity = pw.getTalentEntity();
+
+        if (talentEntity.isArchitect()) {
             if (new Random().nextInt(10) > 7) {
                 p.getInventory().addItem(new ItemStack(b.getType()));
             }

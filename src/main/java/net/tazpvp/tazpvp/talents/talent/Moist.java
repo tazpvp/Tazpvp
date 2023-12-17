@@ -33,14 +33,19 @@
 package net.tazpvp.tazpvp.talents.talent;
 
 import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.utils.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.utils.observer.Observable;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityCombustEvent;
 
 public class Moist extends Observable {
     @Override
     public void burn(Player victim, EntityCombustEvent event) {
-        if (PersistentData.getTalents(victim.getUniqueId()).is("Moist")) {
+        final PlayerWrapper pw = PlayerWrapper.getPlayer(victim);
+        final TalentEntity talentEntity = pw.getTalentEntity();
+
+        if (talentEntity.isMoist()) {
             event.setCancelled(true);
             victim.setFireTicks(0);
         }

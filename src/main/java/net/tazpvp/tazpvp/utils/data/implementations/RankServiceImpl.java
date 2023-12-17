@@ -1,14 +1,16 @@
-package net.tazpvp.tazpvp.utils.data;
+package net.tazpvp.tazpvp.utils.data.implementations;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.data.Rank;
 import net.tazpvp.tazpvp.utils.data.entity.RankEntity;
+import net.tazpvp.tazpvp.utils.data.services.RankService;
 
 import java.sql.SQLException;
 import java.util.UUID;
 
-public class RankServiceImpl implements RankService{
+public class RankServiceImpl implements RankService {
     @Override
     public Dao<RankEntity, UUID> getUserDao() {
         try {
