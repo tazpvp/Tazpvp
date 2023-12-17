@@ -57,7 +57,7 @@ public class Classic extends Duel {
         super(P1, P2, "classic");
         p1 = Bukkit.getPlayer(super.getP1());
         p2 = Bukkit.getPlayer(super.getP2());
-        super.setWorldName("duel_" + p1.getName() + "_" + p2.getName());
+        super.setWorldName(p1.getName() + p2.getName() + UUID.randomUUID());
     }
 
     @Override

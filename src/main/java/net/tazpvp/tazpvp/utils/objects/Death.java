@@ -260,12 +260,13 @@ public class Death {
         );
 
         List<ItemStack> items = Arrays.asList(
-                ItemBuilder.of(Material.AMETHYST_SHARD, 2).name(StaticItems.SHARD.getName()).build()
+                ItemBuilder.of(Material.AMETHYST_SHARD, 2).name(StaticItems.SHARD.getName()).build(),
+                new ItemStack(Material.GOLDEN_APPLE, 2)
         );
 
         int randomItemChance = r.nextInt(10);
 
-        if (randomItemChance < 8) {
+        if (randomItemChance < 7) {
             Enchantment enchant = enchants.get(r.nextInt(enchants.size()));
             return new EnchantmentBookBuilder().enchantment(enchant, 1).build();
         } else {

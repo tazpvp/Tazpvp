@@ -18,7 +18,7 @@ public class Holograms {
 
     private static String[] welcome = {
             CC.WHITE + "Welcome to " + ChatFunctions.gradient(ColorCodes.SERVER.toString(), "Tazpvp", true),
-            "Type " + ChatFunctions.hexColor(ColorCodes.SERVER.toString(), "/help ", true), "for assistance"
+            "Type " + CC.AQUA + "/help", CC.WHITE + "for a guide!"
     };
     private static String[] afkPit = {
             ChatFunctions.gradient("#8fff17", "AFK PIT", true),

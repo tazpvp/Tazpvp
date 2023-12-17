@@ -64,6 +64,27 @@ public class Maxim extends GUI {
     private Player p;
     private final String prefix = CC.RED + "[Maxim] " + CC.WHITE;
 
+    private final List<Material> wool = List.of(
+            Material.ORANGE_WOOL,
+            Material.PURPLE_WOOL,
+            Material.YELLOW_WOOL,
+            Material.LIME_WOOL,
+            Material.GRAY_WOOL,
+            Material.CYAN_WOOL,
+            Material.BROWN_WOOL,
+            Material.RED_WOOL,
+            Material.BLACK_WOOL
+    );
+    private final List<Material> wood = List.of(
+            Material.OAK_PLANKS,
+            Material.ACACIA_PLANKS,
+            Material.BIRCH_PLANKS,
+            Material.BIRCH_PLANKS,
+            Material.DARK_OAK_PLANKS,
+            Material.JUNGLE_PLANKS,
+            Material.SPRUCE_PLANKS
+    );
+
     public Maxim(Player p) {
         super("Maxim", 6);
         this.p = p;
@@ -72,35 +93,22 @@ public class Maxim extends GUI {
     }
 
     private void addItems() {
-        List<Material> wool = List.of(
-                Material.ORANGE_WOOL,
-                Material.PURPLE_WOOL,
-                Material.YELLOW_WOOL,
-                Material.LIME_WOOL,
-                Material.GRAY_WOOL,
-                Material.CYAN_WOOL,
-                Material.BROWN_WOOL,
-                Material.RED_WOOL,
-                Material.BLACK_WOOL
-        );
-        List<Material> wood = List.of(
-                Material.OAK_PLANKS,
-                Material.ACACIA_PLANKS,
-                Material.BIRCH_PLANKS,
-                Material.BIRCH_PLANKS,
-                Material.DARK_OAK_PLANKS,
-                Material.JUNGLE_PLANKS,
-                Material.SPRUCE_PLANKS
-        );
-
         slotNum = 10;
         num = 1;
 
         fill(0, 6*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
+        addButton(Button.create(ItemBuilder.of(Material.ENCHANTING_TABLE, 1)
+                .name(CC.AQUA + "" + CC.BOLD + "Rebirth Shop")
+                .lore(CC.GRAY + "Special items you can",CC.GRAY + "buy after you rebirth.")
+                .glow(true)
+                .build(), (e) -> {
+            new Prestige(p);
+        }), 40);
+
         setButton(1, "Azure Vapor", "Extinguish flames.", Material.BLUE_ORCHID, 10, true, true);
-        setButton(5, "Sticky Web", "Slow down your enemies.", Material.COBWEB, 10,false, false);
         setButton(3, "Inker", "Blind the enemies you slap.", Material.INK_SAC, 40, true, true);
+        setButton(5, "Sticky Web", "Slow down your enemies.", Material.COBWEB, 10,false, false);
         setButton(1, "Lighter", "Set things afire.", Material.FLINT_AND_STEEL, 100, false, true);
         setButton(1, "Shulker", "Extra Storage.", Material.SHULKER_BOX, 2500, false, false);
         setButton(32, "Exp Bottle", "Mend your armor.", Material.EXPERIENCE_BOTTLE, 64, false, false);
@@ -111,24 +119,11 @@ public class Maxim extends GUI {
         setButton(5, "Arrow", "Projectiles.", Material.ARROW, 50, false, false);
         setButton(5, "Steak", "We have the meats.", Material.COOKED_BEEF, 30, false, false);
         setButton(5, "Gold Carrot", "Good nutrition.", Material.GOLDEN_CARROT, 100, false, false);
-        setButton(1, "Gold Apple", "Only for rich people.", Material.GOLDEN_APPLE, 300, false, false);
+        setButton(5, "Push Bomb", "Push everyone away from you.", Material.TNT, 225, true, true);
         setChangingButton("Wool", "Placeable Blocks", wool, 30, 64);
 
         setButton(5, "Spectral Arrow", "Highlight targets.", Material.SPECTRAL_ARROW, 90, false, false);
         setButton(1, "Crossbow", "Stronger than the bow.", Material.CROSSBOW, 90, false, false);
-        setButton(5, "Push Bomb", "Push everyone away from you.", Material.TNT, 225, true, true);
-        setButton(1, "Sharpness", "Deal more sword damage.", Material.ENCHANTED_BOOK, 230, Enchantment.DAMAGE_ALL);
-        setButton(1, "Unbreaking", "Fortify your tools.", Material.ENCHANTED_BOOK, 160, Enchantment.DURABILITY);
-        setButton(1, "Protection", "Take less damage.", Material.ENCHANTED_BOOK, 375, Enchantment.PROTECTION_ENVIRONMENTAL);
-        setButton(1, "Projectile Protection", "Take less projectile damage.", Material.ENCHANTED_BOOK, 225, Enchantment.PROTECTION_PROJECTILE);
-
-        setButton(1, "Fire Protection", "Take less damage to fire.", Material.ENCHANTED_BOOK, 225, Enchantment.PROTECTION_FIRE);
-        setButton(1, "Sweeping Edge", "Increase attack range.", Material.ENCHANTED_BOOK, 220, Enchantment.SWEEPING_EDGE);
-        setButton(1, "Punch", "Shoot players back further.", Material.ENCHANTED_BOOK, 350, Enchantment.ARROW_KNOCKBACK);
-        setButton(1, "Knockback", "Hit players back further.", Material.ENCHANTED_BOOK, 275, Enchantment.KNOCKBACK);
-        setButton(1, "Flame", "Shoot and set things on fire.", Material.ENCHANTED_BOOK, 450, Enchantment.ARROW_FIRE);
-        setButton(1, "Fire Aspect", "Hit and set things on fire.", Material.ENCHANTED_BOOK, 450, Enchantment.FIRE_ASPECT);
-        setButton(1, "Mending", "Heal armor with xp bottles.", Material.ENCHANTED_BOOK, 100, Enchantment.MENDING);
 
         update();
     }
@@ -147,19 +142,7 @@ public class Maxim extends GUI {
                 .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: " + cost + " Coins")
                 .glow(glow)
                 .build(), (e) -> {
-            checkMoney(name2, cost, item, null);
-        }), slotNum);
-        calcSlot();
-    }
-
-    private void setButton(int amount, String name, String lore, Material material, int cost, Enchantment enchant) {
-        String name2 = ChatFunctions.gradient("#db3bff", name, true);
-
-        addButton(Button.create(ItemBuilder.of(material, amount)
-                .name(CC.YELLOW + "" + CC.BOLD + name)
-                .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: " + cost + " Coins", CC.RED + "Drag the enchant onto", CC.RED + "an item to combine")
-                .build(), (e) -> {
-            checkMoney(name2, cost, ItemBuilder.of(material, amount).build(), enchant);
+            checkMoney(name2, cost, item);
         }), slotNum);
         calcSlot();
     }
@@ -183,7 +166,7 @@ public class Maxim extends GUI {
                             if (!ChatFunctions.hasPremium(p, prefix)) return;
                         }
                         String name2 = ChatFunctions.gradient("#db3bff", name, true);
-                        checkMoney(name2, cost, ItemBuilder.of(list.get(num), amount).build(), null);
+                        checkMoney(name2, cost, ItemBuilder.of(list.get(num), amount).build());
                     }), slot);
                 }
             }
@@ -191,14 +174,10 @@ public class Maxim extends GUI {
         calcSlot();
     }
 
-    private void checkMoney(String name, int cost, ItemStack item, @Nullable Enchantment enchantment) {
+    private void checkMoney(String name, int cost, ItemStack item) {
         if (PersistentData.getInt(p, DataTypes.COINS) >= cost) {
             PersistentData.remove(p, DataTypes.COINS, cost);
-            if (enchantment == null) {
-                p.getInventory().addItem(item);
-            } else {
-                p.getInventory().addItem(new EnchantmentBookBuilder().enchantment(enchantment, 1).build());
-            }
+            p.getInventory().addItem(item);
             p.sendMessage(prefix + "You purchased: " + name);
             p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
         } else {
