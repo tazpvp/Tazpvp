@@ -75,7 +75,7 @@ public class MuteCommand extends NRCommand {
             reason = "Chat Infraction";
         }
 
-        PunishmentFunctions.mute(target, args[1], reason);
+        PunishmentFunctions.mute(target, args[1], sender, reason);
 
         target.sendMessage("You've been muted for " + reason);
         return true;

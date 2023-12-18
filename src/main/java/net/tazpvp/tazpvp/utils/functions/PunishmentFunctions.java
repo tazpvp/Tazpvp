@@ -2,22 +2,26 @@ package net.tazpvp.tazpvp.utils.functions;
 
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.tazpvp.tazpvp.listeners.CommandSend;
 import net.tazpvp.tazpvp.utils.TimeToken;
 import net.tazpvp.tazpvp.data.services.PunishmentService;
 import net.tazpvp.tazpvp.data.implementations.PunishmentServiceImpl;
+import net.tazpvp.tazpvp.utils.discord.webhook.BanWebhook;
+import net.tazpvp.tazpvp.utils.discord.webhook.MuteWebhook;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class PunishmentFunctions {
 
-    public static void ban(OfflinePlayer target, String time) {
-        ban(target, time, "Unfair Advantage");
+    public static void ban(OfflinePlayer target, String time, CommandSender commandSender) {
+        ban(target, time,commandSender, "Unfair Advantage");
     }
 
-    public static void ban(OfflinePlayer target, String time, String reason) {
+    public static void ban(OfflinePlayer target, String time, CommandSender commandSender, String reason) {
         TimeToken timeToken = new TimeToken(time);
 
         final PunishmentService punishmentService = new PunishmentServiceImpl();
@@ -36,17 +40,19 @@ public class PunishmentFunctions {
 
             banned.setGameMode(GameMode.SPECTATOR);
         }
+        new BanWebhook(target.getName(), commandSender.getName(), reason);
     }
 
-    public static void mute(Player target, String time) {
-        mute(target, time, "Chat Infraction");
+    public static void mute(Player target, String time, CommandSender commandSender) {
+        mute(target, time, commandSender, "Chat Infraction");
     }
 
-    public static void mute(Player target, String time, String reason) {
+    public static void mute(Player target, String time, CommandSender commandSender, String reason) {
         TimeToken timeToken = new TimeToken(time);
 
         final PunishmentService punishmentService = new PunishmentServiceImpl();
         punishmentService.punish(target.getUniqueId(), PunishmentService.PunishmentType.MUTED, timeToken.getUnixTimestamp(), reason);
+        new MuteWebhook(target.getName(), commandSender.getName(), reason);
     }
 
     public static void unmute(Player target) {

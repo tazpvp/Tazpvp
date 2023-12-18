@@ -76,9 +76,9 @@ public class BanCommand extends NRCommand {
 
 
         if (args.length < 3) {
-            PunishmentFunctions.ban(target, args[1]);
+            PunishmentFunctions.ban(target, args[1], sender);
         } else {
-            PunishmentFunctions.ban(target, args[1], ChatUtils.builder(args, 2));
+            PunishmentFunctions.ban(target, args[1], sender, ChatUtils.builder(args, 2));
         }
 
         return true;

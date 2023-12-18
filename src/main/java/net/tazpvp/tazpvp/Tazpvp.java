@@ -34,6 +34,7 @@
 package net.tazpvp.tazpvp;
 
 import lombok.Getter;
+import net.tazpvp.tazpvp.commands.admin.permissions.TempPermissionsCommand;
 import net.tazpvp.tazpvp.data.services.AchievementService;
 import net.tazpvp.tazpvp.player.achievements.achievement.*;
 import net.tazpvp.tazpvp.commands.admin.BroadcastCommand;
@@ -186,6 +187,10 @@ public final class Tazpvp extends JavaPlugin {
         new UserAchievementServiceImpl().createTableIfNotExists(postgresqlDatabase, UserAchievementEntity.class);
         new AchievementServiceImpl().createTableIfNotExists(postgresqlDatabase, AchievementEntity.class);
         new TalentServiceImpl().createTableIfNotExists(postgresqlDatabase, TalentEntity.class);
+        new ExpirationRankServiceImpl().createTableIfNotExists(postgresqlDatabase, ExpirationRankEntity.class);
+        new GameRankServiceImpl().createTableIfNotExists(postgresqlDatabase, GameRankEntity.class);
+        new PermissionServiceImpl().createTableIfNotExists(postgresqlDatabase, PermissionEntity.class);
+        new UserRankServiceImpl().createTableIfNotExists(postgresqlDatabase, UserRankEntity.class);
     }
 
     public static void registerObserver(Observer observer) {
@@ -271,7 +276,8 @@ public final class Tazpvp extends JavaPlugin {
                 new VanishCommand(),
                 new KeyallCommand(),
                 new ResetStatsCommand(),
-                new BroadcastCommand()
+                new BroadcastCommand(),
+                new TempPermissionsCommand()
         );
     }
 
