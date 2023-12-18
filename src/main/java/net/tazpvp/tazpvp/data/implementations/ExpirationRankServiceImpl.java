@@ -41,6 +41,9 @@ public class ExpirationRankServiceImpl implements ExpirationRankService {
 
     @Override
     public boolean hasRankExpired(ExpirationRankEntity expirationRankEntity) {
+        if (expirationRankEntity.getExpirationTimestamp() == 0L) {
+            return false;
+        }
         return expirationRankEntity.getExpirationTimestamp() < System.currentTimeMillis();
     }
 }

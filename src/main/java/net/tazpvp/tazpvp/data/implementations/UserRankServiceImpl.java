@@ -12,6 +12,8 @@ import net.tazpvp.tazpvp.data.services.GameRankService;
 import net.tazpvp.tazpvp.data.services.UserRankService;
 
 import java.sql.SQLException;
+import java.util.Comparator;
+import java.util.List;
 import java.util.UUID;
 
 public class UserRankServiceImpl implements UserRankService {
@@ -100,5 +102,15 @@ public class UserRankServiceImpl implements UserRankService {
         saveUserRankEntity(userRankEntity);
 
         return userRankEntity;
+    }
+
+    @Override
+    public GameRankEntity getHighestRank(UserRankEntity userRankEntity) {
+
+        final List<GameRankEntity> gameRankEntities = userRankEntity.getRanks().stream()
+                .map(ExpirationRankEntity::getGameRankEntity)
+                .toList();
+
+        return gameRankEntities.stream().max(Comparator.comparing(GameRankEntity::getHierarchy)).get();
     }
 }

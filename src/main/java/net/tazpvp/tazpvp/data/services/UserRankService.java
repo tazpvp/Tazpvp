@@ -16,4 +16,5 @@ public interface UserRankService extends DataService {
     UserRankEntity getOrDefault(UUID uuid);
     UserRankEntity addRank(UserRankEntity userRankEntity, GameRankEntity gameRankEntity);
     UserRankEntity addExpiringRank(UserRankEntity userRankEntity, GameRankEntity gameRankEntity, long timestamp);
+    GameRankEntity getHighestRank(UserRankEntity userRankEntity);
 }
