@@ -89,26 +89,36 @@ public class Achievements extends GUI {
 
         boolean collected = entity.isCollected();
 
-        if (!collected) {
+        if (!completed) {
+            addButton(Button.createBasic(ItemBuilder.of(mat, 1)
+                    .name(CC.RED + "" + CC.BOLD + name)
+                    .lore(CC.GRAY + lore, " ", CC.GRAY + "Reward: " + keyName, " ", complete)
+                    .build()), slot);
+        } else if (!collected) {
             addButton(Button.create(ItemBuilder.of(mat, 1)
                                     .name(CC.RED + "" + CC.BOLD + name)
                                     .lore(
                                             CC.GRAY + lore,
                                             " ",
-                                            CC.GRAY + "Reward: ",
-                                            keyName,
+                                            CC.GRAY + "Reward: " + keyName,
                                             CC.YELLOW + "(Click to claim reward)",
                                             " ",
                                             complete
                                     ).build(), (e) -> {
-                entity.setCollected(true);
                 PlayerWrapper pw = PlayerWrapper.getPlayer(p);
                 pw.setUserAchievementEntity(userEntity);
                 p.sendMessage(prefix + "You collected your reward!");
                 p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
+                entity.setCollected(true);
+                pw.setUserAchievementEntity(userEntity);
+                p.closeInventory();
+                new Achievements(p);
             }), slot);
         } else {
-            addButton(Button.createBasic(ItemBuilder.of(mat, 1).name(CC.RED + "" + CC.BOLD + name).lore(CC.GRAY + lore, " ", complete).build()), slot);
+            addButton(Button.createBasic(ItemBuilder.of(mat, 1)
+                    .name(CC.RED + "" + CC.BOLD + name)
+                    .lore(CC.GRAY + lore, " ", complete)
+                    .build()), slot);
         }
 
     }
