@@ -9,7 +9,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-@DatabaseTable
+@DatabaseTable(tableName = "expiring_rank")
 public class ExpirationRankEntity {
     @DatabaseField(generatedId = true)
     private int id;

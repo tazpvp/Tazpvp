@@ -5,6 +5,7 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.dao.ForeignCollection;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.ExpirationRankEntity;
+import net.tazpvp.tazpvp.data.entity.GameRankEntity;
 import net.tazpvp.tazpvp.data.entity.UserRankEntity;
 import net.tazpvp.tazpvp.data.services.ExpirationRankService;
 import net.tazpvp.tazpvp.data.services.GameRankService;
@@ -59,6 +60,11 @@ public class UserRankServiceImpl implements UserRankService {
             userRankEntityTemp.setUuid(uuid);
             userRankEntityTemp.setDeathParticle(null);
             userRankEntityTemp.setArrowParticle(null);
+            try {
+                getUserDao().assignEmptyForeignCollection(userRankEntityTemp, "ranks");
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
             ForeignCollection<ExpirationRankEntity> expirationRankEntities = userRankEntityTemp.getRanks();
 
             final ExpirationRankService expirationRankService = new ExpirationRankServiceImpl();
@@ -74,6 +80,24 @@ public class UserRankServiceImpl implements UserRankService {
 
             return userRankEntityTemp;
         }
+
+        return userRankEntity;
+    }
+
+    @Override
+    public UserRankEntity addRank(UserRankEntity userRankEntity, GameRankEntity gameRankEntity) {
+        return addExpiringRank(userRankEntity, gameRankEntity, 0L);
+    }
+
+    @Override
+    public UserRankEntity addExpiringRank(UserRankEntity userRankEntity, GameRankEntity gameRankEntity, long timestamp) {
+        final ForeignCollection<ExpirationRankEntity> expirationRankEntities = userRankEntity.getRanks();
+
+        final ExpirationRankService expirationRankService = new ExpirationRankServiceImpl();
+        expirationRankEntities.add(expirationRankService.createExpirationRank(userRankEntity, gameRankEntity, timestamp));
+
+        userRankEntity.setRanks(expirationRankEntities);
+        saveUserRankEntity(userRankEntity);
 
         return userRankEntity;
     }
