@@ -15,7 +15,7 @@ public class AchievementEntity {
     @DatabaseField(generatedId = true)
     private int id;
 
-    @DatabaseField(foreign = true, columnName = "user_achievements")
+    @DatabaseField(foreign = true, columnName = "user_achievements_fk")
     private UserAchievementEntity userAchievementEntity;
 
     @DatabaseField(defaultValue = "false", canBeNull = false)
