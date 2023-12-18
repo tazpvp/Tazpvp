@@ -33,7 +33,7 @@
 package net.tazpvp.tazpvp.utils.functions;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.enchants.Enchants;
+import net.tazpvp.tazpvp.game.items.enchants.Enchants;
 import net.tazpvp.tazpvp.utils.objects.Ore;
 import net.tazpvp.tazpvp.utils.objects.Pickaxe;
 import org.bukkit.Material;
@@ -41,7 +41,6 @@ import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 

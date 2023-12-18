@@ -32,8 +32,8 @@
 
 package net.tazpvp.tazpvp.utils.functions;
 
-import net.tazpvp.tazpvp.utils.data.DataTypes;
-import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.data.DataTypes;
+import net.tazpvp.tazpvp.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.enums.ColorCodes;
 import org.bukkit.Bukkit;

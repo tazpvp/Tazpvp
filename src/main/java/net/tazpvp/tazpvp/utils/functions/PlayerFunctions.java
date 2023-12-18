@@ -32,14 +32,14 @@
 
 package net.tazpvp.tazpvp.utils.functions;
 
-import net.tazpvp.tazpvp.booster.ActiveBoosterManager;
-import net.tazpvp.tazpvp.booster.BoosterBonus;
-import net.tazpvp.tazpvp.booster.BoosterTypes;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
-import net.tazpvp.tazpvp.utils.data.LooseData;
-import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.game.booster.ActiveBoosterManager;
+import net.tazpvp.tazpvp.game.booster.BoosterBonus;
+import net.tazpvp.tazpvp.game.booster.BoosterTypes;
+import net.tazpvp.tazpvp.data.DataTypes;
+import net.tazpvp.tazpvp.data.LooseData;
+import net.tazpvp.tazpvp.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
-import net.tazpvp.tazpvp.items.StaticItems;
+import net.tazpvp.tazpvp.game.items.StaticItems;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -54,7 +54,7 @@ import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 import java.util.List;
 import java.util.UUID;
 
-import static net.tazpvp.tazpvp.utils.data.PersistentData.getInt;
+import static net.tazpvp.tazpvp.data.PersistentData.getInt;
 
 public class PlayerFunctions {
 

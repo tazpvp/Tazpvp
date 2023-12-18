@@ -1,25 +1,20 @@
 package net.tazpvp.tazpvp.guis.Mine;
 
-import net.tazpvp.tazpvp.enchants.Enchants;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
-import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.game.items.enchants.Enchants;
+import net.tazpvp.tazpvp.data.DataTypes;
+import net.tazpvp.tazpvp.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
-import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

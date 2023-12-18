@@ -1,7 +1,7 @@
 package net.tazpvp.tazpvp.commands.admin.permissions;
 
 import lombok.NonNull;
-import net.tazpvp.tazpvp.utils.data.Rank;
+import net.tazpvp.tazpvp.data.Rank;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;

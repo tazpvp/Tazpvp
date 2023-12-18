@@ -1,7 +1,7 @@
 package net.tazpvp.tazpvp.utils;
 
-import net.tazpvp.tazpvp.utils.data.DataTypes;
-import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.data.DataTypes;
+import net.tazpvp.tazpvp.data.PersistentData;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 

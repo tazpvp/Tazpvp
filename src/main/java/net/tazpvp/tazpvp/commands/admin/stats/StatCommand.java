@@ -1,8 +1,8 @@
 package net.tazpvp.tazpvp.commands.admin.stats;
 
 import lombok.NonNull;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
-import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.data.DataTypes;
+import net.tazpvp.tazpvp.data.PersistentData;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -45,7 +45,7 @@ public class StatCommand extends NRCommand {
             return false;
         }
 
-        final DataTypes dataType = DataTypes.valueOf(args[1]);
+        final DataTypes dataType = DataTypes.valueOf(args[1].toUpperCase());
 
         final int number = Integer.parseInt(args[2]);
 

@@ -33,9 +33,8 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.utils.data.LooseData;
+import net.tazpvp.tazpvp.data.LooseData;
 import net.tazpvp.tazpvp.utils.functions.BlockFunctions;
-import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
 import net.tazpvp.tazpvp.utils.objects.Ore;
 import net.tazpvp.tazpvp.utils.objects.Pickaxe;
 import org.bukkit.GameMode;

@@ -1,6 +1,6 @@
 package net.tazpvp.tazpvp.commands.admin.tazload;
 
-import net.tazpvp.tazpvp.duels.Duel;
+import net.tazpvp.tazpvp.game.duels.Duel;
 import org.bukkit.Bukkit;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;

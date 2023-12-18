@@ -38,10 +38,10 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.PlayerNameTag;
 import net.tazpvp.tazpvp.utils.PlaytimeUtil;
 import net.tazpvp.tazpvp.utils.TimeUtil;
-import net.tazpvp.tazpvp.utils.data.*;
-import net.tazpvp.tazpvp.utils.data.entity.PunishmentEntity;
-import net.tazpvp.tazpvp.utils.data.implementations.PunishmentServiceImpl;
-import net.tazpvp.tazpvp.utils.data.services.PunishmentService;
+import net.tazpvp.tazpvp.data.*;
+import net.tazpvp.tazpvp.data.entity.PunishmentEntity;
+import net.tazpvp.tazpvp.data.implementations.PunishmentServiceImpl;
+import net.tazpvp.tazpvp.data.services.PunishmentService;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.enums.ColorCodes;
 import net.tazpvp.tazpvp.utils.functions.AfkFunctions;
@@ -126,7 +126,11 @@ public class Join implements Listener {
             PlayerWrapper vpw = PlayerWrapper.getPlayer(vp);
             if (vpw.isVanished()) {
                 for (Player op : Bukkit.getOnlinePlayers()) {
-                    op.hidePlayer(Tazpvp.getInstance(), vp);
+                    if (!op.hasPermission("tazpvp.vanish")) {
+                        op.hidePlayer(Tazpvp.getInstance(), vp);
+                    } else {
+                        op.showPlayer(Tazpvp.getInstance(), vp);
+                    }
                 }
             }
         }

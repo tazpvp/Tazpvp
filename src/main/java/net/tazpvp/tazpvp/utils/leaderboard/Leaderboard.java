@@ -33,11 +33,9 @@
 
 package net.tazpvp.tazpvp.utils.leaderboard;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import net.tazpvp.tazpvp.utils.Sorting;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
-import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.data.DataTypes;
+import net.tazpvp.tazpvp.data.PersistentData;
 
 import java.util.*;
 

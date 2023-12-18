@@ -3,24 +3,24 @@ package net.tazpvp.tazpvp.utils.player;
 import lombok.Getter;
 import lombok.Setter;
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.duels.Duel;
-import net.tazpvp.tazpvp.guild.Guild;
-import net.tazpvp.tazpvp.guild.GuildUtils;
+import net.tazpvp.tazpvp.game.duels.Duel;
+import net.tazpvp.tazpvp.game.guilds.Guild;
+import net.tazpvp.tazpvp.game.guilds.GuildUtils;
 import net.tazpvp.tazpvp.npc.shops.NPC;
 import net.tazpvp.tazpvp.utils.PlayerNameTag;
-import net.tazpvp.tazpvp.utils.data.*;
-import net.tazpvp.tazpvp.utils.data.entity.AchievementEntity;
-import net.tazpvp.tazpvp.utils.data.entity.RankEntity;
-import net.tazpvp.tazpvp.utils.data.entity.TalentEntity;
-import net.tazpvp.tazpvp.utils.data.implementations.AchievementServiceImpl;
-import net.tazpvp.tazpvp.utils.data.implementations.RankServiceImpl;
-import net.tazpvp.tazpvp.utils.data.implementations.TalentServiceImpl;
-import net.tazpvp.tazpvp.utils.data.services.AchievementService;
-import net.tazpvp.tazpvp.utils.data.services.RankService;
-import net.tazpvp.tazpvp.utils.data.services.TalentService;
+import net.tazpvp.tazpvp.data.*;
+import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
+import net.tazpvp.tazpvp.data.entity.RankEntity;
+import net.tazpvp.tazpvp.data.entity.TalentEntity;
+import net.tazpvp.tazpvp.data.implementations.UserAchievementServiceImpl;
+import net.tazpvp.tazpvp.data.implementations.RankServiceImpl;
+import net.tazpvp.tazpvp.data.implementations.TalentServiceImpl;
+import net.tazpvp.tazpvp.data.services.UserAchievementService;
+import net.tazpvp.tazpvp.data.services.RankService;
+import net.tazpvp.tazpvp.data.services.TalentService;
 import net.tazpvp.tazpvp.utils.enums.CC;
-import net.tazpvp.tazpvp.utils.report.ReportDebounce;
-import net.tazpvp.tazpvp.utils.report.ReportLogger;
+import net.tazpvp.tazpvp.commands.gameplay.report.utils.ReportDebounce;
+import net.tazpvp.tazpvp.commands.gameplay.report.utils.ReportLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -74,7 +74,7 @@ public class PlayerWrapper {
     @Getter
     private RankEntity rankEntity;
     @Getter
-    private AchievementEntity achievementEntity;
+    private UserAchievementEntity userAchievementEntity;
     @Getter
     private TalentEntity talentEntity;
     @Getter @Setter
@@ -105,8 +105,8 @@ public class PlayerWrapper {
         final RankService rankService = new RankServiceImpl();
         this.rankEntity = rankService.getOrDefault(getUuid());
 
-        final AchievementService achievementService = new AchievementServiceImpl();
-        this.achievementEntity = achievementService.getOrDefault(getUuid());
+        final UserAchievementService userAchievementService = new UserAchievementServiceImpl();
+        this.userAchievementEntity = userAchievementService.getOrDefault(getUuid());
 
         final TalentService talentService = new TalentServiceImpl();
         this.talentEntity = talentService.getOrDefault(getUuid());
@@ -250,9 +250,9 @@ public class PlayerWrapper {
         rankService.saveRankEntity(rankEntity);
     }
 
-    public void setAchievementEntity(final AchievementEntity achievementEntity) {
-        final AchievementService achievementService = new AchievementServiceImpl();
-        achievementService.saveAchievementEntity(achievementEntity);
+    public void setUserAchievementEntity(final UserAchievementEntity achievementEntity) {
+        final UserAchievementService userAchievementService = new UserAchievementServiceImpl();
+        userAchievementService.saveUserAchievementEntity(achievementEntity);
     }
 
     public void setTalentEntity(final TalentEntity talentEntity) {

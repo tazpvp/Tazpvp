@@ -32,13 +32,10 @@
 
 package net.tazpvp.tazpvp.listeners;
 
-import com.j256.ormlite.field.DataType;
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.duels.Duel;
-import net.tazpvp.tazpvp.events.Event;
-import net.tazpvp.tazpvp.items.UsableItem;
-import net.tazpvp.tazpvp.talents.Talents;
-import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.game.duels.Duel;
+import net.tazpvp.tazpvp.game.events.Event;
+import net.tazpvp.tazpvp.game.items.UsableItem;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
@@ -50,7 +47,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;

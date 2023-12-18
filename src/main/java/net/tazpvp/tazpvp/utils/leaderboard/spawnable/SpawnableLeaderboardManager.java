@@ -35,7 +35,7 @@ package net.tazpvp.tazpvp.utils.leaderboard.spawnable;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
+import net.tazpvp.tazpvp.data.DataTypes;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 

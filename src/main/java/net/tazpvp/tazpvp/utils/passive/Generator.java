@@ -33,7 +33,7 @@
 package net.tazpvp.tazpvp.utils.passive;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.items.StaticItems;
+import net.tazpvp.tazpvp.game.items.StaticItems;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.*;
 import org.bukkit.entity.Item;

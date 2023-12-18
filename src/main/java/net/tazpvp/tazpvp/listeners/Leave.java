@@ -33,8 +33,8 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
-import net.tazpvp.tazpvp.duels.Duel;
-import net.tazpvp.tazpvp.events.Event;
+import net.tazpvp.tazpvp.game.duels.Duel;
+import net.tazpvp.tazpvp.game.events.Event;
 import net.tazpvp.tazpvp.utils.PlaytimeUtil;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;

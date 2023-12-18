@@ -33,12 +33,12 @@
 package net.tazpvp.tazpvp.guis.Menu.guild;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.guild.Guild;
+import net.tazpvp.tazpvp.game.guilds.Guild;
 import net.tazpvp.tazpvp.utils.Profanity;
-import net.tazpvp.tazpvp.utils.data.*;
-import net.tazpvp.tazpvp.utils.data.entity.RankEntity;
-import net.tazpvp.tazpvp.utils.data.implementations.RankServiceImpl;
-import net.tazpvp.tazpvp.utils.data.services.RankService;
+import net.tazpvp.tazpvp.data.*;
+import net.tazpvp.tazpvp.data.entity.RankEntity;
+import net.tazpvp.tazpvp.data.implementations.RankServiceImpl;
+import net.tazpvp.tazpvp.data.services.RankService;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import net.wesjd.anvilgui.AnvilGUI;

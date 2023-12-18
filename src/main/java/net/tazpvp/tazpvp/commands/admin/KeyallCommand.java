@@ -1,7 +1,7 @@
 package net.tazpvp.tazpvp.commands.admin;
 
 import lombok.NonNull;
-import net.tazpvp.tazpvp.utils.crate.KeyFactory;
+import net.tazpvp.tazpvp.game.crates.KeyFactory;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

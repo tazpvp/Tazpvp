@@ -1,11 +1,10 @@
 package net.tazpvp.tazpvp.guis.Mine;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
-import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.data.DataTypes;
+import net.tazpvp.tazpvp.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.BlockFunctions;
-import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.objects.Ore;
 import net.tazpvp.tazpvp.utils.objects.Pickaxe;
 import org.bukkit.Material;

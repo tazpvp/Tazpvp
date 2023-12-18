@@ -34,7 +34,7 @@
 package net.tazpvp.tazpvp.utils.leaderboard.spawnable;
 
 import lombok.Getter;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
+import net.tazpvp.tazpvp.data.DataTypes;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.leaderboard.Leaderboard;

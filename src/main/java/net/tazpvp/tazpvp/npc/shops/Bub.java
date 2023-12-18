@@ -33,9 +33,8 @@
 package net.tazpvp.tazpvp.npc.shops;
 
 import net.tazpvp.tazpvp.npc.dialogue.Dialogues;
-import net.tazpvp.tazpvp.items.StaticItems;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
-import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.data.DataTypes;
+import net.tazpvp.tazpvp.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.Bukkit;

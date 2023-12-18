@@ -1,12 +1,10 @@
 package net.tazpvp.tazpvp.utils;
 
-import net.tazpvp.tazpvp.utils.data.Rank;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.data.Rank;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Color;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
 import world.ntdi.nrcore.utils.ChatUtils;

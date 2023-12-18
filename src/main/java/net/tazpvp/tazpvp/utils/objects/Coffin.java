@@ -34,7 +34,7 @@
 package net.tazpvp.tazpvp.utils.objects;
 
 import lombok.Getter;
-import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.data.PersistentData;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
@@ -50,6 +50,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+@Deprecated
 public class Coffin {
     @Getter
     private final Location location;
@@ -61,8 +62,6 @@ public class Coffin {
         this.hologram = hologram;
 
         location.getBlock().setType(Material.CHEST);
-
-        DeathFunctions.addCoffin(this);
     }
 
     public void destroy() {

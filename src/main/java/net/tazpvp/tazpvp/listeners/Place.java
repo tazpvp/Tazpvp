@@ -49,6 +49,7 @@ public class Place implements Listener {
             if (mat == Material.PLAYER_HEAD) {
                 e.setCancelled(true);
                 p.sendMessage("Trade player heads with bub at the tree.");
+                return;
             }
 
             if (mat == Material.TNT) {

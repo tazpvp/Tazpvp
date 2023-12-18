@@ -33,20 +33,15 @@
 package net.tazpvp.tazpvp.guis.Shop;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.items.UsableItem;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
-import net.tazpvp.tazpvp.utils.data.PersistentData;
-import net.tazpvp.tazpvp.utils.data.Rank;
+import net.tazpvp.tazpvp.data.DataTypes;
+import net.tazpvp.tazpvp.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
-import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.MaterialData;
 import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
@@ -124,6 +119,11 @@ public class Maxim extends GUI {
 
         setButton(5, "Spectral Arrow", "Highlight targets.", Material.SPECTRAL_ARROW, 90, false, false);
         setButton(1, "Crossbow", "Stronger than the bow.", Material.CROSSBOW, 90, false, false);
+        setButton(1, "Sharpness", "Deal more sword damage.", Material.ENCHANTED_BOOK, 230, Enchantment.DAMAGE_ALL);
+        setButton(1, "Protection", "Take less damage.", Material.ENCHANTED_BOOK, 375, Enchantment.PROTECTION_ENVIRONMENTAL);
+        setButton(1, "Power", "Deal more damage with your bow.", Material.ENCHANTED_BOOK, 600, Enchantment.ARROW_DAMAGE);
+        setButton(1, "Mending", "Heal armor with xp bottles.", Material.ENCHANTED_BOOK, 100, Enchantment.MENDING);
+        setButton(1, "Fire Aspect", "Hit and set things on fire.", Material.ENCHANTED_BOOK, 450, Enchantment.FIRE_ASPECT);
 
         update();
     }
@@ -142,7 +142,19 @@ public class Maxim extends GUI {
                 .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: " + cost + " Coins")
                 .glow(glow)
                 .build(), (e) -> {
-            checkMoney(name2, cost, item);
+            checkMoney(name2, cost, item, null);
+        }), slotNum);
+        calcSlot();
+    }
+
+    private void setButton(int amount, String name, String lore, Material material, int cost, Enchantment enchant) {
+        String name2 = ChatFunctions.gradient("#db3bff", name, true);
+
+        addButton(Button.create(ItemBuilder.of(material, amount)
+                .name(CC.YELLOW + "" + CC.BOLD + name)
+                .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: " + cost + " Coins", CC.RED + "Drag the enchant onto", CC.RED + "an item to combine")
+                .build(), (e) -> {
+            checkMoney(name2, cost, ItemBuilder.of(material, amount).build(), enchant);
         }), slotNum);
         calcSlot();
     }
@@ -166,7 +178,7 @@ public class Maxim extends GUI {
                             if (!ChatFunctions.hasPremium(p, prefix)) return;
                         }
                         String name2 = ChatFunctions.gradient("#db3bff", name, true);
-                        checkMoney(name2, cost, ItemBuilder.of(list.get(num), amount).build());
+                        checkMoney(name2, cost, ItemBuilder.of(list.get(num), amount).build(), null);
                     }), slot);
                 }
             }
@@ -174,10 +186,14 @@ public class Maxim extends GUI {
         calcSlot();
     }
 
-    private void checkMoney(String name, int cost, ItemStack item) {
+    private void checkMoney(String name, int cost, ItemStack item, @Nullable Enchantment enchantment) {
         if (PersistentData.getInt(p, DataTypes.COINS) >= cost) {
             PersistentData.remove(p, DataTypes.COINS, cost);
-            p.getInventory().addItem(item);
+            if (enchantment == null) {
+                p.getInventory().addItem(item);
+            } else {
+                p.getInventory().addItem(new EnchantmentBookBuilder().enchantment(enchantment, 1).build());
+            }
             p.sendMessage(prefix + "You purchased: " + name);
             p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
         } else {

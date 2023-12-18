@@ -1,25 +1,26 @@
 package net.tazpvp.tazpvp.guis.Shop;
 
-import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
-import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.data.DataTypes;
+import net.tazpvp.tazpvp.data.PersistentData;
+import net.tazpvp.tazpvp.data.entity.AchievementEntity;
+import net.tazpvp.tazpvp.data.entity.TalentEntity;
+import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
+import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.block.EnderChest;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.item.builders.EnchantmentBookBuilder;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Random;
 
 public class Prestige extends GUI {
     private int slotNum;
@@ -47,7 +48,8 @@ public class Prestige extends GUI {
                         CC.GRAY + "- 25% more coins.",
                         CC.GRAY + "- Access to rebirth features.",
                         "",
-                        CC.DARK_PURPLE + "Requirement: " + CC.LIGHT_PURPLE + "100 Levels"
+                        CC.DARK_PURPLE + "Requirement: " + CC.LIGHT_PURPLE + "100 Levels",
+                        CC.YELLOW + "(Click to Rebirth)"
                 )
                 .glow(true)
                 .build(), (e) -> {
@@ -55,26 +57,36 @@ public class Prestige extends GUI {
                 p.sendMessage(prefix + "You are not a high enough level.");
                 return;
             }
-            p.sendMessage(prefix + "Currently out of order.");
-//            int rebirthLevel = PersistentData.getInt(p.getUniqueId(), DataTypes.PRESTIGE);
-//            PersistentData.set(p.getUniqueId(), DataTypes.PRESTIGE, rebirthLevel + 1);
-//            PersistentData.set(p.getUniqueId(), DataTypes.COINS, 0);
+            int rebirthLevel = PersistentData.getInt(p.getUniqueId(), DataTypes.PRESTIGE);
+            PersistentData.set(p.getUniqueId(), DataTypes.PRESTIGE, rebirthLevel + 1);
+            PlayerWrapper pw = PlayerWrapper.getPlayer(p);
+            UserAchievementEntity userAchievementEntity = new UserAchievementEntity();
+            pw.setUserAchievementEntity(userAchievementEntity);
+            TalentEntity talentEntity = new TalentEntity();
+            pw.setTalentEntity(talentEntity);
+            PersistentData.set(p.getUniqueId(), DataTypes.COINS, 0);
+            p.getEnderChest().clear();
+            p.getInventory().clear();
+            PlayerFunctions.kitPlayer(p);
+            p.sendTitle(CC.LIGHT_PURPLE + "" + CC.BOLD + "REBIRTH", CC.DARK_PURPLE + "You are reborn anew");
+            p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, 1, 1);
         }), 13);
 
         setButton(1, "Premium Pass", "24 hours of the Premium rank.", Material.NETHER_STAR, 100000, true, true);
-        setButton(1, "Sharpness", "Deal more sword damage.", Material.ENCHANTED_BOOK, 230, Enchantment.DAMAGE_ALL);
+        setButton(1, "Bounty Hunter", "Find the player with the highest bounty.", Material.COMPASS, 1600, true, true);
         setButton(1, "Unbreaking", "Fortify your tools.", Material.ENCHANTED_BOOK, 160, Enchantment.DURABILITY);
-        setButton(1, "Protection", "Take less damage.", Material.ENCHANTED_BOOK, 375, Enchantment.PROTECTION_ENVIRONMENTAL);
         setButton(1, "Projectile Protection", "Take less projectile damage.", Material.ENCHANTED_BOOK, 225, Enchantment.PROTECTION_PROJECTILE);
         setButton(1, "Fire Protection", "Take less damage to fire.", Material.ENCHANTED_BOOK, 225, Enchantment.PROTECTION_FIRE);
         setButton(1, "Sweeping Edge", "Increase attack range.", Material.ENCHANTED_BOOK, 220, Enchantment.SWEEPING_EDGE);
+        setButton(1, "Multishot", "Shoot multiple crossbow arrows at time.", Material.ENCHANTED_BOOK, 650, Enchantment.MULTISHOT);
 
+        setButton(1, "Quick Charge", "Recharge crossbows faster.", Material.ENCHANTED_BOOK, 550, Enchantment.QUICK_CHARGE);
         setButton(1, "Punch", "Shoot players back further.", Material.ENCHANTED_BOOK, 350, Enchantment.ARROW_KNOCKBACK);
         setButton(1, "Knockback", "Hit players back further.", Material.ENCHANTED_BOOK, 275, Enchantment.KNOCKBACK);
         setButton(1, "Flame", "Shoot and set things on fire.", Material.ENCHANTED_BOOK, 450, Enchantment.ARROW_FIRE);
-        setButton(1, "Fire Aspect", "Hit and set things on fire.", Material.ENCHANTED_BOOK, 450, Enchantment.FIRE_ASPECT);
-        setButton(1, "Mending", "Heal armor with xp bottles.", Material.ENCHANTED_BOOK, 100, Enchantment.MENDING);
-        setButton(1, "Power", "Deal more damage with your bow.", Material.ENCHANTED_BOOK, 600, Enchantment.ARROW_DAMAGE);
+        setButton(1, "Efficiency", "Break blocks faster.", Material.ENCHANTED_BOOK, 350, Enchantment.DIG_SPEED);
+        setButton(1, "Infinity", "Infinite arrows.", Material.ENCHANTED_BOOK, 900, Enchantment.ARROW_INFINITE);
+        setButton(1, "Depth Strider", "Walk faster in water.", Material.ENCHANTED_BOOK, 250, Enchantment.DEPTH_STRIDER);
 
         update();
     }
@@ -94,7 +106,7 @@ public class Prestige extends GUI {
                 .glow(glow)
                 .build(), (e) -> {
             if (PersistentData.getInt(p.getUniqueId(), DataTypes.PRESTIGE) < 1) {
-                p.sendMessage(prefix + "You need to prestige before buying this.");
+                p.sendMessage(prefix + "You need to rebirth before buying this.");
                 return;
             }
             checkMoney(name2, cost, item, null);
@@ -110,7 +122,7 @@ public class Prestige extends GUI {
                 .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: " + cost + " Coins", CC.RED + "Drag the enchant onto", CC.RED + "an item to combine")
                 .build(), (e) -> {
             if (PersistentData.getInt(p.getUniqueId(), DataTypes.PRESTIGE) < 1) {
-                p.sendMessage(prefix + "You need to prestige before buying this.");
+                p.sendMessage(prefix + "You need to rebirth before buying this.");
                 return;
             }
             checkMoney(name2, cost, ItemBuilder.of(material, amount).build(), enchant);

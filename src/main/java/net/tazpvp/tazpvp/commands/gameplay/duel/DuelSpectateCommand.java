@@ -1,13 +1,11 @@
 package net.tazpvp.tazpvp.commands.gameplay.duel;
 
 import lombok.NonNull;
-import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
-import net.tazpvp.tazpvp.duels.Duel;
-import net.tazpvp.tazpvp.events.Event;
+import net.tazpvp.tazpvp.game.duels.Duel;
+import net.tazpvp.tazpvp.game.events.Event;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
-import net.tazpvp.tazpvp.utils.objects.CombatTag;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;

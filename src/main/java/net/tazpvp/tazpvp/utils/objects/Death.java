@@ -32,35 +32,25 @@
 
 package net.tazpvp.tazpvp.utils.objects;
 
-import lombok.Getter;
-import lombok.Setter;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.booster.ActiveBoosterManager;
-import net.tazpvp.tazpvp.booster.BoosterBonus;
-import net.tazpvp.tazpvp.booster.BoosterTypes;
-import net.tazpvp.tazpvp.guild.GuildUtils;
-import net.tazpvp.tazpvp.items.StaticItems;
-import net.tazpvp.tazpvp.utils.data.*;
-import net.tazpvp.tazpvp.utils.data.entity.TalentEntity;
+import net.tazpvp.tazpvp.game.booster.ActiveBoosterManager;
+import net.tazpvp.tazpvp.game.booster.BoosterBonus;
+import net.tazpvp.tazpvp.game.booster.BoosterTypes;
+import net.tazpvp.tazpvp.game.guilds.GuildUtils;
+import net.tazpvp.tazpvp.game.items.StaticItems;
+import net.tazpvp.tazpvp.data.*;
 import net.tazpvp.tazpvp.utils.enums.CC;
-import net.tazpvp.tazpvp.utils.enums.ColorCodes;
-import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
-import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerInventoryStorage;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.PotionData;
-import org.bukkit.potion.PotionType;
 import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.NRCore;
-import world.ntdi.nrcore.utils.holograms.Hologram;
 import world.ntdi.nrcore.utils.item.builders.EnchantmentBookBuilder;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 import world.ntdi.nrcore.utils.item.builders.SkullBuilder;
@@ -71,7 +61,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 public class Death {
 

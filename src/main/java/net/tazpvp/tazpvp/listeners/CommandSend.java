@@ -2,8 +2,8 @@ package net.tazpvp.tazpvp.listeners;
 
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.tazpvp.tazpvp.utils.data.services.PunishmentService;
-import net.tazpvp.tazpvp.utils.data.implementations.PunishmentServiceImpl;
+import net.tazpvp.tazpvp.data.services.PunishmentService;
+import net.tazpvp.tazpvp.data.implementations.PunishmentServiceImpl;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

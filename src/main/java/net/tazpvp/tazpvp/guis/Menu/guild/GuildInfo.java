@@ -32,7 +32,7 @@
 
 package net.tazpvp.tazpvp.guis.Menu.guild;
 
-import net.tazpvp.tazpvp.guild.Guild;
+import net.tazpvp.tazpvp.game.guilds.Guild;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

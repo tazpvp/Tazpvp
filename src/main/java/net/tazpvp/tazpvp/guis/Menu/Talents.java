@@ -33,11 +33,10 @@
 package net.tazpvp.tazpvp.guis.Menu;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
-import net.tazpvp.tazpvp.utils.data.PersistentData;
-import net.tazpvp.tazpvp.utils.data.entity.TalentEntity;
+import net.tazpvp.tazpvp.data.DataTypes;
+import net.tazpvp.tazpvp.data.PersistentData;
+import net.tazpvp.tazpvp.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.utils.enums.CC;
-import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Color;
 import org.bukkit.Material;

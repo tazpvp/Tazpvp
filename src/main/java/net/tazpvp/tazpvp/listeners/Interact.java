@@ -1,17 +1,14 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.items.UsableItem;
-import net.tazpvp.tazpvp.utils.crate.Crate;
-import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
-import org.bukkit.Bukkit;
+import net.tazpvp.tazpvp.game.items.UsableItem;
+import net.tazpvp.tazpvp.game.crates.Crate;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 
 public class Interact implements Listener {
 

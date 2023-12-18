@@ -1,9 +1,9 @@
 package net.tazpvp.tazpvp.utils.functions;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.utils.crate.KeyFactory;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
-import net.tazpvp.tazpvp.utils.data.PersistentData;
+import net.tazpvp.tazpvp.game.crates.KeyFactory;
+import net.tazpvp.tazpvp.data.DataTypes;
+import net.tazpvp.tazpvp.data.PersistentData;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;

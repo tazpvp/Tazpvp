@@ -36,7 +36,7 @@ package net.tazpvp.tazpvp.commands.gameplay.guild.sub;
 import lombok.NonNull;
 import net.tazpvp.tazpvp.commands.gameplay.guild.GuildCommand;
 import net.tazpvp.tazpvp.commands.gameplay.guild.handler.GuildAbstractArgumentCommand;
-import net.tazpvp.tazpvp.guild.Guild;
+import net.tazpvp.tazpvp.game.guilds.Guild;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
 

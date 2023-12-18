@@ -32,32 +32,25 @@
 
 package net.tazpvp.tazpvp.utils.functions;
 
-import lombok.Getter;
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.duels.Duel;
-import net.tazpvp.tazpvp.guild.GuildUtils;
-import net.tazpvp.tazpvp.utils.data.*;
-import net.tazpvp.tazpvp.utils.data.entity.KitEntity;
-import net.tazpvp.tazpvp.utils.data.implementations.KitServiceImpl;
-import net.tazpvp.tazpvp.utils.data.services.KitService;
+import net.tazpvp.tazpvp.game.duels.Duel;
+import net.tazpvp.tazpvp.game.guilds.GuildUtils;
+import net.tazpvp.tazpvp.data.*;
+import net.tazpvp.tazpvp.data.entity.KitEntity;
+import net.tazpvp.tazpvp.data.implementations.KitServiceImpl;
+import net.tazpvp.tazpvp.data.services.KitService;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.kit.SerializableInventory;
-import net.tazpvp.tazpvp.utils.objects.Coffin;
 import net.tazpvp.tazpvp.utils.objects.CombatTag;
 import net.tazpvp.tazpvp.utils.objects.Death;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.event.block.BlockBreakEvent;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public class DeathFunctions {
-    @Getter
-    private final static List<Coffin> coffins = new ArrayList<>();
     public static void death(UUID victim, UUID killer) {
 
         Death death = new Death(victim, killer);
@@ -161,18 +154,5 @@ public class DeathFunctions {
         PlayerFunctions.resetHealth(pVictim);
         PlayerFunctions.feedPlr(pVictim);
         CombatTag.tags.get(pVictim.getUniqueId()).endCombat(null, false);
-    }
-
-    public static void acceptClick(BlockBreakEvent e) {
-        for (Coffin coffin : getCoffins()) {
-            if (e.getBlock().getLocation().distance(coffin.getLocation()) < 2D) {
-                coffin.doTheDo(e.getPlayer());
-            }
-        }
-    }
-
-    public static void addCoffin(Coffin coffin) {
-        coffins.add(coffin);
-        System.out.println(coffins);
     }
 }
