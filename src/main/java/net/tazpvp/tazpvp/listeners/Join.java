@@ -165,5 +165,6 @@ public class Join implements Listener {
         e.setJoinMessage(message);
 
         AfkFunctions.setAfk(p);
+        Tazpvp.getBotThread().connectionChat(p.getName(), true);
     }
 }

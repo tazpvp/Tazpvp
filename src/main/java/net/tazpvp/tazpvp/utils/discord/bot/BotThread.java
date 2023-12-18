@@ -39,27 +39,33 @@ import lombok.SneakyThrows;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.utils.discord.bot.commands.LeaderboardCommand;
+import org.bukkit.Bukkit;
 
 @RequiredArgsConstructor
 public class BotThread extends Thread {
     private final String token;
     @Getter
     private Guild guild;
+    private long minecraftChannelId;
 
     @SneakyThrows
     @Override
     public void run() {
 
+        minecraftChannelId = Tazpvp.getInstance().getConfig().getLong("minecraft-chat-channel-id");
+
         JDA jda = JDABuilder.createDefault(this.token)
                 .disableCache(CacheFlag.VOICE_STATE, CacheFlag.EMOJI, CacheFlag.STICKER, CacheFlag.SCHEDULED_EVENTS, CacheFlag.MEMBER_OVERRIDES, CacheFlag.FORUM_TAGS, CacheFlag.ACTIVITY, CacheFlag.ROLE_TAGS, CacheFlag.CLIENT_STATUS)
                 .setEnabledIntents(GatewayIntent.GUILD_MEMBERS)
-                .addEventListeners(new LeaderboardCommand())
+                .addEventListeners(new LeaderboardCommand(), new BotListener(minecraftChannelId))
                 .build();
 
         // optionally block until JDA is ready
@@ -78,5 +84,29 @@ public class BotThread extends Thread {
                                         .setRequired(true)
                         )
         ).queue();
+    }
+
+    public void receiveMinecraftChat(final String username, final String message) {
+        final TextChannel textChannel = getGuild().getTextChannelById(minecraftChannelId);
+
+        if (textChannel == null) {
+            Bukkit.getLogger().severe("Text Channel for Minecraft Server Chat Null!");
+            return;
+        }
+
+        textChannel.sendMessage(String.format("**%s** %s", username, message)).queue();
+    }
+
+    public void connectionChat(final String username, final boolean joined) {
+        final TextChannel textChannel = getGuild().getTextChannelById(minecraftChannelId);
+
+        if (textChannel == null) {
+            Bukkit.getLogger().severe("Text Channel for Minecraft Server Chat Null!");
+            return;
+        }
+        
+        final String suffix = (joined ? "joined." : "left.");
+
+        textChannel.sendMessage(String.format("**%s %s**", username, suffix)).queue();
     }
 }

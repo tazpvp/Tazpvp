@@ -41,6 +41,7 @@ import net.tazpvp.tazpvp.data.*;
 import net.tazpvp.tazpvp.data.implementations.PunishmentServiceImpl;
 import net.tazpvp.tazpvp.data.services.PunishmentService;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.functions.PunishmentFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -66,12 +67,23 @@ public class Chat implements Listener {
         component.setClickEvent(new net.md_5.bungee.api.chat.ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/56rdkbSqa8"));
 
         if (punishmentService.getPunishment(uuid) == PunishmentService.PunishmentType.MUTED) {
-            final String howLongAgo = TimeUtil.howLongAgo(punishmentService.getTimeRemaining(uuid));
 
-            p.sendMessage(CC.RED + "You are currently muted for " + howLongAgo);
-            p.spigot().sendMessage(component);
-            e.setCancelled(true);
-            return;
+            final long timestamp = punishmentService.getTimeRemaining(uuid);
+            final String howLongAgo = TimeUtil.howLongAgo(timestamp);
+
+            if (timestamp < System.currentTimeMillis()) {
+                PunishmentFunctions.unmute(uuid);
+            } else {
+                p.sendMessage(CC.RED + "You are currently muted for " + howLongAgo);
+                p.spigot().sendMessage(component);
+                e.setCancelled(true);
+
+                if (timestamp < System.currentTimeMillis()) {
+                    PunishmentFunctions.unmute(uuid);
+                }
+
+                return;
+            }
         }
 
         if (punishmentService.getPunishment(uuid) == PunishmentService.PunishmentType.BANNED) {
@@ -129,6 +141,8 @@ public class Chat implements Listener {
         LooseData.setChatCount(p.getUniqueId(), LooseData.getChatCount(p.getUniqueId()) + 1);
 
         Tazpvp.getObservers().forEach(observer -> observer.chat(p, e.getMessage()));
+
+        Tazpvp.getBotThread().receiveMinecraftChat(p.getName(), e.getMessage());
 
         e.setMessage(message);
         e.setFormat(format);

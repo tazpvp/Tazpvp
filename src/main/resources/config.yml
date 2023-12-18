@@ -4,3 +4,4 @@ sql-user: 'root'
 sql-password: 'root'
 report-webhook: 'hh'
 bot-token: 'hhhhhh'
+minecraft-chat-channel-id: 1010101010101001001

@@ -15,6 +15,8 @@ import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 public class PunishmentFunctions {
 
     public static void ban(OfflinePlayer target, String time, CommandSender commandSender) {
@@ -55,9 +57,9 @@ public class PunishmentFunctions {
         new MuteWebhook(target.getName(), commandSender.getName(), reason);
     }
 
-    public static void unmute(Player target) {
+    public static void unmute(UUID target) {
         PunishmentService punishmentService = new PunishmentServiceImpl();
-        punishmentService.unpunish(target.getUniqueId());
+        punishmentService.unpunish(target);
     }
 
     public static void unban(Player target) {

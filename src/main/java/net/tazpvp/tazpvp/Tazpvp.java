@@ -128,6 +128,8 @@ public final class Tazpvp extends JavaPlugin {
     private static CrateManager crateManager;
     @Getter
     private static SpawnableLeaderboardManager spawnableLeaderboardManager;
+    @Getter
+    private static BotThread botThread;
 
     @Override
     public void onEnable() {
@@ -170,7 +172,7 @@ public final class Tazpvp extends JavaPlugin {
 
         crateManager = new CrateManager();
 
-        BotThread botThread = new BotThread(getConfig().getString("bot-token"));
+        botThread = new BotThread(getConfig().getString("bot-token"));
         botThread.start();
 
         spawnableLeaderboardManager = new SpawnableLeaderboardManager(this);
