@@ -17,7 +17,7 @@ import lombok.ToString;
 @ToString
 @DatabaseTable(tableName = "game_ranks")
 public class GameRankEntity {
-    @DatabaseField(id = true, generatedId = true)
+    @DatabaseField(generatedId = true)
     private int id;
 
     @DatabaseField(unique = true)
