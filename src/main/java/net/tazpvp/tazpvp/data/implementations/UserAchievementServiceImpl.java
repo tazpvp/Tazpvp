@@ -24,7 +24,6 @@ public class UserAchievementServiceImpl implements UserAchievementService {
     public void saveUserAchievementEntity(final UserAchievementEntity achievementEntity) {
         AchievementService achievementService = new AchievementServiceImpl();
         try {
-            getUserDao().createOrUpdate(achievementEntity);
             achievementService.saveAchievementEntity(achievementEntity.getAgileAchievementEntity());
             achievementService.saveAchievementEntity(achievementEntity.getBowlingAchievementEntity());
             achievementService.saveAchievementEntity(achievementEntity.getCraftsmanAchievementEntity());
@@ -42,6 +41,7 @@ public class UserAchievementServiceImpl implements UserAchievementService {
             achievementService.saveAchievementEntity(achievementEntity.getSuperiorAchievementEntity());
             achievementService.saveAchievementEntity(achievementEntity.getSkilledAchievementEntity());
             achievementService.saveAchievementEntity(achievementEntity.getZorginAchievementEntity());
+            getUserDao().createOrUpdate(achievementEntity);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
