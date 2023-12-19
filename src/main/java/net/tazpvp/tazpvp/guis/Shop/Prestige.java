@@ -57,8 +57,8 @@ public class Prestige extends GUI {
                 p.sendMessage(prefix + "You are not a high enough level.");
                 return;
             }
-            int rebirthLevel = PersistentData.getInt(p.getUniqueId(), DataTypes.PRESTIGE);
-            PersistentData.set(p.getUniqueId(), DataTypes.PRESTIGE, rebirthLevel + 1);
+            int rebirthLevel = PersistentData.getInt(p.getUniqueId(), DataTypes.REBIRTH);
+            PersistentData.set(p.getUniqueId(), DataTypes.REBIRTH, rebirthLevel + 1);
             PlayerWrapper pw = PlayerWrapper.getPlayer(p);
             UserAchievementEntity userAchievementEntity = new UserAchievementEntity();
             pw.setUserAchievementEntity(userAchievementEntity);
@@ -105,7 +105,7 @@ public class Prestige extends GUI {
                 .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: " + cost + " Coins")
                 .glow(glow)
                 .build(), (e) -> {
-            if (PersistentData.getInt(p.getUniqueId(), DataTypes.PRESTIGE) < 1) {
+            if (PersistentData.getInt(p.getUniqueId(), DataTypes.REBIRTH) < 1) {
                 p.sendMessage(prefix + "You need to rebirth before buying this.");
                 return;
             }
@@ -121,7 +121,7 @@ public class Prestige extends GUI {
                 .name(CC.YELLOW + "" + CC.BOLD + name)
                 .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: " + cost + " Coins", CC.RED + "Drag the enchant onto", CC.RED + "an item to combine")
                 .build(), (e) -> {
-            if (PersistentData.getInt(p.getUniqueId(), DataTypes.PRESTIGE) < 1) {
+            if (PersistentData.getInt(p.getUniqueId(), DataTypes.REBIRTH) < 1) {
                 p.sendMessage(prefix + "You need to rebirth before buying this.");
                 return;
             }

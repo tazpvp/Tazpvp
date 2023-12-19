@@ -96,6 +96,10 @@ public abstract class Duel {
         end();
     }
     public void end() {
+        if (Bukkit.getPlayer(getWinner()) == null) {
+            Bukkit.getLogger().warning("ERROR: winner is null");
+            return;
+        }
         final Player winner = Bukkit.getPlayer(getWinner());
         final Player loser = Bukkit.getPlayer(getLoser());
         final OfflinePlayer offlineWinner = Bukkit.getOfflinePlayer(getWinner());
