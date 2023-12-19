@@ -71,7 +71,7 @@ public class Chat implements Listener {
             final long timestamp = punishmentService.getTimeRemaining(uuid);
             final String howLongAgo = TimeUtil.howLongAgo(timestamp);
 
-            if (timestamp < System.currentTimeMillis()) {
+            if (timestamp < 0L) {
                 PunishmentFunctions.unmute(uuid);
             } else {
                 p.sendMessage(CC.RED + "You are currently muted for " + howLongAgo);
