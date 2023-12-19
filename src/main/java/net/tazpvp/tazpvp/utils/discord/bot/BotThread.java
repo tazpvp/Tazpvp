@@ -65,10 +65,8 @@ public class BotThread extends Thread {
         JDA jda = JDABuilder.createDefault(this.token)
                 .disableCache(CacheFlag.VOICE_STATE, CacheFlag.EMOJI, CacheFlag.STICKER, CacheFlag.SCHEDULED_EVENTS, CacheFlag.MEMBER_OVERRIDES, CacheFlag.FORUM_TAGS, CacheFlag.ACTIVITY, CacheFlag.ROLE_TAGS, CacheFlag.CLIENT_STATUS)
                 .setEnabledIntents(GatewayIntent.GUILD_MEMBERS)
-                .addEventListeners(new LeaderboardCommand())
+                .addEventListeners(new LeaderboardCommand(minecraftChannelId))
                 .build();
-
-        jda.addEventListener(new BotListener(minecraftChannelId));
 
         // optionally block until JDA is ready
         jda.awaitReady();
