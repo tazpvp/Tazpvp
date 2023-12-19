@@ -142,7 +142,7 @@ public class Chat implements Listener {
 
         Tazpvp.getObservers().forEach(observer -> observer.chat(p, e.getMessage()));
 
-        Tazpvp.getBotThread().receiveMinecraftChat(p.getName(), e.getMessage());
+        Tazpvp.getBotThread().receiveMinecraftChat(pw.getRankPrefix() + " " + p.getName(), e.getMessage());
 
         e.setMessage(message);
         e.setFormat(format);
