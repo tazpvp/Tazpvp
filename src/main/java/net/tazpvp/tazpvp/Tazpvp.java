@@ -34,11 +34,10 @@
 package net.tazpvp.tazpvp;
 
 import lombok.Getter;
-import net.tazpvp.tazpvp.commands.admin.RankCommand;
+import net.tazpvp.tazpvp.commands.admin.rank.RankCommand;
 import net.tazpvp.tazpvp.commands.admin.permissions.TempPermissionsCommand;
 import net.tazpvp.tazpvp.commands.gameplay.duel.DuelCommand;
 import net.tazpvp.tazpvp.commands.moderation.StaffChatCommand;
-import net.tazpvp.tazpvp.data.services.AchievementService;
 import net.tazpvp.tazpvp.player.achievements.achievement.*;
 import net.tazpvp.tazpvp.commands.admin.BroadcastCommand;
 import net.tazpvp.tazpvp.commands.admin.KeyallCommand;

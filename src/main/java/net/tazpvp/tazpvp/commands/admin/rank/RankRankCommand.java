@@ -1,7 +1,6 @@
-package net.tazpvp.tazpvp.commands.admin;
+package net.tazpvp.tazpvp.commands.admin.rank;
 
 import lombok.NonNull;
-import net.tazpvp.tazpvp.data.entity.GameRankEntity;
 import net.tazpvp.tazpvp.data.implementations.GameRankServiceImpl;
 import net.tazpvp.tazpvp.data.services.GameRankService;
 import net.tazpvp.tazpvp.utils.enums.CC;
@@ -12,8 +11,8 @@ import org.jetbrains.annotations.NotNull;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
-public class RankCommand extends NRCommand {
-    public RankCommand() {
+public class RankRankCommand extends NRCommand {
+    public RankRankCommand() {
         super(new Label("rank", "tazpvp.rank"));
     }
 
