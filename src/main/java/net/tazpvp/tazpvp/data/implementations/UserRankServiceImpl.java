@@ -63,6 +63,7 @@ public class UserRankServiceImpl implements UserRankService {
             userRankEntityTemp.setUuid(uuid);
             userRankEntityTemp.setDeathParticle(null);
             userRankEntityTemp.setArrowParticle(null);
+            userRankEntityTemp.setCustomPrefix(null);
             try {
                 getUserDao().assignEmptyForeignCollection(userRankEntityTemp, "ranks");
             } catch (SQLException e) {
@@ -124,5 +125,10 @@ public class UserRankServiceImpl implements UserRankService {
                         .forEach(permissionEntity -> perms.add(permissionEntity.getPermission())));
 
         return perms;
+    }
+
+    @Override
+    public String getHighestPrefix(UserRankEntity userRankEntity) {
+        return getHighestRank(userRankEntity).getPrefix();
     }
 }

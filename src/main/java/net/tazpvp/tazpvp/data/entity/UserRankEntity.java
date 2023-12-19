@@ -21,7 +21,8 @@ public class UserRankEntity {
     @ForeignCollectionField
     private ForeignCollection<ExpirationRankEntity> ranks;
 
-
+    @DatabaseField(columnName = "custom_prefix", width = 1024)
+    private String customPrefix;
     @DatabaseField(columnName = "death_particle")
     private String deathParticle;
     @DatabaseField(columnName = "arrow_particle")

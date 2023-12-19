@@ -3,15 +3,15 @@ package net.tazpvp.tazpvp.utils.player;
 import lombok.Getter;
 import lombok.Setter;
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.data.entity.*;
+import net.tazpvp.tazpvp.data.implementations.UserRankServiceImpl;
+import net.tazpvp.tazpvp.data.services.UserRankService;
 import net.tazpvp.tazpvp.game.duels.Duel;
 import net.tazpvp.tazpvp.game.guilds.Guild;
 import net.tazpvp.tazpvp.game.guilds.GuildUtils;
 import net.tazpvp.tazpvp.npc.shops.NPC;
 import net.tazpvp.tazpvp.utils.PlayerNameTag;
 import net.tazpvp.tazpvp.data.*;
-import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
-import net.tazpvp.tazpvp.data.entity.RankEntity;
-import net.tazpvp.tazpvp.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.data.implementations.UserAchievementServiceImpl;
 import net.tazpvp.tazpvp.data.implementations.RankServiceImpl;
 import net.tazpvp.tazpvp.data.implementations.TalentServiceImpl;
@@ -38,6 +38,7 @@ import java.util.WeakHashMap;
 public class PlayerWrapper {
     @Getter
     private final UUID uuid;
+    private final UserRankService userRankService;
     @Getter @Setter
     private boolean launching;
     @Getter @Setter
@@ -72,7 +73,7 @@ public class PlayerWrapper {
     @Getter @Setter
     private Duel spectating;
     @Getter
-    private RankEntity rankEntity;
+    private UserRankEntity userRankEntity; // After you set a value here make sure to call refresh()
     @Getter
     private UserAchievementEntity userAchievementEntity;
     @Getter
@@ -105,8 +106,8 @@ public class PlayerWrapper {
         this.spectating = null;
         this.staffChatActive = false;
 
-        final RankService rankService = new RankServiceImpl();
-        this.rankEntity = rankService.getOrDefault(getUuid());
+        this.userRankService = new UserRankServiceImpl();
+        this.userRankEntity = userRankService.getOrDefault(getUuid());
 
         final UserAchievementService userAchievementService = new UserAchievementServiceImpl();
         this.userAchievementEntity = userAchievementService.getOrDefault(getUuid());
@@ -131,8 +132,8 @@ public class PlayerWrapper {
         return "";
     }
 
-    public Rank getRank() {
-        return Rank.valueOf(rankEntity.getRank());
+    public GameRankEntity getRank() {
+        return this.userRankService.getHighestRank(getUserRankEntity());
     }
 
     public String getRankPrefix() {
@@ -144,11 +145,11 @@ public class PlayerWrapper {
 
     @Nullable
     public String getCustomPrefix() {
-        return rankEntity.getPrefix();
+        return getRank().getPrefix();
     }
 
     public void setCustomPrefix(String prefix) {
-        rankEntity.setPrefix(prefix);
+        userRankEntity.setCustomPrefix(prefix);
         setRankEntity();
     }
 
@@ -226,31 +227,20 @@ public class PlayerWrapper {
         }
         this.permissionAttachment = getPlayer().addAttachment(Tazpvp.getInstance());
 //        getRank().getPermissions().forEach(perm -> this.permissionAttachment.setPermission(perm, true));
-        for (Rank rank : Rank.values()) {
-            if (rank.getRank() >= getRank().getRank()) {
-                rank.getPermissions().forEach(perm -> this.permissionAttachment.setPermission(perm, true));
-            }
-        }
+        this.userRankService.getPermissions(getUserRankEntity())
+                .forEach(perm -> this.permissionAttachment.setPermission(perm, true));
+
         this.permissionAttachment.getPermissible().recalculatePermissions();
     }
 
-    public void setRank(Rank rank) {
-        rankEntity.setRank(rank.toString());
-        rankEntity.setTimeRankedUpdated(System.currentTimeMillis());
-
-        setRankEntity();
-
-        refreshPermissions();
-    }
-
-    public void setPremium(final boolean premium) {
-        this.rankEntity.setPremium(premium);
-        setRankEntity();
-    }
 
     public void setRankEntity() {
-        final RankService rankService = new RankServiceImpl();
-        rankService.saveRankEntity(rankEntity);
+        this.userRankService.saveUserRankEntity(userRankEntity);
+        refreshRankEntity();
+    }
+
+    public void refreshRankEntity() {
+        this.userRankEntity = this.userRankService.getUserRankEntity(getUuid());
     }
 
     public void setUserAchievementEntity(final UserAchievementEntity achievementEntity) {

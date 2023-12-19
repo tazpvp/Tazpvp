@@ -19,4 +19,5 @@ public interface UserRankService extends DataService {
     UserRankEntity addExpiringRank(UserRankEntity userRankEntity, GameRankEntity gameRankEntity, long timestamp);
     GameRankEntity getHighestRank(UserRankEntity userRankEntity);
     List<String> getPermissions(UserRankEntity userRankEntity);
+    String getHighestPrefix(UserRankEntity userRankEntity);
 }
