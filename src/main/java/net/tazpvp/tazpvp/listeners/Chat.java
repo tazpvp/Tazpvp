@@ -144,13 +144,15 @@ public class Chat implements Listener {
 
         e.setMessage(message);
         e.setFormat(format);
-        if (pw.isStaffChatActive()){
 
+        if (pw.isStaffChatActive()) {
             e.setCancelled(true);
-            Bukkit.broadcast(CC.YELLOW.toString() + CC.BOLD + "Staff> " + p.getName() + CC.WHITE + "" + e.getMessage(),"tazpvp.staffchat");
-
-        }else {
-
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                if (player.hasPermission("tazpvp.staffchat")) {
+                    player.sendMessage(CC.YELLOW.toString() + CC.BOLD + "Staff> " + p.getName() + CC.WHITE + " " + e.getMessage());
+                }
+            }
+        } else {
             Tazpvp.getBotThread().receiveMinecraftChat(
                     (pw.getRankPrefix() != null ? CC.stripColor(pw.getRankPrefix()) + " " : "")+ p.getName(),
                     e.getMessage());
