@@ -19,13 +19,19 @@ public class BotListener extends ListenerAdapter {
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         final MessageChannelUnion messageChannelUnion = event.getChannel();
 
+        System.out.println("1");
+
         if (messageChannelUnion.getIdLong() != channelId) {
             return;
         }
 
+        System.out.println("2");
+
         if (event.getAuthor().isBot()) {
             return;
         }
+
+        System.out.println("3");
 
         final String prefix = ChatFunctions.gradient("#db3bff", "DISCORD", true);
         final String name = ChatColor.GRAY + event.getAuthor().getEffectiveName();
