@@ -111,7 +111,7 @@ public class Classic extends Duel {
                             }
                         });
                         setStarting(false);
-                        end();
+                        cancel();
                     }
                 }
             }

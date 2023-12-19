@@ -101,6 +101,11 @@ public abstract class Duel {
         final OfflinePlayer offlineWinner = Bukkit.getOfflinePlayer(getWinner());
         final OfflinePlayer offlineLoser = Bukkit.getOfflinePlayer(getLoser());
 
+        if (winner == null) {
+            Bukkit.getLogger().warning("ERROR: winner is null");
+            return;
+        }
+
         ChatFunctions.announce(CC.AQUA + offlineWinner.getName() + CC.DARK_AQUA + " won a duel against " + CC.AQUA + offlineLoser.getName(), Sound.BLOCK_BELL_RESONATE);
         PersistentData.add(winner.getUniqueId(), DataTypes.DUELWINS, 1);
         if (loser != null) {

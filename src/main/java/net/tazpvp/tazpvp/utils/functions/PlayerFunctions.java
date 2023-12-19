@@ -109,7 +109,6 @@ public class PlayerFunctions {
                 ItemBuilder.of(Material.BOW, 1, ChatFunctions.gradient("#04f000", p.getName() + "'s Bow", true)).build(),
                 ItemBuilder.of(Material.STONE_PICKAXE, 1, ChatFunctions.gradient("#04f000", p.getName() + "'s Pickaxe", true)).build(),
                 ItemBuilder.of(Material.COOKED_BEEF, 20).build(),
-                ItemBuilder.of(Material.GOLDEN_APPLE, 3).build(),
                 ItemBuilder.of(Material.OAK_PLANKS, 64).build(),
                 ItemBuilder.of(Material.ARROW, 32).build()
         };

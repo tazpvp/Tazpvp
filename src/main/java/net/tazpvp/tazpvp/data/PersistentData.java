@@ -8,6 +8,8 @@ import net.tazpvp.tazpvp.utils.serialization.SerializeObject;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
 import world.ntdi.nrcore.utils.sql.SQLHelper;
@@ -252,9 +254,13 @@ public final class PersistentData {
                 PlayerFunctions.levelUp(ID, value);
                 return;
             }
-            if (dataType != DataTypes.PRESTIGE) {
-                p.getScoreboard().getTeam(dataType.getColumnName()).setSuffix((int) value + "");
+
+            Team sbTeam = p.getScoreboard().getTeam(dataType.getColumnName());
+
+            if (sbTeam != null) {
+                sbTeam.setSuffix((int) value + "");
             }
+
             if (dataType.equals(DataTypes.KILLS) || dataType.equals(DataTypes.DEATHS)) {
                 p.getScoreboard().getTeam("kdr").setSuffix(kdrFormula(getFloat(p, DataTypes.KILLS), getFloat(p, DataTypes.DEATHS)) + "");
             }
