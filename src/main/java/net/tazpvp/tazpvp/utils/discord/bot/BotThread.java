@@ -65,8 +65,10 @@ public class BotThread extends Thread {
         JDA jda = JDABuilder.createDefault(this.token)
                 .disableCache(CacheFlag.VOICE_STATE, CacheFlag.EMOJI, CacheFlag.STICKER, CacheFlag.SCHEDULED_EVENTS, CacheFlag.MEMBER_OVERRIDES, CacheFlag.FORUM_TAGS, CacheFlag.ACTIVITY, CacheFlag.ROLE_TAGS, CacheFlag.CLIENT_STATUS)
                 .setEnabledIntents(GatewayIntent.GUILD_MEMBERS)
-                .addEventListeners(new LeaderboardCommand(), new BotListener(minecraftChannelId))
+                .addEventListeners(new LeaderboardCommand())
                 .build();
+
+        jda.addEventListener(new BotListener(minecraftChannelId));
 
         // optionally block until JDA is ready
         jda.awaitReady();
@@ -104,7 +106,7 @@ public class BotThread extends Thread {
             Bukkit.getLogger().severe("Text Channel for Minecraft Server Chat Null!");
             return;
         }
-        
+
         final String suffix = (joined ? "joined." : "left.");
 
         textChannel.sendMessage(String.format("**%s %s**", username, suffix)).queue();
