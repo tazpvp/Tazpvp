@@ -35,8 +35,7 @@ public class PermissionServiceImpl implements PermissionService {
         QueryBuilder<PermissionEntity, Integer> queryBuilder = getUserDao().queryBuilder();
 
         try {
-            queryBuilder.where().eq("permission", name);
-            queryBuilder.where().eq("game_rank", gameRankEntity);
+            queryBuilder.where().eq("permission", name).and().eq("game_rank", gameRankEntity);
 
             return queryBuilder.queryForFirst();
         } catch (SQLException e) {

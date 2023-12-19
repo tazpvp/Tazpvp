@@ -13,6 +13,9 @@ import org.jetbrains.annotations.NotNull;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RankPermissionCommand extends NRCommand {
     public RankPermissionCommand() {
         super(new Label("permission", "tazpvp.rank"));
@@ -48,11 +51,27 @@ public class RankPermissionCommand extends NRCommand {
             }
 
             gameRankService.removePermissionFromGameRank(gameRankEntity, permission);
+            sender.sendMessage("Removed permission");
         } else {
             gameRankService.addPermissionToGameRank(gameRankEntity, permission);
             sender.sendMessage("Added permission");
         }
 
         return true;
+    }
+
+    @Override
+    public List<String> complete(CommandSender sender, String[] args) {
+        if (args.length < 2) {
+            return new GameRankServiceImpl().getAllGameRanks();
+        } else if (args.length < 3) {
+            return List.of("add", "remove");
+        } else if (args.length < 4) {
+            if (args[1].equals("remove")) {
+                return List.of("todo add permissions");
+            }
+        }
+
+        return new ArrayList<>();
     }
 }
