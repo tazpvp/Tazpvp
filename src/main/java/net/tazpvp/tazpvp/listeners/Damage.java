@@ -80,6 +80,11 @@ public class Damage implements Listener {
             return;
         }
 
+        if (playerWrapper.isVanished()) {
+            event.setCancelled(true);
+            return;
+        }
+
         UUID victimID = victim.getUniqueId();
 
         if (Event.currentEvent != null && Event.currentEvent.getParticipantList().contains(victimID)) {
