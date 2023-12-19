@@ -142,11 +142,18 @@ public class Chat implements Listener {
 
         Tazpvp.getObservers().forEach(observer -> observer.chat(p, e.getMessage()));
 
-        Tazpvp.getBotThread().receiveMinecraftChat(
-                (pw.getRankPrefix() != null ? CC.stripColor(pw.getRankPrefix()) + " " : "")+ p.getName(),
-                e.getMessage());
-
         e.setMessage(message);
         e.setFormat(format);
+        if (pw.isStaffChatActive()){
+
+            e.setCancelled(true);
+            Bukkit.broadcast(CC.YELLOW.toString() + CC.BOLD + "Staff> " + p.getName() + CC.WHITE + "" + e.getMessage(),"tazpvp.staffchat");
+
+        }else {
+
+            Tazpvp.getBotThread().receiveMinecraftChat(
+                    (pw.getRankPrefix() != null ? CC.stripColor(pw.getRankPrefix()) + " " : "")+ p.getName(),
+                    e.getMessage());
+        }
     }
 }
