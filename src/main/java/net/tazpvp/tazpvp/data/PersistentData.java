@@ -252,7 +252,9 @@ public final class PersistentData {
                 PlayerFunctions.levelUp(ID, value);
                 return;
             }
-            p.getScoreboard().getTeam(dataType.getColumnName()).setSuffix((int) value + "");
+            if (dataType != DataTypes.PRESTIGE) {
+                p.getScoreboard().getTeam(dataType.getColumnName()).setSuffix((int) value + "");
+            }
             if (dataType.equals(DataTypes.KILLS) || dataType.equals(DataTypes.DEATHS)) {
                 p.getScoreboard().getTeam("kdr").setSuffix(kdrFormula(getFloat(p, DataTypes.KILLS), getFloat(p, DataTypes.DEATHS)) + "");
             }
