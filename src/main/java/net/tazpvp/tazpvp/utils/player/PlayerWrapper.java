@@ -79,6 +79,8 @@ public class PlayerWrapper {
     private TalentEntity talentEntity;
     @Getter @Setter
     private boolean vanished;
+    @Getter @Setter
+    private boolean staffChatActive;
 
 
     /**
@@ -101,6 +103,7 @@ public class PlayerWrapper {
         this.blocksPlaced = new ArrayList<>();
         this.lastMessageSent = "";
         this.spectating = null;
+        this.staffChatActive = false;
 
         final RankService rankService = new RankServiceImpl();
         this.rankEntity = rankService.getOrDefault(getUuid());
