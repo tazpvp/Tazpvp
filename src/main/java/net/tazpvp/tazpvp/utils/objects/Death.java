@@ -106,14 +106,13 @@ public class Death {
     public void dropHead() {
         PlayerWrapper killerWrapper = PlayerWrapper.getPlayer(killer);
         if (killerWrapper.getTalentEntity().isHarvester()) {
-            if (r.nextInt(10) < 3) return;
+            if (r.nextInt(100) < 1) return;
         } else {
-            if (r.nextInt(10) < 6) return;
+            if (r.nextInt(200) < 1) return;
         }
         World w = location.getWorld();
         ItemStack skull = makeSkull(pVictim);
-        if (skull == null) return;
-        if (w == null) return;
+        if (skull == null || w == null) return;
         w.dropItemNaturally(location.add(0, 1, 0), skull);
     }
 

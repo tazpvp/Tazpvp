@@ -102,9 +102,9 @@ public class Bub extends NPC {
         int reward;
 
         if (item.getType() == Material.PLAYER_HEAD) {
-            reward = num * 200;
+            reward = num * 2000;
         } else if (item.getType() == Material.AMETHYST_SHARD) {
-            reward = num * 100;
+            reward = num * 800;
         } else {
             p.sendMessage(CC.GREEN + "[Bub]" + CC.WHITE + " Right click me with player heads or shards and I'll give you money.");
             return;
