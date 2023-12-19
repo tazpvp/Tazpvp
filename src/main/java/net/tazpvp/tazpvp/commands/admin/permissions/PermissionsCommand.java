@@ -19,7 +19,7 @@ import java.util.List;
 
 public class PermissionsCommand extends NRCommand {
     public PermissionsCommand() {
-        super(new Label("permissions", "tazpvp.rank", "perms", "rank"));
+        super(new Label("permissions", "tazpvp.rank", "perms"));
     }
 
     @Override

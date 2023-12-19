@@ -91,14 +91,16 @@ public class DuelSendCommand extends NRCommand {
         }
         p.sendMessage(CC.GREEN + "You sent a duel request to " + CC.GOLD +  target.getName());
 
-        BaseComponent[] baseComponents = new ComponentBuilder(p.getName()).color(net.md_5.bungee.api.ChatColor.GOLD).append(" sent you a ").color(net.md_5.bungee.api.ChatColor.GREEN)
-                        .append(type).color(net.md_5.bungee.api.ChatColor.RED).append(" duel request").color(net.md_5.bungee.api.ChatColor.GREEN)
+        BaseComponent[] baseComponents = new ComponentBuilder(p.getName())
+                .color(net.md_5.bungee.api.ChatColor.GOLD)
+                .append(" sent you a ")
+                .color(net.md_5.bungee.api.ChatColor.GREEN)
+                        .append(type).color(net.md_5.bungee.api.ChatColor.RED)
+                .append(" duel request").color(net.md_5.bungee.api.ChatColor.GREEN)
                         .append("\n[Click to Accept]").create();
 
         baseComponents[4].setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/duel accept"));
         baseComponents[4].setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(CC.GREEN + "Accept Duel Request")));
-
-
 
         target.spigot().sendMessage(baseComponents);
     }
