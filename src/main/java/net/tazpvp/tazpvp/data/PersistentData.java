@@ -252,7 +252,7 @@ public final class PersistentData {
                 PlayerFunctions.levelUp(ID, value);
                 return;
             }
-            if (dataType != DataTypes.PRESTIGE) {
+            if (dataType != DataTypes.REBIRTH) {
                 p.getScoreboard().getTeam(dataType.getColumnName()).setSuffix((int) value + "");
             }
             if (dataType.equals(DataTypes.KILLS) || dataType.equals(DataTypes.DEATHS)) {
