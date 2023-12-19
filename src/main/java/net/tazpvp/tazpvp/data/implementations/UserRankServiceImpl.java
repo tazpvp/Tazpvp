@@ -12,6 +12,7 @@ import net.tazpvp.tazpvp.data.services.GameRankService;
 import net.tazpvp.tazpvp.data.services.UserRankService;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
@@ -112,5 +113,16 @@ public class UserRankServiceImpl implements UserRankService {
                 .toList();
 
         return gameRankEntities.stream().max(Comparator.comparing(GameRankEntity::getHierarchy)).get();
+    }
+
+    @Override
+    public List<String> getPermissions(UserRankEntity userRankEntity) {
+        final List<String> perms = new ArrayList<>();
+
+        userRankEntity.getRanks()
+                .forEach(expirationRankEntity -> expirationRankEntity.getGameRankEntity().getPermissions()
+                        .forEach(permissionEntity -> perms.add(permissionEntity.getPermission())));
+
+        return perms;
     }
 }

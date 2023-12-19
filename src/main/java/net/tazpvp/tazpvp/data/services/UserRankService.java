@@ -6,6 +6,7 @@ import net.tazpvp.tazpvp.data.entity.GameRankEntity;
 import net.tazpvp.tazpvp.data.entity.RankEntity;
 import net.tazpvp.tazpvp.data.entity.UserRankEntity;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface UserRankService extends DataService {
@@ -17,4 +18,5 @@ public interface UserRankService extends DataService {
     UserRankEntity addRank(UserRankEntity userRankEntity, GameRankEntity gameRankEntity);
     UserRankEntity addExpiringRank(UserRankEntity userRankEntity, GameRankEntity gameRankEntity, long timestamp);
     GameRankEntity getHighestRank(UserRankEntity userRankEntity);
+    List<String> getPermissions(UserRankEntity userRankEntity);
 }
