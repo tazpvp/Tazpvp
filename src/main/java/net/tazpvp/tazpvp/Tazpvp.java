@@ -34,6 +34,7 @@
 package net.tazpvp.tazpvp;
 
 import lombok.Getter;
+import net.tazpvp.tazpvp.commands.admin.RankCommand;
 import net.tazpvp.tazpvp.commands.admin.permissions.TempPermissionsCommand;
 import net.tazpvp.tazpvp.commands.gameplay.duel.DuelCommand;
 import net.tazpvp.tazpvp.commands.moderation.StaffChatCommand;
@@ -281,7 +282,8 @@ public final class Tazpvp extends JavaPlugin {
                 new ResetStatsCommand(),
                 new BroadcastCommand(),
                 new TempPermissionsCommand(),
-                new StaffChatCommand()
+                new StaffChatCommand(),
+                new RankCommand()
         );
     }
 
