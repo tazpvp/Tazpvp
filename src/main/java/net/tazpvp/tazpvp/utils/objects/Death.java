@@ -110,9 +110,9 @@ public class Death {
 
         PlayerWrapper killerWrapper = PlayerWrapper.getPlayer(killer);
         if (killerWrapper.getTalentEntity().isHarvester()) {
-            if (r.nextInt(100) < 1) return;
+            if (r.nextInt(0, 100) > 1) return;
         } else {
-            if (r.nextInt(200) < 1) return;
+            if (r.nextInt(0, 200) > 1) return;
         }
         World w = location.getWorld();
         ItemStack skull = makeSkull(pVictim);
