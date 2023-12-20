@@ -2,7 +2,9 @@ package net.tazpvp.tazpvp.commands.admin;
 
 import lombok.NonNull;
 import net.tazpvp.tazpvp.game.crates.KeyFactory;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -33,6 +35,8 @@ public class KeyallCommand extends NRCommand {
             op.getInventory().addItem(KeyFactory.getFactory().createRareKey());
             op.getInventory().addItem(KeyFactory.getFactory().createMythicKey());
         }
+        ChatFunctions.announce("FREE KEYS FOR EVERYONE!!!!!!!!!", Sound.BLOCK_AMETHYST_BLOCK_CHIME);
+
         return true;
     }
 
