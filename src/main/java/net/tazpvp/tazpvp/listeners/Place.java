@@ -52,6 +52,11 @@ public class Place implements Listener {
                 return;
             }
 
+            if (mat.name().endsWith("ORE")) {
+                e.setCancelled(true);
+                return;
+            }
+
             if (mat == Material.TNT) {
                 b.setType(Material.AIR);
                 b.getWorld().spawn(b.getLocation().add(0.5, 0, 0.5), TNTPrimed.class);

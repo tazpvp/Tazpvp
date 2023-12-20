@@ -71,7 +71,7 @@ public class Chat implements Listener {
             final long timestamp = punishmentService.getTimeRemaining(uuid);
             final String howLongAgo = TimeUtil.howLongAgo(timestamp);
 
-            if (timestamp < System.currentTimeMillis()) {
+            if (timestamp < 0L) {
                 PunishmentFunctions.unmute(uuid);
             } else {
                 p.sendMessage(CC.RED + "You are currently muted for " + howLongAgo);
@@ -144,13 +144,15 @@ public class Chat implements Listener {
 
         e.setMessage(message);
         e.setFormat(format);
-        if (pw.isStaffChatActive()){
 
+        if (pw.isStaffChatActive()) {
             e.setCancelled(true);
-            Bukkit.broadcast(CC.YELLOW.toString() + CC.BOLD + "Staff> " + p.getName() + CC.WHITE + "" + e.getMessage(),"tazpvp.staffchat");
-
-        }else {
-
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                if (player.hasPermission("tazpvp.staffchat")) {
+                    player.sendMessage(CC.YELLOW.toString() + CC.BOLD + "Staff> " + p.getName() + CC.WHITE + " " + e.getMessage());
+                }
+            }
+        } else {
             Tazpvp.getBotThread().receiveMinecraftChat(
                     (pw.getRankPrefix() != null ? CC.stripColor(pw.getRankPrefix()) + " " : "")+ p.getName(),
                     e.getMessage());

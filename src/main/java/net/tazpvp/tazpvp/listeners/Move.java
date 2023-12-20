@@ -52,10 +52,6 @@ public class Move implements Listener {
                 }
                 return;
             }
-            if (pw.isRespawning()) {
-                e.setCancelled(true);
-                return;
-            }
 
             if (p.getGameMode() == GameMode.SURVIVAL) {
                 if (p.getLocation().getY() < 78 && p.getLocation().getZ() < 133) {
