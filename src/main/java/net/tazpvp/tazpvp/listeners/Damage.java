@@ -172,6 +172,10 @@ public class Damage implements Listener {
 
         if ((pVictim.getHealth() - finalDamage) <= 0) {
             event.setCancelled(true);
+            if (pVictim.getName().startsWith(".")) {
+                pVictim.setHealth(0);
+                return;
+            }
             if (killer != null) {
                 DeathFunctions.death(victim, killer);
             } else {

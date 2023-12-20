@@ -67,9 +67,9 @@ public class Join implements Listener {
     private void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
 
+        PlayerWrapper.addPlayer(p);
         PersistentData.initPlayer(p);
         ScoreboardFunctions.initScoreboard(p);
-        PlayerWrapper.addPlayer(p);
 
         new PlayerNameTag().initializePlayerNameTag(p);
 

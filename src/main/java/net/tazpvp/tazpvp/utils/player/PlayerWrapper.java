@@ -281,9 +281,13 @@ public class PlayerWrapper {
         playerMap.remove(uuid, new PlayerWrapper(uuid));
     }
     public static PlayerWrapper getPlayer(Player p) {
-        return playerMap.get(p.getUniqueId());
+        return getPlayer(p.getUniqueId());
     }
     public static PlayerWrapper getPlayer(UUID uuid) {
+        if (!playerMap.containsKey(uuid)) {
+            addPlayer(uuid);
+        }
+
         return playerMap.get(uuid);
     }
 }

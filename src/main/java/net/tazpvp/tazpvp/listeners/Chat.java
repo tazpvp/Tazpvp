@@ -78,10 +78,6 @@ public class Chat implements Listener {
                 p.spigot().sendMessage(component);
                 e.setCancelled(true);
 
-                if (timestamp < System.currentTimeMillis()) {
-                    PunishmentFunctions.unmute(uuid);
-                }
-
                 return;
             }
         }

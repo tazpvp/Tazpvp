@@ -4,6 +4,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.game.bosses.BossManager;
 import net.tazpvp.tazpvp.game.bosses.zorg.attacks.SummonUndeadAttack;
 import net.tazpvp.tazpvp.game.duels.Duel;
+import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -11,6 +12,7 @@ import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 
 import java.util.UUID;
 
@@ -36,6 +38,16 @@ public class Death implements Listener {
                 duel.setWinner(duel.getOtherDueler(player.getUniqueId()));
                 duel.end();
             }
+
+            final Player killer = player.getKiller();
+
+            if (killer != null) {
+                DeathFunctions.death(player.getUniqueId(), killer.getUniqueId());
+            } else {
+                DeathFunctions.death(player.getUniqueId());
+            }
+
+            ((PlayerDeathEvent) event).setDeathMessage(null);
         }
 
         final UUID bossUUID = BossManager.getSpawnedBoss().getBoss().getUniqueId();
