@@ -6,6 +6,7 @@ import com.j256.ormlite.dao.ForeignCollection;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.ExpirationRankEntity;
 import net.tazpvp.tazpvp.data.entity.GameRankEntity;
+import net.tazpvp.tazpvp.data.entity.PermissionEntity;
 import net.tazpvp.tazpvp.data.entity.UserRankEntity;
 import net.tazpvp.tazpvp.data.services.ExpirationRankService;
 import net.tazpvp.tazpvp.data.services.GameRankService;
@@ -137,9 +138,17 @@ public class UserRankServiceImpl implements UserRankService {
     public List<String> getPermissions(UserRankEntity userRankEntity) {
         final List<String> perms = new ArrayList<>();
 
-        userRankEntity.getRanks()
-                .forEach(expirationRankEntity -> expirationRankEntity.getGameRankEntity().getPermissions()
-                        .forEach(permissionEntity -> perms.add(permissionEntity.getPermission())));
+        for (ExpirationRankEntity expirationRankEntity : userRankEntity.getRanks()) {
+            final GameRankEntity gameRankEntity = expirationRankEntity.getGameRankEntity();
+
+            final ForeignCollection<PermissionEntity> permissionEntities = gameRankEntity.getPermissions();
+
+            if (permissionEntities != null) {
+                for (PermissionEntity permissionEntity : permissionEntities) {
+                    perms.add(permissionEntity.getPermission());
+                }
+            }
+        }
 
         return perms;
     }
