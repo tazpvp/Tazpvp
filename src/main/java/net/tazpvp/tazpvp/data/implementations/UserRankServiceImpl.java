@@ -116,6 +116,8 @@ public class UserRankServiceImpl implements UserRankService {
                 .toList();
 
 
+        expirationRankEntities.clear();
+        expirationRankEntities.addAll(filteredEntities);
 
         userRankEntity.setRanks(expirationRankEntities);
         saveUserRankEntity(userRankEntity);
