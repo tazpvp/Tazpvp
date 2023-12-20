@@ -60,4 +60,13 @@ public class TalentServiceImpl implements TalentService {
         }
         return talentEntity;
     }
+
+    @Override
+    public void removeTalentEntity(TalentEntity talentEntity) {
+        try {
+            getUserDao().delete(talentEntity);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

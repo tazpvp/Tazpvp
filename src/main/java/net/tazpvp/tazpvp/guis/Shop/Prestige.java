@@ -5,6 +5,8 @@ import net.tazpvp.tazpvp.data.PersistentData;
 import net.tazpvp.tazpvp.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
+import net.tazpvp.tazpvp.data.implementations.TalentServiceImpl;
+import net.tazpvp.tazpvp.data.services.TalentService;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
@@ -57,18 +59,27 @@ public class Prestige extends GUI {
                 p.sendMessage(prefix + "You are not a high enough level.");
                 return;
             }
+
             int rebirthLevel = PersistentData.getInt(p.getUniqueId(), DataTypes.REBIRTH);
             PersistentData.set(p.getUniqueId(), DataTypes.REBIRTH, rebirthLevel + 1);
+
             PlayerWrapper pw = PlayerWrapper.getPlayer(p);
-            UserAchievementEntity userAchievementEntity = new UserAchievementEntity();
-            pw.setUserAchievementEntity(userAchievementEntity);
-            TalentEntity talentEntity = new TalentEntity();
-            pw.setTalentEntity(talentEntity);
+
+            TalentEntity talentEntity = pw.getTalentEntity();
+            TalentService talentService = new TalentServiceImpl();
+            talentService.removeTalentEntity(talentEntity);
+            pw.setTalentEntity(talentService.getOrDefault(p.getUniqueId()));
+
             PersistentData.set(p.getUniqueId(), DataTypes.COINS, 0);
+            PersistentData.set(p.getUniqueId(), DataTypes.LEVEL, 0);
+            PersistentData.set(p.getUniqueId(), DataTypes.XP, 0);
+
             p.getEnderChest().clear();
             p.getInventory().clear();
             PlayerFunctions.kitPlayer(p);
-            p.sendTitle(CC.LIGHT_PURPLE + "" + CC.BOLD + "REBIRTH", CC.DARK_PURPLE + "You are reborn anew");
+
+            p.closeInventory();
+            p.sendTitle(CC.LIGHT_PURPLE + "" + CC.BOLD + "REBIRTH", CC.DARK_PURPLE + "You are reborn anew", 20, 40, 20);
             p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, 1, 1);
         }), 13);
 
