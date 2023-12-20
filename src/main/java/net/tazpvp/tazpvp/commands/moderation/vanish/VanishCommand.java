@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import world.ntdi.nrcore.NRCore;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
@@ -24,8 +25,6 @@ public class VanishCommand extends NRCommand {
             sendNoPermission(sender);
             return true;
         }
-
-
         if (!(sender instanceof Player p)) {
             sendNoPermission(sender);
             return true;
@@ -57,6 +56,7 @@ public class VanishCommand extends NRCommand {
             p.sendMessage(CC.LIGHT_PURPLE + "You are no longer in vanish.");
             p.setFlying(false);
             p.setAllowFlight(false);
+            p.teleport(NRCore.config.spawn);
             for (Player op : Bukkit.getOnlinePlayers()) {
                 op.showPlayer(Tazpvp.getInstance(), p);
             }
@@ -65,6 +65,7 @@ public class VanishCommand extends NRCommand {
             p.setAllowFlight(true);
             p.setFlying(true);
             p.sendMessage(CC.LIGHT_PURPLE + "You are now in vanish.");
+            p.teleport(NRCore.config.spawn);
             for (Player op : Bukkit.getOnlinePlayers()) {
                 if (!op.hasPermission(getLabel().getPermission())) {
                     op.hidePlayer(Tazpvp.getInstance(), p);

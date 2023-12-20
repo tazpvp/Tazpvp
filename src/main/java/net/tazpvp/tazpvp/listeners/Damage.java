@@ -119,6 +119,11 @@ public class Damage implements Listener {
 
     private void handleEntityDamageByEntity(Player victim, EntityDamageByEntityEvent event, double finalDamage) {
         if (event.getDamager() instanceof Player killer) {
+            final PlayerWrapper killerWrapper = PlayerWrapper.getPlayer(killer);
+            if (killerWrapper.isVanished()) {
+                event.setCancelled(true);
+                return;
+            }
             checkDeath(victim.getUniqueId(), killer.getUniqueId(), event, finalDamage);
             ItemStack weapon = killer.getInventory().getItemInMainHand();
             if (UsableItem.getCustomItem(weapon) != null) {

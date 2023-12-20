@@ -34,6 +34,7 @@ package net.tazpvp.tazpvp.guis.Menu;
 
 import net.tazpvp.tazpvp.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
+import net.tazpvp.tazpvp.game.crates.KeyFactory;
 import net.tazpvp.tazpvp.game.items.StaticItems;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
@@ -111,6 +112,7 @@ public class Achievements extends GUI {
                 p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
                 entity.setCollected(true);
                 pw.setUserAchievementEntity(userEntity);
+                p.getInventory().addItem(KeyFactory.getFactory().createKey(keyType, keyName));
                 p.closeInventory();
                 new Achievements(p);
             }), slot);
