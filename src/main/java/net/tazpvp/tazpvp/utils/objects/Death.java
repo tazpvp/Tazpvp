@@ -104,6 +104,10 @@ public class Death {
     }
 
     public void dropHead() {
+        if (pVictim.getName().startsWith(".")) {
+            return;
+        }
+
         PlayerWrapper killerWrapper = PlayerWrapper.getPlayer(killer);
         if (killerWrapper.getTalentEntity().isHarvester()) {
             if (r.nextInt(100) < 1) return;
