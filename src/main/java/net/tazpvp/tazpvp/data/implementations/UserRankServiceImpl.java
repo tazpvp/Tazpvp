@@ -131,4 +131,17 @@ public class UserRankServiceImpl implements UserRankService {
     public String getHighestPrefix(UserRankEntity userRankEntity) {
         return getHighestRank(userRankEntity).getPrefix();
     }
+
+    @Override
+    public boolean hasRank(UserRankEntity userRankEntity, String rankName) {
+
+        List<String> ranks = userRankEntity.getRanks()
+                .stream()
+                .map(ExpirationRankEntity::getGameRankEntity)
+                .map(GameRankEntity::getName)
+                .filter(name -> name.equalsIgnoreCase(rankName))
+                .toList();
+
+        return !ranks.isEmpty();
+    }
 }

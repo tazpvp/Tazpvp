@@ -58,7 +58,7 @@ public class MaterialSelectionGui extends GUI {
         for (ParticleSelectionContainer particleSelectionContainer : particleSelectionContainers) {
             addButton(Button.create(ItemBuilder.of(particleSelectionContainer.material()).name(particleSelectionContainer.name()).lore(CC.GRAY + particleSelectionContainer.lore()).build(), e -> {
                 PlayerWrapper pw = PlayerWrapper.getPlayer(p);
-                if (pw.getRank().getRank() > 8) {
+                if (pw.getRank().getHierarchy() >= 1) {
                     p.sendMessage(CC.GREEN + "[Lorenzo]" + CC.RED + "You require a premium subscription for this feature.");
                     return;
                 }

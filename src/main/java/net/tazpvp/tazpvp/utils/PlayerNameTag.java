@@ -34,7 +34,7 @@ public class PlayerNameTag {
             return;
         }
 
-        String teamName = "" + otherWrapper.getRank().getRank() + p2.getUniqueId();
+        String teamName = "" + otherWrapper.getRank().getHierarchy() + p2.getUniqueId();
         Team team = p1.getScoreboard().getTeam(teamName);
         if (team != null) {
             team.unregister();
@@ -56,9 +56,9 @@ public class PlayerNameTag {
             prefixSeparator = " ";
         }
 
-        if (otherWrapper.getRank() == Rank.PREMIUM) {
+        if (otherWrapper.getRank().getName().equals("premium")) {
             team.setColor(ChatColor.GREEN);
-        } else if (otherWrapper.getRank() == Rank.DEFAULT) {
+        } else if (otherWrapper.getRank().getName().equals("default")) {
             team.setColor(ChatColor.GRAY);
         }
 

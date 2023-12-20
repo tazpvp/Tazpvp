@@ -69,11 +69,10 @@ public class GuildEdit extends GUI {
     private void addItems(Player p, Guild g) {
         fill(0, 3 * 9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE).name(" ").build());
 
-        final RankService rankService = new RankServiceImpl();
-        final RankEntity rankEntity = rankService.getOrDefault(p.getUniqueId());
+
 
         Button guildIcon = Button.create(ItemBuilder.of(g.getIcon()).name(CC.GREEN + "Edit Guild Icon").lore(REQ_RANK).build(), e -> {
-            if (PlayerWrapper.getPlayer(p.getUniqueId()).getRank().getRank() <= 8) {
+            if (PlayerWrapper.getPlayer(p.getUniqueId()).getRank().getHierarchy() >= 1) {
                 new Icon(p, g);
             } else {
                 p.sendMessage(NO_RANK);
@@ -89,7 +88,7 @@ public class GuildEdit extends GUI {
         });
 
         Button guildTag = Button.create(ItemBuilder.of(Material.NAME_TAG).name(CC.GREEN + "Edit Tag").lore(REQ_RANK).build(), e -> {
-            if (PlayerWrapper.getPlayer(p.getUniqueId()).getRank().getRank() <= 8) {
+            if (PlayerWrapper.getPlayer(p.getUniqueId()).getRank().getHierarchy() >= 1) {
                 setTag(p, g);
             } else {
                 p.sendMessage(NO_RANK);

@@ -40,6 +40,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -144,12 +145,8 @@ public class ChatFunctions {
 
     public static boolean hasPremium(Player p, @Nullable String prefix) {
         PlayerWrapper pw = PlayerWrapper.getPlayer(p);
-        if (pw.getRank().getRank() > 8) {
-            if (prefix != null) {
-                p.sendMessage(prefix + "You require a premium subscription for this feature.");
-            } else {
-                p.sendMessage(CC.RED + "You require a premium subscription for this feature.");
-            }
+        if (pw.getRank().getHierarchy() >= 1) {
+            p.sendMessage(Objects.requireNonNullElse(prefix, CC.RED) + "You require a premium subscription for this feature.");
             p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
             return false;
         }
