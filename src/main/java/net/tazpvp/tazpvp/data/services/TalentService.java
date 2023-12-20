@@ -12,4 +12,5 @@ public interface TalentService extends DataService {
     TalentEntity getTalentEntity(UUID uuid);
     boolean talentEntityExists(UUID uuid);
     TalentEntity getOrDefault(UUID uuid);
+    void removeTalentEntity(TalentEntity talentEntity);
 }
