@@ -116,6 +116,12 @@ public class PlayerFunctions {
 
     public static void kitPlayer(Player p) {
         Inventory inv = p.getInventory();
+        int playTime = PersistentData.getInt(p.getUniqueId(), DataTypes.PLAYTIMEUNIX);
+        int thirtyMinutesInMs = 30 * 60 * 1000;
+
+        if (playTime <= thirtyMinutesInMs) {
+            p.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 2));
+        }
 
         armorPlayer(p);
 
