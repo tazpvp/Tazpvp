@@ -9,6 +9,7 @@ import net.tazpvp.tazpvp.data.services.GameRankService;
 import net.tazpvp.tazpvp.data.services.UserRankService;
 import net.tazpvp.tazpvp.utils.TimeToken;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -74,6 +75,10 @@ public class RankUserCommand extends NRCommand {
             sender.sendMessage("Successfully Added Rank");
         } else {
             sendIncorrectUsage(sender, "Couldn't find sub-argument " + addOrRemove);
+        }
+
+        if (offlinePlayer.isOnline()) {
+            PlayerWrapper.getPlayer(uuid).refreshRankEntity();
         }
 
         return true;

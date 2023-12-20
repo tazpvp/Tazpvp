@@ -161,4 +161,19 @@ public class UserRankServiceImpl implements UserRankService {
 
         return !ranks.isEmpty();
     }
+
+    @Override
+    public void removeAllExpiredRanks(UserRankEntity userRankEntity) {
+        final ExpirationRankService expirationRankService = new ExpirationRankServiceImpl();
+        final ForeignCollection<ExpirationRankEntity> expirationRankEntities = userRankEntity.getRanks();
+
+        final List<ExpirationRankEntity> entitiesFiltered = expirationRankEntities
+                .stream()
+                .filter(entity -> !expirationRankService.hasRankExpired(entity))
+                .toList();
+
+        expirationRankEntities.clear();
+        expirationRankEntities.addAll(entitiesFiltered);
+        saveUserRankEntity(userRankEntity);
+    }
 }

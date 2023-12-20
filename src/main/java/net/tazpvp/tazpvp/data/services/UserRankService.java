@@ -22,4 +22,5 @@ public interface UserRankService extends DataService {
     List<String> getPermissions(UserRankEntity userRankEntity);
     String getHighestPrefix(UserRankEntity userRankEntity);
     boolean hasRank(UserRankEntity userRankEntity, String rankName);
+    void removeAllExpiredRanks(UserRankEntity userRankEntity);
 }
