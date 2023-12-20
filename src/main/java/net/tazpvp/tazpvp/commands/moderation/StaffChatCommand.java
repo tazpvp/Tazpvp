@@ -38,7 +38,7 @@ public class StaffChatCommand extends NRCommand {
 
             for (Player plr : Bukkit.getOnlinePlayers()) {
                 if (plr.hasPermission("tazpvp.staffchat")) {
-                    plr.sendMessage(CC.YELLOW.toString() + CC.BOLD + "Staff> " + player.getName() + CC.WHITE + " " + message);
+                    plr.sendMessage(CC.DARK_PURPLE.toString() + CC.BOLD + "[Staff] " + player.getName() + CC.WHITE + " " + message);
                 }
             }
         } else {
