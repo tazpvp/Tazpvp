@@ -73,7 +73,8 @@ public class Leaderboard {
         COINS(DataTypes.COINS, "Coins"),
         DEATHS(DataTypes.DEATHS, "Deaths"),
         KILLS(DataTypes.KILLS, "Kills"),
-        LEVELS(DataTypes.LEVEL, "Levels");
+        LEVELS(DataTypes.LEVEL, "Levels"),
+        REBIRTH(DataTypes.REBIRTH, "Rebirths");
 
         private final DataTypes dataTypes;
         @Getter
