@@ -55,6 +55,9 @@ public class CombatTagFunctions {
     }
 
     public static CombatTag getTag(UUID ID) {
+        if (!CombatTag.tags.containsKey(ID)) {
+            CombatTag.tags.put(ID, new CombatTag(ID));
+        }
         return CombatTag.tags.get(ID);
     }
 
