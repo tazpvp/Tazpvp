@@ -126,6 +126,7 @@ public class UserRankServiceImpl implements UserRankService {
 
     @Override
     public GameRankEntity getHighestRank(UserRankEntity userRankEntity) {
+        System.out.println(userRankEntity.getRanks().toString());
 
         final List<GameRankEntity> gameRankEntities = userRankEntity.getRanks().stream()
                 .map(ExpirationRankEntity::getGameRankEntity)
