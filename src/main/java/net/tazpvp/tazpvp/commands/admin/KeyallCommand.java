@@ -36,7 +36,7 @@ public class KeyallCommand extends NRCommand {
             op.getInventory().addItem(KeyFactory.getFactory().createRareKey());
             op.getInventory().addItem(KeyFactory.getFactory().createMythicKey());
         }
-        ChatFunctions.announce(CC.LIGHT_PURPLE.BOLD + "KEYALL" + CC.WHITE + "Everyone has been given crate keys.\n", Sound.BLOCK_AMETHYST_BLOCK_CHIME);
+        ChatFunctions.announce(CC.LIGHT_PURPLE.BOLD + "KEYALL" + CC.WHITE + " - Everyone has been given crate keys!\n", Sound.BLOCK_AMETHYST_BLOCK_CHIME);
 
         return true;
     }
