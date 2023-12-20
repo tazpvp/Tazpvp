@@ -17,5 +17,6 @@ public class RankCommand extends NRCommand {
         super(new Label("rank", "tazpvp.rank"));
         addSubcommand(new RankPermissionCommand());
         addSubcommand(new RankRankCommand());
+        addSubcommand(new RankUserCommand());
     }
 }
