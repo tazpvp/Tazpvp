@@ -78,6 +78,7 @@ public class Prestige extends GUI {
             p.getInventory().clear();
             PlayerFunctions.kitPlayer(p);
 
+            p.closeInventory();
             p.sendTitle(CC.LIGHT_PURPLE + "" + CC.BOLD + "REBIRTH", CC.DARK_PURPLE + "You are reborn anew", 20, 40, 20);
             p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, 1, 1);
         }), 13);
