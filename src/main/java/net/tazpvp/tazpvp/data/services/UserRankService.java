@@ -17,6 +17,7 @@ public interface UserRankService extends DataService {
     UserRankEntity getOrDefault(UUID uuid);
     UserRankEntity addRank(UserRankEntity userRankEntity, GameRankEntity gameRankEntity);
     UserRankEntity addExpiringRank(UserRankEntity userRankEntity, GameRankEntity gameRankEntity, long timestamp);
+    void removeExpiringRank(UserRankEntity userRankEntity, GameRankEntity gameRankEntity);
     GameRankEntity getHighestRank(UserRankEntity userRankEntity);
     List<String> getPermissions(UserRankEntity userRankEntity);
     String getHighestPrefix(UserRankEntity userRankEntity);

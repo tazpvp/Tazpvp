@@ -107,6 +107,21 @@ public class UserRankServiceImpl implements UserRankService {
     }
 
     @Override
+    public void removeExpiringRank(UserRankEntity userRankEntity, GameRankEntity gameRankEntity) {
+        final ForeignCollection<ExpirationRankEntity> expirationRankEntities = userRankEntity.getRanks();
+
+        final List<ExpirationRankEntity> filteredEntities = expirationRankEntities
+                .stream()
+                .filter(expirationRankEntity -> expirationRankEntity.getGameRankEntity().getId() != gameRankEntity.getId())
+                .toList();
+
+
+
+        userRankEntity.setRanks(expirationRankEntities);
+        saveUserRankEntity(userRankEntity);
+    }
+
+    @Override
     public GameRankEntity getHighestRank(UserRankEntity userRankEntity) {
 
         final List<GameRankEntity> gameRankEntities = userRankEntity.getRanks().stream()
