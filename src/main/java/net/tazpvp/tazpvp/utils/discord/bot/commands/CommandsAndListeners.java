@@ -131,6 +131,8 @@ public class CommandsAndListeners extends ListenerAdapter {
                     event.reply("You are currently on cooldown. Please wait **6 Hours** before your next suggestion").setEphemeral(true).queue();
                     return;
                 }
+            } else {
+                cooldownIdMap.put(userId, System.currentTimeMillis());
             }
 
             final String suggestion = event.getOption("suggestion").getAsString();
