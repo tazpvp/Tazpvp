@@ -67,7 +67,7 @@ public class Caesar extends NPC {
                         ),
                         List.of(
                                 "Mine ore, sell ore, repeat.",
-                                "Upgrade your pickaxe to mine more rare ores.",
+                                "Upgrade your pickaxe to mine rarer ores.",
                                 "Beware of enemies! They may try to sneak up on you.", // Does dying with a upgraded pickaxe make you lose your upgrades? @rownox
                                 "I dunno what a \"premium\" is, but buy it for the ability to sell all your ores at once!",
                                 "Sell and upgrade, all I was trained to do.",
