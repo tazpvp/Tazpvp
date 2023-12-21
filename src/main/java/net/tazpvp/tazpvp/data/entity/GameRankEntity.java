@@ -29,6 +29,9 @@ public class GameRankEntity {
     @DatabaseField
     private int hierarchy;
 
+    @DatabaseField(defaultValue = "5")
+    private int weight;
+
     @ForeignCollectionField
     private ForeignCollection<PermissionEntity> permissions;
 }

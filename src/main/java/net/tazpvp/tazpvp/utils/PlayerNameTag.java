@@ -36,7 +36,7 @@ public class PlayerNameTag {
 
         otherWrapper.refreshRankEntity();
 
-        String teamName = "" + otherWrapper.getRank().getHierarchy() + p2.getUniqueId();
+        String teamName = "" + otherWrapper.getRank().getWeight() + p2.getUniqueId();
         Team team = p1.getScoreboard().getTeam(teamName);
         if (team != null) {
             team.unregister();

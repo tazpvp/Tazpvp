@@ -137,7 +137,7 @@ public class PlayerWrapper {
     }
 
     public String getRankPrefix() {
-        if (getRank().getPrefix() != null) {
+        if (!getRank().getPrefix().isEmpty()) {
             return getRank().getPrefix();
         }
         return getCustomPrefix();

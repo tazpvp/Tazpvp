@@ -40,6 +40,7 @@ public class GameRankServiceImpl implements GameRankService {
         gameRankEntity.setName(name);
         gameRankEntity.setPrefix(prefix);
         gameRankEntity.setHierarchy(hierarchy);
+        gameRankEntity.setWeight(5);
 
         saveGameRank(gameRankEntity);
 
