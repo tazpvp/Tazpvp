@@ -58,7 +58,7 @@ public class PremiumMenu extends GUI {
     private final String prefix = CC.DARK_AQUA + "[Lorenzo] " + CC.AQUA;
 
     private final List<ParticleSelectionContainer> deathParticles = new ArrayList<>(Arrays.asList(
-            new ParticleSelectionContainer(Material.REDSTONE, Particle.REDSTONE, CC.RED + "Redstone", "Forge from the stone of Asia."),
+            new ParticleSelectionContainer(Material.REDSTONE, Particle.CRIT_MAGIC, CC.RED + "Redstone", "Forge from the stone of Asia."),
             new ParticleSelectionContainer(Material.WATER_BUCKET, Particle.DRIP_WATER, CC.BLUE + "Wet", "Someone needed to cool off."),
             new ParticleSelectionContainer(Material.TNT, Particle.EXPLOSION_NORMAL, CC.DARK_RED + "Creeper?", "Aww man."),
             new ParticleSelectionContainer(Material.FIREWORK_ROCKET, Particle.FIREWORKS_SPARK, CC.GREEN + "Rocket", "Go out with a bang!"),
