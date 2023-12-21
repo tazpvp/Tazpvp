@@ -56,11 +56,11 @@ public class PlayerNameTag {
             prefixSeparator = " ";
         }
 
-        if (otherWrapper.getRank() == Rank.PREMIUM) {
-            team.setColor(ChatColor.GREEN);
-        } else if (otherWrapper.getRank() == Rank.DEFAULT) {
-            team.setColor(ChatColor.GRAY);
-        }
+//        if (otherWrapper.getRank() == Rank.PREMIUM) {
+//            team.setColor(ChatColor.GREEN);
+//        } else if (otherWrapper.getRank() == Rank.DEFAULT) {
+//            team.setColor(ChatColor.GRAY);
+//        }
 
         team.setColor(getLastColors(otherWrapper.getRankPrefix()));
 
