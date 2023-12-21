@@ -18,5 +18,7 @@ public class RankCommand extends NRCommand {
         addSubcommand(new RankPermissionCommand());
         addSubcommand(new RankRankCommand());
         addSubcommand(new RankUserCommand());
+        addSubcommand(new RankResetCommand());
+        addSubcommand(new RankListCommand());
     }
 }

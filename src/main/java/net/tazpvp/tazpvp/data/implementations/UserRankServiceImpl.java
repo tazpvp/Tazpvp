@@ -187,4 +187,16 @@ public class UserRankServiceImpl implements UserRankService {
         expirationRankEntities.addAll(entitiesFiltered);
         saveUserRankEntity(userRankEntity);
     }
+
+    @Override
+    public void resetAllRanks(UserRankEntity userRankEntity) {
+        final GameRankService gameRankService = new GameRankServiceImpl();
+        ForeignCollection<ExpirationRankEntity> ranks = userRankEntity.getRanks();
+
+        ranks.clear();
+        userRankEntity.setRanks(ranks);
+        UserRankEntity userRankEntity1 = addRank(userRankEntity, gameRankService.getGameRankFromName("default"));
+
+        saveUserRankEntity(userRankEntity1);
+    }
 }
