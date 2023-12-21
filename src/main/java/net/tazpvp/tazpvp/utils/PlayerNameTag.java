@@ -1,5 +1,6 @@
 package net.tazpvp.tazpvp.utils;
 
+import com.google.common.base.Preconditions;
 import net.tazpvp.tazpvp.data.Rank;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
@@ -7,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
+import org.jetbrains.annotations.NotNull;
 import world.ntdi.nrcore.utils.ChatUtils;
 
 public class PlayerNameTag {
@@ -54,11 +56,13 @@ public class PlayerNameTag {
             prefixSeparator = " ";
         }
 
-        if (otherWrapper.getRank() == Rank.PREMIUM) {
-            team.setColor(ChatColor.GREEN);
-        } else if (otherWrapper.getRank() == Rank.DEFAULT) {
-            team.setColor(ChatColor.GRAY);
-        }
+//        if (otherWrapper.getRank() == Rank.PREMIUM) {
+//            team.setColor(ChatColor.GREEN);
+//        } else if (otherWrapper.getRank() == Rank.DEFAULT) {
+//            team.setColor(ChatColor.GRAY);
+//        }
+
+        team.setColor(getLastColors(otherWrapper.getRankPrefix()));
 
         final String suffix = otherWrapper.getGuildTag();
         final String suffixSeparator = suffix.isBlank() ? "" : " ";
@@ -70,5 +74,22 @@ public class PlayerNameTag {
         final boolean isBold = gradient.toCharArray()[gradient.toCharArray().length-2] == 'b';
 
         team.addPlayer(p2);
+    }
+
+    public ChatColor getLastColors(@NotNull String input) {
+
+        int length = input.length();
+
+        // Search backwards from the end as it is faster
+        for (int index = length - 1; index > -1; index--) {
+            char section = input.charAt(index);
+            if (section == ChatColor.COLOR_CHAR && index < length - 1) {
+                char c = input.charAt(index + 1);
+
+                return ChatColor.getByChar(c);
+            }
+        }
+
+        return null;
     }
 }
