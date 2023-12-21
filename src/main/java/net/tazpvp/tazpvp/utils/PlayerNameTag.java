@@ -58,8 +58,6 @@ public class PlayerNameTag {
             prefixSeparator = " ";
         }
 
-        System.out.println(otherWrapper.getRank());
-
         if (otherWrapper.getRank().getName().equals("premium")) {
             team.setColor(ChatColor.GREEN);
         } else if (otherWrapper.getRank().getName().equals("default")) {
