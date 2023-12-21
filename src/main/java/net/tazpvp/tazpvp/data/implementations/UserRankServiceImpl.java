@@ -77,7 +77,7 @@ public class UserRankServiceImpl implements UserRankService {
 
             final ExpirationRankEntity expirationRankEntity = expirationRankService
                     .createExpirationRank(userRankEntityTemp,
-                            gameRankService.getOrCreateIfNotExists("default", "", 0),
+                            gameRankService.getGameRankFromName("default"),
                             0L);
 
             expirationRankEntities.add(expirationRankEntity);
@@ -126,7 +126,7 @@ public class UserRankServiceImpl implements UserRankService {
 
     @Override
     public GameRankEntity getHighestRank(UserRankEntity userRankEntity) {
-        System.out.println(userRankEntity.getRanks().toString());
+        userRankEntity.getRanks().forEach(System.out::println);
 
         final List<GameRankEntity> gameRankEntities = userRankEntity.getRanks().stream()
                 .map(ExpirationRankEntity::getGameRankEntity)

@@ -96,7 +96,9 @@ public class GameRankServiceImpl implements GameRankService {
     public GameRankEntity getOrCreateIfNotExists(String name, String prefix, int hierarchy) {
         GameRankEntity gameRankEntity = getGameRankFromName(name);
         if (gameRankEntity == null) {
-            return createGameRank(name, prefix, hierarchy);
+            final GameRankEntity gameRankEntity1 = createGameRank(name, prefix, hierarchy);
+            saveGameRank(gameRankEntity1);
+            return gameRankEntity1;
         }
         return gameRankEntity;
     }
