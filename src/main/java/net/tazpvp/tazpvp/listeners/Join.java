@@ -35,6 +35,8 @@ package net.tazpvp.tazpvp.listeners;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.data.implementations.UserRankServiceImpl;
+import net.tazpvp.tazpvp.data.services.UserRankService;
 import net.tazpvp.tazpvp.utils.PlayerNameTag;
 import net.tazpvp.tazpvp.utils.PlaytimeUtil;
 import net.tazpvp.tazpvp.utils.TimeUtil;
@@ -134,6 +136,13 @@ public class Join implements Listener {
                 }
             }
         }
+
+        PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(p);
+
+        final UserRankService userRankService = new UserRankServiceImpl();
+        userRankService.removeAllExpiredRanks(playerWrapper.getUserRankEntity());
+
+        playerWrapper.refreshRankEntity();
 
 
 //        int ranking = 1; //TODO: Use database and rankdata

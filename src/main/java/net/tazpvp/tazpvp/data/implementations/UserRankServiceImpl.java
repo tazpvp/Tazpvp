@@ -6,12 +6,14 @@ import com.j256.ormlite.dao.ForeignCollection;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.ExpirationRankEntity;
 import net.tazpvp.tazpvp.data.entity.GameRankEntity;
+import net.tazpvp.tazpvp.data.entity.PermissionEntity;
 import net.tazpvp.tazpvp.data.entity.UserRankEntity;
 import net.tazpvp.tazpvp.data.services.ExpirationRankService;
 import net.tazpvp.tazpvp.data.services.GameRankService;
 import net.tazpvp.tazpvp.data.services.UserRankService;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
@@ -62,6 +64,7 @@ public class UserRankServiceImpl implements UserRankService {
             userRankEntityTemp.setUuid(uuid);
             userRankEntityTemp.setDeathParticle(null);
             userRankEntityTemp.setArrowParticle(null);
+            userRankEntityTemp.setCustomPrefix(null);
             try {
                 getUserDao().assignEmptyForeignCollection(userRankEntityTemp, "ranks");
             } catch (SQLException e) {
@@ -74,13 +77,15 @@ public class UserRankServiceImpl implements UserRankService {
 
             final ExpirationRankEntity expirationRankEntity = expirationRankService
                     .createExpirationRank(userRankEntityTemp,
-                            gameRankService.getOrCreateIfNotExists("default", "", 0),
+                            gameRankService.getGameRankFromName("default"),
                             0L);
 
             expirationRankEntities.add(expirationRankEntity);
             userRankEntityTemp.setRanks(expirationRankEntities);
 
-            return userRankEntityTemp;
+            saveUserRankEntity(userRankEntityTemp);
+
+            return getOrDefault(uuid);
         }
 
         return userRankEntity;
@@ -105,6 +110,23 @@ public class UserRankServiceImpl implements UserRankService {
     }
 
     @Override
+    public void removeExpiringRank(UserRankEntity userRankEntity, GameRankEntity gameRankEntity) {
+        final ForeignCollection<ExpirationRankEntity> expirationRankEntities = userRankEntity.getRanks();
+
+        final List<ExpirationRankEntity> filteredEntities = expirationRankEntities
+                .stream()
+                .filter(expirationRankEntity -> expirationRankEntity.getGameRankEntity().getId() != gameRankEntity.getId())
+                .toList();
+
+
+        expirationRankEntities.clear();
+        expirationRankEntities.addAll(filteredEntities);
+
+        userRankEntity.setRanks(expirationRankEntities);
+        saveUserRankEntity(userRankEntity);
+    }
+
+    @Override
     public GameRankEntity getHighestRank(UserRankEntity userRankEntity) {
 
         final List<GameRankEntity> gameRankEntities = userRankEntity.getRanks().stream()
@@ -112,5 +134,69 @@ public class UserRankServiceImpl implements UserRankService {
                 .toList();
 
         return gameRankEntities.stream().max(Comparator.comparing(GameRankEntity::getHierarchy)).get();
+    }
+
+    @Override
+    public List<String> getPermissions(UserRankEntity userRankEntity) {
+        final List<String> perms = new ArrayList<>();
+
+        for (ExpirationRankEntity expirationRankEntity : userRankEntity.getRanks()) {
+            final GameRankEntity gameRankEntity = expirationRankEntity.getGameRankEntity();
+
+            final ForeignCollection<PermissionEntity> permissionEntities = gameRankEntity.getPermissions();
+
+            if (permissionEntities != null) {
+                for (PermissionEntity permissionEntity : permissionEntities) {
+                    perms.add(permissionEntity.getPermission());
+                }
+            }
+        }
+
+        return perms;
+    }
+
+    @Override
+    public String getHighestPrefix(UserRankEntity userRankEntity) {
+        return getHighestRank(userRankEntity).getPrefix();
+    }
+
+    @Override
+    public boolean hasRank(UserRankEntity userRankEntity, String rankName) {
+
+        List<String> ranks = userRankEntity.getRanks()
+                .stream()
+                .map(ExpirationRankEntity::getGameRankEntity)
+                .map(GameRankEntity::getName)
+                .filter(name -> name.equalsIgnoreCase(rankName))
+                .toList();
+
+        return !ranks.isEmpty();
+    }
+
+    @Override
+    public void removeAllExpiredRanks(UserRankEntity userRankEntity) {
+        final ExpirationRankService expirationRankService = new ExpirationRankServiceImpl();
+        final ForeignCollection<ExpirationRankEntity> expirationRankEntities = userRankEntity.getRanks();
+
+        final List<ExpirationRankEntity> entitiesFiltered = expirationRankEntities
+                .stream()
+                .filter(entity -> !expirationRankService.hasRankExpired(entity))
+                .toList();
+
+        expirationRankEntities.clear();
+        expirationRankEntities.addAll(entitiesFiltered);
+        saveUserRankEntity(userRankEntity);
+    }
+
+    @Override
+    public void resetAllRanks(UserRankEntity userRankEntity) {
+        final GameRankService gameRankService = new GameRankServiceImpl();
+        ForeignCollection<ExpirationRankEntity> ranks = userRankEntity.getRanks();
+
+        ranks.clear();
+        userRankEntity.setRanks(ranks);
+        UserRankEntity userRankEntity1 = addRank(userRankEntity, gameRankService.getGameRankFromName("default"));
+
+        saveUserRankEntity(userRankEntity1);
     }
 }

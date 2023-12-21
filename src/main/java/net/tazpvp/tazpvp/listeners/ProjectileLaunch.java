@@ -72,8 +72,8 @@ public class ProjectileLaunch implements Listener {
         if (e.getEntityType() == EntityType.ARROW) {
             if (e.getEntity().getShooter() instanceof Player p) {
                 final PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(p);
-                if (playerWrapper.getRank() != Rank.DEFAULT) {
-                    final String particleText = playerWrapper.getRankEntity().getArrowParticle();
+                if (!playerWrapper.getRank().getName().equals("default")) {
+                    final String particleText = playerWrapper.getUserRankEntity().getArrowParticle();
 
                     if (particleText != null) {
                         arrowsToFollow.put(e.getEntity(), Particle.valueOf(particleText));

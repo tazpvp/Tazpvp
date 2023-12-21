@@ -91,7 +91,7 @@ public class Chat implements Listener {
             }
         }
 
-        if (pw.getRank() == Rank.DEFAULT && pw.getLastMessageSent().equalsIgnoreCase(e.getMessage())) {
+        if (pw.getRank().getName().equals("default") && pw.getLastMessageSent().equalsIgnoreCase(e.getMessage())) {
             e.setCancelled(true);
             p.sendMessage(CC.RED + "Please do not spam our chats.");
             return;

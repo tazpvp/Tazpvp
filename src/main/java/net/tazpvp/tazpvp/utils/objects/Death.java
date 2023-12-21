@@ -127,8 +127,8 @@ public class Death {
     public void playParticle() {
         PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(victim);
 
-        if (playerWrapper.getRank() != Rank.DEFAULT) {
-            final String particle = playerWrapper.getRankEntity().getDeathParticle();
+        if (playerWrapper.getRank().getHierarchy() >= 1) {
+            final String particle = playerWrapper.getUserRankEntity().getDeathParticle();
 
             if (particle != null) {
                 location.getWorld().spawnParticle(Particle.valueOf(particle), location, 6);
