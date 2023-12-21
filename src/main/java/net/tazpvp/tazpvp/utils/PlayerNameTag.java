@@ -34,6 +34,8 @@ public class PlayerNameTag {
             return;
         }
 
+        otherWrapper.refreshRankEntity();
+
         String teamName = "" + otherWrapper.getRank().getHierarchy() + p2.getUniqueId();
         Team team = p1.getScoreboard().getTeam(teamName);
         if (team != null) {
@@ -55,6 +57,8 @@ public class PlayerNameTag {
             prefix = ChatUtils.chat(otherWrapper.getRankPrefix());
             prefixSeparator = " ";
         }
+
+        System.out.println(otherWrapper.getRank());
 
         if (otherWrapper.getRank().getName().equals("premium")) {
             team.setColor(ChatColor.GREEN);

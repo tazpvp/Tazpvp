@@ -20,7 +20,7 @@ public class GameRankEntity {
     @DatabaseField(generatedId = true)
     private int id;
 
-    @DatabaseField(unique = true)
+    @DatabaseField(unique = true, canBeNull = false)
     private String name;
 
     @DatabaseField(width = 1024)

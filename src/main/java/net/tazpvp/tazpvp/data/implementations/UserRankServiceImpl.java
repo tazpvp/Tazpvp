@@ -83,7 +83,9 @@ public class UserRankServiceImpl implements UserRankService {
             expirationRankEntities.add(expirationRankEntity);
             userRankEntityTemp.setRanks(expirationRankEntities);
 
-            return userRankEntityTemp;
+            saveUserRankEntity(userRankEntityTemp);
+
+            return getOrDefault(uuid);
         }
 
         return userRankEntity;
@@ -126,7 +128,6 @@ public class UserRankServiceImpl implements UserRankService {
 
     @Override
     public GameRankEntity getHighestRank(UserRankEntity userRankEntity) {
-        userRankEntity.getRanks().forEach(System.out::println);
 
         final List<GameRankEntity> gameRankEntities = userRankEntity.getRanks().stream()
                 .map(ExpirationRankEntity::getGameRankEntity)

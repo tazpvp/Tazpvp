@@ -69,7 +69,7 @@ public class RankUserCommand extends NRCommand {
             }
 
             final long expiration = new TimeToken(args[3]).getUnixTimestamp();
-            final long expirationWithCurrentTime = System.currentTimeMillis() + expiration;
+            final long expirationWithCurrentTime = (expiration == 0L ? 0 : System.currentTimeMillis() + expiration);
 
             userRankService.addExpiringRank(userRankEntity, gameRankEntity, expirationWithCurrentTime);
             sender.sendMessage("Successfully Added Rank");

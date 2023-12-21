@@ -133,7 +133,7 @@ public class PlayerWrapper {
     }
 
     public GameRankEntity getRank() {
-        return this.userRankService.getHighestRank(getUserRankEntity());
+        return this.userRankService.getHighestRank(this.userRankEntity);
     }
 
     public String getRankPrefix() {
