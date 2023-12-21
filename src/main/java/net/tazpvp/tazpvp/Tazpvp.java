@@ -266,7 +266,7 @@ public final class Tazpvp extends JavaPlugin {
                 new LeaderboardCommand(),
                 new ApplyCommand(),
                 new AdCommand(),
-                new PermissionsCommand(),
+//                new PermissionsCommand(),
                 new TeleportWorldCommand(),
                 new EditCommand(),
                 new PlaytimeCommand(),
@@ -280,7 +280,7 @@ public final class Tazpvp extends JavaPlugin {
                 new KeyallCommand(),
                 new ResetStatsCommand(),
                 new BroadcastCommand(),
-                new TempPermissionsCommand(),
+//                new TempPermissionsCommand(),
                 new StaffChatCommand(),
                 new RankCommand()
         );
