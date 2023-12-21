@@ -124,7 +124,7 @@ public class CommandsAndListeners extends ListenerAdapter {
 
             final long userId = event.getUser().getIdLong();
 
-            if (cooldownIdMap.containsKey(userId)) {
+            if (cooldownIdMap.containsKey(userId) ) {
                 if (cooldownIdMap.get(userId) < System.currentTimeMillis()) {
                     cooldownIdMap.remove(userId);
                 } else {
@@ -132,7 +132,7 @@ public class CommandsAndListeners extends ListenerAdapter {
                     return;
                 }
             } else {
-                cooldownIdMap.put(userId, System.currentTimeMillis());
+                cooldownIdMap.put(userId, System.currentTimeMillis() + 6 * 60 * 60 * 1000);
             }
 
             final String suggestion = event.getOption("suggestion").getAsString();
