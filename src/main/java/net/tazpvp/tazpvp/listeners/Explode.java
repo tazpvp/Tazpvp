@@ -1,9 +1,7 @@
 package net.tazpvp.tazpvp.listeners;
 
 import kotlin.Metadata;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.TNTPrimed;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
@@ -22,6 +20,10 @@ public class Explode implements Listener {
                     entity.setVelocity(new Vector(0, 0, 0));
                 }
             }
+        }
+
+        if (e.getEntity().getType() == EntityType.ENDER_CRYSTAL) {
+            e.setCancelled(true);
         }
     }
 }
