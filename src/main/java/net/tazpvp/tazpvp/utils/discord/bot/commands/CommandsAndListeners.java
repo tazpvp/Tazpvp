@@ -35,6 +35,7 @@ package net.tazpvp.tazpvp.utils.discord.bot.commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.channel.unions.MessageChannelUnion;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -44,14 +45,20 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class LeaderboardCommand extends ListenerAdapter {
+public class CommandsAndListeners extends ListenerAdapter {
     private final long channelId;
+    private final long suggestionChannelId;
+    private final Map<Long, Long> cooldownIdMap;
 
-    public LeaderboardCommand(long channelId) {
+    public CommandsAndListeners(long channelId, long suggestionChannelId) {
         this.channelId = channelId;
+        this.suggestionChannelId = suggestionChannelId;
+        this.cooldownIdMap = new HashMap<>();
     }
 
     @Override
@@ -109,6 +116,40 @@ public class LeaderboardCommand extends ListenerAdapter {
             embedBuilder.setDescription(stringBuilder.toString());
 
             event.replyEmbeds(embedBuilder.build()).queue();
+        } else if (event.getName().equals("suggest")) {
+            if (event.getOption("suggestion") == null) {
+                event.reply("No suggestion found...").setEphemeral(true).queue();
+                return;
+            }
+
+            final long userId = event.getUser().getIdLong();
+
+            if (cooldownIdMap.containsKey(userId)) {
+                if (cooldownIdMap.get(userId) < System.currentTimeMillis()) {
+                    cooldownIdMap.remove(userId);
+                } else {
+                    event.reply("You are currently on cooldown. Please wait **6 Hours** before your next suggestion").setEphemeral(true).queue();
+                    return;
+                }
+            } else {
+                cooldownIdMap.put(userId, System.currentTimeMillis());
+            }
+
+            final String suggestion = event.getOption("suggestion").getAsString();
+            final String senderUsername = event.getUser().getEffectiveName();
+
+            final EmbedBuilder embedBuilder = new EmbedBuilder();
+            embedBuilder.setTitle(senderUsername + "'s Suggestion");
+            embedBuilder.setColor(Color.pink);
+            embedBuilder.setDescription(suggestion);
+
+            event.reply("Suggestion suggested!").setEphemeral(true).queue();
+
+            event.getGuild().getTextChannelById(suggestionChannelId)
+                    .sendMessageEmbeds(embedBuilder.build()).queue(message -> {
+                        message.addReaction(Emoji.fromUnicode("U+1F44D")).queue();
+                        message.addReaction(Emoji.fromUnicode("U+1F44E")).queue();
+                    });
         }
     }
 }

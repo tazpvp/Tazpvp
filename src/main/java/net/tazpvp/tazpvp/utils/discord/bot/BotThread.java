@@ -46,7 +46,7 @@ import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.utils.discord.bot.commands.LeaderboardCommand;
+import net.tazpvp.tazpvp.utils.discord.bot.commands.CommandsAndListeners;
 import org.bukkit.Bukkit;
 
 @RequiredArgsConstructor
@@ -65,7 +65,7 @@ public class BotThread extends Thread {
         JDA jda = JDABuilder.createDefault(this.token)
                 .disableCache(CacheFlag.VOICE_STATE, CacheFlag.EMOJI, CacheFlag.STICKER, CacheFlag.SCHEDULED_EVENTS, CacheFlag.MEMBER_OVERRIDES, CacheFlag.FORUM_TAGS, CacheFlag.ACTIVITY, CacheFlag.ROLE_TAGS, CacheFlag.CLIENT_STATUS)
                 .setEnabledIntents(GatewayIntent.GUILD_MEMBERS)
-                .addEventListeners(new LeaderboardCommand(minecraftChannelId))
+                .addEventListeners(new CommandsAndListeners(minecraftChannelId, 1054970919141003285L))
                 .enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT)
                 .build();
 
@@ -83,7 +83,9 @@ public class BotThread extends Thread {
                                         .addChoice("Coins", "COINS")
                                         .addChoice("Levels", "LEVELS")
                                         .setRequired(true)
-                        )
+                        ),
+                Commands.slash("suggest", "Suggest a feature for Tazpvp")
+                        .addOption(OptionType.STRING, "suggestion", "The suggestion you would like to suggest.", true)
         ).queue();
     }
 
