@@ -143,6 +143,8 @@ public class CommandsAndListeners extends ListenerAdapter {
             embedBuilder.setColor(Color.pink);
             embedBuilder.setDescription(suggestion);
 
+            event.reply("Suggestion suggested!").setEphemeral(true).queue();
+
             event.getGuild().getTextChannelById(suggestionChannelId)
                     .sendMessageEmbeds(embedBuilder.build()).queue(message -> {
                         message.addReaction(Emoji.fromUnicode("U+1F44D")).queue();
