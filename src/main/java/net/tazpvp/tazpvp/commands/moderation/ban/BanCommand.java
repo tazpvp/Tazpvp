@@ -33,9 +33,12 @@
 package net.tazpvp.tazpvp.commands.moderation.ban;
 
 import lombok.NonNull;
+import net.tazpvp.tazpvp.data.implementations.PunishmentServiceImpl;
+import net.tazpvp.tazpvp.data.services.PunishmentService;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.PunishmentFunctions;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -71,6 +74,17 @@ public class BanCommand extends NRCommand {
             Player target2 = target.getPlayer();
             if (target2.hasPermission("tazpvp.ban")) {
                 sender.sendMessage(CC.RED + "You cannot ban this person.");
+                return true;
+            }
+        }
+
+        final PunishmentService punishmentService = new PunishmentServiceImpl();
+        final PunishmentService.PunishmentType punishmentType = punishmentService.getPunishment(target.getUniqueId());
+
+        if (punishmentType == PunishmentService.PunishmentType.BANNED) {
+            if (punishmentService.getTimeRemaining(target.getUniqueId()) > 0) {
+                sender.sendMessage(CC.RED + "This player is already banned.");
+                return true;
             }
         }
 
