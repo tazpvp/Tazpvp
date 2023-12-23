@@ -1,9 +1,15 @@
 package net.tazpvp.tazpvp.listeners;
 
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.data.entity.PunishmentEntity;
+import net.tazpvp.tazpvp.data.implementations.PunishmentServiceImpl;
+import net.tazpvp.tazpvp.data.services.PunishmentService;
 import net.tazpvp.tazpvp.npc.shops.NPC;
 import net.tazpvp.tazpvp.utils.ParkourUtil;
 import net.tazpvp.tazpvp.data.entity.TalentEntity;
+import net.tazpvp.tazpvp.utils.TimeUtil;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.AfkFunctions;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
@@ -17,6 +23,8 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import world.ntdi.nrcore.NRCore;
+
+import java.util.UUID;
 
 public class Move implements Listener {
     @EventHandler
@@ -34,6 +42,18 @@ public class Move implements Listener {
             if (pw.getDuel().isStarting()) {
                 e.setCancelled(true);
                 return;
+            }
+        }
+
+        final PunishmentService punishmentService = new PunishmentServiceImpl();
+        final PunishmentService.PunishmentType punishmentType = punishmentService.getPunishment(p.getUniqueId());
+
+        if (punishmentType == PunishmentService.PunishmentType.BANNED) {
+            if (punishmentService.getTimeRemaining(p.getUniqueId()) > 0) {
+                e.setCancelled(true);
+                if (p.getGameMode() != GameMode.SPECTATOR) {
+                    p.setGameMode(GameMode.SPECTATOR);
+                }
             }
         }
 
