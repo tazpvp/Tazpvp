@@ -35,7 +35,6 @@ package net.tazpvp.tazpvp;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.commands.admin.rank.RankCommand;
-import net.tazpvp.tazpvp.commands.admin.permissions.TempPermissionsCommand;
 import net.tazpvp.tazpvp.commands.gameplay.duel.DuelCommand;
 import net.tazpvp.tazpvp.commands.moderation.StaffChatCommand;
 import net.tazpvp.tazpvp.player.achievements.achievement.*;
@@ -47,7 +46,6 @@ import net.tazpvp.tazpvp.commands.admin.edit.EditCommand;
 import net.tazpvp.tazpvp.commands.admin.hide.HideCommand;
 import net.tazpvp.tazpvp.commands.admin.kit.KitCommand;
 import net.tazpvp.tazpvp.commands.admin.npc.NpcCommand;
-import net.tazpvp.tazpvp.commands.admin.permissions.PermissionsCommand;
 import net.tazpvp.tazpvp.commands.admin.stats.StatCommand;
 import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
 import net.tazpvp.tazpvp.commands.admin.teleportWorld.TeleportWorldCommand;
