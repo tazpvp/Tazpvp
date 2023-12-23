@@ -246,11 +246,15 @@ public class PlayerWrapper {
     public void setUserAchievementEntity(final UserAchievementEntity achievementEntity) {
         final UserAchievementService userAchievementService = new UserAchievementServiceImpl();
         userAchievementService.saveUserAchievementEntity(achievementEntity);
+
+        this.userAchievementEntity = achievementEntity;
     }
 
     public void setTalentEntity(final TalentEntity talentEntity) {
         final TalentService talentService = new TalentServiceImpl();
         talentService.saveTalentEntity(talentEntity);
+
+        this.talentEntity = talentEntity;
     }
 
     public void refreshNametag() {
