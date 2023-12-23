@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.tazpvp.tazpvp.data.DataTypes;
 import net.tazpvp.tazpvp.data.GuildData;
 import net.tazpvp.tazpvp.data.PersistentData;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -41,6 +42,8 @@ public class Guild implements Serializable {
     @Getter
     private int kills, deaths;
 
+    private final String prefix = CC.GREEN + "Guilds | " + CC.DARK_GREEN;
+
     public Guild(String name, UUID guildLeader) {
         this.ID = UUID.randomUUID();
         this.name = name;
@@ -51,7 +54,7 @@ public class Guild implements Serializable {
         this.kills = 0;
         this.deaths = 0;
         this.show_in_browser = true;
-        this.description = "A guild";
+        this.description = "Guild Description";
         this.icon = Material.OAK_SIGN;
 
         GuildData.initializeGuild(getID(), this);
@@ -99,11 +102,13 @@ public class Guild implements Serializable {
 
     public void addMember(UUID uuid) {
         if (getAllMembers().length < 22) {
-            guildMembers.add(uuid);
+            if (!guildMembers.contains(uuid)) {
+                guildMembers.add(uuid);
+                setPlayersGuild(uuid);
+                OfflinePlayer p = Bukkit.getOfflinePlayer(uuid);
+                sendAll(prefix + p.getName() + " has joined the guild.");
+            }
             invited.remove(uuid);
-            setPlayersGuild(uuid);
-            OfflinePlayer p = Bukkit.getOfflinePlayer(uuid);
-            sendAll(p.getName() + " has joined the guild!");
         } else {
             throw new ArrayIndexOutOfBoundsException();
         }
@@ -191,7 +196,11 @@ public class Guild implements Serializable {
     public void invitePlayer(UUID invited, UUID inviter) {
         if (hasElevatedPerms(inviter)) {
             this.invited.add(invited);
-            sendAll(Bukkit.getOfflinePlayer(inviter).getName() + " has invited " + Bukkit.getOfflinePlayer(invited).getName() + " to the guild");
+            Player player = Bukkit.getPlayer(invited);
+            if (player== null) {
+                return;
+            }
+            player.sendMessage(prefix + "You have been invited to the " + getName() + " guild.");
         }
         GuildData.setGuild(getID(), this);
     }
@@ -205,7 +214,7 @@ public class Guild implements Serializable {
             addMember(uuid);
         } else if (Bukkit.getOfflinePlayer(uuid).isOnline()) {
             Player p = Bukkit.getPlayer(uuid);
-            p.sendMessage("You were not invited to guild " + getName());
+            p.sendMessage(prefix + "You were not invited to guild " + getName());
         }
         GuildData.setGuild(getID(), this);
     }
@@ -213,8 +222,8 @@ public class Guild implements Serializable {
     public void deleteGuild() {
         for (UUID member : getAllMembers()) {
             resetPlayerGuild(member);
-            GuildData.deleteGuild(getID());
         }
+        GuildData.deleteGuild(getID());
     }
 
     public void transferOwnership(UUID uuid) {

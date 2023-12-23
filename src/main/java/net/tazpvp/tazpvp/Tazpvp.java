@@ -36,6 +36,8 @@ package net.tazpvp.tazpvp;
 import lombok.Getter;
 import net.tazpvp.tazpvp.commands.admin.rank.RankCommand;
 import net.tazpvp.tazpvp.commands.gameplay.duel.DuelCommand;
+import net.tazpvp.tazpvp.commands.gameplay.guild.GuildCommand;
+import net.tazpvp.tazpvp.commands.gameplay.leaderboard.BaltopCommand;
 import net.tazpvp.tazpvp.commands.moderation.StaffChatCommand;
 import net.tazpvp.tazpvp.player.achievements.achievement.*;
 import net.tazpvp.tazpvp.commands.admin.BroadcastCommand;
@@ -256,7 +258,7 @@ public final class Tazpvp extends JavaPlugin {
                 new ReportCommand(),
                 new TazloadCommand(),
                 new ReportCommand(),
-//                new GuildCommand(),
+                new GuildCommand(),
                 new ReportViewCommand(),
                 new ReportCommand(),
                 new HelpCommand(),
@@ -264,7 +266,6 @@ public final class Tazpvp extends JavaPlugin {
                 new LeaderboardCommand(),
                 new ApplyCommand(),
                 new AdCommand(),
-//                new PermissionsCommand(),
                 new TeleportWorldCommand(),
                 new EditCommand(),
                 new PlaytimeCommand(),
@@ -278,9 +279,9 @@ public final class Tazpvp extends JavaPlugin {
                 new KeyallCommand(),
                 new ResetStatsCommand(),
                 new BroadcastCommand(),
-//                new TempPermissionsCommand(),
                 new StaffChatCommand(),
-                new RankCommand()
+                new RankCommand(),
+                new BaltopCommand()
         );
     }
 

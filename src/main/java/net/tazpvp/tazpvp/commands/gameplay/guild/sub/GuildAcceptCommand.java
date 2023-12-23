@@ -56,9 +56,7 @@ public class GuildAcceptCommand extends NRCommand {
             sendIncorrectUsage(sender);
             return false;
         }
-
         acceptInvite(p);
-
         return true;
     }
 
@@ -66,9 +64,6 @@ public class GuildAcceptCommand extends NRCommand {
         if (p.hasMetadata("guildInvited")) {
             UUID guildID = UUID.fromString(p.getMetadata("guildInvited").get(0).asString());
             Guild g = GuildData.getGuild(guildID);
-            for (UUID u : g.getInvited()) {
-                Bukkit.broadcastMessage(Bukkit.getPlayer(u).getName());
-            }
 
             g.acceptInvite(p.getUniqueId());
             p.removeMetadata("guildInvite", Tazpvp.getInstance());

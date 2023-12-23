@@ -61,8 +61,7 @@ public class Lorenzo extends GUI {
         }), 12);
 
         addButton(Button.create(ItemBuilder.of(Material.TOTEM_OF_UNDYING, 1).name(CC.GREEN + "" + CC.BOLD + "Guilds").lore(CC.GRAY + "Create guilds and", CC.GRAY + "compete with rivals").build(), (e) -> {
-            p.sendMessage(CC.RED + "Currently out of order.");
-//            new GuildBrowser(p);
+            new GuildBrowser(p);
         }), 14);
 
         addButton(Button.create(ItemBuilder.of(Material.FIRE_CHARGE, 1).name(CC.GREEN + "" + CC.BOLD + "Premium").lore(CC.GRAY + "All of the premium", CC.GRAY + "and cosmetic features").build(), (e) -> {

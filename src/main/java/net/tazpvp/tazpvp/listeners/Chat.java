@@ -50,17 +50,35 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Chat implements Listener {
 
+    List<String> swearWords = List.of(
+            "fuck", "shit", "damn", "ass", "bitch", "bastard", "bollocks", "cunt", "cock",
+            "dick", "piss", "arsehole", "wanker", "slut", "whore", "twat", "nigger",
+            "faggot", "dyke", "kike", "spic", "chink", "retard", "moron", "idiot", "stupid",
+            "gook", "slope", "coon", "raghead", "sand nigger", "wetback", "beaner", "jap",
+            "squaw", "injun", "half-breed", "mulatto", "mudblood", "yellow", "cracker",
+            "honky", "whitey", "redneck", "hillbilly", "nigga"
+    );
+
     @EventHandler
     public void onChat(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
         UUID uuid = p.getUniqueId();
         PlayerWrapper pw = PlayerWrapper.getPlayer(p);
+
+        for (String word : swearWords)  {
+            if (e.getMessage().contains(word)) {
+                e.setCancelled(true);
+                p.sendMessage(CC.RED + "Please refrain from breaking the chat rules.");
+                return;
+            }
+        }
 
         final PunishmentService punishmentService = new PunishmentServiceImpl();
         TextComponent component = new TextComponent(CC.GRAY + "Join the discord to appeal [Click here]");

@@ -63,12 +63,14 @@ public class RankUserCommand extends NRCommand {
             userRankService.removeExpiringRank(userRankEntity, gameRankEntity);
             sender.sendMessage("Successfully Removed Rank");
         } else if (addOrRemove.equalsIgnoreCase("add")) {
+            String time;
             if (args.length < 4) {
-                sendIncorrectUsage(sender);
-                return true;
+                time = "perm";
+            } else {
+                time = args[3];
             }
 
-            final long expiration = new TimeToken(args[3]).getUnixTimestamp();
+            final long expiration = new TimeToken(time).getUnixTimestamp();
             final long expirationWithCurrentTime = (expiration == 0L ? 0 : System.currentTimeMillis() + expiration);
 
             userRankService.addExpiringRank(userRankEntity, gameRankEntity, expirationWithCurrentTime);

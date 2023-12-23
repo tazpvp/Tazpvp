@@ -42,9 +42,13 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.commands.gameplay.guild.handler.GuildAbstractArgumentCommand;
 import net.tazpvp.tazpvp.game.guilds.Guild;
 import net.tazpvp.tazpvp.game.guilds.GuildUtils;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
+import world.ntdi.nrcore.utils.command.simple.Completer;
 import world.ntdi.nrcore.utils.command.simple.Label;
+
+import java.util.List;
 
 public class GuildInviteCommand extends GuildAbstractArgumentCommand {
     public GuildInviteCommand() {
@@ -88,5 +92,13 @@ public class GuildInviteCommand extends GuildAbstractArgumentCommand {
         } else {
             p.sendMessage("You do not have permission to invite");
         }
+    }
+
+    @Override
+    public List<String> complete(CommandSender sender, String[] args) {
+        if (args.length == 1) {
+            return Completer.onlinePlayers(args[0]);
+        }
+        return List.of();
     }
 }
