@@ -54,6 +54,7 @@ public class Bowling extends Observable {
         if (!achievementEntity.isCompleted()) {
             if (LooseData.getKs(killer.getUniqueId()) >= 50) {
                 achievementEntity.setCompleted(true);
+                userAchievementEntity.setBowlingAchievementEntity(achievementEntity);
                 pw.setUserAchievementEntity(userAchievementEntity);
                 ChatFunctions.achievement(killer, "Bowling");
             }

@@ -36,6 +36,7 @@ public class Skilled extends Observable {
             if (talentEntity.isRevenge()) return;
 
             achievementEntity.setCompleted(true);
+            userAchievementEntity.setSkilledAchievementEntity(achievementEntity);
             pw.setUserAchievementEntity(userAchievementEntity);
             ChatFunctions.achievement(killer, "Skilled");
         }

@@ -18,6 +18,7 @@ public class Speedrunner extends Observable {
             if (System.currentTimeMillis() - pw.getTimeOfLaunch() <= 30 * 1000) {
                 if (pw.getKillCount() >= 10) {
                     achievementEntity.setCompleted(true);
+                    userAchievementEntity.setSpeedrunnerAchievementEntity(achievementEntity);
                     pw.setUserAchievementEntity(userAchievementEntity);
                     ChatFunctions.achievement(killer, "Speedrunner");
                 } else {

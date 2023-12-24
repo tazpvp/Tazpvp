@@ -16,6 +16,7 @@ public class Zorgin extends Observable {
 
         if (!achievementEntity.isCompleted()) {
             achievementEntity.setCompleted(true);
+            userAchievementEntity.setZorginAchievementEntity(achievementEntity);
             pw.setUserAchievementEntity(userAchievementEntity);
             ChatFunctions.achievement(p, "Zorgin");
         }

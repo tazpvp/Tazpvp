@@ -48,6 +48,7 @@ public class Legend extends Observable {
 
         if (!achievementEntity.isCompleted()) {
             achievementEntity.setCompleted(true);
+            userAchievementEntity.setLegendAchievementEntity(achievementEntity);
             pw.setUserAchievementEntity(userAchievementEntity);
             ChatFunctions.achievement(p, "Legend");
         }

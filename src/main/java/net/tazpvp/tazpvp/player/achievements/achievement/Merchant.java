@@ -17,6 +17,7 @@ public class Merchant extends Observable {
         if (!achievementEntity.isCompleted()) {
             if (name.equalsIgnoreCase("caesar")) {
                 achievementEntity.setCompleted(true);
+                userAchievementEntity.setMerchantAchievementEntity(achievementEntity);
                 pw.setUserAchievementEntity(userAchievementEntity);
                 ChatFunctions.achievement(p, "Merchant");
             }

@@ -70,6 +70,7 @@ public class Adept extends Observable {
             if (!talentEntity.isRevenge()) return;
 
             achievementEntity.setCompleted(true);
+            userAchievementEntity.setAdeptAchievementEntity(achievementEntity);
             pw.setUserAchievementEntity(userAchievementEntity);
 
             ChatFunctions.achievement(p, "Adept");

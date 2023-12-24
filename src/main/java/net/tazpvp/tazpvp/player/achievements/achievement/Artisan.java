@@ -36,6 +36,7 @@ public class Artisan extends Observable {
             }
 
             achievementEntity.setCompleted(true);
+            userAchievementEntity.setArtisanAchievementEntity(achievementEntity);
             pw.setUserAchievementEntity(userAchievementEntity);
             ChatFunctions.achievement(p, "Artisan");
         }
