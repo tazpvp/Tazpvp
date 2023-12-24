@@ -46,6 +46,8 @@ import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
+import java.util.function.BiConsumer;
+
 public class Achievements extends GUI {
 
     String prefix = CC.DARK_AQUA + "[Lorenzo] " + CC.AQUA;
@@ -62,28 +64,31 @@ public class Achievements extends GUI {
 
         fill(0, 5*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
-        setButton(p,  10, "Adept", "Learn every talent.", UAE, UAE.getAdeptAchievementEntity(), StaticItems.MYTHIC_KEY.getName(), "mythic");
-        setButton(p,  11, "Bowling", "Get a kill streak of 50.", UAE, UAE.getBowlingAchievementEntity(), StaticItems.RARE_KEY.getName(), "rare");
-        setButton(p,  12, "Charm", "Chat 100 times before leaving.", UAE, UAE.getCharmAchievementEntity(), StaticItems.MYTHIC_KEY.getName(), "mythic");
-        setButton(p,  13, "Craftsman", "Combine your sword with an enchantment.", UAE, UAE.getCraftsmanAchievementEntity(), StaticItems.RARE_KEY.getName(), "rare");
-        setButton(p,  14, "Gamble", "Kill a player while at low health.", UAE, UAE.getGambleAchievementEntity(), StaticItems.MYTHIC_KEY.getName(), "mythic");
-        setButton(p,  15, "Gladiator", "Win 35 duels.", UAE, UAE.getGladiatorAchievementEntity(), StaticItems.MYTHIC_KEY.getName(), "mythic");
-        setButton(p,  16, "Legend", "Rebirth your character.", UAE, UAE.getLegendAchievementEntity(), StaticItems.RARE_KEY.getName(), "rare");
+        setButton(p,  10, "Adept", "Learn every talent.", UAE, UAE.getAdeptAchievementEntity(), UserAchievementEntity::setAdeptAchievementEntity,  StaticItems.MYTHIC_KEY.getName(), "mythic");
+        setButton(p,  11, "Bowling", "Get a kill streak of 50.", UAE, UAE.getBowlingAchievementEntity(), UserAchievementEntity::setBowlingAchievementEntity, StaticItems.RARE_KEY.getName(), "rare");
+        setButton(p,  12, "Charm", "Chat 100 times before leaving.", UAE, UAE.getCharmAchievementEntity(), UserAchievementEntity::setCharmAchievementEntity, StaticItems.MYTHIC_KEY.getName(), "mythic");
+        setButton(p,  13, "Craftsman", "Combine your sword with an enchantment.", UAE, UAE.getCraftsmanAchievementEntity(), UserAchievementEntity::setCraftsmanAchievementEntity, StaticItems.RARE_KEY.getName(), "rare");
+        setButton(p,  14, "Gamble", "Kill a player while at low health.", UAE, UAE.getGambleAchievementEntity(), UserAchievementEntity::setGambleAchievementEntity, StaticItems.MYTHIC_KEY.getName(), "mythic");
+        setButton(p,  15, "Gladiator", "Win 35 duels.", UAE, UAE.getGladiatorAchievementEntity(), UserAchievementEntity::setGladiatorAchievementEntity, StaticItems.MYTHIC_KEY.getName(), "mythic");
+        setButton(p,  16, "Legend", "Rebirth your character.", UAE, UAE.getLegendAchievementEntity(), UserAchievementEntity::setLegendAchievementEntity, StaticItems.RARE_KEY.getName(), "rare");
 
-        setButton(p,  19, "Merchant", "Trade with Caesar at the mines.", UAE, UAE.getMerchantAchievementEntity(), StaticItems.RARE_KEY.getName(), "rare");
-        setButton(p,  20, "Superior", "Win an event.", UAE, UAE.getSuperiorAchievementEntity(), StaticItems.MYTHIC_KEY.getName(), "mythic");
-        setButton(p,  21, "Zorgin", "Kill Zorg in the mines.", UAE, UAE.getZorginAchievementEntity(), StaticItems.RARE_KEY.getName(), "rare");
-        setButton(p,  22, "Grinder", "Mine 100 ores.", UAE, UAE.getGrinderAchievementEntity(), StaticItems.RARE_KEY.getName(), "rare");
-        setButton(p,  23, "Artisan", "Place every type of wood plank.", UAE, UAE.getArtisanAchievementEntity(), StaticItems.RARE_KEY.getName(), "rare");
-        setButton(p,  24, "Harvester", "Collect a player coffin.", UAE, UAE.getHarvesterAchievementEntity(), StaticItems.RARE_KEY.getName(), "rare");
-        setButton(p,  25, "Speedrunner", "Get a kill within 30 seconds of launch.", UAE, UAE.getSpeedrunnerAchievementEntity(), StaticItems.RARE_KEY.getName(), "rare");
+        setButton(p,  19, "Merchant", "Trade with Caesar at the mines.", UAE, UAE.getMerchantAchievementEntity(), UserAchievementEntity::setMerchantAchievementEntity, StaticItems.RARE_KEY.getName(), "rare");
+        setButton(p,  20, "Superior", "Win an event.", UAE, UAE.getSuperiorAchievementEntity(), UserAchievementEntity::setSuperiorAchievementEntity, StaticItems.MYTHIC_KEY.getName(), "mythic");
+        setButton(p,  21, "Zorgin", "Kill Zorg in the mines.", UAE, UAE.getZorginAchievementEntity(), UserAchievementEntity::setZorginAchievementEntity, StaticItems.RARE_KEY.getName(), "rare");
+        setButton(p,  22, "Grinder", "Mine 100 ores.", UAE, UAE.getGrinderAchievementEntity(), UserAchievementEntity::setGrinderAchievementEntity, StaticItems.RARE_KEY.getName(), "rare");
+        setButton(p,  23, "Artisan", "Place every type of wood plank.", UAE, UAE.getArtisanAchievementEntity(), UserAchievementEntity::setArtisanAchievementEntity, StaticItems.RARE_KEY.getName(), "rare");
+        setButton(p,  24, "Harvester", "Collect a player coffin.", UAE, UAE.getHarvesterAchievementEntity(), UserAchievementEntity::setHarvesterAchievementEntity, StaticItems.RARE_KEY.getName(), "rare");
+        setButton(p,  25, "Speedrunner", "Get a kill within 30 seconds of launch.", UAE, UAE.getSpeedrunnerAchievementEntity(), UserAchievementEntity::setSpeedrunnerAchievementEntity, StaticItems.RARE_KEY.getName(), "rare");
 
-        setButton(p,  28, "Error", "Die 500 times.", UAE, UAE.getErrorAchievementEntity(), StaticItems.MYTHIC_KEY.getName(), "mythic");
-        setButton(p,  29, "Skilled", "Get level 100 without talents.", UAE, UAE.getSkilledAchievementEntity(), StaticItems.MYTHIC_KEY.getName(), "mythic");
+        setButton(p,  28, "Error", "Die 500 times.", UAE, UAE.getErrorAchievementEntity(), UserAchievementEntity::setErrorAchievementEntity, StaticItems.MYTHIC_KEY.getName(), "mythic");
+        setButton(p,  29, "Skilled", "Get level 100 without talents.", UAE, UAE.getSkilledAchievementEntity(), UserAchievementEntity::setSkilledAchievementEntity, StaticItems.MYTHIC_KEY.getName(), "mythic");
         update();
     }
 
-    private void setButton(Player p, int slot, String name, String lore, UserAchievementEntity userEntity, AchievementEntity entity, String keyName, String keyType) {
+    private void setButton(Player p, int slot, String name, String lore,
+                           UserAchievementEntity userEntity, AchievementEntity entity,
+                           BiConsumer<UserAchievementEntity, AchievementEntity> setUserAchievementEntityAchievementEntityBiConsumer,
+                           String keyName, String keyType) {
         boolean completed = entity.isCompleted();
         String complete = completed ? CC.GREEN + "Complete" : CC.RED + "Incomplete";
         Material mat = completed ? Material.ENCHANTED_BOOK : Material.BOOK;
@@ -107,11 +112,14 @@ public class Achievements extends GUI {
                                             complete
                                     ).build(), (e) -> {
                 PlayerWrapper pw = PlayerWrapper.getPlayer(p);
-                pw.setUserAchievementEntity(userEntity);
+
                 p.sendMessage(prefix + "You collected your reward!");
                 p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
+
                 entity.setCollected(true);
+                setUserAchievementEntityAchievementEntityBiConsumer.accept(userEntity, entity);
                 pw.setUserAchievementEntity(userEntity);
+
                 p.getInventory().addItem(KeyFactory.getFactory().createKey(keyType, keyName));
                 p.closeInventory();
                 new Achievements(p);
