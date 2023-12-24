@@ -11,6 +11,8 @@ import org.jetbrains.annotations.NotNull;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
+import java.util.List;
+
 public class RankRankCommand extends NRCommand {
     public RankRankCommand() {
         super(new Label("rank", "tazpvp.rank"));
@@ -40,5 +42,17 @@ public class RankRankCommand extends NRCommand {
         gameRankService.createGameRank(name, hexPrefix, hierarchy);
 
         return true;
+    }
+
+    @Override
+    public List<String> complete(CommandSender sender, String[] args) {
+        if (args.length == 1) {
+            return List.of("<name>");
+        } else if (args.length == 2) {
+            return List.of("<prefix>");
+        } else if (args.length == 3) {
+            return List.of("<hex>");
+        }
+        return List.of();
     }
 }

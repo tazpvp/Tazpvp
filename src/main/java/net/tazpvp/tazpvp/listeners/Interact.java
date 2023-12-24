@@ -4,17 +4,22 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.game.items.UsableItem;
 import net.tazpvp.tazpvp.game.crates.Crate;
 import org.bukkit.Material;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.ShulkerBox;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 public class Interact implements Listener {
 
     @EventHandler
     private void onInteract(PlayerInteractEvent e) {
         Player p = e.getPlayer();
+        ItemStack item = e.getItem();
 
         if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (e.getClickedBlock().getType() == Material.BEACON) {
@@ -29,14 +34,14 @@ public class Interact implements Listener {
                 e.setCancelled(true);
             }
         }
-        if (e.getItem() == null) return;
+        if (item == null) return;
         if (UsableItem.getCustomItem(e.getItem()) != null) {
-            UsableItem item = UsableItem.getCustomItem(e.getItem());
-            if (item == null) return;
+            UsableItem usableItem = UsableItem.getCustomItem(e.getItem());
+            if (usableItem == null) return;
             if (e.getAction() == Action.LEFT_CLICK_AIR) {
-                item.onLeftClick(p, e.getItem());
+                usableItem.onLeftClick(p, e.getItem());
             } else if (e.getAction() == Action.RIGHT_CLICK_AIR) {
-                item.onRightClick(p, e.getItem());
+                usableItem.onRightClick(p, e.getItem());
             }
         }
 

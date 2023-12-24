@@ -30,7 +30,7 @@ public class PunishmentFunctions {
         punishmentService.punish(target.getUniqueId(), PunishmentService.PunishmentType.BANNED, timeToken.getUnixTimestamp(), reason);
 
         if (commandSender instanceof Player p) {
-            ChatFunctions.announce(CC.RED + target.getName() + " was banned by " + p, Sound.BLOCK_STONE_BUTTON_CLICK_OFF);
+            ChatFunctions.announce(CC.RED + target.getName() + " was banned by " + p.getName(), Sound.BLOCK_STONE_BUTTON_CLICK_OFF);
         } else {
             ChatFunctions.announce(CC.RED + target.getName() + " has been banned.", Sound.BLOCK_STONE_BUTTON_CLICK_OFF);
         }

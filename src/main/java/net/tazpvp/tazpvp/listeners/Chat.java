@@ -50,6 +50,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -72,8 +74,11 @@ public class Chat implements Listener {
         UUID uuid = p.getUniqueId();
         PlayerWrapper pw = PlayerWrapper.getPlayer(p);
 
+        String[] messageWords = e.getMessage().split(" ");
+        List<String> messageWordsList = new ArrayList<>(Arrays.asList(messageWords));
+
         for (String word : swearWords)  {
-            if (e.getMessage().contains(word)) {
+            if (messageWordsList.contains(word.toLowerCase())) {
                 e.setCancelled(true);
                 p.sendMessage(CC.RED + "Please refrain from breaking the chat rules.");
                 return;

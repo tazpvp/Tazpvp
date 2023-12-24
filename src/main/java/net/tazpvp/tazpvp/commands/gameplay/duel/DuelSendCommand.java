@@ -18,6 +18,8 @@ import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
 import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class DuelSendCommand extends NRCommand {
     public DuelSendCommand() {
@@ -30,26 +32,21 @@ public class DuelSendCommand extends NRCommand {
             sendNoPermission(sender);
             return true;
         }
-
         if (args.length < 2) {
             sendIncorrectUsage(sender, "Usage: /duel send <player> <type>\n" + "Types: \n" + "- Classic" + "\n- Op");
             return true;
         }
-
         if (PlayerWrapper.getPlayer(p).getDuel() != null) {
             p.sendMessage(CC.RED + "You cannot use this command while dueling.");
             return true;
         }
-
         if (CombatTagFunctions.isInCombat(p.getUniqueId())) {
             p.sendMessage( CC.RED + "You cannot use this command while in combat.");
             return true;
         }
-
         if (PlayerWrapper.getPlayer(p).getSpectating() != null) {
             return true;
         }
-
         if (TazloadCommand.tazloading) {
             p.sendMessage(CC.RED + "This feature is disabled while the server is reloading.");
             return true;
@@ -61,14 +58,17 @@ public class DuelSendCommand extends NRCommand {
             p.sendMessage(CC.RED + "Cannot find player.");
             return true;
         }
-
         if (target.getUniqueId().equals(p.getUniqueId())) {
             sendIncorrectUsage(sender, "You cannot send a duel to yourself.");
             return true;
         }
 
-        putInDuel(args[1], p, target);
+        duelRequest(p, target, args[1]);
         return true;
+    }
+
+    private void duelRequest(Player sender, Player target, String type) {
+
     }
 
     private void putInDuel(String type, Player p, Player target) {
@@ -82,9 +82,9 @@ public class DuelSendCommand extends NRCommand {
             }
         }
         if (type.equalsIgnoreCase("classic")) {
-            Duel.duels.put(new Classic(p.getUniqueId(), target.getUniqueId()), target.getUniqueId());
+            Duel.duels.putIfAbsent(new Classic(p.getUniqueId(), target.getUniqueId()), target.getUniqueId());
         } else if (type.equalsIgnoreCase("op")) {
-            Duel.duels.put(new Op(p.getUniqueId(), target.getUniqueId()), target.getUniqueId());
+            Duel.duels.putIfAbsent(new Op(p.getUniqueId(), target.getUniqueId()), target.getUniqueId());
         } else {
             p.sendMessage(CC.RED + "Not a valid duel type!");
             return;
