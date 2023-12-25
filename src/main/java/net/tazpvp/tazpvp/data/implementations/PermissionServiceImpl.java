@@ -5,12 +5,10 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.stmt.QueryBuilder;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.GameRankEntity;
-import net.tazpvp.tazpvp.data.entity.KitEntity;
 import net.tazpvp.tazpvp.data.entity.PermissionEntity;
 import net.tazpvp.tazpvp.data.services.PermissionService;
 
 import java.sql.SQLException;
-import java.util.UUID;
 
 public class PermissionServiceImpl implements PermissionService {
     @Override

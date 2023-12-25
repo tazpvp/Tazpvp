@@ -49,10 +49,14 @@ import world.ntdi.nrcore.utils.ArmorManager;
 import world.ntdi.nrcore.utils.world.WorldUtil;
 
 import javax.annotation.Nonnull;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class Duel {
+
+    public static final String prefix = CC.AQUA + "Duel | " + CC.DARK_AQUA;
 
     @Getter
     private final UUID P1;
@@ -90,18 +94,16 @@ public abstract class Duel {
 
 
     public void end(final UUID loserID) {
-        setLoser(loser);
-        setWinner(getOtherDueler(loser));
+        setLoser(loserID);
+        setWinner(getOtherDueler(loserID));
 
         final Player winner = Bukkit.getPlayer(getWinner());
         final Player loser = Bukkit.getPlayer(loserID);
-        final OfflinePlayer offlineWinner = Bukkit.getOfflinePlayer(getWinner());
-        final OfflinePlayer offlineLoser = Bukkit.getOfflinePlayer(getLoser());
 
         ChatFunctions.announce(
-                CC.AQUA + offlineWinner.getName() +
+                CC.AQUA + Bukkit.getOfflinePlayer(getWinner()).getName() +
                         CC.DARK_AQUA + " won a duel against " +
-                        CC.AQUA + offlineLoser.getName(),
+                        CC.AQUA + Bukkit.getOfflinePlayer(loserID).getName(),
                 Sound.BLOCK_BELL_RESONATE
         );
 
@@ -110,25 +112,20 @@ public abstract class Duel {
             winner.sendTitle(CC.GOLD + "" + CC.BOLD + "YOU WIN", "", 20, 20, 20);
         }
 
-        if (loser != null) {
-            ArmorManager.setPlayerContents(loser, true);
-            loser.teleport(NRCore.config.spawn);
-            PlayerWrapper.getPlayer(loser).setDuel(null);
-            PlayerFunctions.resetHealth(loser);
-        }
-
         clearSpectators();
         final Duel duel = this;
 
         new BukkitRunnable() {
             public void run() {
-                ArmorManager.setPlayerContents(winner, true);
-                winner.teleport(NRCore.config.spawn);
 
-                PlayerWrapper pw = PlayerWrapper.getPlayer(winner);
-                pw.setDuel(null);
-                PlayerFunctions.resetHealth(winner);
-
+                DUELERS.forEach(id -> {
+                    Player p = Bukkit.getPlayer(id);
+                    if (p == null) return;
+                    ArmorManager.setPlayerContents(p, true);
+                    p.teleport(NRCore.config.spawn);
+                    PlayerWrapper.getPlayer(p).setDuel(null);
+                    PlayerFunctions.resetHealth(p);
+                });
 
                 new WorldUtil().deleteWorld(getWorldName());
                 duelsList.remove(duel);

@@ -33,11 +33,11 @@
 package net.tazpvp.tazpvp.guis.Menu.guild;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.game.guilds.Guild;
-import net.tazpvp.tazpvp.game.guilds.GuildUtils;
 import net.tazpvp.tazpvp.data.DataTypes;
 import net.tazpvp.tazpvp.data.GuildData;
 import net.tazpvp.tazpvp.data.PersistentData;
+import net.tazpvp.tazpvp.game.guilds.Guild;
+import net.tazpvp.tazpvp.game.guilds.GuildUtils;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.Bukkit;

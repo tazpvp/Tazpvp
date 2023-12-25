@@ -1,7 +1,11 @@
 package net.tazpvp.tazpvp.commands.gameplay.duel;
 
 import lombok.NonNull;
-import net.md_5.bungee.api.chat.*;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.hover.content.Text;
 import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
 import net.tazpvp.tazpvp.game.duels.Duel;
@@ -19,7 +23,6 @@ import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class DuelSendCommand extends NRCommand {
     public DuelSendCommand() {
@@ -37,29 +40,29 @@ public class DuelSendCommand extends NRCommand {
             return true;
         }
         if (PlayerWrapper.getPlayer(p).getDuel() != null) {
-            p.sendMessage(CC.RED + "You cannot use this command while dueling.");
+            p.sendMessage(Duel.prefix + "You cannot use this command while dueling.");
             return true;
         }
         if (CombatTagFunctions.isInCombat(p.getUniqueId())) {
-            p.sendMessage( CC.RED + "You cannot use this command while in combat.");
+            p.sendMessage( Duel.prefix + "You cannot use this command while in combat.");
             return true;
         }
         if (PlayerWrapper.getPlayer(p).getSpectating() != null) {
             return true;
         }
         if (TazloadCommand.tazloading) {
-            p.sendMessage(CC.RED + "This feature is disabled while the server is reloading.");
+            p.sendMessage(Duel.prefix + "This feature is disabled while the server is reloading.");
             return true;
         }
 
         final Player target = Bukkit.getPlayer(args[0]);
 
         if (target == null) {
-            p.sendMessage(CC.RED + "Cannot find player.");
+            p.sendMessage(Duel.prefix + "Cannot find player.");
             return true;
         }
         if (target.getUniqueId().equals(p.getUniqueId())) {
-            sendIncorrectUsage(sender, "You cannot send a duel to yourself.");
+            p.sendMessage(Duel.prefix + "You cannot send a duel to yourself.");
             return true;
         }
 
@@ -71,38 +74,39 @@ public class DuelSendCommand extends NRCommand {
         UUID senderID = sender.getUniqueId();
         UUID targetID = target.getUniqueId();
         PlayerWrapper targetWrapper = PlayerWrapper.getPlayer(target);
-        PlayerWrapper senderWrapper = PlayerWrapper.getPlayer(sender);
 
         if (targetWrapper.getDuelRequests().containsKey(senderID)) {
-            sender.sendMessage(CC.RED + "You already sent a duel to this person.");
+            sender.sendMessage(Duel.prefix + "You already sent a duel to this person.");
             return;
         }
 
         if (type.equalsIgnoreCase("classic")) {
             Duel duel = new Classic(senderID, targetID);
-            senderWrapper.getDuelRequests().putIfAbsent(senderID, duel);
+            targetWrapper.getDuelRequests().putIfAbsent(senderID, duel);
         } else if (type.equalsIgnoreCase("op")) {
             Duel duel = new Op(senderID, targetID);
-            senderWrapper.getDuelRequests().putIfAbsent(senderID, duel);
+            targetWrapper.getDuelRequests().putIfAbsent(senderID, duel);
         } else {
-            sender.sendMessage(CC.RED + "Not a valid duel type!");
+            sender.sendMessage(Duel.prefix + "Not a valid duel type!");
             return;
         }
 
-        sender.sendMessage(CC.GREEN + "You sent a duel request to " + CC.GOLD +  target.getName());
+        sender.sendMessage(Duel.prefix + "You sent a duel request to " + CC.GOLD +  target.getName());
 
-        BaseComponent[] baseComponents = new ComponentBuilder(sender.getName())
-                .color(net.md_5.bungee.api.ChatColor.GOLD)
+        BaseComponent[] baseComponents = new ComponentBuilder("Duel | " + sender.getName())
+                .color(ChatColor.AQUA)
                 .append(" sent you a ")
-                .color(net.md_5.bungee.api.ChatColor.GREEN)
-                .append(type).color(net.md_5.bungee.api.ChatColor.RED)
-                .append(" duel request").color(net.md_5.bungee.api.ChatColor.GREEN)
-                .append("\n[Click to Accept]").create();
+                .color(ChatColor.DARK_AQUA)
+                .append(type).color(ChatColor.RED)
+                .append(" duel request").color(ChatColor.DARK_AQUA)
+                .append("\n[Click to Accept]").color(ChatColor.AQUA).create();
 
         baseComponents[4].setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/duel accept " + sender.getName()));
-        baseComponents[4].setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(CC.GREEN + "Accept the duel?")));
+        baseComponents[4].setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(CC.DARK_AQUA + "Accept the duel?")));
 
+        target.sendMessage("");
         target.spigot().sendMessage(baseComponents);
+        target.sendMessage("");
     }
 
     @Override

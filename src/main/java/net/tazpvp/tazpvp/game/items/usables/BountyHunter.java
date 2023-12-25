@@ -1,7 +1,6 @@
 package net.tazpvp.tazpvp.game.items.usables;
 
 import net.tazpvp.tazpvp.data.LooseData;
-import net.tazpvp.tazpvp.data.PersistentData;
 import net.tazpvp.tazpvp.game.items.UsableItem;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
@@ -10,7 +9,6 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.CompassMeta;
 
 import java.util.*;
 

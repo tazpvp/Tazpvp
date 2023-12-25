@@ -33,7 +33,6 @@
 
 package net.tazpvp.tazpvp.listeners;
 
-import net.tazpvp.tazpvp.data.Rank;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Location;
 import org.bukkit.Particle;

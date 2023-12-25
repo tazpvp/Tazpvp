@@ -1,7 +1,5 @@
 package net.tazpvp.tazpvp.utils;
 
-import com.google.common.base.Preconditions;
-import net.tazpvp.tazpvp.data.Rank;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;

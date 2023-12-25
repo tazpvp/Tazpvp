@@ -1,8 +1,8 @@
 package net.tazpvp.tazpvp.player.talents.talent;
 
+import net.tazpvp.tazpvp.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.game.guilds.Guild;
 import net.tazpvp.tazpvp.game.guilds.GuildUtils;
-import net.tazpvp.tazpvp.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.observer.Observable;

@@ -1,7 +1,6 @@
 package net.tazpvp.tazpvp.commands.gameplay.duel;
 
 import lombok.NonNull;
-import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
 import net.tazpvp.tazpvp.game.duels.Duel;
 import net.tazpvp.tazpvp.utils.enums.CC;
@@ -10,10 +9,8 @@ import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
-import world.ntdi.postglam.data.Tuple;
 
 import java.util.UUID;
 
@@ -33,38 +30,38 @@ public class DuelAcceptCommand extends NRCommand {
         PlayerWrapper pw = PlayerWrapper.getPlayer(p);
 
         if (pw.getDuel() != null) {
-            p.sendMessage(CC.RED + "You cannot use this command while dueling.");
+            p.sendMessage(Duel.prefix + "You cannot use this command while dueling.");
             return true;
         }
 
         if (pw.getSpectating() != null) {
-            p.sendMessage(CC.RED + "You cannot use this command while spectating.");
+            p.sendMessage(Duel.prefix + "You cannot use this command while spectating.");
             return true;
         }
 
         if (CombatTagFunctions.isInCombat(p.getUniqueId())) {
-            p.sendMessage( CC.RED + "You cannot use this command while in combat.");
+            p.sendMessage( Duel.prefix + "You cannot use this command while in combat.");
             return true;
         }
 
         if (TazloadCommand.tazloading) {
-            p.sendMessage(CC.RED + "This feature is disabled while the server is reloading.");
+            p.sendMessage(Duel.prefix + "This feature is disabled while the server is reloading.");
             return true;
         }
 
         if (args.length < 1) {
-            p.sendMessage(CC.RED + "Incorrect Usage: /duel accept <player>");
+            p.sendMessage(Duel.prefix + "Incorrect Usage: /duel accept <player>");
             return true;
         }
 
         if (pw.getDuelRequests().isEmpty()) {
-            p.sendMessage(CC.RED + "No one sent you a duel request.");
+            p.sendMessage(Duel.prefix + "No one sent you a duel request.");
             return true;
         }
 
         Player senderPlayer = Bukkit.getPlayer(args[0]);
         if (senderPlayer == null) {
-            p.sendMessage(CC.RED + "Invalid Player.");
+            p.sendMessage(Duel.prefix + "Invalid Player.");
             return true;
         }
         UUID senderID = senderPlayer.getUniqueId();
@@ -77,10 +74,12 @@ public class DuelAcceptCommand extends NRCommand {
                     return true;
                 }
 
-                senderPlayer.sendMessage(CC.GREEN + p.getName() + " has accepted your duel request. You will teleport to the duel arena shortly.");
-                p.sendMessage(CC.GREEN + "You have accepted " + senderPlayer.getName() + "'s duel request. You will teleport to the duel arena shortly.");
+                senderPlayer.sendMessage(Duel.prefix + p.getName() + " has accepted your duel request. You will teleport to the duel arena shortly.");
+                p.sendMessage(Duel.prefix + "You have accepted " + senderPlayer.getName() + "'s duel request. You will teleport to the duel arena shortly.");
 
                 pw.getDuelRequests().clear();
+                PlayerWrapper senderWrapper = PlayerWrapper.getPlayer(senderID);
+                senderWrapper.getDuelRequests().clear();
 
                 Duel.duelsList.add(duel);
                 duel.initialize();

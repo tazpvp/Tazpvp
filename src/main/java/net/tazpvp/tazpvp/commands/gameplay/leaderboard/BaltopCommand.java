@@ -10,7 +10,6 @@ import org.jetbrains.annotations.NotNull;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 

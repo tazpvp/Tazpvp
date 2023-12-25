@@ -3,11 +3,11 @@ package net.tazpvp.tazpvp.commands.gameplay.PayCommand;
 import net.tazpvp.tazpvp.data.DataTypes;
 import net.tazpvp.tazpvp.data.PersistentData;
 import org.bukkit.Bukkit;
-import world.ntdi.nrcore.utils.command.simple.Label;
-import world.ntdi.nrcore.utils.command.simple.NRCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import world.ntdi.nrcore.utils.command.simple.Label;
+import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
 public class PayCommand extends NRCommand {
 

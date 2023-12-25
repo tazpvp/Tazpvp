@@ -1,8 +1,8 @@
 package net.tazpvp.tazpvp.guis.Mine;
 
-import net.tazpvp.tazpvp.game.items.enchants.Enchants;
 import net.tazpvp.tazpvp.data.DataTypes;
 import net.tazpvp.tazpvp.data.PersistentData;
+import net.tazpvp.tazpvp.game.items.enchants.Enchants;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.Material;

@@ -2,10 +2,9 @@ package net.tazpvp.tazpvp.utils.functions;
 
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.tazpvp.tazpvp.listeners.CommandSend;
-import net.tazpvp.tazpvp.utils.TimeToken;
-import net.tazpvp.tazpvp.data.services.PunishmentService;
 import net.tazpvp.tazpvp.data.implementations.PunishmentServiceImpl;
+import net.tazpvp.tazpvp.data.services.PunishmentService;
+import net.tazpvp.tazpvp.utils.TimeToken;
 import net.tazpvp.tazpvp.utils.discord.webhook.BanWebhook;
 import net.tazpvp.tazpvp.utils.discord.webhook.MuteWebhook;
 import net.tazpvp.tazpvp.utils.enums.CC;

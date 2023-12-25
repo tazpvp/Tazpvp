@@ -2,8 +2,8 @@ package net.tazpvp.tazpvp.game.items;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.tazpvp.tazpvp.game.items.usables.Inker;
 import net.tazpvp.tazpvp.game.items.usables.AzureVapor;
+import net.tazpvp.tazpvp.game.items.usables.Inker;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;

@@ -1,11 +1,10 @@
 package net.tazpvp.tazpvp.commands.admin;
+
 import lombok.NonNull;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;

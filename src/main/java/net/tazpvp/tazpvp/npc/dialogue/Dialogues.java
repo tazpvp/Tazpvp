@@ -35,7 +35,6 @@ package net.tazpvp.tazpvp.npc.dialogue;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Bukkit;
 
 import java.util.List;

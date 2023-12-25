@@ -34,10 +34,10 @@
 package net.tazpvp.tazpvp.guis.Menu.cosmetic;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.utils.Profanity;
-import net.tazpvp.tazpvp.data.services.RankService;
-import net.tazpvp.tazpvp.data.implementations.RankServiceImpl;
 import net.tazpvp.tazpvp.data.entity.RankEntity;
+import net.tazpvp.tazpvp.data.implementations.RankServiceImpl;
+import net.tazpvp.tazpvp.data.services.RankService;
+import net.tazpvp.tazpvp.utils.Profanity;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;

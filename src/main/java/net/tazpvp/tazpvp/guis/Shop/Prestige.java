@@ -2,9 +2,7 @@ package net.tazpvp.tazpvp.guis.Shop;
 
 import net.tazpvp.tazpvp.data.DataTypes;
 import net.tazpvp.tazpvp.data.PersistentData;
-import net.tazpvp.tazpvp.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.data.entity.TalentEntity;
-import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
 import net.tazpvp.tazpvp.data.implementations.TalentServiceImpl;
 import net.tazpvp.tazpvp.data.services.TalentService;
 import net.tazpvp.tazpvp.utils.enums.CC;
@@ -13,7 +11,6 @@ import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.block.EnderChest;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

@@ -3,7 +3,6 @@ package net.tazpvp.tazpvp.data.entity;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import lombok.*;
-import net.tazpvp.tazpvp.data.entity.GuildEntity;
 
 @Getter
 @Setter
