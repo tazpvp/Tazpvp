@@ -87,8 +87,7 @@ public class Leave implements Listener {
         }
 
         if (playerWrapper.getDuel() != null) {
-            final Duel duel = playerWrapper.getDuel();
-            duel.end(id);
+            playerWrapper.getDuel().end(id);
         }
 
         Tazpvp.getBotThread().connectionChat(p.getName(), false);

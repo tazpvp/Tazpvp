@@ -157,12 +157,9 @@ public class Damage implements Listener {
 
         if (pVictim == null) return;
         if (pw.getDuel() != null) {
-            Duel duel = pw.getDuel();
             if ((pVictim.getHealth() - finalDamage) <= 0) {
                 event.setCancelled(true);
-                duel.setWinner(duel.getOtherDueler(victim));
-                duel.setLoser(victim);
-                duel.end();
+                pw.getDuel().end(victim);
             }
             return;
         }

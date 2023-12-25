@@ -15,6 +15,8 @@ import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 import world.ntdi.postglam.data.Tuple;
 
+import java.util.UUID;
+
 public class DuelAcceptCommand extends NRCommand {
     public DuelAcceptCommand() {
         super(new Label("accept", null));
@@ -28,12 +30,14 @@ public class DuelAcceptCommand extends NRCommand {
             return true;
         }
 
-        if (PlayerWrapper.getPlayer(p).getDuel() != null) {
+        PlayerWrapper pw = PlayerWrapper.getPlayer(p);
+
+        if (pw.getDuel() != null) {
             p.sendMessage(CC.RED + "You cannot use this command while dueling.");
             return true;
         }
 
-        if (PlayerWrapper.getPlayer(p).getSpectating() != null) {
+        if (pw.getSpectating() != null) {
             p.sendMessage(CC.RED + "You cannot use this command while spectating.");
             return true;
         }
@@ -48,34 +52,41 @@ public class DuelAcceptCommand extends NRCommand {
             return true;
         }
 
-        Tuple<Boolean, Duel> duelPair = requested(p);
-
-        if (duelPair.getA() != null) {
-            Duel duel = duelPair.getB();
-
-            if (duel == null) return true;
-
-            duel.initialize();
-            new BukkitRunnable() {
-                public void run() {
-                    duel.begin();
-                }
-            }.runTaskLater(Tazpvp.getInstance(), 20*2L);
-            duel.getDUELERS().forEach(d -> {
-                Bukkit.getPlayer(d).sendMessage(CC.BOLD + "" + CC.GOLD + "The duel will begin shortly.");
-            });
-        } else {
-            p.sendMessage(CC.RED + "No one sent you a duel request");
+        if (args.length < 1) {
+            p.sendMessage(CC.RED + "Incorrect Usage: /duel accept <player>");
+            return true;
         }
-        return true;
-    }
 
-    private Tuple<Boolean, Duel> requested(Player p) {
-        for (Duel duel : Duel.duels.keySet()) {
-            if (Duel.duels.get(duel) == p.getUniqueId()) {
-                return new Tuple<>(true, duel);
+        if (pw.getDuelRequests().isEmpty()) {
+            p.sendMessage(CC.RED + "No one sent you a duel request.");
+            return true;
+        }
+
+        Player senderPlayer = Bukkit.getPlayer(args[0]);
+        if (senderPlayer == null) {
+            p.sendMessage(CC.RED + "Invalid Player.");
+            return true;
+        }
+        UUID senderID = senderPlayer.getUniqueId();
+
+        for (UUID id : pw.getDuelRequests().keySet()) {
+            if (id.equals(senderID)) {
+                Duel duel = pw.getDuelRequests().get(id);
+                if (duel == null) {
+                    pw.getDuelRequests().remove(id);
+                    return true;
+                }
+
+                senderPlayer.sendMessage(CC.GREEN + p.getName() + " has accepted your duel request. You will teleport to the duel arena shortly.");
+                p.sendMessage(CC.GREEN + "You have accepted " + senderPlayer.getName() + "'s duel request. You will teleport to the duel arena shortly.");
+
+                pw.getDuelRequests().clear();
+
+                Duel.duelsList.add(duel);
+                duel.initialize();
             }
         }
-        return new Tuple<>(false, null);
+
+        return true;
     }
 }

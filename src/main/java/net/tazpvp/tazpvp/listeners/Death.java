@@ -35,12 +35,9 @@ public class Death implements Listener {
         }
 
         if (entity instanceof Player player) {
-            final PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(player);
-            if (playerWrapper.getDuel() != null) {
-                final Duel duel = playerWrapper.getDuel();
-                duel.setLoser(player.getUniqueId());
-                duel.setWinner(duel.getOtherDueler(player.getUniqueId()));
-                duel.end();
+            final PlayerWrapper pw = PlayerWrapper.getPlayer(player);
+            if (pw.getDuel() != null) {
+                pw.getDuel().end(player.getUniqueId());
             }
 
             final Player killer = player.getKiller();

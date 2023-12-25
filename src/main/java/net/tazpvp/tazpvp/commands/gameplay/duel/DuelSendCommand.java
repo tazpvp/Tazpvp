@@ -68,39 +68,39 @@ public class DuelSendCommand extends NRCommand {
     }
 
     private void duelRequest(Player sender, Player target, String type) {
+        UUID senderID = sender.getUniqueId();
+        UUID targetID = target.getUniqueId();
+        PlayerWrapper targetWrapper = PlayerWrapper.getPlayer(target);
+        PlayerWrapper senderWrapper = PlayerWrapper.getPlayer(sender);
 
-    }
-
-    private void putInDuel(String type, Player p, Player target) {
-        for (Duel duel : Duel.duels.keySet()) {
-            if (Duel.duels.get(duel) == target.getUniqueId()) {
-                if (duel.getP1() == p.getUniqueId()) {
-                    p.sendMessage(CC.RED + "You already sent a duel to this person.");
-                    return;
-                }
-                Duel.duels.remove(duel);
-            }
-        }
-        if (type.equalsIgnoreCase("classic")) {
-            Duel.duels.putIfAbsent(new Classic(p.getUniqueId(), target.getUniqueId()), target.getUniqueId());
-        } else if (type.equalsIgnoreCase("op")) {
-            Duel.duels.putIfAbsent(new Op(p.getUniqueId(), target.getUniqueId()), target.getUniqueId());
-        } else {
-            p.sendMessage(CC.RED + "Not a valid duel type!");
+        if (targetWrapper.getDuelRequests().containsKey(senderID)) {
+            sender.sendMessage(CC.RED + "You already sent a duel to this person.");
             return;
         }
-        p.sendMessage(CC.GREEN + "You sent a duel request to " + CC.GOLD +  target.getName());
 
-        BaseComponent[] baseComponents = new ComponentBuilder(p.getName())
+        if (type.equalsIgnoreCase("classic")) {
+            Duel duel = new Classic(senderID, targetID);
+            senderWrapper.getDuelRequests().putIfAbsent(senderID, duel);
+        } else if (type.equalsIgnoreCase("op")) {
+            Duel duel = new Op(senderID, targetID);
+            senderWrapper.getDuelRequests().putIfAbsent(senderID, duel);
+        } else {
+            sender.sendMessage(CC.RED + "Not a valid duel type!");
+            return;
+        }
+
+        sender.sendMessage(CC.GREEN + "You sent a duel request to " + CC.GOLD +  target.getName());
+
+        BaseComponent[] baseComponents = new ComponentBuilder(sender.getName())
                 .color(net.md_5.bungee.api.ChatColor.GOLD)
                 .append(" sent you a ")
                 .color(net.md_5.bungee.api.ChatColor.GREEN)
-                        .append(type).color(net.md_5.bungee.api.ChatColor.RED)
+                .append(type).color(net.md_5.bungee.api.ChatColor.RED)
                 .append(" duel request").color(net.md_5.bungee.api.ChatColor.GREEN)
-                        .append("\n[Click to Accept]").create();
+                .append("\n[Click to Accept]").create();
 
-        baseComponents[4].setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/duel accept"));
-        baseComponents[4].setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(CC.GREEN + "Accept Duel Request")));
+        baseComponents[4].setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/duel accept " + sender.getName()));
+        baseComponents[4].setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(CC.GREEN + "Accept the duel?")));
 
         target.spigot().sendMessage(baseComponents);
     }

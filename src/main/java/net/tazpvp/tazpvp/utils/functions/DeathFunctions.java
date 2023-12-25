@@ -67,10 +67,7 @@ public class DeathFunctions {
 
         if (!killer.equals(victim)) {
             if (wrapper.getDuel() != null) {
-                final Duel duel = wrapper.getDuel();
-                duel.setWinner(duel.getOtherDueler(victim));
-                duel.setLoser(victim);
-                duel.end();
+                wrapper.getDuel().end(victim);
                 return;
             }
 
@@ -118,10 +115,7 @@ public class DeathFunctions {
         final Player pVictim = Bukkit.getPlayer(victim);
 
         if (wrapper.getDuel() != null) {
-            Duel duel = wrapper.getDuel();
-            duel.setWinner(duel.getOtherDueler(victim));
-            duel.setLoser(victim);
-            duel.end();
+            wrapper.getDuel().end(victim);
             return;
         }
 

@@ -88,24 +88,28 @@ public abstract class Duel {
     public abstract void initialize();
     public abstract void begin();
 
-    public void end(final UUID loser) {
-        setWinner(getOtherDueler(loser));
+
+    public void end(final UUID loserID) {
         setLoser(loser);
-        end();
-    }
-    public void end() {
+        setWinner(getOtherDueler(loser));
+
         final Player winner = Bukkit.getPlayer(getWinner());
-        final Player loser = Bukkit.getPlayer(getLoser());
+        final Player loser = Bukkit.getPlayer(loserID);
         final OfflinePlayer offlineWinner = Bukkit.getOfflinePlayer(getWinner());
         final OfflinePlayer offlineLoser = Bukkit.getOfflinePlayer(getLoser());
 
-        if (winner == null) {
-            Bukkit.getLogger().warning("ERROR: winner is null");
-            return;
+        ChatFunctions.announce(
+                CC.AQUA + offlineWinner.getName() +
+                        CC.DARK_AQUA + " won a duel against " +
+                        CC.AQUA + offlineLoser.getName(),
+                Sound.BLOCK_BELL_RESONATE
+        );
+
+        if (winner != null) {
+            PersistentData.add(winner.getUniqueId(), DataTypes.DUELWINS, 1);
+            winner.sendTitle(CC.GOLD + "" + CC.BOLD + "YOU WIN", "", 20, 20, 20);
         }
 
-        ChatFunctions.announce(CC.AQUA + offlineWinner.getName() + CC.DARK_AQUA + " won a duel against " + CC.AQUA + offlineLoser.getName(), Sound.BLOCK_BELL_RESONATE);
-        PersistentData.add(winner.getUniqueId(), DataTypes.DUELWINS, 1);
         if (loser != null) {
             ArmorManager.setPlayerContents(loser, true);
             loser.teleport(NRCore.config.spawn);
@@ -113,15 +117,7 @@ public abstract class Duel {
             PlayerFunctions.resetHealth(loser);
         }
 
-        winner.sendTitle(CC.GOLD + "" + CC.BOLD + "YOU WIN", "", 20, 20, 20);
-
-        SPECTATORS.forEach(p -> {
-            final Player spectator = Bukkit.getPlayer(p);
-            if (spectator != null) {
-                removeSpectator(spectator);
-            }
-        });
-
+        clearSpectators();
         final Duel duel = this;
 
         new BukkitRunnable() {
@@ -135,7 +131,7 @@ public abstract class Duel {
 
 
                 new WorldUtil().deleteWorld(getWorldName());
-                duels.remove(duel);
+                duelsList.remove(duel);
             }
         }.runTaskLater(Tazpvp.getInstance(), 20*5);
 
@@ -159,7 +155,7 @@ public abstract class Duel {
         });
 
         new WorldUtil().deleteWorld(getWorldName());
-        duels.remove(this);
+        duelsList.remove(this);
     }
 
     public void addSpectator(final Player player) {
@@ -177,6 +173,15 @@ public abstract class Duel {
         }
     }
 
+    private void clearSpectators() {
+        SPECTATORS.forEach(p -> {
+            final Player spectator = Bukkit.getPlayer(p);
+            if (spectator != null) {
+                removeSpectator(spectator);
+            }
+        });
+    }
+
     public void removeSpectator(final Player player) {
         final UUID uuid = player.getUniqueId();
         this.SPECTATORS.remove(uuid);
@@ -192,5 +197,6 @@ public abstract class Duel {
         return (P1.equals(id) ? P2 : P1);
     }
 
-    public static ConcurrentHashMap<Duel, UUID> duels = new ConcurrentHashMap<>();
+    public final static ConcurrentHashMap<UUID, Duel> duels = new ConcurrentHashMap<>();
+    public final static List<Duel> duelsList = new ArrayList<>();
 }

@@ -50,72 +50,63 @@ import java.util.UUID;
 
 public class Classic extends Duel {
 
-    Player p1;
-    Player p2;
 
     public Classic(UUID P1, UUID P2) {
         super(P1, P2, "classic");
-        p1 = Bukkit.getPlayer(super.getP1());
-        p2 = Bukkit.getPlayer(super.getP2());
-        super.setWorldName(p1.getName() + p2.getName() + UUID.randomUUID());
+        super.setWorldName("duel_" + UUID.randomUUID());
     }
 
     @Override
     public void initialize() {
+        getDUELERS().forEach(uuid -> {
+            PlayerWrapper pw = PlayerWrapper.getPlayer(uuid);
+            if (pw.getDuel() != null) return;
+            pw.setDuel(this);
+        });
+
         new WorldUtil().cloneWorld("duelMap1", super.getWorldName());
 
-        getDUELERS().forEach(uuid -> PlayerWrapper.getPlayer(uuid).setDuel(this));
+        new BukkitRunnable() {
+            public void run() {
+                begin();
+            }
+        }.runTaskLater(Tazpvp.getInstance(), 20*2L);
     }
 
     @Override
     public void begin() {
-        Tazpvp.getObservers().forEach(observer -> observer.duel(Bukkit.getPlayer(getP1())));
-        Tazpvp.getObservers().forEach(observer -> observer.duel(Bukkit.getPlayer(getP2())));
         World world = Bukkit.getWorld(super.getWorldName());
-
-        setStarting(true);
 
         List<UUID> duelers = super.getDUELERS();
 
-        duelers.forEach(id -> {
-            Player p = Bukkit.getPlayer(id);
-            ArmorManager.storeAndClearInventory(p);
-            PlayerFunctions.resetHealth(p);
-            PlayerFunctions.feedPlr(p);
-            p.setGameMode(GameMode.SURVIVAL);
-        });
+        Player p1 = Bukkit.getPlayer(duelers.get(0));
+        Player p2 = Bukkit.getPlayer(duelers.get(1));
+
+        if (p1 == null || p2 == null) return;
+
+        initPlayer(p1);
+        initPlayer(p2);
 
         p1.teleport(new Location(world, 0.5, 10, 14.5, 180, 0));
         p2.teleport(new Location(world, 0.5, 10, -13.5, 0, 0));
 
-        super.getDUELERS().forEach(this::addItems);
+        duelers.forEach(this::addItems);
+
+        setStarting(true);
 
         new BukkitRunnable() {
-            int countDown = 5;
             @Override
             public void run() {
-                if (isStarting()) {
-                    if (countDown > 0) {
-                        duelers.forEach(id -> {
-                            Player p = Bukkit.getPlayer(id);
-                            if (p != null) {
-                                p.sendTitle(CC.GOLD + "" + CC.BOLD + countDown, "", 5, 10, 5);
-                            }
-                        });
-                        countDown -= 1;
-                    } else {
-                        duelers.forEach(id -> {
-                            Player p = Bukkit.getPlayer(id);
-                            if (p != null) {
-                                p.sendTitle(CC.GOLD + "" + CC.BOLD + "BEGIN", "", 5, 10, 5);
-                            }
-                        });
-                        setStarting(false);
-                        cancel();
+                duelers.forEach(id -> {
+                    Player p = Bukkit.getPlayer(id);
+                    if (p != null) {
+                        p.sendTitle(CC.GOLD + "" + CC.BOLD + "BEGIN", "", 5, 10, 5);
+                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1,1);
                     }
-                }
+                });
+                setStarting(false);
             }
-        }.runTaskTimer(Tazpvp.getInstance(), 20, 20);
+        }.runTaskLater(Tazpvp.getInstance(), 20*5);
     }
 
     public void addItems(final UUID duelerUUID) {
@@ -131,5 +122,14 @@ public class Classic extends Duel {
         inv.addItem(new ItemStack(Material.DIAMOND_SWORD));
         inv.addItem(new ItemStack(Material.DIAMOND_AXE));
         inv.addItem(new ItemStack(Material.GOLDEN_APPLE, 6));
+    }
+
+    private void initPlayer(final Player p) {
+        ArmorManager.storeAndClearInventory(p);
+        PlayerFunctions.resetHealth(p);
+        PlayerFunctions.feedPlr(p);
+        p.sendMessage(CC.BOLD + "" + CC.GOLD + "The duel will begin in 5 seconds.");
+        p.setGameMode(GameMode.SURVIVAL);
+        Tazpvp.getObservers().forEach(observer -> observer.duel(p));
     }
 }

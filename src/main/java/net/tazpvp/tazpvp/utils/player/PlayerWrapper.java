@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.WeakHashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Wrapper for the player object which contains valuable methods exclusive to tazpvp
@@ -82,6 +83,8 @@ public class PlayerWrapper {
     private boolean vanished;
     @Getter @Setter
     private boolean staffChatActive;
+    @Getter
+    private final ConcurrentHashMap<UUID, Duel> duelRequests;
 
 
     /**
@@ -114,6 +117,8 @@ public class PlayerWrapper {
 
         final TalentService talentService = new TalentServiceImpl();
         this.talentEntity = talentService.getOrDefault(getUuid());
+
+        this.duelRequests = new ConcurrentHashMap<>();
 
         refreshPermissions();
     }
