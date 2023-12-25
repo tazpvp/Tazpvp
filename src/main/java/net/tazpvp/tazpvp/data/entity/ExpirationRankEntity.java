@@ -17,7 +17,7 @@ public class ExpirationRankEntity {
     @DatabaseField(foreign = true, columnName = "user_rank", foreignAutoRefresh = true)
     private UserRankEntity userRankEntity;
 
-    @DatabaseField(foreign = true, columnName = "game_rank")
+    @DatabaseField(foreign = true, columnName = "game_rank", foreignAutoRefresh = true)
     private GameRankEntity gameRankEntity;
 
     @DatabaseField(canBeNull = false)

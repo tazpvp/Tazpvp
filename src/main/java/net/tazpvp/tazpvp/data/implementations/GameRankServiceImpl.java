@@ -40,6 +40,7 @@ public class GameRankServiceImpl implements GameRankService {
         gameRankEntity.setName(name);
         gameRankEntity.setPrefix(prefix);
         gameRankEntity.setHierarchy(hierarchy);
+        gameRankEntity.setWeight(5);
 
         saveGameRank(gameRankEntity);
 
@@ -56,6 +57,18 @@ public class GameRankServiceImpl implements GameRankService {
         permissionEntities.add(permissionEntity);
 
         saveGameRank(gameRankEntity);
+    }
+
+    @Override
+    public void removePermissionFromGameRank(GameRankEntity gameRankEntity, String permission) {
+        final PermissionService permissionService = new PermissionServiceImpl();
+        final PermissionEntity permissionEntity = permissionService.findByPermission(gameRankEntity, permission);
+        final ForeignCollection<PermissionEntity> permissionEntities = gameRankEntity.getPermissions();
+        permissionEntities.remove(permissionEntity);
+
+        gameRankEntity.setPermissions(permissionEntities);
+        saveGameRank(gameRankEntity);
+        permissionService.deletePermission(permissionEntity);
     }
 
     @Override
@@ -84,8 +97,19 @@ public class GameRankServiceImpl implements GameRankService {
     public GameRankEntity getOrCreateIfNotExists(String name, String prefix, int hierarchy) {
         GameRankEntity gameRankEntity = getGameRankFromName(name);
         if (gameRankEntity == null) {
-            return createGameRank(name, prefix, hierarchy);
+            final GameRankEntity gameRankEntity1 = createGameRank(name, prefix, hierarchy);
+            saveGameRank(gameRankEntity1);
+            return gameRankEntity1;
         }
         return gameRankEntity;
+    }
+
+    @Override
+    public List<String> getAllGameRanks() {
+        try {
+            return getUserDao().queryForAll().stream().map(GameRankEntity::getName).toList();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -51,6 +51,7 @@ public class Gladiator extends Observable {
         if (!achievementEntity.isCompleted()) {
             if (PersistentData.getInt(p.getUniqueId(), DataTypes.DUELWINS) >= 35) {
                 achievementEntity.setCompleted(true);
+                userAchievementEntity.setGladiatorAchievementEntity(achievementEntity);
                 pw.setUserAchievementEntity(userAchievementEntity);
                 ChatFunctions.achievement(p, "Gladiator");
             }

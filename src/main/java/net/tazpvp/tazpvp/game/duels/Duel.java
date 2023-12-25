@@ -49,10 +49,8 @@ import world.ntdi.nrcore.utils.ArmorManager;
 import world.ntdi.nrcore.utils.world.WorldUtil;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import java.util.WeakHashMap;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class Duel {
 
@@ -194,5 +192,5 @@ public abstract class Duel {
         return (P1.equals(id) ? P2 : P1);
     }
 
-    public static WeakHashMap<Duel, UUID> duels = new WeakHashMap<>();
+    public static ConcurrentHashMap<Duel, UUID> duels = new ConcurrentHashMap<>();
 }

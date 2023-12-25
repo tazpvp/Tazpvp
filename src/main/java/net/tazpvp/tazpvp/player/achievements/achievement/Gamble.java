@@ -50,6 +50,7 @@ public class Gamble extends Observable {
         if (!achievementEntity.isCompleted()) {
             if (killer.getHealth() <= 1) {
                 achievementEntity.setCompleted(true);
+                userAchievementEntity.setGambleAchievementEntity(achievementEntity);
                 pw.setUserAchievementEntity(userAchievementEntity);
                 ChatFunctions.achievement(killer, "Gamble");
             }

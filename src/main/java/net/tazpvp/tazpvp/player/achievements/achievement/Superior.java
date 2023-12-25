@@ -49,6 +49,7 @@ public class Superior extends Observable {
 
         if (!achievementEntity.isCompleted()) {
             achievementEntity.setCompleted(true);
+            userAchievementEntity.setSuperiorAchievementEntity(achievementEntity);
             pw.setUserAchievementEntity(userAchievementEntity);
             ChatFunctions.achievement(p, "Superior");
         }

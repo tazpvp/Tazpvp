@@ -51,6 +51,7 @@ public class Charm extends Observable {
         if (!achievementEntity.isCompleted()) {
             if (LooseData.getChatCount(p.getUniqueId()) >= 100) {
                 achievementEntity.setCompleted(true);
+                userAchievementEntity.setCharmAchievementEntity(achievementEntity);
                 pw.setUserAchievementEntity(userAchievementEntity);
                 ChatFunctions.achievement(p, "Charm");
             }

@@ -99,7 +99,7 @@ public class Caesar extends GUI {
                 }
             }
             if (reward == 0) {
-                sendNPCMessage(p, "Are you trying to scam me!? You don't have any ores!" + reward);
+                sendNPCMessage(p, "Are you trying to scam me!? You don't have any ores!");
                 p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
             } else {
                 PersistentData.add(p.getUniqueId(), DataTypes.COINS, reward);

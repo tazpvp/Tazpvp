@@ -19,6 +19,7 @@ public class Grinder extends Observable {
         if (!achievementEntity.isCompleted()) {
             if (LooseData.getMineCount(p.getUniqueId()) >= 100) {
                 achievementEntity.setCompleted(true);
+                userAchievementEntity.setGrinderAchievementEntity(achievementEntity);
                 pw.setUserAchievementEntity(userAchievementEntity);
                 ChatFunctions.achievement(p, "Grinder");
             }

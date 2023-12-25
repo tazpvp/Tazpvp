@@ -49,6 +49,7 @@ public class Craftsman extends Observable {
 
         if (!achievementEntity.isCompleted()) {
             achievementEntity.setCompleted(true);
+            userAchievementEntity.setCraftsmanAchievementEntity(achievementEntity);
             pw.setUserAchievementEntity(userAchievementEntity);
             ChatFunctions.achievement(p, "Craftsman");
         }

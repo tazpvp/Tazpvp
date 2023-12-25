@@ -6,6 +6,8 @@ import net.tazpvp.tazpvp.game.bosses.zorg.attacks.SummonUndeadAttack;
 import net.tazpvp.tazpvp.game.duels.Duel;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
@@ -22,6 +24,8 @@ public class Death implements Listener {
         final Entity entity = event.getEntity();
 
         final UUID uuid = entity.getUniqueId();
+
+        final Location location = entity.getLocation();
 
         event.setDroppedExp(0);
         event.getDrops().clear();
@@ -58,6 +62,9 @@ public class Death implements Listener {
             }
 
             BossManager.bossDied();
+            World world = entity.getWorld();
+            world.dropItemNaturally(location.add(0, 1, 0), net.tazpvp.tazpvp.utils.objects.Death.deathItem());
+
             if (!SummonUndeadAttack.undeadList.isEmpty()) {
                 for (Zombie z : SummonUndeadAttack.undeadList) {
                     z.setHealth(0);

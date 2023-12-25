@@ -29,8 +29,12 @@ public class PunishmentFunctions {
         final PunishmentService punishmentService = new PunishmentServiceImpl();
         punishmentService.punish(target.getUniqueId(), PunishmentService.PunishmentType.BANNED, timeToken.getUnixTimestamp(), reason);
 
+        if (commandSender instanceof Player p) {
+            ChatFunctions.announce(CC.RED + target.getName() + " was banned by " + p.getName(), Sound.BLOCK_STONE_BUTTON_CLICK_OFF);
+        } else {
+            ChatFunctions.announce(CC.RED + target.getName() + " has been banned.", Sound.BLOCK_STONE_BUTTON_CLICK_OFF);
+        }
 
-        ChatFunctions.announce(CC.RED + target.getName() + " has been banned.", Sound.BLOCK_STONE_BUTTON_CLICK_OFF);
         if (target.isOnline()) {
             Player banned = target.getPlayer();
             if (banned == null) return;

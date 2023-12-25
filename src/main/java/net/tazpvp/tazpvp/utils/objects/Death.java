@@ -127,8 +127,8 @@ public class Death {
     public void playParticle() {
         PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(victim);
 
-        if (playerWrapper.getRank() != Rank.DEFAULT) {
-            final String particle = playerWrapper.getRankEntity().getDeathParticle();
+        if (playerWrapper.getRank().getHierarchy() >= 1) {
+            final String particle = playerWrapper.getUserRankEntity().getDeathParticle();
 
             if (particle != null) {
                 location.getWorld().spawnParticle(Particle.valueOf(particle), location, 6);
@@ -241,7 +241,7 @@ public class Death {
         PlayerInventoryStorage.updateStorage(victim, killer);
     }
 
-    private ItemStack deathItem() {
+    public static ItemStack deathItem() {
         Random r = new Random();
 
         List<Enchantment> enchants = List.of(
@@ -256,7 +256,8 @@ public class Death {
 
         List<ItemStack> items = Arrays.asList(
                 ItemBuilder.of(Material.AMETHYST_SHARD, 2).name(StaticItems.SHARD.getName()).build(),
-                new ItemStack(Material.GOLDEN_APPLE, 2)
+                new ItemStack(Material.GOLDEN_APPLE, 2),
+                new ItemStack(Material.COOKED_BEEF, 10)
         );
 
         int randomItemChance = r.nextInt(10);

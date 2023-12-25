@@ -18,6 +18,7 @@ public class Harvester extends Observable {
         if (!achievementEntity.isCompleted()) {
             if (pw.getCoffinCount() >= 10) {
                 achievementEntity.setCompleted(true);
+                userAchievementEntity.setHarvesterAchievementEntity(achievementEntity);
                 pw.setUserAchievementEntity(userAchievementEntity);
                 ChatFunctions.achievement(p, "Harvester");
             }

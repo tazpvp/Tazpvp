@@ -11,4 +11,6 @@ import java.util.UUID;
 public interface PermissionService extends DataService {
     Dao<PermissionEntity, Integer> getUserDao();
     PermissionEntity createPermission(GameRankEntity gameRankEntity, String permission);
+    PermissionEntity findByPermission(GameRankEntity gameRankEntity, String name);
+    void deletePermission(PermissionEntity permissionEntity);
 }

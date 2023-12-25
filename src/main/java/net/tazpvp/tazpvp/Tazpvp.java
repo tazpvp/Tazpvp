@@ -37,8 +37,9 @@ import lombok.Getter;
 import net.tazpvp.tazpvp.commands.admin.permissions.TempPermissionsCommand;
 import net.tazpvp.tazpvp.commands.gameplay.PayCommand.PayCommand;
 import net.tazpvp.tazpvp.commands.gameplay.duel.DuelCommand;
+import net.tazpvp.tazpvp.commands.gameplay.guild.GuildCommand;
+import net.tazpvp.tazpvp.commands.gameplay.leaderboard.BaltopCommand;
 import net.tazpvp.tazpvp.commands.moderation.StaffChatCommand;
-import net.tazpvp.tazpvp.data.services.AchievementService;
 import net.tazpvp.tazpvp.player.achievements.achievement.*;
 import net.tazpvp.tazpvp.commands.admin.BroadcastCommand;
 import net.tazpvp.tazpvp.commands.admin.KeyallCommand;
@@ -48,7 +49,6 @@ import net.tazpvp.tazpvp.commands.admin.edit.EditCommand;
 import net.tazpvp.tazpvp.commands.admin.hide.HideCommand;
 import net.tazpvp.tazpvp.commands.admin.kit.KitCommand;
 import net.tazpvp.tazpvp.commands.admin.npc.NpcCommand;
-import net.tazpvp.tazpvp.commands.admin.permissions.PermissionsCommand;
 import net.tazpvp.tazpvp.commands.admin.stats.StatCommand;
 import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
 import net.tazpvp.tazpvp.commands.admin.teleportWorld.TeleportWorldCommand;
@@ -267,7 +267,6 @@ public final class Tazpvp extends JavaPlugin {
                 new LeaderboardCommand(),
                 new ApplyCommand(),
                 new AdCommand(),
-                new PermissionsCommand(),
                 new TeleportWorldCommand(),
                 new EditCommand(),
                 new PlaytimeCommand(),
@@ -281,7 +280,8 @@ public final class Tazpvp extends JavaPlugin {
                 new KeyallCommand(),
                 new ResetStatsCommand(),
                 new BroadcastCommand(),
-                new TempPermissionsCommand(),
+                new StaffChatCommand(),
+                new BaltopCommand(),
                 new StaffChatCommand(),
                 new PayCommand()
         );

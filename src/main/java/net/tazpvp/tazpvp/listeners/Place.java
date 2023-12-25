@@ -1,6 +1,8 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.data.implementations.UserRankServiceImpl;
+import net.tazpvp.tazpvp.data.services.UserRankService;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -63,10 +65,13 @@ public class Place implements Listener {
                 return;
             }
 
+            final UserRankService userRankService = new UserRankServiceImpl();
+            boolean hasPremium = userRankService.hasRank(pw.getUserRankEntity(), "premium");
+
             // Delay in seconds.
             if (mat == Material.COBWEB) {
                 delay = 2;
-            } else if (pw.getRankEntity().isPremium()) {
+            } else if (hasPremium) {
                 delay = 20;
             } else {
                 delay = 8;

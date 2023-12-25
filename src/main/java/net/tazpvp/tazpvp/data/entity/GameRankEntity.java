@@ -20,7 +20,7 @@ public class GameRankEntity {
     @DatabaseField(generatedId = true)
     private int id;
 
-    @DatabaseField(unique = true)
+    @DatabaseField(unique = true, canBeNull = false)
     private String name;
 
     @DatabaseField(width = 1024)
@@ -28,6 +28,9 @@ public class GameRankEntity {
 
     @DatabaseField
     private int hierarchy;
+
+    @DatabaseField(defaultValue = "5")
+    private int weight;
 
     @ForeignCollectionField
     private ForeignCollection<PermissionEntity> permissions;

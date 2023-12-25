@@ -19,6 +19,7 @@ public class Error extends Observable {
         if (!achievementEntity.isCompleted()) {
             if (PersistentData.getInt(victim.getUniqueId(), DataTypes.DEATHS) >= 100) {
                 achievementEntity.setCompleted(true);
+                userAchievementEntity.setErrorAchievementEntity(achievementEntity);
                 pw.setUserAchievementEntity(userAchievementEntity);
                 ChatFunctions.achievement(killer, "Error");
             }

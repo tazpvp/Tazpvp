@@ -36,6 +36,7 @@ package net.tazpvp.tazpvp.commands.gameplay.guild.sub;
 import lombok.NonNull;
 import net.tazpvp.tazpvp.commands.gameplay.guild.handler.GuildAvailableCommand;
 import net.tazpvp.tazpvp.game.guilds.Guild;
+import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
 
@@ -47,7 +48,7 @@ public class GuildDisbandCommand extends GuildAvailableCommand {
     @Override
     public boolean executeFunction(@NonNull Player p, @NonNull Guild g) {
         if (g.getGuildLeader() != p.getUniqueId()) {
-            sendIncorrectUsage(p, "You don't own this guild.");
+            p.sendMessage(CC.RED + "You don't own this guild.");
             return false;
         }
 
