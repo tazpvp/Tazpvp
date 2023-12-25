@@ -91,7 +91,7 @@ public class DuelSendCommand extends NRCommand {
             return;
         }
 
-        sender.sendMessage(Duel.prefix + "You sent a duel request to " + CC.GOLD +  target.getName());
+        sender.sendMessage(Duel.prefix + "You sent a duel request to " + CC.AQUA +  target.getName());
 
         BaseComponent[] baseComponents = new ComponentBuilder("Duel | " + sender.getName())
                 .color(ChatColor.AQUA)

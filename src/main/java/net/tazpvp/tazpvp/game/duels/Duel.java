@@ -112,6 +112,10 @@ public abstract class Duel {
             winner.sendTitle(CC.GOLD + "" + CC.BOLD + "YOU WIN", "", 20, 20, 20);
         }
 
+        if (loser != null) {
+            loser.setGameMode(GameMode.SPECTATOR);
+        }
+
         clearSpectators();
         final Duel duel = this;
 
@@ -122,6 +126,7 @@ public abstract class Duel {
                     Player p = Bukkit.getPlayer(id);
                     if (p == null) return;
                     ArmorManager.setPlayerContents(p, true);
+                    p.setGameMode(GameMode.SURVIVAL);
                     p.teleport(NRCore.config.spawn);
                     PlayerWrapper.getPlayer(p).setDuel(null);
                     PlayerFunctions.resetHealth(p);
