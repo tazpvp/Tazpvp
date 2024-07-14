@@ -3,6 +3,8 @@ package net.tazpvp.tazpvp.data.implementations;
 import com.j256.ormlite.dao.Dao;
 import net.tazpvp.tazpvp.data.entity.GameRankEntity;
 import net.tazpvp.tazpvp.data.entity.GuildEntity;
+import net.tazpvp.tazpvp.data.entity.GuildMemberEntity;
+import net.tazpvp.tazpvp.data.services.GuildMemberService;
 import net.tazpvp.tazpvp.data.services.GuildService;
 
 import java.sql.SQLException;
@@ -10,8 +12,14 @@ import java.util.List;
 import java.util.UUID;
 
 public class GuildServiceImpl implements GuildService {
+    private final GuildMemberService guildMemberService;
+
+    public GuildServiceImpl(GuildMemberService guildMemberService) {
+        this.guildMemberService = guildMemberService;
+    }
+
     @Override
-    public Dao<GuildEntity, UUID> getUserDao() {
+    public Dao<GuildEntity, Integer> getUserDao() {
         return null;
     }
 
@@ -37,30 +45,37 @@ public class GuildServiceImpl implements GuildService {
     }
 
     @Override
-    public void addMember(int guild, UUID member) {
-        GuildEntity guildEntity = getGuild(guild);
-
-        //guildEntity.getMembers().add(member);
+    public void addMember(GuildEntity guild, GuildMemberEntity member) {
+        guild.getMembers().add(member);
     }
 
     @Override
-    public GuildEntity getGuildByPlayer(UUID player) {
+    public GuildEntity getGuildByPlayer(UUID player) throws SQLException {
+        GuildMemberEntity member = guildMemberService.getGuildMemberByUUID(player);
+
+        if (member != null) {
+            return member.getGuildEntity();
+        }
+
         return null;
     }
 
     @Override
     public GuildEntity getGuild(int id) {
-        return null;
+        try {
+            return getUserDao().queryForId(id);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
-    public void deleteGuild(UUID player) {
-
-    }
-
-    @Override
-    public void deleteGuild(int guild) {
-
+    public void deleteGuild(GuildEntity guild) {
+        try {
+            getUserDao().delete(guild);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

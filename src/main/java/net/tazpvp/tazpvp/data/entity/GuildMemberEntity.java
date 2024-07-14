@@ -4,6 +4,8 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import lombok.*;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,6 +19,9 @@ public class GuildMemberEntity {
     @DatabaseField(foreign = true, columnName = "guild_entity", foreignAutoRefresh = true)
     private GuildEntity guildEntity;
 
+    @DatabaseField(canBeNull = false)
+    private UUID pUUID;
+
     @DatabaseField(defaultValue = "false")
-    private boolean general;
+    private boolean officer;
 }
