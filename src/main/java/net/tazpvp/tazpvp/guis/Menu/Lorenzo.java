@@ -32,7 +32,10 @@
 
 package net.tazpvp.tazpvp.guis.Menu;
 
+import net.tazpvp.tazpvp.data.services.GuildService;
+import net.tazpvp.tazpvp.guis.GuildMenu;
 import net.tazpvp.tazpvp.guis.Menu.cosmetic.PremiumMenu;
+import net.tazpvp.tazpvp.guis.Menu.guild.GuildBrowser;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -60,8 +63,7 @@ public class Lorenzo extends GUI {
         }), 12);
 
         addButton(Button.create(ItemBuilder.of(Material.TOTEM_OF_UNDYING, 1).name(CC.GREEN + "" + CC.BOLD + "Guilds").lore(CC.GRAY + "Create guilds and", CC.GRAY + "compete with rivals").build(), (e) -> {
-            p.sendMessage(CC.RED + "Out of order.");
-//            new GuildBrowser(p);
+            new GuildMenu(p);
         }), 14);
 
         addButton(Button.create(ItemBuilder.of(Material.FIRE_CHARGE, 1).name(CC.GREEN + "" + CC.BOLD + "Premium").lore(CC.GRAY + "All of the premium", CC.GRAY + "and cosmetic features").build(), (e) -> {

@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.UUID;
 
 public class GuildServiceImpl implements GuildService {
-    private final GuildMemberService guildMemberService;
+    private final GuildMemberServiceImpl guildMemberServiceImpl;
 
-    public GuildServiceImpl(GuildMemberService guildMemberService) {
-        this.guildMemberService = guildMemberService;
+    public GuildServiceImpl(GuildMemberServiceImpl guildMemberServiceImpl) {
+        this.guildMemberServiceImpl = guildMemberServiceImpl;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class GuildServiceImpl implements GuildService {
 
     @Override
     public GuildEntity getGuildByPlayer(UUID player) throws SQLException {
-        GuildMemberEntity member = guildMemberService.getGuildMemberByUUID(player);
+        GuildMemberEntity member = guildMemberServiceImpl.getGuildMemberByUUID(player);
 
         if (member != null) {
             return member.getGuildEntity();
