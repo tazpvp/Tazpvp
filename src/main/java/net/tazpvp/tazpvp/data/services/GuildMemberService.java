@@ -15,7 +15,7 @@ public interface GuildMemberService extends DataService {
 
     void saveGuildMemberEntity(GuildMemberEntity guildMember);
 
-    GuildMemberEntity getGuildMemberByUUID(UUID id) throws SQLException;
+    GuildMemberEntity getGuildMemberByUUID(UUID id);
 
     GuildMemberEntity getGuildMemberById(int id);
 

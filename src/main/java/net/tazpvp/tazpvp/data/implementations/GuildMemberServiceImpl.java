@@ -1,6 +1,9 @@
 package net.tazpvp.tazpvp.data.implementations;
 
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
+import lombok.SneakyThrows;
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.GuildEntity;
 import net.tazpvp.tazpvp.data.entity.GuildMemberEntity;
 import net.tazpvp.tazpvp.data.services.GuildMemberService;
@@ -9,9 +12,17 @@ import java.sql.SQLException;
 import java.util.UUID;
 
 public class GuildMemberServiceImpl implements GuildMemberService {
+    private Dao<GuildMemberEntity, Integer> userDao;
     @Override
     public Dao<GuildMemberEntity, Integer> getUserDao() {
-        return null;
+        if (userDao == null) {
+            try {
+                userDao = DaoManager.createDao(Tazpvp.getPostgresqlDatabase().getConnectionSource(), GuildMemberEntity.class);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return userDao;
     }
 
     @Override
@@ -35,8 +46,9 @@ public class GuildMemberServiceImpl implements GuildMemberService {
         }
     }
 
+    @SneakyThrows
     @Override
-    public GuildMemberEntity getGuildMemberByUUID(UUID id) throws SQLException {
+    public GuildMemberEntity getGuildMemberByUUID(UUID id) {
         return getUserDao().queryBuilder()
                 .where().eq("pUUID", id)
                 .queryForFirst();

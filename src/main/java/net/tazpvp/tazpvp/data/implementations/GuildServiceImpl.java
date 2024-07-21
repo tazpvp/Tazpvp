@@ -1,6 +1,7 @@
 package net.tazpvp.tazpvp.data.implementations;
 
 import com.j256.ormlite.dao.Dao;
+import lombok.AllArgsConstructor;
 import net.tazpvp.tazpvp.data.entity.GameRankEntity;
 import net.tazpvp.tazpvp.data.entity.GuildEntity;
 import net.tazpvp.tazpvp.data.entity.GuildMemberEntity;
@@ -12,12 +13,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
+@AllArgsConstructor
 public class GuildServiceImpl implements GuildService {
     private final GuildMemberService guildMemberService;
-
-    public GuildServiceImpl(GuildMemberService guildMemberService) {
-        this.guildMemberService = guildMemberService;
-    }
 
     @Override
     public Dao<GuildEntity, Integer> getUserDao() {
@@ -52,14 +50,10 @@ public class GuildServiceImpl implements GuildService {
 
     @Override
     public GuildEntity getGuildByPlayer(UUID player) {
-        try {
-            GuildMemberEntity member = guildMemberService.getGuildMemberByUUID(player);
+        GuildMemberEntity member = guildMemberService.getGuildMemberByUUID(player);
 
-            if (member != null) {
-                return member.getGuildEntity();
-            }
-        } catch (SQLException e) {
-            throw  new RuntimeException(e);
+        if (member != null) {
+            return member.getGuildEntity();
         }
         return null;
     }
