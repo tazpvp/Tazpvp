@@ -76,13 +76,13 @@ public class CrateManager {
         getCrates().add(new Crate(
                 new Location(Bukkit.getWorld("arena"), -15, 99, 5), ChatFunctions.gradient("#039dfc", "Rare Crate", true), "rare",
                 createItem(Enchantment.MENDING),
-                createItem(Enchantment.DAMAGE_ALL),
-                createItem(Enchantment.ARROW_DAMAGE),
-                createItem(Enchantment.DURABILITY),
-                createItem(Enchantment.PROTECTION_ENVIRONMENTAL),
-                createItem(Enchantment.ARROW_KNOCKBACK),
+                createItem(Enchantment.SHARPNESS),
+                createItem(Enchantment.POWER),
+                createItem(Enchantment.UNBREAKING),
+                createItem(Enchantment.PROTECTION),
+                createItem(Enchantment.PUNCH),
                 createItem(Enchantment.KNOCKBACK),
-                createItem(Enchantment.ARROW_FIRE),
+                createItem(Enchantment.FLAME),
                 createItem(Enchantment.FIRE_ASPECT)
         ));
         getCrates().add(new Crate(

@@ -35,12 +35,12 @@ public class SonicBoomAttack implements Attack {
                 for (int i = 0; i < 30; i++) {
                     Location loc = origin.clone().add(direction.clone().multiply(i));
 
-                    loc.getWorld().spawnParticle(Particle.CRIT_MAGIC, loc, 1, (Math.random() - 0.5) * 0.5, (Math.random() - 0.5) * 0.5, (Math.random() - 0.5) * 0.5, 0.05);
-                    loc.getWorld().spawnParticle(Particle.EXPLOSION_NORMAL, loc, 1, (Math.random() - 0.5) * 0.5, (Math.random() - 0.5) * 0.5, (Math.random() - 0.5) * 0.5, 0.05);
+                    loc.getWorld().spawnParticle(Particle.CRIT, loc, 1, (Math.random() - 0.5) * 0.5, (Math.random() - 0.5) * 0.5, (Math.random() - 0.5) * 0.5, 0.05);
+                    loc.getWorld().spawnParticle(Particle.EXPLOSION, loc, 1, (Math.random() - 0.5) * 0.5, (Math.random() - 0.5) * 0.5, (Math.random() - 0.5) * 0.5, 0.05);
                 }
 
                 origin.getWorld().playSound(origin, Sound.ENTITY_SQUID_SQUIRT, 1.0f, 1.0f);
-                origin.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, origin, 1, 0, 0, 0, 0.05);
+                origin.getWorld().spawnParticle(Particle.EXPLOSION, origin, 1, 0, 0, 0, 0.05);
 
                 target.damage(random.nextInt(2) + 2);
             }

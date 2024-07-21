@@ -94,7 +94,7 @@ public class Talents extends GUI {
         addButton(Button.create(ItemBuilder.of(mat, 1)
                 .name(CC.AQUA +  "" + CC.BOLD +name)
                 .lore(CC.DARK_AQUA + lore, " ",CC.GRAY + "Cost: " + cost + " Coins", " ", complete)
-                .flag(ItemFlag.HIDE_POTION_EFFECTS).flag(ItemFlag.HIDE_ATTRIBUTES)
+                .flag(ItemFlag.HIDE_ATTRIBUTES)
                 .build(), (e) -> {
 
             if (!active) {

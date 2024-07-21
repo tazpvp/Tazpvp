@@ -74,7 +74,7 @@ public class Crate {
         Player p = e.getPlayer();
         if (isCrate(e)) {
             if (hasKey(p)) {
-                getLocation().getWorld().spawnParticle(Particle.EXPLOSION_NORMAL, getLocation(), 1);
+                getLocation().getWorld().spawnParticle(Particle.EXPLOSION, getLocation(), 1);
                 removeOne(p);
                 p.playSound(p.getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN, 1F, 1F);
                 Tuple<String, ItemStack> randomShopItem = randomShopItem();

@@ -11,8 +11,8 @@ public class EnchantWrapper extends Enchantment {
 
     private final String name;
     private final int maxLevel;
-    public EnchantWrapper(NamespacedKey key, String name, int maxLevel) {
-        super(key);
+    public EnchantWrapper(String name, int maxLevel) {
+        super();
         this.name = name;
         this.maxLevel = maxLevel;
     }
@@ -57,5 +57,17 @@ public class EnchantWrapper extends Enchantment {
     @Override
     public boolean canEnchantItem(ItemStack item) {
         return item.getType() == Material.DIAMOND_PICKAXE || item.getType() == Material.IRON_PICKAXE || item.getType() == Material.STONE_PICKAXE || item.getType() == Material.WOODEN_PICKAXE;
+    }
+
+    @NotNull
+    @Override
+    public NamespacedKey getKey() {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public String getTranslationKey() {
+        return null;
     }
 }

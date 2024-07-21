@@ -77,7 +77,7 @@ public class Coffin {
         p.getInventory().addItem(coffinItem());
 
         Location playerLocation = p.getLocation();
-        playerLocation.getWorld().spawnParticle(Particle.SPELL_MOB, playerLocation, 100, 0.5, 1, 0.5, 0.2);
+        playerLocation.getWorld().spawnParticle(Particle.BUBBLE, playerLocation, 100, 0.5, 1, 0.5, 0.2);
         p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1, 1);
 
         if (PersistentData.getTalents(p).is("Necromancer")) {
@@ -92,24 +92,24 @@ public class Coffin {
     private ItemStack coffinItem() {
         Random r = new Random();
         List<PotionType> tippedArrows = Arrays.asList(
-                PotionType.SPEED,
+                PotionType.SWIFTNESS,
                 PotionType.SLOWNESS,
-                PotionType.INSTANT_HEAL,
-                PotionType.INSTANT_DAMAGE,
+                PotionType.HEALING,
+                PotionType.HARMING,
                 PotionType.POISON,
-                PotionType.REGEN,
+                PotionType.REGENERATION,
                 PotionType.STRENGTH,
                 PotionType.WEAKNESS,
                 PotionType.LUCK
         );
         List<Enchantment> list = List.of(
-                Enchantment.DAMAGE_ALL,
-                Enchantment.ARROW_DAMAGE,
-                Enchantment.PROTECTION_ENVIRONMENTAL,
+                Enchantment.SHARPNESS,
+                Enchantment.POWER,
+                Enchantment.PROTECTION,
                 Enchantment.MENDING,
-                Enchantment.ARROW_FIRE,
+                Enchantment.FLAME,
                 Enchantment.FIRE_ASPECT,
-                Enchantment.DURABILITY
+                Enchantment.UNBREAKING
         );
 
         if ((r.nextInt(2) + 1) <= 1) {

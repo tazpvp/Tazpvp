@@ -58,23 +58,23 @@ public class PremiumMenu extends GUI {
     private final String prefix = CC.DARK_AQUA + "[Lorenzo] " + CC.AQUA;
 
     private final List<ParticleSelectionContainer> deathParticles = new ArrayList<>(Arrays.asList(
-            new ParticleSelectionContainer(Material.REDSTONE, Particle.CRIT_MAGIC, CC.RED + "Redstone", "Forge from the stone of Asia."),
-            new ParticleSelectionContainer(Material.WATER_BUCKET, Particle.DRIP_WATER, CC.BLUE + "Wet", "Someone needed to cool off."),
-            new ParticleSelectionContainer(Material.TNT, Particle.EXPLOSION_NORMAL, CC.DARK_RED + "Creeper?", "Aww man."),
-            new ParticleSelectionContainer(Material.FIREWORK_ROCKET, Particle.FIREWORKS_SPARK, CC.GREEN + "Rocket", "Go out with a bang!"),
+            new ParticleSelectionContainer(Material.REDSTONE, Particle.CRIT, CC.RED + "Redstone", "Forge from the stone of Asia."),
+            new ParticleSelectionContainer(Material.WATER_BUCKET, Particle.DRIPPING_WATER, CC.BLUE + "Wet", "Someone needed to cool off."),
+            new ParticleSelectionContainer(Material.TNT, Particle.EXPLOSION, CC.DARK_RED + "Creeper?", "Aww man."),
+            new ParticleSelectionContainer(Material.FIREWORK_ROCKET, Particle.FIREWORK, CC.GREEN + "Rocket", "Go out with a bang!"),
             new ParticleSelectionContainer(Material.RED_CANDLE, Particle.HEART, CC.RED + "Heart", "Give a little love."),
             new ParticleSelectionContainer(Material.SCULK_SHRIEKER, Particle.SONIC_BOOM, CC.AQUA + "Sonic Boom", "Break the sound barrier."),
-            new ParticleSelectionContainer(Material.BLAZE_POWDER, Particle.VILLAGER_ANGRY, CC.LIGHT_PURPLE + "Anger", "Someone woke up on the wrong side of the bed.")
+            new ParticleSelectionContainer(Material.BLAZE_POWDER, Particle.ANGRY_VILLAGER, CC.LIGHT_PURPLE + "Anger", "Someone woke up on the wrong side of the bed.")
     ));
 
     private final List<ParticleSelectionContainer> arrowParticles = new ArrayList<>(Arrays.asList(
             new ParticleSelectionContainer(Material.FIRE, Particle.FLAME, CC.YELLOW + "Flame", "Feel the burn."),
             new ParticleSelectionContainer(Material.DRAGON_BREATH, Particle.DRAGON_BREATH, CC.DARK_PURPLE + "Dragon Breath", "Made in China."),
-            new ParticleSelectionContainer(Material.TOTEM_OF_UNDYING, Particle.TOTEM, CC.GREEN + "Totem", "Lucky charms?"),
+            new ParticleSelectionContainer(Material.TOTEM_OF_UNDYING, Particle.TOTEM_OF_UNDYING, CC.GREEN + "Totem", "Lucky charms?"),
             new ParticleSelectionContainer(Material.NOTE_BLOCK, Particle.NOTE, CC.AQUA + "Note", "The sound of arrows."),
-            new ParticleSelectionContainer(Material.CAMPFIRE, Particle.SMOKE_NORMAL, "Smoke", "I.. thought those were banned.. on planes.."),
-            new ParticleSelectionContainer(Material.TIPPED_ARROW, Particle.SPELL, CC.BLUE + "Magic", "Do you believe?"),
-            new ParticleSelectionContainer(Material.ENCHANTING_TABLE, Particle.ENCHANTMENT_TABLE, CC.YELLOW + "Enchant", "Enchantingly ugly.")
+            new ParticleSelectionContainer(Material.CAMPFIRE, Particle.SMOKE, "Smoke", "I.. thought those were banned.. on planes.."),
+            new ParticleSelectionContainer(Material.TIPPED_ARROW, Particle.CHERRY_LEAVES, CC.BLUE + "Magic", "Do you believe?"),
+            new ParticleSelectionContainer(Material.ENCHANTING_TABLE, Particle.ENCHANT, CC.YELLOW + "Enchant", "Enchantingly ugly.")
     ));
 
     public PremiumMenu(Player p) {

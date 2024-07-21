@@ -23,7 +23,7 @@ public class Explode implements Listener {
             }
         }
 
-        if (e.getEntity().getType() == EntityType.ENDER_CRYSTAL) {
+        if (e.getEntity().getType() == EntityType.END_CRYSTAL) {
             e.setCancelled(true);
         }
     }

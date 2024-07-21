@@ -17,7 +17,7 @@ public class EnchantUtil {
 
     static {
         for (Enchants enchant : Enchants.values()) {
-            customEnchantments.add(new EnchantWrapper(new NamespacedKey(Tazpvp.getInstance(), enchant.getKey()), enchant.getName(), enchant.getMaxLevel()));
+            customEnchantments.add(new EnchantWrapper(enchant.getName(), enchant.getMaxLevel()));
         }
     }
 
@@ -34,7 +34,7 @@ public class EnchantUtil {
             Field f = Enchantment.class.getDeclaredField("acceptingNew");
             f.setAccessible(true);
             f.set(null, true);
-            Enchantment.registerEnchantment(enchant);
+//            Enchantment.registerEnchantment(enchant);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -247,13 +247,13 @@ public class Death {
         Random r = new Random();
 
         List<Enchantment> enchants = List.of(
-                Enchantment.DAMAGE_ALL,
-                Enchantment.ARROW_DAMAGE,
-                Enchantment.PROTECTION_ENVIRONMENTAL,
+                Enchantment.SHARPNESS,
+                Enchantment.POWER,
+                Enchantment.PROTECTION,
                 Enchantment.MENDING,
-                Enchantment.ARROW_FIRE,
+                Enchantment.FLAME,
                 Enchantment.FIRE_ASPECT,
-                Enchantment.DURABILITY
+                Enchantment.UNBREAKING
         );
 
         List<ItemStack> items = Arrays.asList(

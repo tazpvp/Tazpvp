@@ -82,18 +82,18 @@ public class Prestige extends GUI {
 
         setButton(1, "Premium Pass", "24 hours of the Premium rank.", Material.NETHER_STAR, 100000, true, true);
         setButton(1, "Bounty Hunter", "Find the player with the highest bounty.", Material.COMPASS, 1600, true, true);
-        setButton(1, "Unbreaking", "Fortify your tools.", Material.ENCHANTED_BOOK, 160, Enchantment.DURABILITY);
-        setButton(1, "Projectile Protection", "Take less projectile damage.", Material.ENCHANTED_BOOK, 225, Enchantment.PROTECTION_PROJECTILE);
-        setButton(1, "Fire Protection", "Take less damage to fire.", Material.ENCHANTED_BOOK, 225, Enchantment.PROTECTION_FIRE);
+        setButton(1, "Unbreaking", "Fortify your tools.", Material.ENCHANTED_BOOK, 160, Enchantment.UNBREAKING);
+        setButton(1, "Projectile Protection", "Take less projectile damage.", Material.ENCHANTED_BOOK, 225, Enchantment.PROJECTILE_PROTECTION);
+        setButton(1, "Fire Protection", "Take less damage to fire.", Material.ENCHANTED_BOOK, 225, Enchantment.FIRE_PROTECTION);
         setButton(1, "Sweeping Edge", "Increase attack range.", Material.ENCHANTED_BOOK, 220, Enchantment.SWEEPING_EDGE);
         setButton(1, "Multishot", "Shoot multiple crossbow arrows at time.", Material.ENCHANTED_BOOK, 650, Enchantment.MULTISHOT);
 
         setButton(1, "Quick Charge", "Recharge crossbows faster.", Material.ENCHANTED_BOOK, 550, Enchantment.QUICK_CHARGE);
-        setButton(1, "Punch", "Shoot players back further.", Material.ENCHANTED_BOOK, 350, Enchantment.ARROW_KNOCKBACK);
+        setButton(1, "Punch", "Shoot players back further.", Material.ENCHANTED_BOOK, 350, Enchantment.PUNCH);
         setButton(1, "Knockback", "Hit players back further.", Material.ENCHANTED_BOOK, 275, Enchantment.KNOCKBACK);
-        setButton(1, "Flame", "Shoot and set things on fire.", Material.ENCHANTED_BOOK, 450, Enchantment.ARROW_FIRE);
-        setButton(1, "Efficiency", "Break blocks faster.", Material.ENCHANTED_BOOK, 350, Enchantment.DIG_SPEED);
-        setButton(1, "Infinity", "Infinite arrows.", Material.ENCHANTED_BOOK, 900, Enchantment.ARROW_INFINITE);
+        setButton(1, "Flame", "Shoot and set things on fire.", Material.ENCHANTED_BOOK, 450, Enchantment.FLAME);
+        setButton(1, "Efficiency", "Break blocks faster.", Material.ENCHANTED_BOOK, 350, Enchantment.EFFICIENCY);
+        setButton(1, "Infinity", "Infinite arrows.", Material.ENCHANTED_BOOK, 900, Enchantment.INFINITY);
         setButton(1, "Depth Strider", "Walk faster in water.", Material.ENCHANTED_BOOK, 250, Enchantment.DEPTH_STRIDER);
 
         update();

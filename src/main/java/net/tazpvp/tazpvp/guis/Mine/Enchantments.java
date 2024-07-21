@@ -38,7 +38,7 @@ public class Enchantments extends GUI {
         Button autoSmelt = Button.create(ItemBuilder.of(Material.ENCHANTED_BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Auto Smelt").lore(CC.GRAY + "Automatically refine ores.", CC.GRAY + "Cost: " + CC.GOLD + "$" + Enchants.AUTO_SMELT.getCost()).build(), (e) ->
             applyEnchant(Enchants.AUTO_SMELT));
         Button efficiency = Button.create(ItemBuilder.of(Material.ENCHANTED_BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Efficiency").lore(CC.GRAY + "Increase the speed of mining.", CC.GRAY + "Cost: " + CC.GOLD + "$200").build(), (e) ->
-            applyEnchant(Enchantment.DIG_SPEED, 200));
+            applyEnchant(Enchantment.EFFICIENCY, 200));
         Button doubleOres = Button.create(ItemBuilder.of(Material.ENCHANTED_BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Double Ores").lore(CC.GRAY + "Duplicate the ores you mine.", CC.GRAY + "Cost: " + CC.GOLD + "$" + Enchants.DOUBLE_ORES.getCost()).build(), (e) ->
             applyEnchant(Enchants.DOUBLE_ORES));
 
