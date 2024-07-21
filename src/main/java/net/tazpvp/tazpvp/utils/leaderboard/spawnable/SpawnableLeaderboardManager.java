@@ -36,6 +36,7 @@ package net.tazpvp.tazpvp.utils.leaderboard.spawnable;
 import lombok.Getter;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.DataTypes;
+import net.tazpvp.tazpvp.utils.leaderboard.LeaderboardEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
@@ -51,11 +52,11 @@ public class SpawnableLeaderboardManager {
 
     public SpawnableLeaderboardManager(Tazpvp tazpvp) {
         this.spawnableLeaderboards = new ArrayList<>();
-        this.spawnableLeaderboards.add(new SpawnableLeaderboard(DataTypes.LEVEL, "Levels", new Location(Bukkit.getWorld("arena"), -6, 101, -1.5)));
-        this.spawnableLeaderboards.add(new SpawnableLeaderboard(DataTypes.KILLS, "Kills", new Location(Bukkit.getWorld("arena"), 0.5, 101, -8)));
-        this.spawnableLeaderboards.add(new SpawnableLeaderboard(DataTypes.COINS, "Coins", new Location(Bukkit.getWorld("arena"), 7, 101, -1.5)));
-        this.spawnableLeaderboards.add(new SpawnableLeaderboard(DataTypes.DEATHS, "Deaths", new Location(Bukkit.getWorld("arena"), -5.5, 101, -7.5)));
-        this.spawnableLeaderboards.add(new SpawnableLeaderboard(DataTypes.REBIRTH, "Rebirths", new Location(Bukkit.getWorld("arena"), 6.5, 101, -7.5)));
+        this.spawnableLeaderboards.add(new SpawnableLeaderboard(LeaderboardEnum.LEVEL, "Levels", new Location(Bukkit.getWorld("arena"), -6, 101, -1.5)));
+        this.spawnableLeaderboards.add(new SpawnableLeaderboard(LeaderboardEnum.KILLS, "Kills", new Location(Bukkit.getWorld("arena"), 0.5, 101, -8)));
+        this.spawnableLeaderboards.add(new SpawnableLeaderboard(LeaderboardEnum.COINS, "Coins", new Location(Bukkit.getWorld("arena"), 7, 101, -1.5)));
+        this.spawnableLeaderboards.add(new SpawnableLeaderboard(LeaderboardEnum.DEATHS, "Deaths", new Location(Bukkit.getWorld("arena"), -5.5, 101, -7.5)));
+        this.spawnableLeaderboards.add(new SpawnableLeaderboard(LeaderboardEnum.REBIRTHS, "Rebirths", new Location(Bukkit.getWorld("arena"), 6.5, 101, -7.5)));
 
         createScheduler(tazpvp);
     }
