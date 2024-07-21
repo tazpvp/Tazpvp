@@ -1,7 +1,10 @@
 package net.tazpvp.tazpvp.commands.gameplay.leaderboard;
 
 import lombok.NonNull;
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.leaderboard.LeaderboardEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -9,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -24,19 +28,17 @@ public class BaltopCommand extends NRCommand{
             return true;
         }
 
-        for (Leaderboard.LeaderboardEnum leaderboardEnum : Leaderboard.LeaderboardEnum.values()) {
-            if (leaderboardEnum.getType().equalsIgnoreCase("coins")) {
-                int count = 1;
-                Map<UUID, Integer> sortedMap = leaderboardEnum.getLeaderboard().getSortedPlacement();
+        LeaderboardEnum leaderboardEnum = LeaderboardEnum.COINS;
 
-                p.sendMessage( CC.DARK_AQUA + "" + CC.BOLD + leaderboardEnum.getType() + " Leaderboard");
+        int count = 1;
+        List<PlayerStatEntity> playerStatEntities = Tazpvp.getInstance().getPlayerStatService()
+                .getTop10Most(leaderboardEnum.getColumnName());
 
-                for (Map.Entry<UUID, Integer> entry : sortedMap.entrySet()) {
-                    p.sendMessage(count + ". " + CC.GRAY + Bukkit.getOfflinePlayer(entry.getKey()).getName() + " " + CC.GOLD + entry.getValue());
-                    count++;
-                }
-                return true;
-            }
+        p.sendMessage( CC.DARK_AQUA + "" + CC.BOLD + "COINS Leaderboard");
+
+        for (PlayerStatEntity playerStatEntity : playerStatEntities) {
+            p.sendMessage(count + ". " + CC.GRAY + Bukkit.getOfflinePlayer(playerStatEntity.getUuid()).getName() + " " + CC.GOLD + leaderboardEnum.getStatEntityIntegerFunction().apply(playerStatEntity));
+            count++;
         }
         return true;
     }

@@ -1,7 +1,10 @@
 package net.tazpvp.tazpvp.commands.gameplay.leaderboard;
 
 import lombok.NonNull;
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.leaderboard.LeaderboardEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -27,15 +30,16 @@ public class LeaderboardCommand extends NRCommand {
         if (args.length >= 2) {
             String type = args[0];
 
-            for (Leaderboard.LeaderboardEnum leaderboardEnum : Leaderboard.LeaderboardEnum.values()) {
-                if (type.equals(leaderboardEnum.getType())) {
+            for (LeaderboardEnum leaderboardEnum : LeaderboardEnum.values()) {
+                if (type.equalsIgnoreCase(leaderboardEnum.getColumnName())) {
                     int count = 1;
-                    Map<UUID, Integer> sortedMap = leaderboardEnum.getLeaderboard().getSortedPlacement();
+                    List<PlayerStatEntity> playerStatEntities = Tazpvp.getInstance().getPlayerStatService()
+                            .getTop10Most(leaderboardEnum.getColumnName());
 
-                    p.sendMessage( CC.DARK_AQUA + "" + CC.BOLD + leaderboardEnum.getType() + " Leaderboard");
+                    p.sendMessage( CC.DARK_AQUA + "" + CC.BOLD + "COINS Leaderboard");
 
-                    for (Map.Entry<UUID, Integer> entry : sortedMap.entrySet()) {
-                        p.sendMessage(count + ". " + CC.GRAY + Bukkit.getOfflinePlayer(entry.getKey()).getName() + " " + CC.GOLD + entry.getValue());
+                    for (PlayerStatEntity playerStatEntity : playerStatEntities) {
+                        p.sendMessage(count + ". " + CC.GRAY + Bukkit.getOfflinePlayer(playerStatEntity.getUuid()).getName() + " " + CC.GOLD + leaderboardEnum.getStatEntityIntegerFunction().apply(playerStatEntity));
                         count++;
                     }
                     return true;
