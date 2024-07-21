@@ -33,6 +33,7 @@
 
 package net.tazpvp.tazpvp;
 
+import com.j256.ormlite.table.TableUtils;
 import lombok.Getter;
 import net.tazpvp.tazpvp.commands.admin.BroadcastCommand;
 import net.tazpvp.tazpvp.commands.admin.KeyallCommand;
@@ -64,6 +65,8 @@ import net.tazpvp.tazpvp.commands.network.*;
 import net.tazpvp.tazpvp.data.database.PostgresqlDatabase;
 import net.tazpvp.tazpvp.data.entity.*;
 import net.tazpvp.tazpvp.data.implementations.*;
+import net.tazpvp.tazpvp.data.services.GuildMemberService;
+import net.tazpvp.tazpvp.data.services.GuildService;
 import net.tazpvp.tazpvp.game.bosses.BossManager;
 import net.tazpvp.tazpvp.game.bosses.zorg.Zorg;
 import net.tazpvp.tazpvp.game.crates.CrateManager;
@@ -129,6 +132,11 @@ public final class Tazpvp extends JavaPlugin {
     @Getter
     private static BotThread botThread;
 
+    @Getter
+    private GuildService guildService;
+    @Getter
+    private GuildMemberService guildMemberService;
+
 
 
     @Override
@@ -178,7 +186,7 @@ public final class Tazpvp extends JavaPlugin {
         spawnableLeaderboardManager = new SpawnableLeaderboardManager(this);
     }
 
-    private static void connectDatabase(String host, int port, String user, String password) throws SQLException {
+    private void connectDatabase(String host, int port, String user, String password) throws SQLException {
         database = new Database(host, port, user, password);
         database.connect();
         postgresqlDatabase = new PostgresqlDatabase("jdbc:postgresql://" + host + ":" + port + "/postgres", user, password);
@@ -193,6 +201,12 @@ public final class Tazpvp extends JavaPlugin {
         new GameRankServiceImpl().createTableIfNotExists(postgresqlDatabase, GameRankEntity.class);
         new PermissionServiceImpl().createTableIfNotExists(postgresqlDatabase, PermissionEntity.class);
         new UserRankServiceImpl().createTableIfNotExists(postgresqlDatabase, UserRankEntity.class);
+
+        this.guildMemberService = new GuildMemberServiceImpl();
+        this.guildService = new GuildServiceImpl(guildMemberService);
+
+        guildMemberService.createTableIfNotExists(postgresqlDatabase, GuildMemberEntity.class);
+        guildService.createTableIfNotExists(postgresqlDatabase, GuildEntity.class);
     }
 
     public static void registerObserver(Observer observer) {
@@ -244,7 +258,7 @@ public final class Tazpvp extends JavaPlugin {
     public void registerCommands() {
         register(
                 new KitCommand(),
-                new NpcCommand(),
+                new NpcCommand(this),
                 new BanCommand(),
                 new RestoreCommand(),
                 new SpawnCommand(),
@@ -313,7 +327,7 @@ public final class Tazpvp extends JavaPlugin {
 
     private void spawnNpcs() {
         npcs.add(new Maxim());
-        npcs.add(new Lorenzo());
+        npcs.add(new Lorenzo(guildService));
         npcs.add(new Bub());
         npcs.add(new Caesar());
 

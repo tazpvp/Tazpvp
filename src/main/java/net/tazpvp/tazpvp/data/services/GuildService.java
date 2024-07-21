@@ -6,6 +6,7 @@ import net.tazpvp.tazpvp.data.entity.GuildEntity;
 import net.tazpvp.tazpvp.data.entity.GuildMemberEntity;
 
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,8 +16,9 @@ public interface GuildService extends DataService {
     GuildEntity createGuild(String name, UUID owner);
     void saveGuild(GuildEntity guild);
     void addMember(GuildEntity guild, GuildMemberEntity member);
-    GuildEntity getGuildByPlayer(UUID player) throws SQLException;
+    GuildEntity getGuildByPlayer(UUID player);
     GuildEntity getGuild(int id);
     void deleteGuild(GuildEntity guild);
     List<GuildEntity> getAllGuilds();
+    List<GuildEntity> getAllGuildsSorted();
 }

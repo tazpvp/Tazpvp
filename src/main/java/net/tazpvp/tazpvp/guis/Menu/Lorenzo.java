@@ -45,8 +45,11 @@ import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 public class Lorenzo extends GUI {
 
-    public Lorenzo(Player p) {
+    private final GuildService guildService;
+
+    public Lorenzo(Player p, GuildService guildService) {
         super("Lorenzo", 3);
+        this.guildService = guildService;
         addItems(p);
         open(p);
     }
@@ -63,7 +66,7 @@ public class Lorenzo extends GUI {
         }), 12);
 
         addButton(Button.create(ItemBuilder.of(Material.TOTEM_OF_UNDYING, 1).name(CC.GREEN + "" + CC.BOLD + "Guilds").lore(CC.GRAY + "Create guilds and", CC.GRAY + "compete with rivals").build(), (e) -> {
-            new GuildMenu(p);
+            new GuildMenu(p, guildService);
         }), 14);
 
         addButton(Button.create(ItemBuilder.of(Material.FIRE_CHARGE, 1).name(CC.GREEN + "" + CC.BOLD + "Premium").lore(CC.GRAY + "All of the premium", CC.GRAY + "and cosmetic features").build(), (e) -> {

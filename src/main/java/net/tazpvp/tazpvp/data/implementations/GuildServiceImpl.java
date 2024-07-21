@@ -8,14 +8,15 @@ import net.tazpvp.tazpvp.data.services.GuildMemberService;
 import net.tazpvp.tazpvp.data.services.GuildService;
 
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
 public class GuildServiceImpl implements GuildService {
-    private final GuildMemberServiceImpl guildMemberServiceImpl;
+    private final GuildMemberService guildMemberService;
 
-    public GuildServiceImpl(GuildMemberServiceImpl guildMemberServiceImpl) {
-        this.guildMemberServiceImpl = guildMemberServiceImpl;
+    public GuildServiceImpl(GuildMemberService guildMemberService) {
+        this.guildMemberService = guildMemberService;
     }
 
     @Override
@@ -50,13 +51,16 @@ public class GuildServiceImpl implements GuildService {
     }
 
     @Override
-    public GuildEntity getGuildByPlayer(UUID player) throws SQLException {
-        GuildMemberEntity member = guildMemberServiceImpl.getGuildMemberByUUID(player);
+    public GuildEntity getGuildByPlayer(UUID player) {
+        try {
+            GuildMemberEntity member = guildMemberService.getGuildMemberByUUID(player);
 
-        if (member != null) {
-            return member.getGuildEntity();
+            if (member != null) {
+                return member.getGuildEntity();
+            }
+        } catch (SQLException e) {
+            throw  new RuntimeException(e);
         }
-
         return null;
     }
 
@@ -82,6 +86,15 @@ public class GuildServiceImpl implements GuildService {
     public List<GuildEntity> getAllGuilds() {
         try {
             return getUserDao().queryForAll();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<GuildEntity> getAllGuildsSorted() {
+        try {
+            return getUserDao().queryBuilder().orderBy("kills", true).query();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

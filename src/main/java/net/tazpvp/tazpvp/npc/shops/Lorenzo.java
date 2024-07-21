@@ -32,6 +32,7 @@
 
 package net.tazpvp.tazpvp.npc.shops;
 
+import net.tazpvp.tazpvp.data.services.GuildService;
 import net.tazpvp.tazpvp.npc.dialogue.Dialogues;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
@@ -47,7 +48,9 @@ import java.util.List;
 
 public class Lorenzo extends NPC {
 
-    public Lorenzo() {
+    private final GuildService guildService;
+
+    public Lorenzo(GuildService guildService) {
         super(ChatFunctions.gradient("#068fff", "Lorenzo", true), new Location(Bukkit.getWorld("arena"), 12.5, 99, 20.5, 135, 0),
                 Villager.Profession.FLETCHER,
                 Villager.Type.TAIGA,
@@ -81,10 +84,11 @@ public class Lorenzo extends NPC {
                                 "Who doesn't like a versatile fighter? Buy some talents!"
                         )
                 ));
+        this.guildService = guildService;
     }
 
     @Override
     public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
-        new net.tazpvp.tazpvp.guis.Menu.Lorenzo(p);
+        new net.tazpvp.tazpvp.guis.Menu.Lorenzo(p, guildService);
     }
 }

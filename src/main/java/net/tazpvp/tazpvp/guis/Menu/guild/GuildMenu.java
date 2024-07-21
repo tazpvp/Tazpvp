@@ -24,9 +24,9 @@ public class GuildMenu extends GUI {
     private static final int ROWS = 5;
     private static final int GUILDS_PER_PAGE = ROWS * 7;
 
-    public GuildMenu(Player player) {
+    public GuildMenu(Player player, GuildService guildService) {
         super("Guild List", ROWS + 1);
-        this.guilds = new GuildServiceImpl(new GuildMemberServiceImpl()).getAllGuilds();
+        this.guilds = guildService.getAllGuildsSorted();
         this.currentPage = 0;
         updateGUI(player);
         open(player);
@@ -71,14 +71,6 @@ public class GuildMenu extends GUI {
     private ItemStack createGuildItem(GuildEntity guild) {
         return ItemBuilder.of(Material.valueOf(guild.getIcon()))
                 .name(CC.GREEN + guild.getName())
-                .lore(
-                        CC.GRAY + "Owner: " + CC.WHITE + Bukkit.getOfflinePlayer(guild.getOwner()).getName(),
-                        CC.GRAY + "Members: " + CC.WHITE + guild.getMembers().size(),
-                        CC.GRAY + "Kills: " + CC.WHITE + guild.getKills(),
-                        CC.GRAY + "Deaths: " + CC.WHITE + guild.getDeaths(),
-                        "",
-                        CC.GRAY + guild.getDescription()
-                )
                 .build();
     }
 

@@ -32,6 +32,7 @@
 
 package net.tazpvp.tazpvp.commands.admin.npc;
 
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.npc.shops.Bub;
 import net.tazpvp.tazpvp.npc.shops.Caesar;
 import net.tazpvp.tazpvp.npc.shops.Lorenzo;
@@ -45,7 +46,7 @@ import java.util.List;
 
 public class NpcCommand extends NRCommand {
 
-    public NpcCommand() {
+    public NpcCommand(Tazpvp tazpvp) {
         super(new Label("npc", "tazpvp.npc"));
         setNativeExecutor((sender, args) -> {
 
@@ -62,7 +63,7 @@ public class NpcCommand extends NRCommand {
             if (args[0].equalsIgnoreCase("maxim")) {
                 new Maxim();
             } else if (args[0].equalsIgnoreCase("lorenzo")) {
-                new Lorenzo();
+                new Lorenzo(tazpvp.getGuildService());
             } else if (args[0].equalsIgnoreCase("caesar")) {
                 new Caesar();
             } else if (args[0].equalsIgnoreCase("bub")) {

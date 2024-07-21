@@ -10,7 +10,6 @@ import java.util.UUID;
 public interface AchievementService extends DataService {
     Dao<AchievementEntity, UUID> getUserDao();
     void saveAchievementEntity(AchievementEntity AchievementEntity);
-
     AchievementEntity createDefault(UserAchievementEntity userAchievementEntity);
 
 }

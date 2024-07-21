@@ -5,13 +5,11 @@ import lombok.Setter;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.commands.gameplay.report.utils.ReportDebounce;
 import net.tazpvp.tazpvp.commands.gameplay.report.utils.ReportLogger;
-import net.tazpvp.tazpvp.data.entity.GameRankEntity;
-import net.tazpvp.tazpvp.data.entity.TalentEntity;
-import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
-import net.tazpvp.tazpvp.data.entity.UserRankEntity;
+import net.tazpvp.tazpvp.data.entity.*;
 import net.tazpvp.tazpvp.data.implementations.TalentServiceImpl;
 import net.tazpvp.tazpvp.data.implementations.UserAchievementServiceImpl;
 import net.tazpvp.tazpvp.data.implementations.UserRankServiceImpl;
+import net.tazpvp.tazpvp.data.services.GuildService;
 import net.tazpvp.tazpvp.data.services.TalentService;
 import net.tazpvp.tazpvp.data.services.UserAchievementService;
 import net.tazpvp.tazpvp.data.services.UserRankService;
@@ -40,6 +38,7 @@ public class PlayerWrapper {
     @Getter
     private final UUID uuid;
     private final UserRankService userRankService;
+    private final GuildService guildService;
     @Getter @Setter
     private boolean launching;
     @Getter @Setter
@@ -118,6 +117,8 @@ public class PlayerWrapper {
         final TalentService talentService = new TalentServiceImpl();
         this.talentEntity = talentService.getOrDefault(getUuid());
 
+        this.guildService = Tazpvp.getInstance().getGuildService();
+
         this.duelRequests = new ConcurrentHashMap<>();
 
         refreshPermissions();
@@ -128,10 +129,10 @@ public class PlayerWrapper {
     }
 
     public String getGuildTag() {
-        if (GuildUtils.isInGuild(getPlayer())) {
-            Guild g = GuildUtils.getGuildPlayerIn(getUuid());
-            if (g != null && g.getTag() != null) {
-                return CC.YELLOW + " [" + g.getTag().toUpperCase() + "]";
+        GuildEntity playerGuild = guildService.getGuildByPlayer(getUuid());
+        if (playerGuild != null) {
+            if (playerGuild.getTag() != null) {
+                return CC.YELLOW + " [" + playerGuild.getTag().toUpperCase() + "]";
             }
         }
         return "";
