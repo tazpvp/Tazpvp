@@ -39,13 +39,17 @@ import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
+import net.tazpvp.tazpvp.utils.leaderboard.LeaderboardEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -97,19 +101,19 @@ public class CommandsAndListeners extends ListenerAdapter {
 
             String typeString = event.getOption("type").getAsString();
 
-            Leaderboard.LeaderboardEnum leaderboardEnum = Leaderboard.LeaderboardEnum.valueOf(typeString);
+            LeaderboardEnum leaderboardEnum = LeaderboardEnum.valueOf(typeString);
 
-            final int[] count = {1};
+            int count = 0;
 
-            Map<UUID, Integer> sortedMap = leaderboardEnum.getLeaderboard().getSortedPlacement();
+            List<PlayerStatEntity> playerStatEntityList = Tazpvp.getInstance().getPlayerStatService().getTop10Most(leaderboardEnum.getColumnName());
 
-            sortedMap.forEach(((uuid, integer) -> {
-                if (count[0] == 1) {
-                    embedBuilder.setThumbnail("https://crafatar.com/renders/head/" + uuid);
+            for (PlayerStatEntity playerStatEntity : playerStatEntityList) {
+                if (count == 1) {
+                    embedBuilder.setThumbnail("https://crafatar.com/renders/head/" + playerStatEntity.getUuid());
                 }
-                stringBuilder.append(count[0] + ". **" + Bukkit.getOfflinePlayer(uuid).getName() + "** - " + integer).append("\n");
-                count[0]++;
-            }));
+                stringBuilder.append(count + ". **" + Bukkit.getOfflinePlayer(playerStatEntity.getUuid()).getName() + "** - " + leaderboardEnum.getStatEntityIntegerFunction().apply(playerStatEntity)).append("\n");
+                count++;
+            }
 
             embedBuilder.setTitle(typeString + " LEADERBOARD");
             embedBuilder.setDescription(stringBuilder.toString());
