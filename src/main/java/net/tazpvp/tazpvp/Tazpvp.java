@@ -67,6 +67,7 @@ import net.tazpvp.tazpvp.data.entity.*;
 import net.tazpvp.tazpvp.data.implementations.*;
 import net.tazpvp.tazpvp.data.services.GuildMemberService;
 import net.tazpvp.tazpvp.data.services.GuildService;
+import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.game.bosses.BossManager;
 import net.tazpvp.tazpvp.game.bosses.zorg.Zorg;
 import net.tazpvp.tazpvp.game.crates.CrateManager;
@@ -132,6 +133,8 @@ public final class Tazpvp extends JavaPlugin {
     @Getter
     private static BotThread botThread;
 
+    @Getter
+    private PlayerStatService playerStatService;
     @Getter
     private GuildService guildService;
     @Getter
@@ -202,11 +205,14 @@ public final class Tazpvp extends JavaPlugin {
         new PermissionServiceImpl().createTableIfNotExists(postgresqlDatabase, PermissionEntity.class);
         new UserRankServiceImpl().createTableIfNotExists(postgresqlDatabase, UserRankEntity.class);
 
+
         this.guildMemberService = new GuildMemberServiceImpl();
         this.guildService = new GuildServiceImpl(guildMemberService);
+        this.playerStatService = new PlayerStatServiceImpl();
 
         guildMemberService.createTableIfNotExists(postgresqlDatabase, GuildMemberEntity.class);
         guildService.createTableIfNotExists(postgresqlDatabase, GuildEntity.class);
+        playerStatService.createTableIfNotExists(postgresqlDatabase, PlayerStatEntity.class);
     }
 
     public static void registerObserver(Observer observer) {
