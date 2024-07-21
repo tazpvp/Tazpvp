@@ -32,8 +32,10 @@
 
 package net.tazpvp.tazpvp.utils.functions;
 
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.DataTypes;
 import net.tazpvp.tazpvp.data.PersistentData;
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.enums.ColorCodes;
 import org.bukkit.Bukkit;
@@ -59,21 +61,23 @@ public class ScoreboardFunctions {
             healthObjective.setDisplaySlot(DisplaySlot.BELOW_NAME);
         }
 
+        PlayerStatEntity playerStatEntity = Tazpvp.getInstance().getPlayerStatService().getOrDefault(p.getUniqueId());
+
         objective = board.registerNewObjective("statboard", "dummy", ChatFunctions.gradient(ColorCodes.SERVER.toString(), "TAZPVP.NET", true));
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         objective.getScore("                         ").setScore(8);
-        newLine(p, DataTypes.LEVEL.getColumnName(), ChatFunctions.gradient(ColorCodes.SERVER.toString(), "✳ ʟᴇᴠᴇʟ", false), CC.AQUA,
-                PersistentData.getInt(p, DataTypes.LEVEL) + "").setScore(6);
-        newLine(p, DataTypes.COINS.getColumnName(), ChatFunctions.gradient(ColorCodes.SERVER.toString(), "❂ ᴄᴏɪɴꜱ", false), CC.GOLD,
-                PersistentData.getInt(p, DataTypes.COINS) + "").setScore(5);
+        newLine(p, "level", ChatFunctions.gradient(ColorCodes.SERVER.toString(), "✳ ʟᴇᴠᴇʟ", false), CC.AQUA,
+                playerStatEntity.getLevel() + "").setScore(6);
+        newLine(p, "coins", ChatFunctions.gradient(ColorCodes.SERVER.toString(), "❂ ᴄᴏɪɴꜱ", false), CC.GOLD,
+                playerStatEntity.getCoins() + "").setScore(5);
         objective.getScore(" ").setScore(4);
-        newLine(p, DataTypes.KILLS.getColumnName(), ChatFunctions.gradient(ColorCodes.SERVER.toString(), "⚔ ᴋɪʟʟꜱ", false), CC.YELLOW,
-                PersistentData.getInt(p, DataTypes.KILLS) + "").setScore(3);
-        newLine(p, DataTypes.DEATHS.getColumnName(), ChatFunctions.gradient(ColorCodes.SERVER.toString(), "☠ ᴅᴇᴀᴛʜꜱ", false), CC.DARK_PURPLE,
-                PersistentData.getInt(p, DataTypes.DEATHS) + "").setScore(2);
+        newLine(p, "kills", ChatFunctions.gradient(ColorCodes.SERVER.toString(), "⚔ ᴋɪʟʟꜱ", false), CC.YELLOW,
+                playerStatEntity.getKills() + "").setScore(3);
+        newLine(p, "deaths", ChatFunctions.gradient(ColorCodes.SERVER.toString(), "☠ ᴅᴇᴀᴛʜꜱ", false), CC.DARK_PURPLE,
+                playerStatEntity.getDeaths() + "").setScore(2);
         newLine(p, "kdr", ChatFunctions.gradient(ColorCodes.SERVER.toString(), "✚ ᴋᴅʀ", false), CC.GRAY, PersistentData.kdrFormula(
-                PersistentData.getFloat(p, DataTypes.KILLS), PersistentData.getFloat(p, DataTypes.DEATHS)) + "").setScore(1);
+                playerStatEntity.getKills(), playerStatEntity.getDeaths()) + "").setScore(1);
         objective.getScore("   ").setScore(0);
 
         p.setScoreboard(board);

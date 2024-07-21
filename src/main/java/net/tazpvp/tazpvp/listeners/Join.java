@@ -73,7 +73,7 @@ public class Join implements Listener {
 
         PlayerWrapper.addPlayer(p);
 //        PersistentData.initPlayer(p);
-//        ScoreboardFunctions.initScoreboard(p);
+        ScoreboardFunctions.initScoreboard(p);
 
         new PlayerNameTag().initializePlayerNameTag(p);
 
