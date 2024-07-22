@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.utils.holograms;
+package net.tazpvp.tazpvp.utils;
 
 import org.bukkit.persistence.PersistentDataAdapterContext;
 import org.bukkit.persistence.PersistentDataType;

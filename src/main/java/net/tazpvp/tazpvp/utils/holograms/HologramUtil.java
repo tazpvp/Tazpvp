@@ -2,6 +2,7 @@ package net.tazpvp.tazpvp.utils.holograms;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.StringArrayDataType;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;

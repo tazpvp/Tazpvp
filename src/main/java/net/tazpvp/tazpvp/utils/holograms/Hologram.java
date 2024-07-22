@@ -2,6 +2,7 @@ package net.tazpvp.tazpvp.utils.holograms;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.utils.StringArrayDataType;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
