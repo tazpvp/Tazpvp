@@ -82,7 +82,6 @@ import net.tazpvp.tazpvp.utils.ConfigUtil;
 import net.tazpvp.tazpvp.utils.discord.bot.BotThread;
 import net.tazpvp.tazpvp.utils.functions.AfkFunctions;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
-import net.tazpvp.tazpvp.utils.holograms.Hologram;
 import net.tazpvp.tazpvp.utils.holograms.HologramUtil;
 import net.tazpvp.tazpvp.utils.leaderboard.spawnable.SpawnableLeaderboardManager;
 import net.tazpvp.tazpvp.utils.observer.Observer;
