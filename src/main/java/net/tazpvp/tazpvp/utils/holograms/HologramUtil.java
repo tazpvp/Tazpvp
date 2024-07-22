@@ -44,7 +44,7 @@ public class HologramUtil {
                     }
                 }
             });
-        }, 0, 20 * 30);
+        }, 20 * 30, 20 * 30);
     }
 
     public static void loadAllHolograms() {
