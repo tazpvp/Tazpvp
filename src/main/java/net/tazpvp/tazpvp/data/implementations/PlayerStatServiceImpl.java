@@ -36,6 +36,7 @@ public class PlayerStatServiceImpl implements PlayerStatService {
                 playerStatEntity.setKills(0);
                 playerStatEntity.setDeaths(0);
                 playerStatEntity.setRebirths(0);
+                playerStatEntity.setPlaytime(0);
             }
             return playerStatEntity;
 

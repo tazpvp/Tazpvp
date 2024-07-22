@@ -32,9 +32,11 @@
 
 package net.tazpvp.tazpvp.utils.functions;
 
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.DataTypes;
 import net.tazpvp.tazpvp.data.LooseData;
 import net.tazpvp.tazpvp.data.PersistentData;
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.game.booster.ActiveBoosterManager;
 import net.tazpvp.tazpvp.game.booster.BoosterBonus;
 import net.tazpvp.tazpvp.game.booster.BoosterTypes;
@@ -73,12 +75,13 @@ public class PlayerFunctions {
     }
 
     public static void healPlr(Player p) {
-        int playTime = PersistentData.getInt(p.getUniqueId(), DataTypes.PLAYTIMEUNIX);
+        PlayerStatEntity playerStatEntity = Tazpvp.getInstance().getPlayerStatService().getOrDefault(p.getUniqueId());
+        long playTime = playerStatEntity.getPlaytime();
         int thirtyMinutesInMs = 30 * 60 * 1000;
 
         if (playTime <= thirtyMinutesInMs) {
-            int remainingTimeInMs = thirtyMinutesInMs - playTime;
-            int remainingMinutes = remainingTimeInMs / (60 * 1000);
+            long remainingTimeInMs = thirtyMinutesInMs - playTime;
+            long remainingMinutes = remainingTimeInMs / (60 * 1000);
 
             p.sendMessage("");
             p.sendMessage(CC.YELLOW + "You have " + remainingMinutes + " minutes of starter health buff remaining.");

@@ -30,4 +30,6 @@ public class PlayerStatEntity {
     private int deaths;
     @DatabaseField(columnName = "rebirths", canBeNull = false)
     private int rebirths;
+    @DatabaseField(columnName = "playtime", canBeNull = false, defaultValue = "0")
+    private long playtime;
 }
