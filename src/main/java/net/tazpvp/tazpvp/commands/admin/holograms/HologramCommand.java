@@ -28,6 +28,7 @@ public class HologramCommand extends NRCommand {
         }
 
         if (!(sender instanceof Player p)) {
+            sender.sendMessage(CC.RED + "Only players may run this command.");
             return true;
         }
 
