@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.commands.gameplay.PayCommand;
+package net.tazpvp.tazpvp.commands.gameplay.pay;
 
 import lombok.NonNull;
 import net.tazpvp.tazpvp.data.DataTypes;

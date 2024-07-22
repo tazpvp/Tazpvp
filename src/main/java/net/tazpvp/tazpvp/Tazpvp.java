@@ -33,7 +33,6 @@
 
 package net.tazpvp.tazpvp;
 
-import com.j256.ormlite.table.TableUtils;
 import lombok.Getter;
 import net.tazpvp.tazpvp.commands.admin.BroadcastCommand;
 import net.tazpvp.tazpvp.commands.admin.KeyallCommand;
@@ -41,12 +40,13 @@ import net.tazpvp.tazpvp.commands.admin.ResetStatsCommand;
 import net.tazpvp.tazpvp.commands.admin.booster.BoosterCommand;
 import net.tazpvp.tazpvp.commands.admin.edit.EditCommand;
 import net.tazpvp.tazpvp.commands.admin.hide.HideCommand;
+import net.tazpvp.tazpvp.commands.admin.holograms.HologramCommand;
 import net.tazpvp.tazpvp.commands.admin.kit.KitCommand;
 import net.tazpvp.tazpvp.commands.admin.npc.NpcCommand;
 import net.tazpvp.tazpvp.commands.admin.stats.StatCommand;
 import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
 import net.tazpvp.tazpvp.commands.admin.teleportWorld.TeleportWorldCommand;
-import net.tazpvp.tazpvp.commands.gameplay.PayCommand.PayCommand;
+import net.tazpvp.tazpvp.commands.gameplay.pay.PayCommand;
 import net.tazpvp.tazpvp.commands.gameplay.duel.DuelCommand;
 import net.tazpvp.tazpvp.commands.gameplay.event.EventCommand;
 import net.tazpvp.tazpvp.commands.gameplay.leaderboard.BaltopCommand;
@@ -82,6 +82,8 @@ import net.tazpvp.tazpvp.utils.ConfigUtil;
 import net.tazpvp.tazpvp.utils.discord.bot.BotThread;
 import net.tazpvp.tazpvp.utils.functions.AfkFunctions;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
+import net.tazpvp.tazpvp.utils.holograms.Hologram;
+import net.tazpvp.tazpvp.utils.holograms.HologramUtil;
 import net.tazpvp.tazpvp.utils.leaderboard.spawnable.SpawnableLeaderboardManager;
 import net.tazpvp.tazpvp.utils.observer.Observer;
 import net.tazpvp.tazpvp.utils.passive.Alerts;
@@ -130,6 +132,8 @@ public final class Tazpvp extends JavaPlugin {
     private static CrateManager crateManager;
     @Getter
     private static SpawnableLeaderboardManager spawnableLeaderboardManager;
+    @Getter
+    private static HologramUtil hologramUtil;
     @Getter
     private static BotThread botThread;
 
@@ -187,6 +191,7 @@ public final class Tazpvp extends JavaPlugin {
         botThread.start();
 
         spawnableLeaderboardManager = new SpawnableLeaderboardManager(this);
+        hologramUtil = new HologramUtil();
     }
 
     private void connectDatabase(String host, int port, String user, String password) throws SQLException {
@@ -300,7 +305,8 @@ public final class Tazpvp extends JavaPlugin {
                 new StaffChatCommand(),
                 new BaltopCommand(),
                 new StaffChatCommand(),
-                new PayCommand()
+                new PayCommand(),
+                new HologramCommand()
         );
     }
 
