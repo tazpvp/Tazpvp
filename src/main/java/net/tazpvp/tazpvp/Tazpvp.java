@@ -146,6 +146,18 @@ public final class Tazpvp extends JavaPlugin {
     public void onEnable() {
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
+
+        try {
+            connectDatabase(
+                    getConfig().getString("sql-host"),
+                    getConfig().getInt("sql-port"),
+                    getConfig().getString("sql-user"),
+                    getConfig().getString("sql-password")
+            );
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
         registerEvents();
         registerCommands();
         Generator.generate();
@@ -170,17 +182,6 @@ public final class Tazpvp extends JavaPlugin {
                 new Location(Bukkit.getWorld("arena"), 11, 95, 4)
         );
 
-        try {
-            connectDatabase(
-                    getConfig().getString("sql-host"),
-                    getConfig().getInt("sql-port"),
-                    getConfig().getString("sql-user"),
-                    getConfig().getString("sql-password")
-            );
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
         crateManager = new CrateManager();
 
         botThread = new BotThread(getConfig().getString("bot-token"));
@@ -204,7 +205,6 @@ public final class Tazpvp extends JavaPlugin {
         new GameRankServiceImpl().createTableIfNotExists(postgresqlDatabase, GameRankEntity.class);
         new PermissionServiceImpl().createTableIfNotExists(postgresqlDatabase, PermissionEntity.class);
         new UserRankServiceImpl().createTableIfNotExists(postgresqlDatabase, UserRankEntity.class);
-
 
         this.guildMemberService = new GuildMemberServiceImpl();
         this.guildService = new GuildServiceImpl(guildMemberService);

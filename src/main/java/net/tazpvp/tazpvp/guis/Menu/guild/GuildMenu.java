@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.guis;
+package net.tazpvp.tazpvp.guis.Menu.guild;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.GuildEntity;
@@ -21,11 +21,11 @@ import java.util.List;
 public class GuildMenu extends GUI {
     private final List<GuildEntity> guilds;
     private int currentPage;
-    private static final int ROWS = 5;
+    private static final int ROWS = 4;
     private static final int GUILDS_PER_PAGE = ROWS * 7;
 
     public GuildMenu(Player player, GuildService guildService) {
-        super("Guild List", ROWS + 1);
+        super("Guild List", ROWS + 2);
         this.guilds = guildService.getAllGuildsSorted();
         this.currentPage = 0;
         updateGUI(player);
