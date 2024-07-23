@@ -67,19 +67,26 @@ public class GuildMenu extends GUI {
         clear();
         fill(0, ROWS * 9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE).name(" ").build());
 
+        String[] lore = {
+                " ",
+                CC.DARK_GREEN + "Kills: " + CC.GREEN + pGuild.getKills(),
+                CC.DARK_GREEN + "Deaths: " + CC.GREEN + pGuild.getDeaths(),
+                CC.DARK_GREEN + "KDR: " + CC.GREEN + (pGuild.getKills() / pGuild.getDeaths()),
+                " ",
+                CC.GOLD + "Click to edit guild."
+        };
+
         Button playerGuild;
 
         if (pGuild != null) {
             playerGuild = Button.create(ItemBuilder.of(Material.getMaterial(pGuild.getIcon()))
-                    .name(CC.GREEN + "" + CC.BOLD + pGuild.getName())
-                    .lore(CC.DARK_GREEN + "Click to view and", CC.DARK_GREEN + "edit your guild.")
-                    .glow(true)
-            .build(), (e) -> {
+                    .name(CC.GREEN + "" + CC.BOLD + pGuild.getName()).lore(lore).glow(true).build(), (e) ->
+            {
                 p.closeInventory();
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-//                        new GuildInfo(p, g);
+                        new GuildEdit(p, guildService);
                     }
                 }.runTaskLater(Tazpvp.getInstance(), 2L);
             });
@@ -113,7 +120,7 @@ public class GuildMenu extends GUI {
         update();
     }
 
-    private static void nameGuild(Player p) {
+    private void nameGuild(Player p) {
         new AnvilGUI.Builder()
             .onClick((slot, stateSnapshot) -> {
                 if (slot != AnvilGUI.Slot.OUTPUT) {
@@ -140,7 +147,7 @@ public class GuildMenu extends GUI {
 
     }
 
-    public static void createGuild(String text, UUID id) {
+    private void createGuild(String name, UUID id) {
+        guildService.createGuild(name, id);
     }
-
 }

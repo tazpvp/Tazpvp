@@ -2,6 +2,7 @@ package net.tazpvp.tazpvp.data.implementations;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.dao.ForeignCollection;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import net.tazpvp.tazpvp.Tazpvp;
@@ -10,8 +11,12 @@ import net.tazpvp.tazpvp.data.entity.GuildEntity;
 import net.tazpvp.tazpvp.data.entity.GuildMemberEntity;
 import net.tazpvp.tazpvp.data.services.GuildMemberService;
 import net.tazpvp.tazpvp.data.services.GuildService;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -84,6 +89,65 @@ public class GuildServiceImpl implements GuildService {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+
+    @Override
+    public void messageAll(GuildEntity guild, String msg) {
+        for (Player p : getAllOnlineMembers(guild)) {
+            p.sendMessage(msg);
+        }
+    }
+
+    @Override
+    public List<UUID> getAllOnlineMembers(GuildEntity guild) {
+        List<UUID> onlinePlayers = new ArrayList<>();
+
+        for (UUID offlineMember : getAllMembers(guild)) {
+            if (Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(offlineMember))) {
+                onlinePlayers.add(offlineMember);
+            }
+        }
+        return onlinePlayers;
+    }
+
+    @Override
+    public List<UUID> getAllMembers(GuildEntity guild) {
+        List<UUID> offlinePlayers = new ArrayList<>();
+        ForeignCollection<GuildMemberEntity> guildMembers = guild.getMembers();
+
+        for (GuildMemberEntity guildMember : guildMembers) {
+            offlinePlayers.add(guildMember.getPUUID());
+        }
+
+        return offlinePlayers;
+    }
+
+    @Override
+    public List<UUID> getOnlineOfficers(GuildEntity guild) {
+        List<UUID> onlinePlayers = new ArrayList<>();
+
+        for (UUID offlineMember : getOfficers(guild)) {
+            if (Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(offlineMember))) {
+                onlinePlayers.add(offlineMember);
+            }
+        }
+        return onlinePlayers;
+    }
+
+    @Override
+    public List<UUID> getOfficers(GuildEntity guild) {
+        List<UUID> offlinePlayers = new ArrayList<>();
+
+        ForeignCollection<GuildMemberEntity> guildMembers = guild.getMembers();
+        for (GuildMemberEntity guildMember : guildMembers) {
+            if (guildMember.isOfficer()) {
+                offlinePlayers.add(guildMember.getPUUID());
+            }
+        }
+
+        return offlinePlayers;
     }
 
     @Override

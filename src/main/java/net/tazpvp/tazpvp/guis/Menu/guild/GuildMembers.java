@@ -32,6 +32,8 @@
 
 package net.tazpvp.tazpvp.guis.Menu.guild;
 
+import net.tazpvp.tazpvp.data.entity.GuildEntity;
+import net.tazpvp.tazpvp.data.services.GuildService;
 import net.tazpvp.tazpvp.game.guilds.Guild;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Bukkit;
@@ -50,24 +52,28 @@ import java.util.List;
 import java.util.UUID;
 
 public class GuildMembers extends GUI {
-    public GuildMembers(Player p, Guild g) {
+
+    private final GuildService guildService;
+
+    public GuildMembers(Player p, GuildService guildService) {
         super("Guild Members", 4);
-        addItems(p, g);
+        this.guildService = guildService;
+        addItems(p, guildService.getGuildByPlayer(p.getUniqueId()));
         open(p);
     }
 
-    private void addItems(Player p, Guild g) {
+    private void addItems(Player p, GuildEntity g) {
         fill(0, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE).name(" ").build());
 
         Button owner = Button.createBasic(SkullBuilder.of()
-                .setHeadTexture(g.getGuildLeader())
-                .name(Bukkit.getOfflinePlayer(g.getGuildLeader()).getName())
+                .setHeadTexture(g.getOwner())
+                .name(Bukkit.getOfflinePlayer(g.getOwner()).getName())
                 .build());
 
         addButton(owner, 4);
 
         List<OfflinePlayer> members = new ArrayList<>();
-        for (UUID uuid : g.getAllMembers()) {
+        for (UUID uuid : guildService.getAllMembers(g)) {
             if (uuid.equals(p.getUniqueId())) continue;
             members.add(Bukkit.getOfflinePlayer(uuid));
         }
@@ -76,10 +82,10 @@ public class GuildMembers extends GUI {
         update();
     }
 
-    private void allOthers(List<OfflinePlayer> members, Guild g, Player viewer) {
+    private void allOthers(List<OfflinePlayer> members, GuildEntity g, Player viewer) {
         int index = 10;
         for (OfflinePlayer p : members) {
-            ChatColor nameColor = g.getGuildGenerals().contains(p.getUniqueId()) ? ChatColor.GREEN : ChatColor.GRAY;
+            ChatColor nameColor = guildService.getOfficers(g).contains(p.getUniqueId()) ? ChatColor.GREEN : ChatColor.GRAY;
             //rank based colors
 
             String lore = g.hasElevatedPerms(viewer.getUniqueId()) ? ChatColor.RED + "Click me to edit!" : "";

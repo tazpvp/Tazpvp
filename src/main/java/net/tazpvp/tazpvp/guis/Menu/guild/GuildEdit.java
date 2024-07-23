@@ -35,6 +35,8 @@ package net.tazpvp.tazpvp.guis.Menu.guild;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.DataTypes;
 import net.tazpvp.tazpvp.data.PersistentData;
+import net.tazpvp.tazpvp.data.entity.GuildEntity;
+import net.tazpvp.tazpvp.data.services.GuildService;
 import net.tazpvp.tazpvp.game.guilds.Guild;
 import net.tazpvp.tazpvp.utils.Profanity;
 import net.tazpvp.tazpvp.utils.enums.CC;
@@ -58,49 +60,69 @@ public class GuildEdit extends GUI {
     private final String NO_RANK = CC.RED + "You do not have premium, visit the store to purchase it.";
     private final String REQ_RANK = CC.DARK_PURPLE + "Requires rank to edit.";
 
-    public GuildEdit(Player p, Guild g) {
+    private final GuildService guildService;
+    private final GuildEntity playerGuildEntity;
+
+    public GuildEdit(Player p, GuildService guildService) {
         super("Guild Edit", 3);
-        addItems(p, g);
+        this.guildService = guildService;
+        this.playerGuildEntity = guildService.getGuildByPlayer(p.getUniqueId());
+        addItems(p);
         open(p);
     }
 
-    private void addItems(Player p, Guild g) {
+    private void addItems(Player p) {
         fill(0, 3 * 9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE).name(" ").build());
 
-
-
-        Button guildIcon = Button.create(ItemBuilder.of(g.getIcon()).name(CC.GREEN + "Edit Guild Icon").lore(REQ_RANK).build(), e -> {
+        Button guildIcon = Button.create(ItemBuilder.of(Material.getMaterial(playerGuildEntity.getIcon()))
+                .name(CC.GREEN + "Edit Guild Icon")
+                .lore(REQ_RANK)
+                .build(), e ->
+        {
             if (PlayerWrapper.getPlayer(p.getUniqueId()).getRank().getHierarchy() >= 1) {
-                new Icon(p, g);
+                new Icon(p, guildService, playerGuildEntity);
             } else {
                 p.sendMessage(NO_RANK);
             }
         });
 
-        Button guildDescription = Button.create(ItemBuilder.of(Material.WRITABLE_BOOK).name(CC.GREEN + "Edit Description").lore(CC.YELLOW + "Costs " + CC.GOLD + "6,000 " + CC.YELLOW + "coins.").build(), e -> {
+        Button guildDescription = Button.create(ItemBuilder.of(Material.WRITABLE_BOOK)
+                .name(CC.GREEN + "Edit Description")
+                .lore(CC.YELLOW + "Costs " + CC.GOLD + "6,000 " + CC.YELLOW + "coins.")
+                .build(), e ->
+        {
             if (PersistentData.getInt(p, DataTypes.COINS) > 6000) {
-                setDescription(p, g);
+                setDescription(p, playerGuildEntity);
             } else {
                 p.sendMessage(NO_RANK);
             }
         });
 
-        Button guildTag = Button.create(ItemBuilder.of(Material.NAME_TAG).name(CC.GREEN + "Edit Tag").lore(REQ_RANK).build(), e -> {
+        Button guildTag = Button.create(ItemBuilder.of(Material.NAME_TAG)
+                .name(CC.GREEN + "Edit Tag")
+                .lore(REQ_RANK).build(), e ->
+        {
             if (PlayerWrapper.getPlayer(p.getUniqueId()).getRank().getHierarchy() >= 1) {
-                setTag(p, g);
+                setTag(p, playerGuildEntity);
             } else {
                 p.sendMessage(NO_RANK);
             }
         });
 
-        final String showinbrowserText = (g.isShow_in_browser() ? "Enabled" : "Disabled");
-        Button setShowInBrowser = Button.create(ItemBuilder.of(Material.BELL).name(CC.GREEN + "Show in browser").lore(showinbrowserText).build(), e -> {
-           g.setShow_in_browser(p.getUniqueId(), !g.isShow_in_browser());
-           p.closeInventory();
-           p.sendMessage(CC.RED + "Showing guild in browser is now: " + CC.GOLD + (g.isShow_in_browser() ? "Enabled" : "Disabled"));
-           new GuildEdit(p, g);
+        final String showinbrowserText = (playerGuildEntity.isPrivate() ? "Enabled" : "Disabled");
+        Button setShowInBrowser = Button.create(ItemBuilder.of(Material.BELL)
+                .name(CC.GREEN + "Show in browser").lore(showinbrowserText).build(), e ->
+        {
+            playerGuildEntity.setPrivate(!playerGuildEntity.isPrivate());
+            p.closeInventory();
+            p.sendMessage(CC.RED + "Showing guild in browser is now: " + CC.GOLD + (playerGuildEntity.isPrivate() ? "Enabled" : "Disabled"));
+            new GuildEdit(p, guildService);
         });
 
+        addButton(Button.create(ItemBuilder.of(Material.WRITABLE_BOOK, 1)
+                .name(CC.GREEN + "Members").lore(" ", CC.DARK_GREEN + "View guild members.").build(), (e) -> {
+            new GuildMembers(p, guildService);
+        }), 15);
         addButton(guildIcon, 10);
         addButton(guildDescription, 12);
         addButton(guildTag, 14);
@@ -110,30 +132,36 @@ public class GuildEdit extends GUI {
     }
 
     public static class Icon extends GUI {
+
+        private final GuildService guildService2;
+        private final GuildEntity playerGuildEntity2;
+
         private List<Material> icons = List.of(
                 Material.OAK_SIGN, Material.RAW_GOLD, Material.CHORUS_FLOWER, Material.ENCHANTING_TABLE, Material.BEACON, Material.END_PORTAL_FRAME, Material.TURTLE_EGG, Material.WITHER_ROSE, Material.DIRT, Material.TARGET, Material.DIAMOND, Material.EMERALD, Material.LAPIS_LAZULI, Material.AMETHYST_SHARD, Material.GOLDEN_APPLE, Material.NETHERITE_CHESTPLATE, Material.CARROT_ON_A_STICK, Material.LEATHER, Material.LAVA_BUCKET, Material.ENDER_PEARL, Material.ENDER_EYE, Material.SLIME_BALL, Material.GLOW_INK_SAC, Material.PUFFERFISH, Material.MAGMA_CREAM, Material.BLAZE_POWDER, Material.FIRE_CHARGE, Material.DIAMOND_HORSE_ARMOR
         );
-        public Icon(Player p, Guild g) {
+        public Icon(Player p, GuildService guildService2, GuildEntity playerGuildEntity2) {
             super("Guild Icon Picker", 6);
-            addItems(p, g);
+            this.guildService2 = guildService2;
+            this.playerGuildEntity2 = playerGuildEntity2;
+            addItems(p, playerGuildEntity2);
             p.closeInventory();
             open(p);
         }
 
-        private void addItems(Player p, Guild g) {
+        private void addItems(Player p, GuildEntity g) {
             fill(0, 6 * 9, ItemBuilder.of(Material.GRAY_STAINED_GLASS_PANE).name(" ").build());
 
             int index = 10;
             for (Material m : icons) {
                 Button iconBTN = Button.create(ItemBuilder.of(m).name(ChatColor.YELLOW + m.name()).lore(ChatColor.GREEN + "Click to set icon", ChatColor.DARK_AQUA + "Cost: " + ChatColor.AQUA + "50 credits").build(), (e) -> {
-                    g.setIcon(p.getUniqueId(), m);
+                    g.setIcon(m.toString());
                     p.closeInventory();
-                    g.sendAll(ChatColor.YELLOW + p.getName() + ChatColor.GREEN + " has set the guild icon to " + ChatColor.YELLOW + m.name());
+                    guildService2.messageAll(playerGuildEntity2, ChatColor.YELLOW + p.getName() + ChatColor.GREEN + " has set the guild icon to " + ChatColor.YELLOW + m.name());
                     p.playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            new GuildEdit(p, g);
+                            new GuildEdit(p, Tazpvp.getInstance().getGuildService());
                         }
                     }.runTaskLater(Tazpvp.getInstance(), 1);
                 });
@@ -149,7 +177,7 @@ public class GuildEdit extends GUI {
         }
     }
 
-    private void  setDescription(Player p, Guild g) {
+    private void setDescription(Player p, GuildEntity g) {
         new AnvilGUI.Builder()
                 .onClick((slot, stateSnapshot) -> {
                     if(slot != AnvilGUI.Slot.OUTPUT) {
@@ -169,7 +197,7 @@ public class GuildEdit extends GUI {
 
                     PersistentData.remove(p, DataTypes.COINS, 6000);
 
-                    g.setDescription(p.getUniqueId(), text);
+                    g.setDescription(text);
 
                     return Arrays.asList(AnvilGUI.ResponseAction.close());
                 })
@@ -183,7 +211,7 @@ public class GuildEdit extends GUI {
                 .open(p);
     }
 
-    private void setTag(Player p, Guild g) {
+    private void setTag(Player p, GuildEntity g) {
         new AnvilGUI.Builder()
                 .onClick((slot, stateSnapshot) -> {
                     if(slot != AnvilGUI.Slot.OUTPUT) {
@@ -206,7 +234,7 @@ public class GuildEdit extends GUI {
 
                     player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
 
-                    g.setTag(p.getUniqueId(), text);
+                    g.setTag(text);
 
                     return AnvilGUI.Response.close();
                 })
