@@ -34,7 +34,7 @@ package net.tazpvp.tazpvp.guis.Menu;
 
 import net.tazpvp.tazpvp.data.services.GuildService;
 import net.tazpvp.tazpvp.guis.Menu.cosmetic.PremiumMenu;
-import net.tazpvp.tazpvp.guis.Menu.guild.GuildBrowser;
+import net.tazpvp.tazpvp.guis.Menu.guild.GuildList;
 import net.tazpvp.tazpvp.guis.Menu.guild.GuildMenu;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Material;
