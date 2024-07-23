@@ -88,8 +88,17 @@ public class GuildMembers extends GUI {
             ChatColor nameColor = guildService.getOfficers(g).contains(p.getUniqueId()) ? ChatColor.GREEN : ChatColor.GRAY;
             //rank based colors
 
-            String lore = g.hasElevatedPerms(viewer.getUniqueId()) ? ChatColor.RED + "Click me to edit!" : "";
-            ItemStack plrItem = SkullBuilder.of().setHeadTexture(p).name(nameColor + p.getName()).lore(nameColor + g.getRank(p.getUniqueId()), "", lore).build();
+            String lore = guildService.getMemberEntity(g, viewer.getUniqueId()).isOfficer() ? ChatColor.RED + "Click me to edit!" : "";
+            String rank;
+
+            if (viewer.getUniqueId()== g.getOwner()) {
+                rank = "Leader";
+            } else if (guildService.getMemberEntity(g, viewer.getUniqueId()).isOfficer()) {
+                rank = "Officer";
+            } else {
+                rank = "Member";
+            }
+            ItemStack plrItem = SkullBuilder.of().setHeadTexture(p).name(nameColor + p.getName()).lore(nameColor + rank, "", lore).build();
             Button item = Button.createBasic(plrItem);
 
             addButton(item, index);

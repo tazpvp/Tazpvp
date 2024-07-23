@@ -26,6 +26,7 @@ public interface GuildService extends DataService {
     List<UUID> getAllMembers(GuildEntity guild);
     List<UUID> getOnlineOfficers(GuildEntity guild);
     List<UUID> getOfficers(GuildEntity guild);
+    GuildMemberEntity getMemberEntity(GuildEntity guild, UUID uuid);
     List<GuildEntity> getAllGuilds();
     List<GuildEntity> getAllGuildsSorted();
 }

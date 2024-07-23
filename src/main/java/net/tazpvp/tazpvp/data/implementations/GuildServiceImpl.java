@@ -95,7 +95,8 @@ public class GuildServiceImpl implements GuildService {
 
     @Override
     public void messageAll(GuildEntity guild, String msg) {
-        for (Player p : getAllOnlineMembers(guild)) {
+        for (UUID uuid : getAllOnlineMembers(guild)) {
+            Player p = Bukkit.getPlayer(uuid);
             p.sendMessage(msg);
         }
     }
@@ -148,6 +149,17 @@ public class GuildServiceImpl implements GuildService {
         }
 
         return offlinePlayers;
+    }
+
+    @Override
+    public GuildMemberEntity getMemberEntity(GuildEntity guild, UUID uuid) {
+        ForeignCollection<GuildMemberEntity> guildMembers = guild.getMembers();
+        for (GuildMemberEntity guildMember : guildMembers) {
+            if (uuid.equals(guildMember.getPUUID())) {
+                return guildMember;
+            }
+        }
+        return null;
     }
 
     @Override
