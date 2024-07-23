@@ -52,7 +52,7 @@ public class RankServiceImpl implements RankService {
         if (rankEntityExists(uuid)) {
             return getRankEntity(uuid);
         } else {
-            return new RankEntity(uuid, false, Rank.DEFAULT.toString(), null, null, null, 0L);
+            return new RankEntity(uuid, false, "default", null, null, null, 0L);
         }
     }
 }
