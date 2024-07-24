@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.guis.Menu.guild;
+package net.tazpvp.tazpvp.npc.characters.guildmaster.gui;
 
 import net.tazpvp.tazpvp.data.entity.GuildEntity;
 import net.tazpvp.tazpvp.data.services.GuildService;

@@ -1,11 +1,8 @@
 package net.tazpvp.tazpvp.game.crates.gui;
 
 import net.tazpvp.tazpvp.game.crates.Crate;
-import net.tazpvp.tazpvp.guis.Shop.Prestige;
-import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;

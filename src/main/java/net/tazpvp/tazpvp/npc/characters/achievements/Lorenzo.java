@@ -30,8 +30,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.npc.shops;
+package net.tazpvp.tazpvp.npc.characters.achievements;
 
+import net.tazpvp.tazpvp.data.services.GuildService;
+import net.tazpvp.tazpvp.npc.characters.NPC;
+import net.tazpvp.tazpvp.npc.characters.achievements.gui.Achievements;
 import net.tazpvp.tazpvp.npc.dialogue.Dialogues;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
@@ -45,50 +48,49 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class Maxim extends NPC {
+public class Lorenzo extends NPC {
 
-    public Maxim() {
-        super(ChatFunctions.gradient("#fc6400", "Maxim", true), new Location(Bukkit.getWorld("arena"), -11.5, 99, 20.5, -135, 0),
-                Villager.Profession.FARMER,
-                Villager.Type.SAVANNA,
+    private final GuildService guildService;
+
+    public Lorenzo(GuildService guildService) {
+        super(ChatFunctions.gradient("#068fff", "Lorenzo", true), new Location(Bukkit.getWorld("arena"), 12.5, 99, 20.5, 135, 0),
+                Villager.Profession.FLETCHER,
+                Villager.Type.TAIGA,
                 Sound.ITEM_GOAT_HORN_SOUND_0,
                 new Dialogues(
-                        CC.RED + "[Maxim] " + CC.WHITE,
+                        CC.DARK_AQUA + "[Lorenzo] " + CC.AQUA,
                         List.of(
-                                "I sell stuff I guess..",
-                                "erhm.",
-                                "Buy items if you want..",
-                                "Business is.. well..",
-                                "Who is Caesar? Why is my wife with him?",
-                                "Does anything even matter?",
-                                "Novelty items.. or soon to be.",
-                                "I blame Ntdi for this life.."
+                                "If you need an advantage, buy it here I guess..",
+                                "Why do I reward you for playing the game?",
+                                "Guilds are cool, if you have friends..",
+                                "Who is Caesar and why does he mine so much? Can't he sell talents and be normal.",
+                                "Got spare cash? Use it on talents if you want..",
+                                "What do you want?"
                         ),
                         List.of(
+                                "Track your progress here.",
                                 "Need something?",
-                                "New sale, 0% off the entire store.",
-                                "Quality items, fair prices.",
-                                "No pain, no shame.",
-                                "Items if you want.",
-                                "Get your power-ups and items here",
-                                "Buy Buy Buy!",
-                                "New items, fresh stock"
+                                "Cosmetics make you pretty.",
+                                "Progressing feeling slow? Claim some achievements.",
+                                "Guilds are the best way to stand out!",
+                                "Create a guild and dominate the leaderboard.",
+                                "Achieve anything special? Claim the reward you worked hard for!"
                         ),
                         List.of(
-                                "Anything you need, I got it!",
-                                "Hello traveler! I'm here if you need anything.",
-                                "Get the upper hand with better items!",
-                                "Powerful items, useful power-ups, the options are endless!",
-                                "I love my shop, selling items is the best!",
-                                "You want it? I got it.",
-                                "Howdy! Need some super cool blocks?",
-                                "How about some food? Fighters get hungry too!"
+                                "Got a Guild? Check it out here!",
+                                "Want revenge on the person who killed you? Check out the Revenge talent!",
+                                "Looks like you've been working hard! Come get a reward.",
+                                "Guilds make you way cooler! Make sure to bring friends.",
+                                "Check out Maxim for some temporary upgrade that will scare your foes!",
+                                "Challenge the leaderboard, create a guild for unique competition!",
+                                "Who doesn't like a versatile fighter? Buy some talents!"
                         )
                 ));
+        this.guildService = guildService;
     }
 
     @Override
     public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
-        new net.tazpvp.tazpvp.guis.Shop.Maxim(p);
+        new Achievements(p);
     }
 }

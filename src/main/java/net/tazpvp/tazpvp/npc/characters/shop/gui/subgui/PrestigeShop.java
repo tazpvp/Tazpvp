@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.guis.Shop;
+package net.tazpvp.tazpvp.npc.characters.shop.gui.subgui;
 
 import net.tazpvp.tazpvp.data.DataTypes;
 import net.tazpvp.tazpvp.data.PersistentData;
@@ -21,13 +21,13 @@ import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import javax.annotation.Nullable;
 
-public class Prestige extends GUI {
+public class PrestigeShop extends GUI {
     private int slotNum;
     private int num;
     private Player p;
     private final String prefix = CC.RED + "[Maxim] " + CC.WHITE;
 
-    public Prestige(Player p) {
+    public PrestigeShop(Player p) {
         super("Maxim", 5);
         this.p = p;
         addItems();

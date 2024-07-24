@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.guis.Mine;
+package net.tazpvp.tazpvp.npc.characters.enchanter.gui;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.DataTypes;

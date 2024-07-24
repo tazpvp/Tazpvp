@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.guis.Shop;
+package net.tazpvp.tazpvp.npc.characters.shop.gui.subgui;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.DataTypes;
@@ -52,7 +52,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-public class Maxim extends GUI {
+public class ItemShop extends GUI {
 
     private int slotNum;
     private int num;
@@ -80,7 +80,7 @@ public class Maxim extends GUI {
             Material.SPRUCE_PLANKS
     );
 
-    public Maxim(Player p) {
+    public ItemShop(Player p) {
         super("Maxim", 6);
         this.p = p;
         addItems();
@@ -98,7 +98,7 @@ public class Maxim extends GUI {
                 .lore(CC.GRAY + "Special items you can",CC.GRAY + "buy after you rebirth.")
                 .glow(true)
                 .build(), (e) -> {
-            new Prestige(p);
+            new PrestigeShop(p);
         }), 40);
 
         setButton(1, "Azure Vapor", "Extinguish flames.", Material.BLUE_ORCHID, 10, true, true);

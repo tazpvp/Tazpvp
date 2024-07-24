@@ -30,9 +30,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.npc.shops;
+package net.tazpvp.tazpvp.npc.characters.guildmaster;
 
 import net.tazpvp.tazpvp.data.services.GuildService;
+import net.tazpvp.tazpvp.npc.characters.NPC;
+import net.tazpvp.tazpvp.npc.characters.guildmaster.gui.GuildMenu;
 import net.tazpvp.tazpvp.npc.dialogue.Dialogues;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
@@ -46,11 +48,11 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class Lorenzo extends NPC {
+public class GuildMaster extends NPC {
 
     private final GuildService guildService;
 
-    public Lorenzo(GuildService guildService) {
+    public GuildMaster(GuildService guildService) {
         super(ChatFunctions.gradient("#068fff", "Lorenzo", true), new Location(Bukkit.getWorld("arena"), 12.5, 99, 20.5, 135, 0),
                 Villager.Profession.FLETCHER,
                 Villager.Type.TAIGA,
@@ -89,6 +91,6 @@ public class Lorenzo extends NPC {
 
     @Override
     public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
-        new net.tazpvp.tazpvp.guis.Menu.Lorenzo(p, guildService);
+        new GuildMenu(p, guildService);
     }
 }

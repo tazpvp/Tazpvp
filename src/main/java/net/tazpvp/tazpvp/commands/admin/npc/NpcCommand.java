@@ -33,10 +33,9 @@
 package net.tazpvp.tazpvp.commands.admin.npc;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.npc.shops.Bub;
-import net.tazpvp.tazpvp.npc.shops.Caesar;
-import net.tazpvp.tazpvp.npc.shops.Lorenzo;
-import net.tazpvp.tazpvp.npc.shops.Maxim;
+import net.tazpvp.tazpvp.npc.characters.enchanter.Caesar;
+import net.tazpvp.tazpvp.npc.characters.achievements.Lorenzo;
+import net.tazpvp.tazpvp.npc.characters.shop.Maxim;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;

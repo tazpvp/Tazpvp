@@ -31,7 +31,7 @@
  *
  */
 
-package net.tazpvp.tazpvp.guis.Menu.cosmetic;
+package net.tazpvp.tazpvp.npc.characters.shop.gui.subgui.cosmetic;
 
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;

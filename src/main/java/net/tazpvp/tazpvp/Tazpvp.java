@@ -33,7 +33,6 @@
 
 package net.tazpvp.tazpvp;
 
-import com.j256.ormlite.table.TableUtils;
 import lombok.Getter;
 import net.tazpvp.tazpvp.commands.admin.BroadcastCommand;
 import net.tazpvp.tazpvp.commands.admin.KeyallCommand;
@@ -75,7 +74,10 @@ import net.tazpvp.tazpvp.game.events.Event;
 import net.tazpvp.tazpvp.game.items.UsableItem;
 import net.tazpvp.tazpvp.game.items.enchants.EnchantUtil;
 import net.tazpvp.tazpvp.listeners.*;
-import net.tazpvp.tazpvp.npc.shops.*;
+import net.tazpvp.tazpvp.npc.characters.*;
+import net.tazpvp.tazpvp.npc.characters.enchanter.Caesar;
+import net.tazpvp.tazpvp.npc.characters.achievements.Lorenzo;
+import net.tazpvp.tazpvp.npc.characters.shop.Maxim;
 import net.tazpvp.tazpvp.player.achievements.achievement.*;
 import net.tazpvp.tazpvp.player.talents.talent.*;
 import net.tazpvp.tazpvp.utils.ConfigUtil;

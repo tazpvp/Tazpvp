@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.npc.shops;
+package net.tazpvp.tazpvp.npc.characters;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.Tazpvp;

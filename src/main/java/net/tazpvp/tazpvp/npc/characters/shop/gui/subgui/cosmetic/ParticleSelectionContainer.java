@@ -31,7 +31,7 @@
  *
  */
 
-package net.tazpvp.tazpvp.guis.Menu.cosmetic;
+package net.tazpvp.tazpvp.npc.characters.shop.gui.subgui.cosmetic;
 
 
 import org.bukkit.Material;

@@ -30,9 +30,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.npc.shops;
+package net.tazpvp.tazpvp.npc.characters.enchanter;
 
 import net.tazpvp.tazpvp.npc.dialogue.Dialogues;
+import net.tazpvp.tazpvp.npc.characters.NPC;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.BlockFunctions;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
@@ -91,7 +92,7 @@ public class Caesar extends NPC {
     public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
 
         if (BlockFunctions.getPickaxe(p) != null) {
-            new net.tazpvp.tazpvp.guis.Mine.Caesar(p);
+            new net.tazpvp.tazpvp.npc.characters.enchanter.gui.Caesar(p);
         } else {
             p.sendMessage(CC.YELLOW + "[" + "Caesar" + "] " + CC.GOLD + "Give me your pickaxe and I can upgrade it.");
         }

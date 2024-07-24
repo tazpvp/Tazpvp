@@ -149,34 +149,6 @@ public class PlayerFunctions {
         p.getEquipment().setBoots(ItemBuilder.of(Material.DIAMOND_BOOTS, 1, CC.WHITE + "Sandles").build());
     }
 
-    public static int countShards(Player p) {
-        int shardCount = 0;
-        for (ItemStack i : p.getInventory()) {
-            if (i == null) continue;
-            if (i.getType() == Material.AMETHYST_SHARD) {
-                shardCount = shardCount + i.getAmount();
-            }
-        }
-        return shardCount;
-    }
-
-    public static void takeShards(Player p, int cost) {
-
-        for (int n = 0; n < cost; n++) {
-            for (ItemStack i : p.getInventory()) {
-                if (i == null) continue;
-                if (i.getType() == Material.AMETHYST_SHARD) {
-                    if (i.getAmount() >= 2) {
-                        i.setAmount(i.getAmount() - 1);
-                    } else {
-                        p.getInventory().remove(i);
-                    }
-                    break;
-                }
-            }
-        }
-    }
-
     public static void levelUp(UUID ID, float value) {
         Player p = Bukkit.getPlayer(ID);
         if (p == null) return;
