@@ -48,11 +48,11 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class GuildMaster extends NPC {
+public class Rigel extends NPC {
 
     private final GuildService guildService;
 
-    public GuildMaster(GuildService guildService) {
+    public Rigel(GuildService guildService) {
         super(ChatFunctions.gradient("#068fff", "Lorenzo", true), new Location(Bukkit.getWorld("arena"), 12.5, 99, 20.5, 135, 0),
                 Villager.Profession.FLETCHER,
                 Villager.Type.TAIGA,

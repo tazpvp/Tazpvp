@@ -50,9 +50,7 @@ import java.util.List;
 
 public class Lorenzo extends NPC {
 
-    private final GuildService guildService;
-
-    public Lorenzo(GuildService guildService) {
+    public Lorenzo() {
         super(ChatFunctions.gradient("#068fff", "Lorenzo", true), new Location(Bukkit.getWorld("arena"), 12.5, 99, 20.5, 135, 0),
                 Villager.Profession.FLETCHER,
                 Villager.Type.TAIGA,
@@ -86,7 +84,6 @@ public class Lorenzo extends NPC {
                                 "Who doesn't like a versatile fighter? Buy some talents!"
                         )
                 ));
-        this.guildService = guildService;
     }
 
     @Override

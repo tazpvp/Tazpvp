@@ -77,6 +77,7 @@ import net.tazpvp.tazpvp.listeners.*;
 import net.tazpvp.tazpvp.npc.characters.*;
 import net.tazpvp.tazpvp.npc.characters.enchanter.Caesar;
 import net.tazpvp.tazpvp.npc.characters.achievements.Lorenzo;
+import net.tazpvp.tazpvp.npc.characters.guildmaster.Rigel;
 import net.tazpvp.tazpvp.npc.characters.shop.Maxim;
 import net.tazpvp.tazpvp.player.achievements.achievement.*;
 import net.tazpvp.tazpvp.player.talents.talent.*;
@@ -335,9 +336,9 @@ public final class Tazpvp extends JavaPlugin {
 
     private void spawnNpcs() {
         npcs.add(new Maxim());
-        npcs.add(new Lorenzo(guildService));
-        npcs.add(new Bub());
+        npcs.add(new Lorenzo());
         npcs.add(new Caesar());
+        npcs.add(new Rigel(guildService));
 
         new BukkitRunnable() {
             @Override

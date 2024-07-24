@@ -44,9 +44,9 @@ import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 import java.util.List;
 import java.util.function.BiConsumer;
 
-public class MaterialSelectionGui extends GUI {
+public class MaterialSelection extends GUI {
 
-    public MaterialSelectionGui(Player p, List<ParticleSelectionContainer> particleSelectionContainers, BiConsumer<Player, ParticleSelectionContainer> action) {
+    public MaterialSelection(Player p, List<ParticleSelectionContainer> particleSelectionContainers, BiConsumer<Player, ParticleSelectionContainer> action) {
         super("Particles", 4);
 
         this.fill(0, 4 * 9, ItemBuilder.of(Material.GRAY_STAINED_GLASS_PANE).name(" ").build());

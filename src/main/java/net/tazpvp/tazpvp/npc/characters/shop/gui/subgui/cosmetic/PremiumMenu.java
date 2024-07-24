@@ -123,7 +123,7 @@ public class PremiumMenu extends GUI {
 
     private void updateParticle(Player p, List<ParticleSelectionContainer> particles, String currentParticle, Type type) {
         p.closeInventory();
-        new MaterialSelectionGui(p, particles, ((player, particleSelectionContainer) -> {
+        new MaterialSelection(p, particles, ((player, particleSelectionContainer) -> {
             final RankService rankService = new RankServiceImpl();
 
             final RankEntity rankEntity = rankService.getOrDefault(p.getUniqueId());
