@@ -67,20 +67,26 @@ public class ScoreboardFunctions {
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         objective.getScore("                         ").setScore(8);
-        newLine(p, "level", ChatFunctions.gradient(ColorCodes.SERVER.toString(), "✳ ʟᴇᴠᴇʟ", false), CC.AQUA,
+        newLine(p, "rank", scoreTitle("✦ ʀᴀɴᴋ"), CC.AQUA,
+                ChatFunctions.getRanking(p)+ "").setScore(7);
+        newLine(p, "level", scoreTitle("✳ ʟᴇᴠᴇʟ"), CC.AQUA,
                 playerStatEntity.getLevel() + "").setScore(6);
-        newLine(p, "coins", ChatFunctions.gradient(ColorCodes.SERVER.toString(), "❂ ᴄᴏɪɴꜱ", false), CC.GOLD,
+        newLine(p, "coins", scoreTitle("❂ ᴄᴏɪɴꜱ"), CC.GOLD,
                 playerStatEntity.getCoins() + "").setScore(5);
         objective.getScore(" ").setScore(4);
-        newLine(p, "kills", ChatFunctions.gradient(ColorCodes.SERVER.toString(), "⚔ ᴋɪʟʟꜱ", false), CC.YELLOW,
+        newLine(p, "kills", scoreTitle("⚔ ᴋɪʟʟꜱ"), CC.YELLOW,
                 playerStatEntity.getKills() + "").setScore(3);
-        newLine(p, "deaths", ChatFunctions.gradient(ColorCodes.SERVER.toString(), "☠ ᴅᴇᴀᴛʜꜱ", false), CC.DARK_PURPLE,
+        newLine(p, "deaths", scoreTitle("☠ ᴅᴇᴀᴛʜꜱ"), CC.DARK_PURPLE,
                 playerStatEntity.getDeaths() + "").setScore(2);
-        newLine(p, "kdr", ChatFunctions.gradient(ColorCodes.SERVER.toString(), "✚ ᴋᴅʀ", false), CC.GRAY, PersistentData.kdrFormula(
+        newLine(p, "kdr", scoreTitle("✚ ᴋᴅʀ"), CC.GRAY, PersistentData.kdrFormula(
                 playerStatEntity.getKills(), playerStatEntity.getDeaths()) + "").setScore(1);
         objective.getScore("   ").setScore(0);
 
         p.setScoreboard(board);
+    }
+
+    private static String scoreTitle(String text) {
+        return ChatFunctions.gradient(ColorCodes.SERVER.toString(), text, false);
     }
 
     private static Score newLine(Player p, String name, String prefix, CC chatColor, String suffix) {

@@ -24,6 +24,10 @@ public class PlayerStatEntity {
     private int xp;
     @DatabaseField(columnName = "level", canBeNull = false)
     private int level;
+    @DatabaseField(columnName = "mmr", canBeNull = false)
+    private int MMR;
+    @DatabaseField(columnName = "duelmmr", canBeNull = false)
+    private int duelMMR;
     @DatabaseField(columnName = "kills", canBeNull = false)
     private int kills;
     @DatabaseField(columnName = "deaths", canBeNull = false)

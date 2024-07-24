@@ -38,6 +38,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.DataTypes;
 import net.tazpvp.tazpvp.data.LooseData;
 import net.tazpvp.tazpvp.data.PersistentData;
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.game.booster.ActiveBoosterManager;
 import net.tazpvp.tazpvp.game.booster.BoosterBonus;
 import net.tazpvp.tazpvp.game.booster.BoosterTypes;
@@ -72,11 +73,15 @@ public class Death {
     private Player pKiller;
     private final Location location;
     private final Random r = new Random();
+    private final PlayerStatEntity killerStatEntity;
+    private final PlayerStatEntity victimStatEntity;
 
     public Death(UUID victim, @Nullable UUID killer) {
         this.victim = victim;
         this.killer = killer;
         this.pVictim = Bukkit.getPlayer(victim);
+        this.victimStatEntity = Tazpvp.getInstance().getPlayerStatService().getOrDefault(victim);
+        this.killerStatEntity = Tazpvp.getInstance().getPlayerStatService().getOrDefault(killer);
         this.location = pVictim.getLocation();
         if (killer != null) {
             this.pKiller = Bukkit.getPlayer(killer);
@@ -234,8 +239,9 @@ public class Death {
             if (bounty > 0) {
                 pKiller.sendMessage(CC.YELLOW + "You collected " + pVictim.getName() + "'s " + CC.GOLD + "$" + bounty + CC.YELLOW + " bounty.");
             }
-            PersistentData.add(killer, DataTypes.COINS, coins + bounty);
-            PersistentData.add(killer, DataTypes.XP, xp);
+            killerStatEntity.setCoins(killerStatEntity.getCoins() + coins + bounty);
+            killerStatEntity.setMMR(killerStatEntity.getMMR() + 15);
+            killerStatEntity.setXp(killerStatEntity.getXp() + xp);
         }
     }
 
@@ -257,7 +263,6 @@ public class Death {
         );
 
         List<ItemStack> items = Arrays.asList(
-                ItemBuilder.of(Material.AMETHYST_SHARD, 2).name(StaticItems.SHARD.getName()).build(),
                 new ItemStack(Material.GOLDEN_APPLE, 2),
                 new ItemStack(Material.COOKED_BEEF, 10)
         );
