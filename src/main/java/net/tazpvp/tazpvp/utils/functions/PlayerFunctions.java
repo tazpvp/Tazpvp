@@ -108,13 +108,19 @@ public class PlayerFunctions {
 
     public static ItemStack[] getKitItems(Player p) {
         return new ItemStack[] {
-                ItemBuilder.of(Material.DIAMOND_SWORD, 1, ChatFunctions.gradient("#04f000", p.getName() + "'s Sword", true)).enchantment(Enchantment.SHARPNESS, 1).build(),
-                ItemBuilder.of(Material.BOW, 1, ChatFunctions.gradient("#04f000", p.getName() + "'s Bow", true)).build(),
-                ItemBuilder.of(Material.STONE_PICKAXE, 1, ChatFunctions.gradient("#04f000", p.getName() + "'s Pickaxe", true)).build(),
-                ItemBuilder.of(Material.COOKED_BEEF, 20).build(),
+                ItemBuilder.of(Material.DIAMOND_SWORD, 1, kitItemName(p,"Sword"))
+                        .enchantment(Enchantment.SHARPNESS, 1).build(),
+                ItemBuilder.of(Material.BOW, 1, kitItemName(p,"Bow"))
+                        .enchantment(Enchantment.INFINITY, 1).build(),
+                ItemBuilder.of(Material.STONE_PICKAXE, 1, kitItemName(p,"Pickaxe")).build(),
+                ItemBuilder.of(Material.CROSSBOW, 1, kitItemName(p,"Crossbow")).build(),
                 ItemBuilder.of(Material.OAK_PLANKS, 64).build(),
                 ItemBuilder.of(Material.ARROW, 32).build()
         };
+    }
+
+    private static String kitItemName(Player p, String text) {
+        return ChatFunctions.gradient("#04f000", p.getName() + "'s " + text, true);
     }
 
     public static void kitPlayer(Player p) {
@@ -175,7 +181,8 @@ public class PlayerFunctions {
         Player p = Bukkit.getPlayer(ID);
         if (p == null) return;
         if (value >= LooseData.getExpLeft(ID)) {
-            final BoosterBonus coinsBonus = ActiveBoosterManager.getInstance().calculateBonus(100, List.of(BoosterTypes.COINS, BoosterTypes.MEGA));
+            final BoosterBonus coinsBonus = ActiveBoosterManager.getInstance()
+                    .calculateBonus(100, List.of(BoosterTypes.COINS, BoosterTypes.MEGA));
             final int coins = (int) coinsBonus.result();
 
             int num = (int) value - LooseData.getExpLeft(ID);
