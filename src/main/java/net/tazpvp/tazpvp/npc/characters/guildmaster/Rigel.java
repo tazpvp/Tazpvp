@@ -53,37 +53,26 @@ public class Rigel extends NPC {
     private final GuildService guildService;
 
     public Rigel(GuildService guildService) {
-        super(ChatFunctions.gradient("#068fff", "Lorenzo", true), new Location(Bukkit.getWorld("arena"), 12.5, 99, 20.5, 135, 0),
+        super(ChatFunctions.gradient("#068fff", "Lorenzo", true), new Location(Bukkit.getWorld("arena"), 5, 99, 10, 135, 0),
                 Villager.Profession.FLETCHER,
                 Villager.Type.TAIGA,
                 Sound.ITEM_GOAT_HORN_SOUND_0,
                 new Dialogues(
                         CC.DARK_AQUA + "[Lorenzo] " + CC.AQUA,
                         List.of(
-                                "If you need an advantage, buy it here I guess..",
-                                "Why do I reward you for playing the game?",
                                 "Guilds are cool, if you have friends..",
-                                "Who is Caesar and why does he mine so much? Can't he sell talents and be normal.",
-                                "Got spare cash? Use it on talents if you want..",
                                 "What do you want?"
                         ),
                         List.of(
-                                "Track your progress here.",
                                 "Need something?",
-                                "Cosmetics make you pretty.",
-                                "Progressing feeling slow? Claim some achievements.",
                                 "Guilds are the best way to stand out!",
-                                "Create a guild and dominate the leaderboard.",
-                                "Achieve anything special? Claim the reward you worked hard for!"
+                                "Create a guild and dominate the leaderboard."
                         ),
                         List.of(
                                 "Got a Guild? Check it out here!",
-                                "Want revenge on the person who killed you? Check out the Revenge talent!",
-                                "Looks like you've been working hard! Come get a reward.",
                                 "Guilds make you way cooler! Make sure to bring friends.",
                                 "Check out Maxim for some temporary upgrade that will scare your foes!",
-                                "Challenge the leaderboard, create a guild for unique competition!",
-                                "Who doesn't like a versatile fighter? Buy some talents!"
+                                "Challenge the leaderboard, create a guild for unique competition!"
                         )
                 ));
         this.guildService = guildService;
