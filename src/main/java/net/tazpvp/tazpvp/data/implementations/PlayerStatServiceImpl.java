@@ -7,6 +7,9 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.database.PostgresqlDatabase;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
+import net.tazpvp.tazpvp.game.booster.ActiveBoosterManager;
+import net.tazpvp.tazpvp.game.booster.BoosterBonus;
+import net.tazpvp.tazpvp.game.booster.BoosterTypes;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -35,7 +38,7 @@ public class PlayerStatServiceImpl implements PlayerStatService {
                 playerStatEntity.setLevel(1);
                 playerStatEntity.setKills(0);
                 playerStatEntity.setDeaths(0);
-                playerStatEntity.setRebirths(0);
+                playerStatEntity.setPrestige(0);
                 playerStatEntity.setPlaytime(0);
             }
             return playerStatEntity;
@@ -71,4 +74,6 @@ public class PlayerStatServiceImpl implements PlayerStatService {
             throw new RuntimeException(e);
         }
     }
+
+
 }

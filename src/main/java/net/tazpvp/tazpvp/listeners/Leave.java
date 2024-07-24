@@ -38,7 +38,7 @@ import net.tazpvp.tazpvp.game.duels.Duel;
 import net.tazpvp.tazpvp.game.events.Event;
 import net.tazpvp.tazpvp.utils.PlaytimeUtil;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
-import net.tazpvp.tazpvp.utils.objects.DeathObject;
+import net.tazpvp.tazpvp.objects.DeathObject;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

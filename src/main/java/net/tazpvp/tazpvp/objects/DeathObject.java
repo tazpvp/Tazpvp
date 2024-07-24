@@ -1,16 +1,15 @@
-package net.tazpvp.tazpvp.utils.objects;
+package net.tazpvp.tazpvp.objects;
 
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.DataTypes;
 import net.tazpvp.tazpvp.data.LooseData;
 import net.tazpvp.tazpvp.data.entity.GuildEntity;
 import net.tazpvp.tazpvp.data.entity.KitEntity;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.implementations.KitServiceImpl;
-import net.tazpvp.tazpvp.data.services.GuildService;
 import net.tazpvp.tazpvp.data.services.KitService;
+import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.game.booster.ActiveBoosterManager;
 import net.tazpvp.tazpvp.game.booster.BoosterBonus;
 import net.tazpvp.tazpvp.game.booster.BoosterTypes;
@@ -23,17 +22,14 @@ import net.tazpvp.tazpvp.utils.kit.SerializableInventory;
 import net.tazpvp.tazpvp.utils.player.PlayerInventoryStorage;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.*;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.NRCore;
-import world.ntdi.nrcore.utils.item.builders.EnchantmentBookBuilder;
 import world.ntdi.nrcore.utils.item.builders.SkullBuilder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -48,16 +44,18 @@ public class DeathObject {
     private final Random r = new Random();
     private final PlayerStatEntity killerStatEntity;
     private final PlayerStatEntity victimStatEntity;
+    private final PlayerStatService playerStatService;
     private final GuildEntity victimGuild;
     private final GuildEntity killerGuild;
     private final PlayerWrapper killerWrapper;
     private final PlayerWrapper victimWrapper;
 
     public DeathObject(UUID victim, @Nullable UUID killer) {
+        this.playerStatService = Tazpvp.getInstance().getPlayerStatService();
         this.victim = victim;
         this.pVictim = Bukkit.getPlayer(victim);
-        this.victimStatEntity = Tazpvp.getInstance().getPlayerStatService().getOrDefault(victim);
-        this.killerStatEntity = Tazpvp.getInstance().getPlayerStatService().getOrDefault(killer);
+        this.victimStatEntity = playerStatService.getOrDefault(victim);
+        this.killerStatEntity = playerStatService.getOrDefault(killer);
         if (pVictim != null) {
             this.location = pVictim.getLocation();
         } else {
@@ -241,10 +239,7 @@ public class DeathObject {
                     Player assister = Bukkit.getPlayer(uuid);
                     if (assister == null) continue;
 
-                    final BoosterBonus assistBonus = ActiveBoosterManager.getInstance().calculateBonus(5, List.of(BoosterTypes.XP, BoosterTypes.MEGA));
                     final BoosterBonus coinBonus = ActiveBoosterManager.getInstance().calculateBonus(5, List.of(BoosterTypes.COINS, BoosterTypes.MEGA));
-
-                    final int assistXP = (int) assistBonus.result();
                     final int assistCoins = (int) coinBonus.result();
 
                     assister.sendMessage(
@@ -252,9 +247,9 @@ public class DeathObject {
                                     CC.DARK_AQUA + "Exp: " + CC.AQUA + assistXP + " " + CC.DARK_AQUA + assistBonus.prettyPercentMultiplier() +
                                     CC.GOLD + " Coins: " + CC.YELLOW + assistCoins + " " + CC.GOLD + coinBonus.prettyPercentMultiplier()
                     );
-                    PlayerStatEntity aStatEntity = Tazpvp.getInstance().getPlayerStatService().getOrDefault(assister.getUniqueId());
+                    PlayerStatEntity aStatEntity = playerStatService.getOrDefault(assister.getUniqueId());
                     aStatEntity.setCoins(aStatEntity.getCoins() + assistCoins);
-                    aStatEntity.setXp(aStatEntity.getXp() + assistXP);
+                    playerStatService.addXp(killerStatEntity, 5);
                     aStatEntity.setMMR(aStatEntity.getMMR() + 5);
                 }
             }
@@ -271,19 +266,26 @@ public class DeathObject {
         if (killer != null) {
             if (killer == victim) return;
 
-            final BoosterBonus xpBonus = ActiveBoosterManager.getInstance().calculateBonus(15, List.of(BoosterTypes.XP, BoosterTypes.MEGA));
-            final BoosterBonus coinBonus = ActiveBoosterManager.getInstance().calculateBonus(26, List.of(BoosterTypes.COINS, BoosterTypes.MEGA));
 
-            final int xp = (int) xpBonus.result();
-            final int coins = (int) coinBonus.result();
-            final int bounty = LooseData.getKs(victim) * 10;
+
+            int XP = 15;
+            int COINS = 25;
+            final BoosterBonus XP_NETWORK_BUFF = ActiveBoosterManager.getInstance().calculateBonus(XP, List.of(BoosterTypes.XP, BoosterTypes.MEGA));
+            final BoosterBonus COIN_NETWORK_BUFF = ActiveBoosterManager.getInstance().calculateBonus(COINS, List.of(BoosterTypes.COINS, BoosterTypes.MEGA));
+            int XP_OTHER_BUFF = otherBuffs(killerStatEntity, XP);
+            int COIN_OTHER_BUFF =  otherBuffs(killerStatEntity, COINS);
+
+            final int bountyReward = LooseData.getKs(victim) * 10;
+
+            int finalXp = (int) XP_NETWORK_BUFF.result() + XP_OTHER_BUFF;
+            int finalCoins = (int) COIN_NETWORK_BUFF.result() + COIN_OTHER_BUFF + bountyReward;
 
             killerStatEntity.setKills(killerStatEntity.getKills() + 1);
             LooseData.addKs(killer);
 
-            killerStatEntity.setCoins(killerStatEntity.getCoins() + coins + bounty);
+            killerStatEntity.setCoins(killerStatEntity.getCoins() + finalCoins);
+            killerStatEntity.setXp(killerStatEntity.getXp() + finalXp);
             killerStatEntity.setMMR(killerStatEntity.getMMR() + 15);
-            killerStatEntity.setXp(killerStatEntity.getXp() + xp);
 
             if ((LooseData.getKs(killer) % 5) == 0) {
                 Bukkit.broadcastMessage(
@@ -298,11 +300,11 @@ public class DeathObject {
             }
 
             pKiller.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
-                    CC.DARK_AQUA.toString() + CC.BOLD + "Exp: " + CC.AQUA + CC.BOLD + xp + " " + CC.DARK_AQUA + xpBonus.prettyPercentMultiplier() +
-                            CC.GOLD + CC.BOLD + " Coins: " + CC.YELLOW + CC.BOLD + coins + " " + CC.GOLD + coinBonus.prettyPercentMultiplier()
+                    CC.DARK_AQUA.toString() + CC.BOLD + "Exp: " + CC.AQUA + CC.BOLD + XP + " " + CC.DARK_AQUA + XP_NETWORK_BUFF.prettyPercentMultiplier() +
+                            CC.GOLD + CC.BOLD + " Coins: " + CC.YELLOW + CC.BOLD + COINS + " " + CC.GOLD + COIN_NETWORK_BUFF.prettyPercentMultiplier()
             ));
-            if (bounty > 0) {
-                pKiller.sendMessage(CC.YELLOW + "You collected " + pVictim.getName() + "'s " + CC.GOLD + "$" + bounty + CC.YELLOW + " bounty.");
+            if (bountyReward > 0) {
+                pKiller.sendMessage(CC.YELLOW + "You collected " + pVictim.getName() + "'s " + CC.GOLD + "$" + bountyReward + CC.YELLOW + " bounty.");
             }
 
         }
@@ -321,5 +323,15 @@ public class DeathObject {
             victimStatEntity.setDeaths(0);
         }
         LooseData.resetKs(victim);
+    }
+
+    private int otherBuffs(PlayerStatEntity playerStatEntity, int stat) {
+        int finalStat = 0;
+
+        if (playerStatEntity.getPrestige() > 0) {
+            finalStat = (playerStatEntity.getPrestige() * stat);
+        }
+
+        return finalStat;
     }
 }
