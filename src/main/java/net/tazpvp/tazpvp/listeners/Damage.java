@@ -37,7 +37,7 @@ import net.tazpvp.tazpvp.game.events.Event;
 import net.tazpvp.tazpvp.game.items.UsableItem;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
-import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
+import net.tazpvp.tazpvp.utils.objects.DeathObject;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -142,7 +142,7 @@ public class Damage implements Listener {
     private void handleNonEntityDamage(Player victim, EntityDamageEvent event, double finalDamage) {
         if ((victim.getHealth() - finalDamage) <= 0) {
             event.setCancelled(true);
-            DeathFunctions.death(victim.getUniqueId());
+            new DeathObject(victim.getUniqueId(), null);
         } else {
             if (PlayerWrapper.getPlayer(victim).getDuel() == null) {
                 CombatTagFunctions.putInCombat(victim.getUniqueId(), null);
@@ -173,9 +173,9 @@ public class Damage implements Listener {
                 return;
             }
             if (killer != null) {
-                DeathFunctions.death(victim, killer);
+                new DeathObject(victim, killer);
             } else {
-                DeathFunctions.death(victim);
+                new DeathObject(victim, null);
             }
         }
     }

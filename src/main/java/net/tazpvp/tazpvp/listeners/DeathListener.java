@@ -4,6 +4,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.game.bosses.BossManager;
 import net.tazpvp.tazpvp.game.bosses.zorg.attacks.SummonUndeadAttack;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
+import net.tazpvp.tazpvp.utils.objects.DeathObject;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -17,7 +18,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 
 import java.util.UUID;
 
-public class Death implements Listener {
+public class DeathListener implements Listener {
     @EventHandler
     public void onDeath(final EntityDeathEvent event) {
         final Entity entity = event.getEntity();
@@ -42,9 +43,9 @@ public class Death implements Listener {
             final Player killer = player.getKiller();
 
             if (killer != null) {
-                DeathFunctions.death(player.getUniqueId(), killer.getUniqueId());
+                new DeathObject(player.getUniqueId(), killer.getUniqueId());
             } else {
-                DeathFunctions.death(player.getUniqueId());
+                new DeathObject(player.getUniqueId(), null);
             }
 
             ((PlayerDeathEvent) event).setDeathMessage(null);
@@ -59,7 +60,7 @@ public class Death implements Listener {
 
             BossManager.bossDied();
             World world = entity.getWorld();
-            world.dropItemNaturally(location.add(0, 1, 0), net.tazpvp.tazpvp.utils.objects.Death.deathItem());
+            world.dropItemNaturally(location.add(0, 1, 0), DeathFunctions.deathItem());
 
             if (!SummonUndeadAttack.undeadList.isEmpty()) {
                 for (Zombie z : SummonUndeadAttack.undeadList) {
