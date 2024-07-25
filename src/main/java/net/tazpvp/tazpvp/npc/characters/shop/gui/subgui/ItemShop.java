@@ -106,31 +106,31 @@ public class ItemShop extends GUI {
             new PrestigeShop(p);
         }), 40);
 
-        addBuyButton(Items.AZURE_VAPOR, 10, 1, true);
-        addBuyButton(Items.INKER, 40, 3, true);
-        addBuyButton(Items.STICKY_WEB, 10, 5, true);
-        addBuyButton(Items.LIGHTER, 100, 1, false);
-        addBuyButton(Items.EXP_BOTTLE, 64, 32, false);
-        addBuyButton(Items.HATCHET, 40, 1, false);
+        addBuyButton(1, 10, true, Items.AZURE_VAPOR);
+        addBuyButton(3, 40, true, Items.INKER);
+        addBuyButton(5, 10, true, Items.STICKY_WEB);
+        addBuyButton(1, 100, false, Items.LIGHTER);
+        addBuyButton(32, 64, false, Items.EXP_BOTTLE);
+        addBuyButton(1, 40, false, Items.HATCHET);
         setChangingButton("Plank", "Placeable Blocks", wood, 30, 64);
 
-        addBuyButton(Items.SHEAR, 20, 1, false);
-        addBuyButton(Items.ARROW, 50, 5, false);
-        addBuyButton(Items.GOLD_CARROT, 100, 5, false);
-        addBuyButton(Items.PUSH_BOMB, 225, 5, true);
-        addBuyButton(Items.SPECTRAL_ARROW, 90, 5, false);
+        addBuyButton(1, 20, false, Items.SHEAR);
+        addBuyButton(5, 50, false, Items.ARROW);
+        addBuyButton(5, 100, false, Items.GOLD_CARROT);
+        addBuyButton(5, 225, true, Items.PUSH_BOMB);
+        addBuyButton(5, 90, false, Items.SPECTRAL_ARROW);
         setChangingButton("Wool", "Placeable Blocks", wool, 30, 64);
 
-        addBuyButton(Items.SHARPNESS, 230, 1, Enchantment.SHARPNESS);
-        addBuyButton(Items.PROTECTION, 375, 1, Enchantment.PROTECTION);
-        addBuyButton(Items.POWER, 600, 1, Enchantment.POWER);
-        addBuyButton(Items.MENDING, 100, 1, Enchantment.MENDING);
-        addBuyButton(Items.FIRE_ASPECT, 450, 1, Enchantment.FIRE_ASPECT);
+        addBuyButton(230, Items.SHARPNESS, Enchantment.SHARPNESS);
+        addBuyButton(375, Items.PROTECTION, Enchantment.PROTECTION);
+        addBuyButton(600, Items.POWER, Enchantment.POWER);
+        addBuyButton(100, Items.MENDING, Enchantment.MENDING);
+        addBuyButton(450, Items.FIRE_ASPECT, Enchantment.FIRE_ASPECT);
 
         update();
     }
 
-    private void addBuyButton(Items customItem, int cost, int amount, boolean glow) {
+    private void addBuyButton(int amount, int cost, boolean glow, Items customItem) {
         ItemStack item = customItem.getShopItem(cost, amount, glow);
         addButton(Button.create(item, (e) -> {
             checkMoney(cost, customItem, null);
@@ -138,8 +138,8 @@ public class ItemShop extends GUI {
         calcSlot();
     }
 
-    private void addBuyButton(Items customItem, int cost, int amount, Enchantment enchant) {
-        ItemStack item = customItem.getShopEnchant(cost, amount);
+    private void addBuyButton(int cost, Items customItem, Enchantment enchant) {
+        ItemStack item = customItem.getShopEnchant(cost, 1);
         addButton(Button.create(item, (e) -> {
             checkMoney(cost, customItem, enchant);
         }), slotNum);
