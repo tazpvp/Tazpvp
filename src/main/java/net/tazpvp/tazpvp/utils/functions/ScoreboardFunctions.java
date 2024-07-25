@@ -61,6 +61,9 @@ public class ScoreboardFunctions {
             healthObjective.setDisplaySlot(DisplaySlot.BELOW_NAME);
         }
 
+        Team team = board.registerNewTeam("name");
+        team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
+
         PlayerStatEntity playerStatEntity = Tazpvp.getInstance().getPlayerStatService().getOrDefault(p.getUniqueId());
 
         objective = board.registerNewObjective("statboard", "dummy", ChatFunctions.gradient(ColorCodes.SERVER.toString(), "TAZPVP.NET", true));
