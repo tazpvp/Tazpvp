@@ -55,10 +55,11 @@ public class GuildMenu extends GUI {
     private final GuildEntity pGuild;
     private final GuildService guildService;
     private static final int ROWS = 3;
+
     public GuildMenu(Player p, GuildService guildService) {
         super("Guild Browser", ROWS);
-        this.pGuild = guildService.getGuildByPlayer(p.getUniqueId());
         this.guildService = guildService;
+        this.pGuild = guildService.getGuildByPlayer(p.getUniqueId());
         addItems(p);
         open(p);
     }
@@ -78,9 +79,10 @@ public class GuildMenu extends GUI {
 
         Button playerGuild;
 
-        if (pGuild != null) {
-            playerGuild = Button.create(ItemBuilder.of(Material.getMaterial(pGuild.getIcon()))
-                    .name(CC.GREEN + "" + CC.BOLD + pGuild.getName()).lore(lore).glow(true).build(), (e) ->
+        if (guildService.getGuildByPlayer(p.getUniqueId()) != null) {
+            Material guildIcon = Material.getMaterial(pGuild.getIcon());
+            playerGuild = Button.create(ItemBuilder.of(guildIcon == null ? Material.OAK_SIGN : guildIcon)
+                    .name(CC.GREEN + "" + CC.BOLD + pGuild.getName()).lore(lore).glow(true).build(), (_) ->
             {
                 p.closeInventory();
                 new BukkitRunnable() {
@@ -95,7 +97,7 @@ public class GuildMenu extends GUI {
                     .name(CC.GREEN + "" + CC.BOLD + "Create Guild")
                     .lore(CC.DARK_GREEN + "Click to buy a guild.", " ", CC.GRAY + "Cost: $6,000")
                     .glow(true)
-            .build(), (e) -> {
+            .build(), (_) -> {
                 p.closeInventory();
                 if (PersistentData.getInt(p, DataTypes.COINS) >= 6000) {
                     nameGuild(p);
@@ -109,7 +111,7 @@ public class GuildMenu extends GUI {
                 .name(CC.GREEN + "" + CC.BOLD + "View Guilds")
                 .lore(CC.DARK_GREEN + "A list of all the top guilds.")
                 .glow(true)
-                .build(), (e) -> {
+                .build(), (_) -> {
             p.closeInventory();
             new GuildList(p, guildService);
         });
@@ -137,7 +139,7 @@ public class GuildMenu extends GUI {
 
                 createGuild(text, p.getUniqueId());
                 p.sendMessage("You created a guild! " + GuildUtils.getGuildPlayerIn(p).getName());
-                return Arrays.asList(AnvilGUI.ResponseAction.close());
+                return List.of(AnvilGUI.ResponseAction.close());
             })
             .text(">")
             .itemLeft(ItemBuilder.of(Material.NAME_TAG).build())

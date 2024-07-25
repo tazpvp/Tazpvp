@@ -12,7 +12,7 @@ import java.util.function.Function;
 public enum LeaderboardEnum {
     KILLS("kills", PlayerStatEntity::getKills),
     DEATHS("deaths", PlayerStatEntity::getDeaths),
-    REBIRTHS("rebirths", PlayerStatEntity::getRebirths),
+    PRESTIGE("prestige", PlayerStatEntity::getPrestige),
     LEVEL("level", PlayerStatEntity::getLevel),
     COINS("coins", PlayerStatEntity::getCoins),;
 

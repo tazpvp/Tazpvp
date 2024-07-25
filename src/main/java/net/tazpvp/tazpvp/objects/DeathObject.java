@@ -15,6 +15,7 @@ import net.tazpvp.tazpvp.game.booster.BoosterBonus;
 import net.tazpvp.tazpvp.game.booster.BoosterTypes;
 import net.tazpvp.tazpvp.game.guilds.GuildUtils;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
@@ -66,10 +67,11 @@ public class DeathObject {
             if (currentKiller != null) {
                 CombatTag.tags.get(victim).getAttackers().clear();
                 this.killer = currentKiller;
+                this.killerWrapper = PlayerWrapper.getPlayer(currentKiller);
             } else {
                 this.killer = null;
+                this.killerWrapper = null;
             }
-            this.killerWrapper = null;
         } else {
             this.killer = killer;
             this.pKiller = Bukkit.getPlayer(killer);
@@ -239,17 +241,20 @@ public class DeathObject {
                     Player assister = Bukkit.getPlayer(uuid);
                     if (assister == null) continue;
 
-                    final BoosterBonus coinBonus = ActiveBoosterManager.getInstance().calculateBonus(5, List.of(BoosterTypes.COINS, BoosterTypes.MEGA));
-                    final int assistCoins = (int) coinBonus.result();
+                    final BoosterBonus XP_NETWORK_BUFF = ActiveBoosterManager.getInstance().calculateBonus(5, List.of(BoosterTypes.XP, BoosterTypes.MEGA));
+                    final BoosterBonus COIN_NETWORK_BUFF = ActiveBoosterManager.getInstance().calculateBonus(5, List.of(BoosterTypes.COINS, BoosterTypes.MEGA));
+
+                    int finalXp = (int) XP_NETWORK_BUFF.result();
+                    int finalCoins = (int) COIN_NETWORK_BUFF.result();
 
                     assister.sendMessage(
                             CC.DARK_GRAY + "Assist kill:" + CC.GRAY + " (" + pVictim.getName() + ") " +
-                                    CC.DARK_AQUA + "Exp: " + CC.AQUA + assistXP + " " + CC.DARK_AQUA + assistBonus.prettyPercentMultiplier() +
-                                    CC.GOLD + " Coins: " + CC.YELLOW + assistCoins + " " + CC.GOLD + coinBonus.prettyPercentMultiplier()
+                                    CC.DARK_AQUA + "Exp: " + CC.AQUA + finalXp + " " + CC.DARK_AQUA + XP_NETWORK_BUFF.prettyPercentMultiplier() +
+                                    CC.GOLD + " Coins: " + CC.YELLOW + finalCoins + " " + CC.GOLD + COIN_NETWORK_BUFF.prettyPercentMultiplier()
                     );
                     PlayerStatEntity aStatEntity = playerStatService.getOrDefault(assister.getUniqueId());
-                    aStatEntity.setCoins(aStatEntity.getCoins() + assistCoins);
-                    playerStatService.addXp(killerStatEntity, 5);
+                    aStatEntity.setCoins(aStatEntity.getCoins() + finalCoins);
+                    aStatEntity.setXp(aStatEntity.getXp() + finalXp);
                     aStatEntity.setMMR(aStatEntity.getMMR() + 5);
                 }
             }
@@ -265,8 +270,6 @@ public class DeathObject {
     private void updateKillerStats() {
         if (killer != null) {
             if (killer == victim) return;
-
-
 
             int XP = 15;
             int COINS = 25;
@@ -307,6 +310,8 @@ public class DeathObject {
                 pKiller.sendMessage(CC.YELLOW + "You collected " + pVictim.getName() + "'s " + CC.GOLD + "$" + bountyReward + CC.YELLOW + " bounty.");
             }
 
+            Tazpvp.getInstance().getPlayerNameTagService().setTagRank(pKiller);
+
         }
     }
 
@@ -323,6 +328,8 @@ public class DeathObject {
             victimStatEntity.setDeaths(0);
         }
         LooseData.resetKs(victim);
+
+        Tazpvp.getInstance().getPlayerNameTagService().setTagRank(pVictim);
     }
 
     private int otherBuffs(PlayerStatEntity playerStatEntity, int stat) {
