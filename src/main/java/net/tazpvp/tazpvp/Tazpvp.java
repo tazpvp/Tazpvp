@@ -130,6 +130,10 @@ public final class Tazpvp extends JavaPlugin {
     private static PostgresqlDatabase postgresqlDatabase;
 
     @Getter
+    private BukkitAudiences adventure;
+
+    private static final Logger log = Logger.getLogger("Minecraft");
+    @Getter
     private static CrateManager crateManager;
     @Getter
     private static SpawnableLeaderboardManager spawnableLeaderboardManager;
@@ -160,6 +164,9 @@ public final class Tazpvp extends JavaPlugin {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        adventure = BukkitAudiences.create(this);
+
 
         registerEvents();
         registerCommands();
@@ -316,7 +323,7 @@ public final class Tazpvp extends JavaPlugin {
 
     public void registerEvents() {
         getServer().getPluginManager().registerEvents(new Damage(), this);
-        getServer().getPluginManager().registerEvents(new  Join(), this);
+        getServer().getPluginManager().registerEvents(new Join(), this);
         getServer().getPluginManager().registerEvents(new Leave(), this);
         getServer().getPluginManager().registerEvents(new InventoryClick(), this);
         getServer().getPluginManager().registerEvents(new Break(), this);
@@ -355,5 +362,12 @@ public final class Tazpvp extends JavaPlugin {
     private void despawnNpcs() {
         npcs.forEach(NPC::remove);
         npcs.clear();
+    }
+
+    public @NonNull BukkitAudiences adventure() {
+        if(adventure == null) {
+            throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
+        }
+        return adventure;
     }
 }
