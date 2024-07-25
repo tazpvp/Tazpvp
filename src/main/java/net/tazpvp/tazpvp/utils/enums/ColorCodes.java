@@ -34,13 +34,13 @@ package net.tazpvp.tazpvp.utils.enums;
 
 import lombok.Getter;
 
+@Getter
 public enum ColorCodes {
     SERVER("#055cff"),
     DISCORD("#7a32ff"),
     STORE("#fcde00");
 
-    @Getter
-    private String hex;
+    private final String hex;
 
     ColorCodes(String hex) {
         this.hex = hex;

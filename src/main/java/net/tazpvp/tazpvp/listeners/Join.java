@@ -74,9 +74,6 @@ public class Join implements Listener {
         PlayerWrapper.addPlayer(p);
         ScoreboardFunctions.initScoreboard(p);
         Tazpvp.getInstance().getPlayerNameTagService().initializePlayer(p);
-//        new PlayerNameTag().initializePlayerNameTag(p);
-//        PersistentData.initPlayer(p);
-
 
         final PunishmentService punishmentService = new PunishmentServiceImpl();
         final PunishmentEntity punishmentEntity = punishmentService.getOrDefault(p.getUniqueId());
@@ -146,14 +143,6 @@ public class Join implements Listener {
         userRankService.removeAllExpiredRanks(playerWrapper.getUserRankEntity());
 
         playerWrapper.refreshRankEntity();
-
-
-//        int ranking = 1; //TODO: Use database and rankdata
-//        String prefix = Tazpvp.getChat().getPlayerPrefix(p);
-//        String suffix = Tazpvp.getChat().getPlayerSuffix(p);
-//        ChatColor color = ChatColor.GRAY; //TODO: Use database and rankdata
-//
-//        new PlayerNameTag().initializePlayerNameTag(e.getPlayer(), ranking, prefix, suffix, color);
 
         p.setPlayerListHeaderFooter(
                 CC.DARK_AQUA + "                                      " + "\n                 " +

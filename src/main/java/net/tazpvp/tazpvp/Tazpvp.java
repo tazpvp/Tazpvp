@@ -110,9 +110,9 @@ import java.util.logging.Logger;
  */
 public final class Tazpvp extends JavaPlugin {
     @Getter
-    private static List<Observer> observers = new ArrayList<>();
+    private static final List<Observer> observers = new ArrayList<>();
     @Getter
-    private List<NPC> npcs = new ArrayList<>();
+    private final List<NPC> npcs = new ArrayList<>();
 
     public static String prefix = "tazpvp.";
 
@@ -129,7 +129,6 @@ public final class Tazpvp extends JavaPlugin {
     @Getter
     private static PostgresqlDatabase postgresqlDatabase;
 
-    private static final Logger log = Logger.getLogger("Minecraft");
     @Getter
     private static CrateManager crateManager;
     @Getter
@@ -143,11 +142,8 @@ public final class Tazpvp extends JavaPlugin {
     private GuildService guildService;
     @Getter
     private GuildMemberService guildMemberService;
-
     @Getter
     private PlayerNameTagService playerNameTagService;
-
-
 
     @Override
     public void onEnable() {
@@ -320,7 +316,7 @@ public final class Tazpvp extends JavaPlugin {
 
     public void registerEvents() {
         getServer().getPluginManager().registerEvents(new Damage(), this);
-        getServer().getPluginManager().registerEvents(new Join(), this);
+        getServer().getPluginManager().registerEvents(new  Join(), this);
         getServer().getPluginManager().registerEvents(new Leave(), this);
         getServer().getPluginManager().registerEvents(new InventoryClick(), this);
         getServer().getPluginManager().registerEvents(new Break(), this);
