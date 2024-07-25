@@ -82,6 +82,7 @@ import net.tazpvp.tazpvp.npc.characters.shop.Maxim;
 import net.tazpvp.tazpvp.player.achievements.achievement.*;
 import net.tazpvp.tazpvp.player.talents.talent.*;
 import net.tazpvp.tazpvp.utils.ConfigUtil;
+import net.tazpvp.tazpvp.utils.PlayerNameTagService;
 import net.tazpvp.tazpvp.utils.discord.bot.BotThread;
 import net.tazpvp.tazpvp.utils.functions.AfkFunctions;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
@@ -143,6 +144,9 @@ public final class Tazpvp extends JavaPlugin {
     @Getter
     private GuildMemberService guildMemberService;
 
+    @Getter
+    private PlayerNameTagService playerNameTagService;
+
 
 
     @Override
@@ -163,6 +167,7 @@ public final class Tazpvp extends JavaPlugin {
 
         registerEvents();
         registerCommands();
+        playerStatService = new PlayerStatServiceImpl();
         Generator.generate();
         Holograms.holograms();
         Alerts.alert();

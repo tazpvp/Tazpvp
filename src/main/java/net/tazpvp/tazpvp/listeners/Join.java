@@ -75,7 +75,8 @@ public class Join implements Listener {
 //        PersistentData.initPlayer(p);
         ScoreboardFunctions.initScoreboard(p);
 
-        new PlayerNameTag().initializePlayerNameTag(p);
+        Tazpvp.getInstance().getPlayerNameTagService().initializePlayer(p);
+//        new PlayerNameTag().initializePlayerNameTag(p);
 
         final PunishmentService punishmentService = new PunishmentServiceImpl();
         final PunishmentEntity punishmentEntity = punishmentService.getOrDefault(p.getUniqueId());

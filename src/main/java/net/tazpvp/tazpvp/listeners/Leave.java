@@ -92,6 +92,8 @@ public class Leave implements Listener {
 
         Tazpvp.getBotThread().connectionChat(p.getName(), false);
 
+        Tazpvp.getInstance().getPlayerNameTagService().removePlayer(p);
+
     }
 
     private void saveInv(Player p) {
