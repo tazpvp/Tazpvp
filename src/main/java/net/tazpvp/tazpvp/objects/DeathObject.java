@@ -15,6 +15,7 @@ import net.tazpvp.tazpvp.game.booster.BoosterBonus;
 import net.tazpvp.tazpvp.game.booster.BoosterTypes;
 import net.tazpvp.tazpvp.game.guilds.GuildUtils;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
@@ -310,6 +311,8 @@ public class DeathObject {
                 pKiller.sendMessage(CC.YELLOW + "You collected " + pVictim.getName() + "'s " + CC.GOLD + "$" + bountyReward + CC.YELLOW + " bounty.");
             }
 
+            Tazpvp.getInstance().getPlayerNameTagService().setTagRank(pKiller);
+
         }
     }
 
@@ -326,6 +329,8 @@ public class DeathObject {
             victimStatEntity.setDeaths(0);
         }
         LooseData.resetKs(victim);
+
+        Tazpvp.getInstance().getPlayerNameTagService().setTagRank(pVictim);
     }
 
     private int otherBuffs(PlayerStatEntity playerStatEntity, int stat) {
