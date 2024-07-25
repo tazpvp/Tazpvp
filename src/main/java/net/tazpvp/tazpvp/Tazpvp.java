@@ -34,6 +34,8 @@
 package net.tazpvp.tazpvp;
 
 import lombok.Getter;
+import lombok.NonNull;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.tazpvp.tazpvp.commands.admin.BroadcastCommand;
 import net.tazpvp.tazpvp.commands.admin.KeyallCommand;
 import net.tazpvp.tazpvp.commands.admin.ResetStatsCommand;
@@ -129,6 +131,9 @@ public final class Tazpvp extends JavaPlugin {
     @Getter
     private static PostgresqlDatabase postgresqlDatabase;
 
+    @Getter
+    private BukkitAudiences adventure;
+
     private static final Logger log = Logger.getLogger("Minecraft");
     @Getter
     private static CrateManager crateManager;
@@ -164,6 +169,9 @@ public final class Tazpvp extends JavaPlugin {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        adventure = BukkitAudiences.create(this);
+
 
         registerEvents();
         registerCommands();
@@ -359,5 +367,12 @@ public final class Tazpvp extends JavaPlugin {
     private void despawnNpcs() {
         npcs.forEach(NPC::remove);
         npcs.clear();
+    }
+
+    public @NonNull BukkitAudiences adventure() {
+        if(adventure == null) {
+            throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
+        }
+        return adventure;
     }
 }
