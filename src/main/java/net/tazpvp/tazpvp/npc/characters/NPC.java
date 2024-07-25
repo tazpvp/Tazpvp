@@ -53,25 +53,16 @@ import java.util.UUID;
 /**
  * A simple utility class for creating Villager NPCs
  */
+@Getter
 public abstract class NPC implements Listener {
-    @Getter
     private final String NAME;
-    @Getter
     private final Location SPAWN;
-    @Getter
     private final Villager.Profession PROFESSION;
-    @Getter
     private final Villager.Type TYPE;
-    @Getter
     private final Sound SOUND;
-    @Getter
     private final Villager V;
-    @Getter
     private final UUID ID;
-    @Getter
     private final Dialogues dialogues;
-
-    private final int RANGE = 4;
 
 
     public NPC(@Nonnull final String NAME, @Nonnull final Location SPAWN, @Nonnull final Villager.Profession PROFESSION, @Nonnull final Villager.Type TYPE, @Nonnull final Sound SOUND, @Nonnull final Dialogues dialogues) {
@@ -103,6 +94,7 @@ public abstract class NPC implements Listener {
     public abstract void interact(@Nonnull final PlayerInteractAtEntityEvent e, @Nonnull final Player p);
 
     public boolean withinRange(Location location) {
+        int RANGE = 4;
         return getSPAWN().toVector().distance(location.toVector()) <= RANGE;
     }
 
