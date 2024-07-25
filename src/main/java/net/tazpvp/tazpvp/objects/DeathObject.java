@@ -239,17 +239,20 @@ public class DeathObject {
                     Player assister = Bukkit.getPlayer(uuid);
                     if (assister == null) continue;
 
-                    final BoosterBonus coinBonus = ActiveBoosterManager.getInstance().calculateBonus(5, List.of(BoosterTypes.COINS, BoosterTypes.MEGA));
-                    final int assistCoins = (int) coinBonus.result();
+                    final BoosterBonus XP_NETWORK_BUFF = ActiveBoosterManager.getInstance().calculateBonus(5, List.of(BoosterTypes.XP, BoosterTypes.MEGA));
+                    final BoosterBonus COIN_NETWORK_BUFF = ActiveBoosterManager.getInstance().calculateBonus(5, List.of(BoosterTypes.COINS, BoosterTypes.MEGA));
+
+                    int finalXp = (int) XP_NETWORK_BUFF.result();
+                    int finalCoins = (int) COIN_NETWORK_BUFF.result();
 
                     assister.sendMessage(
                             CC.DARK_GRAY + "Assist kill:" + CC.GRAY + " (" + pVictim.getName() + ") " +
-                                    CC.DARK_AQUA + "Exp: " + CC.AQUA + assistXP + " " + CC.DARK_AQUA + assistBonus.prettyPercentMultiplier() +
-                                    CC.GOLD + " Coins: " + CC.YELLOW + assistCoins + " " + CC.GOLD + coinBonus.prettyPercentMultiplier()
+                                    CC.DARK_AQUA + "Exp: " + CC.AQUA + finalXp + " " + CC.DARK_AQUA + XP_NETWORK_BUFF.prettyPercentMultiplier() +
+                                    CC.GOLD + " Coins: " + CC.YELLOW + finalCoins + " " + CC.GOLD + COIN_NETWORK_BUFF.prettyPercentMultiplier()
                     );
                     PlayerStatEntity aStatEntity = playerStatService.getOrDefault(assister.getUniqueId());
-                    aStatEntity.setCoins(aStatEntity.getCoins() + assistCoins);
-                    playerStatService.addXp(killerStatEntity, 5);
+                    aStatEntity.setCoins(aStatEntity.getCoins() + finalCoins);
+                    aStatEntity.setXp(aStatEntity.getXp() + finalXp);
                     aStatEntity.setMMR(aStatEntity.getMMR() + 5);
                 }
             }
