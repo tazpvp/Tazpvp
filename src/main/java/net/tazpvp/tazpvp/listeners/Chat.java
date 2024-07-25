@@ -44,6 +44,7 @@ import net.tazpvp.tazpvp.data.services.PunishmentService;
 import net.tazpvp.tazpvp.utils.Profanity;
 import net.tazpvp.tazpvp.utils.TimeUtil;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.functions.PunishmentFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
@@ -132,14 +133,15 @@ public class Chat implements Listener {
 
         pw.setLastMessageSent(message);
 
-        String format = "&GRAY[{LEVEL}&GRAY] {PREFIX} %s{SUFFIX} &GRAY&M%s";
+        String format = "&GOLD{RANK} &GRAY[{LEVEL}&GRAY] {PREFIX} %s{SUFFIX} &GRAY&M%s";
 
         if (pw.getRankPrefix() == null) {
-            String tempFormat = "&GRAY[{LEVEL}&GRAY] %s{SUFFIX} &GRAY&M%s";
+            String tempFormat = "&GOLD{RANK} &GRAY{RANK} [{LEVEL}&GRAY] %s{SUFFIX} &GRAY&M%s";
             format = tempFormat
                     .replace("&GRAY", CC.GRAY.toString())
                     .replace("&GOLD", CC.YELLOW.toString())
                     .replace("&M", CC.WHITE.toString())
+                    .replace("{RANK}", ChatFunctions.getRanking(p) + "")
                     .replace("{LEVEL}", playerStatEntity.getLevel() + "")
                     .replace("{SUFFIX}", pw.getGuildTag().toUpperCase());
         } else {
@@ -147,6 +149,7 @@ public class Chat implements Listener {
                     .replace("&GRAY", CC.GRAY.toString())
                     .replace("&GOLD", CC.YELLOW.toString())
                     .replace("&M", CC.WHITE.toString())
+                    .replace("{RANK}", ChatFunctions.getRanking(p) + "")
                     .replace("{LEVEL}", playerStatEntity.getLevel() + "")
                     .replace("{PREFIX}", CC.trans(pw.getRankPrefix()))
                     .replace("{SUFFIX}", pw.getGuildTag().toUpperCase());

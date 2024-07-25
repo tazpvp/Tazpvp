@@ -34,6 +34,7 @@
 package net.tazpvp.tazpvp.game.crates;
 
 import lombok.Getter;
+import net.tazpvp.tazpvp.game.crates.gui.Preview;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -86,6 +87,10 @@ public class Crate {
                 p.sendTitle(CC.BLUE + "Error", CC.BLUE + "No Crate Key In Hand", 10,20,10);
             }
         }
+    }
+
+    public void openPreview(PlayerInteractEvent e) {
+        new Preview(e.getPlayer(), this);
     }
 
     private boolean isCrate(PlayerInteractEvent e) {

@@ -33,6 +33,10 @@
 package net.tazpvp.tazpvp.utils.functions;
 
 import net.md_5.bungee.api.ChatColor;
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
+import net.tazpvp.tazpvp.data.services.GuildService;
+import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
@@ -158,5 +162,20 @@ public class ChatFunctions {
         p.sendMessage(CC.DARK_AQUA + "" + CC.BOLD + "Achievement Unlocked: " + CC.RED + "" + CC.BOLD + name);
         p.sendMessage("");
         p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+    }
+
+    public static String getRanking(Player p) {
+        PlayerStatService statService = Tazpvp.getInstance().getPlayerStatService();
+        PlayerStatEntity statEntity = statService.getOrDefault(p.getUniqueId());
+        if (statEntity.getMMR() > 2000) {
+            return "✪✪✪✪✪";
+        } else if (statEntity.getMMR() > 1500) {
+            return "✪✪✪✪";
+        } else if (statEntity.getMMR() > 1000) {
+            return "✪✪✪";
+        } else if (statEntity.getMMR() > 500) {
+            return "✪✪";
+        }
+        return "✪";
     }
 }

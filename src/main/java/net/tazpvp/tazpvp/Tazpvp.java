@@ -75,10 +75,15 @@ import net.tazpvp.tazpvp.game.events.Event;
 import net.tazpvp.tazpvp.game.items.UsableItem;
 import net.tazpvp.tazpvp.game.items.enchants.EnchantUtil;
 import net.tazpvp.tazpvp.listeners.*;
-import net.tazpvp.tazpvp.npc.shops.*;
+import net.tazpvp.tazpvp.npc.characters.*;
+import net.tazpvp.tazpvp.npc.characters.enchanter.Caesar;
+import net.tazpvp.tazpvp.npc.characters.achievements.Lorenzo;
+import net.tazpvp.tazpvp.npc.characters.guildmaster.Rigel;
+import net.tazpvp.tazpvp.npc.characters.shop.Maxim;
 import net.tazpvp.tazpvp.player.achievements.achievement.*;
 import net.tazpvp.tazpvp.player.talents.talent.*;
 import net.tazpvp.tazpvp.utils.ConfigUtil;
+import net.tazpvp.tazpvp.services.PlayerNameTagService;
 import net.tazpvp.tazpvp.utils.discord.bot.BotThread;
 import net.tazpvp.tazpvp.utils.functions.AfkFunctions;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
@@ -143,14 +148,30 @@ public final class Tazpvp extends JavaPlugin {
     @Getter
     private GuildMemberService guildMemberService;
 
+    @Getter
+    private PlayerNameTagService playerNameTagService;
+
 
 
     @Override
     public void onEnable() {
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
+
+        try {
+            connectDatabase(
+                    getConfig().getString("sql-host"),
+                    getConfig().getInt("sql-port"),
+                    getConfig().getString("sql-user"),
+                    getConfig().getString("sql-password")
+            );
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
         registerEvents();
         registerCommands();
+        playerStatService = new PlayerStatServiceImpl();
         Generator.generate();
         Holograms.holograms();
         Alerts.alert();
@@ -172,17 +193,6 @@ public final class Tazpvp extends JavaPlugin {
                 new Location(Bukkit.getWorld("arena"), 16, 98, 9),
                 new Location(Bukkit.getWorld("arena"), 11, 95, 4)
         );
-
-        try {
-            connectDatabase(
-                    getConfig().getString("sql-host"),
-                    getConfig().getInt("sql-port"),
-                    getConfig().getString("sql-user"),
-                    getConfig().getString("sql-password")
-            );
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
 
         crateManager = new CrateManager();
 
@@ -208,7 +218,6 @@ public final class Tazpvp extends JavaPlugin {
         new GameRankServiceImpl().createTableIfNotExists(postgresqlDatabase, GameRankEntity.class);
         new PermissionServiceImpl().createTableIfNotExists(postgresqlDatabase, PermissionEntity.class);
         new UserRankServiceImpl().createTableIfNotExists(postgresqlDatabase, UserRankEntity.class);
-
 
         this.guildMemberService = new GuildMemberServiceImpl();
         this.guildService = new GuildServiceImpl(guildMemberService);
@@ -328,7 +337,7 @@ public final class Tazpvp extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Interact(), this);
         getServer().getPluginManager().registerEvents(new Shoot(), this);
         getServer().getPluginManager().registerEvents(new ProjectileLaunch(this), this);
-        getServer().getPluginManager().registerEvents(new Death(), this);
+        getServer().getPluginManager().registerEvents(new DeathListener(), this);
         getServer().getPluginManager().registerEvents(new CommandSend(), this);
         getServer().getPluginManager().registerEvents(new Craft(), this);
         getServer().getPluginManager().registerEvents(new Explode(), this);
@@ -338,9 +347,9 @@ public final class Tazpvp extends JavaPlugin {
 
     private void spawnNpcs() {
         npcs.add(new Maxim());
-        npcs.add(new Lorenzo(guildService));
-        npcs.add(new Bub());
+        npcs.add(new Lorenzo());
         npcs.add(new Caesar());
+        npcs.add(new Rigel(guildService));
 
         new BukkitRunnable() {
             @Override

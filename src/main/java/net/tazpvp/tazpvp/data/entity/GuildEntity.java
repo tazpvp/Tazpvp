@@ -27,14 +27,17 @@ public class GuildEntity {
     @ForeignCollectionField
     private ForeignCollection<GuildMemberEntity> members;
 
-    @DatabaseField(canBeNull = false)
+    @DatabaseField(defaultValue = "None.")
     private String description;
 
-    @DatabaseField(canBeNull = true)
+    @DatabaseField()
     private String tag;
 
     @DatabaseField(defaultValue = "OAK_SIGN")
     private String icon;
+
+    @DatabaseField(defaultValue = "false")
+    private boolean isPrivate;
 
     @DatabaseField(defaultValue = "0", canBeNull = false)
     private int kills;

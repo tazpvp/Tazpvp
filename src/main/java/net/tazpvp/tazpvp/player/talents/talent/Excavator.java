@@ -36,7 +36,7 @@ import net.tazpvp.tazpvp.data.DataTypes;
 import net.tazpvp.tazpvp.data.PersistentData;
 import net.tazpvp.tazpvp.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.utils.functions.BlockFunctions;
-import net.tazpvp.tazpvp.utils.objects.Ore;
+import net.tazpvp.tazpvp.objects.Ore;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.GameMode;

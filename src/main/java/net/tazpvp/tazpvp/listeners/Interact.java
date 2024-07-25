@@ -42,7 +42,13 @@ public class Interact implements Listener {
             }
         }
 
+        if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
+            if (e.getClickedBlock().getType() == Material.BEACON) {
+                e.setCancelled(true);
+                for (Crate crate : Tazpvp.getCrateManager().getCrates()) {
+                    crate.openPreview(e);
+                }
+            }
+        }
     }
-
-
 }

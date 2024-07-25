@@ -4,11 +4,11 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.data.implementations.PunishmentServiceImpl;
 import net.tazpvp.tazpvp.data.services.PunishmentService;
-import net.tazpvp.tazpvp.npc.shops.NPC;
+import net.tazpvp.tazpvp.npc.characters.NPC;
 import net.tazpvp.tazpvp.utils.ParkourUtil;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.AfkFunctions;
-import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
+import net.tazpvp.tazpvp.objects.DeathObject;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -69,11 +69,11 @@ public class Move implements Listener {
 
             if (p.getGameMode() == GameMode.SURVIVAL) {
                 if (p.getLocation().getY() < 78 && p.getLocation().getZ() < 133) {
-                    DeathFunctions.death(p.getUniqueId());
+                    new DeathObject(p.getUniqueId(), null);
                     return;
                 }
                 if (p.getLocation().getY() < 64) {
-                    DeathFunctions.death(p.getUniqueId());
+                    new DeathObject(p.getUniqueId(), null);
                     return;
                 }
             }

@@ -38,7 +38,7 @@ import net.tazpvp.tazpvp.game.duels.Duel;
 import net.tazpvp.tazpvp.game.events.Event;
 import net.tazpvp.tazpvp.utils.PlaytimeUtil;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
-import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
+import net.tazpvp.tazpvp.objects.DeathObject;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -76,7 +76,7 @@ public class Leave implements Listener {
         if (CombatTagFunctions.isInCombat(id)) {
             if (TazloadCommand.tazloading) return;
             if (CombatTagFunctions.getLastAttacker(id) == null) return;
-            DeathFunctions.death(id, CombatTagFunctions.getLastAttacker(id));
+            new DeathObject(id, CombatTagFunctions.getLastAttacker(id));
         }
 
         final PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(p);
@@ -91,6 +91,8 @@ public class Leave implements Listener {
         }
 
         Tazpvp.getBotThread().connectionChat(p.getName(), false);
+
+        Tazpvp.getInstance().getPlayerNameTagService().removePlayer(p);
 
     }
 

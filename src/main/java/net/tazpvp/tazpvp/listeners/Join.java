@@ -52,7 +52,7 @@ import net.tazpvp.tazpvp.utils.functions.AfkFunctions;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.functions.ScoreboardFunctions;
-import net.tazpvp.tazpvp.utils.objects.CombatTag;
+import net.tazpvp.tazpvp.objects.CombatTag;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -72,10 +72,11 @@ public class Join implements Listener {
         Player p = e.getPlayer();
 
         PlayerWrapper.addPlayer(p);
-//        PersistentData.initPlayer(p);
         ScoreboardFunctions.initScoreboard(p);
+        Tazpvp.getInstance().getPlayerNameTagService().initializePlayer(p);
+//        new PlayerNameTag().initializePlayerNameTag(p);
+//        PersistentData.initPlayer(p);
 
-        new PlayerNameTag().initializePlayerNameTag(p);
 
         final PunishmentService punishmentService = new PunishmentServiceImpl();
         final PunishmentEntity punishmentEntity = punishmentService.getOrDefault(p.getUniqueId());

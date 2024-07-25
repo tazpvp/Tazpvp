@@ -56,7 +56,7 @@ public class SpawnableLeaderboardManager {
         this.spawnableLeaderboards.add(new SpawnableLeaderboard(LeaderboardEnum.KILLS, "Kills", new Location(Bukkit.getWorld("arena"), 0.5, 101, -8)));
         this.spawnableLeaderboards.add(new SpawnableLeaderboard(LeaderboardEnum.COINS, "Coins", new Location(Bukkit.getWorld("arena"), 7, 101, -1.5)));
         this.spawnableLeaderboards.add(new SpawnableLeaderboard(LeaderboardEnum.DEATHS, "Deaths", new Location(Bukkit.getWorld("arena"), -5.5, 101, -7.5)));
-        this.spawnableLeaderboards.add(new SpawnableLeaderboard(LeaderboardEnum.REBIRTHS, "Rebirths", new Location(Bukkit.getWorld("arena"), 6.5, 101, -7.5)));
+        this.spawnableLeaderboards.add(new SpawnableLeaderboard(LeaderboardEnum.PRESTIGE, "Prestige", new Location(Bukkit.getWorld("arena"), 6.5, 101, -7.5)));
 
         createScheduler(tazpvp);
     }

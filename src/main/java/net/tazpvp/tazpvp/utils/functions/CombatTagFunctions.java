@@ -33,7 +33,7 @@
 package net.tazpvp.tazpvp.utils.functions;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.utils.objects.CombatTag;
+import net.tazpvp.tazpvp.objects.CombatTag;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import javax.annotation.Nullable;

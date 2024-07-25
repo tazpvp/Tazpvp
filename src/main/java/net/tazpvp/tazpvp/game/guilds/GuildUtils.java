@@ -7,7 +7,8 @@ import org.bukkit.OfflinePlayer;
 
 import java.util.*;
 
-public final class GuildUtils {
+public final class
+GuildUtils {
 
     public static boolean isInGuild(OfflinePlayer p) {
         return !PersistentData.getString(p, DataTypes.GUILD_ID).equals("n");
