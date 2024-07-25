@@ -115,12 +115,9 @@ public final class Tazpvp extends JavaPlugin {
     private static final List<Observer> observers = new ArrayList<>();
     @Getter
     private final List<NPC> npcs = new ArrayList<>();
-
     public static String prefix = "tazpvp.";
-
     @Getter
     private static ConfigUtil parkourUtil;
-
     @Getter
     public static Cuboid spawnRegion;
     @Getter
@@ -168,7 +165,6 @@ public final class Tazpvp extends JavaPlugin {
         }
 
         adventure = BukkitAudiences.create(this);
-
 
         registerEvents();
         registerCommands();

@@ -45,9 +45,4 @@ public enum ColorCodes {
     ColorCodes(String hex) {
         this.hex = hex;
     }
-
-    @Override
-    public String toString() {
-        return getHex();
-    }
 }

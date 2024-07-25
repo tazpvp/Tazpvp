@@ -128,6 +128,7 @@ public class ItemShop extends GUI {
         update();
     }
 
+
     private void setButton(int amount, String name, String lore, Material material, int cost, boolean glow, boolean custom) {
         String name2 = ChatFunctions.gradient("#db3bff", name, true);
         ItemStack item;
