@@ -32,6 +32,8 @@
 
 package net.tazpvp.tazpvp.npc.characters.shop;
 
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
+import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.npc.characters.shop.gui.Shop;
 import net.tazpvp.tazpvp.npc.dialogue.Dialogues;
 import net.tazpvp.tazpvp.npc.characters.NPC;
@@ -49,7 +51,9 @@ import java.util.List;
 
 public class Maxim extends NPC {
 
-    public Maxim() {
+    private final PlayerStatService playerStatService;
+
+    public Maxim(PlayerStatService playerStatService) {
         super(ChatFunctions.gradient("#fc6400", "Maxim", true), new Location(Bukkit.getWorld("arena"), -11.5, 99, 20.5, -135, 0),
                 Villager.Profession.FARMER,
                 Villager.Type.SAVANNA,
@@ -87,10 +91,11 @@ public class Maxim extends NPC {
                                 "How about some food? Fighters get hungry too!"
                         )
                 ));
+        this.playerStatService = playerStatService;
     }
 
     @Override
     public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
-        new Shop(p);
+        new Shop(p, playerStatService);
     }
 }

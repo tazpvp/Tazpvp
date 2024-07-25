@@ -33,9 +33,10 @@
 package net.tazpvp.tazpvp.npc.characters.shop.gui.subgui;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.DataTypes;
-import net.tazpvp.tazpvp.data.PersistentData;
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
+import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.utils.enums.Items;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -58,6 +59,8 @@ public class ItemShop extends GUI {
     private int num;
     private Player p;
     private final String prefix = CC.RED + "[Maxim] " + CC.WHITE;
+    private final PlayerStatEntity playerStatEntity;
+    private final PlayerStatService playerStatService;
 
     private final List<Material> wool = List.of(
             Material.ORANGE_WOOL,
@@ -80,9 +83,11 @@ public class ItemShop extends GUI {
             Material.SPRUCE_PLANKS
     );
 
-    public ItemShop(Player p) {
+    public ItemShop(Player p, PlayerStatService playerStatService) {
         super("Maxim", 6);
         this.p = p;
+        this.playerStatService = playerStatService;
+        this.playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
         addItems();
         open(p);
     }
@@ -101,61 +106,42 @@ public class ItemShop extends GUI {
             new PrestigeShop(p);
         }), 40);
 
-        setButton(1, "Azure Vapor", "Extinguish flames.", Material.BLUE_ORCHID, 10, true, true);
-        setButton(3, "Inker", "Blind the enemies you slap.", Material.INK_SAC, 40, true, true);
-        setButton(5, "Sticky Web", "Slow down your enemies.", Material.COBWEB, 10,false, false);
-        setButton(1, "Lighter", "Set things afire.", Material.FLINT_AND_STEEL, 100, false, true);
-        setButton(1, "Shulker", "Extra Storage.", Material.SHULKER_BOX, 2500, false, false);
-        setButton(32, "Exp Bottle", "Mend your armor.", Material.EXPERIENCE_BOTTLE, 64, false, false);
+        addBuyButton(Items.AZURE_VAPOR, 10, 1, true);
+        addBuyButton(Items.INKER, 40, 3, true);
+        addBuyButton(Items.STICKY_WEB, 10, 5, true);
+        addBuyButton(Items.LIGHTER, 100, 1, false);
+        addBuyButton(Items.EXP_BOTTLE, 64, 32, false);
+        addBuyButton(Items.HATCHET, 40, 1, false);
         setChangingButton("Plank", "Placeable Blocks", wood, 30, 64);
 
-        setButton(1, "Hatchet", "Break wooden blocks.", Material.GOLDEN_AXE, 40, false, true);
-        setButton(1, "Shear", "Break wool blocks.", Material.SHEARS, 20, false, true);
-        setButton(5, "Arrow", "Projectiles.", Material.ARROW, 50, false, false);
-        setButton(5, "Steak", "We have the meats.", Material.COOKED_BEEF, 30, false, false);
-        setButton(5, "Gold Carrot", "Good nutrition.", Material.GOLDEN_CARROT, 100, false, false);
-        setButton(5, "Push Bomb", "Push everyone away from you.", Material.TNT, 225, true, true);
+        addBuyButton(Items.SHEAR, 20, 1, false);
+        addBuyButton(Items.ARROW, 50, 5, false);
+        addBuyButton(Items.GOLD_CARROT, 100, 5, false);
+        addBuyButton(Items.PUSH_BOMB, 225, 5, true);
+        addBuyButton(Items.SPECTRAL_ARROW, 90, 5, false);
         setChangingButton("Wool", "Placeable Blocks", wool, 30, 64);
 
-        setButton(5, "Spectral Arrow", "Highlight targets.", Material.SPECTRAL_ARROW, 90, false, false);
-        setButton(1, "Crossbow", "Stronger than the bow.", Material.CROSSBOW, 90, false, false);
-        setButton(1, "Sharpness", "Deal more sword damage.", Material.ENCHANTED_BOOK, 230, Enchantment.SHARPNESS);
-        setButton(1, "Protection", "Take less damage.", Material.ENCHANTED_BOOK, 375, Enchantment.PROTECTION);
-        setButton(1, "Power", "Deal more damage with your bow.", Material.ENCHANTED_BOOK, 600, Enchantment.POWER);
-        setButton(1, "Mending", "Heal armor with xp bottles.", Material.ENCHANTED_BOOK, 100, Enchantment.MENDING);
-        setButton(1, "Fire Aspect", "Hit and set things on fire.", Material.ENCHANTED_BOOK, 450, Enchantment.FIRE_ASPECT);
+        addBuyButton(Items.SHARPNESS, 230, 1, Enchantment.SHARPNESS);
+        addBuyButton(Items.PROTECTION, 375, 1, Enchantment.PROTECTION);
+        addBuyButton(Items.POWER, 600, 1, Enchantment.POWER);
+        addBuyButton(Items.MENDING, 100, 1, Enchantment.MENDING);
+        addBuyButton(Items.FIRE_ASPECT, 450, 1, Enchantment.FIRE_ASPECT);
 
         update();
     }
 
-
-    private void setButton(int amount, String name, String lore, Material material, int cost, boolean glow, boolean custom) {
-        String name2 = ChatFunctions.gradient("#db3bff", name, true);
-        ItemStack item;
-        if (custom) {
-            item = ItemBuilder.of(material, amount).name(name2).lore(CC.GRAY + lore).build();
-        } else {
-            item = ItemBuilder.of(material, amount).build();
-        }
-
-        addButton(Button.create(ItemBuilder.of(material, amount)
-                .name(CC.YELLOW + "" + CC.BOLD + name)
-                .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: " + cost + " Coins")
-                .glow(glow)
-                .build(), (e) -> {
-            checkMoney(name2, cost, item, null);
+    private void addBuyButton(Items customItem, int cost, int amount, boolean glow) {
+        ItemStack item = customItem.getShopItem(cost, amount, glow);
+        addButton(Button.create(item, (e) -> {
+            checkMoney(cost, customItem, null);
         }), slotNum);
         calcSlot();
     }
 
-    private void setButton(int amount, String name, String lore, Material material, int cost, Enchantment enchant) {
-        String name2 = ChatFunctions.gradient("#db3bff", name, true);
-
-        addButton(Button.create(ItemBuilder.of(material, amount)
-                .name(CC.YELLOW + "" + CC.BOLD + name)
-                .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: " + cost + " Coins", CC.RED + "Drag the enchant onto", CC.RED + "an item to combine")
-                .build(), (e) -> {
-            checkMoney(name2, cost, ItemBuilder.of(material, amount).build(), enchant);
+    private void addBuyButton(Items customItem, int cost, int amount, Enchantment enchant) {
+        ItemStack item = customItem.getShopEnchant(cost, amount);
+        addButton(Button.create(item, (e) -> {
+            checkMoney(cost, customItem, enchant);
         }), slotNum);
         calcSlot();
     }
@@ -187,18 +173,20 @@ public class ItemShop extends GUI {
         calcSlot();
     }
 
-    private void checkMoney(String name, int cost, ItemStack item, @Nullable Enchantment enchantment) {
-        if (PersistentData.getInt(p, DataTypes.COINS) >= cost) {
-            PersistentData.remove(p, DataTypes.COINS, cost);
-            if (enchantment == null) {
-                p.getInventory().addItem(item);
+    private void checkMoney(int cost, Items item, @Nullable Enchantment enchantment) {
+        if (playerStatEntity != null) {
+            if (playerStatEntity.getCoins() >= cost) {
+                playerStatEntity.setCoins(playerStatEntity.getCoins() - cost);
+                if (enchantment == null) {
+                    p.getInventory().addItem(item.getItem());
+                } else {
+                    p.getInventory().addItem(new EnchantmentBookBuilder().enchantment(enchantment, 1).build());
+                }
+                p.sendMessage(prefix + "You purchased: " + item.getName());
+                p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
             } else {
-                p.getInventory().addItem(new EnchantmentBookBuilder().enchantment(enchantment, 1).build());
+                p.sendMessage(prefix + "You don't have enough money");
             }
-            p.sendMessage(prefix + "You purchased: " + name);
-            p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
-        } else {
-            p.sendMessage(prefix + "You don't have enough money");
         }
     }
 
