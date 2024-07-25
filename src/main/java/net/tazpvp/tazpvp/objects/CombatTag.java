@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.utils.objects;
+package net.tazpvp.tazpvp.objects;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.utils.enums.CC;

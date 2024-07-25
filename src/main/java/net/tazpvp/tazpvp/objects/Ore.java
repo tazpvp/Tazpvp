@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.utils.objects;
+package net.tazpvp.tazpvp.objects;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
