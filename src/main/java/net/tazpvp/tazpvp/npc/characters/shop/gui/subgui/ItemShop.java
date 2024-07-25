@@ -160,12 +160,11 @@ public class ItemShop extends GUI {
                             .name(CC.YELLOW + "" + CC.BOLD + name)
                             .lore(CC.GOLD + text, " ", CC.GRAY + "Cost: " + cost + " Coins")
                             .build(), (e) -> {
-
                         if (list.contains(Material.RED_WOOL)) {
                             if (!ChatFunctions.hasPremium(p, prefix)) return;
                         }
                         String name2 = ChatFunctions.gradient("#db3bff", name, true);
-                        checkMoney(name2, cost, ItemBuilder.of(list.get(num), amount).build(), null);
+                        checkMoney(cost, ItemBuilder.of(list.get(num), amount).build(), null);
                     }), slot);
                 }
             }
