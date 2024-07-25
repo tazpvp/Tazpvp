@@ -67,10 +67,11 @@ public class DeathObject {
             if (currentKiller != null) {
                 CombatTag.tags.get(victim).getAttackers().clear();
                 this.killer = currentKiller;
+                this.killerWrapper = PlayerWrapper.getPlayer(currentKiller);
             } else {
                 this.killer = null;
+                this.killerWrapper = null;
             }
-            this.killerWrapper = null;
         } else {
             this.killer = killer;
             this.pKiller = Bukkit.getPlayer(killer);
@@ -269,8 +270,6 @@ public class DeathObject {
     private void updateKillerStats() {
         if (killer != null) {
             if (killer == victim) return;
-
-
 
             int XP = 15;
             int COINS = 25;
