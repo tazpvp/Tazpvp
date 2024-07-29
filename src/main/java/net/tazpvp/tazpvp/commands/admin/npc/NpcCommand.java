@@ -61,7 +61,7 @@ public class NpcCommand extends NRCommand {
             }
 
             if (args[0].equalsIgnoreCase("maxim")) {
-                new Maxim();
+                new Maxim(tazpvp.getPlayerStatService());
             } else if (args[0].equalsIgnoreCase("lorenzo")) {
                 new Lorenzo();
             } else if (args[0].equalsIgnoreCase("caesar")) {

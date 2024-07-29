@@ -164,7 +164,7 @@ public class ItemShop extends GUI {
                             if (!ChatFunctions.hasPremium(p, prefix)) return;
                         }
                         String name2 = ChatFunctions.gradient("#db3bff", name, true);
-                        checkMoney(cost, ItemBuilder.of(list.get(num), amount).build(), null);
+//                        checkMoney(cost, ItemBuilder.of(list.get(num), amount).build(), null);
                     }), slot);
                 }
             }
