@@ -114,9 +114,7 @@ public class PlayerWrapper {
 
         final TalentService talentService = new TalentServiceImpl();
         this.talentEntity = talentService.getOrDefault(getUuid());
-
         this.guildService = Tazpvp.getInstance().getGuildService();
-
         this.duelRequests = new ConcurrentHashMap<>();
 
         refreshPermissions();

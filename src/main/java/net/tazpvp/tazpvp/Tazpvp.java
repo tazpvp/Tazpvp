@@ -69,6 +69,7 @@ import net.tazpvp.tazpvp.data.implementations.*;
 import net.tazpvp.tazpvp.data.services.GuildMemberService;
 import net.tazpvp.tazpvp.data.services.GuildService;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
+import net.tazpvp.tazpvp.data.services.UserRankService;
 import net.tazpvp.tazpvp.game.bosses.BossManager;
 import net.tazpvp.tazpvp.game.bosses.zorg.Zorg;
 import net.tazpvp.tazpvp.game.crates.CrateManager;
@@ -83,6 +84,7 @@ import net.tazpvp.tazpvp.npc.characters.guildmaster.Rigel;
 import net.tazpvp.tazpvp.npc.characters.shop.Maxim;
 import net.tazpvp.tazpvp.player.achievements.achievement.*;
 import net.tazpvp.tazpvp.player.talents.talent.*;
+import net.tazpvp.tazpvp.services.PlayerNameTagServiceImpl;
 import net.tazpvp.tazpvp.utils.ConfigUtil;
 import net.tazpvp.tazpvp.services.PlayerNameTagService;
 import net.tazpvp.tazpvp.utils.discord.bot.BotThread;
@@ -115,6 +117,7 @@ public final class Tazpvp extends JavaPlugin {
     private static final List<Observer> observers = new ArrayList<>();
     @Getter
     private final List<NPC> npcs = new ArrayList<>();
+    @Getter
     public static String prefix = "tazpvp.";
     @Getter
     private static ConfigUtil parkourUtil;
@@ -122,29 +125,26 @@ public final class Tazpvp extends JavaPlugin {
     public static Cuboid spawnRegion;
     @Getter
     public static Cuboid afkRegion;
-
     @Getter
     private static Database database;
     @Getter
     private static PostgresqlDatabase postgresqlDatabase;
-
     @Getter
     private BukkitAudiences adventure;
-
-    private static final Logger log = Logger.getLogger("Minecraft");
     @Getter
     private static CrateManager crateManager;
     @Getter
     private static SpawnableLeaderboardManager spawnableLeaderboardManager;
     @Getter
     private static BotThread botThread;
-
     @Getter
     private PlayerStatService playerStatService;
     @Getter
     private GuildService guildService;
     @Getter
     private GuildMemberService guildMemberService;
+    @Getter
+    private UserRankService userRankService;
     @Getter
     private PlayerNameTagService playerNameTagService;
 
@@ -213,15 +213,17 @@ public final class Tazpvp extends JavaPlugin {
         new ExpirationRankServiceImpl().createTableIfNotExists(postgresqlDatabase, ExpirationRankEntity.class);
         new GameRankServiceImpl().createTableIfNotExists(postgresqlDatabase, GameRankEntity.class);
         new PermissionServiceImpl().createTableIfNotExists(postgresqlDatabase, PermissionEntity.class);
-        new UserRankServiceImpl().createTableIfNotExists(postgresqlDatabase, UserRankEntity.class);
 
         this.guildMemberService = new GuildMemberServiceImpl();
         this.guildService = new GuildServiceImpl(guildMemberService);
         this.playerStatService = new PlayerStatServiceImpl();
+        this.userRankService = new UserRankServiceImpl();
+        this.playerNameTagService = new PlayerNameTagServiceImpl(this);
 
         guildMemberService.createTableIfNotExists(postgresqlDatabase, GuildMemberEntity.class);
         guildService.createTableIfNotExists(postgresqlDatabase, GuildEntity.class);
         playerStatService.createTableIfNotExists(postgresqlDatabase, PlayerStatEntity.class);
+        userRankService.createTableIfNotExists(postgresqlDatabase, UserRankEntity.class);
     }
 
     public static void registerObserver(Observer observer) {
