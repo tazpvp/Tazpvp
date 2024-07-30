@@ -142,24 +142,24 @@ public class PlayerFunctions {
         Player p = Bukkit.getPlayer(ID);
         PlayerStatEntity pStatEntity = playerStatService.getOrDefault(ID);
         if (p == null) return;
-        if (value >= LooseData.getExpLeft(pStatEntity)) {
+        if (value >= LooseData.getExpLeft(ID)) {
             final BoosterBonus coinsBonus = ActiveBoosterManager.getInstance()
                     .calculateBonus(100, List.of(BoosterTypes.COINS, BoosterTypes.MEGA));
             final int coins = (int) coinsBonus.result();
 
-            int num = (int) value - LooseData.getExpLeft(pStatEntity);
+            int num = (int) value - LooseData.getExpLeft(ID);
             pStatEntity.setXp(num);
             pStatEntity.setLevel(pStatEntity.getLevel() + 1);
             pStatEntity.setCoins(pStatEntity.getCoins() + coins);
             p.getInventory().addItem(StaticItems.SHARD.item(1));
             p.setLevel(pStatEntity.getLevel());
-            p.setExp((float) num / LooseData.getExpLeft(pStatEntity));
+            p.setExp((float) num / LooseData.getExpLeft(ID));
             ChatFunctions.announce(p, CC.AQUA + "" + CC.BOLD + "  LEVEL UP " + CC.DARK_AQUA + "Combat Lvl. " + CC.AQUA + pStatEntity.getLevel(), Sound.ENTITY_PLAYER_LEVELUP);
             p.sendMessage(CC.DARK_GRAY + "  ▶ " + CC.GOLD + coins + " Coins " + coinsBonus.prettyPercentMultiplier());
             p.sendMessage(CC.DARK_GRAY + "  ▶ " + CC.DARK_AQUA + "1 Shard");
             p.sendMessage("");
         } else {
-            p.setExp(value / LooseData.getExpLeft(pStatEntity));
+            p.setExp(value / LooseData.getExpLeft(ID));
         }
     }
 

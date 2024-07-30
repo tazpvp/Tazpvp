@@ -24,16 +24,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+@Deprecated
 public final class PersistentData {
-    /**
-     * Name of the stats table
-     */
-    private static final String NAME = "stats";
-    /**
-     * Name of the ID Column
-     */
-    private static final String ID_COLUMN = "ID";
 
+    private static final String NAME = "stats";
+    private static final String ID_COLUMN = "ID";
 
     public static void topKs(UUID uuid) {
         if (getInt(uuid, DataTypes.TOPKILLSTREAK) < LooseData.getKs(uuid)) {
@@ -41,18 +36,10 @@ public final class PersistentData {
         }
     }
 
-    /**
-     * Initialize a player into the database by first checking if they are already inside the db
-     * @param p The targeted player
-     */
     public static void initPlayer(OfflinePlayer p) {
         initPlayer(p.getUniqueId());
     }
 
-    /**
-     * Initialize a player into the database by first checking if they are already inside the db
-     * @param uuid The UUID of the player
-     */
     public static void initPlayer(UUID uuid) {
         if (!SQLHelper.ifRowExists(NAME, ID_COLUMN, uuid.toString())) {
             SQLHelper.initializeValues(NAME,
@@ -63,59 +50,27 @@ public final class PersistentData {
         }
     }
 
-    /**
-     * Get quantitative data (ints) from the database
-     * @param p The targeted player
-     * @param dataType The type of data you want to access
-     * @return The value of the requested data
-     */
     public static int getInt(OfflinePlayer p, DataTypes dataType) {
         return getInt(p.getUniqueId(), dataType);
     }
-    /**
-     * Get quantitative data (ints) from the database
-     * @param uuid The targeted UUID
-     * @param dataType The type of data you want to access
-     * @return The value of the requested data
-     */
+
     public static int getInt(UUID uuid, DataTypes dataType) {
         return getInt(uuid, dataType.getColumnIndex());
     }
 
-    /**
-     * Get quantitative data (String) from the database
-     * @param p The targeted player
-     * @param dataType The type of data you want to access
-     * @return The value of the requested data
-     */
     public static String getString(OfflinePlayer p, DataTypes dataType) {
         return getString(p.getUniqueId(), dataType);
     }
-    /**
-     * Get quantitative data (String) from the database
-     * @param uuid The targeted UUID
-     * @param dataType The type of data you want to access
-     * @return The value of the requested data
-     */
+
     public static String getString(UUID uuid, DataTypes dataType) {
         return getString(uuid, dataType.getColumnIndex());
     }
 
-    /**
-     * Get the talent object from the serialized column
-     * @param p The targeted player
-     * @return The Talents object stored in the column
-     */
     @Deprecated
     public static Talents getTalents(@Nonnull final OfflinePlayer p) {
         return getTalents(p.getUniqueId());
     }
 
-    /**
-     * Get the talent object from the serialized column
-     * @param uuid the targeted uuid
-     * @return The Talents object stored in the column
-     */
     @Deprecated
     public static Talents getTalents(@Nonnull final UUID uuid) {
         return (Talents) getSerializeObject(uuid, DataTypes.TALENTS);
@@ -157,53 +112,22 @@ public final class PersistentData {
         }
     }
 
-
-    /**
-     * Get an Object value of a sql column
-     * @param ID the targeted UUID
-     * @param columnIndex the index of the column
-     * @return the Object value of the requested column
-     */
     private static Object getObject(@Nonnull final UUID ID, final int columnIndex) {
         return SQLHelper.getObject(NAME, ID_COLUMN, "'" + ID.toString() + "'", columnIndex);
     }
 
-    /**
-     * Get an Object value of a sql column
-     * @param ID the targeted UUID
-     * @param columnIndex the index of the column
-     * @return the Object value of the requested column
-     */
     public static String getString(@Nonnull final UUID ID, final int columnIndex) {
         return SQLHelper.getString(NAME, ID_COLUMN, "'" + ID.toString() + "'", columnIndex);
     }
 
-    /**
-     * Get an Object value of a sql column
-     * @param ID the targeted UUID
-     * @param columnIndex the index of the column
-     * @return the Object value of the requested column
-     */
     public static int getInt(@Nonnull final UUID ID, final int columnIndex) {
         return SQLHelper.getInt(NAME, ID_COLUMN, "'" + ID + "'", columnIndex);
     }
 
-    /**
-     * Get an Object value of a sql column
-     * @param ID the targeted UUID
-     * @param dataTypes the index of the column
-     * @return the Object value of the requested column
-     */
     public static float getFloat(@Nonnull final UUID ID, final DataTypes dataTypes) {
         return SQLHelper.getFloat(NAME, ID_COLUMN, "'" + ID.toString() + "'", dataTypes.getColumnIndex());
     }
 
-    /**
-     * Get an Object value of a sql column
-     * @param p the targeted Player
-     * @param dataTypes the index of the column
-     * @return the Object value of the requested column
-     */
     public static float getFloat(@Nonnull final OfflinePlayer p, final DataTypes dataTypes) {
         return getFloat(p.getUniqueId(), dataTypes);
     }
@@ -224,22 +148,10 @@ public final class PersistentData {
         ====================== End GET ====================== Start SET ======================
      */
 
-    /**
-     * Set a quantitative datatype to a new value
-     * @param p The targeted Player
-     * @param dataType the datatype
-     * @param value the new value for the datatype
-     */
     public static void set(@Nonnull final OfflinePlayer p, @Nonnull final DataTypes dataType, final float value) {
         set(p.getUniqueId(), dataType, value);
     }
 
-    /**
-     * Set a quantitative datatype to a new value
-     * @param ID the targeted UUID
-     * @param dataType the datatype
-     * @param value the new value for the datatype
-     */
     public static void set(@Nonnull final UUID ID, @Nonnull final DataTypes dataType, final float value) {
         Player p = Bukkit.getPlayer(ID);
         if (!dataType.isQuantitative()) {
@@ -267,41 +179,21 @@ public final class PersistentData {
         }
     }
 
-    /**
-     * Set the talents object to the column
-     * @param p the targeted player
-     * @param talents the talents object
-     */
     @Deprecated
     public static void setTalents(@Nonnull final OfflinePlayer p, @Nonnull final Talents talents) {
         setTalents(p.getUniqueId(), talents);
     }
 
-    /**
-     * Set the talents object to the column
-     * @param uuid the targeted uuid
-     * @param talents the talents object
-     */
     @Deprecated
     public static void setTalents(@Nonnull final UUID uuid, @Nonnull final Talents talents) {
         setSerializedObject(uuid, talents, DataTypes.TALENTS);
     }
 
-    /**
-     * Set the talents object to the column
-     * @param p the targeted player
-     * @param achievements the talents object
-     */
     @Deprecated
     public static void setAchievements(@Nonnull final OfflinePlayer p, @Nonnull final Achievements achievements) {
         setAchievements(p.getUniqueId(), achievements);
     }
 
-    /**
-     * Set the talents object to the column
-     * @param uuid the targeted uuid
-     * @param achievements the talents object
-     */
     @Deprecated
     public static void setAchievements(@Nonnull final UUID uuid, @Nonnull final Achievements achievements) {
         setSerializedObject(uuid, achievements, DataTypes.ACHIEVEMENTS);
@@ -324,42 +216,18 @@ public final class PersistentData {
         }
     }
 
-    /**
-     * Set the value of a int in a column
-     * @param ID the targeted UUID
-     * @param columnName the column name
-     * @param value the new value
-     */
     private static void setValue(@Nonnull final UUID ID, final String columnName, final int value) {
         SQLHelper.updateValue(NAME, ID_COLUMN, "'" + ID.toString() + "'", columnName, value);
     }
 
-    /**
-     * Set the value of a float in a column
-     * @param ID the targetd UUID
-     * @param columnName the column name
-     * @param value the new value
-     */
     private static void setValueF(@Nonnull final UUID ID, final String columnName, final float value) {
         SQLHelper.updateValue(NAME, ID_COLUMN, "'" + ID.toString() + "'", columnName, value);
     }
 
-    /**
-     * Set the value of a String in a column
-     * @param ID the targeted UUID
-     * @param columnName the column name
-     * @param value the new value
-     */
     public static void setValueS(@Nonnull final UUID ID, final String columnName, final String value) {
         SQLHelper.updateValue(NAME, ID_COLUMN, "'" + ID.toString() + "'", columnName, "'" + value + "'");
     }
 
-    /**
-     * Set the value of a String in a column
-     * @param ID the targeted UUID
-     * @param columnName the column name
-     * @param value the new value
-     */
     public static void setValueB(@Nonnull final UUID ID, final String columnName, final boolean value) {
         SQLHelper.updateValue(NAME, ID_COLUMN, "'" + ID.toString() + "'", columnName, "'" + value + "'");
     }
@@ -368,40 +236,18 @@ public final class PersistentData {
         ====================== End SET ====================== Start ADD/REMOVE ======================
      */
 
-    /**
-     * Add 1 to a quantitative datatype
-     * @param p the targeted player
-     * @param dataType the Datatype
-     */
     public static void add(@Nonnull final OfflinePlayer p, @Nonnull final DataTypes dataType) {
         add(p.getUniqueId(), dataType, 1);
     }
 
-    /**
-     * Add a custom amount to a quantitative datatype
-     * @param p the targeted player
-     * @param dataType the Datatype
-     * @param amount the desired amount to add
-     */
     public static void add(@Nonnull final OfflinePlayer p, @Nonnull final DataTypes dataType, final int amount) {
         add(p.getUniqueId(), dataType, amount);
     }
 
-    /**
-     * Add 1 to a quantitative datatype
-     * @param ID the targeted UUID
-     * @param dataType the Datatype
-     */
     public static void add(@Nonnull final UUID ID, @Nonnull final DataTypes dataType) {
         add(ID, dataType, 1);
     }
 
-    /**
-     * Add a custom amount to a quantitative datatype
-     * @param ID the targeted uuid
-     * @param dataType the Datatype
-     * @param amount the desired amount to add
-     */
     public static void add(@Nonnull final UUID ID, @Nonnull final DataTypes dataType, final int amount) {
         if (dataType.equals(DataTypes.TALENTS) || dataType.equals(DataTypes.ACHIEVEMENTS)) {
             Bukkit.getLogger().severe("CANNOT ADD TO NON INT COLUMNS");
@@ -409,40 +255,18 @@ public final class PersistentData {
         set(ID, dataType, getInt(ID, dataType) + amount);
     }
 
-    /**
-     * Remove 1 from a quantitative datatype
-     * @param p the targeted player
-     * @param dataType the Datatype
-     */
     public static void remove(@Nonnull final OfflinePlayer p, @Nonnull final DataTypes dataType) {
         remove(p.getUniqueId(), dataType, 1);
     }
 
-    /**
-     * remove a custom amount from a quantitative datatype
-     * @param p the targeted player
-     * @param dataType the Datatype
-     * @param amount the desired amount to remove
-     */
     public static void remove(@Nonnull final OfflinePlayer p, @Nonnull final DataTypes dataType, final int amount) {
         remove(p.getUniqueId(), dataType, amount);
     }
 
-    /**
-     * Remove 1 from a quantitative datatype
-     * @param ID the targeted UUID
-     * @param dataType the Datatype
-     */
     public static void remove(@Nonnull final UUID ID, @Nonnull final DataTypes dataType) {
         remove(ID, dataType, 1);
     }
 
-    /**
-     * remove a custom amount from a quantitative datatype
-     * @param ID the targeted uuid
-     * @param dataType the Datatype
-     * @param amount the desired amount to remove
-     */
     public static void remove(@Nonnull final UUID ID, @Nonnull final DataTypes dataType, final int amount) {
         if (dataType.equals(DataTypes.TALENTS) || dataType.equals(DataTypes.ACHIEVEMENTS) || dataType.equals(DataTypes.PLAYTIMEUNIX)) {
             Bukkit.getLogger().severe("CANNOT MINUS TO NON INT COLUMNS");
