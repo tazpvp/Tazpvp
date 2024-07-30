@@ -116,15 +116,17 @@ public class Join implements Listener {
 
         CombatTag.tags.put(p.getUniqueId(), new CombatTag(p.getUniqueId()));
 
-        p.setLevel(PersistentData.getInt(p.getUniqueId(), DataTypes.LEVEL));
-        if (PersistentData.getFloat(p.getUniqueId(), DataTypes.XP) >= LooseData.getExpLeft(p.getUniqueId())) {
-            float num = PersistentData.getFloat(p.getUniqueId(), DataTypes.XP) - LooseData.getExpLeft(p.getUniqueId());
-            PlayerFunctions.levelUp(p.getUniqueId(), num);
-        } else if (PersistentData.getFloat(p.getUniqueId(), DataTypes.XP) < 0) {
-            PersistentData.set(p.getUniqueId(), DataTypes.XP, 0);
-        } else {
-            p.setExp(PersistentData.getFloat(p.getUniqueId(), DataTypes.XP) / LooseData.getExpLeft(p.getUniqueId()));
-        }
+
+        // TODO: Replace with new database
+//        p.setLevel(PersistentData.getInt(p.getUniqueId(), DataTypes.LEVEL));
+//        if (PersistentData.getFloat(p.getUniqueId(), DataTypes.XP) >= LooseData.getExpLeft(p.getUniqueId())) {
+//            float num = PersistentData.getFloat(p.getUniqueId(), DataTypes.XP) - LooseData.getExpLeft(p.getUniqueId());
+//            PlayerFunctions.levelUp(p.getUniqueId(), num);
+//        } else if (PersistentData.getFloat(p.getUniqueId(), DataTypes.XP) < 0) {
+//            PersistentData.set(p.getUniqueId(), DataTypes.XP, 0);
+//        } else {
+//            p.setExp(PersistentData.getFloat(p.getUniqueId(), DataTypes.XP) / LooseData.getExpLeft(p.getUniqueId()));
+//        }
 
 
         for (Player vp : Bukkit.getOnlinePlayers()) {
