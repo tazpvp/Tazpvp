@@ -33,11 +33,8 @@
 package net.tazpvp.tazpvp.player.talents.talent;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.DataTypes;
-import net.tazpvp.tazpvp.data.PersistentData;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.entity.TalentEntity;
-import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;

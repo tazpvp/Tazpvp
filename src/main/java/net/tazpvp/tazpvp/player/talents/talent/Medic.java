@@ -1,8 +1,8 @@
 package net.tazpvp.tazpvp.player.talents.talent;
 
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.data.entity.GuildEntity;
 import net.tazpvp.tazpvp.data.entity.TalentEntity;
-import net.tazpvp.tazpvp.game.guilds.Guild;
-import net.tazpvp.tazpvp.game.guilds.GuildUtils;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.observer.Observable;
@@ -15,15 +15,14 @@ public class Medic extends Observable {
     public void death(Player victim, Player killer) {
         final PlayerWrapper killerWrapper = PlayerWrapper.getPlayer(killer);
         final TalentEntity killerTalentEntity = killerWrapper.getTalentEntity();
+        final GuildEntity victimGuild = Tazpvp.getInstance().getGuildService().getGuildByPlayer(victim.getUniqueId());
+        final GuildEntity killerGuild = Tazpvp.getInstance().getGuildService().getGuildByPlayer(victim.getUniqueId());
 
         if (killerTalentEntity.isMedic()) {
-            if (GuildUtils.isInGuild(killer)) {
-                Guild killerGuild = GuildUtils.getGuildPlayerIn(killer);
-
+            if (killerGuild != null) {
                 for (Player p : Bukkit.getOnlinePlayers()) {
-                    if (GuildUtils.isInGuild(p)) {
-                        Guild pGuild = GuildUtils.getGuildPlayerIn(p);
-                        if (pGuild == killerGuild) {
+                    if (victimGuild != null) {
+                        if (victimGuild == killerGuild) {
                             if (p.getLocation().distance(victim.getLocation()) <= 5) {
                                 if (p != killer) {
                                     PlayerFunctions.addHealth(p, 2);

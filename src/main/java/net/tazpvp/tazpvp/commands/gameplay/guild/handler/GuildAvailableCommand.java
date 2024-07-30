@@ -34,8 +34,6 @@
 package net.tazpvp.tazpvp.commands.gameplay.guild.handler;
 
 import lombok.NonNull;
-import net.tazpvp.tazpvp.game.guilds.Guild;
-import net.tazpvp.tazpvp.game.guilds.GuildUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
@@ -48,19 +46,20 @@ public class GuildAvailableCommand extends NRCommand {
 
     @Override
     public boolean execute(@NonNull CommandSender sender, @NonNull String[] args) {
-        if (!(sender instanceof Player p)) {
-            sendIncorrectUsage(sender);
-            return false;
-        }
-
-        if (!GuildUtils.isInGuild(p)) {
-            sendIncorrectUsage(p, "You're not in a guild");
-            return false;
-        }
-
-        Guild g = GuildUtils.getGuildPlayerIn(p);
-        return executeFunction(p, g);
+//        if (!(sender instanceof Player p)) {
+//            sendIncorrectUsage(sender);
+//            return false;
+//        }
+//
+//        if (!GuildUtils.isInGuild(p)) {
+//            sendIncorrectUsage(p, "You're not in a guild");
+//            return false;
+//        }
+//
+//        Guild g = GuildUtils.getGuildPlayerIn(p);
+//        return executeFunction(p, g);
+        return true;
     }
 
-    public boolean executeFunction(@NonNull Player p, @NonNull Guild g) {return true;};
+    public boolean executeFunction(@NonNull Player p) {return true;};
 }

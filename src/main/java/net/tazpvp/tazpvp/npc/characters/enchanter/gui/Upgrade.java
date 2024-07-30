@@ -87,7 +87,7 @@ public class Upgrade extends GUI {
 
         addButton(Button.create(ItemBuilder.of(Material.ENCHANTED_BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Enchant Pickaxe").lore(CC.GRAY + "Check out the custom pickaxe enchantments.").build(), (_) -> {
             p.closeInventory();
-            new Enchantments(p, tool);
+            new Enchantments(p, tool, playerStatService);
         }), 13);
 
         addButton(Button.create(ItemBuilder.of(Material.NAME_TAG, 1).name(CC.GREEN + "" + CC.BOLD + "Sell Your Ores").lore(CC.GRAY + "Sell all of your ores.").build(), (_) -> {

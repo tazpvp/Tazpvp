@@ -34,8 +34,9 @@
 package net.tazpvp.tazpvp.game.crates;
 
 import lombok.Getter;
-import net.tazpvp.tazpvp.data.DataTypes;
-import net.tazpvp.tazpvp.data.PersistentData;
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
+import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -104,8 +105,11 @@ public class CrateManager {
     }
 
     public boolean canClaimDaily(OfflinePlayer p) {
+        PlayerStatService playerStatService = Tazpvp.getInstance().getPlayerStatService();
+        PlayerStatEntity playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
+
         long timeNow = System.currentTimeMillis();
-        long timeSinceLastDaily = (long) PersistentData.getFloat(p, DataTypes.DAILYCRATEUNIX);
+        long timeSinceLastDaily = playerStatEntity.getLastClaim();
 
         return timeNow - timeSinceLastDaily > 24 * 60 * 60 * 1000;
     }

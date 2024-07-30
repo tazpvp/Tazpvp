@@ -261,7 +261,6 @@ public final class Tazpvp extends JavaPlugin {
         new Harvester();
         new Speedrunner();
 //        new Error();
-
         new Revenge();
         new Moist();
         new Agile();
@@ -347,7 +346,7 @@ public final class Tazpvp extends JavaPlugin {
         npcs.add(new Maxim(playerStatService));
         npcs.add(new Lorenzo());
         npcs.add(new Caesar(playerStatService));
-        npcs.add(new Rigel(guildService));
+        npcs.add(new Rigel(guildService, playerStatService));
 
         new BukkitRunnable() {
             @Override

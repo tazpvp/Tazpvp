@@ -38,6 +38,7 @@ import net.tazpvp.tazpvp.commands.gameplay.guild.sub.*;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
+
 public class GuildCommand extends NRCommand {
     @Getter
     private static final String notInGuild = "You are not in a guild";

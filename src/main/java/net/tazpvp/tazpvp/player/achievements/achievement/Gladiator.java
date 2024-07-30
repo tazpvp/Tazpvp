@@ -32,9 +32,9 @@
 
 package net.tazpvp.tazpvp.player.achievements.achievement;
 
-import net.tazpvp.tazpvp.data.DataTypes;
-import net.tazpvp.tazpvp.data.PersistentData;
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.AchievementEntity;
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.observer.Observable;
@@ -47,9 +47,10 @@ public class Gladiator extends Observable {
         final PlayerWrapper pw = PlayerWrapper.getPlayer(p);
         final UserAchievementEntity userAchievementEntity = pw.getUserAchievementEntity();
         final AchievementEntity achievementEntity = userAchievementEntity.getGladiatorAchievementEntity();
+        final PlayerStatEntity playerStatEntity = Tazpvp.getInstance().getPlayerStatService().getOrDefault(p.getUniqueId());
 
         if (!achievementEntity.isCompleted()) {
-            if (PersistentData.getInt(p.getUniqueId(), DataTypes.DUELWINS) >= 35) {
+            if (playerStatEntity.getDuelMMR() >= 350) {
                 achievementEntity.setCompleted(true);
                 userAchievementEntity.setGladiatorAchievementEntity(achievementEntity);
                 pw.setUserAchievementEntity(userAchievementEntity);

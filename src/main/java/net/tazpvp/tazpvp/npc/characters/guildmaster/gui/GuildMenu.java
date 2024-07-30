@@ -37,7 +37,6 @@ import net.tazpvp.tazpvp.data.entity.GuildEntity;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.GuildService;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
-import net.tazpvp.tazpvp.game.guilds.GuildUtils;
 import net.tazpvp.tazpvp.enums.CC;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.Material;
@@ -52,7 +51,7 @@ import java.util.*;
 
 public class GuildMenu extends GUI {
 
-    private final GuildEntity pGuild;
+    private final GuildEntity guildEntity;
     private final GuildService guildService;
     private final PlayerStatService playerStatService;
     private final PlayerStatEntity playerStatEntity;
@@ -61,7 +60,7 @@ public class GuildMenu extends GUI {
     public GuildMenu(Player p, GuildService guildService, PlayerStatService playerStatService) {
         super("Guild Browser", ROWS);
         this.guildService = guildService;
-        this.pGuild = guildService.getGuildByPlayer(p.getUniqueId());
+        this.guildEntity = guildService.getGuildByPlayer(p.getUniqueId());
         this.playerStatService = playerStatService;
         this.playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
         addItems(p);
@@ -74,9 +73,9 @@ public class GuildMenu extends GUI {
 
         String[] lore = {
                 " ",
-                CC.DARK_GREEN + "Kills: " + CC.GREEN + pGuild.getKills(),
-                CC.DARK_GREEN + "Deaths: " + CC.GREEN + pGuild.getDeaths(),
-                CC.DARK_GREEN + "KDR: " + CC.GREEN + (pGuild.getKills() / pGuild.getDeaths()),
+                CC.DARK_GREEN + "Kills: " + CC.GREEN + guildEntity.getKills(),
+                CC.DARK_GREEN + "Deaths: " + CC.GREEN + guildEntity.getDeaths(),
+                CC.DARK_GREEN + "KDR: " + CC.GREEN + (guildEntity.getKills() / guildEntity.getDeaths()),
                 " ",
                 CC.GOLD + "Click to edit guild."
         };
@@ -84,9 +83,9 @@ public class GuildMenu extends GUI {
         Button playerGuild;
 
         if (guildService.getGuildByPlayer(p.getUniqueId()) != null) {
-            Material guildIcon = Material.getMaterial(pGuild.getIcon());
+            Material guildIcon = Material.getMaterial(guildEntity.getIcon());
             playerGuild = Button.create(ItemBuilder.of(guildIcon == null ? Material.OAK_SIGN : guildIcon)
-                    .name(CC.GREEN + "" + CC.BOLD + pGuild.getName()).lore(lore).glow(true).build(), (_) ->
+                    .name(CC.GREEN + "" + CC.BOLD + guildEntity.getName()).lore(lore).glow(true).build(), (_) ->
             {
                 p.closeInventory();
                 new BukkitRunnable() {
@@ -142,7 +141,7 @@ public class GuildMenu extends GUI {
                 p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
 
                 createGuild(text, p.getUniqueId());
-                p.sendMessage("You created a guild! " + GuildUtils.getGuildPlayerIn(p).getName());
+                p.sendMessage("You created a guild! " + guildEntity.getName());
                 return List.of(AnvilGUI.ResponseAction.close());
             })
             .text(">")

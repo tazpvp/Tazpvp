@@ -2,7 +2,6 @@ package net.tazpvp.tazpvp.commands.admin.stats;
 
 import lombok.NonNull;
 import net.tazpvp.tazpvp.data.DataTypes;
-import net.tazpvp.tazpvp.data.PersistentData;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -56,11 +55,11 @@ public class StatCommand extends NRCommand {
             return false;
         }
 
-        switch (modifier) {
-            case "add" -> PersistentData.add(target, dataType, number);
-            case "remove" -> PersistentData.remove(target, dataType, number);
-            case "set" -> PersistentData.set(target, dataType, number);
-        }
+//        switch (modifier) {
+//            case "add" -> PersistentData.add(target, dataType, number);
+//            case "remove" -> PersistentData.remove(target, dataType, number);
+//            case "set" -> PersistentData.set(target, dataType, number);
+//        }
 
         return true;
     }

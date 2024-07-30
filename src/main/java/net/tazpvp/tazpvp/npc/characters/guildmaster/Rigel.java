@@ -33,6 +33,8 @@
 package net.tazpvp.tazpvp.npc.characters.guildmaster;
 
 import net.tazpvp.tazpvp.data.services.GuildService;
+import net.tazpvp.tazpvp.data.services.PlayerStatService;
+import net.tazpvp.tazpvp.enums.PlayerStatEnum;
 import net.tazpvp.tazpvp.npc.characters.NPC;
 import net.tazpvp.tazpvp.npc.characters.guildmaster.gui.GuildMenu;
 import net.tazpvp.tazpvp.npc.dialogue.Dialogues;
@@ -51,8 +53,9 @@ import java.util.List;
 public class Rigel extends NPC {
 
     private final GuildService guildService;
+    private final PlayerStatService playerStatService;
 
-    public Rigel(GuildService guildService) {
+    public Rigel(GuildService guildService, PlayerStatService playerStatService) {
         super(ChatFunctions.gradient("#068fff", "Lorenzo", true), new Location(Bukkit.getWorld("arena"), 5, 99, 10, 135, 0),
                 Villager.Profession.FLETCHER,
                 Villager.Type.TAIGA,
@@ -76,10 +79,11 @@ public class Rigel extends NPC {
                         )
                 ));
         this.guildService = guildService;
+        this.playerStatService = playerStatService;
     }
 
     @Override
     public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
-        new GuildMenu(p, guildService);
+        new GuildMenu(p, guildService, playerStatService);
     }
 }

@@ -61,6 +61,13 @@ public final class LooseData {
         ks.put(id, 0);
     }
 
+    //FROM PERSISTENT DATA
+//    public static void topKs(UUID uuid) {
+//        if (getInt(uuid, DataTypes.TOPKILLSTREAK) < LooseData.getKs(uuid)) {
+//            set(uuid, DataTypes.TOPKILLSTREAK, LooseData.getKs(uuid));
+//        }
+//    }
+
     public static float kdrFormula(final float kills, final float deaths) {
         if (kills != 0 && deaths != 0) {
             DecimalFormat df = new DecimalFormat("0.00");

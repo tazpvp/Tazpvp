@@ -36,4 +36,6 @@ public class PlayerStatEntity {
     private int prestige;
     @DatabaseField(columnName = "playtime", canBeNull = false, defaultValue = "0")
     private long playtime;
+    @DatabaseField(columnName = "lastclaim", canBeNull = false)
+    private long lastClaim;
 }

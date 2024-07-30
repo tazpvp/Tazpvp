@@ -13,7 +13,6 @@ import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.game.booster.ActiveBoosterManager;
 import net.tazpvp.tazpvp.game.booster.BoosterBonus;
 import net.tazpvp.tazpvp.game.booster.BoosterTypes;
-import net.tazpvp.tazpvp.game.guilds.GuildUtils;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.functions.DeathFunctions;
@@ -127,8 +126,8 @@ public class DeathObject {
     public void dropItems() {
         if (killer == victim) return;
 
-        if (GuildUtils.isInGuild(pVictim) && GuildUtils.isInGuild(pKiller)) {
-            if (GuildUtils.getGuildPlayerIn(pVictim) == GuildUtils.getGuildPlayerIn(pKiller)) return;
+        if (victimGuild != null && killerGuild != null) {
+            if (victimGuild == killerGuild) return;
         }
 
         int chance = r.nextInt(10);

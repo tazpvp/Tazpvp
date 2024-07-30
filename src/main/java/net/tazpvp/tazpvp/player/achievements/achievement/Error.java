@@ -1,8 +1,8 @@
 package net.tazpvp.tazpvp.player.achievements.achievement;
 
-import net.tazpvp.tazpvp.data.DataTypes;
-import net.tazpvp.tazpvp.data.PersistentData;
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.AchievementEntity;
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.observer.Observable;
@@ -15,9 +15,10 @@ public class Error extends Observable {
         final PlayerWrapper pw = PlayerWrapper.getPlayer(killer);
         final UserAchievementEntity userAchievementEntity = pw.getUserAchievementEntity();
         final AchievementEntity achievementEntity = userAchievementEntity.getErrorAchievementEntity();
+        final PlayerStatEntity victimStatEntity = Tazpvp.getInstance().getPlayerStatService().getOrDefault(victim.getUniqueId());
 
         if (!achievementEntity.isCompleted()) {
-            if (PersistentData.getInt(victim.getUniqueId(), DataTypes.DEATHS) >= 100) {
+            if (victimStatEntity.getDeaths() >= 100) {
                 achievementEntity.setCompleted(true);
                 userAchievementEntity.setErrorAchievementEntity(achievementEntity);
                 pw.setUserAchievementEntity(userAchievementEntity);

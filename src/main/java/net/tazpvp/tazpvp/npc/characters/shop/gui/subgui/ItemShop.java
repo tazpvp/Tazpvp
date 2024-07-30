@@ -103,7 +103,7 @@ public class ItemShop extends GUI {
                 .lore(CC.GRAY + "Special items you can",CC.GRAY + "buy after you rebirth.")
                 .glow(true)
                 .build(), (e) -> {
-            new PrestigeShop(p);
+            new PrestigeShop(p, playerStatService);
         }), 40);
 
         addBuyButton(1, 10, true, ItemEnum.AZURE_VAPOR);

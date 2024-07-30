@@ -1,7 +1,8 @@
 package net.tazpvp.tazpvp.utils;
 
-import net.tazpvp.tazpvp.data.DataTypes;
-import net.tazpvp.tazpvp.data.PersistentData;
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
+import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
@@ -11,26 +12,29 @@ import java.util.WeakHashMap;
 
 public class PlaytimeUtil {
     private final static WeakHashMap<UUID, Long> loginTime = new WeakHashMap<>();
+    private final static PlayerStatService playerStatService = Tazpvp.getInstance().getPlayerStatService();
 
     public static void playerJoined(@Nonnull final Player p) {
         loginTime.put(p.getUniqueId(), System.currentTimeMillis());
     }
 
     public static void playerLeft(@Nonnull final Player p) {
+        PlayerStatEntity playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
         if (!loginTime.containsKey(p.getUniqueId())) {
             return;
         }
 
         long currentTime = System.currentTimeMillis();
         long timePlayed = currentTime - loginTime.get(p.getUniqueId());
-        PersistentData.set(p, DataTypes.PLAYTIMEUNIX, PersistentData.getInt(p, DataTypes.PLAYTIMEUNIX) + timePlayed);
+        playerStatEntity.setPlaytime(playerStatEntity.getPlaytime() + timePlayed);
     }
 
     public static long getPlayTime(final OfflinePlayer p) {
+        PlayerStatEntity playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
         long currTime = System.currentTimeMillis();
         long timePlayed = currTime - loginTime.get(p.getUniqueId());
 
-        return PersistentData.getInt(p.getUniqueId(), DataTypes.PLAYTIMEUNIX) + timePlayed;
+        return playerStatEntity.getPlaytime() + timePlayed;
     }
 
     public static String secondsToDDHHMMSS(long seconds) {
