@@ -97,6 +97,8 @@ import net.tazpvp.tazpvp.utils.passive.Generator;
 import net.tazpvp.tazpvp.utils.passive.Holograms;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Server;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.utils.command.CommandCL;

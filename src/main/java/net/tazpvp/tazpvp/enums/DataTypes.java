@@ -30,12 +30,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.data;
+package net.tazpvp.tazpvp.enums;
 
 import lombok.Getter;
 
 import javax.annotation.Nonnull;
 
+@Deprecated
 public enum DataTypes {
     COINS("coins", 2, true),
     XP("xp", 3, true),
