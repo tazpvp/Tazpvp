@@ -346,7 +346,7 @@ public final class Tazpvp extends JavaPlugin {
     private void spawnNpcs() {
         npcs.add(new Maxim(playerStatService));
         npcs.add(new Lorenzo());
-        npcs.add(new Caesar());
+        npcs.add(new Caesar(playerStatService));
         npcs.add(new Rigel(guildService));
 
         new BukkitRunnable() {

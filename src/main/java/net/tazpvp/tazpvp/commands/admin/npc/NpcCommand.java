@@ -65,7 +65,7 @@ public class NpcCommand extends NRCommand {
             } else if (args[0].equalsIgnoreCase("lorenzo")) {
                 new Lorenzo();
             } else if (args[0].equalsIgnoreCase("caesar")) {
-                new Caesar();
+                new Caesar(tazpvp.getPlayerStatService());
             } else if (args[0].equalsIgnoreCase("rigel")) {
                 new Rigel(tazpvp.getGuildService());
             }
