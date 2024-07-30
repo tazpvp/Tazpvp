@@ -169,6 +169,7 @@ public final class Tazpvp extends JavaPlugin {
         registerEvents();
         registerCommands();
         playerStatService = new PlayerStatServiceImpl();
+        playerNameTagService = new PlayerNameTagServiceImpl(this);
         Generator.generate();
         Holograms.holograms();
         Alerts.alert();
