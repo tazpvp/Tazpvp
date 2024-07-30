@@ -1,10 +1,10 @@
-package net.tazpvp.tazpvp.utils.enums;
+package net.tazpvp.tazpvp.enums;
 
 import lombok.Getter;
 import org.bukkit.Material;
 
 @Getter
-public enum TalentsEnum {
+public enum TalentEnum {
     REVENGE(Material.NETHERITE_SWORD, "Revenge", "Set the player who killed you on fire.", 8000),
     MOIST(Material.WATER_BUCKET, "Moist", "You can no longer be set on fire.", 9000),
     RESILIENT(Material.SHIELD, "Resilient", "Gain 2 absorption hearts on kill.", 12000),
@@ -25,7 +25,7 @@ public enum TalentsEnum {
     final String lore;
     final int cost;
 
-    TalentsEnum(Material mat, String name, String lore, int cost) {
+    TalentEnum(Material mat, String name, String lore, int cost) {
         this.mat = mat;
         this.name = name;
         this.lore = lore;

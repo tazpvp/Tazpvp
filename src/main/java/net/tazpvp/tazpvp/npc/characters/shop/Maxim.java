@@ -32,12 +32,11 @@
 
 package net.tazpvp.tazpvp.npc.characters.shop;
 
-import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.npc.characters.shop.gui.Shop;
 import net.tazpvp.tazpvp.npc.dialogue.Dialogues;
 import net.tazpvp.tazpvp.npc.characters.NPC;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

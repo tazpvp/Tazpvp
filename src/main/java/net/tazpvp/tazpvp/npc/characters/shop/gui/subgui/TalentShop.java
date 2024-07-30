@@ -36,8 +36,8 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
-import net.tazpvp.tazpvp.utils.enums.CC;
-import net.tazpvp.tazpvp.utils.enums.TalentsEnum;
+import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.enums.TalentEnum;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -74,24 +74,24 @@ public class TalentShop extends GUI {
         count = 1;
         fill(0, 4*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
-        setButton(TalentsEnum.REVENGE, TalentEntity::isRevenge, (t -> t.setRevenge(true)));
-        setButton(TalentsEnum.MOIST, TalentEntity::isMoist, (t -> t.setMoist(true)));
-        setButton(TalentsEnum.RESILIENT, TalentEntity::isResilient, (t -> t.setResilient(true)));
-        setButton(TalentsEnum.EXCAVATOR, TalentEntity::isExcavator, (t -> t.setExcavator(true)));
-        setButton(TalentsEnum.ARCHITECT, TalentEntity::isArchitect, (t -> t.setArchitect(true)));
-        setButton(TalentsEnum.HUNTER, TalentEntity::isHunter, (t -> t.setHunter(true)));
-        setButton(TalentsEnum.CANNIBAL, TalentEntity::isCannibal, (t -> t.setCannibal(true)));
+        setButton(TalentEnum.REVENGE, TalentEntity::isRevenge, (t -> t.setRevenge(true)));
+        setButton(TalentEnum.MOIST, TalentEntity::isMoist, (t -> t.setMoist(true)));
+        setButton(TalentEnum.RESILIENT, TalentEntity::isResilient, (t -> t.setResilient(true)));
+        setButton(TalentEnum.EXCAVATOR, TalentEntity::isExcavator, (t -> t.setExcavator(true)));
+        setButton(TalentEnum.ARCHITECT, TalentEntity::isArchitect, (t -> t.setArchitect(true)));
+        setButton(TalentEnum.HUNTER, TalentEntity::isHunter, (t -> t.setHunter(true)));
+        setButton(TalentEnum.CANNIBAL, TalentEntity::isCannibal, (t -> t.setCannibal(true)));
 
-        setButton(TalentsEnum.AGILE, TalentEntity::isAgile, (t -> t.setAgile(true)));
-        setButton(TalentsEnum.HARVESTER, TalentEntity::isHarvester, (t -> t.setHarvester(true)));
-        setButton(TalentsEnum.NECROMANCER, TalentEntity::isNecromancer, (t -> t.setNecromancer(true)));
-        setButton(TalentsEnum.BLESSED, TalentEntity::isBlessed, (t -> t.setBlessed(true)));
-        setButton(TalentsEnum.GLIDE, TalentEntity::isGlide, (t -> t.setGlide(true)));
-        setButton(TalentsEnum.PROFICIENT, TalentEntity::isProficient, (t -> t.setProficient(true)));
-        setButton(TalentsEnum.MEDIC, TalentEntity::isMedic, (t -> t.setMedic(true)));
+        setButton(TalentEnum.AGILE, TalentEntity::isAgile, (t -> t.setAgile(true)));
+        setButton(TalentEnum.HARVESTER, TalentEntity::isHarvester, (t -> t.setHarvester(true)));
+        setButton(TalentEnum.NECROMANCER, TalentEntity::isNecromancer, (t -> t.setNecromancer(true)));
+        setButton(TalentEnum.BLESSED, TalentEntity::isBlessed, (t -> t.setBlessed(true)));
+        setButton(TalentEnum.GLIDE, TalentEntity::isGlide, (t -> t.setGlide(true)));
+        setButton(TalentEnum.PROFICIENT, TalentEntity::isProficient, (t -> t.setProficient(true)));
+        setButton(TalentEnum.MEDIC, TalentEntity::isMedic, (t -> t.setMedic(true)));
     }
 
-    private void setButton(TalentsEnum talent, Predicate<TalentEntity> hasTalentPredicate, Consumer<TalentEntity> talentEntityConsumer) {
+    private void setButton(TalentEnum talent, Predicate<TalentEntity> hasTalentPredicate, Consumer<TalentEntity> talentEntityConsumer) {
         TalentEntity talentEntity = pw.getTalentEntity();
         boolean active = hasTalentPredicate.test(talentEntity);
         PlayerStatEntity playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());

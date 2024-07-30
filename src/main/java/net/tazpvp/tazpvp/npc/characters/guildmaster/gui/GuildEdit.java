@@ -33,12 +33,12 @@
 package net.tazpvp.tazpvp.npc.characters.guildmaster.gui;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.DataTypes;
-import net.tazpvp.tazpvp.data.PersistentData;
 import net.tazpvp.tazpvp.data.entity.GuildEntity;
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.GuildService;
+import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.utils.Profanity;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.ChatColor;
@@ -50,7 +50,6 @@ import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -61,11 +60,15 @@ public class GuildEdit extends GUI {
 
     private final GuildService guildService;
     private final GuildEntity playerGuildEntity;
+    private final PlayerStatService playerStatService;
+    private final PlayerStatEntity playerStatEntity;
 
-    public GuildEdit(Player p, GuildService guildService) {
+    public GuildEdit(Player p, GuildService guildService, PlayerStatService playerStatService) {
         super("Guild Edit", 3);
         this.guildService = guildService;
         this.playerGuildEntity = guildService.getGuildByPlayer(p.getUniqueId());
+        this.playerStatService = playerStatService;
+        this.playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
         addItems(p);
         open(p);
     }
@@ -76,7 +79,7 @@ public class GuildEdit extends GUI {
         Button guildIcon = Button.create(ItemBuilder.of(Material.getMaterial(playerGuildEntity.getIcon()))
                 .name(CC.GREEN + "Edit Guild Icon")
                 .lore(REQ_RANK)
-                .build(), e ->
+                .build(), _ ->
         {
             if (PlayerWrapper.getPlayer(p.getUniqueId()).getRank().getHierarchy() >= 1) {
                 new Icon(p, guildService, playerGuildEntity);
@@ -88,9 +91,9 @@ public class GuildEdit extends GUI {
         Button guildDescription = Button.create(ItemBuilder.of(Material.WRITABLE_BOOK)
                 .name(CC.GREEN + "Edit Description")
                 .lore(CC.YELLOW + "Costs " + CC.GOLD + "6,000 " + CC.YELLOW + "coins.")
-                .build(), e ->
+                .build(), _ ->
         {
-            if (PersistentData.getInt(p, DataTypes.COINS) > 6000) {
+            if (playerStatEntity.getCoins() > 6000) {
                 setDescription(p, playerGuildEntity);
             } else {
                 p.sendMessage(NO_RANK);
@@ -99,7 +102,7 @@ public class GuildEdit extends GUI {
 
         Button guildTag = Button.create(ItemBuilder.of(Material.NAME_TAG)
                 .name(CC.GREEN + "Edit Tag")
-                .lore(REQ_RANK).build(), e ->
+                .lore(REQ_RANK).build(), _ ->
         {
             if (PlayerWrapper.getPlayer(p.getUniqueId()).getRank().getHierarchy() >= 1) {
                 setTag(p, playerGuildEntity);
@@ -110,18 +113,16 @@ public class GuildEdit extends GUI {
 
         final String showinbrowserText = (playerGuildEntity.isPrivate() ? "Enabled" : "Disabled");
         Button setShowInBrowser = Button.create(ItemBuilder.of(Material.BELL)
-                .name(CC.GREEN + "Show in browser").lore(showinbrowserText).build(), e ->
+                .name(CC.GREEN + "Show in browser").lore(showinbrowserText).build(), _ ->
         {
             playerGuildEntity.setPrivate(!playerGuildEntity.isPrivate());
             p.closeInventory();
             p.sendMessage(CC.RED + "Showing guild in browser is now: " + CC.GOLD + (playerGuildEntity.isPrivate() ? "Enabled" : "Disabled"));
-            new GuildEdit(p, guildService);
+            new GuildEdit(p, guildService, playerStatService);
         });
 
         addButton(Button.create(ItemBuilder.of(Material.WRITABLE_BOOK, 1)
-                .name(CC.GREEN + "Members").lore(" ", CC.DARK_GREEN + "View guild members.").build(), (e) -> {
-            new GuildMembers(p, guildService);
-        }), 15);
+                .name(CC.GREEN + "Members").lore(" ", CC.DARK_GREEN + "View guild members.").build(), (_) -> new GuildMembers(p, guildService)), 15);
         addButton(guildIcon, 10);
         addButton(guildDescription, 12);
         addButton(guildTag, 14);
@@ -135,8 +136,35 @@ public class GuildEdit extends GUI {
         private final GuildService guildService2;
         private final GuildEntity playerGuildEntity2;
 
-        private List<Material> icons = List.of(
-                Material.OAK_SIGN, Material.RAW_GOLD, Material.CHORUS_FLOWER, Material.ENCHANTING_TABLE, Material.BEACON, Material.END_PORTAL_FRAME, Material.TURTLE_EGG, Material.WITHER_ROSE, Material.DIRT, Material.TARGET, Material.DIAMOND, Material.EMERALD, Material.LAPIS_LAZULI, Material.AMETHYST_SHARD, Material.GOLDEN_APPLE, Material.NETHERITE_CHESTPLATE, Material.CARROT_ON_A_STICK, Material.LEATHER, Material.LAVA_BUCKET, Material.ENDER_PEARL, Material.ENDER_EYE, Material.SLIME_BALL, Material.GLOW_INK_SAC, Material.PUFFERFISH, Material.MAGMA_CREAM, Material.BLAZE_POWDER, Material.FIRE_CHARGE, Material.DIAMOND_HORSE_ARMOR
+        private final List<Material> icons = List.of(
+                Material.OAK_SIGN,
+                Material.RAW_GOLD,
+                Material.CHORUS_FLOWER,
+                Material.ENCHANTING_TABLE,
+                Material.BEACON,
+                Material.END_PORTAL_FRAME,
+                Material.TURTLE_EGG,
+                Material.WITHER_ROSE,
+                Material.DIRT,
+                Material.TARGET,
+                Material.DIAMOND,
+                Material.EMERALD,
+                Material.LAPIS_LAZULI,
+                Material.AMETHYST_SHARD,
+                Material.GOLDEN_APPLE,
+                Material.NETHERITE_CHESTPLATE,
+                Material.CARROT_ON_A_STICK,
+                Material.LEATHER,
+                Material.LAVA_BUCKET,
+                Material.ENDER_PEARL,
+                Material.ENDER_EYE,
+                Material.SLIME_BALL,
+                Material.GLOW_INK_SAC,
+                Material.PUFFERFISH,
+                Material.MAGMA_CREAM,
+                Material.BLAZE_POWDER,
+                Material.FIRE_CHARGE,
+                Material.DIAMOND_HORSE_ARMOR
         );
         public Icon(Player p, GuildService guildService2, GuildEntity playerGuildEntity2) {
             super("Guild Icon Picker", 6);
@@ -152,7 +180,7 @@ public class GuildEdit extends GUI {
 
             int index = 10;
             for (Material m : icons) {
-                Button iconBTN = Button.create(ItemBuilder.of(m).name(ChatColor.YELLOW + m.name()).lore(ChatColor.GREEN + "Click to set icon", ChatColor.DARK_AQUA + "Cost: " + ChatColor.AQUA + "50 credits").build(), (e) -> {
+                Button iconBTN = Button.create(ItemBuilder.of(m).name(ChatColor.YELLOW + m.name()).lore(ChatColor.GREEN + "Click to set icon", ChatColor.DARK_AQUA + "Cost: " + ChatColor.AQUA + "50 credits").build(), (_) -> {
                     g.setIcon(m.toString());
                     p.closeInventory();
                     guildService2.messageAll(playerGuildEntity2, ChatColor.YELLOW + p.getName() + ChatColor.GREEN + " has set the guild icon to " + ChatColor.YELLOW + m.name());
@@ -160,7 +188,7 @@ public class GuildEdit extends GUI {
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            new GuildEdit(p, Tazpvp.getInstance().getGuildService());
+                            new GuildEdit(p, Tazpvp.getInstance().getGuildService(), Tazpvp.getInstance().getPlayerStatService());
                         }
                     }.runTaskLater(Tazpvp.getInstance(), 1);
                 });
@@ -190,15 +218,13 @@ public class GuildEdit extends GUI {
                         text = text.replaceFirst(">", "");
                     }
 
-
-                    if (Profanity.sayNoNo(p, text)) return Arrays.asList(AnvilGUI.ResponseAction.close());
+                    if (Profanity.sayNoNo(p, text)) return List.of(AnvilGUI.ResponseAction.close());
                     player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
 
-                    PersistentData.remove(p, DataTypes.COINS, 6000);
-
+                    playerStatEntity.setCoins(playerStatEntity.getCoins() - 6000);
                     g.setDescription(text);
 
-                    return Arrays.asList(AnvilGUI.ResponseAction.close());
+                    return List.of(AnvilGUI.ResponseAction.close());
                 })
                 .onClose(stateSnapshot -> {
                     stateSnapshot.getPlayer().playSound(stateSnapshot.getPlayer().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
@@ -212,38 +238,39 @@ public class GuildEdit extends GUI {
 
     private void setTag(Player p, GuildEntity g) {
         new AnvilGUI.Builder()
-                .onClick((slot, stateSnapshot) -> {
-                    if(slot != AnvilGUI.Slot.OUTPUT) {
-                        return Collections.emptyList();
-                    }
+            .onClick((slot, stateSnapshot) -> {
+                if(slot != AnvilGUI.Slot.OUTPUT) {
+                    return Collections.emptyList();
+                }
 
-                    String text = stateSnapshot.getText();
-                    final Player player = stateSnapshot.getPlayer();
+                String text = stateSnapshot.getText();
+                final Player player = stateSnapshot.getPlayer();
 
-                    if (text.startsWith(">")) {
-                        text = text.replaceFirst(">", "");
-                    }
+                if (text.startsWith(">")) {
+                    text = text.replaceFirst(">", "");
+                }
 
-                    if (!(text.length() < 8)) {
-                        p.sendMessage("too long fatass");
-                        return AnvilGUI.Response.close();
-                    }
+                if (!(text.length() < 8)) {
+                    p.sendMessage("too long fatass");
+                    return List.of(AnvilGUI.ResponseAction.close());
+                }
 
-                    if (Profanity.sayNoNo(p, text)) return AnvilGUI.Response.close();
+                if (Profanity.sayNoNo(p, text)) return List.of(AnvilGUI.ResponseAction.close());
 
-                    player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+                player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
 
-                    g.setTag(text);
+                g.setTag(text);
 
-                    return AnvilGUI.Response.close();
-                })
-                .onClose(stateSnapshot -> {
-                    stateSnapshot.getPlayer().playSound(stateSnapshot.getPlayer().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
-                })
-                .text(">")
-                .itemLeft(ItemBuilder.of(Material.NAME_TAG).name(ChatColor.GREEN + "Guild Tag < 8").build())
-                .title(ChatColor.YELLOW + "Guild Tag < 8:")
-                .plugin(Tazpvp.getInstance())
-                .open(p);
+                return List.of(AnvilGUI.ResponseAction.close());
+            })
+
+            .onClose(stateSnapshot -> {
+                stateSnapshot.getPlayer().playSound(stateSnapshot.getPlayer().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+            })
+            .text(">")
+            .itemLeft(ItemBuilder.of(Material.NAME_TAG).name(ChatColor.GREEN + "Guild Tag < 8").build())
+            .title(ChatColor.YELLOW + "Guild Tag < 8:")
+            .plugin(Tazpvp.getInstance())
+            .open(p);
     }
 }

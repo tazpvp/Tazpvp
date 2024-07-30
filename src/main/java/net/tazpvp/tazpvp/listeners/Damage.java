@@ -35,7 +35,7 @@ package net.tazpvp.tazpvp.listeners;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.game.events.Event;
 import net.tazpvp.tazpvp.game.items.UsableItem;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
 import net.tazpvp.tazpvp.objects.DeathObject;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;

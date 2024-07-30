@@ -6,7 +6,7 @@ import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.npc.characters.shop.gui.subgui.TalentShop;
 import net.tazpvp.tazpvp.npc.characters.shop.gui.subgui.cosmetic.PremiumMenu;
 import net.tazpvp.tazpvp.npc.characters.shop.gui.subgui.ItemShop;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;

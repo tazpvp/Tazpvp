@@ -7,7 +7,7 @@ import net.tazpvp.tazpvp.data.services.PunishmentService;
 import net.tazpvp.tazpvp.utils.TimeToken;
 import net.tazpvp.tazpvp.utils.discord.webhook.BanWebhook;
 import net.tazpvp.tazpvp.utils.discord.webhook.MuteWebhook;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;

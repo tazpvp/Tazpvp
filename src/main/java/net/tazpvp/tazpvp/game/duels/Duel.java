@@ -35,9 +35,9 @@ package net.tazpvp.tazpvp.game.duels;
 import lombok.Getter;
 import lombok.Setter;
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.DataTypes;
-import net.tazpvp.tazpvp.data.PersistentData;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
+import net.tazpvp.tazpvp.data.services.PlayerStatService;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
@@ -77,6 +77,8 @@ public abstract class Duel {
     @Getter @Setter
     private boolean starting;
 
+    private final PlayerStatService playerStatService = Tazpvp.getInstance().getPlayerStatService();
+
     public Duel(@Nonnull final UUID P1, @Nonnull final UUID P2, @Nonnull final String NAME) {
         this.P1 = P1;
         this.P2 = P2;
@@ -100,6 +102,9 @@ public abstract class Duel {
         final Player winner = Bukkit.getPlayer(getWinner());
         final Player loser = Bukkit.getPlayer(loserID);
 
+        final PlayerStatEntity winnerStatEntity = playerStatService.getOrDefault(getWinner());
+        final PlayerStatEntity loserStatEntity = playerStatService.getOrDefault(loserID);
+
         ChatFunctions.announce(
                 CC.AQUA + Bukkit.getOfflinePlayer(getWinner()).getName() +
                         CC.DARK_AQUA + " won a duel against " +
@@ -108,11 +113,12 @@ public abstract class Duel {
         );
 
         if (winner != null) {
-            PersistentData.add(winner.getUniqueId(), DataTypes.DUELWINS, 1);
+            winnerStatEntity.setDuelMMR(winnerStatEntity.getDuelMMR() + 15);
             winner.sendTitle(CC.GOLD + "" + CC.BOLD + "YOU WIN", "", 20, 20, 20);
         }
 
         if (loser != null) {
+            loserStatEntity.setDuelMMR(loserStatEntity.getDuelMMR() - 9);
             loser.setGameMode(GameMode.SPECTATOR);
         }
 

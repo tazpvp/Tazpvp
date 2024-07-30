@@ -6,7 +6,7 @@ import net.tazpvp.tazpvp.data.implementations.PunishmentServiceImpl;
 import net.tazpvp.tazpvp.data.services.PunishmentService;
 import net.tazpvp.tazpvp.npc.characters.NPC;
 import net.tazpvp.tazpvp.utils.ParkourUtil;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.AfkFunctions;
 import net.tazpvp.tazpvp.objects.DeathObject;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;

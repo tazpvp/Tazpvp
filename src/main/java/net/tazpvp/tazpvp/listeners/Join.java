@@ -33,15 +33,14 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.DataTypes;
 import net.tazpvp.tazpvp.data.LooseData;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.implementations.UserRankServiceImpl;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.data.services.UserRankService;
 import net.tazpvp.tazpvp.utils.PlaytimeUtil;
-import net.tazpvp.tazpvp.utils.enums.CC;
-import net.tazpvp.tazpvp.utils.enums.ColorCodes;
+import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.enums.Theme;
 import net.tazpvp.tazpvp.utils.functions.*;
 import net.tazpvp.tazpvp.objects.CombatTag;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
@@ -76,13 +75,13 @@ public class Join implements Listener {
         CombatTag.tags.put(p.getUniqueId(), new CombatTag(p.getUniqueId()));
 
         p.setLevel(playerStatEntity.getLevel());
-        if (playerStatEntity.getXp() >= LooseData.getExpLeft(playerStatEntity)) {
-            float num = playerStatEntity.getXp() - LooseData.getExpLeft(playerStatEntity);
+        if (playerStatEntity.getXp() >= LooseData.getExpLeft(p.getUniqueId())) {
+            float num = playerStatEntity.getXp() - LooseData.getExpLeft(p.getUniqueId());
             PlayerFunctions.levelUp(p.getUniqueId(), num);
         } else if (playerStatEntity.getXp() < 0) {
             playerStatEntity.setXp(0);
         } else {
-            p.setExp((float) playerStatEntity.getXp() / LooseData.getExpLeft(playerStatEntity));
+            p.setExp((float) playerStatEntity.getXp() / LooseData.getExpLeft(p.getUniqueId()));
         }
 
         for (Player vp : Bukkit.getOnlinePlayers()) {
@@ -107,10 +106,11 @@ public class Join implements Listener {
 
         p.setPlayerListHeaderFooter(
                 CC.DARK_AQUA + "                                      " + "\n                 " +
-                        ChatFunctions.gradient(ColorCodes.SERVER.getHex(), "TAZPVP.NET", true) + "               " + "\n",
+                        Theme.SERVER.gradient("TAZPVP.NET", true) + "               " + "\n",
+
                 "\n" +
-                        ChatFunctions.gradient(ColorCodes.DISCORD.getHex(), "✉ ᴊᴏɪɴ ᴜꜱ /ᴅɪꜱᴄᴏʀᴅ", false) + "\n" +
-                        ChatFunctions.gradient(ColorCodes.STORE.getHex(), "✘ ꜱᴜʙꜱᴄʀɪʙᴇ /ꜱᴛᴏʀᴇ", false) + "\n");
+                        Theme.DISCORD.gradient("✉ ᴊᴏɪɴ ᴜꜱ /ᴅɪꜱᴄᴏʀᴅ", false) + "\n" +
+                        Theme.STORE.gradient("✘ ꜱᴜʙꜱᴄʀɪʙᴇ /ꜱᴛᴏʀᴇ", false) + "\n");
 
 
         final String name = p.getName();

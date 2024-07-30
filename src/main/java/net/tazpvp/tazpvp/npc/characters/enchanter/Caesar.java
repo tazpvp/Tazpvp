@@ -36,7 +36,7 @@ import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.npc.characters.enchanter.gui.Upgrade;
 import net.tazpvp.tazpvp.npc.dialogue.Dialogues;
 import net.tazpvp.tazpvp.npc.characters.NPC;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.BlockFunctions;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.Bukkit;

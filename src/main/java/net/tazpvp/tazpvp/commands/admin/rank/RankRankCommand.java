@@ -3,7 +3,7 @@ package net.tazpvp.tazpvp.commands.admin.rank;
 import lombok.NonNull;
 import net.tazpvp.tazpvp.data.implementations.GameRankServiceImpl;
 import net.tazpvp.tazpvp.data.services.GameRankService;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

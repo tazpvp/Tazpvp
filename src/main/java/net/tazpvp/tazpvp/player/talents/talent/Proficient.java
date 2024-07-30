@@ -32,9 +32,12 @@
 
 package net.tazpvp.tazpvp.player.talents.talent;
 
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.DataTypes;
 import net.tazpvp.tazpvp.data.PersistentData;
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.entity.TalentEntity;
+import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
@@ -46,7 +49,8 @@ public class Proficient extends Observable {
         final TalentEntity talentEntity = pw.getTalentEntity();
 
         if (talentEntity.isProficient()) {
-            PersistentData.add(winner.getUniqueId(), DataTypes.XP, 50);
+            PlayerStatEntity playerStatEntity = Tazpvp.getInstance().getPlayerStatService().getOrDefault(winner.getUniqueId());
+            playerStatEntity.setXp(playerStatEntity.getXp() + 50);
             winner.sendMessage("Proficient Talent: + 50 EXP");
         }
     }

@@ -3,7 +3,7 @@ package net.tazpvp.tazpvp.commands.gameplay.report;
 import lombok.NonNull;
 import net.tazpvp.tazpvp.commands.gameplay.report.utils.ReportDebounce;
 import net.tazpvp.tazpvp.utils.discord.webhook.ReportWebhook;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;

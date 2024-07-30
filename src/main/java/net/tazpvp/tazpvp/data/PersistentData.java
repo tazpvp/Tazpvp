@@ -174,7 +174,7 @@ public final class PersistentData {
             }
 
             if (dataType.equals(DataTypes.KILLS) || dataType.equals(DataTypes.DEATHS)) {
-                p.getScoreboard().getTeam("kdr").setSuffix(kdrFormula(getFloat(p, DataTypes.KILLS), getFloat(p, DataTypes.DEATHS)) + "");
+                p.getScoreboard().getTeam("kdr").setSuffix(LooseData.kdrFormula(getFloat(p, DataTypes.KILLS), getFloat(p, DataTypes.DEATHS)) + "");
             }
         }
     }
@@ -236,17 +236,17 @@ public final class PersistentData {
         ====================== End SET ====================== Start ADD/REMOVE ======================
      */
 
-    public static void add(@Nonnull final OfflinePlayer p, @Nonnull final DataTypes dataType) {
-        add(p.getUniqueId(), dataType, 1);
-    }
+//    public static void add(@Nonnull final OfflinePlayer p, @Nonnull final DataTypes dataType) {
+//        add(p.getUniqueId(), dataType, 1);
+//    }
 
     public static void add(@Nonnull final OfflinePlayer p, @Nonnull final DataTypes dataType, final int amount) {
         add(p.getUniqueId(), dataType, amount);
     }
 
-    public static void add(@Nonnull final UUID ID, @Nonnull final DataTypes dataType) {
-        add(ID, dataType, 1);
-    }
+//    public static void add(@Nonnull final UUID ID, @Nonnull final DataTypes dataType) {
+//        add(ID, dataType, 1);
+//    }
 
     public static void add(@Nonnull final UUID ID, @Nonnull final DataTypes dataType, final int amount) {
         if (dataType.equals(DataTypes.TALENTS) || dataType.equals(DataTypes.ACHIEVEMENTS)) {
@@ -255,35 +255,23 @@ public final class PersistentData {
         set(ID, dataType, getInt(ID, dataType) + amount);
     }
 
-    public static void remove(@Nonnull final OfflinePlayer p, @Nonnull final DataTypes dataType) {
-        remove(p.getUniqueId(), dataType, 1);
-    }
+//    public static void remove(@Nonnull final OfflinePlayer p, @Nonnull final DataTypes dataType) {
+//        remove(p.getUniqueId(), dataType, 1);
+//    }
 
     public static void remove(@Nonnull final OfflinePlayer p, @Nonnull final DataTypes dataType, final int amount) {
         remove(p.getUniqueId(), dataType, amount);
     }
 
-    public static void remove(@Nonnull final UUID ID, @Nonnull final DataTypes dataType) {
-        remove(ID, dataType, 1);
-    }
+//    public static void remove(@Nonnull final UUID ID, @Nonnull final DataTypes dataType) {
+//        remove(ID, dataType, 1);
+//    }
 
     public static void remove(@Nonnull final UUID ID, @Nonnull final DataTypes dataType, final int amount) {
         if (dataType.equals(DataTypes.TALENTS) || dataType.equals(DataTypes.ACHIEVEMENTS) || dataType.equals(DataTypes.PLAYTIMEUNIX)) {
             Bukkit.getLogger().severe("CANNOT MINUS TO NON INT COLUMNS");
         }
         set(ID, dataType, getInt(ID, dataType) - amount);
-    }
-
-    /*
-        ====================== End ADD/REMOVE ====================== Start Formula ======================
-     */
-
-    public static float kdrFormula(final float kills, final float deaths) {
-        if (kills != 0 && deaths != 0) {
-            DecimalFormat df = new DecimalFormat("0.00");
-            return Float.parseFloat(df.format(kills / deaths));
-        }
-        return 0F;
     }
 }
 

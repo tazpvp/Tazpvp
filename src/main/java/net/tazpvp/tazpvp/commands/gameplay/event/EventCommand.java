@@ -8,7 +8,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.game.events.Event;
 import net.tazpvp.tazpvp.game.events.EventUtils;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;

@@ -32,8 +32,10 @@
 
 package net.tazpvp.tazpvp.player.talents.talent;
 
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.DataTypes;
 import net.tazpvp.tazpvp.data.PersistentData;
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.utils.functions.BlockFunctions;
 import net.tazpvp.tazpvp.objects.Ore;
@@ -54,13 +56,11 @@ public class Excavator extends Observable {
             if (p.getGameMode() == GameMode.SURVIVAL) {
                 for (Ore ore : BlockFunctions.ores) {
                     if (ore.getMat() == material) {
-                        PersistentData.add(p, DataTypes.XP, 1);
+                        PlayerStatEntity playerStatEntity = Tazpvp.getInstance().getPlayerStatService().getOrDefault(p.getUniqueId());
+                        playerStatEntity.setXp(playerStatEntity.getXp() + 1);
                     }
                 }
             }
         }
-
-
-
     }
 }

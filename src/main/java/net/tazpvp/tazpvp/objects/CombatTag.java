@@ -1,7 +1,7 @@
 package net.tazpvp.tazpvp.objects;
 
 import lombok.Getter;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;

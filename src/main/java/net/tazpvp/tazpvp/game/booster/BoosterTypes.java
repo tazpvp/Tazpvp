@@ -2,7 +2,7 @@ package net.tazpvp.tazpvp.game.booster;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 
 @Getter

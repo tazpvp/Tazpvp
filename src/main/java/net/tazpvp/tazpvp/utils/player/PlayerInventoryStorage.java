@@ -5,9 +5,9 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.tazpvp.tazpvp.data.DataTypes;
-import net.tazpvp.tazpvp.data.PersistentData;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
+import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -38,6 +38,7 @@ public class PlayerInventoryStorage {
 
     @Getter
     private static final WeakHashMap<UUID, PlayerInventoryStorage> playerInventoryStorageWeakHashMap = new WeakHashMap<>();
+
     public static void updateStorage(Player p, UUID lastAttacker) {
         playerInventoryStorageWeakHashMap.put(p.getUniqueId(), new PlayerInventoryStorage(p.getUniqueId(), lastAttacker));
     }
@@ -50,14 +51,16 @@ public class PlayerInventoryStorage {
     public static PlayerInventoryStorage getStorage(UUID uuid) {
         return playerInventoryStorageWeakHashMap.get(uuid);
     }
+
     public static void restoreStorage(Player p) {
+        PlayerStatEntity playerStatEntity = Tazpvp.getInstance().getPlayerStatService().getOrDefault(p.getUniqueId());
         PlayerInventoryStorage playerInventoryStorage = getStorage(p);
 
         p.getInventory().clear();
         p.getInventory().setContents(playerInventoryStorage.getItems());
         p.getInventory().setArmorContents(playerInventoryStorage.getArmors());
 
-        PersistentData.remove(p.getUniqueId(), DataTypes.DEATHS);
+        playerStatEntity.setDeaths(playerStatEntity.getDeaths() - 1);
 
         playerInventoryStorageWeakHashMap.remove(p.getUniqueId());
 
@@ -65,6 +68,7 @@ public class PlayerInventoryStorage {
     public static void restoreStorage(UUID uuid) {
         restoreStorage(Bukkit.getPlayer(uuid));
     }
+
     public static void checkContainedBanned(UUID bannedUUID) {
         playerInventoryStorageWeakHashMap.forEach((key, value) -> {
             if (value.lastKillerUUID.equals(bannedUUID)) {

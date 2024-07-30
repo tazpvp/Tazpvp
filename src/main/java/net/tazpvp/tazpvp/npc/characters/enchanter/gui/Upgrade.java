@@ -3,7 +3,7 @@ package net.tazpvp.tazpvp.npc.characters.enchanter.gui;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.BlockFunctions;
 import net.tazpvp.tazpvp.objects.Ore;
 import net.tazpvp.tazpvp.objects.Pickaxe;

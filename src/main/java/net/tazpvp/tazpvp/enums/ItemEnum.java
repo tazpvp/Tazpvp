@@ -1,10 +1,9 @@
-package net.tazpvp.tazpvp.utils.enums;
+package net.tazpvp.tazpvp.enums;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ import java.util.List;
 import java.util.Random;
 
 @Getter
-public enum Items {
+public enum ItemEnum {
     GAPPLE(Material.GOLDEN_APPLE, "", "", true, false),
     AZURE_VAPOR(Material.BLUE_ORCHID, "Azure Vapor", "Extinguish flames.", false, true),
     INKER(Material.INK_SAC, "Inker", "Blind the enemies you slap.", false, true),
@@ -40,7 +39,7 @@ public enum Items {
 
     final Random random = new Random();
 
-    Items(Material material, String name, String lore, boolean drop, boolean shop) {
+    ItemEnum(Material material, String name, String lore, boolean drop, boolean shop) {
         this.material = material;
         this.name = name;
         this.lore = lore;
@@ -77,7 +76,7 @@ public enum Items {
 
     public ItemStack getRandomDrop() {
         List<ItemStack> drops = new ArrayList<>();
-        for (Items item : Items.values()) {
+        for (ItemEnum item : ItemEnum.values()) {
             if (item.isDrop()) {
                 drops.add(item.getItem());
             }
@@ -87,7 +86,7 @@ public enum Items {
 
     public List<ItemStack> getShopItems() {
         List<ItemStack> shopItems = new ArrayList<>();
-        for (Items item : Items.values()) {
+        for (ItemEnum item : ItemEnum.values()) {
             if (item.isShop()) {
                 shopItems.add(item.getItem());
             }

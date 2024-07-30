@@ -35,8 +35,8 @@ package net.tazpvp.tazpvp.npc.characters.shop.gui.subgui;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
-import net.tazpvp.tazpvp.utils.enums.CC;
-import net.tazpvp.tazpvp.utils.enums.Items;
+import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.enums.ItemEnum;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -106,31 +106,31 @@ public class ItemShop extends GUI {
             new PrestigeShop(p);
         }), 40);
 
-        addBuyButton(1, 10, true, Items.AZURE_VAPOR);
-        addBuyButton(3, 40, true, Items.INKER);
-        addBuyButton(5, 10, true, Items.STICKY_WEB);
-        addBuyButton(1, 100, false, Items.LIGHTER);
-        addBuyButton(32, 64, false, Items.EXP_BOTTLE);
-        addBuyButton(1, 40, false, Items.HATCHET);
+        addBuyButton(1, 10, true, ItemEnum.AZURE_VAPOR);
+        addBuyButton(3, 40, true, ItemEnum.INKER);
+        addBuyButton(5, 10, true, ItemEnum.STICKY_WEB);
+        addBuyButton(1, 100, false, ItemEnum.LIGHTER);
+        addBuyButton(32, 64, false, ItemEnum.EXP_BOTTLE);
+        addBuyButton(1, 40, false, ItemEnum.HATCHET);
         setChangingButton("Plank", "Placeable Blocks", wood, 30, 64);
 
-        addBuyButton(1, 20, false, Items.SHEAR);
-        addBuyButton(5, 50, false, Items.ARROW);
-        addBuyButton(5, 100, false, Items.GOLD_CARROT);
-        addBuyButton(5, 225, true, Items.PUSH_BOMB);
-        addBuyButton(5, 90, false, Items.SPECTRAL_ARROW);
+        addBuyButton(1, 20, false, ItemEnum.SHEAR);
+        addBuyButton(5, 50, false, ItemEnum.ARROW);
+        addBuyButton(5, 100, false, ItemEnum.GOLD_CARROT);
+        addBuyButton(5, 225, true, ItemEnum.PUSH_BOMB);
+        addBuyButton(5, 90, false, ItemEnum.SPECTRAL_ARROW);
         setChangingButton("Wool", "Placeable Blocks", wool, 30, 64);
 
-        addBuyButton(230, Items.SHARPNESS, Enchantment.SHARPNESS);
-        addBuyButton(375, Items.PROTECTION, Enchantment.PROTECTION);
-        addBuyButton(600, Items.POWER, Enchantment.POWER);
-        addBuyButton(100, Items.MENDING, Enchantment.MENDING);
-        addBuyButton(450, Items.FIRE_ASPECT, Enchantment.FIRE_ASPECT);
+        addBuyButton(230, ItemEnum.SHARPNESS, Enchantment.SHARPNESS);
+        addBuyButton(375, ItemEnum.PROTECTION, Enchantment.PROTECTION);
+        addBuyButton(600, ItemEnum.POWER, Enchantment.POWER);
+        addBuyButton(100, ItemEnum.MENDING, Enchantment.MENDING);
+        addBuyButton(450, ItemEnum.FIRE_ASPECT, Enchantment.FIRE_ASPECT);
 
         update();
     }
 
-    private void addBuyButton(int amount, int cost, boolean glow, Items customItem) {
+    private void addBuyButton(int amount, int cost, boolean glow, ItemEnum customItem) {
         ItemStack item = customItem.getShopItem(cost, amount, glow);
         addButton(Button.create(item, (e) -> {
             checkMoney(cost, customItem, null);
@@ -138,7 +138,7 @@ public class ItemShop extends GUI {
         calcSlot();
     }
 
-    private void addBuyButton(int cost, Items customItem, Enchantment enchant) {
+    private void addBuyButton(int cost, ItemEnum customItem, Enchantment enchant) {
         ItemStack item = customItem.getShopEnchant(cost, 1);
         addButton(Button.create(item, (e) -> {
             checkMoney(cost, customItem, enchant);
@@ -172,7 +172,7 @@ public class ItemShop extends GUI {
         calcSlot();
     }
 
-    private void checkMoney(int cost, Items item, @Nullable Enchantment enchantment) {
+    private void checkMoney(int cost, ItemEnum item, @Nullable Enchantment enchantment) {
         if (playerStatEntity != null) {
             if (playerStatEntity.getCoins() >= cost) {
                 playerStatEntity.setCoins(playerStatEntity.getCoins() - cost);

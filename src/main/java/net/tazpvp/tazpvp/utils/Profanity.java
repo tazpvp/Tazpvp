@@ -1,6 +1,6 @@
 package net.tazpvp.tazpvp.utils;
 
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.profanity.ProfanityFilter;
 import world.ntdi.postglam.data.Tuple;

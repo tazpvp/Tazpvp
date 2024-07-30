@@ -35,7 +35,7 @@ package net.tazpvp.tazpvp.commands.moderation.ban;
 import lombok.NonNull;
 import net.tazpvp.tazpvp.data.implementations.PunishmentServiceImpl;
 import net.tazpvp.tazpvp.data.services.PunishmentService;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.PunishmentFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;

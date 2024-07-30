@@ -1,11 +1,11 @@
 package net.tazpvp.tazpvp.npc.characters.shop.gui.subgui;
 
-import net.tazpvp.tazpvp.data.DataTypes;
-import net.tazpvp.tazpvp.data.PersistentData;
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.data.implementations.TalentServiceImpl;
+import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.data.services.TalentService;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
@@ -26,10 +26,14 @@ public class PrestigeShop extends GUI {
     private int num;
     private Player p;
     private final String prefix = CC.RED + "[Maxim] " + CC.WHITE;
+    private final PlayerStatService playerStatService;
+    private final PlayerStatEntity playerStatEntity;
 
-    public PrestigeShop(Player p) {
+    public PrestigeShop(Player p, PlayerStatService playerStatService) {
         super("Maxim", 5);
         this.p = p;
+        this.playerStatService = playerStatService;
+        this.playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
         addItems();
         open(p);
     }
@@ -52,13 +56,12 @@ public class PrestigeShop extends GUI {
                 )
                 .glow(true)
                 .build(), (e) -> {
-            if (PersistentData.getInt(p.getUniqueId(), DataTypes.LEVEL) < 100) {
+            if (playerStatEntity.getLevel() < 100) {
                 p.sendMessage(prefix + "You are not a high enough level.");
                 return;
             }
 
-            int rebirthLevel = PersistentData.getInt(p.getUniqueId(), DataTypes.REBIRTH);
-            PersistentData.set(p.getUniqueId(), DataTypes.REBIRTH, rebirthLevel + 1);
+            playerStatEntity.setPrestige(playerStatEntity.getPrestige() + 1);
 
             PlayerWrapper pw = PlayerWrapper.getPlayer(p);
 
@@ -67,9 +70,9 @@ public class PrestigeShop extends GUI {
             talentService.removeTalentEntity(talentEntity);
             pw.setTalentEntity(talentService.getOrDefault(p.getUniqueId()));
 
-            PersistentData.set(p.getUniqueId(), DataTypes.COINS, 0);
-            PersistentData.set(p.getUniqueId(), DataTypes.LEVEL, 0);
-            PersistentData.set(p.getUniqueId(), DataTypes.XP, 0);
+            playerStatEntity.setCoins(0);
+            playerStatEntity.setLevel(0);
+            playerStatEntity.setXp(0);
 
             p.getEnderChest().clear();
             p.getInventory().clear();
@@ -80,40 +83,40 @@ public class PrestigeShop extends GUI {
             p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, 1, 1);
         }), 13);
 
-        setButton(1, "Premium Pass", "24 hours of the Premium rank.", Material.NETHER_STAR, 100000, true, true);
-        setButton(1, "Bounty Hunter", "Find the player with the highest bounty.", Material.COMPASS, 1600, true, true);
-        setButton(1, "Unbreaking", "Fortify your tools.", Material.ENCHANTED_BOOK, 160, Enchantment.UNBREAKING);
-        setButton(1, "Projectile Protection", "Take less projectile damage.", Material.ENCHANTED_BOOK, 225, Enchantment.PROJECTILE_PROTECTION);
-        setButton(1, "Fire Protection", "Take less damage to fire.", Material.ENCHANTED_BOOK, 225, Enchantment.FIRE_PROTECTION);
-        setButton(1, "Sweeping Edge", "Increase attack range.", Material.ENCHANTED_BOOK, 220, Enchantment.SWEEPING_EDGE);
-        setButton(1, "Multishot", "Shoot multiple crossbow arrows at time.", Material.ENCHANTED_BOOK, 650, Enchantment.MULTISHOT);
+        setButton("Premium Pass", "24 hours of the Premium rank.", Material.NETHER_STAR, 100000, true, true);
+        setButton("Bounty Hunter", "Find the player with the highest bounty.", Material.COMPASS, 1600, true, true);
+        setButton("Unbreaking", "Fortify your tools.", 160, Enchantment.UNBREAKING);
+        setButton("Projectile Protection", "Take less projectile damage.", 225, Enchantment.PROJECTILE_PROTECTION);
+        setButton("Fire Protection", "Take less damage to fire.", 225, Enchantment.FIRE_PROTECTION);
+        setButton("Sweeping Edge", "Increase attack range.", 220, Enchantment.SWEEPING_EDGE);
+        setButton("Multishot", "Shoot multiple crossbow arrows at time.", 650, Enchantment.MULTISHOT);
 
-        setButton(1, "Quick Charge", "Recharge crossbows faster.", Material.ENCHANTED_BOOK, 550, Enchantment.QUICK_CHARGE);
-        setButton(1, "Punch", "Shoot players back further.", Material.ENCHANTED_BOOK, 350, Enchantment.PUNCH);
-        setButton(1, "Knockback", "Hit players back further.", Material.ENCHANTED_BOOK, 275, Enchantment.KNOCKBACK);
-        setButton(1, "Flame", "Shoot and set things on fire.", Material.ENCHANTED_BOOK, 450, Enchantment.FLAME);
-        setButton(1, "Efficiency", "Break blocks faster.", Material.ENCHANTED_BOOK, 350, Enchantment.EFFICIENCY);
-        setButton(1, "Infinity", "Infinite arrows.", Material.ENCHANTED_BOOK, 900, Enchantment.INFINITY);
-        setButton(1, "Depth Strider", "Walk faster in water.", Material.ENCHANTED_BOOK, 250, Enchantment.DEPTH_STRIDER);
+        setButton("Quick Charge", "Recharge crossbows faster.", 550, Enchantment.QUICK_CHARGE);
+        setButton("Punch", "Shoot players back further.", 350, Enchantment.PUNCH);
+        setButton("Knockback", "Hit players back further.", 275, Enchantment.KNOCKBACK);
+        setButton("Flame", "Shoot and set things on fire.", 450, Enchantment.FLAME);
+        setButton("Efficiency", "Break blocks faster.", 350, Enchantment.EFFICIENCY);
+        setButton("Infinity", "Infinite arrows.", 900, Enchantment.INFINITY);
+        setButton("Depth Strider", "Walk faster in water.", 250, Enchantment.DEPTH_STRIDER);
 
         update();
     }
 
-    private void setButton(int amount, String name, String lore, Material material, int cost, boolean glow, boolean custom) {
+    private void setButton(String name, String lore, Material material, int cost, boolean glow, boolean custom) {
         String name2 = ChatFunctions.gradient("#db3bff", name, true);
         ItemStack item;
         if (custom) {
-            item = ItemBuilder.of(material, amount).name(name2).lore(CC.GRAY + lore).build();
+            item = ItemBuilder.of(material, 1).name(name2).lore(CC.GRAY + lore).build();
         } else {
-            item = ItemBuilder.of(material, amount).build();
+            item = ItemBuilder.of(material, 1).build();
         }
 
-        addButton(Button.create(ItemBuilder.of(material, amount)
+        addButton(Button.create(ItemBuilder.of(material, 1)
                 .name(CC.YELLOW + "" + CC.BOLD + name)
                 .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: " + cost + " Coins")
                 .glow(glow)
                 .build(), (e) -> {
-            if (PersistentData.getInt(p.getUniqueId(), DataTypes.REBIRTH) < 1) {
+            if (playerStatEntity.getPrestige() < 1) {
                 p.sendMessage(prefix + "You need to rebirth before buying this.");
                 return;
             }
@@ -122,25 +125,25 @@ public class PrestigeShop extends GUI {
         calcSlot();
     }
 
-    private void setButton(int amount, String name, String lore, Material material, int cost, Enchantment enchant) {
+    private void setButton(String name, String lore, int cost, Enchantment enchant) {
         String name2 = ChatFunctions.gradient("#db3bff", name, true);
 
-        addButton(Button.create(ItemBuilder.of(material, amount)
+        addButton(Button.create(ItemBuilder.of(Material.ENCHANTED_BOOK, 1)
                 .name(CC.YELLOW + "" + CC.BOLD + name)
                 .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: " + cost + " Coins", CC.RED + "Drag the enchant onto", CC.RED + "an item to combine")
                 .build(), (e) -> {
-            if (PersistentData.getInt(p.getUniqueId(), DataTypes.REBIRTH) < 1) {
+            if (playerStatEntity.getPrestige() < 1) {
                 p.sendMessage(prefix + "You need to rebirth before buying this.");
                 return;
             }
-            checkMoney(name2, cost, ItemBuilder.of(material, amount).build(), enchant);
+            checkMoney(name2, cost, ItemBuilder.of(Material.ENCHANTED_BOOK, 1).build(), enchant);
         }), slotNum);
         calcSlot();
     }
 
     private void checkMoney(String name, int cost, ItemStack item, @Nullable Enchantment enchantment) {
-        if (PersistentData.getInt(p, DataTypes.COINS) >= cost) {
-            PersistentData.remove(p, DataTypes.COINS, cost);
+        if (playerStatEntity.getCoins() >= cost) {
+            playerStatEntity.setCoins(playerStatEntity.getCoins() - cost);
             if (enchantment == null) {
                 p.getInventory().addItem(item);
             } else {

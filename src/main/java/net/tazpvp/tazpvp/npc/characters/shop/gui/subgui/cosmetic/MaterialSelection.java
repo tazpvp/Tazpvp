@@ -33,7 +33,7 @@
 
 package net.tazpvp.tazpvp.npc.characters.shop.gui.subgui.cosmetic;
 
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

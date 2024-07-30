@@ -4,7 +4,7 @@ import lombok.NonNull;
 import net.tazpvp.tazpvp.data.entity.KitEntity;
 import net.tazpvp.tazpvp.data.implementations.KitServiceImpl;
 import net.tazpvp.tazpvp.data.services.KitService;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.utils.kit.SerializableInventory;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

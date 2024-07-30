@@ -30,19 +30,24 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.utils.enums;
+package net.tazpvp.tazpvp.enums;
 
 import lombok.Getter;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 
 @Getter
-public enum ColorCodes {
+public enum Theme {
     SERVER("#055cff"),
     DISCORD("#7a32ff"),
     STORE("#fcde00");
 
     private final String hex;
 
-    ColorCodes(String hex) {
+    Theme(String hex) {
         this.hex = hex;
+    }
+
+    public String gradient(String text, boolean bold) {
+        return ChatFunctions.gradient(hex, text, bold);
     }
 }

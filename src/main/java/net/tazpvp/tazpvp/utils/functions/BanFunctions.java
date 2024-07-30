@@ -7,7 +7,7 @@ import net.tazpvp.tazpvp.data.entity.PunishmentEntity;
 import net.tazpvp.tazpvp.data.implementations.PunishmentServiceImpl;
 import net.tazpvp.tazpvp.data.services.PunishmentService;
 import net.tazpvp.tazpvp.utils.TimeUtil;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;

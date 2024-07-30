@@ -34,7 +34,7 @@
 package net.tazpvp.tazpvp.commands.network;
 
 import lombok.NonNull;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

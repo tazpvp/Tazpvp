@@ -36,7 +36,7 @@ import net.tazpvp.tazpvp.data.services.GuildService;
 import net.tazpvp.tazpvp.npc.characters.NPC;
 import net.tazpvp.tazpvp.npc.characters.guildmaster.gui.GuildMenu;
 import net.tazpvp.tazpvp.npc.dialogue.Dialogues;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

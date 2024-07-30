@@ -33,12 +33,10 @@
 package net.tazpvp.tazpvp.utils.functions;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.DataTypes;
 import net.tazpvp.tazpvp.data.LooseData;
-import net.tazpvp.tazpvp.data.PersistentData;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
-import net.tazpvp.tazpvp.utils.enums.CC;
-import net.tazpvp.tazpvp.utils.enums.ColorCodes;
+import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.enums.Theme;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
@@ -67,7 +65,7 @@ public class ScoreboardFunctions {
 
         PlayerStatEntity playerStatEntity = Tazpvp.getInstance().getPlayerStatService().getOrDefault(p.getUniqueId());
 
-        objective = board.registerNewObjective("statboard", "dummy", ChatFunctions.gradient(ColorCodes.SERVER.getHex(), "TAZPVP.NET", true));
+        objective = board.registerNewObjective("statboard", "dummy",  Theme.SERVER.gradient("TAZPVP.NET", true));
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         objective.getScore("                         ").setScore(8);
@@ -90,7 +88,7 @@ public class ScoreboardFunctions {
     }
 
     private static String scoreTitle(String text) {
-        return ChatFunctions.gradient(ColorCodes.SERVER.getHex(), text, false);
+        return Theme.SERVER.gradient(text, false);
     }
 
     private static Score newLine(Player p, String name, String prefix, CC chatColor, String suffix) {

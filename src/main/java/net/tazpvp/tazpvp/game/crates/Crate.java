@@ -35,7 +35,7 @@ package net.tazpvp.tazpvp.game.crates;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.game.crates.gui.Preview;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
