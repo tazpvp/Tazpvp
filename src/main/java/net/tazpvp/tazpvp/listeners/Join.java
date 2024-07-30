@@ -32,81 +32,42 @@
 
 package net.tazpvp.tazpvp.listeners;
 
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.TextComponent;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.DataTypes;
 import net.tazpvp.tazpvp.data.LooseData;
-import net.tazpvp.tazpvp.data.PersistentData;
-import net.tazpvp.tazpvp.data.entity.PunishmentEntity;
-import net.tazpvp.tazpvp.data.implementations.PunishmentServiceImpl;
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.implementations.UserRankServiceImpl;
-import net.tazpvp.tazpvp.data.services.PunishmentService;
+import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.data.services.UserRankService;
-import net.tazpvp.tazpvp.utils.PlayerNameTag;
 import net.tazpvp.tazpvp.utils.PlaytimeUtil;
-import net.tazpvp.tazpvp.utils.TimeUtil;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.enums.ColorCodes;
-import net.tazpvp.tazpvp.utils.functions.AfkFunctions;
-import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
-import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
-import net.tazpvp.tazpvp.utils.functions.ScoreboardFunctions;
+import net.tazpvp.tazpvp.utils.functions.*;
 import net.tazpvp.tazpvp.objects.CombatTag;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.NRCore;
 
-import java.util.UUID;
-
 public class Join implements Listener {
+
+    PlayerStatService playerStatService = Tazpvp.getInstance().getPlayerStatService();
 
     @EventHandler
     private void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
+        PlayerStatEntity playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
 
         PlayerWrapper.addPlayer(p);
         ScoreboardFunctions.initScoreboard(p);
-        Tazpvp.getInstance().getPlayerNameTagService().initializePlayer(p);
-
-
-        final PunishmentService punishmentService = new PunishmentServiceImpl();
-        final PunishmentEntity punishmentEntity = punishmentService.getOrDefault(p.getUniqueId());
-        final PunishmentService.PunishmentType punishmentType = punishmentService.getPunishment(p.getUniqueId());
-
-        TextComponent component = new TextComponent(CC.GREEN + "Join the discord to appeal [Click here]");
-        component.setClickEvent(new net.md_5.bungee.api.chat.ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/56rdkbSqa8"));
-
-        if (punishmentType == PunishmentService.PunishmentType.BANNED) {
-            if (punishmentService.getTimeRemaining(p.getUniqueId()) > 0) {
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        p.setGameMode(GameMode.SPECTATOR);
-                    }
-                }.runTaskLater(Tazpvp.getInstance(), 20);
-
-                p.sendMessage("");
-                p.sendMessage(CC.RED + "You've been banned.");
-                p.sendMessage(CC.GRAY + "Reason: " + CC.WHITE + punishmentEntity.getReason());
-                p.sendMessage(CC.GRAY + "Time left: " + CC.WHITE + TimeUtil.howLongAgo(punishmentService.getTimeRemaining(UUID.randomUUID())));
-                p.sendMessage("");
-
-                p.spigot().sendMessage(component);
-            } else {
-                punishmentService.unpunish(p.getUniqueId());
-            }
-        }
-
         PlaytimeUtil.playerJoined(p);
         PlayerFunctions.resetHealth(p);
         PlayerFunctions.feedPlr(p);
+        Tazpvp.getInstance().getPlayerNameTagService().initializePlayer(p);
+        BanFunctions.checkBan(p);
 
         if (!p.getWorld().getName().equalsIgnoreCase("arena")) {
             p.teleport(NRCore.config.spawn);
@@ -114,16 +75,15 @@ public class Join implements Listener {
 
         CombatTag.tags.put(p.getUniqueId(), new CombatTag(p.getUniqueId()));
 
-        p.setLevel(PersistentData.getInt(p.getUniqueId(), DataTypes.LEVEL));
-        if (PersistentData.getFloat(p.getUniqueId(), DataTypes.XP) >= LooseData.getExpLeft(p.getUniqueId())) {
-            float num = PersistentData.getFloat(p.getUniqueId(), DataTypes.XP) - LooseData.getExpLeft(p.getUniqueId());
+        p.setLevel(playerStatEntity.getLevel());
+        if (playerStatEntity.getXp() >= LooseData.getExpLeft(playerStatEntity)) {
+            float num = playerStatEntity.getXp() - LooseData.getExpLeft(playerStatEntity);
             PlayerFunctions.levelUp(p.getUniqueId(), num);
-        } else if (PersistentData.getFloat(p.getUniqueId(), DataTypes.XP) < 0) {
-            PersistentData.set(p.getUniqueId(), DataTypes.XP, 0);
+        } else if (playerStatEntity.getXp() < 0) {
+            playerStatEntity.setXp(0);
         } else {
-            p.setExp(PersistentData.getFloat(p.getUniqueId(), DataTypes.XP) / LooseData.getExpLeft(p.getUniqueId()));
+            p.setExp((float) playerStatEntity.getXp() / LooseData.getExpLeft(playerStatEntity));
         }
-
 
         for (Player vp : Bukkit.getOnlinePlayers()) {
             PlayerWrapper vpw = PlayerWrapper.getPlayer(vp);

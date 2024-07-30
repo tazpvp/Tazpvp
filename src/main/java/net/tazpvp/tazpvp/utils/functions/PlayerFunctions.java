@@ -33,10 +33,9 @@
 package net.tazpvp.tazpvp.utils.functions;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.DataTypes;
 import net.tazpvp.tazpvp.data.LooseData;
-import net.tazpvp.tazpvp.data.PersistentData;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
+import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.game.booster.ActiveBoosterManager;
 import net.tazpvp.tazpvp.game.booster.BoosterBonus;
 import net.tazpvp.tazpvp.game.booster.BoosterTypes;
@@ -56,21 +55,11 @@ import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 import java.util.List;
 import java.util.UUID;
 
-import static net.tazpvp.tazpvp.data.PersistentData.getInt;
-
 public class PlayerFunctions {
 
-    public static List<Material> kitItems = List.of(
-            Material.DIAMOND_HELMET,
-            Material.DIAMOND_CHESTPLATE,
-            Material.DIAMOND_LEGGINGS,
-            Material.DIAMOND_BOOTS,
-            Material.DIAMOND_SWORD,
-            Material.BOW,
-            Material.STONE_PICKAXE
-    );
+    private static final PlayerStatService playerStatService = Tazpvp.getInstance().getPlayerStatService();
 
-    public static Double getMaxHealth(Player p) {
+    private static Double getMaxHealth(Player p) {
         return p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
     }
 
@@ -124,11 +113,11 @@ public class PlayerFunctions {
     }
 
     public static void kitPlayer(Player p) {
+        PlayerStatEntity pStatEntity = playerStatService.getOrDefault(p.getUniqueId());
         Inventory inv = p.getInventory();
-        int playTime = PersistentData.getInt(p.getUniqueId(), DataTypes.PLAYTIMEUNIX);
         int thirtyMinutesInMs = 30 * 60 * 1000;
 
-        if (playTime <= thirtyMinutesInMs) {
+        if (pStatEntity.getPlaytime() <= thirtyMinutesInMs) {
             p.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 2));
         }
 
@@ -143,33 +132,34 @@ public class PlayerFunctions {
     }
 
     public static void armorPlayer(Player p) {
-        p.getEquipment().setHelmet(ItemBuilder.of(Material.DIAMOND_HELMET, 1, CC.WHITE + "Hard Hat").build());
-        p.getEquipment().setChestplate(ItemBuilder.of(Material.DIAMOND_CHESTPLATE, 1, CC.WHITE + "Tunic").build());
-        p.getEquipment().setLeggings(ItemBuilder.of(Material.DIAMOND_LEGGINGS, 1, CC.WHITE + "Pants").build());
-        p.getEquipment().setBoots(ItemBuilder.of(Material.DIAMOND_BOOTS, 1, CC.WHITE + "Sandles").build());
+        p.getInventory().setHelmet(ItemBuilder.of(Material.DIAMOND_HELMET, 1, CC.WHITE + "Hard Hat").build());
+        p.getInventory().setChestplate(ItemBuilder.of(Material.DIAMOND_CHESTPLATE, 1, CC.WHITE + "Tunic").build());
+        p.getInventory().setLeggings(ItemBuilder.of(Material.DIAMOND_LEGGINGS, 1, CC.WHITE + "Pants").build());
+        p.getInventory().setBoots(ItemBuilder.of(Material.DIAMOND_BOOTS, 1, CC.WHITE + "Sandles").build());
     }
 
     public static void levelUp(UUID ID, float value) {
         Player p = Bukkit.getPlayer(ID);
+        PlayerStatEntity pStatEntity = playerStatService.getOrDefault(ID);
         if (p == null) return;
-        if (value >= LooseData.getExpLeft(ID)) {
+        if (value >= LooseData.getExpLeft(pStatEntity)) {
             final BoosterBonus coinsBonus = ActiveBoosterManager.getInstance()
                     .calculateBonus(100, List.of(BoosterTypes.COINS, BoosterTypes.MEGA));
             final int coins = (int) coinsBonus.result();
 
-            int num = (int) value - LooseData.getExpLeft(ID);
-            PersistentData.set(ID, DataTypes.XP, num);
-            PersistentData.add(ID, DataTypes.LEVEL);
-            PersistentData.add(ID, DataTypes.COINS, coins);
+            int num = (int) value - LooseData.getExpLeft(pStatEntity);
+            pStatEntity.setXp(num);
+            pStatEntity.setLevel(pStatEntity.getLevel() + 1);
+            pStatEntity.setCoins(pStatEntity.getCoins() + coins);
             p.getInventory().addItem(StaticItems.SHARD.item(1));
-            p.setLevel(PersistentData.getInt(ID, DataTypes.LEVEL));
-            p.setExp((float) num / LooseData.getExpLeft(p.getUniqueId()));
-            ChatFunctions.announce(p, CC.AQUA + "" + CC.BOLD + "  LEVEL UP " + CC.DARK_AQUA + "Combat Lvl. " + CC.AQUA + getInt(ID, DataTypes.LEVEL), Sound.ENTITY_PLAYER_LEVELUP);
+            p.setLevel(pStatEntity.getLevel());
+            p.setExp((float) num / LooseData.getExpLeft(pStatEntity));
+            ChatFunctions.announce(p, CC.AQUA + "" + CC.BOLD + "  LEVEL UP " + CC.DARK_AQUA + "Combat Lvl. " + CC.AQUA + pStatEntity.getLevel(), Sound.ENTITY_PLAYER_LEVELUP);
             p.sendMessage(CC.DARK_GRAY + "  ▶ " + CC.GOLD + coins + " Coins " + coinsBonus.prettyPercentMultiplier());
             p.sendMessage(CC.DARK_GRAY + "  ▶ " + CC.DARK_AQUA + "1 Shard");
             p.sendMessage("");
         } else {
-            p.setExp(value / LooseData.getExpLeft(p.getUniqueId()));
+            p.setExp(value / LooseData.getExpLeft(pStatEntity));
         }
     }
 

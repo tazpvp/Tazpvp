@@ -1,5 +1,6 @@
 package net.tazpvp.tazpvp.data;
 
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.player.achievements.Achievements;
 import net.tazpvp.tazpvp.player.talents.Talents;
 import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;

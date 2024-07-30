@@ -1,5 +1,7 @@
 package net.tazpvp.tazpvp.data;
 
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
+
 import java.util.UUID;
 import java.util.WeakHashMap;
 
@@ -9,8 +11,8 @@ public final class LooseData {
     private static final WeakHashMap<UUID, Integer> chatCount = new WeakHashMap<>();
     private static final WeakHashMap<UUID, Integer> mineCount = new WeakHashMap<>();
 
-    public static int getExpLeft(UUID uuid) {
-        float level = PersistentData.getInt(uuid, DataTypes.LEVEL);
+    public static int getExpLeft(PlayerStatEntity playerStatEntity) {
+        float level = playerStatEntity.getLevel();
         return Math.round((float) (level * 1.94) + 40);
     }
 
