@@ -74,8 +74,6 @@ public class Join implements Listener {
         PlayerWrapper.addPlayer(p);
         ScoreboardFunctions.initScoreboard(p);
         Tazpvp.getInstance().getPlayerNameTagService().initializePlayer(p);
-//        new PlayerNameTag().initializePlayerNameTag(p);
-//        PersistentData.initPlayer(p);
 
 
         final PunishmentService punishmentService = new PunishmentServiceImpl();
@@ -149,20 +147,12 @@ public class Join implements Listener {
 
         playerWrapper.refreshRankEntity();
 
-
-//        int ranking = 1; //TODO: Use database and rankdata
-//        String prefix = Tazpvp.getChat().getPlayerPrefix(p);
-//        String suffix = Tazpvp.getChat().getPlayerSuffix(p);
-//        ChatColor color = ChatColor.GRAY; //TODO: Use database and rankdata
-//
-//        new PlayerNameTag().initializePlayerNameTag(e.getPlayer(), ranking, prefix, suffix, color);
-
         p.setPlayerListHeaderFooter(
                 CC.DARK_AQUA + "                                      " + "\n                 " +
-                        ChatFunctions.gradient(ColorCodes.SERVER.toString(), "TAZPVP.NET", true) + "               " + "\n",
+                        ChatFunctions.gradient(ColorCodes.SERVER.getHex(), "TAZPVP.NET", true) + "               " + "\n",
                 "\n" +
-                        ChatFunctions.gradient(ColorCodes.DISCORD.toString(), "✉ ᴊᴏɪɴ ᴜꜱ /ᴅɪꜱᴄᴏʀᴅ", false) + "\n" +
-                        ChatFunctions.gradient(ColorCodes.STORE.toString(), "✘ ꜱᴜʙꜱᴄʀɪʙᴇ /ꜱᴛᴏʀᴇ", false) + "\n");
+                        ChatFunctions.gradient(ColorCodes.DISCORD.getHex(), "✉ ᴊᴏɪɴ ᴜꜱ /ᴅɪꜱᴄᴏʀᴅ", false) + "\n" +
+                        ChatFunctions.gradient(ColorCodes.STORE.getHex(), "✘ ꜱᴜʙꜱᴄʀɪʙᴇ /ꜱᴛᴏʀᴇ", false) + "\n");
 
 
         final String name = p.getName();

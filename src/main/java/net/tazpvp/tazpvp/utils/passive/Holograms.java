@@ -5,6 +5,7 @@ import net.tazpvp.tazpvp.utils.enums.ColorCodes;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import world.ntdi.nrcore.utils.holograms.Hologram;
@@ -17,7 +18,7 @@ public class Holograms {
     public static List<Hologram> holograms = new ArrayList<>();
 
     private static String[] welcome = {
-            CC.WHITE + "Welcome to " + ChatFunctions.gradient(ColorCodes.SERVER.toString(), "Tazpvp", true),
+            CC.WHITE + "Welcome to " + ChatFunctions.gradient(ColorCodes.SERVER.getHex(), "Tazpvp", true),
             "Type " + CC.AQUA + "/help", CC.WHITE + "for a guide!"
     };
     private static String[] afkPit = {
@@ -33,8 +34,10 @@ public class Holograms {
         );
     }
 
-    public static void removeHolograms() {
-        for (Entity entity : Bukkit.getWorld("arena").getEntities()) {
+    public static <World> void removeHolograms() {
+        org.bukkit.World world = Bukkit.getWorld("arena");
+        if (world == null) return;
+        for (Entity entity : world.getEntities()) {
             if (entity.getType() == EntityType.ARMOR_STAND) {
                 entity.remove();
             }

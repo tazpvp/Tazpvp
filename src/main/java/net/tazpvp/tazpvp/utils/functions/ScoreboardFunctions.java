@@ -66,7 +66,7 @@ public class ScoreboardFunctions {
 
         PlayerStatEntity playerStatEntity = Tazpvp.getInstance().getPlayerStatService().getOrDefault(p.getUniqueId());
 
-        objective = board.registerNewObjective("statboard", "dummy", ChatFunctions.gradient(ColorCodes.SERVER.toString(), "TAZPVP.NET", true));
+        objective = board.registerNewObjective("statboard", "dummy", ChatFunctions.gradient(ColorCodes.SERVER.getHex(), "TAZPVP.NET", true));
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         objective.getScore("                         ").setScore(8);
@@ -89,7 +89,7 @@ public class ScoreboardFunctions {
     }
 
     private static String scoreTitle(String text) {
-        return ChatFunctions.gradient(ColorCodes.SERVER.toString(), text, false);
+        return ChatFunctions.gradient(ColorCodes.SERVER.getHex(), text, false);
     }
 
     private static Score newLine(Player p, String name, String prefix, CC chatColor, String suffix) {

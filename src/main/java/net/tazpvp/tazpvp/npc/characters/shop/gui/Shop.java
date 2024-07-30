@@ -19,8 +19,11 @@ import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 public class Shop extends GUI {
 
-    public Shop(Player p) {
+    private final PlayerStatService playerStatService;
+
+    public Shop(Player p, PlayerStatService playerStatService) {
         super("Shop", 5);
+        this.playerStatService = playerStatService;
         addItems(p);
         open(p);
     }
@@ -29,7 +32,7 @@ public class Shop extends GUI {
         fill(0, 3*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
         addButton(Button.create(ItemBuilder.of(Material.LECTERN, 1).name(CC.GREEN + "" + CC.BOLD + "Item Shop").lore(CC.GRAY + "Buy upgrades and battle gear").build(), (e) -> {
-            new ItemShop(p);
+            new ItemShop(p, playerStatService);
         }), 10);
 
         addButton(Button.create(ItemBuilder.of(Material.LECTERN, 1).name(CC.GREEN + "" + CC.BOLD + "Talents").lore(CC.GRAY + "PvP and PvE perks" + CC.GRAY + "for the arena").build(), (e) -> {

@@ -74,15 +74,15 @@ public class ChatFunctions {
         return input;
     }
 
-    public static String gradient(String hexColorCode, String text, boolean isBold) {
+    public static String gradient(String hex, String text, boolean bold) {
         StringBuilder coloredText = new StringBuilder();
-        Matcher matcher = pattern.matcher(hexColorCode);
+        Matcher matcher = pattern.matcher(hex);
         if (matcher.find()) {
-            hexColorCode = matcher.group();
+            hex = matcher.group();
         } else {
             return text;
         }
-        float[] hsl = hexToHSL(hexColorCode);
+        float[] hsl = hexToHSL(hex);
 
         int length = text.length();
         float hueStep = -0.01f;
@@ -94,7 +94,7 @@ public class ChatFunctions {
             }
             String color = hslToHex(hue, hsl[1], hsl[2]);
             coloredText.append(hex(color));
-            if (isBold) {
+            if (bold) {
                 coloredText.append(ChatColor.BOLD);
             }
             coloredText.append(text.charAt(i));
