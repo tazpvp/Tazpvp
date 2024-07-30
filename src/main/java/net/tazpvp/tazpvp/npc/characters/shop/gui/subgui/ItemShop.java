@@ -56,7 +56,7 @@ import java.util.Random;
 public class ItemShop extends GUI {
 
     private int slotNum;
-    private int num;
+    private int count;
     private Player p;
     private final String prefix = CC.RED + "[Maxim] " + CC.WHITE;
     private final PlayerStatEntity playerStatEntity;
@@ -94,7 +94,7 @@ public class ItemShop extends GUI {
 
     private void addItems() {
         slotNum = 10;
-        num = 1;
+        count = 1;
 
         fill(0, 6*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
@@ -190,11 +190,11 @@ public class ItemShop extends GUI {
     }
 
     public void calcSlot() {
-        if (num % 7 == 0) {
+        if (count % 7 == 0) {
             slotNum += 2;
-            num = 0;
+            count = 0;
         }
         slotNum ++;
-        num ++;
+        count++;
     }
 }

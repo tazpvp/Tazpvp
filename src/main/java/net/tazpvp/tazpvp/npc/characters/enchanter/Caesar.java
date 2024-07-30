@@ -32,6 +32,8 @@
 
 package net.tazpvp.tazpvp.npc.characters.enchanter;
 
+import net.tazpvp.tazpvp.data.services.PlayerStatService;
+import net.tazpvp.tazpvp.npc.characters.enchanter.gui.Upgrade;
 import net.tazpvp.tazpvp.npc.dialogue.Dialogues;
 import net.tazpvp.tazpvp.npc.characters.NPC;
 import net.tazpvp.tazpvp.utils.enums.CC;
@@ -49,7 +51,9 @@ import java.util.List;
 
 public class Caesar extends NPC {
 
-    public Caesar() {
+    PlayerStatService playerStatService;
+
+    public Caesar(PlayerStatService playerStatService) {
         super(ChatFunctions.gradient("#fcfc00", "Caesar", true), new Location(
                 Bukkit.getWorld("arena"), -3, 90, 132, -155.5F, 0),
                 Villager.Profession.WEAPONSMITH,
@@ -86,13 +90,14 @@ public class Caesar extends NPC {
                                 "PVP is overrated, just mine! Mining calms the soul and also rewards you with that sweet cash."
                         )
                 ));
+        this.playerStatService = playerStatService;
     }
 
     @Override
     public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
 
         if (BlockFunctions.getPickaxe(p) != null) {
-            new net.tazpvp.tazpvp.npc.characters.enchanter.gui.Caesar(p);
+            new Upgrade(p, playerStatService);
         } else {
             p.sendMessage(CC.YELLOW + "[" + "Caesar" + "] " + CC.GOLD + "Give me your pickaxe and I can upgrade it.");
         }

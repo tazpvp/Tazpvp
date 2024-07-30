@@ -1,8 +1,8 @@
 package net.tazpvp.tazpvp.npc.characters.enchanter.gui;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.DataTypes;
-import net.tazpvp.tazpvp.data.PersistentData;
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
+import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.utils.enums.CC;
 import net.tazpvp.tazpvp.utils.functions.BlockFunctions;
 import net.tazpvp.tazpvp.objects.Ore;
@@ -17,10 +17,13 @@ import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 
-public class Caesar extends GUI {
+public class Upgrade extends GUI {
 
-    public Caesar(Player p) {
+    PlayerStatService playerStatService;
+
+    public Upgrade(Player p, PlayerStatService playerStatService) {
         super("Caesar", 3);
+        this.playerStatService = playerStatService;
         addItems(p);
         open(p);
     }
@@ -28,8 +31,10 @@ public class Caesar extends GUI {
     private void addItems(Player p) {
         fill(0, 27, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
+        PlayerStatEntity playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
+
         ItemStack tool = BlockFunctions.getPickaxe(p);
-        int balance = PersistentData.getInt(p.getUniqueId(), DataTypes.COINS);
+        int balance = playerStatEntity.getCoins();
 
         Pickaxe currentPickaxe = BlockFunctions.pickaxes.stream()
                 .filter(pickaxe -> pickaxe.getItem().getType() == tool.getType())
@@ -51,7 +56,7 @@ public class Caesar extends GUI {
 
         ItemStack upgradeButton = upgradeButtonBuilder.build();
 
-        addButton(Button.create(upgradeButton, (e) -> {
+        addButton(Button.create(upgradeButton, (_) -> {
 
             if (tool.getType() == Material.NETHERITE_PICKAXE) {
                 sendNPCMessage(p, "You already have the best upgrade.");
@@ -64,7 +69,7 @@ public class Caesar extends GUI {
             }
 
             tool.setType(currentPickaxe.getUpgrade());
-            PersistentData.remove(p.getUniqueId(), DataTypes.COINS, cost);
+            playerStatEntity.setCoins(playerStatEntity.getCoins() - cost);
 
             sendNPCMessage(p, "Thanks, here is your new pickaxe.");
             p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, 1, 1);
@@ -80,12 +85,12 @@ public class Caesar extends GUI {
             update();
         }), 11);
 
-        addButton(Button.create(ItemBuilder.of(Material.ENCHANTED_BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Enchant Pickaxe").lore(CC.GRAY + "Check out the custom pickaxe enchantments.").build(), (e) -> {
+        addButton(Button.create(ItemBuilder.of(Material.ENCHANTED_BOOK, 1).name(CC.GREEN + "" + CC.BOLD + "Enchant Pickaxe").lore(CC.GRAY + "Check out the custom pickaxe enchantments.").build(), (_) -> {
             p.closeInventory();
             new Enchantments(p, tool);
         }), 13);
 
-        addButton(Button.create(ItemBuilder.of(Material.NAME_TAG, 1).name(CC.GREEN + "" + CC.BOLD + "Sell Your Ores").lore(CC.GRAY + "Sell all of your ores.").build(), (e) -> {
+        addButton(Button.create(ItemBuilder.of(Material.NAME_TAG, 1).name(CC.GREEN + "" + CC.BOLD + "Sell Your Ores").lore(CC.GRAY + "Sell all of your ores.").build(), (_) -> {
             int reward = 0;
             for (ItemStack i : p.getInventory()) {
                 if (i != null) {
@@ -102,7 +107,7 @@ public class Caesar extends GUI {
                 sendNPCMessage(p, "Are you trying to scam me!? You don't have any ores!");
                 p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
             } else {
-                PersistentData.add(p.getUniqueId(), DataTypes.COINS, reward);
+                playerStatEntity.setCoins(playerStatEntity.getCoins() + reward);
                 sendNPCMessage(p, "Great doing business!" + CC.GREEN + " + $" + reward);
                 p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
                 Tazpvp.getObservers().forEach(observer -> observer.gui(p, "Caesar"));

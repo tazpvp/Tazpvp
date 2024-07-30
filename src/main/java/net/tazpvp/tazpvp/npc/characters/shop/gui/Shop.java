@@ -1,11 +1,9 @@
 package net.tazpvp.tazpvp.npc.characters.shop.gui;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.DataTypes;
-import net.tazpvp.tazpvp.data.PersistentData;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
-import net.tazpvp.tazpvp.npc.characters.shop.gui.subgui.Talents;
+import net.tazpvp.tazpvp.npc.characters.shop.gui.subgui.TalentShop;
 import net.tazpvp.tazpvp.npc.characters.shop.gui.subgui.cosmetic.PremiumMenu;
 import net.tazpvp.tazpvp.npc.characters.shop.gui.subgui.ItemShop;
 import net.tazpvp.tazpvp.utils.enums.CC;
@@ -36,7 +34,7 @@ public class Shop extends GUI {
         }), 10);
 
         addButton(Button.create(ItemBuilder.of(Material.LECTERN, 1).name(CC.GREEN + "" + CC.BOLD + "Talents").lore(CC.GRAY + "PvP and PvE perks" + CC.GRAY + "for the arena").build(), (e) -> {
-            new Talents(p);
+            new TalentShop(p, playerStatService);
         }), 12);
 
         addButton(Button.create(ItemBuilder.of(Material.FIRE_CHARGE, 1).name(CC.GREEN + "" + CC.BOLD + "Premium").lore(CC.GRAY + "All of the premium", CC.GRAY + "and cosmetic features").build(), (e) -> {

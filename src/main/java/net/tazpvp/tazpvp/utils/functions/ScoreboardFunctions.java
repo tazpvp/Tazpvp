@@ -34,6 +34,7 @@ package net.tazpvp.tazpvp.utils.functions;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.DataTypes;
+import net.tazpvp.tazpvp.data.LooseData;
 import net.tazpvp.tazpvp.data.PersistentData;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.utils.enums.CC;
@@ -81,7 +82,7 @@ public class ScoreboardFunctions {
                 playerStatEntity.getKills() + "").setScore(3);
         newLine(p, "deaths", scoreTitle("☠ ᴅᴇᴀᴛʜꜱ"), CC.DARK_PURPLE,
                 playerStatEntity.getDeaths() + "").setScore(2);
-        newLine(p, "kdr", scoreTitle("✚ ᴋᴅʀ"), CC.GRAY, PersistentData.kdrFormula(
+        newLine(p, "kdr", scoreTitle("✚ ᴋᴅʀ"), CC.GRAY, LooseData.kdrFormula(
                 playerStatEntity.getKills(), playerStatEntity.getDeaths()) + "").setScore(1);
         objective.getScore("   ").setScore(0);
 

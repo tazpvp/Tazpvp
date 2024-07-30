@@ -281,7 +281,6 @@ public final class PersistentData {
     public static float kdrFormula(final float kills, final float deaths) {
         if (kills != 0 && deaths != 0) {
             DecimalFormat df = new DecimalFormat("0.00");
-
             return Float.parseFloat(df.format(kills / deaths));
         }
         return 0F;

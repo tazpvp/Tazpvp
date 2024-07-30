@@ -4,6 +4,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 
+import java.text.DecimalFormat;
 import java.util.UUID;
 import java.util.WeakHashMap;
 
@@ -60,5 +61,12 @@ public final class LooseData {
         ks.put(id, 0);
     }
 
+    public static float kdrFormula(final float kills, final float deaths) {
+        if (kills != 0 && deaths != 0) {
+            DecimalFormat df = new DecimalFormat("0.00");
+            return Float.parseFloat(df.format(kills / deaths));
+        }
+        return 0F;
+    }
 }
 
