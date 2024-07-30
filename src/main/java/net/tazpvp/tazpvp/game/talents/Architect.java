@@ -30,23 +30,27 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.player.talents.talent;
+package net.tazpvp.tazpvp.game.talents;
 
 import net.tazpvp.tazpvp.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+import org.bukkit.inventory.ItemStack;
 
-public class Agile extends Observable {
+import java.util.Random;
+
+public class Architect extends Observable {
     @Override
-    public void death(Player victim, Player killer) {
-        final PlayerWrapper pw = PlayerWrapper.getPlayer(killer);
+    public void place(Player p, Block b) {
+        final PlayerWrapper pw = PlayerWrapper.getPlayer(p);
         final TalentEntity talentEntity = pw.getTalentEntity();
 
-        if (talentEntity.isAgile()) {
-            killer.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*3, 1, false, true));
+        if (talentEntity.isArchitect()) {
+            if (new Random().nextInt(10) > 7) {
+                p.getInventory().addItem(new ItemStack(b.getType()));
+            }
         }
     }
 }

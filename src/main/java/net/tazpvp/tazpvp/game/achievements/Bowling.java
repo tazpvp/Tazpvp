@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  *
- * Copyright (c) 2023, n-tdi
+ * Copyright (c) 2022, n-tdi
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,22 +30,34 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.player.talents.talent;
+package net.tazpvp.tazpvp.game.achievements;
 
-import net.tazpvp.tazpvp.data.entity.TalentEntity;
+import net.tazpvp.tazpvp.data.LooseData;
+import net.tazpvp.tazpvp.data.entity.AchievementEntity;
+import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
 
-public class Cannibal extends Observable {
+public class Bowling extends Observable {
     @Override
     public void death(Player victim, Player killer) {
-        final PlayerWrapper pw = PlayerWrapper.getPlayer(killer);
-        final TalentEntity talentEntity = pw.getTalentEntity();
+        if (victim == null || killer == null) {
+            return;
+        }
 
-        if (talentEntity.isCannibal()) {
-            killer.setFoodLevel(20);
-            killer.setSaturation(20f);
+        final PlayerWrapper pw = PlayerWrapper.getPlayer(killer);
+        final UserAchievementEntity userAchievementEntity = pw.getUserAchievementEntity();
+        final AchievementEntity achievementEntity = userAchievementEntity.getBowlingAchievementEntity();
+
+        if (!achievementEntity.isCompleted()) {
+            if (LooseData.getKs(killer.getUniqueId()) >= 50) {
+                achievementEntity.setCompleted(true);
+                userAchievementEntity.setBowlingAchievementEntity(achievementEntity);
+                pw.setUserAchievementEntity(userAchievementEntity);
+                ChatFunctions.achievement(killer, "Bowling");
+            }
         }
     }
 }

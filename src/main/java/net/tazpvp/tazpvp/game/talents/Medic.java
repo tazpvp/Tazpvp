@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.player.talents.talent;
+package net.tazpvp.tazpvp.game.talents;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.GuildEntity;

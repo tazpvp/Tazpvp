@@ -30,8 +30,9 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.player.achievements.achievement;
+package net.tazpvp.tazpvp.game.achievements;
 
+import net.tazpvp.tazpvp.data.LooseData;
 import net.tazpvp.tazpvp.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
@@ -39,18 +40,21 @@ import net.tazpvp.tazpvp.utils.observer.Observable;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
 
-public class Legend extends Observable {
+public class Charm extends Observable {
+
     @Override
-    public void rebirth(Player p) {
+    public void chat(Player p, String chat) {
         final PlayerWrapper pw = PlayerWrapper.getPlayer(p);
         final UserAchievementEntity userAchievementEntity = pw.getUserAchievementEntity();
-        final AchievementEntity achievementEntity = userAchievementEntity.getLegendAchievementEntity();
+        final AchievementEntity achievementEntity = userAchievementEntity.getCharmAchievementEntity();
 
         if (!achievementEntity.isCompleted()) {
-            achievementEntity.setCompleted(true);
-            userAchievementEntity.setLegendAchievementEntity(achievementEntity);
-            pw.setUserAchievementEntity(userAchievementEntity);
-            ChatFunctions.achievement(p, "Legend");
+            if (LooseData.getChatCount(p.getUniqueId()) >= 100) {
+                achievementEntity.setCompleted(true);
+                userAchievementEntity.setCharmAchievementEntity(achievementEntity);
+                pw.setUserAchievementEntity(userAchievementEntity);
+                ChatFunctions.achievement(p, "Charm");
+            }
         }
     }
 }

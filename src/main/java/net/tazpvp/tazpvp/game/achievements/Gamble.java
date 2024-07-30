@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  *
- * Copyright (c) 2023, n-tdi
+ * Copyright (c) 2022, n-tdi
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,25 +30,30 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.player.talents.talent;
+package net.tazpvp.tazpvp.game.achievements;
 
-import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
-import net.tazpvp.tazpvp.data.entity.TalentEntity;
+import net.tazpvp.tazpvp.data.entity.AchievementEntity;
+import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
 
-public class Proficient extends Observable {
-    @Override
-    public void duel_end(Player winner, Player loser) {
-        final PlayerWrapper pw = PlayerWrapper.getPlayer(winner);
-        final TalentEntity talentEntity = pw.getTalentEntity();
+public class Gamble extends Observable {
 
-        if (talentEntity.isProficient()) {
-            PlayerStatEntity playerStatEntity = Tazpvp.getInstance().getPlayerStatService().getOrDefault(winner.getUniqueId());
-            playerStatEntity.setXp(playerStatEntity.getXp() + 50);
-            winner.sendMessage("Proficient Talent: + 50 EXP");
+    @Override
+    public void death(Player victim, Player killer) {
+        final PlayerWrapper pw = PlayerWrapper.getPlayer(killer);
+        final UserAchievementEntity userAchievementEntity = pw.getUserAchievementEntity();
+        final AchievementEntity achievementEntity = userAchievementEntity.getGambleAchievementEntity();
+
+        if (!achievementEntity.isCompleted()) {
+            if (killer.getHealth() <= 1) {
+                achievementEntity.setCompleted(true);
+                userAchievementEntity.setGambleAchievementEntity(achievementEntity);
+                pw.setUserAchievementEntity(userAchievementEntity);
+                ChatFunctions.achievement(killer, "Gamble");
+            }
         }
     }
 }

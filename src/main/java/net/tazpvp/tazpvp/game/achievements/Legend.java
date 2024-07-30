@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.player.achievements.achievement;
+package net.tazpvp.tazpvp.game.achievements;
 
 import net.tazpvp.tazpvp.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
@@ -39,19 +39,18 @@ import net.tazpvp.tazpvp.utils.observer.Observable;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
 
-public class Superior extends Observable {
-
+public class Legend extends Observable {
     @Override
-    public void event(Player p) {
+    public void rebirth(Player p) {
         final PlayerWrapper pw = PlayerWrapper.getPlayer(p);
         final UserAchievementEntity userAchievementEntity = pw.getUserAchievementEntity();
-        final AchievementEntity achievementEntity = userAchievementEntity.getSuperiorAchievementEntity();
+        final AchievementEntity achievementEntity = userAchievementEntity.getLegendAchievementEntity();
 
         if (!achievementEntity.isCompleted()) {
             achievementEntity.setCompleted(true);
-            userAchievementEntity.setSuperiorAchievementEntity(achievementEntity);
+            userAchievementEntity.setLegendAchievementEntity(achievementEntity);
             pw.setUserAchievementEntity(userAchievementEntity);
-            ChatFunctions.achievement(p, "Superior");
+            ChatFunctions.achievement(p, "Legend");
         }
     }
 }

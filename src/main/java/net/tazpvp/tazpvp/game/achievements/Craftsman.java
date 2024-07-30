@@ -30,46 +30,28 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.player.achievements.achievement;
+package net.tazpvp.tazpvp.game.achievements;
 
 import net.tazpvp.tazpvp.data.entity.AchievementEntity;
-import net.tazpvp.tazpvp.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
 
-public class Adept extends Observable {
+public class Craftsman extends Observable {
 
     @Override
-    public void talent(Player p) {
+    public void enchant(Player p) {
         final PlayerWrapper pw = PlayerWrapper.getPlayer(p);
         final UserAchievementEntity userAchievementEntity = pw.getUserAchievementEntity();
-        final AchievementEntity achievementEntity = userAchievementEntity.getAdeptAchievementEntity();
+        final AchievementEntity achievementEntity = userAchievementEntity.getCraftsmanAchievementEntity();
 
         if (!achievementEntity.isCompleted()) {
-            TalentEntity talentEntity = pw.getTalentEntity();
-
-            if (!talentEntity.isAgile()) return;
-            if (!talentEntity.isHarvester()) return;
-            if (!talentEntity.isArchitect()) return;
-            if (!talentEntity.isCannibal()) return;
-            if (!talentEntity.isExcavator()) return;
-            if (!talentEntity.isBlessed()) return;
-            if (!talentEntity.isMoist()) return;
-            if (!talentEntity.isMedic()) return;
-            if (!talentEntity.isProficient()) return;
-            if (!talentEntity.isNecromancer()) return;
-            if (!talentEntity.isResilient()) return;
-            if (!talentEntity.isGlide()) return;
-            if (!talentEntity.isRevenge()) return;
-
             achievementEntity.setCompleted(true);
-            userAchievementEntity.setAdeptAchievementEntity(achievementEntity);
+            userAchievementEntity.setCraftsmanAchievementEntity(achievementEntity);
             pw.setUserAchievementEntity(userAchievementEntity);
-
-            ChatFunctions.achievement(p, "Adept");
+            ChatFunctions.achievement(p, "Craftsman");
         }
     }
 }

@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.player.achievements.achievement;
+package net.tazpvp.tazpvp.game.achievements;
 
 import net.tazpvp.tazpvp.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;

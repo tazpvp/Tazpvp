@@ -82,8 +82,8 @@ import net.tazpvp.tazpvp.npc.characters.enchanter.Caesar;
 import net.tazpvp.tazpvp.npc.characters.achievements.Lorenzo;
 import net.tazpvp.tazpvp.npc.characters.guildmaster.Rigel;
 import net.tazpvp.tazpvp.npc.characters.shop.Maxim;
-import net.tazpvp.tazpvp.player.achievements.achievement.*;
-import net.tazpvp.tazpvp.player.talents.talent.*;
+import net.tazpvp.tazpvp.game.achievements.*;
+import net.tazpvp.tazpvp.game.talents.*;
 import net.tazpvp.tazpvp.services.PlayerNameTagServiceImpl;
 import net.tazpvp.tazpvp.utils.ConfigUtil;
 import net.tazpvp.tazpvp.services.PlayerNameTagService;
@@ -107,7 +107,6 @@ import world.ntdi.postglam.connection.Database;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 /*
     A plugin for tazpvp beacuse we love tazpvp! <3 I love tazpvp <3 <3 <3 Rownxo smells like tazpvp stinky tazpvp

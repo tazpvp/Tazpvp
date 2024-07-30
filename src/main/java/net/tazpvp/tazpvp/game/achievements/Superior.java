@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.player.achievements.achievement;
+package net.tazpvp.tazpvp.game.achievements;
 
 import net.tazpvp.tazpvp.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
@@ -39,19 +39,19 @@ import net.tazpvp.tazpvp.utils.observer.Observable;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
 
-public class Craftsman extends Observable {
+public class Superior extends Observable {
 
     @Override
-    public void enchant(Player p) {
+    public void event(Player p) {
         final PlayerWrapper pw = PlayerWrapper.getPlayer(p);
         final UserAchievementEntity userAchievementEntity = pw.getUserAchievementEntity();
-        final AchievementEntity achievementEntity = userAchievementEntity.getCraftsmanAchievementEntity();
+        final AchievementEntity achievementEntity = userAchievementEntity.getSuperiorAchievementEntity();
 
         if (!achievementEntity.isCompleted()) {
             achievementEntity.setCompleted(true);
-            userAchievementEntity.setCraftsmanAchievementEntity(achievementEntity);
+            userAchievementEntity.setSuperiorAchievementEntity(achievementEntity);
             pw.setUserAchievementEntity(userAchievementEntity);
-            ChatFunctions.achievement(p, "Craftsman");
+            ChatFunctions.achievement(p, "Superior");
         }
     }
 }

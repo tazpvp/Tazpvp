@@ -30,35 +30,28 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.player.talents.talent;
+package net.tazpvp.tazpvp.game.talents;
 
-import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.entity.TalentEntity;
-import net.tazpvp.tazpvp.utils.functions.BlockFunctions;
-import net.tazpvp.tazpvp.objects.Ore;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
-public class Excavator extends Observable {
+public class Resilient extends Observable {
 
     @Override
-    public void mine(Player p, Material material) {
-        final PlayerWrapper pw = PlayerWrapper.getPlayer(p);
+    public void death(Player victim, Player killer) {
+        final PlayerWrapper pw = PlayerWrapper.getPlayer(killer);
         final TalentEntity talentEntity = pw.getTalentEntity();
 
-        if (talentEntity.isExcavator()) {
-            if (p.getGameMode() == GameMode.SURVIVAL) {
-                for (Ore ore : BlockFunctions.ores) {
-                    if (ore.getMat() == material) {
-                        PlayerStatEntity playerStatEntity = Tazpvp.getInstance().getPlayerStatService().getOrDefault(p.getUniqueId());
-                        playerStatEntity.setXp(playerStatEntity.getXp() + 1);
-                    }
-                }
+        if (talentEntity.isResilient()) {
+            if (victim != killer) {
+                killer.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 20 * 5, 0));
             }
         }
+
+
     }
 }

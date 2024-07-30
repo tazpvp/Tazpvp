@@ -30,32 +30,32 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.player.achievements;
+package net.tazpvp.tazpvp.game.achievements;
 
-import net.tazpvp.tazpvp.data.ContainerData;
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.data.entity.AchievementEntity;
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
+import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
+import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
+import net.tazpvp.tazpvp.utils.observer.Observable;
+import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
+import org.bukkit.entity.Player;
 
-import java.io.Serializable;
-import java.util.HashMap;
+public class Gladiator extends Observable {
+    @Override
+    public void duel(Player p) {
+        final PlayerWrapper pw = PlayerWrapper.getPlayer(p);
+        final UserAchievementEntity userAchievementEntity = pw.getUserAchievementEntity();
+        final AchievementEntity achievementEntity = userAchievementEntity.getGladiatorAchievementEntity();
+        final PlayerStatEntity playerStatEntity = Tazpvp.getInstance().getPlayerStatService().getOrDefault(p.getUniqueId());
 
-@Deprecated
-public class Achievements extends ContainerData implements Serializable {
-    public Achievements() {
-        super(new HashMap<>() {{
-            put("Adept", false);
-            put("Merchant", false);
-            put("Bowling", false);
-            put("Legend", false);
-            put("Gamble", false);
-            put("Superior", false);
-            put("Craftsman", false);
-            put("Gladiator", false);
-            put("Charm", false);
-            put("Rehab", false);
-            put("Zorgin", false);
-            put("Grinder", false);
-            put("Harvester", false);
-            put("Speedrunner", false);
-            put("Artisan", false);
-        }});
+        if (!achievementEntity.isCompleted()) {
+            if (playerStatEntity.getDuelMMR() >= 350) {
+                achievementEntity.setCompleted(true);
+                userAchievementEntity.setGladiatorAchievementEntity(achievementEntity);
+                pw.setUserAchievementEntity(userAchievementEntity);
+                ChatFunctions.achievement(p, "Gladiator");
+            }
+        }
     }
 }

@@ -30,29 +30,34 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.player.achievements.achievement;
+package net.tazpvp.tazpvp.game.talents;
 
-import net.tazpvp.tazpvp.data.entity.AchievementEntity;
-import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
-import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
+import net.tazpvp.tazpvp.data.entity.TalentEntity;
+import net.tazpvp.tazpvp.utils.functions.BlockFunctions;
+import net.tazpvp.tazpvp.objects.Ore;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
+import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-public class Gamble extends Observable {
+public class Excavator extends Observable {
 
     @Override
-    public void death(Player victim, Player killer) {
-        final PlayerWrapper pw = PlayerWrapper.getPlayer(killer);
-        final UserAchievementEntity userAchievementEntity = pw.getUserAchievementEntity();
-        final AchievementEntity achievementEntity = userAchievementEntity.getGambleAchievementEntity();
+    public void mine(Player p, Material material) {
+        final PlayerWrapper pw = PlayerWrapper.getPlayer(p);
+        final TalentEntity talentEntity = pw.getTalentEntity();
 
-        if (!achievementEntity.isCompleted()) {
-            if (killer.getHealth() <= 1) {
-                achievementEntity.setCompleted(true);
-                userAchievementEntity.setGambleAchievementEntity(achievementEntity);
-                pw.setUserAchievementEntity(userAchievementEntity);
-                ChatFunctions.achievement(killer, "Gamble");
+        if (talentEntity.isExcavator()) {
+            if (p.getGameMode() == GameMode.SURVIVAL) {
+                for (Ore ore : BlockFunctions.ores) {
+                    if (ore.getMat() == material) {
+                        PlayerStatEntity playerStatEntity = Tazpvp.getInstance().getPlayerStatService().getOrDefault(p.getUniqueId());
+                        playerStatEntity.setXp(playerStatEntity.getXp() + 1);
+                    }
+                }
             }
         }
     }

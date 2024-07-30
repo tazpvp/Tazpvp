@@ -30,34 +30,46 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.player.achievements.achievement;
+package net.tazpvp.tazpvp.game.achievements;
 
-import net.tazpvp.tazpvp.data.LooseData;
 import net.tazpvp.tazpvp.data.entity.AchievementEntity;
+import net.tazpvp.tazpvp.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
 import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
 
-public class Bowling extends Observable {
-    @Override
-    public void death(Player victim, Player killer) {
-        if (victim == null || killer == null) {
-            return;
-        }
+public class Adept extends Observable {
 
-        final PlayerWrapper pw = PlayerWrapper.getPlayer(killer);
+    @Override
+    public void talent(Player p) {
+        final PlayerWrapper pw = PlayerWrapper.getPlayer(p);
         final UserAchievementEntity userAchievementEntity = pw.getUserAchievementEntity();
-        final AchievementEntity achievementEntity = userAchievementEntity.getBowlingAchievementEntity();
+        final AchievementEntity achievementEntity = userAchievementEntity.getAdeptAchievementEntity();
 
         if (!achievementEntity.isCompleted()) {
-            if (LooseData.getKs(killer.getUniqueId()) >= 50) {
-                achievementEntity.setCompleted(true);
-                userAchievementEntity.setBowlingAchievementEntity(achievementEntity);
-                pw.setUserAchievementEntity(userAchievementEntity);
-                ChatFunctions.achievement(killer, "Bowling");
-            }
+            TalentEntity talentEntity = pw.getTalentEntity();
+
+            if (!talentEntity.isAgile()) return;
+            if (!talentEntity.isHarvester()) return;
+            if (!talentEntity.isArchitect()) return;
+            if (!talentEntity.isCannibal()) return;
+            if (!talentEntity.isExcavator()) return;
+            if (!talentEntity.isBlessed()) return;
+            if (!talentEntity.isMoist()) return;
+            if (!talentEntity.isMedic()) return;
+            if (!talentEntity.isProficient()) return;
+            if (!talentEntity.isNecromancer()) return;
+            if (!talentEntity.isResilient()) return;
+            if (!talentEntity.isGlide()) return;
+            if (!talentEntity.isRevenge()) return;
+
+            achievementEntity.setCompleted(true);
+            userAchievementEntity.setAdeptAchievementEntity(achievementEntity);
+            pw.setUserAchievementEntity(userAchievementEntity);
+
+            ChatFunctions.achievement(p, "Adept");
         }
     }
 }

@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  *
- * Copyright (c) 2022, n-tdi
+ * Copyright (c) 2023, n-tdi
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,31 +30,28 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.player.achievements.achievement;
+package net.tazpvp.tazpvp.game.talents;
 
-import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.entity.AchievementEntity;
-import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
-import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
-import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
+import net.tazpvp.tazpvp.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
-public class Gladiator extends Observable {
+import java.util.Random;
+
+public class Hunter extends Observable {
     @Override
-    public void duel(Player p) {
-        final PlayerWrapper pw = PlayerWrapper.getPlayer(p);
-        final UserAchievementEntity userAchievementEntity = pw.getUserAchievementEntity();
-        final AchievementEntity achievementEntity = userAchievementEntity.getGladiatorAchievementEntity();
-        final PlayerStatEntity playerStatEntity = Tazpvp.getInstance().getPlayerStatService().getOrDefault(p.getUniqueId());
+    public void shoot(Player shooter) {
+        final PlayerWrapper pw = PlayerWrapper.getPlayer(shooter);
+        final TalentEntity talentEntity = pw.getTalentEntity();
 
-        if (!achievementEntity.isCompleted()) {
-            if (playerStatEntity.getDuelMMR() >= 350) {
-                achievementEntity.setCompleted(true);
-                userAchievementEntity.setGladiatorAchievementEntity(achievementEntity);
-                pw.setUserAchievementEntity(userAchievementEntity);
-                ChatFunctions.achievement(p, "Gladiator");
+        if (talentEntity.isHunter()) {
+
+
+            if (new Random().nextInt(11) > 8) {
+                shooter.getInventory().addItem(new ItemStack(Material.ARROW));
             }
         }
     }

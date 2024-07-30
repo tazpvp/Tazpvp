@@ -30,28 +30,23 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.player.talents.talent;
+package net.tazpvp.tazpvp.game.talents;
 
 import net.tazpvp.tazpvp.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+import org.bukkit.event.entity.EntityCombustEvent;
 
-public class Resilient extends Observable {
-
+public class Moist extends Observable {
     @Override
-    public void death(Player victim, Player killer) {
-        final PlayerWrapper pw = PlayerWrapper.getPlayer(killer);
+    public void burn(Player victim, EntityCombustEvent event) {
+        final PlayerWrapper pw = PlayerWrapper.getPlayer(victim);
         final TalentEntity talentEntity = pw.getTalentEntity();
 
-        if (talentEntity.isResilient()) {
-            if (victim != killer) {
-                killer.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 20 * 5, 0));
-            }
+        if (talentEntity.isMoist()) {
+            event.setCancelled(true);
+            victim.setFireTicks(0);
         }
-
-
     }
 }
