@@ -36,7 +36,7 @@ import net.tazpvp.tazpvp.npc.characters.NPC;
 import net.tazpvp.tazpvp.npc.characters.achievements.gui.Achievements;
 import net.tazpvp.tazpvp.npc.dialogue.Dialogues;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.helpers.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -50,7 +50,7 @@ import java.util.List;
 public class Lorenzo extends NPC {
 
     public Lorenzo() {
-        super(ChatFunctions.gradient("#068fff", "Lorenzo", true), new Location(Bukkit.getWorld("arena"), 12.5, 99, 20.5, 135, 0),
+        super(ChatHelper.gradient("#068fff", "Lorenzo", true), new Location(Bukkit.getWorld("arena"), 12.5, 99, 20.5, 135, 0),
                 Villager.Profession.FLETCHER,
                 Villager.Type.TAIGA,
                 Sound.ITEM_GOAT_HORN_SOUND_0,

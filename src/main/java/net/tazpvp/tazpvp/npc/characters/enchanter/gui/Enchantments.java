@@ -4,7 +4,7 @@ import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.game.items.enchants.Enchants;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.helpers.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
@@ -123,7 +123,7 @@ public class Enchantments extends GUI {
         final List<String> lore = Objects.requireNonNullElse(meta.getLore(), new ArrayList<>());
 
         boolean loreExists = false;
-        final String enchantLine = CC.GRAY + enchantPrefix + " " + ChatFunctions.intToRoman(level);
+        final String enchantLine = CC.GRAY + enchantPrefix + " " + ChatHelper.intToRoman(level);
 
         if (!lore.isEmpty()) {
             for (int i = 0; i < lore.size(); i++) {

@@ -37,7 +37,7 @@ import lombok.Getter;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
-import net.tazpvp.tazpvp.helpers.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -59,7 +59,7 @@ public class CrateManager {
         this.crates = new ArrayList<>();
 
         getCrates().add(new Crate(
-                new Location(Bukkit.getWorld("arena"), -16, 99, 7), ChatFunctions.gradient("#03fc39", "Common Crate", true), "common",
+                new Location(Bukkit.getWorld("arena"), -16, 99, 7), ChatHelper.gradient("#03fc39", "Common Crate", true), "common",
                     createItem("Azure Vapor", "Extinguish flames.", Material.BLUE_ORCHID, 1),
                     createItem("Sticky Web", "Slow down your enemies.", Material.COBWEB, 5),
                     createItem("Ink Splash", "Blind your enemies.", Material.INK_SAC, 3),
@@ -75,7 +75,7 @@ public class CrateManager {
                     createItem("Crossbow", "Stronger than the bow.", Material.CROSSBOW, 1)
                 ));
         getCrates().add(new Crate(
-                new Location(Bukkit.getWorld("arena"), -15, 99, 5), ChatFunctions.gradient("#039dfc", "Rare Crate", true), "rare",
+                new Location(Bukkit.getWorld("arena"), -15, 99, 5), ChatHelper.gradient("#039dfc", "Rare Crate", true), "rare",
                 createItem(Enchantment.MENDING),
                 createItem(Enchantment.SHARPNESS),
                 createItem(Enchantment.POWER),
@@ -87,7 +87,7 @@ public class CrateManager {
                 createItem(Enchantment.FIRE_ASPECT)
         ));
         getCrates().add(new Crate(
-                new Location(Bukkit.getWorld("arena"), -13, 99, 4), ChatFunctions.gradient("#db3bff", "Mythic Crate", true), "mythic",
+                new Location(Bukkit.getWorld("arena"), -13, 99, 4), ChatHelper.gradient("#db3bff", "Mythic Crate", true), "mythic",
                 createItem("Shard", "Valuable gem.", Material.AMETHYST_SHARD,1),
                 createItem("Shard", "Valuable gem.", Material.AMETHYST_SHARD,2),
                 createItem("Shard", "Valuable gem.", Material.AMETHYST_SHARD,3),
@@ -96,7 +96,7 @@ public class CrateManager {
     }
 
     public ItemStack createItem(String name, String description, Material material, int amount) {
-        String name2 = ChatFunctions.gradient("#db3bff", name, true);
+        String name2 = ChatHelper.gradient("#db3bff", name, true);
         return ItemBuilder.of(material).amount(amount).name(name2).build();
     }
 

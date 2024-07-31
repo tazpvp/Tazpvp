@@ -89,7 +89,7 @@ import net.tazpvp.tazpvp.utils.ConfigUtil;
 import net.tazpvp.tazpvp.services.PlayerNameTagService;
 import net.tazpvp.tazpvp.utils.discord.bot.BotThread;
 import net.tazpvp.tazpvp.helpers.AfkFunctions;
-import net.tazpvp.tazpvp.helpers.CombatTagFunctions;
+import net.tazpvp.tazpvp.helpers.CombatTagHelper;
 import net.tazpvp.tazpvp.utils.leaderboard.spawnable.SpawnableLeaderboardManager;
 import net.tazpvp.tazpvp.utils.observer.Observer;
 import net.tazpvp.tazpvp.utils.passive.Alerts;
@@ -176,7 +176,7 @@ public final class Tazpvp extends JavaPlugin {
         registerObservable();
         EnchantUtil.register();
         spawnNpcs();
-        CombatTagFunctions.initCombatTag();
+        CombatTagHelper.initCombatTag();
         AfkFunctions.setup();
         UsableItem.registerCustomItems();
 
@@ -321,24 +321,24 @@ public final class Tazpvp extends JavaPlugin {
     }
 
     public void registerEvents() {
-        getServer().getPluginManager().registerEvents(new Damage(), this);
-        getServer().getPluginManager().registerEvents(new Join(), this);
-        getServer().getPluginManager().registerEvents(new Leave(), this);
-        getServer().getPluginManager().registerEvents(new InventoryClick(), this);
-        getServer().getPluginManager().registerEvents(new Break(), this);
-        getServer().getPluginManager().registerEvents(new Move(), this);
-        getServer().getPluginManager().registerEvents(new Place(), this);
-        getServer().getPluginManager().registerEvents(new Chat(), this);
-        getServer().getPluginManager().registerEvents(new Exp(), this);
-        getServer().getPluginManager().registerEvents(new Interact(), this);
-        getServer().getPluginManager().registerEvents(new Shoot(), this);
-        getServer().getPluginManager().registerEvents(new ProjectileLaunch(this), this);
+        getServer().getPluginManager().registerEvents(new DamageListener(), this);
+        getServer().getPluginManager().registerEvents(new JoinListener(), this);
+        getServer().getPluginManager().registerEvents(new LeaveListener(), this);
+        getServer().getPluginManager().registerEvents(new InventoryListener(), this);
+        getServer().getPluginManager().registerEvents(new BreakListener(), this);
+        getServer().getPluginManager().registerEvents(new MoveListener(), this);
+        getServer().getPluginManager().registerEvents(new PlaceListener(), this);
+        getServer().getPluginManager().registerEvents(new ChatListener(), this);
+        getServer().getPluginManager().registerEvents(new ExpListener(), this);
+        getServer().getPluginManager().registerEvents(new InteractListener(), this);
+        getServer().getPluginManager().registerEvents(new ShootListener(), this);
+        getServer().getPluginManager().registerEvents(new ProjectileListener(this), this);
         getServer().getPluginManager().registerEvents(new DeathListener(), this);
-        getServer().getPluginManager().registerEvents(new CommandSend(), this);
-        getServer().getPluginManager().registerEvents(new Craft(), this);
-        getServer().getPluginManager().registerEvents(new Explode(), this);
-        getServer().getPluginManager().registerEvents(new EntitySpawn(), this);
-        getServer().getPluginManager().registerEvents(new Burn(), this);
+        getServer().getPluginManager().registerEvents(new CommandListener(), this);
+        getServer().getPluginManager().registerEvents(new CraftListener(), this);
+        getServer().getPluginManager().registerEvents(new ExplodeListener(), this);
+        getServer().getPluginManager().registerEvents(new EntitySpawnListener(), this);
+        getServer().getPluginManager().registerEvents(new BurnListener(), this);
     }
 
     private void spawnNpcs() {

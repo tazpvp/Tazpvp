@@ -1,9 +1,9 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.enums.ItemEnum;
 import net.tazpvp.tazpvp.game.bosses.BossManager;
 import net.tazpvp.tazpvp.game.bosses.zorg.attacks.SummonUndeadAttack;
-import net.tazpvp.tazpvp.helpers.DeathFunctions;
 import net.tazpvp.tazpvp.objects.DeathObject;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Location;
@@ -60,7 +60,7 @@ public class DeathListener implements Listener {
 
             BossManager.bossDied();
             World world = entity.getWorld();
-            world.dropItemNaturally(location.add(0, 1, 0), DeathFunctions.deathItem());
+            world.dropItemNaturally(location.add(0, 1, 0), ItemEnum.getRandomDrop());
 
             if (!SummonUndeadAttack.undeadList.isEmpty()) {
                 for (Zombie z : SummonUndeadAttack.undeadList) {

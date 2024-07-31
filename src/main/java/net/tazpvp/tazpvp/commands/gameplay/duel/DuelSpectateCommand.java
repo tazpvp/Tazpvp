@@ -5,7 +5,7 @@ import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
 import net.tazpvp.tazpvp.game.duels.Duel;
 import net.tazpvp.tazpvp.game.events.Event;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.helpers.CombatTagFunctions;
+import net.tazpvp.tazpvp.helpers.CombatTagHelper;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -37,7 +37,7 @@ public class DuelSpectateCommand extends NRCommand {
         }
 
         if (playerWrapper.getDuel() != null || (Event.currentEvent != null && Event.currentEvent.getParticipantList().contains(p.getUniqueId())) ||
-                CombatTagFunctions.isInCombat(p.getUniqueId()) || p.getGameMode() != GameMode.SURVIVAL || playerWrapper.getSpectating() != null) {
+                CombatTagHelper.isInCombat(p.getUniqueId()) || p.getGameMode() != GameMode.SURVIVAL || playerWrapper.getSpectating() != null) {
             sendIncorrectUsage(p, "You cannot use this right now.");
             return true;
         }

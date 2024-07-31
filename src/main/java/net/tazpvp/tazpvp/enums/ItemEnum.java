@@ -1,7 +1,7 @@
 package net.tazpvp.tazpvp.enums;
 
 import lombok.Getter;
-import net.tazpvp.tazpvp.helpers.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -54,7 +54,7 @@ public enum ItemEnum {
     final String lore;
     final boolean drop;
 
-    final Random random = new Random();
+    private static final Random random = new Random();
 
     ItemEnum(Material material, String name, String lore, boolean drop) {
         this.enchant = Enchantment.MENDING;
@@ -74,21 +74,21 @@ public enum ItemEnum {
 
     public ItemStack getItem() {
         return ItemBuilder.of(material)
-                .name(ChatFunctions.gradient("", name,true))
+                .name(ChatHelper.gradient("", name,true))
                 .lore(lore)
                 .build();
     }
 
     public ItemStack getItem(Material mat) {
         return ItemBuilder.of(mat)
-                .name(ChatFunctions.gradient("", name,true))
+                .name(ChatHelper.gradient("", name,true))
                 .lore(lore)
                 .build();
     }
 
     public ItemStack getShopItem(int cost, int amount, boolean glow) {
         return ItemBuilder.of(material, amount)
-                .name(ChatFunctions.gradient("", name,true))
+                .name(ChatHelper.gradient("", name,true))
                 .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: " + cost + " Coins")
                 .glow(glow)
                 .build();
@@ -96,7 +96,7 @@ public enum ItemEnum {
 
     public ItemStack getShopItem(Material mat, int cost, int amount, boolean glow) {
         return ItemBuilder.of(mat, amount)
-                .name(ChatFunctions.gradient("", name,true))
+                .name(ChatHelper.gradient("", name,true))
                 .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: " + cost + " Coins")
                 .glow(glow)
                 .build();
@@ -104,7 +104,7 @@ public enum ItemEnum {
 
     public ItemStack getShopItem(Material mat, int cost, int amount, boolean glow, String extraLore) {
         return ItemBuilder.of(mat, amount)
-                .name(ChatFunctions.gradient("", name,true))
+                .name(ChatHelper.gradient("", name,true))
                 .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: " + cost + " Coins", extraLore)
                 .glow(glow)
                 .build();
@@ -112,7 +112,7 @@ public enum ItemEnum {
 
     public ItemStack getShopEnchant(int cost, int amount) {
         return ItemBuilder.of(material, amount)
-                .name(ChatFunctions.gradient("#db3bff", name,true))
+                .name(ChatHelper.gradient("#db3bff", name,true))
                 .lore(
                         CC.GOLD + lore,
                         " ",
@@ -122,7 +122,7 @@ public enum ItemEnum {
                 .build();
     }
 
-    public ItemStack getRandomDrop() {
+    public static ItemStack getRandomDrop() {
         List<ItemStack> drops = new ArrayList<>();
         for (ItemEnum item : ItemEnum.values()) {
             if (item.isDrop()) {

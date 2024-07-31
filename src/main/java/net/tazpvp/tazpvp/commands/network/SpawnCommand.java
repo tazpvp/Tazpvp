@@ -4,7 +4,7 @@ import lombok.NonNull;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.game.duels.Duel;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.helpers.CombatTagFunctions;
+import net.tazpvp.tazpvp.helpers.CombatTagHelper;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -31,7 +31,7 @@ public class SpawnCommand extends NRCommand {
             return true;
         }
 
-        if (CombatTagFunctions.isInCombat(p.getUniqueId())) {
+        if (CombatTagHelper.isInCombat(p.getUniqueId())) {
             p.sendMessage(CC.RED + "You cannot use this command while in combat.");
             return true;
         }

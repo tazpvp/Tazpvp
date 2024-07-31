@@ -34,6 +34,7 @@ public class BlockShop extends GUI {
             Material.RED_WOOL,
             Material.BLACK_WOOL
     );
+
     private final List<Material> wood = List.of(
             Material.OAK_PLANKS,
             Material.CHERRY_PLANKS,

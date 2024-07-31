@@ -36,7 +36,7 @@ package net.tazpvp.tazpvp.game.crates;
 import lombok.Getter;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.helpers.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -53,19 +53,19 @@ public class KeyFactory {
     private final NamespacedKey crateKey;
 
     public ItemStack createCommonKey() {
-        ItemStack i = ItemBuilder.of(Material.TRIPWIRE_HOOK, 1, ChatFunctions.gradient("#03fc39", "Common Key", true))
+        ItemStack i = ItemBuilder.of(Material.TRIPWIRE_HOOK, 1, ChatHelper.gradient("#03fc39", "Common Key", true))
                 .lore(CC.GRAY + "Right-click the crate.").build();
         i = setCrateKey(i, "common");
         return i;
     }
     public ItemStack createRareKey() {
-        ItemStack i = ItemBuilder.of(Material.TRIPWIRE_HOOK, 1, ChatFunctions.gradient("#039dfc", "Rare Key", true))
+        ItemStack i = ItemBuilder.of(Material.TRIPWIRE_HOOK, 1, ChatHelper.gradient("#039dfc", "Rare Key", true))
                 .lore(CC.GRAY + "Right-click the crate.").build();
         i = setCrateKey(i, "rare");
         return i;
     }
     public ItemStack createMythicKey() {
-        ItemStack i = ItemBuilder.of(Material.TRIPWIRE_HOOK, 1, ChatFunctions.gradient("#db3bff", "Mythic Key", true))
+        ItemStack i = ItemBuilder.of(Material.TRIPWIRE_HOOK, 1, ChatHelper.gradient("#db3bff", "Mythic Key", true))
                 .lore(CC.GRAY + "Right-click the crate.").build();
         i = setCrateKey(i, "mythic");
         return i;

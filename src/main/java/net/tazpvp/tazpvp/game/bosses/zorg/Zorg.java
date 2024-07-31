@@ -3,7 +3,7 @@ package net.tazpvp.tazpvp.game.bosses.zorg;
 import net.tazpvp.tazpvp.game.bosses.CustomBoss;
 import net.tazpvp.tazpvp.game.bosses.zorg.attacks.SonicBoomAttack;
 import net.tazpvp.tazpvp.game.bosses.zorg.attacks.SummonUndeadAttack;
-import net.tazpvp.tazpvp.helpers.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -33,7 +33,7 @@ public class Zorg extends CustomBoss {
         equipment.setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
         equipment.setBoots(new ItemStack(Material.DIAMOND_BOOTS));
         equipment.setItemInMainHand(new ItemBuilder().item(new ItemStack(Material.DIAMOND_SWORD)).enchantment(Enchantment.KNOCKBACK, 2).build());
-        getBossAs().setCustomName(ChatFunctions.gradient("#FFADED", "Zorg", true));
+        getBossAs().setCustomName(ChatHelper.gradient("#FFADED", "Zorg", true));
 
         getBossAs().setAI(true);
         getBossAs().setAware(true);

@@ -4,9 +4,9 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.helpers.BlockFunctions;
-import net.tazpvp.tazpvp.objects.Ore;
-import net.tazpvp.tazpvp.objects.Pickaxe;
+import net.tazpvp.tazpvp.helpers.BlockHelper;
+import net.tazpvp.tazpvp.objects.OreObject;
+import net.tazpvp.tazpvp.objects.PickaxeObject;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -33,10 +33,10 @@ public class Upgrade extends GUI {
 
         PlayerStatEntity playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
 
-        ItemStack tool = BlockFunctions.getPickaxe(p);
+        ItemStack tool = BlockHelper.getPickaxe(p);
         int balance = playerStatEntity.getCoins();
 
-        Pickaxe currentPickaxe = BlockFunctions.pickaxes.stream()
+        PickaxeObject currentPickaxe = BlockHelper.pickaxes.stream()
                 .filter(pickaxe -> pickaxe.getItem().getType() == tool.getType())
                 .findFirst()
                 .orElse(null);
@@ -94,10 +94,10 @@ public class Upgrade extends GUI {
             int reward = 0;
             for (ItemStack i : p.getInventory()) {
                 if (i != null) {
-                    Ore ore = BlockFunctions.getOreFrom(i.getType());
+                    OreObject ore = BlockHelper.getOreFrom(i.getType());
                     int amount = i.getAmount();
                     if (ore != null) {
-                        reward += (BlockFunctions.isSmelted(i.getType())) ? ((ore.getCost() * 2) * amount) : (ore.getCost() * amount);
+                        reward += (BlockHelper.isSmelted(i.getType())) ? ((ore.getCost() * 2) * amount) : (ore.getCost() * amount);
 
                         i.setAmount(0);
                     }

@@ -38,7 +38,7 @@ import net.tazpvp.tazpvp.npc.characters.NPC;
 import net.tazpvp.tazpvp.npc.characters.guildmaster.gui.GuildMenu;
 import net.tazpvp.tazpvp.npc.dialogue.Dialogues;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.helpers.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -55,7 +55,7 @@ public class Rigel extends NPC {
     private final PlayerStatService playerStatService;
 
     public Rigel(GuildService guildService, PlayerStatService playerStatService) {
-        super(ChatFunctions.gradient("#068fff", "Lorenzo", true), new Location(Bukkit.getWorld("arena"), 5, 99, 10, 135, 0),
+        super(ChatHelper.gradient("#068fff", "Lorenzo", true), new Location(Bukkit.getWorld("arena"), 5, 99, 10, 135, 0),
                 Villager.Profession.FLETCHER,
                 Villager.Type.TAIGA,
                 Sound.ITEM_GOAT_HORN_SOUND_0,

@@ -34,18 +34,18 @@ public class AfkFunctions {
                             String keyType;
 
                             if (probability < 70) {
-                                keyType = ChatFunctions.gradient("#03fc39", "Common", true);
+                                keyType = ChatHelper.gradient("#03fc39", "Common", true);
                                 p.getInventory().addItem(KeyFactory.getFactory().createCommonKey());
                             } else if (probability < 95) {
-                                keyType = ChatFunctions.gradient("#039dfc", "Rare", true);
+                                keyType = ChatHelper.gradient("#039dfc", "Rare", true);
                                 p.getInventory().addItem(KeyFactory.getFactory().createRareKey());
                             } else {
-                                keyType = ChatFunctions.gradient("#db3bff", "Mythic", true);
+                                keyType = ChatHelper.gradient("#db3bff", "Mythic", true);
                                 p.getInventory().addItem(KeyFactory.getFactory().createMythicKey());
                             }
 
                             p.sendMessage(
-                                    ChatFunctions.gradient("#ffc70b", "AFK Rewards: \n", true) +
+                                    ChatHelper.gradient("#ffc70b", "AFK Rewards: \n", true) +
                                             "\n" +
                                     CC.GRAY + "+ 1 " + keyType + " Key\n" +
                                     CC.GRAY + "+ $100 Coins\n"

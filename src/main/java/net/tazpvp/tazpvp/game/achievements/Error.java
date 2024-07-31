@@ -4,7 +4,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
-import net.tazpvp.tazpvp.helpers.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
@@ -22,7 +22,7 @@ public class Error extends Observable {
                 achievementEntity.setCompleted(true);
                 userAchievementEntity.setErrorAchievementEntity(achievementEntity);
                 pw.setUserAchievementEntity(userAchievementEntity);
-                ChatFunctions.achievement(killer, "Error");
+                ChatHelper.achievement(killer, "Error");
             }
         }
     }

@@ -3,7 +3,7 @@ package net.tazpvp.tazpvp.game.achievements;
 import net.tazpvp.tazpvp.data.LooseData;
 import net.tazpvp.tazpvp.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
-import net.tazpvp.tazpvp.helpers.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Material;
@@ -21,7 +21,7 @@ public class Grinder extends Observable {
                 achievementEntity.setCompleted(true);
                 userAchievementEntity.setGrinderAchievementEntity(achievementEntity);
                 pw.setUserAchievementEntity(userAchievementEntity);
-                ChatFunctions.achievement(p, "Grinder");
+                ChatHelper.achievement(p, "Grinder");
             }
         }
     }

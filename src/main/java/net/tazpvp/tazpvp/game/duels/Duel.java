@@ -38,8 +38,8 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.helpers.ChatFunctions;
-import net.tazpvp.tazpvp.helpers.PlayerFunctions;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
+import net.tazpvp.tazpvp.helpers.PlayerHelper;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -105,7 +105,7 @@ public abstract class Duel {
         final PlayerStatEntity winnerStatEntity = playerStatService.getOrDefault(getWinner());
         final PlayerStatEntity loserStatEntity = playerStatService.getOrDefault(loserID);
 
-        ChatFunctions.announce(
+        ChatHelper.announce(
                 CC.AQUA + Bukkit.getOfflinePlayer(getWinner()).getName() +
                         CC.DARK_AQUA + " won a duel against " +
                         CC.AQUA + Bukkit.getOfflinePlayer(loserID).getName(),
@@ -135,7 +135,7 @@ public abstract class Duel {
                     p.setGameMode(GameMode.SURVIVAL);
                     p.teleport(NRCore.config.spawn);
                     PlayerWrapper.getPlayer(p).setDuel(null);
-                    PlayerFunctions.resetHealth(p);
+                    PlayerHelper.resetHealth(p);
                 });
 
                 new WorldUtil().deleteWorld(getWorldName());

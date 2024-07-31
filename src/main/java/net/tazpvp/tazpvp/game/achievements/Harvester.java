@@ -2,7 +2,7 @@ package net.tazpvp.tazpvp.game.achievements;
 
 import net.tazpvp.tazpvp.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
-import net.tazpvp.tazpvp.helpers.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.entity.Player;
@@ -20,7 +20,7 @@ public class Harvester extends Observable {
                 achievementEntity.setCompleted(true);
                 userAchievementEntity.setHarvesterAchievementEntity(achievementEntity);
                 pw.setUserAchievementEntity(userAchievementEntity);
-                ChatFunctions.achievement(p, "Harvester");
+                ChatHelper.achievement(p, "Harvester");
             }
         }
     }

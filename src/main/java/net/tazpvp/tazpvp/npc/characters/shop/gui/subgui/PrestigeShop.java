@@ -7,20 +7,16 @@ import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.data.services.TalentService;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.enums.ItemEnum;
-import net.tazpvp.tazpvp.helpers.ChatFunctions;
-import net.tazpvp.tazpvp.helpers.PlayerFunctions;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
+import net.tazpvp.tazpvp.helpers.PlayerHelper;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
-import world.ntdi.nrcore.utils.item.builders.EnchantmentBookBuilder;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
-
-import javax.annotation.Nullable;
 
 public class PrestigeShop extends GUI {
     private int slotNum;
@@ -44,7 +40,7 @@ public class PrestigeShop extends GUI {
         fill(0, 5*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
         addButton(Button.create(ItemBuilder.of(Material.ENCHANTING_TABLE, 1)
-                .name(ChatFunctions.gradient("#eb0fff", "Rebirth", true))
+                .name(ChatHelper.gradient("#eb0fff", "Rebirth", true))
                 .lore(CC.GRAY + "Reset your stats ", CC.GRAY + "and gain buffs.",
                         "", CC.GRAY + "- 25% more EXP gain.",
                         CC.GRAY + "- 25% more coins.",
@@ -75,7 +71,7 @@ public class PrestigeShop extends GUI {
 
             p.getEnderChest().clear();
             p.getInventory().clear();
-            PlayerFunctions.kitPlayer(p);
+            PlayerHelper.kitPlayer(p);
 
             p.closeInventory();
             p.sendTitle(CC.LIGHT_PURPLE + "" + CC.BOLD + "REBIRTH", CC.DARK_PURPLE + "You are reborn anew", 20, 40, 20);

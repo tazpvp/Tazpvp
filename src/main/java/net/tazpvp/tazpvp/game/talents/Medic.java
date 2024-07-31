@@ -4,7 +4,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.GuildEntity;
 import net.tazpvp.tazpvp.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.helpers.PlayerFunctions;
+import net.tazpvp.tazpvp.helpers.PlayerHelper;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
@@ -25,7 +25,7 @@ public class Medic extends Observable {
                         if (victimGuild == killerGuild) {
                             if (p.getLocation().distance(victim.getLocation()) <= 5) {
                                 if (p != killer) {
-                                    PlayerFunctions.addHealth(p, 2);
+                                    PlayerHelper.addHealth(p, 2);
                                     p.sendMessage(CC.DARK_GREEN + "Your guild mate healed you.");
                                 }
                             }

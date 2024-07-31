@@ -37,8 +37,8 @@ import net.tazpvp.tazpvp.npc.characters.enchanter.gui.Upgrade;
 import net.tazpvp.tazpvp.npc.dialogue.Dialogues;
 import net.tazpvp.tazpvp.npc.characters.NPC;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.helpers.BlockFunctions;
-import net.tazpvp.tazpvp.helpers.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.BlockHelper;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -54,7 +54,7 @@ public class Caesar extends NPC {
     PlayerStatService playerStatService;
 
     public Caesar(PlayerStatService playerStatService) {
-        super(ChatFunctions.gradient("#fcfc00", "Caesar", true), new Location(
+        super(ChatHelper.gradient("#fcfc00", "Caesar", true), new Location(
                 Bukkit.getWorld("arena"), -3, 90, 132, -155.5F, 0),
                 Villager.Profession.WEAPONSMITH,
                 Villager.Type.JUNGLE,
@@ -96,7 +96,7 @@ public class Caesar extends NPC {
     @Override
     public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
 
-        if (BlockFunctions.getPickaxe(p) != null) {
+        if (BlockHelper.getPickaxe(p) != null) {
             new Upgrade(p, playerStatService);
         } else {
             p.sendMessage(CC.YELLOW + "[" + "Caesar" + "] " + CC.GOLD + "Give me your pickaxe and I can upgrade it.");

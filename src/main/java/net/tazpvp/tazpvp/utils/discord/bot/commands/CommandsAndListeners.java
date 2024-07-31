@@ -41,7 +41,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
-import net.tazpvp.tazpvp.helpers.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
 import net.tazpvp.tazpvp.utils.leaderboard.LeaderboardEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -79,7 +79,7 @@ public class CommandsAndListeners extends ListenerAdapter {
             return;
         }
 
-        final String prefix = ChatFunctions.gradient("#db3bff", "DISCORD", true);
+        final String prefix = ChatHelper.gradient("#db3bff", "DISCORD", true);
         final String name = ChatColor.GRAY + event.getAuthor().getEffectiveName();
         final String message = ChatColor.WHITE + event.getMessage().getContentStripped();
 

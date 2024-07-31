@@ -34,7 +34,7 @@ package net.tazpvp.tazpvp.data;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.helpers.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
 import org.bukkit.ChatColor;
 
 import java.util.List;
@@ -42,15 +42,15 @@ import java.util.List;
 public enum Rank {
     DEFAULT("default", null, ChatColor.GRAY, 9, List.of("")),
     PREMIUM("premium", CC.GREEN+"❂", ChatColor.GREEN, 8, List.of("")),
-    HELPER("helper", ChatFunctions.gradient("#04FF17", "HELPER", true), ChatColor.GREEN, 7,
+    HELPER("helper", ChatHelper.gradient("#04FF17", "HELPER", true), ChatColor.GREEN, 7,
             List.of("tazpvp.mute", "tazpvp.staff", "tazpvp.staffchat")),
-    MODERATOR("moderator", ChatFunctions.gradient("#04A0FF", "MOD", true), ChatColor.AQUA, 6,
+    MODERATOR("moderator", ChatHelper.gradient("#04A0FF", "MOD", true), ChatColor.AQUA, 6,
             List.of("tazpvp.ban", "tazpvp.restore", "vulcan.alerts", "tazpvp.vanish", "tazpvp.hide", "tazpvp.staffchat")),
-    ADMIN("admin", ChatFunctions.gradient("#FFE104", "ADMIN", true), ChatColor.YELLOW, 5,
+    ADMIN("admin", ChatHelper.gradient("#FFE104", "ADMIN", true), ChatColor.YELLOW, 5,
             List.of("tazpvp.restore", "tazpvp.kit", "tazpvp.staffchat")),
-    MANAGER("manager", ChatFunctions.gradient("#db3bff", "MANAGER", true), ChatColor.BLUE, 4,
+    MANAGER("manager", ChatHelper.gradient("#db3bff", "MANAGER", true), ChatColor.BLUE, 4,
             List.of("tazpvp.stats", "tazpvp.staffchat")),
-    OWNER("owner", ChatFunctions.gradient("#ff6417", "OWNER", true), ChatColor.RED, 1,
+    OWNER("owner", ChatHelper.gradient("#ff6417", "OWNER", true), ChatColor.RED, 1,
             List.of("is.op"));
 
     @Getter

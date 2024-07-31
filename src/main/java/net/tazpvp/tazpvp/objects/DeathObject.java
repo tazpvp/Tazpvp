@@ -10,13 +10,13 @@ import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.implementations.KitServiceImpl;
 import net.tazpvp.tazpvp.data.services.KitService;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
+import net.tazpvp.tazpvp.enums.ItemEnum;
 import net.tazpvp.tazpvp.game.booster.ActiveBoosterManager;
 import net.tazpvp.tazpvp.game.booster.BoosterBonus;
 import net.tazpvp.tazpvp.game.booster.BoosterTypes;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.helpers.CombatTagFunctions;
-import net.tazpvp.tazpvp.helpers.DeathFunctions;
-import net.tazpvp.tazpvp.helpers.PlayerFunctions;
+import net.tazpvp.tazpvp.helpers.CombatTagHelper;
+import net.tazpvp.tazpvp.helpers.PlayerHelper;
 import net.tazpvp.tazpvp.utils.kit.SerializableInventory;
 import net.tazpvp.tazpvp.utils.player.PlayerInventoryStorage;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
@@ -61,9 +61,9 @@ public class DeathObject {
             this.location = null;
         }
         if (killer == null) {
-            final UUID currentKiller = CombatTagFunctions.getLastAttacker(victim);
+            final UUID currentKiller = CombatTagHelper.getLastAttacker(victim);
             if (currentKiller != null) {
-                CombatTag.tags.get(victim).getAttackers().clear();
+                CombatObject.tags.get(victim).getAttackers().clear();
                 this.killer = currentKiller;
                 this.killerWrapper = PlayerWrapper.getPlayer(currentKiller);
             } else {
@@ -110,17 +110,17 @@ public class DeathObject {
 
         final String kitSerial = kitEntity.getSerial();
         if (kitSerial == null || kitSerial.isEmpty()) {
-            PlayerFunctions.kitPlayer(pVictim);
+            PlayerHelper.kitPlayer(pVictim);
         } else {
             SerializableInventory serializableInventory = SerializableInventory.convertFromString(kitSerial);
-            serializableInventory.addItems(pVictim.getInventory(), PlayerFunctions.getKitItems(pVictim));
+            serializableInventory.addItems(pVictim.getInventory(), PlayerHelper.getKitItems(pVictim));
 
-            PlayerFunctions.armorPlayer(pVictim);
+            PlayerHelper.armorPlayer(pVictim);
         }
 
-        PlayerFunctions.resetHealth(pVictim);
-        PlayerFunctions.feedPlr(pVictim);
-        CombatTag.tags.get(pVictim.getUniqueId()).endCombat(null, false);
+        PlayerHelper.resetHealth(pVictim);
+        PlayerHelper.feedPlr(pVictim);
+        CombatObject.tags.get(pVictim.getUniqueId()).endCombat(null, false);
     }
 
     public void dropItems() {
@@ -137,9 +137,9 @@ public class DeathObject {
 
             if (world != null) {
                 if (killerWrapper.getTalentEntity().isNecromancer()) {
-                    world.dropItemNaturally(location.add(0, 2, 0), DeathFunctions.deathItem());
+                    world.dropItemNaturally(location.add(0, 2, 0), ItemEnum.getRandomDrop());
                 }
-                world.dropItemNaturally(location.add(0, 1, 0), DeathFunctions.deathItem());
+                world.dropItemNaturally(location.add(0, 1, 0), ItemEnum.getRandomDrop());
             }
         }
     }
@@ -180,12 +180,12 @@ public class DeathObject {
     }
 
     public void respawn() {
-        EulerAngleSpectating eulerAngleSpectating;
+        SpectateObject spectateObject;
         Location camLoc = location;
 
         if (killer == null) {
-            if (CombatTagFunctions.getLastAttacker(victim) != null) {
-                UUID assistKillerId = CombatTagFunctions.getLastAttacker(victim);
+            if (CombatTagHelper.getLastAttacker(victim) != null) {
+                UUID assistKillerId = CombatTagHelper.getLastAttacker(victim);
                 if (assistKillerId != null) {
                     Player assistKiller = Bukkit.getPlayer(assistKillerId);
                     if (assistKiller != null) {
@@ -197,9 +197,9 @@ public class DeathObject {
             camLoc = pKiller.getLocation();
         }
 
-        eulerAngleSpectating = new EulerAngleSpectating(camLoc);
-        pVictim.teleport(eulerAngleSpectating.getResult());
-        eulerAngleSpectating.faceLocation(pVictim);
+        spectateObject = new SpectateObject(camLoc);
+        pVictim.teleport(spectateObject.getResult());
+        spectateObject.faceLocation(pVictim);
         pVictim.setGameMode(GameMode.SPECTATOR);
         pVictim.playSound(pVictim.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1, 1);
         pVictim.sendTitle(CC.RED + "" + CC.BOLD + "YOU DIED", CC.GOLD + "Respawning...", 5, 50, 5);
@@ -232,7 +232,7 @@ public class DeathObject {
         }
     }
     public void updateStats() {
-        CombatTag tag = CombatTag.tags.get(victim);
+        CombatObject tag = CombatObject.tags.get(victim);
         if (!tag.getAttackers().isEmpty()) {
             for (UUID uuid : tag.getAttackers()) {
                 if (uuid != killer && uuid != null) {

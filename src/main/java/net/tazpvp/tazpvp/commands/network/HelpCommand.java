@@ -35,7 +35,7 @@ package net.tazpvp.tazpvp.commands.network;
 
 import lombok.NonNull;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.helpers.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -77,7 +77,7 @@ public class HelpCommand extends NRCommand {
             p.sendMessage(text + "Ways to get coins:");
             p.sendMessage(highlight + "- " + text + "Killing & Kill assisting");
             p.sendMessage(highlight + "- " + text + "Collecting bounties");
-            p.sendMessage(highlight + "- " + text + "Selling " + ChatFunctions.gradient("#db3bff", "Shards", true) + text + " to " + highlight + "Bub");
+            p.sendMessage(highlight + "- " + text + "Selling " + ChatHelper.gradient("#db3bff", "Shards", true) + text + " to " + highlight + "Bub");
             p.sendMessage(highlight + "- " + text + "Mining and selling ores to " + highlight + "Caesar");
             p.sendMessage(highlight + "- " + text + "Opening crates");
             p.sendMessage("");

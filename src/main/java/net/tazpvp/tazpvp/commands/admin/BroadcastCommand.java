@@ -1,7 +1,7 @@
 package net.tazpvp.tazpvp.commands.admin;
 
 import lombok.NonNull;
-import net.tazpvp.tazpvp.helpers.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
@@ -28,7 +28,7 @@ public class BroadcastCommand extends NRCommand {
         }
 
         String message = String.join(" ", args);
-        ChatFunctions.announce(ChatColor.GREEN + "[Broadcast] " + ChatColor.WHITE + message, Sound.BLOCK_NOTE_BLOCK_PLING);
+        ChatHelper.announce(ChatColor.GREEN + "[Broadcast] " + ChatColor.WHITE + message, Sound.BLOCK_NOTE_BLOCK_PLING);
         return true;
 
 

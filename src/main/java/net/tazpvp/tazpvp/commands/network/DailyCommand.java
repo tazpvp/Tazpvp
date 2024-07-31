@@ -6,7 +6,7 @@ import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.game.crates.KeyFactory;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.helpers.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -33,7 +33,7 @@ public class DailyCommand extends NRCommand {
                 p.getInventory().addItem(KeyFactory.getFactory().createMythicKey());
             } else if (Tazpvp.getCrateManager().canClaimDaily(p)) {
                 p.getInventory().addItem(KeyFactory.getFactory().createCommonKey());
-                p.sendMessage(CC.GREEN + "You claimed your daily " + ChatFunctions.gradient("#03fc39", "Common Key", true));
+                p.sendMessage(CC.GREEN + "You claimed your daily " + ChatHelper.gradient("#03fc39", "Common Key", true));
                 p.playSound(p.getLocation(), Sound.ITEM_BOTTLE_FILL_DRAGONBREATH, 1F, 1F);
 
                 playerStatEntity.setLastClaim(currentTime);

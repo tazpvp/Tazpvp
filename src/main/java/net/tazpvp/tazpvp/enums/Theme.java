@@ -33,7 +33,7 @@
 package net.tazpvp.tazpvp.enums;
 
 import lombok.Getter;
-import net.tazpvp.tazpvp.helpers.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
 
 @Getter
 public enum Theme {
@@ -48,6 +48,6 @@ public enum Theme {
     }
 
     public String gradient(String text, boolean bold) {
-        return ChatFunctions.gradient(hex, text, bold);
+        return ChatHelper.gradient(hex, text, bold);
     }
 }

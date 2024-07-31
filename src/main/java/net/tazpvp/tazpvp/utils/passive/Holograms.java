@@ -2,7 +2,7 @@ package net.tazpvp.tazpvp.utils.passive;
 
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.enums.Theme;
-import net.tazpvp.tazpvp.helpers.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -21,8 +21,8 @@ public class Holograms {
             "Type " + CC.AQUA + "/help", CC.WHITE + "for a guide!"
     };
     private static String[] afkPit = {
-            ChatFunctions.gradient("#8fff17", "AFK PIT", true),
-            ChatFunctions.gradient("#8fff17", "1x Key Rewards", true),
+            ChatHelper.gradient("#8fff17", "AFK PIT", true),
+            ChatHelper.gradient("#8fff17", "1x Key Rewards", true),
     };
     public static void holograms() {
         holograms.add(

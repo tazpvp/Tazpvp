@@ -34,7 +34,7 @@ package net.tazpvp.tazpvp.utils.passive;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.game.items.StaticItems;
-import net.tazpvp.tazpvp.helpers.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -60,7 +60,7 @@ public class Generator {
                     Item i2 = (Bukkit.getWorld("arena")).dropItem(new Location(Bukkit.getWorld("arena"), -24.5, 91, 76.5), shard);
                     i2.setVelocity(new Vector(0, 0, 0));
 
-                    ChatFunctions.announce(ChatColor.LIGHT_PURPLE + " The generators have spawned shards.", Sound.BLOCK_NOTE_BLOCK_BELL);;
+                    ChatHelper.announce(ChatColor.LIGHT_PURPLE + " The generators have spawned shards.", Sound.BLOCK_NOTE_BLOCK_BELL);;
 
                 }
             }
