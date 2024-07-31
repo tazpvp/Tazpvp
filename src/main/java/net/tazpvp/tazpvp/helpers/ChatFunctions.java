@@ -49,6 +49,8 @@ import java.util.regex.Pattern;
 
 public class ChatFunctions {
 
+    private static PlayerStatService statService = Tazpvp.getInstance().getPlayerStatService();
+
     public static void announce(String msg, Sound sound) {
         for (Player p : Bukkit.getOnlinePlayers()) {
             p.sendMessage(" ", msg, " ");
@@ -164,7 +166,6 @@ public class ChatFunctions {
     }
 
     public static int getRanking(Player p) {
-        PlayerStatService statService = Tazpvp.getInstance().getPlayerStatService();
         PlayerStatEntity statEntity = statService.getOrDefault(p.getUniqueId());
 
         if (statEntity.getMMR() > 2000) return 5;

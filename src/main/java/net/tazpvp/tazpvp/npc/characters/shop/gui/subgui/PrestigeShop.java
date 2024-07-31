@@ -86,7 +86,6 @@ public class PrestigeShop extends GUI {
         setButton("Premium Pass", "24 hours of the Premium rank.", Material.NETHER_STAR, 100000, true, true);
         setButton("Bounty Hunter", "Find the player with the highest bounty.", Material.COMPASS, 1600, true, true);
 
-
         update();
     }
 

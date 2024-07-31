@@ -62,26 +62,7 @@ public class ItemShop extends GUI {
     private final PlayerStatEntity playerStatEntity;
     private final PlayerStatService playerStatService;
 
-    private final List<Material> wool = List.of(
-            Material.ORANGE_WOOL,
-            Material.PURPLE_WOOL,
-            Material.YELLOW_WOOL,
-            Material.LIME_WOOL,
-            Material.GRAY_WOOL,
-            Material.CYAN_WOOL,
-            Material.BROWN_WOOL,
-            Material.RED_WOOL,
-            Material.BLACK_WOOL
-    );
-    private final List<Material> wood = List.of(
-            Material.OAK_PLANKS,
-            Material.ACACIA_PLANKS,
-            Material.BIRCH_PLANKS,
-            Material.BIRCH_PLANKS,
-            Material.DARK_OAK_PLANKS,
-            Material.JUNGLE_PLANKS,
-            Material.SPRUCE_PLANKS
-    );
+
 
     public ItemShop(Player p, PlayerStatService playerStatService) {
         super("Maxim", 6);
@@ -112,16 +93,14 @@ public class ItemShop extends GUI {
         addBuyButton(5, 225, true, ItemEnum.PUSH_BOMB);
         addBuyButton(32, 64, false, ItemEnum.EXP_BOTTLE);
         addBuyButton(1, 40, false, ItemEnum.HATCHET);
-        addBuyButton(64, 30, true, ItemEnum.BLOCKS);
+        addMenuButton(64, 30, true, ItemEnum.BLOCKS);
 
         addBuyButton(530, ItemEnum.SHARPNESS);
         addBuyButton(375, ItemEnum.PROTECTION);
         addBuyButton(450, ItemEnum.FIRE_ASPECT);
         addBuyButton(160, ItemEnum.UNBREAKING);
         addBuyButton(220, ItemEnum.SWEEPING_EDGE);
-        addBuyButton(650, ItemEnum.MULTISHOT);
         addBuyButton(275, ItemEnum.KNOCKBACK);
-
         addBuyButton(450, ItemEnum.FLAME);
 
         update();
@@ -143,29 +122,11 @@ public class ItemShop extends GUI {
         calcSlot();
     }
 
-    private void setChangingButton(String name, String text, List<Material> list, int cost, int amount) {
-        int slot = slotNum;
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                if (getDestroyed()) {
-                    this.cancel();
-                } else {
-                    clearSlot(25);
-                    int num = new Random().nextInt(list.size());
-                    addButton(Button.create(ItemBuilder.of(list.get(num), 1)
-                            .name(CC.YELLOW + "" + CC.BOLD + name)
-                            .lore(CC.GOLD + text, " ", CC.GRAY + "Cost: " + cost + " Coins")
-                            .build(), (e) -> {
-                        if (list.contains(Material.RED_WOOL)) {
-                            if (!ChatFunctions.hasPremium(p, prefix)) return;
-                        }
-                        String name2 = ChatFunctions.gradient("#db3bff", name, true);
-//                        checkMoney(cost, ItemBuilder.of(list.get(num), amount).build(), null);
-                    }), slot);
-                }
-            }
-        }.runTaskTimer(Tazpvp.getInstance(), 1, 20);
+    private void addMenuButton(int amount, int cost, boolean glow, ItemEnum customItem) {
+        ItemStack item = customItem.getShopItem(cost, amount, glow);
+        addButton(Button.create(item, (e) -> {
+            new BlockShop(p, playerStatService);
+        }), slotNum);
         calcSlot();
     }
 

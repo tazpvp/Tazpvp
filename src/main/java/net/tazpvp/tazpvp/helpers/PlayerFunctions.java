@@ -98,13 +98,17 @@ public class PlayerFunctions {
     public static ItemStack[] getKitItems(Player p) {
         return new ItemStack[] {
                 ItemBuilder.of(Material.DIAMOND_SWORD, 1, kitItemName(p,"Sword"))
-                        .enchantment(Enchantment.SHARPNESS, 1).build(),
+                        .enchantment(Enchantment.SHARPNESS, 1)
+                        .enchantment(Enchantment.MENDING, 1).build(),
                 ItemBuilder.of(Material.BOW, 1, kitItemName(p,"Bow"))
+                        .enchantment(Enchantment.MENDING, 1)
                         .enchantment(Enchantment.INFINITY, 1).build(),
-                ItemBuilder.of(Material.STONE_PICKAXE, 1, kitItemName(p,"Pickaxe")).build(),
-                ItemBuilder.of(Material.CROSSBOW, 1, kitItemName(p,"Crossbow")).build(),
+                ItemBuilder.of(Material.STONE_PICKAXE, 1, kitItemName(p,"Pickaxe"))
+                        .enchantment(Enchantment.MENDING, 1).build(),
+                ItemBuilder.of(Material.CROSSBOW, 1, kitItemName(p,"Crossbow"))
+                        .enchantment(Enchantment.MENDING, 1).build(),
                 ItemBuilder.of(Material.OAK_PLANKS, 64).build(),
-                ItemBuilder.of(Material.ARROW, 32).build()
+                ItemBuilder.of(Material.ARROW, 5).build()
         };
     }
 

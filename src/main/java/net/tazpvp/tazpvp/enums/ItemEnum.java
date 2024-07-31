@@ -79,10 +79,33 @@ public enum ItemEnum {
                 .build();
     }
 
+    public ItemStack getItem(Material mat) {
+        return ItemBuilder.of(mat)
+                .name(ChatFunctions.gradient("", name,true))
+                .lore(lore)
+                .build();
+    }
+
     public ItemStack getShopItem(int cost, int amount, boolean glow) {
         return ItemBuilder.of(material, amount)
                 .name(ChatFunctions.gradient("", name,true))
                 .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: " + cost + " Coins")
+                .glow(glow)
+                .build();
+    }
+
+    public ItemStack getShopItem(Material mat, int cost, int amount, boolean glow) {
+        return ItemBuilder.of(mat, amount)
+                .name(ChatFunctions.gradient("", name,true))
+                .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: " + cost + " Coins")
+                .glow(glow)
+                .build();
+    }
+
+    public ItemStack getShopItem(Material mat, int cost, int amount, boolean glow, String extraLore) {
+        return ItemBuilder.of(mat, amount)
+                .name(ChatFunctions.gradient("", name,true))
+                .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: " + cost + " Coins", extraLore)
                 .glow(glow)
                 .build();
     }
