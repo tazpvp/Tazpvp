@@ -4,7 +4,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.utils.functions.BlockFunctions;
+import net.tazpvp.tazpvp.helpers.BlockFunctions;
 import net.tazpvp.tazpvp.objects.Ore;
 import net.tazpvp.tazpvp.objects.Pickaxe;
 import org.bukkit.Material;

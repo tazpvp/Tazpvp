@@ -37,7 +37,7 @@ import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.enums.ItemEnum;
-import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatFunctions;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
@@ -57,7 +57,7 @@ public class ItemShop extends GUI {
 
     private int slotNum;
     private int count;
-    private Player p;
+    private final Player p;
     private final String prefix = CC.RED + "[Maxim] " + CC.WHITE;
     private final PlayerStatEntity playerStatEntity;
     private final PlayerStatService playerStatService;
@@ -109,23 +109,20 @@ public class ItemShop extends GUI {
         addBuyButton(1, 10, true, ItemEnum.AZURE_VAPOR);
         addBuyButton(3, 40, true, ItemEnum.INKER);
         addBuyButton(5, 10, true, ItemEnum.STICKY_WEB);
-        addBuyButton(1, 100, false, ItemEnum.LIGHTER);
+        addBuyButton(5, 225, true, ItemEnum.PUSH_BOMB);
         addBuyButton(32, 64, false, ItemEnum.EXP_BOTTLE);
         addBuyButton(1, 40, false, ItemEnum.HATCHET);
-        setChangingButton("Plank", "Placeable Blocks", wood, 30, 64);
+        addBuyButton(64, 30, true, ItemEnum.BLOCKS);
 
-        addBuyButton(1, 20, false, ItemEnum.SHEAR);
-        addBuyButton(5, 50, false, ItemEnum.ARROW);
-        addBuyButton(5, 100, false, ItemEnum.GOLD_CARROT);
-        addBuyButton(5, 225, true, ItemEnum.PUSH_BOMB);
-        addBuyButton(5, 90, false, ItemEnum.SPECTRAL_ARROW);
-        setChangingButton("Wool", "Placeable Blocks", wool, 30, 64);
+        addBuyButton(530, ItemEnum.SHARPNESS);
+        addBuyButton(375, ItemEnum.PROTECTION);
+        addBuyButton(450, ItemEnum.FIRE_ASPECT);
+        addBuyButton(160, ItemEnum.UNBREAKING);
+        addBuyButton(220, ItemEnum.SWEEPING_EDGE);
+        addBuyButton(650, ItemEnum.MULTISHOT);
+        addBuyButton(275, ItemEnum.KNOCKBACK);
 
-        addBuyButton(230, ItemEnum.SHARPNESS, Enchantment.SHARPNESS);
-        addBuyButton(375, ItemEnum.PROTECTION, Enchantment.PROTECTION);
-        addBuyButton(600, ItemEnum.POWER, Enchantment.POWER);
-        addBuyButton(100, ItemEnum.MENDING, Enchantment.MENDING);
-        addBuyButton(450, ItemEnum.FIRE_ASPECT, Enchantment.FIRE_ASPECT);
+        addBuyButton(450, ItemEnum.FLAME);
 
         update();
     }
@@ -138,10 +135,10 @@ public class ItemShop extends GUI {
         calcSlot();
     }
 
-    private void addBuyButton(int cost, ItemEnum customItem, Enchantment enchant) {
+    private void addBuyButton(int cost, ItemEnum customItem) {
         ItemStack item = customItem.getShopEnchant(cost, 1);
         addButton(Button.create(item, (e) -> {
-            checkMoney(cost, customItem, enchant);
+            checkMoney(cost, customItem, customItem.getEnchant());
         }), slotNum);
         calcSlot();
     }

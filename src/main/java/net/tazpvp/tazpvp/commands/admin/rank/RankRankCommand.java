@@ -4,7 +4,7 @@ import lombok.NonNull;
 import net.tazpvp.tazpvp.data.implementations.GameRankServiceImpl;
 import net.tazpvp.tazpvp.data.services.GameRankService;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatFunctions;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

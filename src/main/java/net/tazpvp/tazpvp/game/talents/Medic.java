@@ -4,7 +4,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.GuildEntity;
 import net.tazpvp.tazpvp.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
+import net.tazpvp.tazpvp.helpers.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;

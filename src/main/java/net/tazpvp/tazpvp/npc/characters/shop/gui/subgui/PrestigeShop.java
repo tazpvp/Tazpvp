@@ -6,8 +6,8 @@ import net.tazpvp.tazpvp.data.implementations.TalentServiceImpl;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.data.services.TalentService;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
-import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
+import net.tazpvp.tazpvp.helpers.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -85,19 +85,7 @@ public class PrestigeShop extends GUI {
 
         setButton("Premium Pass", "24 hours of the Premium rank.", Material.NETHER_STAR, 100000, true, true);
         setButton("Bounty Hunter", "Find the player with the highest bounty.", Material.COMPASS, 1600, true, true);
-        setButton("Unbreaking", "Fortify your tools.", 160, Enchantment.UNBREAKING);
-        setButton("Projectile Protection", "Take less projectile damage.", 225, Enchantment.PROJECTILE_PROTECTION);
-        setButton("Fire Protection", "Take less damage to fire.", 225, Enchantment.FIRE_PROTECTION);
-        setButton("Sweeping Edge", "Increase attack range.", 220, Enchantment.SWEEPING_EDGE);
-        setButton("Multishot", "Shoot multiple crossbow arrows at time.", 650, Enchantment.MULTISHOT);
 
-        setButton("Quick Charge", "Recharge crossbows faster.", 550, Enchantment.QUICK_CHARGE);
-        setButton("Punch", "Shoot players back further.", 350, Enchantment.PUNCH);
-        setButton("Knockback", "Hit players back further.", 275, Enchantment.KNOCKBACK);
-        setButton("Flame", "Shoot and set things on fire.", 450, Enchantment.FLAME);
-        setButton("Efficiency", "Break blocks faster.", 350, Enchantment.EFFICIENCY);
-        setButton("Infinity", "Infinite arrows.", 900, Enchantment.INFINITY);
-        setButton("Depth Strider", "Walk faster in water.", 250, Enchantment.DEPTH_STRIDER);
 
         update();
     }

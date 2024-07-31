@@ -41,7 +41,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
-import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatFunctions;
 import net.tazpvp.tazpvp.utils.leaderboard.LeaderboardEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -51,7 +51,6 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 public class CommandsAndListeners extends ListenerAdapter {
     private final long channelId;

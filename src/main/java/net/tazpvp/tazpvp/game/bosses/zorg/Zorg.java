@@ -3,7 +3,7 @@ package net.tazpvp.tazpvp.game.bosses.zorg;
 import net.tazpvp.tazpvp.game.bosses.CustomBoss;
 import net.tazpvp.tazpvp.game.bosses.zorg.attacks.SonicBoomAttack;
 import net.tazpvp.tazpvp.game.bosses.zorg.attacks.SummonUndeadAttack;
-import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatFunctions;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;

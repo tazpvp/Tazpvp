@@ -35,7 +35,7 @@ package net.tazpvp.tazpvp.game.talents;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.entity.TalentEntity;
-import net.tazpvp.tazpvp.utils.functions.BlockFunctions;
+import net.tazpvp.tazpvp.helpers.BlockFunctions;
 import net.tazpvp.tazpvp.objects.Ore;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;

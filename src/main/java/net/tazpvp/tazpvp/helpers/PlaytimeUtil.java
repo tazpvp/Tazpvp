@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.utils;
+package net.tazpvp.tazpvp.helpers;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;

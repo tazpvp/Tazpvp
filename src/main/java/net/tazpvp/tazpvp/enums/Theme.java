@@ -33,7 +33,7 @@
 package net.tazpvp.tazpvp.enums;
 
 import lombok.Getter;
-import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatFunctions;
 
 @Getter
 public enum Theme {

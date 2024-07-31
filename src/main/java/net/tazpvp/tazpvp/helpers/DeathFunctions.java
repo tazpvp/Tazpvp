@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.utils.functions;
+package net.tazpvp.tazpvp.helpers;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;

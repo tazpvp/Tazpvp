@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.utils.functions;
+package net.tazpvp.tazpvp.helpers;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.game.items.enchants.Enchants;

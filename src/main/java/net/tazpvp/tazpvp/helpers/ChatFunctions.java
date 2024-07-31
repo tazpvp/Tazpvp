@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.utils.functions;
+package net.tazpvp.tazpvp.helpers;
 
 import net.md_5.bungee.api.ChatColor;
 import net.tazpvp.tazpvp.Tazpvp;
@@ -163,18 +163,22 @@ public class ChatFunctions {
         p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
     }
 
-    public static String getRanking(Player p) {
+    public static int getRanking(Player p) {
         PlayerStatService statService = Tazpvp.getInstance().getPlayerStatService();
         PlayerStatEntity statEntity = statService.getOrDefault(p.getUniqueId());
-        if (statEntity.getMMR() > 2000) {
-            return "✪✪✪✪✪";
-        } else if (statEntity.getMMR() > 1500) {
-            return "✪✪✪✪";
-        } else if (statEntity.getMMR() > 1000) {
-            return "✪✪✪";
-        } else if (statEntity.getMMR() > 500) {
-            return "✪✪";
-        }
-        return "✪";
+
+        if (statEntity.getMMR() > 2000) return 5;
+        else if (statEntity.getMMR() > 1000) return 4;
+        else if (statEntity.getMMR() > 500) return 3;
+        else if (statEntity.getMMR() > 100) return 2;
+        else return 1;
+    }
+
+    public static String getRankingPrefix(Player p) {
+        if (getRanking(p) == 5) return "✪✪✪✪✪";
+        else if (getRanking(p) == 4) return "✪✪✪✪";
+        else if (getRanking(p) == 3) return "✪✪✪";
+        else if (getRanking(p) == 2) return "✪✪";
+        else return "✪";
     }
 }

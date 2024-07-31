@@ -1,7 +1,7 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.utils.functions.ItemFunctions;
+import net.tazpvp.tazpvp.helpers.ItemFunctions;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

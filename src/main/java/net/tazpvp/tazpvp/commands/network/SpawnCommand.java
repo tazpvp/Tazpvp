@@ -4,7 +4,7 @@ import lombok.NonNull;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.game.duels.Duel;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
+import net.tazpvp.tazpvp.helpers.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

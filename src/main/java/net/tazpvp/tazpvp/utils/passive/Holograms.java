@@ -2,7 +2,7 @@ package net.tazpvp.tazpvp.utils.passive;
 
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.enums.Theme;
-import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;

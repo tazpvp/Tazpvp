@@ -36,7 +36,7 @@ import net.tazpvp.tazpvp.npc.characters.NPC;
 import net.tazpvp.tazpvp.npc.characters.achievements.gui.Achievements;
 import net.tazpvp.tazpvp.npc.dialogue.Dialogues;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;

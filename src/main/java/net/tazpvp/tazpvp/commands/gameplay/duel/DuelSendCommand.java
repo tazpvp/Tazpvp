@@ -12,7 +12,7 @@ import net.tazpvp.tazpvp.game.duels.Duel;
 import net.tazpvp.tazpvp.game.duels.type.Classic;
 import net.tazpvp.tazpvp.game.duels.type.Op;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
+import net.tazpvp.tazpvp.helpers.CombatTagFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;

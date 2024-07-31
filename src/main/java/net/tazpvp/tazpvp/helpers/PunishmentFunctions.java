@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.utils.functions;
+package net.tazpvp.tazpvp.helpers;
 
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;

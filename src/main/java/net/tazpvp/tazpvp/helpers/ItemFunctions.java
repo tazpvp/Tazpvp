@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.utils.functions;
+package net.tazpvp.tazpvp.helpers;
 
 import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.Material;

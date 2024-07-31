@@ -34,7 +34,7 @@ package net.tazpvp.tazpvp.data;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatFunctions;
 import org.bukkit.ChatColor;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package net.tazpvp.tazpvp.game.items;
 
 import lombok.Getter;
-import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatFunctions;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;

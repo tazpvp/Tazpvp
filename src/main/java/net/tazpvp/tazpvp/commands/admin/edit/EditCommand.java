@@ -34,7 +34,7 @@
 package net.tazpvp.tazpvp.commands.admin.edit;
 
 import lombok.NonNull;
-import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
+import net.tazpvp.tazpvp.helpers.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.kit.SerializableInventory;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

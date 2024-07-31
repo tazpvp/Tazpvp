@@ -42,8 +42,8 @@ import net.tazpvp.tazpvp.data.services.PunishmentService;
 import net.tazpvp.tazpvp.utils.Profanity;
 import net.tazpvp.tazpvp.utils.TimeUtil;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
-import net.tazpvp.tazpvp.utils.functions.PunishmentFunctions;
+import net.tazpvp.tazpvp.helpers.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.PunishmentFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -139,7 +139,7 @@ public class Chat implements Listener {
                     .replace("&GRAY", CC.GRAY.toString())
                     .replace("&GOLD", CC.YELLOW.toString())
                     .replace("&M", CC.WHITE.toString())
-                    .replace("{RANK}", ChatFunctions.getRanking(p) + "")
+                    .replace("{RANK}", ChatFunctions.getRankingPrefix(p) + "")
                     .replace("{LEVEL}", playerStatEntity.getLevel() + "")
                     .replace("{SUFFIX}", pw.getGuildTag().toUpperCase());
         } else {
@@ -147,7 +147,7 @@ public class Chat implements Listener {
                     .replace("&GRAY", CC.GRAY.toString())
                     .replace("&GOLD", CC.YELLOW.toString())
                     .replace("&M", CC.WHITE.toString())
-                    .replace("{RANK}", ChatFunctions.getRanking(p) + "")
+                    .replace("{RANK}", ChatFunctions.getRankingPrefix(p) + "")
                     .replace("{LEVEL}", playerStatEntity.getLevel() + "")
                     .replace("{PREFIX}", CC.trans(pw.getRankPrefix()))
                     .replace("{SUFFIX}", pw.getGuildTag().toUpperCase());

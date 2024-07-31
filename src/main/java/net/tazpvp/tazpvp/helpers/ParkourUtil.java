@@ -30,54 +30,24 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.utils.functions;
+package net.tazpvp.tazpvp.helpers;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.objects.CombatTag;
-import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
-import javax.annotation.Nullable;
-import java.util.UUID;
+public class ParkourUtil {
 
-public class CombatTagFunctions {
-
-    public static void putInCombat(@Nullable UUID victim, @Nullable UUID attacker) {
-        if (victim != attacker) {
-            if (victim == null) {
-                getTag(attacker).setTimer(null);
-            } else if (attacker == null) {
-                getTag(victim).setTimer(null);
-            } else {
-                getTag(victim).setTimer(attacker);
-                getTag(attacker).setTimer(victim);
+    public static void getCheckpoint(Player p)  {
+        for (int i = 1; i < Tazpvp.getParkourUtil().getConfigurationSection("checkpoints").getValues(false).size(); i++) {
+            if (p.getLocation().getX() <= Tazpvp.getParkourUtil().getInt("checkpoints." + i + ".check")) {
+                p.teleport(teleportCheckpoint(i, p));
+                return;
             }
         }
     }
 
-    public static CombatTag getTag(UUID ID) {
-        if (!CombatTag.tags.containsKey(ID)) {
-            CombatTag.tags.put(ID, new CombatTag(ID));
-        }
-        return CombatTag.tags.get(ID);
-    }
-
-    public static UUID getLastAttacker(UUID ID) {
-        if (getTag(ID).getAttackers().size() < 1) return null;
-        return getTag(ID).getAttackers().peekLast();
-    }
-
-    public static void initCombatTag() {
-        new BukkitRunnable() {
-            public void run() {
-                for (UUID id : CombatTag.tags.keySet()) {
-                    CombatTag.tags.get(id).countDown();
-                }
-            }
-        }.runTaskTimer(Tazpvp.getInstance(), 0, 20);
-    }
-
-    public static boolean isInCombat(UUID ID) {
-        if (getTag(ID) == null) return false;
-        return !getTag(ID).getAttackers().isEmpty();
+    public static Location teleportCheckpoint(int num, Player p) {
+        return new Location(p.getWorld(), Tazpvp.getParkourUtil().getInt("checkpoints." + num + ".teleport"), 60, 0, 0, 0);
     }
 }

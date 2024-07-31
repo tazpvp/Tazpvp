@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.utils.functions;
+package net.tazpvp.tazpvp.helpers;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.LooseData;
@@ -70,7 +70,7 @@ public class ScoreboardFunctions {
 
         objective.getScore("                         ").setScore(8);
         newLine(p, "rank", scoreTitle("✦ ʀᴀɴᴋ"), CC.AQUA,
-                ChatFunctions.getRanking(p)+ "").setScore(7);
+                ChatFunctions.getRankingPrefix(p)+ "").setScore(7);
         newLine(p, "level", scoreTitle("✳ ʟᴇᴠᴇʟ"), CC.AQUA,
                 playerStatEntity.getLevel() + "").setScore(6);
         newLine(p, "coins", scoreTitle("❂ ᴄᴏɪɴꜱ"), CC.GOLD,

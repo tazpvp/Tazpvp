@@ -1,7 +1,7 @@
 package net.tazpvp.tazpvp.commands.admin;
 
 import lombok.NonNull;
-import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatFunctions;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;

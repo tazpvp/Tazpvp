@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.utils.functions;
+package net.tazpvp.tazpvp.helpers;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.LooseData;
@@ -132,10 +132,17 @@ public class PlayerFunctions {
     }
 
     public static void armorPlayer(Player p) {
-        p.getInventory().setHelmet(ItemBuilder.of(Material.DIAMOND_HELMET, 1, CC.WHITE + "Hard Hat").build());
-        p.getInventory().setChestplate(ItemBuilder.of(Material.DIAMOND_CHESTPLATE, 1, CC.WHITE + "Tunic").build());
-        p.getInventory().setLeggings(ItemBuilder.of(Material.DIAMOND_LEGGINGS, 1, CC.WHITE + "Pants").build());
-        p.getInventory().setBoots(ItemBuilder.of(Material.DIAMOND_BOOTS, 1, CC.WHITE + "Sandles").build());
+        ItemStack[] armor = new ItemStack[] {
+                ItemBuilder.of(Material.DIAMOND_HELMET, 1, CC.WHITE + "Hard Hat")
+                        .enchantment(Enchantment.MENDING, 1).build(),
+                ItemBuilder.of(Material.DIAMOND_CHESTPLATE, 1, CC.WHITE + "Tunic")
+                        .enchantment(Enchantment.MENDING, 1).build(),
+                ItemBuilder.of(Material.DIAMOND_LEGGINGS, 1, CC.WHITE + "Pants")
+                        .enchantment(Enchantment.MENDING, 1).build(),
+                ItemBuilder.of(Material.DIAMOND_BOOTS, 1, CC.WHITE + "Sandles")
+                        .enchantment(Enchantment.MENDING, 1).build()
+        };
+        p.getInventory().setArmorContents(armor);
     }
 
     public static void levelUp(UUID ID, float value) {

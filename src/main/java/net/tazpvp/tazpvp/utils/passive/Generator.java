@@ -34,7 +34,7 @@ package net.tazpvp.tazpvp.utils.passive;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.game.items.StaticItems;
-import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;

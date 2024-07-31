@@ -31,7 +31,7 @@
  *
  */
 
-package net.tazpvp.tazpvp.utils;
+package net.tazpvp.tazpvp.helpers;
 
 import java.util.*;
 

@@ -1,7 +1,7 @@
 package net.tazpvp.tazpvp.commands.admin.kit;
 
 import lombok.NonNull;
-import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
+import net.tazpvp.tazpvp.helpers.PlayerFunctions;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
