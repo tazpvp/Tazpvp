@@ -54,7 +54,7 @@ public class TalentShop extends GUI {
 
     private int slotNum;
     private int count;
-    PlayerStatService playerStatService;
+    PlayerStatEntity playerStatEntity;
     Player p;
 
     String prefix = CC.DARK_AQUA + "[Lorenzo] " + CC.AQUA;
@@ -62,9 +62,9 @@ public class TalentShop extends GUI {
 
     public TalentShop(Player p, PlayerStatService playerStatService) {
         super("Talents", 4);
-        this.playerStatService = playerStatService;
         this.p = p;
         pw = PlayerWrapper.getPlayer(p);
+        playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
         addItems();
         open(p);
     }
@@ -94,7 +94,6 @@ public class TalentShop extends GUI {
     private void setButton(TalentEnum talent, Predicate<TalentEntity> hasTalentPredicate, Consumer<TalentEntity> talentEntityConsumer) {
         TalentEntity talentEntity = pw.getTalentEntity();
         boolean active = hasTalentPredicate.test(talentEntity);
-        PlayerStatEntity playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
 
         String complete = active ? CC.GREEN + "Active" : CC.RED + "Inactive";
 

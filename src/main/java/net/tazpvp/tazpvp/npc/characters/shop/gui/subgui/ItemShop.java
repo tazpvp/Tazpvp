@@ -32,26 +32,21 @@
 
 package net.tazpvp.tazpvp.npc.characters.shop.gui.subgui;
 
-import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.enums.ItemEnum;
-import net.tazpvp.tazpvp.helpers.ChatFunctions;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.item.builders.EnchantmentBookBuilder;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Random;
 
 public class ItemShop extends GUI {
 
@@ -93,7 +88,7 @@ public class ItemShop extends GUI {
         addBuyButton(5, 225, true, ItemEnum.PUSH_BOMB);
         addBuyButton(32, 64, false, ItemEnum.EXP_BOTTLE);
         addBuyButton(1, 40, false, ItemEnum.HATCHET);
-        addMenuButton(64, 30, true, ItemEnum.BLOCKS);
+        addMenuButton(ItemEnum.BLOCKS);
 
         addBuyButton(530, ItemEnum.SHARPNESS);
         addBuyButton(375, ItemEnum.PROTECTION);
@@ -108,25 +103,19 @@ public class ItemShop extends GUI {
 
     private void addBuyButton(int amount, int cost, boolean glow, ItemEnum customItem) {
         ItemStack item = customItem.getShopItem(cost, amount, glow);
-        addButton(Button.create(item, (e) -> {
-            checkMoney(cost, customItem, null);
-        }), slotNum);
+        addButton(Button.create(item, (_) -> checkMoney(cost, customItem, null)), slotNum);
         calcSlot();
     }
 
     private void addBuyButton(int cost, ItemEnum customItem) {
         ItemStack item = customItem.getShopEnchant(cost, 1);
-        addButton(Button.create(item, (e) -> {
-            checkMoney(cost, customItem, customItem.getEnchant());
-        }), slotNum);
+        addButton(Button.create(item, (_) -> checkMoney(cost, customItem, customItem.getEnchant())), slotNum);
         calcSlot();
     }
 
-    private void addMenuButton(int amount, int cost, boolean glow, ItemEnum customItem) {
-        ItemStack item = customItem.getShopItem(cost, amount, glow);
-        addButton(Button.create(item, (e) -> {
-            new BlockShop(p, playerStatService);
-        }), slotNum);
+    private void addMenuButton(ItemEnum customItem) {
+        ItemStack item = customItem.getItem();
+        addButton(Button.create(item, (_) -> new BlockShop(p, playerStatService)), slotNum);
         calcSlot();
     }
 

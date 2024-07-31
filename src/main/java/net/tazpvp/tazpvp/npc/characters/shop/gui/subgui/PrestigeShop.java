@@ -6,6 +6,7 @@ import net.tazpvp.tazpvp.data.implementations.TalentServiceImpl;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.data.services.TalentService;
 import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.enums.ItemEnum;
 import net.tazpvp.tazpvp.helpers.ChatFunctions;
 import net.tazpvp.tazpvp.helpers.PlayerFunctions;
 import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
@@ -26,13 +27,11 @@ public class PrestigeShop extends GUI {
     private int num;
     private Player p;
     private final String prefix = CC.RED + "[Maxim] " + CC.WHITE;
-    private final PlayerStatService playerStatService;
     private final PlayerStatEntity playerStatEntity;
 
     public PrestigeShop(Player p, PlayerStatService playerStatService) {
         super("Maxim", 5);
         this.p = p;
-        this.playerStatService = playerStatService;
         this.playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
         addItems();
         open(p);
@@ -83,63 +82,30 @@ public class PrestigeShop extends GUI {
             p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, 1, 1);
         }), 13);
 
-        setButton("Premium Pass", "24 hours of the Premium rank.", Material.NETHER_STAR, 100000, true, true);
-        setButton("Bounty Hunter", "Find the player with the highest bounty.", Material.COMPASS, 1600, true, true);
+        addBuyButton(100000, true, ItemEnum.PREMIUM_PASS);
+        addBuyButton(1600, true, ItemEnum.BOUNTY_HUNTER);
 
         update();
     }
 
-    private void setButton(String name, String lore, Material material, int cost, boolean glow, boolean custom) {
-        String name2 = ChatFunctions.gradient("#db3bff", name, true);
-        ItemStack item;
-        if (custom) {
-            item = ItemBuilder.of(material, 1).name(name2).lore(CC.GRAY + lore).build();
-        } else {
-            item = ItemBuilder.of(material, 1).build();
-        }
-
-        addButton(Button.create(ItemBuilder.of(material, 1)
-                .name(CC.YELLOW + "" + CC.BOLD + name)
-                .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: " + cost + " Coins")
-                .glow(glow)
-                .build(), (e) -> {
-            if (playerStatEntity.getPrestige() < 1) {
-                p.sendMessage(prefix + "You need to rebirth before buying this.");
-                return;
-            }
-            checkMoney(name2, cost, item, null);
+    private void addBuyButton(int cost, boolean glow, ItemEnum customItem) {
+        ItemStack item = customItem.getShopItem(cost, 1, glow);
+        addButton(Button.create(item, (e) -> {
+            checkMoney(cost, customItem);
         }), slotNum);
         calcSlot();
     }
 
-    private void setButton(String name, String lore, int cost, Enchantment enchant) {
-        String name2 = ChatFunctions.gradient("#db3bff", name, true);
-
-        addButton(Button.create(ItemBuilder.of(Material.ENCHANTED_BOOK, 1)
-                .name(CC.YELLOW + "" + CC.BOLD + name)
-                .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: " + cost + " Coins", CC.RED + "Drag the enchant onto", CC.RED + "an item to combine")
-                .build(), (e) -> {
-            if (playerStatEntity.getPrestige() < 1) {
-                p.sendMessage(prefix + "You need to rebirth before buying this.");
-                return;
-            }
-            checkMoney(name2, cost, ItemBuilder.of(Material.ENCHANTED_BOOK, 1).build(), enchant);
-        }), slotNum);
-        calcSlot();
-    }
-
-    private void checkMoney(String name, int cost, ItemStack item, @Nullable Enchantment enchantment) {
-        if (playerStatEntity.getCoins() >= cost) {
-            playerStatEntity.setCoins(playerStatEntity.getCoins() - cost);
-            if (enchantment == null) {
-                p.getInventory().addItem(item);
+    private void checkMoney(int cost, ItemEnum item) {
+        if (playerStatEntity != null) {
+            if (playerStatEntity.getCoins() >= cost) {
+                playerStatEntity.setCoins(playerStatEntity.getCoins() - cost);
+                p.getInventory().addItem(item.getItem());
+                p.sendMessage(prefix + "You purchased: " + item.getName());
+                p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
             } else {
-                p.getInventory().addItem(new EnchantmentBookBuilder().enchantment(enchantment, 1).build());
+                p.sendMessage(prefix + "You don't have enough money");
             }
-            p.sendMessage(prefix + "You purchased: " + name);
-            p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
-        } else {
-            p.sendMessage(prefix + "You don't have enough money");
         }
     }
 
