@@ -37,12 +37,14 @@ import lombok.Getter;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
+import net.tazpvp.tazpvp.enums.ItemEnum;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 import world.ntdi.nrcore.utils.item.builders.EnchantmentBookBuilder;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
@@ -55,43 +57,30 @@ public class CrateManager {
     @Getter
     private List<Crate> crates;
 
+    ItemStack[] crateItems1;
+
     public CrateManager() {
         this.crates = new ArrayList<>();
 
         getCrates().add(new Crate(
-                new Location(Bukkit.getWorld("arena"), -16, 99, 7), ChatHelper.gradient("#03fc39", "Common Crate", true), "common",
-                    createItem("Azure Vapor", "Extinguish flames.", Material.BLUE_ORCHID, 1),
-                    createItem("Sticky Web", "Slow down your enemies.", Material.COBWEB, 5),
-                    createItem("Ink Splash", "Blind your enemies.", Material.INK_SAC, 3),
-                    createItem("Lighter", "Set things afire.", Material.FLINT_AND_STEEL,  1),
-                    createItem("Exp Bottle", "Mend your armor.", Material.EXPERIENCE_BOTTLE, 1),
-                    createItem("Hatchet", "Break wooden blocks.", Material.GOLDEN_AXE, 1),
-                    createItem("Shears", "Break wool blocks.", Material.SHEARS, 1),
-                    createItem("Arrows", "Projectiles.", Material.ARROW, 5),
-                    createItem("Steak", "We have the meats.", Material.COOKED_BEEF, 5),
-                    createItem("Gold Carrot", "Good nutrition.", Material.GOLDEN_CARROT, 5),
-                    createItem("Gold Apple", "Only for rich people.", Material.GOLDEN_APPLE, 1),
-                    createItem("Spectral Arrow", "Highlight targets.", Material.SPECTRAL_ARROW, 1),
-                    createItem("Crossbow", "Stronger than the bow.", Material.CROSSBOW, 1)
-                ));
-        getCrates().add(new Crate(
-                new Location(Bukkit.getWorld("arena"), -15, 99, 5), ChatHelper.gradient("#039dfc", "Rare Crate", true), "rare",
-                createItem(Enchantment.MENDING),
-                createItem(Enchantment.SHARPNESS),
-                createItem(Enchantment.POWER),
-                createItem(Enchantment.UNBREAKING),
-                createItem(Enchantment.PROTECTION),
-                createItem(Enchantment.PUNCH),
-                createItem(Enchantment.KNOCKBACK),
-                createItem(Enchantment.FLAME),
-                createItem(Enchantment.FIRE_ASPECT)
+                new Location(Bukkit.getWorld("arena"), -16, 99, 7),
+                ChatHelper.gradient("#03fc39", "Common Crate", true),
+                "common",
+                ItemEnum.getAllDrops(1)
         ));
+
         getCrates().add(new Crate(
-                new Location(Bukkit.getWorld("arena"), -13, 99, 4), ChatHelper.gradient("#db3bff", "Mythic Crate", true), "mythic",
-                createItem("Shard", "Valuable gem.", Material.AMETHYST_SHARD,1),
-                createItem("Shard", "Valuable gem.", Material.AMETHYST_SHARD,2),
-                createItem("Shard", "Valuable gem.", Material.AMETHYST_SHARD,3),
-                createItem("Shard", "Valuable gem.", Material.AMETHYST_SHARD,4)
+                new Location(Bukkit.getWorld("arena"), -15, 99, 5),
+                ChatHelper.gradient("#039dfc", "Rare Crate", true),
+                "rare",
+                ItemEnum.getAllDrops(2)
+        ));
+
+        getCrates().add(new Crate(
+                new Location(Bukkit.getWorld("arena"), -13, 99, 4),
+                ChatHelper.gradient("#db3bff", "Mythic Crate", true),
+                "mythic",
+                ItemEnum.getAllDrops(3)
         ));
     }
 
