@@ -50,7 +50,7 @@ public class NpcCommand extends NRCommand {
         super(new Label("npc", "tazpvp.npc"));
         setNativeExecutor((sender, args) -> {
 
-            if (!(sender instanceof Player p)) {
+            if (!(sender instanceof Player)) {
                 sendNoPermission(sender);
                 return true;
             }
@@ -67,7 +67,7 @@ public class NpcCommand extends NRCommand {
             } else if (args[0].equalsIgnoreCase("caesar")) {
                 new Caesar(tazpvp.getPlayerStatService());
             } else if (args[0].equalsIgnoreCase("rigel")) {
-                new Rigel(tazpvp.getGuildService());
+                new Rigel(tazpvp.getGuildService(), tazpvp.getPlayerStatService());
             }
 
             return true;
