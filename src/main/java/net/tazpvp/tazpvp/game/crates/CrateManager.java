@@ -52,12 +52,10 @@ import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class CrateManager {
 
-    @Getter
-    private List<Crate> crates;
-
-    ItemStack[] crateItems1;
+    private final List<Crate> crates;
 
     public CrateManager() {
         this.crates = new ArrayList<>();
@@ -65,32 +63,20 @@ public class CrateManager {
         getCrates().add(new Crate(
                 new Location(Bukkit.getWorld("arena"), -16, 99, 7),
                 ChatHelper.gradient("#03fc39", "Common Crate", true),
-                "common",
-                ItemEnum.getAllDrops(1)
+                "common"
         ));
 
         getCrates().add(new Crate(
                 new Location(Bukkit.getWorld("arena"), -15, 99, 5),
                 ChatHelper.gradient("#039dfc", "Rare Crate", true),
-                "rare",
-                ItemEnum.getAllDrops(2)
+                "rare"
         ));
 
         getCrates().add(new Crate(
                 new Location(Bukkit.getWorld("arena"), -13, 99, 4),
                 ChatHelper.gradient("#db3bff", "Mythic Crate", true),
-                "mythic",
-                ItemEnum.getAllDrops(3)
+                "mythic"
         ));
-    }
-
-    public ItemStack createItem(String name, String description, Material material, int amount) {
-        String name2 = ChatHelper.gradient("#db3bff", name, true);
-        return ItemBuilder.of(material).amount(amount).name(name2).build();
-    }
-
-    public ItemStack createItem(Enchantment enchantment) {
-        return new EnchantmentBookBuilder().enchantment(enchantment, 1).build();
     }
 
     public boolean canClaimDaily(OfflinePlayer p) {

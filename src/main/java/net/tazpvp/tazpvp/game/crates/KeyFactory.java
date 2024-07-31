@@ -44,53 +44,46 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
+@Getter
 public class KeyFactory {
+    private final NamespacedKey crateKey;
+
+    private KeyFactory() {
+        this.crateKey = new NamespacedKey(Tazpvp.getInstance(), "crate");
+    }
+
     public static KeyFactory getFactory() {
         return new KeyFactory();
     }
 
-    @Getter
-    private final NamespacedKey crateKey;
-
     public ItemStack createCommonKey() {
-        ItemStack i = ItemBuilder.of(Material.TRIPWIRE_HOOK, 1, ChatHelper.gradient("#03fc39", "Common Key", true))
-                .lore(CC.GRAY + "Right-click the crate.").build();
-        i = setCrateKey(i, "common");
-        return i;
+        return createKey("common", ChatHelper.gradient("#03fc39", "Common Key", true));
     }
+
     public ItemStack createRareKey() {
-        ItemStack i = ItemBuilder.of(Material.TRIPWIRE_HOOK, 1, ChatHelper.gradient("#039dfc", "Rare Key", true))
-                .lore(CC.GRAY + "Right-click the crate.").build();
-        i = setCrateKey(i, "rare");
-        return i;
+        return createKey("rare", ChatHelper.gradient("#039dfc", "Rare Key", true));
     }
+
     public ItemStack createMythicKey() {
-        ItemStack i = ItemBuilder.of(Material.TRIPWIRE_HOOK, 1, ChatHelper.gradient("#db3bff", "Mythic Key", true))
-                .lore(CC.GRAY + "Right-click the crate.").build();
-        i = setCrateKey(i, "mythic");
-        return i;
+        return createKey("mythic", ChatHelper.gradient("#db3bff", "Mythic Key", true));
     }
 
     public ItemStack createKey(String type, String name) {
-        ItemStack i = ItemBuilder.of(Material.TRIPWIRE_HOOK, 1, name)
-                .lore(CC.GRAY + "Right-click the crate.").build();
-        i = setCrateKey(i, type);
-        return i;
+        ItemStack item = ItemBuilder.of(Material.TRIPWIRE_HOOK, 1, name)
+                .lore(CC.GRAY + "Right-click the crate.")
+                .build();
+        return setCrateKey(item, type);
     }
 
-    private ItemStack setCrateKey(ItemStack i, String type) {
-        ItemMeta meta = i.getItemMeta();
-        meta.getPersistentDataContainer().set(getCrateKey(), PersistentDataType.STRING, type);
-        i.setItemMeta(meta);
-        return i;
+    private ItemStack setCrateKey(ItemStack item, String type) {
+        ItemMeta meta = item.getItemMeta();
+        meta.getPersistentDataContainer().set(crateKey, PersistentDataType.STRING, type);
+        item.setItemMeta(meta);
+        return item;
     }
 
-    public boolean isCrateKey(ItemStack i, String type) {
-        ItemMeta meta = i.getItemMeta();
-        return meta.getPersistentDataContainer().get(getCrateKey(), PersistentDataType.STRING).equals(type);
-    }
-
-    private KeyFactory() {
-        this.crateKey = new NamespacedKey(Tazpvp.getInstance(), "crate");
+    public boolean isCrateKey(ItemStack item, String type) {
+        ItemMeta meta = item.getItemMeta();
+        return meta.getPersistentDataContainer().get(crateKey, PersistentDataType.STRING).equals(type);
     }
 }

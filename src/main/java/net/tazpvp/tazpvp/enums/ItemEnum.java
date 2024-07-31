@@ -121,29 +121,35 @@ public enum ItemEnum {
             .build();
     }
 
-    public static ItemStack getRandomDrop() {
-        List<ItemStack> drops = new ArrayList<>(getAllDrops());
+    public static ItemEnum getRandomDrop() {
+        List<ItemEnum> drops = new ArrayList<>();
+        for (ItemEnum item : getAllDrops()) {
+            drops.add(item);
+        }
         return (drops.get(random.nextInt(drops.size())));
     }
 
-    public static ItemStack getRandomDrop(int selectedTier) {
-        List<ItemStack> drops = new ArrayList<>(getAllDrops(selectedTier));
+    public static ItemEnum getRandomDrop(int selectedTier) {
+        List<ItemEnum> drops = new ArrayList<>();
+        for (ItemEnum item : getAllDrops(selectedTier)) {
+            drops.add(item);
+        }
         return (drops.get(random.nextInt(drops.size())));
     }
 
-    public static List<ItemStack> getAllDrops() {
-        List<ItemStack> drops = new ArrayList<>();
+    public static List<ItemEnum> getAllDrops() {
+        List<ItemEnum> drops = new ArrayList<>();
         for (ItemEnum item : ItemEnum.values()) {
-            drops.add(item.getItem());
+            drops.add(item);
         }
         return drops;
     }
 
-    public static List<ItemStack> getAllDrops(int selectedTier) {
-        List<ItemStack> drops = new ArrayList<>();
+    public static List<ItemEnum> getAllDrops(int selectedTier) {
+        List<ItemEnum> drops = new ArrayList<>();
         for (ItemEnum item : ItemEnum.values()) {
             if (item.getTier() == selectedTier) {
-                drops.add(item.getItem());
+                drops.add(item);
             }
         }
         return drops;

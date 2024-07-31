@@ -60,7 +60,7 @@ public class DeathListener implements Listener {
 
             BossManager.bossDied();
             World world = entity.getWorld();
-            world.dropItemNaturally(location.add(0, 1, 0), ItemEnum.getRandomDrop());
+            world.dropItemNaturally(location.add(0, 1, 0), ItemEnum.getRandomDrop().getItem());
 
             if (!SummonUndeadAttack.undeadList.isEmpty()) {
                 for (Zombie z : SummonUndeadAttack.undeadList) {
