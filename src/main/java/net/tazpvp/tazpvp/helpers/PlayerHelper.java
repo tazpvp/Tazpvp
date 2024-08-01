@@ -133,9 +133,10 @@ public class PlayerHelper {
         p.getInventory().setBoots(ItemEnum.KIT_BOOTS.getKitArmor());
     }
 
-    public static void levelUp(UUID ID, float value) {
+    public static void levelUp(UUID ID) {
         Player p = Bukkit.getPlayer(ID);
         PlayerStatEntity pStatEntity = playerStatService.getOrDefault(ID);
+        float value = pStatEntity.getXp();
         if (p == null) return;
         if (value >= LooseData.getExpLeft(ID)) {
             final BoosterBonus coinsBonus = ActiveBoosterManager.getInstance()

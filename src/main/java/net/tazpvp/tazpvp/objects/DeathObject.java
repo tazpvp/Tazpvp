@@ -246,21 +246,21 @@ public class DeathObject {
                     Player assister = Bukkit.getPlayer(uuid);
                     if (assister == null) continue;
 
-                    final BoosterBonus XP_NETWORK_BUFF = ActiveBoosterManager.getInstance().calculateBonus(5, List.of(BoosterTypes.XP, BoosterTypes.MEGA));
-                    final BoosterBonus COIN_NETWORK_BUFF = ActiveBoosterManager.getInstance().calculateBonus(5, List.of(BoosterTypes.COINS, BoosterTypes.MEGA));
-
-                    int finalXp = (int) XP_NETWORK_BUFF.result();
-                    int finalCoins = (int) COIN_NETWORK_BUFF.result();
+                    int finalXp = 5;
+                    int finalCoins = 5;
 
                     assister.sendMessage(
                             CC.DARK_GRAY + "Assist kill:" + CC.GRAY + " (" + pVictim.getName() + ") " +
-                                    CC.DARK_AQUA + "Exp: " + CC.AQUA + finalXp + " " + CC.DARK_AQUA + XP_NETWORK_BUFF.prettyPercentMultiplier() +
-                                    CC.GOLD + " Coins: " + CC.YELLOW + finalCoins + " " + CC.GOLD + COIN_NETWORK_BUFF.prettyPercentMultiplier()
+                                    CC.DARK_AQUA + "Exp: " + CC.AQUA + finalXp +
+                                    CC.GOLD + " Coins: " + CC.YELLOW + finalCoins
                     );
-                    PlayerStatEntity aStatEntity = playerStatService.getOrDefault(assister.getUniqueId());
+                    PlayerStatEntity aStatEntity = playerStatService.getOrDefault(uuid);
                     aStatEntity.setCoins(aStatEntity.getCoins() + finalCoins);
                     aStatEntity.setXp(aStatEntity.getXp() + finalXp);
                     aStatEntity.setMMR(aStatEntity.getMMR() + 5);
+
+                    playerStatService.save(aStatEntity);
+                    PlayerHelper.levelUp(uuid);
                 }
             }
         }
@@ -321,11 +321,11 @@ public class DeathObject {
 
             playerStatService.save(killerStatEntity);
             guildService.saveGuild(killerGuild);
+            PlayerHelper.levelUp(killer);
         }
     }
 
     private void updateVictimStats() {
-
         if (victimGuild != null) {
             victimGuild.setDeaths(victimGuild.getDeaths() + 1);
         }

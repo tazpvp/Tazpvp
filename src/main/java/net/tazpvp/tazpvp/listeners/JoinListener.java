@@ -77,7 +77,7 @@ public class JoinListener implements Listener {
         p.setLevel(playerStatEntity.getLevel());
         if (playerStatEntity.getXp() >= LooseData.getExpLeft(p.getUniqueId())) {
             float num = playerStatEntity.getXp() - LooseData.getExpLeft(p.getUniqueId());
-            PlayerHelper.levelUp(p.getUniqueId(), num);
+            PlayerHelper.levelUp(p.getUniqueId());
         } else if (playerStatEntity.getXp() < 0) {
             playerStatEntity.setXp(0);
         } else {
