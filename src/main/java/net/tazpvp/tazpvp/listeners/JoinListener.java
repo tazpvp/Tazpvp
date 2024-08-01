@@ -84,6 +84,8 @@ public class JoinListener implements Listener {
             p.setExp((float) playerStatEntity.getXp() / LooseData.getExpLeft(p.getUniqueId()));
         }
 
+        playerStatService.save(playerStatEntity);
+
         for (Player vp : Bukkit.getOnlinePlayers()) {
             PlayerWrapper vpw = PlayerWrapper.getPlayer(vp);
             if (vpw.isVanished()) {
