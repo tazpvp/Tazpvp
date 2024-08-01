@@ -1,12 +1,13 @@
-package net.tazpvp.tazpvp.game.items.enchants;
+package net.tazpvp.tazpvp.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import net.tazpvp.tazpvp.helpers.EnchantHelper;
 import org.bukkit.enchantments.Enchantment;
 
 @AllArgsConstructor
 @Getter
-public enum Enchants {
+public enum EnchantEnum {
     DOUBLE_ORES(1,300,"Double Ores", "double_ores"),
     AUTO_SMELT(1,200,"Auto Smelt", "auto_smelt");
 
@@ -16,6 +17,6 @@ public enum Enchants {
     private final String key;
 
     public Enchantment getEnchant() {
-        return EnchantUtil.getEnchant(this.key);
+        return EnchantHelper.getEnchant(this.key);
     }
 }

@@ -103,28 +103,28 @@ public class ItemShop extends GUI {
 
     private void addBuyButton(int amount, int cost, boolean glow, ItemEnum customItem) {
         ItemStack item = customItem.getShopItem(cost, amount, glow);
-        addButton(Button.create(item, (_) -> checkMoney(cost, customItem, null)), slotNum);
+        addButton(Button.create(item, (_) -> checkMoney(cost, amount, customItem, null)), slotNum);
         calcSlot();
     }
 
     private void addBuyButton(int cost, ItemEnum customItem) {
         ItemStack item = customItem.getShopEnchant(cost, 1);
-        addButton(Button.create(item, (_) -> checkMoney(cost, customItem, customItem.getEnchant())), slotNum);
+        addButton(Button.create(item, (_) -> checkMoney(cost, 1, customItem, customItem.getEnchant())), slotNum);
         calcSlot();
     }
 
     private void addMenuButton(ItemEnum customItem) {
-        ItemStack item = customItem.getItem();
+        ItemStack item = customItem.getItem(1);
         addButton(Button.create(item, (_) -> new BlockShop(p, playerStatService)), slotNum);
         calcSlot();
     }
 
-    private void checkMoney(int cost, ItemEnum item, @Nullable Enchantment enchantment) {
+    private void checkMoney(int cost, int amount, ItemEnum item, @Nullable Enchantment enchantment) {
         if (playerStatEntity != null) {
             if (playerStatEntity.getCoins() >= cost) {
                 playerStatEntity.setCoins(playerStatEntity.getCoins() - cost);
                 if (enchantment == null) {
-                    p.getInventory().addItem(item.getItem());
+                    p.getInventory().addItem(item.getItem(amount));
                 } else {
                     p.getInventory().addItem(new EnchantmentBookBuilder().enchantment(enchantment, 1).build());
                 }

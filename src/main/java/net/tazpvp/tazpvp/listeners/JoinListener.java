@@ -43,7 +43,7 @@ import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.enums.Theme;
 import net.tazpvp.tazpvp.helpers.*;
 import net.tazpvp.tazpvp.objects.CombatObject;
-import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
+import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

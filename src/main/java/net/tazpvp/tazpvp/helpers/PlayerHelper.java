@@ -36,10 +36,11 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.LooseData;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
+import net.tazpvp.tazpvp.enums.ItemEnum;
 import net.tazpvp.tazpvp.game.booster.ActiveBoosterManager;
 import net.tazpvp.tazpvp.game.booster.BoosterBonus;
 import net.tazpvp.tazpvp.game.booster.BoosterTypes;
-import net.tazpvp.tazpvp.game.items.StaticItems;
+import net.tazpvp.tazpvp.enums.StaticItems;
 import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -50,7 +51,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
-import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import java.util.List;
 import java.util.UUID;
@@ -97,33 +97,19 @@ public class PlayerHelper {
 
     public static ItemStack[] getKitItems(Player p) {
         return new ItemStack[] {
-                ItemBuilder.of(Material.DIAMOND_SWORD, 1, kitItemName(p,"Sword"))
-                        .enchantment(Enchantment.SHARPNESS, 1)
-                        .enchantment(Enchantment.MENDING, 1).build(),
-                ItemBuilder.of(Material.BOW, 1, kitItemName(p,"Bow"))
-                        .enchantment(Enchantment.MENDING, 1)
-                        .enchantment(Enchantment.INFINITY, 1).build(),
-                ItemBuilder.of(Material.STONE_PICKAXE, 1, kitItemName(p,"Pickaxe"))
-                        .enchantment(Enchantment.MENDING, 1).build(),
-                ItemBuilder.of(Material.CROSSBOW, 1, kitItemName(p,"Crossbow"))
-                        .enchantment(Enchantment.MENDING, 1).build(),
-                ItemBuilder.of(Material.OAK_PLANKS, 64).build(),
-                ItemBuilder.of(Material.ARROW, 5).build()
+                ItemEnum.KIT_SWORD.getKitTool(p.getName(), Enchantment.SHARPNESS),
+                ItemEnum.KIT_BOW.getKitTool(p.getName(), Enchantment.INFINITY),
+                ItemEnum.KIT_PICKAXE.getKitTool(p.getName()),
+                ItemEnum.KIT_CROSSBOW.getKitTool(p.getName()),
+                ItemEnum.BLOCKS.getItem(64),
+                ItemEnum.ARROW.getItem(15),
         };
-    }
-
-    private static String kitItemName(Player p, String text) {
-        return ChatHelper.gradient("#04f000", p.getName() + "'s " + text, true);
     }
 
     public static void kitPlayer(Player p) {
         PlayerStatEntity pStatEntity = playerStatService.getOrDefault(p.getUniqueId());
         Inventory inv = p.getInventory();
         int thirtyMinutesInMs = 30 * 60 * 1000;
-
-        if (pStatEntity.getPlaytime() <= thirtyMinutesInMs) {
-            p.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 2));
-        }
 
         armorPlayer(p);
 
@@ -133,20 +119,18 @@ public class PlayerHelper {
             }
             inv.addItem(kitItem);
         }
+
+        if (pStatEntity.getPlaytime() <= thirtyMinutesInMs) {
+            p.getInventory().addItem(ItemEnum.GOLDEN_APPLE.getItem(2));
+        }
+
     }
 
     public static void armorPlayer(Player p) {
-        ItemStack[] armor = new ItemStack[] {
-                ItemBuilder.of(Material.DIAMOND_HELMET, 1, CC.WHITE + "Hard Hat")
-                        .enchantment(Enchantment.MENDING, 1).build(),
-                ItemBuilder.of(Material.DIAMOND_CHESTPLATE, 1, CC.WHITE + "Tunic")
-                        .enchantment(Enchantment.MENDING, 1).build(),
-                ItemBuilder.of(Material.DIAMOND_LEGGINGS, 1, CC.WHITE + "Pants")
-                        .enchantment(Enchantment.MENDING, 1).build(),
-                ItemBuilder.of(Material.DIAMOND_BOOTS, 1, CC.WHITE + "Sandles")
-                        .enchantment(Enchantment.MENDING, 1).build()
-        };
-        p.getInventory().setArmorContents(armor);
+        p.getInventory().setHelmet(ItemEnum.KIT_HELMET.getKitArmor());
+        p.getInventory().setChestplate(ItemEnum.KIT_CHESTPLATE.getKitArmor());
+        p.getInventory().setLeggings(ItemEnum.KIT_LEGGINGS.getKitArmor());
+        p.getInventory().setBoots(ItemEnum.KIT_BOOTS.getKitArmor());
     }
 
     public static void levelUp(UUID ID, float value) {
@@ -162,7 +146,6 @@ public class PlayerHelper {
             pStatEntity.setXp(num);
             pStatEntity.setLevel(pStatEntity.getLevel() + 1);
             pStatEntity.setCoins(pStatEntity.getCoins() + coins);
-            p.getInventory().addItem(StaticItems.SHARD.item(1));
             p.setLevel(pStatEntity.getLevel());
             p.setExp((float) num / LooseData.getExpLeft(ID));
             ChatHelper.announce(p, CC.AQUA + "" + CC.BOLD + "  LEVEL UP " + CC.DARK_AQUA + "Combat Lvl. " + CC.AQUA + pStatEntity.getLevel(), Sound.ENTITY_PLAYER_LEVELUP);

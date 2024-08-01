@@ -17,9 +17,8 @@ import net.tazpvp.tazpvp.game.booster.BoosterTypes;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.helpers.CombatTagHelper;
 import net.tazpvp.tazpvp.helpers.PlayerHelper;
-import net.tazpvp.tazpvp.utils.kit.SerializableInventory;
-import net.tazpvp.tazpvp.utils.player.PlayerInventoryStorage;
-import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
+import net.tazpvp.tazpvp.helpers.SerializableInventory;
+import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -137,9 +136,9 @@ public class DeathObject {
 
             if (world != null) {
                 if (killerWrapper.getTalentEntity().isNecromancer()) {
-                    world.dropItemNaturally(location.add(0, 2, 0), ItemEnum.getRandomDrop().getItem());
+                    world.dropItemNaturally(location.add(0, 2, 0), ItemEnum.getRandomDrop().getItem(2));
                 }
-                world.dropItemNaturally(location.add(0, 1, 0), ItemEnum.getRandomDrop().getItem());
+                world.dropItemNaturally(location.add(0, 1, 0), ItemEnum.getRandomDrop().getItem(2));
             }
         }
     }

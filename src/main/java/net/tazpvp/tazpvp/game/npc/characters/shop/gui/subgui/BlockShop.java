@@ -71,18 +71,18 @@ public class BlockShop extends GUI {
     private void addDefault(Material material) {
         ItemStack item = ItemEnum.BLOCKS.getShopItem(material, 64, 64, false);
 
-        addButton(Button.create(item, (_) -> checkMoney(64, false)), slotNum);
+        addButton(Button.create(item, (_) -> checkMoney(material, 64, false)), slotNum);
         calcSlot();
     }
 
     private void addPremium(Material material, String lore) {
         ItemStack item = ItemEnum.BLOCKS.getShopItem(material, 120, 64, false, lore);
 
-        addButton(Button.create(item, (_) -> checkMoney(120, true)), slotNum);
+        addButton(Button.create(item, (_) -> checkMoney(material, 120, true)), slotNum);
         calcSlot();
     }
 
-    private void checkMoney(int cost, boolean premium) {
+    private void checkMoney(Material mat, int cost, boolean premium) {
         if (playerStatEntity != null) {
             if (premium) {
                 UserRankService userRankService = Tazpvp.getInstance().getUserRankService();
@@ -96,7 +96,7 @@ public class BlockShop extends GUI {
             }
             if (playerStatEntity.getCoins() >= cost) {
                 playerStatEntity.setCoins(playerStatEntity.getCoins() - cost);
-                p.getInventory().addItem(ItemEnum.BLOCKS.getItem());
+                p.getInventory().addItem(ItemEnum.BLOCKS.getItem(mat, 64));
                 p.sendMessage(prefix + "You purchased: " + ItemEnum.BLOCKS.getName());
                 p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
             } else {

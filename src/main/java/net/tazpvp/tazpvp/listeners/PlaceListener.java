@@ -3,7 +3,7 @@ package net.tazpvp.tazpvp.listeners;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.implementations.UserRankServiceImpl;
 import net.tazpvp.tazpvp.data.services.UserRankService;
-import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
+import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;

@@ -33,7 +33,7 @@
 
 package net.tazpvp.tazpvp.listeners;
 
-import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
+import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.EntityType;

@@ -9,7 +9,7 @@ import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.enums.ItemEnum;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
 import net.tazpvp.tazpvp.helpers.PlayerHelper;
-import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
+import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -96,7 +96,7 @@ public class PrestigeShop extends GUI {
         if (playerStatEntity != null) {
             if (playerStatEntity.getCoins() >= cost) {
                 playerStatEntity.setCoins(playerStatEntity.getCoins() - cost);
-                p.getInventory().addItem(item.getItem());
+                p.getInventory().addItem(item.getItem(1));
                 p.sendMessage(prefix + "You purchased: " + item.getName());
                 p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
             } else {

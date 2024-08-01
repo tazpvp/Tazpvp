@@ -33,7 +33,7 @@
 package net.tazpvp.tazpvp.helpers;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.game.items.enchants.Enchants;
+import net.tazpvp.tazpvp.enums.EnchantEnum;
 import net.tazpvp.tazpvp.objects.OreObject;
 import net.tazpvp.tazpvp.objects.PickaxeObject;
 import org.bukkit.Material;
@@ -87,9 +87,9 @@ public class BlockHelper {
         if (getPickaxe(p) != null) {
             final ItemStack pickaxe = getPickaxe(p);
             final ItemMeta storageMeta = pickaxe.getItemMeta();
-            if (storageMeta.hasEnchant(Enchants.DOUBLE_ORES.getEnchant()))
+            if (storageMeta.hasEnchant(EnchantEnum.DOUBLE_ORES.getEnchant()))
                 amount = 2;
-            if (storageMeta.hasEnchant(Enchants.AUTO_SMELT.getEnchant()))
+            if (storageMeta.hasEnchant(EnchantEnum.AUTO_SMELT.getEnchant()))
                 givenItem = smelted;
         }
         giveOre(p, givenItem, amount);

@@ -5,7 +5,7 @@ import net.tazpvp.tazpvp.data.entity.KitEntity;
 import net.tazpvp.tazpvp.data.implementations.KitServiceImpl;
 import net.tazpvp.tazpvp.data.services.KitService;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.utils.kit.SerializableInventory;
+import net.tazpvp.tazpvp.helpers.SerializableInventory;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

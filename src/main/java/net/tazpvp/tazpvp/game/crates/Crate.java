@@ -79,7 +79,7 @@ public class Crate {
                 p.playSound(p.getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN, 1F, 1F);
                 ItemEnum randomShopItem = getRandomReward();
                 p.sendTitle(CC.GREEN + "" + CC.BOLD + "REWARD", CC.GREEN + "You won: " + CC.WHITE + randomShopItem.getName(), 5, 10, 5);
-                p.getInventory().addItem(randomShopItem.getItem());
+                p.getInventory().addItem(randomShopItem.getItem(1));
             } else { // YEET the player backwards
                 p.setVelocity(p.getLocation().getDirection().multiply(-1));
                 p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1F, 1F);

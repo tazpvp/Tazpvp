@@ -40,7 +40,7 @@ import net.tazpvp.tazpvp.data.services.RankService;
 import net.tazpvp.tazpvp.utils.Profanity;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
-import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
+import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.*;
 import org.bukkit.entity.Player;

@@ -4,7 +4,7 @@ import lombok.NonNull;
 import net.tazpvp.tazpvp.commands.gameplay.report.utils.ReportLogger;
 import net.tazpvp.tazpvp.utils.TimeUtil;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
+import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;

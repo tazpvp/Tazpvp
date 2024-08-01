@@ -31,7 +31,7 @@
  *
  */
 
-package net.tazpvp.tazpvp.utils.kit;
+package net.tazpvp.tazpvp.helpers;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.utils.serialization.SerializeObject;
@@ -51,13 +51,6 @@ public class SerializableInventory implements Serializable {
         this.hotbar = hotbar;
     }
 
-    /**
-     * Add all the items to the players inventory based on the saved items. Any item not saved in the serialized
-     * inventory will be added to the next available slot.
-     *
-     * @param inventory The inventory to add items to.
-     * @param itemStacks The items to be added to the inventory.
-     */
     public void addItems(PlayerInventory inventory, ItemStack... itemStacks) {
         List<ItemStack> toAdd = new ArrayList<>(List.of(itemStacks));
         for (int i = 0; i < hotbar.length; i++) {
@@ -74,32 +67,14 @@ public class SerializableInventory implements Serializable {
         inventory.addItem(toAdd.toArray(ItemStack[]::new));
     }
 
-    /**
-     * Convert the object into a serialzied form, ez to store in DB.
-     *
-     * @param serializableInventory The inventory that's been serialized
-     * @return String serialized variant of the object
-     */
     public static String convertToString(@Nonnull final SerializableInventory serializableInventory) {
         return SerializeObject.serializedObject(serializableInventory);
     }
 
-    /**
-     * Deserialize the given string into a SerializableInventory.
-     *
-     * @param string The serialized inventory in string form
-     * @return The serialized inventory returned by deserialization.
-     */
     public static SerializableInventory convertFromString(@Nonnull final String string) {
         return (SerializableInventory) SerializeObject.getSerializeObject(string);
     }
 
-    /**
-     * Read the players hotbar into a serialized Inventory
-     *
-     * @param inventory The inventory that had the targeted hotbar
-     * @return A serialzed inventory representing the players hotbar.
-     */
     public static SerializableInventory readHotbar(PlayerInventory inventory) {
         return new SerializableInventory(new ItemStack[]{
                 inventory.getItem(0), inventory.getItem(1), inventory.getItem(2),

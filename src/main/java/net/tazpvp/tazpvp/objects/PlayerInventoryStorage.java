@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.utils.player;
+package net.tazpvp.tazpvp.objects;
 
 import lombok.Getter;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -8,6 +8,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;

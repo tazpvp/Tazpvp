@@ -1,7 +1,7 @@
 package net.tazpvp.tazpvp.utils;
 
 import net.tazpvp.tazpvp.helpers.ChatHelper;
-import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
+import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

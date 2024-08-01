@@ -34,7 +34,7 @@
 package net.tazpvp.tazpvp.game.npc.characters.shop.gui.subgui.cosmetic;
 
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
+import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.gui.Button;

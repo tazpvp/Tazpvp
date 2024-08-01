@@ -9,7 +9,7 @@ import net.tazpvp.tazpvp.helpers.ParkourHelper;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.helpers.AfkFunctions;
 import net.tazpvp.tazpvp.objects.DeathObject;
-import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
+import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;

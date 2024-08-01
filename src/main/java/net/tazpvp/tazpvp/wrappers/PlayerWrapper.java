@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.utils.player;
+package net.tazpvp.tazpvp.wrappers;
 
 import lombok.Getter;
 import lombok.Setter;

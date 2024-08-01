@@ -45,22 +45,35 @@ public enum ItemEnum {
     KNOCKBACK(Enchantment.KNOCKBACK, "Knockback", "Hit players back further.", 2),
     FLAME(Enchantment.FLAME, "Flame", "Shoot and set things on fire.", 1),
     EFFICIENCY(Enchantment.EFFICIENCY, "Efficiency", "Break blocks faster.", 2),
-    DEPTH_STRIDER(Enchantment.DEPTH_STRIDER, "Depth Strider", "Walk faster in water.", 1);
+    DEPTH_STRIDER(Enchantment.DEPTH_STRIDER, "Depth Strider", "Walk faster in water.", 1),
+
+    KIT_HELMET(Material.DIAMOND_HELMET, "Helmet"),
+    KIT_CHESTPLATE(Material.DIAMOND_CHESTPLATE, "Chestplate"),
+    KIT_LEGGINGS(Material.DIAMOND_LEGGINGS, "Leggings"),
+    KIT_BOOTS(Material.DIAMOND_BOOTS, "Boots"),
+
+    KIT_SWORD(Material.DIAMOND_SWORD, "Sword"),
+    KIT_BOW(Material.BOW, "Bow"),
+    KIT_PICKAXE(Material.STONE_PICKAXE, "Pickaxe"),
+    KIT_CROSSBOW(Material.CROSSBOW, "Crossbow");
+
 
     final Enchantment enchant;
     final Material material;
     final String name;
     final String lore;
     final int tier;
+    final boolean drop;
 
     private static final Random random = new Random();
 
     ItemEnum(Material material, String name, String lore, int tier) {
-        this.enchant = Enchantment.MENDING;
+        this.enchant = null;
         this.material = material;
         this.name = name;
         this.lore = lore;
         this.tier= tier;
+        this.drop = true;
     }
 
     ItemEnum(Enchantment enchant, String name, String lore, int tier) {
@@ -69,25 +82,35 @@ public enum ItemEnum {
         this.name = name;
         this.lore = lore;
         this.tier= tier;
+        this.drop = true;
     }
 
-    public ItemStack getItem() {
-        return ItemBuilder.of(material)
-                .name(ChatHelper.gradient("", name,true))
+    ItemEnum(Material material, String name) {
+        this.enchant = null;
+        this.material = material;
+        this.name = name;
+        this.lore = "";
+        this.tier= 1;
+        this.drop = false;
+    }
+
+    public ItemStack getItem(int amt) {
+        return ItemBuilder.of(material, amt)
+                .name(ChatHelper.gradient("#db3bff", name,true))
                 .lore(lore)
                 .build();
     }
 
-    public ItemStack getItem(Material mat) {
-        return ItemBuilder.of(mat)
-                .name(ChatHelper.gradient("", name,true))
+    public ItemStack getItem(Material mat, int amt) {
+        return ItemBuilder.of(mat, amt)
+                .name(ChatHelper.gradient("#db3bff", name,true))
                 .lore(lore)
                 .build();
     }
 
     public ItemStack getShopItem(int cost, int amount, boolean glow) {
         return ItemBuilder.of(material, amount)
-                .name(ChatHelper.gradient("", name,true))
+                .name(ChatHelper.gradient("#db3bff", name,true))
                 .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: " + cost + " Coins")
                 .glow(glow)
                 .build();
@@ -95,7 +118,7 @@ public enum ItemEnum {
 
     public ItemStack getShopItem(Material mat, int cost, int amount, boolean glow) {
         return ItemBuilder.of(mat, amount)
-                .name(ChatHelper.gradient("", name,true))
+                .name(ChatHelper.gradient("#db3bff", name,true))
                 .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: " + cost + " Coins")
                 .glow(glow)
                 .build();
@@ -103,7 +126,7 @@ public enum ItemEnum {
 
     public ItemStack getShopItem(Material mat, int cost, int amount, boolean glow, String extraLore) {
         return ItemBuilder.of(mat, amount)
-                .name(ChatHelper.gradient("", name,true))
+                .name(ChatHelper.gradient("#db3bff", name,true))
                 .lore(CC.GOLD + lore, " ", CC.GRAY + "Cost: " + cost + " Coins", extraLore)
                 .glow(glow)
                 .build();
@@ -119,6 +142,28 @@ public enum ItemEnum {
                     CC.RED + "Drag the enchant onto",
                     CC.RED + "an item to combine")
             .build();
+    }
+
+    public ItemStack getKitArmor() {
+        return ItemBuilder.of(material)
+                .name(ChatHelper.gradient("#04f000", name,true))
+                .enchantment(Enchantment.MENDING, 1)
+                .build();
+    }
+
+    public ItemStack getKitTool(String pName) {
+        return ItemBuilder.of(material)
+                .name(ChatHelper.gradient("#04f000", pName + " " + name,true))
+                .enchantment(Enchantment.MENDING, 1)
+                .build();
+    }
+
+    public ItemStack getKitTool(String pName, Enchantment otherEnchant) {
+        return ItemBuilder.of(material)
+                .name(ChatHelper.gradient("#04f000", pName + " " + name,true))
+                .enchantment(Enchantment.MENDING, 1)
+                .enchantment(otherEnchant, 1)
+                .build();
     }
 
     public static ItemEnum getRandomDrop() {
@@ -140,7 +185,9 @@ public enum ItemEnum {
     public static List<ItemEnum> getAllDrops() {
         List<ItemEnum> drops = new ArrayList<>();
         for (ItemEnum item : ItemEnum.values()) {
-            drops.add(item);
+            if (item.drop) {
+                drops.add(item);
+            }
         }
         return drops;
     }
@@ -148,8 +195,10 @@ public enum ItemEnum {
     public static List<ItemEnum> getAllDrops(int selectedTier) {
         List<ItemEnum> drops = new ArrayList<>();
         for (ItemEnum item : ItemEnum.values()) {
-            if (item.getTier() == selectedTier) {
-                drops.add(item);
+            if (item.drop) {
+                if (item.getTier() == selectedTier) {
+                    drops.add(item);
+                }
             }
         }
         return drops;

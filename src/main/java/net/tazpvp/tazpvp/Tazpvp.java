@@ -75,7 +75,7 @@ import net.tazpvp.tazpvp.game.bosses.zorg.Zorg;
 import net.tazpvp.tazpvp.game.crates.CrateManager;
 import net.tazpvp.tazpvp.game.events.Event;
 import net.tazpvp.tazpvp.game.items.UsableItem;
-import net.tazpvp.tazpvp.game.items.enchants.EnchantUtil;
+import net.tazpvp.tazpvp.helpers.EnchantHelper;
 import net.tazpvp.tazpvp.listeners.*;
 import net.tazpvp.tazpvp.game.npc.characters.*;
 import net.tazpvp.tazpvp.game.npc.characters.enchanter.Caesar;
@@ -174,7 +174,7 @@ public final class Tazpvp extends JavaPlugin {
         Alerts.alert();
         Event.eventTypes.add("FFA");
         registerObservable();
-        EnchantUtil.register();
+        EnchantHelper.register();
         spawnNpcs();
         CombatTagHelper.initCombatTag();
         AfkFunctions.setup();

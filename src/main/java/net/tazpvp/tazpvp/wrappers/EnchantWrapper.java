@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.game.items.enchants;
+package net.tazpvp.tazpvp.wrappers;
 
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;

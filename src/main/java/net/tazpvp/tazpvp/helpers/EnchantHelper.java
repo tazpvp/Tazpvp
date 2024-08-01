@@ -1,7 +1,7 @@
-package net.tazpvp.tazpvp.game.items.enchants;
+package net.tazpvp.tazpvp.helpers;
 
-import net.tazpvp.tazpvp.Tazpvp;
-import org.bukkit.NamespacedKey;
+import net.tazpvp.tazpvp.wrappers.EnchantWrapper;
+import net.tazpvp.tazpvp.enums.EnchantEnum;
 import org.bukkit.enchantments.Enchantment;
 
 import java.lang.reflect.Field;
@@ -11,12 +11,12 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
-public class EnchantUtil {
+public class EnchantHelper {
 
     private static final List<Enchantment> customEnchantments = new ArrayList<>();
 
     static {
-        for (Enchants enchant : Enchants.values()) {
+        for (EnchantEnum enchant : EnchantEnum.values()) {
             customEnchantments.add(new EnchantWrapper(enchant.getName(), enchant.getMaxLevel()));
         }
     }

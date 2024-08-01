@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.game.items;
+package net.tazpvp.tazpvp.enums;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.helpers.ChatHelper;

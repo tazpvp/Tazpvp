@@ -2,7 +2,7 @@ package net.tazpvp.tazpvp.game.npc.characters.enchanter.gui;
 
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
-import net.tazpvp.tazpvp.game.items.enchants.Enchants;
+import net.tazpvp.tazpvp.enums.EnchantEnum;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
 import org.bukkit.Material;
@@ -39,9 +39,9 @@ public class Enchantments extends GUI {
 
         Button autoSmelt = Button.create(ItemBuilder.of(Material.ENCHANTED_BOOK, 1)
                 .name(CC.GREEN + "" + CC.BOLD + "Auto Smelt")
-                .lore(CC.GRAY + "Automatically refine ores.", CC.GRAY + "Cost: " + CC.GOLD + "$" + Enchants.AUTO_SMELT.getCost())
+                .lore(CC.GRAY + "Automatically refine ores.", CC.GRAY + "Cost: " + CC.GOLD + "$" + EnchantEnum.AUTO_SMELT.getCost())
                 .build(), (e) ->
-            applyEfficiency(Enchants.AUTO_SMELT));
+            applyEfficiency(EnchantEnum.AUTO_SMELT));
         Button efficiency = Button.create(ItemBuilder.of(Material.ENCHANTED_BOOK, 1)
                         .name(CC.GREEN + "" + CC.BOLD + "Efficiency")
                         .lore(CC.GRAY + "Increase the speed of mining.", CC.GRAY + "Cost: " + CC.GOLD + "$200")
@@ -49,9 +49,9 @@ public class Enchantments extends GUI {
             applyEfficiency());
         Button doubleOres = Button.create(ItemBuilder.of(Material.ENCHANTED_BOOK, 1)
                 .name(CC.GREEN + "" + CC.BOLD + "Double Ores")
-                .lore(CC.GRAY + "Duplicate the ores you mine.", CC.GRAY + "Cost: " + CC.GOLD + "$" + Enchants.DOUBLE_ORES.getCost())
+                .lore(CC.GRAY + "Duplicate the ores you mine.", CC.GRAY + "Cost: " + CC.GOLD + "$" + EnchantEnum.DOUBLE_ORES.getCost())
                 .build(), (e) ->
-            applyEfficiency(Enchants.DOUBLE_ORES));
+            applyEfficiency(EnchantEnum.DOUBLE_ORES));
 
         addButton(autoSmelt, 11);
         addButton(efficiency, 13);
@@ -60,7 +60,7 @@ public class Enchantments extends GUI {
         update();
     }
 
-    private void applyEfficiency(Enchants enchantEnum) {
+    private void applyEfficiency(EnchantEnum enchantEnum) {
         int cost = enchantEnum.getCost();
         ItemMeta itemMeta = pickaxe.getItemMeta();
 
