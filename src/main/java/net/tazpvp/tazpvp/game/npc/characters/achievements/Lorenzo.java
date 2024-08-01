@@ -57,10 +57,13 @@ public class Lorenzo extends NPC {
                 new Dialogues(
                         CC.DARK_AQUA + "[Lorenzo] " + CC.AQUA,
                         List.of(
+                                ""
                         ),
                         List.of(
+                                ""
                         ),
                         List.of(
+                                ""
                         )
                 ));
     }

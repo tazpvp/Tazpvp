@@ -53,7 +53,6 @@ public class DeathObject {
         this.victim = victim;
         this.pVictim = Bukkit.getPlayer(victim);
         this.victimStatEntity = playerStatService.getOrDefault(victim);
-        this.killerStatEntity = playerStatService.getOrDefault(killer);
         if (pVictim != null) {
             this.location = pVictim.getLocation();
         } else {
@@ -65,18 +64,23 @@ public class DeathObject {
                 CombatObject.tags.get(victim).getAttackers().clear();
                 this.killer = currentKiller;
                 this.killerWrapper = PlayerWrapper.getPlayer(currentKiller);
+                this.killerStatEntity = playerStatService.getOrDefault(currentKiller);
+                this.killerGuild = Tazpvp.getInstance().getGuildService().getGuildByPlayer(currentKiller);
             } else {
                 this.killer = null;
                 this.killerWrapper = null;
+                this.killerStatEntity = null;
+                this.killerGuild = null;
             }
         } else {
+            this.killerStatEntity = playerStatService.getOrDefault(killer);
+            this.killerGuild = Tazpvp.getInstance().getGuildService().getGuildByPlayer(killer);
             this.killer = killer;
             this.pKiller = Bukkit.getPlayer(killer);
             this.killerWrapper = PlayerWrapper.getPlayer(killer);
             Tazpvp.getObservers().forEach(observer -> observer.death(pVictim, pKiller));
         }
         this.victimWrapper = PlayerWrapper.getPlayer(victim);
-        this.killerGuild = Tazpvp.getInstance().getGuildService().getGuildByPlayer(killer);
         this.victimGuild = Tazpvp.getInstance().getGuildService().getGuildByPlayer(victim);
 
         initialize();

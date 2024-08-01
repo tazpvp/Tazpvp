@@ -71,18 +71,18 @@ public class GuildMenu extends GUI {
         clear();
         fill(0, ROWS * 9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE).name(" ").build());
 
-        String[] lore = {
-                " ",
-                CC.DARK_GREEN + "Kills: " + CC.GREEN + guildEntity.getKills(),
-                CC.DARK_GREEN + "Deaths: " + CC.GREEN + guildEntity.getDeaths(),
-                CC.DARK_GREEN + "KDR: " + CC.GREEN + (guildEntity.getKills() / guildEntity.getDeaths()),
-                " ",
-                CC.GOLD + "Click to edit guild."
-        };
-
         Button playerGuild;
 
         if (guildService.getGuildByPlayer(p.getUniqueId()) != null) {
+            String[] lore = {
+                    " ",
+                    CC.DARK_GREEN + "Kills: " + CC.GREEN + guildEntity.getKills(),
+                    CC.DARK_GREEN + "Deaths: " + CC.GREEN + guildEntity.getDeaths(),
+                    CC.DARK_GREEN + "KDR: " + CC.GREEN + (guildEntity.getKills() / guildEntity.getDeaths()),
+                    " ",
+                    CC.GOLD + "Click to edit guild."
+            };
+
             Material guildIcon = Material.getMaterial(guildEntity.getIcon());
             playerGuild = Button.create(ItemBuilder.of(guildIcon == null ? Material.OAK_SIGN : guildIcon)
                     .name(CC.GREEN + "" + CC.BOLD + guildEntity.getName()).lore(lore).glow(true).build(), (_) ->

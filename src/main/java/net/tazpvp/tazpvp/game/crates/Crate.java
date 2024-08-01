@@ -60,6 +60,8 @@ public class Crate {
     private final Material block;
     @Getter
     private final String type;
+    @Getter
+    private final List<ItemEnum> crateDrops;
 
     public Crate(Location location, String hologramText, String type) {
         this.location = location;
@@ -67,6 +69,7 @@ public class Crate {
         this.hologram = new Hologram(hologramText, hologramLocation, false);
         this.type = type;
         this.block = getLocation().getBlock().getType();
+        this.crateDrops = getRewards();
         getLocation().getBlock().setType(Material.BEACON);
     }
 
@@ -127,6 +130,16 @@ public class Crate {
             return ItemEnum.getRandomDrop(2);
         } else {
             return ItemEnum.getRandomDrop(1);
+        }
+    }
+
+    private List<ItemEnum> getRewards() {
+        if (type.equalsIgnoreCase("mythic")) {
+            return ItemEnum.getAllDrops(3);
+        } else if (type.equalsIgnoreCase("rare")) {
+            return ItemEnum.getAllDrops(2);
+        } else {
+            return ItemEnum.getAllDrops(1);
         }
     }
 }
