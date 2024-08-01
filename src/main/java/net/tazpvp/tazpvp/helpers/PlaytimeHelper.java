@@ -27,6 +27,7 @@ public class PlaytimeHelper {
         long currentTime = System.currentTimeMillis();
         long timePlayed = currentTime - loginTime.get(p.getUniqueId());
         playerStatEntity.setPlaytime(playerStatEntity.getPlaytime() + timePlayed);
+        playerStatService.save(playerStatEntity);
     }
 
     public static long getPlayTime(final OfflinePlayer p) {

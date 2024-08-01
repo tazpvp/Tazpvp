@@ -37,6 +37,7 @@ public class DailyCommand extends NRCommand {
                 p.playSound(p.getLocation(), Sound.ITEM_BOTTLE_FILL_DRAGONBREATH, 1F, 1F);
 
                 playerStatEntity.setLastClaim(currentTime);
+                playerStatService.save(playerStatEntity);
 
             } else {
                 long timeDifference = (24 * 60 * 60 * 1000) - (currentTime - lastClaimTime);

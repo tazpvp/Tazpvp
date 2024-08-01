@@ -114,11 +114,13 @@ public abstract class Duel {
 
         if (winner != null) {
             winnerStatEntity.setDuelMMR(winnerStatEntity.getDuelMMR() + 15);
+            playerStatService.save(winnerStatEntity);
             winner.sendTitle(CC.GOLD + "" + CC.BOLD + "YOU WIN", "", 20, 20, 20);
         }
 
         if (loser != null) {
             loserStatEntity.setDuelMMR(loserStatEntity.getDuelMMR() - 9);
+            playerStatService.save(loserStatEntity);
             loser.setGameMode(GameMode.SPECTATOR);
         }
 
