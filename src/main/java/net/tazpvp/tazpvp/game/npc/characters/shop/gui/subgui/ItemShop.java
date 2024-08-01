@@ -130,6 +130,8 @@ public class ItemShop extends GUI {
                 }
                 p.sendMessage(prefix + "You purchased: " + item.getName());
                 p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
+
+                playerStatService.save(playerStatEntity);
             } else {
                 p.sendMessage(prefix + "You don't have enough money");
             }

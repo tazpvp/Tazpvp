@@ -296,6 +296,7 @@ public class DeathObject {
             killerStatEntity.setCoins(killerStatEntity.getCoins() + finalCoins);
             killerStatEntity.setXp(killerStatEntity.getXp() + finalXp);
             killerStatEntity.setMMR(killerStatEntity.getMMR() + 15);
+            playerStatService.save(killerStatEntity);
 
             if ((LooseData.getKs(killer) % 5) == 0) {
                 Bukkit.broadcastMessage(
@@ -307,6 +308,7 @@ public class DeathObject {
 
             if (killerGuild != null) {
                 killerGuild.setKills(killerGuild.getKills() + 1);
+                guildService.saveGuild(killerGuild);
             }
 
             pKiller.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
@@ -318,9 +320,6 @@ public class DeathObject {
             }
 
             Tazpvp.getInstance().getPlayerNameTagService().setTagRank(pKiller);
-
-            playerStatService.save(killerStatEntity);
-            guildService.saveGuild(killerGuild);
             PlayerHelper.levelUp(killer);
         }
     }

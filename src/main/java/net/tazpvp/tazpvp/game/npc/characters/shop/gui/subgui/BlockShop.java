@@ -24,6 +24,7 @@ public class BlockShop extends GUI {
     private final Player p;
     private final String prefix = CC.RED + "[Maxim] " + CC.WHITE;
     private final PlayerStatEntity playerStatEntity;
+    private final PlayerStatService playerStatService;
 
     private final List<Material> wool = List.of(
             Material.ORANGE_WOOL,
@@ -48,6 +49,7 @@ public class BlockShop extends GUI {
     public BlockShop(Player p, PlayerStatService playerStatService) {
         super("Block Shop", 4);
         this.p = p;
+        this.playerStatService = playerStatService;
         this.playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
         addItems();
         open(p);
@@ -99,6 +101,8 @@ public class BlockShop extends GUI {
                 p.getInventory().addItem(ItemEnum.BLOCKS.getItem(mat, 64));
                 p.sendMessage(prefix + "You purchased: " + ItemEnum.BLOCKS.getName());
                 p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
+
+                playerStatService.save(playerStatEntity);
             } else {
                 p.sendMessage(prefix + "You don't have enough money");
             }

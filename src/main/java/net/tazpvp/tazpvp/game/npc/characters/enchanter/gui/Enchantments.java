@@ -23,10 +23,12 @@ public class Enchantments extends GUI {
 
     private final ItemStack pickaxe;
     private final Player p;
+    private final PlayerStatService playerStatService;
     private final PlayerStatEntity playerStatEntity;
 
     public Enchantments(Player p, ItemStack pickaxe, PlayerStatService playerStatService) {
         super("Pickaxe Enchantments", 3);
+        this.playerStatService = playerStatService;
         this.playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
         this.pickaxe = pickaxe;
         this.p = p;
@@ -90,6 +92,8 @@ public class Enchantments extends GUI {
         updateLore(pickaxe, enchantEnum.getName(), levelToAdd);
         p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, 1, 1);
         p.sendMessage("You enchanted your pickaxe with " + enchantEnum.getName());
+
+        playerStatService.save(playerStatEntity);
     }
 
     private void applyEfficiency() {
@@ -115,6 +119,8 @@ public class Enchantments extends GUI {
         p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, 1, 1);
         String keyName = Enchantment.EFFICIENCY.getKey().getKey();
         p.sendMessage("You enchanted your pickaxe with " + keyName.substring(0, 1).toUpperCase() + keyName.substring(1));
+
+        playerStatService.save(playerStatEntity);
     }
 
     private void updateLore(ItemStack itemStack, String enchantPrefix, int level) {

@@ -54,7 +54,8 @@ public class TalentShop extends GUI {
 
     private int slotNum;
     private int count;
-    PlayerStatEntity playerStatEntity;
+    private final PlayerStatEntity playerStatEntity;
+    private final PlayerStatService playerStatService;
     Player p;
 
     String prefix = CC.DARK_AQUA + "[Lorenzo] " + CC.AQUA;
@@ -64,6 +65,7 @@ public class TalentShop extends GUI {
         super("Talents", 4);
         this.p = p;
         pw = PlayerWrapper.getPlayer(p);
+        this.playerStatService = playerStatService;
         playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
         addItems();
         open(p);
@@ -113,6 +115,8 @@ public class TalentShop extends GUI {
                     p.closeInventory();
                     p.sendTitle(CC.AQUA + "" + CC.BOLD + "New Talent",  CC.DARK_AQUA + talent.getName(), 10, 20, 10);
                     p.playSound(p.getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN, 1, 1);
+
+                    playerStatService.save(playerStatEntity);
 
                     Tazpvp.getObservers().forEach(observer -> observer.talent(p));
                 } else {

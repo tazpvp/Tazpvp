@@ -135,8 +135,8 @@ public class PlayerHelper {
 
     public static void levelUp(UUID ID) {
         Player p = Bukkit.getPlayer(ID);
-        PlayerStatEntity pStatEntity = playerStatService.getOrDefault(ID);
-        float value = pStatEntity.getXp();
+        PlayerStatEntity playerStatEntity = playerStatService.getOrDefault(ID);
+        float value = playerStatEntity.getXp();
         if (p == null) return;
         if (value >= LooseData.getExpLeft(ID)) {
             final BoosterBonus coinsBonus = ActiveBoosterManager.getInstance()
@@ -144,15 +144,18 @@ public class PlayerHelper {
             final int coins = (int) coinsBonus.result();
 
             int num = (int) value - LooseData.getExpLeft(ID);
-            pStatEntity.setXp(num);
-            pStatEntity.setLevel(pStatEntity.getLevel() + 1);
-            pStatEntity.setCoins(pStatEntity.getCoins() + coins);
-            p.setLevel(pStatEntity.getLevel());
+            playerStatEntity.setXp(num);
+            playerStatEntity.setLevel(playerStatEntity.getLevel() + 1);
+            playerStatEntity.setCoins(playerStatEntity.getCoins() + coins);
+            playerStatService.save(playerStatEntity);
+
+            p.setLevel(playerStatEntity.getLevel());
             p.setExp((float) num / LooseData.getExpLeft(ID));
-            ChatHelper.announce(p, CC.AQUA + "" + CC.BOLD + "  LEVEL UP " + CC.DARK_AQUA + "Combat Lvl. " + CC.AQUA + pStatEntity.getLevel(), Sound.ENTITY_PLAYER_LEVELUP);
+            ChatHelper.announce(p, CC.AQUA + "" + CC.BOLD + "  LEVEL UP " + CC.DARK_AQUA + "Combat Lvl. " + CC.AQUA + playerStatEntity.getLevel(), Sound.ENTITY_PLAYER_LEVELUP);
             p.sendMessage(CC.DARK_GRAY + "  ▶ " + CC.GOLD + coins + " Coins " + coinsBonus.prettyPercentMultiplier());
             p.sendMessage(CC.DARK_GRAY + "  ▶ " + CC.DARK_AQUA + "1 Shard");
             p.sendMessage("");
+
         } else {
             p.setExp(value / LooseData.getExpLeft(ID));
         }

@@ -142,6 +142,8 @@ public class GuildMenu extends GUI {
 
                 createGuild(text, p.getUniqueId());
                 p.sendMessage("You created a guild! " + guildEntity.getName());
+
+                guildService.saveGuild(guildEntity);
                 return List.of(AnvilGUI.ResponseAction.close());
             })
             .text(">")

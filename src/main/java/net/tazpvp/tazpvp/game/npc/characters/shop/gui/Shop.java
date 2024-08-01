@@ -42,13 +42,13 @@ public class Shop extends GUI {
         }), 16);
 
         addButton(Button.create(ItemBuilder.of(Material.FIRE_CHARGE, 1).name(CC.GREEN + "" + CC.BOLD + "Trade In").lore(CC.GRAY + "Trade all of your player", CC.GRAY + "heads for coins.").build(), (e) -> {
-            sellHead(p);
+            sellHead(p, playerStatService);
         }), 30);
 
         update();
     }
 
-    public static void sellHead(Player p) {
+    public static void sellHead(Player p, PlayerStatService playerStatService) {
         int reward = 0;
         for (ItemStack item : p.getInventory()) {
             if (item.getType().equals(Material.PLAYER_HEAD)) {
@@ -59,7 +59,8 @@ public class Shop extends GUI {
 
         p.sendMessage(CC.GREEN + "[Shop]" + CC.WHITE + " Pleasure doing business." + CC.GOLD + " + $" + reward);
         p.playSound(p.getLocation(), Sound.UI_STONECUTTER_TAKE_RESULT, 1, 1);
-        PlayerStatEntity statEntity = Tazpvp.getInstance().getPlayerStatService().getOrDefault(p.getUniqueId());
+        PlayerStatEntity statEntity = playerStatService.getOrDefault(p.getUniqueId());
         statEntity.setCoins(statEntity.getCoins() + reward);
+        playerStatService.save(statEntity);
     }
 }

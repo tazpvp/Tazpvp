@@ -185,6 +185,7 @@ public class GuildEdit extends GUI {
                     p.closeInventory();
                     guildService2.messageAll(playerGuildEntity2, ChatColor.YELLOW + p.getName() + ChatColor.GREEN + " has set the guild icon to " + ChatColor.YELLOW + m.name());
                     p.playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+                    guildService2.saveGuild(g);
                     new BukkitRunnable() {
                         @Override
                         public void run() {
@@ -223,6 +224,7 @@ public class GuildEdit extends GUI {
 
                     playerStatEntity.setCoins(playerStatEntity.getCoins() - 6000);
                     g.setDescription(text);
+                    guildService.saveGuild(g);
 
                     return List.of(AnvilGUI.ResponseAction.close());
                 })
@@ -260,6 +262,7 @@ public class GuildEdit extends GUI {
                 player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
 
                 g.setTag(text);
+                guildService.saveGuild(g);
 
                 return List.of(AnvilGUI.ResponseAction.close());
             })

@@ -61,6 +61,7 @@ public class GuildServiceImpl implements GuildService {
     @Override
     public void addMember(GuildEntity guild, GuildMemberEntity member) {
         guild.getMembers().add(member);
+        saveGuild(guild);
     }
 
     @Override

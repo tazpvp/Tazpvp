@@ -70,6 +70,7 @@ public class Upgrade extends GUI {
 
             tool.setType(currentPickaxe.getUpgrade());
             playerStatEntity.setCoins(playerStatEntity.getCoins() - cost);
+            playerStatService.save(playerStatEntity);
 
             sendNPCMessage(p, "Thanks, here is your new pickaxe.");
             p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, 1, 1);
@@ -110,6 +111,7 @@ public class Upgrade extends GUI {
                 playerStatEntity.setCoins(playerStatEntity.getCoins() + reward);
                 sendNPCMessage(p, "Great doing business!" + CC.GREEN + " + $" + reward);
                 p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
+                playerStatService.save(playerStatEntity);
                 Tazpvp.getObservers().forEach(observer -> observer.gui(p, "Caesar"));
             }
         }), 15);

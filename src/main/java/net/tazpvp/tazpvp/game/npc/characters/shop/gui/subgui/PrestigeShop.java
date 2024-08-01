@@ -24,10 +24,12 @@ public class PrestigeShop extends GUI {
     private Player p;
     private final String prefix = CC.RED + "[Maxim] " + CC.WHITE;
     private final PlayerStatEntity playerStatEntity;
+    private final PlayerStatService playerStatService;
 
     public PrestigeShop(Player p, PlayerStatService playerStatService) {
         super("Maxim", 5);
         this.p = p;
+        this.playerStatService = playerStatService;
         this.playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
         addItems();
         open(p);
@@ -69,6 +71,8 @@ public class PrestigeShop extends GUI {
             playerStatEntity.setLevel(0);
             playerStatEntity.setXp(0);
 
+            playerStatService.save(playerStatEntity);
+
             p.getEnderChest().clear();
             p.getInventory().clear();
             PlayerHelper.kitPlayer(p);
@@ -99,6 +103,8 @@ public class PrestigeShop extends GUI {
                 p.getInventory().addItem(item.getItem(1));
                 p.sendMessage(prefix + "You purchased: " + item.getName());
                 p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
+
+                playerStatService.save(playerStatEntity);
             } else {
                 p.sendMessage(prefix + "You don't have enough money");
             }
