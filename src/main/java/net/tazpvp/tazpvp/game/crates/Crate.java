@@ -92,7 +92,9 @@ public class Crate {
     }
 
     public void openPreview(PlayerInteractEvent e) {
-        new Preview(e.getPlayer(), this);
+        if (isCrate(e)) {
+            new Preview(e.getPlayer(), crateDrops);
+        }
     }
 
     private boolean isCrate(PlayerInteractEvent e) {

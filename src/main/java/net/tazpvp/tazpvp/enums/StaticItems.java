@@ -9,7 +9,6 @@ import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 @Getter
 public enum StaticItems {
 
-    SHARD(ChatHelper.gradient("#db3bff", "Shard", true), Material.AMETHYST_SHARD),
     MYTHIC_KEY(ChatHelper.gradient("#db3bff", "Mythic Key", true), Material.TRIPWIRE_HOOK),
     RARE_KEY(ChatHelper.gradient("#039dfc", "Rare Key", true), Material.TRIPWIRE_HOOK),
     COMMON_KEY(ChatHelper.gradient("#03fc39", "Common Key", true), Material.TRIPWIRE_HOOK);

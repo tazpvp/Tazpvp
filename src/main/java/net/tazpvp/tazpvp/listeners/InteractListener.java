@@ -21,6 +21,12 @@ public class InteractListener implements Listener {
         if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (e.getClickedBlock().getType() == Material.BEACON) {
                 e.setCancelled(true);
+                if (e.getPlayer().isSneaking()) {
+                    for (Crate crate : Tazpvp.getCrateManager().getCrates()) {
+                        crate.openPreview(e);
+                    }
+                    return;
+                }
                 for (Crate crate : Tazpvp.getCrateManager().getCrates()) {
                     crate.acceptClick(e);
                 }
@@ -39,15 +45,6 @@ public class InteractListener implements Listener {
                 usableItem.onLeftClick(p, e.getItem());
             } else if (e.getAction() == Action.RIGHT_CLICK_AIR) {
                 usableItem.onRightClick(p, e.getItem());
-            }
-        }
-
-        if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
-            if (e.getClickedBlock().getType() == Material.BEACON) {
-                e.setCancelled(true);
-                for (Crate crate : Tazpvp.getCrateManager().getCrates()) {
-                    crate.openPreview(e);
-                }
             }
         }
     }
