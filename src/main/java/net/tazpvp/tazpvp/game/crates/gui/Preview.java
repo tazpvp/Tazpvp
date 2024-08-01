@@ -1,5 +1,6 @@
 package net.tazpvp.tazpvp.game.crates.gui;
 
+import net.tazpvp.tazpvp.enums.ItemEnum;
 import net.tazpvp.tazpvp.game.crates.Crate;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -23,8 +24,8 @@ public class Preview extends GUI {
         fill(0, 6*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
         int i = 0;
-        for (ItemStack item : crate.getCrateDrops()) {
-            addButton(Button.createBasic(item), i);
+        for (ItemEnum item : crate.getCrateDrops()) {
+            addButton(Button.createBasic(item.getItem()), i);
             i++;
         }
 
