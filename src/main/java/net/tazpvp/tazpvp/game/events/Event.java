@@ -52,13 +52,13 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
+@Deprecated
 public abstract class Event implements Listener {
 
     public static List<String> eventTypes = new ArrayList<>();
     @Getter
     @Setter
     public static Event currentEvent;
-
     @Getter
     private List<UUID> participantList = new ArrayList<>();
     @Getter

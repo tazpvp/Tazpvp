@@ -35,7 +35,7 @@ package net.tazpvp.tazpvp.game.events;
 import net.tazpvp.tazpvp.game.events.types.FFA;
 import net.tazpvp.tazpvp.game.events.types.Parkour;
 
-public final class EventUtils {
+public final class EventHelper {
 
     public static Event create(String name) {
         return switch (name.toLowerCase()){

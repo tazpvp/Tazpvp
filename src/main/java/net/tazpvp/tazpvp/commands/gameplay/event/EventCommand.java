@@ -7,7 +7,7 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.game.events.Event;
-import net.tazpvp.tazpvp.game.events.EventUtils;
+import net.tazpvp.tazpvp.game.events.EventHelper;
 import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -40,7 +40,7 @@ public class EventCommand extends NRCommand {
             }
             if (Event.eventTypes.contains(args[1])) {
                 if (Event.currentEvent == null) {
-                    Event.currentEvent = EventUtils.create(args[1]);
+                    Event.currentEvent = EventHelper.create(args[1]);
                     Event.currentEvent.addParticipant(p.getUniqueId());
 
                     Bukkit.broadcastMessage("The " + args[1] + " event has begun.");
