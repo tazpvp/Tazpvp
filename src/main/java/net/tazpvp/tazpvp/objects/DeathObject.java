@@ -8,6 +8,7 @@ import net.tazpvp.tazpvp.data.entity.GuildEntity;
 import net.tazpvp.tazpvp.data.entity.KitEntity;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.implementations.KitServiceImpl;
+import net.tazpvp.tazpvp.data.services.GuildService;
 import net.tazpvp.tazpvp.data.services.KitService;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.enums.ItemEnum;
@@ -45,11 +46,13 @@ public class DeathObject {
     private final PlayerStatService playerStatService;
     private final GuildEntity victimGuild;
     private final GuildEntity killerGuild;
+    private final GuildService guildService;
     private final PlayerWrapper killerWrapper;
     private final PlayerWrapper victimWrapper;
 
     public DeathObject(UUID victim, @Nullable UUID killer) {
         this.playerStatService = Tazpvp.getInstance().getPlayerStatService();
+        this.guildService = Tazpvp.getInstance().getGuildService();
         this.victim = victim;
         this.pVictim = Bukkit.getPlayer(victim);
         this.victimStatEntity = playerStatService.getOrDefault(victim);
@@ -234,6 +237,7 @@ public class DeathObject {
             }
         }
     }
+
     public void updateStats() {
         CombatObject tag = CombatObject.tags.get(victim);
         if (!tag.getAttackers().isEmpty()) {
@@ -274,8 +278,10 @@ public class DeathObject {
 
             int XP = 15;
             int COINS = 25;
-            final BoosterBonus XP_NETWORK_BUFF = ActiveBoosterManager.getInstance().calculateBonus(XP, List.of(BoosterTypes.XP, BoosterTypes.MEGA));
-            final BoosterBonus COIN_NETWORK_BUFF = ActiveBoosterManager.getInstance().calculateBonus(COINS, List.of(BoosterTypes.COINS, BoosterTypes.MEGA));
+            final BoosterBonus XP_NETWORK_BUFF = ActiveBoosterManager.getInstance()
+                    .calculateBonus(XP, List.of(BoosterTypes.XP, BoosterTypes.MEGA));
+            final BoosterBonus COIN_NETWORK_BUFF = ActiveBoosterManager.getInstance()
+                    .calculateBonus(COINS, List.of(BoosterTypes.COINS, BoosterTypes.MEGA));
             int XP_OTHER_BUFF = otherBuffs(killerStatEntity, XP);
             int COIN_OTHER_BUFF =  otherBuffs(killerStatEntity, COINS);
 
@@ -300,12 +306,12 @@ public class DeathObject {
             }
 
             if (killerGuild != null) {
-                killerGuild.setDeaths(killerGuild.getDeaths() + 1);
+                killerGuild.setKills(killerGuild.getKills() + 1);
             }
 
             pKiller.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
                     CC.DARK_AQUA.toString() + CC.BOLD + "Exp: " + CC.AQUA + CC.BOLD + XP + " " + CC.DARK_AQUA + XP_NETWORK_BUFF.prettyPercentMultiplier() +
-                            CC.GOLD + CC.BOLD + " Coins: " + CC.YELLOW + CC.BOLD + COINS + " " + CC.GOLD + COIN_NETWORK_BUFF.prettyPercentMultiplier()
+                    CC.GOLD + CC.BOLD + " Coins: " + CC.YELLOW + CC.BOLD + COINS + " " + CC.GOLD + COIN_NETWORK_BUFF.prettyPercentMultiplier()
             ));
             if (bountyReward > 0) {
                 pKiller.sendMessage(CC.YELLOW + "You collected " + pVictim.getName() + "'s " + CC.GOLD + "$" + bountyReward + CC.YELLOW + " bounty.");
@@ -313,6 +319,8 @@ public class DeathObject {
 
             Tazpvp.getInstance().getPlayerNameTagService().setTagRank(pKiller);
 
+            playerStatService.save(killerStatEntity);
+            guildService.saveGuild(killerGuild);
         }
     }
 
@@ -331,6 +339,9 @@ public class DeathObject {
         LooseData.resetKs(victim);
 
         Tazpvp.getInstance().getPlayerNameTagService().setTagRank(pVictim);
+
+        playerStatService.save(victimStatEntity);
+        guildService.saveGuild(victimGuild);
     }
 
     private int otherBuffs(PlayerStatEntity playerStatEntity, int stat) {

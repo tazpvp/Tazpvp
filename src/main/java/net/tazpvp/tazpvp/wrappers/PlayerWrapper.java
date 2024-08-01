@@ -83,11 +83,6 @@ public class PlayerWrapper {
     @Getter
     private final ConcurrentHashMap<UUID, Duel> duelRequests;
 
-
-    /**
-     * Should only take UUID, all other values should not have to persist.
-     * @param uuid UUID.
-     */
     public PlayerWrapper(UUID uuid) {
         this.uuid = uuid;
         this.launching = false;
@@ -155,17 +150,10 @@ public class PlayerWrapper {
         setRankEntity();
     }
 
-    /**
-     * Hide the player from ALL other players.
-     */
     public void hidePlayer() {
         Bukkit.getOnlinePlayers().forEach(this::hidePlayer);
     }
 
-    /**
-     * Hide the target from the owner.
-     * @param target The player to hide from the owner
-     */
     public void hidePlayer(Player target) {
         Player owner = getPlayer();
         owner.hidePlayer(Tazpvp.getInstance(), target);
@@ -179,9 +167,6 @@ public class PlayerWrapper {
         Bukkit.getOnlinePlayers().forEach(player -> PlayerWrapper.getPlayer(player).hidePlayer(getPlayer()));
     }
 
-    /**
-     * Hide the player from ALL other players.
-     */
     public void showPlayer() {
         Bukkit.getOnlinePlayers().forEach(target -> {
             if (!target.canSee(getPlayer())) {
@@ -190,10 +175,6 @@ public class PlayerWrapper {
         });
     }
 
-    /**
-     * Show the target from the owner.
-     * @param target The player to hide from the owner
-     */
     public void showPlayer(Player target) {
         Player owner = getPlayer();
         owner.showPlayer(Tazpvp.getInstance(), target);

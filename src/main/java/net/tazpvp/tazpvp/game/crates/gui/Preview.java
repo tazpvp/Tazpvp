@@ -10,12 +10,10 @@ import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 import java.util.List;
 
 public class Preview extends GUI {
-    private final Player player;
     private final List<ItemEnum> crateDrops;
 
     public Preview(Player player, List<ItemEnum> crateDrops) {
         super("Crate Preview", 6);
-        this.player = player;
         this.crateDrops = crateDrops;
         addItems();
         open(player);
