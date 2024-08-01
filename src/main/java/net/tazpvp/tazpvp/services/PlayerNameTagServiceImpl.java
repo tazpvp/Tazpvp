@@ -89,4 +89,12 @@ public class PlayerNameTagServiceImpl implements PlayerNameTagService {
             textDisplay.setText(ChatFunctions.getRanking(player));
         }
     }
+
+    @Override
+    public void setNameTagVisibility(Player player, boolean visible) {
+        TextDisplay textDisplay = uuidItemDisplayMap.get(player.getUniqueId());
+        if (textDisplay != null) {
+            textDisplay.setViewRange(visible ? 100 : 0);
+        }
+    }
 }

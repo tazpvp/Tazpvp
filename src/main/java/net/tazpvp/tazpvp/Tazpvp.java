@@ -97,6 +97,7 @@ import net.tazpvp.tazpvp.utils.passive.Generator;
 import net.tazpvp.tazpvp.utils.passive.Holograms;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.utils.command.CommandCL;
@@ -233,6 +234,9 @@ public final class Tazpvp extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            playerNameTagService.recalibratePlayer(player);
+        }
 
         despawnNpcs();
         BossManager.despawnBoss();

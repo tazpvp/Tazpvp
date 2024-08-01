@@ -11,4 +11,6 @@ public interface PlayerNameTagService {
 
     void recalibratePlayer(Player player);
     void setTagRank(Player player);
+
+    void setNameTagVisibility(Player player, boolean visible);
 }
