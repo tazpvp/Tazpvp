@@ -13,7 +13,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Random;
 
-public class AfkFunctions {
+public class AfkHelper {
 
     public static void setup() {
         final Random random = new Random();

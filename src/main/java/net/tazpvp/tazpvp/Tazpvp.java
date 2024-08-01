@@ -88,7 +88,7 @@ import net.tazpvp.tazpvp.services.PlayerNameTagServiceImpl;
 import net.tazpvp.tazpvp.utils.ConfigUtil;
 import net.tazpvp.tazpvp.services.PlayerNameTagService;
 import net.tazpvp.tazpvp.utils.discord.bot.BotThread;
-import net.tazpvp.tazpvp.helpers.AfkFunctions;
+import net.tazpvp.tazpvp.helpers.AfkHelper;
 import net.tazpvp.tazpvp.helpers.CombatTagHelper;
 import net.tazpvp.tazpvp.utils.leaderboard.spawnable.SpawnableLeaderboardManager;
 import net.tazpvp.tazpvp.utils.observer.Observer;
@@ -177,7 +177,7 @@ public final class Tazpvp extends JavaPlugin {
         EnchantHelper.register();
         spawnNpcs();
         CombatTagHelper.initCombatTag();
-        AfkFunctions.setup();
+        AfkHelper.setup();
         UsableItem.registerCustomItems();
 
         parkourUtil = new ConfigUtil("parkour.yml", this);

@@ -128,7 +128,7 @@ public class JoinListener implements Listener {
         final String message = plus + " " + name;
         e.setJoinMessage(message);
 
-        AfkFunctions.setAfk(p);
+        AfkHelper.setAfk(p);
         Tazpvp.getBotThread().connectionChat(p.getName(), true);
     }
 }

@@ -7,7 +7,7 @@ import net.tazpvp.tazpvp.data.services.PunishmentService;
 import net.tazpvp.tazpvp.game.npc.characters.NPC;
 import net.tazpvp.tazpvp.helpers.ParkourHelper;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.helpers.AfkFunctions;
+import net.tazpvp.tazpvp.helpers.AfkHelper;
 import net.tazpvp.tazpvp.objects.DeathObject;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.*;
@@ -57,7 +57,7 @@ public class MoveListener implements Listener {
             }
         } else if (p.getWorld().getName().equals("arena")) {
 
-            AfkFunctions.setAfk(p);
+            AfkHelper.setAfk(p);
 
             if (p.getLocation().distance(launchpadRaidus) < 5) {
                 if (p.getGameMode().equals(GameMode.SURVIVAL)){
