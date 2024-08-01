@@ -33,35 +33,38 @@
 package net.tazpvp.tazpvp.utils.passive;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.game.items.StaticItems;
-import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Sound;
+import net.tazpvp.tazpvp.enums.ItemEnum;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
+import org.bukkit.*;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.util.List;
+
 public class Generator {
 
-    private final static ItemStack shard = StaticItems.SHARD.item(1);
+    private static final ItemStack item = ItemEnum.getRandomDrop().getItem(1);
+
+    private final static List<Location> locationList = List.of(
+            new Location(Bukkit.getWorld("arena"), 23.5, 92, 76.5),
+            new Location(Bukkit.getWorld("arena"), -24.5, 91, 76.5)
+    );
 
     public static void generate() {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (Bukkit.getOnlinePlayers().size() >= 5) {
-
-                    Item i = (Bukkit.getWorld("arena")).dropItem(new Location(Bukkit.getWorld("arena"), 23.5, 92, 76.5), shard);
-                    i.setVelocity(new Vector(0, 0, 0));
-
-                    Item i2 = (Bukkit.getWorld("arena")).dropItem(new Location(Bukkit.getWorld("arena"), -24.5, 91, 76.5), shard);
-                    i2.setVelocity(new Vector(0, 0, 0));
-
-                    ChatFunctions.announce(ChatColor.LIGHT_PURPLE + " The generators have spawned shards.", Sound.BLOCK_NOTE_BLOCK_BELL);;
-
+                if (Bukkit.getOnlinePlayers().size() >= 10) {
+                    World world = Bukkit.getWorld("arena");
+                    if (world != null) {
+                        for (Location location : locationList) {
+                            Item i = world.dropItem(location, item);
+                            i.setVelocity(new Vector(0, 0, 0));
+                        }
+                    }
+                    ChatHelper.announce(ChatColor.LIGHT_PURPLE + " The generators have spawned items.", Sound.BLOCK_NOTE_BLOCK_BELL);;
                 }
             }
         }.runTaskTimer(Tazpvp.getInstance(), 20, 20*60*4);

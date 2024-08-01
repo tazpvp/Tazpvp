@@ -34,10 +34,6 @@
 package net.tazpvp.tazpvp.commands.gameplay.guild.handler;
 
 import lombok.NonNull;
-import net.tazpvp.tazpvp.commands.gameplay.guild.GuildCommand;
-import net.tazpvp.tazpvp.game.guilds.Guild;
-import net.tazpvp.tazpvp.game.guilds.GuildUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
@@ -50,35 +46,36 @@ public class GuildAbstractArgumentCommand extends NRCommand {
 
     @Override
     public boolean execute(@NonNull CommandSender sender, @NonNull String[] args) {
-        if (!(sender instanceof Player p)) {
-            sendIncorrectUsage(sender);
-            return false;
-        }
-
-        if (!GuildUtils.isInGuild(p)) {
-            p.sendMessage(GuildCommand.getNotInGuild());
-            return false;
-        }
-
-        final Guild g = GuildUtils.getGuildPlayerIn(p);
-
-        if (args.length < 1) {
-            sendIncorrectUsage(sender, "No player specified");
-            return false;
-        }
-
-        final String targetName = args[0];
-        final Player targetPlayer = Bukkit.getPlayer(targetName);
-
-        if (targetPlayer == null) {
-            sendIncorrectUsage(sender, "Cannot find player");
-            return false;
-        }
-
-        return executeFunction(p, g, targetPlayer);
+//        if (!(sender instanceof Player p)) {
+//            sendIncorrectUsage(sender);
+//            return false;
+//        }
+//
+//        if (!GuildUtils.isInGuild(p)) {
+//            p.sendMessage(GuildCommand.getNotInGuild());
+//            return false;
+//        }
+//
+//        final Guild g = GuildUtils.getGuildPlayerIn(p);
+//
+//        if (args.length < 1) {
+//            sendIncorrectUsage(sender, "No player specified");
+//            return false;
+//        }
+//
+//        final String targetName = args[0];
+//        final Player targetPlayer = Bukkit.getPlayer(targetName);
+//
+//        if (targetPlayer == null) {
+//            sendIncorrectUsage(sender, "Cannot find player");
+//            return false;
+//        }
+//
+//        return executeFunction(p, g, targetPlayer);
+        return true;
     }
 
-    public boolean executeFunction(@NonNull Player p, @NonNull Guild g, @NonNull Player target) {
+    public boolean executeFunction(@NonNull Player p, @NonNull Player target) {
         return true;
     }
 }

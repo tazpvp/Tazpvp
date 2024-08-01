@@ -35,8 +35,8 @@ package net.tazpvp.tazpvp.commands.moderation.ban;
 import lombok.NonNull;
 import net.tazpvp.tazpvp.data.implementations.PunishmentServiceImpl;
 import net.tazpvp.tazpvp.data.services.PunishmentService;
-import net.tazpvp.tazpvp.utils.enums.CC;
-import net.tazpvp.tazpvp.utils.functions.PunishmentFunctions;
+import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.helpers.PunishmentHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -89,9 +89,9 @@ public class BanCommand extends NRCommand {
 
 
         if (args.length < 3) {
-            PunishmentFunctions.ban(target, args[1], sender);
+            PunishmentHelper.ban(target, args[1], sender);
         } else {
-            PunishmentFunctions.ban(target, args[1], sender, ChatUtils.builder(args, 2));
+            PunishmentHelper.ban(target, args[1], sender, ChatUtils.builder(args, 2));
         }
 
         return true;

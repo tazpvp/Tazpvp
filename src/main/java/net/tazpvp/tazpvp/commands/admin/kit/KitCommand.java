@@ -1,7 +1,7 @@
 package net.tazpvp.tazpvp.commands.admin.kit;
 
 import lombok.NonNull;
-import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
+import net.tazpvp.tazpvp.helpers.PlayerHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -31,10 +31,10 @@ public class KitCommand extends NRCommand {
         }
 
         if (args.length < 1) {
-            PlayerFunctions.kitPlayer(p);
+            PlayerHelper.kitPlayer(p);
         } else {
             if (Bukkit.getPlayer(args[0]) != null) {
-                PlayerFunctions.kitPlayer(Bukkit.getPlayer(args[0]));
+                PlayerHelper.kitPlayer(Bukkit.getPlayer(args[0]));
             } else {
                 p.sendMessage("Usage: /kit <player>");
             }

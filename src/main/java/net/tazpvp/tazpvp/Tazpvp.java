@@ -75,21 +75,21 @@ import net.tazpvp.tazpvp.game.bosses.zorg.Zorg;
 import net.tazpvp.tazpvp.game.crates.CrateManager;
 import net.tazpvp.tazpvp.game.events.Event;
 import net.tazpvp.tazpvp.game.items.UsableItem;
-import net.tazpvp.tazpvp.game.items.enchants.EnchantUtil;
+import net.tazpvp.tazpvp.helpers.EnchantHelper;
 import net.tazpvp.tazpvp.listeners.*;
-import net.tazpvp.tazpvp.npc.characters.*;
-import net.tazpvp.tazpvp.npc.characters.enchanter.Caesar;
-import net.tazpvp.tazpvp.npc.characters.achievements.Lorenzo;
-import net.tazpvp.tazpvp.npc.characters.guildmaster.Rigel;
-import net.tazpvp.tazpvp.npc.characters.shop.Maxim;
-import net.tazpvp.tazpvp.player.achievements.achievement.*;
-import net.tazpvp.tazpvp.player.talents.talent.*;
+import net.tazpvp.tazpvp.game.npc.characters.*;
+import net.tazpvp.tazpvp.game.npc.characters.enchanter.Caesar;
+import net.tazpvp.tazpvp.game.npc.characters.achievements.Lorenzo;
+import net.tazpvp.tazpvp.game.npc.characters.guildmaster.Rigel;
+import net.tazpvp.tazpvp.game.npc.characters.shop.Maxim;
+import net.tazpvp.tazpvp.game.achievements.*;
+import net.tazpvp.tazpvp.game.talents.*;
 import net.tazpvp.tazpvp.services.PlayerNameTagServiceImpl;
 import net.tazpvp.tazpvp.utils.ConfigUtil;
 import net.tazpvp.tazpvp.services.PlayerNameTagService;
 import net.tazpvp.tazpvp.utils.discord.bot.BotThread;
-import net.tazpvp.tazpvp.utils.functions.AfkFunctions;
-import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
+import net.tazpvp.tazpvp.helpers.AfkHelper;
+import net.tazpvp.tazpvp.helpers.CombatTagHelper;
 import net.tazpvp.tazpvp.utils.leaderboard.spawnable.SpawnableLeaderboardManager;
 import net.tazpvp.tazpvp.utils.observer.Observer;
 import net.tazpvp.tazpvp.utils.passive.Alerts;
@@ -108,7 +108,6 @@ import world.ntdi.postglam.connection.Database;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 /*
     A plugin for tazpvp beacuse we love tazpvp! <3 I love tazpvp <3 <3 <3 Rownxo smells like tazpvp stinky tazpvp
@@ -176,10 +175,10 @@ public final class Tazpvp extends JavaPlugin {
         Alerts.alert();
         Event.eventTypes.add("FFA");
         registerObservable();
-        EnchantUtil.register();
+        EnchantHelper.register();
         spawnNpcs();
-        CombatTagFunctions.initCombatTag();
-        AfkFunctions.setup();
+        CombatTagHelper.initCombatTag();
+        AfkHelper.setup();
         UsableItem.registerCustomItems();
 
         parkourUtil = new ConfigUtil("parkour.yml", this);
@@ -265,7 +264,6 @@ public final class Tazpvp extends JavaPlugin {
         new Harvester();
         new Speedrunner();
 //        new Error();
-
         new Revenge();
         new Moist();
         new Agile();
@@ -327,31 +325,31 @@ public final class Tazpvp extends JavaPlugin {
     }
 
     public void registerEvents() {
-        getServer().getPluginManager().registerEvents(new Damage(), this);
-        getServer().getPluginManager().registerEvents(new Join(), this);
-        getServer().getPluginManager().registerEvents(new Leave(), this);
-        getServer().getPluginManager().registerEvents(new InventoryClick(), this);
-        getServer().getPluginManager().registerEvents(new Break(), this);
-        getServer().getPluginManager().registerEvents(new Move(), this);
-        getServer().getPluginManager().registerEvents(new Place(), this);
-        getServer().getPluginManager().registerEvents(new Chat(), this);
-        getServer().getPluginManager().registerEvents(new Exp(), this);
-        getServer().getPluginManager().registerEvents(new Interact(), this);
-        getServer().getPluginManager().registerEvents(new Shoot(), this);
-        getServer().getPluginManager().registerEvents(new ProjectileLaunch(this), this);
+        getServer().getPluginManager().registerEvents(new DamageListener(), this);
+        getServer().getPluginManager().registerEvents(new JoinListener(), this);
+        getServer().getPluginManager().registerEvents(new LeaveListener(), this);
+        getServer().getPluginManager().registerEvents(new InventoryListener(), this);
+        getServer().getPluginManager().registerEvents(new BreakListener(), this);
+        getServer().getPluginManager().registerEvents(new MoveListener(), this);
+        getServer().getPluginManager().registerEvents(new PlaceListener(), this);
+        getServer().getPluginManager().registerEvents(new ChatListener(), this);
+        getServer().getPluginManager().registerEvents(new ExpListener(), this);
+        getServer().getPluginManager().registerEvents(new InteractListener(), this);
+        getServer().getPluginManager().registerEvents(new ShootListener(), this);
+        getServer().getPluginManager().registerEvents(new ProjectileListener(this), this);
         getServer().getPluginManager().registerEvents(new DeathListener(), this);
-        getServer().getPluginManager().registerEvents(new CommandSend(), this);
-        getServer().getPluginManager().registerEvents(new Craft(), this);
-        getServer().getPluginManager().registerEvents(new Explode(), this);
-        getServer().getPluginManager().registerEvents(new EntitySpawn(), this);
-        getServer().getPluginManager().registerEvents(new Burn(), this);
+        getServer().getPluginManager().registerEvents(new CommandListener(), this);
+        getServer().getPluginManager().registerEvents(new CraftListener(), this);
+        getServer().getPluginManager().registerEvents(new ExplodeListener(), this);
+        getServer().getPluginManager().registerEvents(new EntitySpawnListener(), this);
+        getServer().getPluginManager().registerEvents(new BurnListener(), this);
     }
 
     private void spawnNpcs() {
         npcs.add(new Maxim(playerStatService));
         npcs.add(new Lorenzo());
-        npcs.add(new Caesar());
-        npcs.add(new Rigel(guildService));
+        npcs.add(new Caesar(playerStatService));
+        npcs.add(new Rigel(guildService, playerStatService));
 
         new BukkitRunnable() {
             @Override

@@ -1,8 +1,8 @@
 package net.tazpvp.tazpvp.commands.network;
 
 import lombok.NonNull;
-import net.tazpvp.tazpvp.utils.PlaytimeUtil;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.helpers.PlaytimeHelper;
+import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -33,8 +33,8 @@ public class PlaytimeCommand extends NRCommand {
         else
             target = p;
 
-        long playtimeSeconds = PlaytimeUtil.getPlayTime(target) / 1000;
-        String formattedPlaytime = PlaytimeUtil.secondsToDDHHMMSS(playtimeSeconds);
+        long playtimeSeconds = PlaytimeHelper.getPlayTime(target) / 1000;
+        String formattedPlaytime = PlaytimeHelper.secondsToDDHHMMSS(playtimeSeconds);
 
         p.sendMessage(CC.GOLD + "" + CC.BOLD + target.getName() + "'s Playtime: " + CC.YELLOW + formattedPlaytime);
 

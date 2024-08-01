@@ -1,9 +1,10 @@
 package net.tazpvp.tazpvp.commands.gameplay.PayCommand;
 
 import lombok.NonNull;
-import net.tazpvp.tazpvp.data.DataTypes;
-import net.tazpvp.tazpvp.data.PersistentData;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
+import net.tazpvp.tazpvp.data.services.PlayerStatService;
+import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -18,6 +19,7 @@ public class PayCommand extends NRCommand {
     public PayCommand() {
         super(new Label("pay", null));
     }
+    private final PlayerStatService playerStatService = Tazpvp.getInstance().getPlayerStatService();
 
     @Override
     public boolean execute(@NonNull CommandSender sender, @NonNull String[] args) {
@@ -51,11 +53,17 @@ public class PayCommand extends NRCommand {
             return true;
         }
 
-        if (PersistentData.getInt(p, DataTypes.COINS) >= amount) {
-            PersistentData.remove(p, DataTypes.COINS, amount);
-            PersistentData.add(target, DataTypes.COINS, amount);
+        PlayerStatEntity senderStatEntity = playerStatService.getOrDefault(p.getUniqueId());
+        PlayerStatEntity targetStatEntity = playerStatService.getOrDefault(target.getUniqueId());
+
+        if (senderStatEntity.getCoins() >= amount) {
+            senderStatEntity.setCoins(senderStatEntity.getCoins() - amount);
+            targetStatEntity.setCoins(targetStatEntity.getCoins() + amount);
             p.sendMessage(CC.GREEN + "You have paid " + target.getName() + " " + amount + " coins.");
             target.sendMessage(CC.GREEN + p.getName() + " has paid you " + amount + " coins.");
+
+            playerStatService.save(senderStatEntity);
+            playerStatService.save(targetStatEntity);
         } else {
             p.sendMessage(CC.RED + "You do not have enough coins.");
             return true;

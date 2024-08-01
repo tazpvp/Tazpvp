@@ -1,11 +1,10 @@
 package net.tazpvp.tazpvp.utils.passive;
 
-import net.tazpvp.tazpvp.utils.enums.CC;
-import net.tazpvp.tazpvp.utils.enums.ColorCodes;
-import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
+import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.enums.Theme;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import world.ntdi.nrcore.utils.holograms.Hologram;
@@ -18,12 +17,12 @@ public class Holograms {
     public static List<Hologram> holograms = new ArrayList<>();
 
     private static String[] welcome = {
-            CC.WHITE + "Welcome to " + ChatFunctions.gradient(ColorCodes.SERVER.getHex(), "Tazpvp", true),
+            CC.WHITE + "Welcome to " +  Theme.SERVER.gradient("Tazpvp", true),
             "Type " + CC.AQUA + "/help", CC.WHITE + "for a guide!"
     };
     private static String[] afkPit = {
-            ChatFunctions.gradient("#8fff17", "AFK PIT", true),
-            ChatFunctions.gradient("#8fff17", "1x Key Rewards", true),
+            ChatHelper.gradient("#8fff17", "AFK PIT", true),
+            ChatHelper.gradient("#8fff17", "1x Key Rewards", true),
     };
     public static void holograms() {
         holograms.add(

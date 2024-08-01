@@ -34,15 +34,9 @@
 package net.tazpvp.tazpvp.commands.gameplay.guild.sub;
 
 import lombok.NonNull;
-import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.GuildData;
-import net.tazpvp.tazpvp.game.guilds.Guild;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
-
-import java.util.UUID;
 
 public class GuildAcceptCommand extends NRCommand {
     public GuildAcceptCommand() {
@@ -51,23 +45,23 @@ public class GuildAcceptCommand extends NRCommand {
 
     @Override
     public boolean execute(@NonNull CommandSender sender, @NonNull String[] args) {
-        if (!(sender instanceof Player p)) {
-            sendIncorrectUsage(sender);
-            return false;
-        }
-        acceptInvite(p);
+//        if (!(sender instanceof Player p)) {
+//            sendIncorrectUsage(sender);
+//            return false;
+//        }
+//        acceptInvite(p);
         return true;
     }
 
-    private static void acceptInvite(Player p) {
-        if (p.hasMetadata("guildInvited")) {
-            UUID guildID = UUID.fromString(p.getMetadata("guildInvited").get(0).asString());
-            Guild g = GuildData.getGuild(guildID);
-
-            g.acceptInvite(p.getUniqueId());
-            p.removeMetadata("guildInvite", Tazpvp.getInstance());
-        } else {
-            p.sendMessage("You were not invited to a guild.");
-        }
-    }
+//    private static void acceptInvite(Player p) {
+//        if (p.hasMetadata("guildInvited")) {
+//            UUID guildID = UUID.fromString(p.getMetadata("guildInvited").get(0).asString());
+//            Guild g = GuildData.getGuild(guildID);
+//
+//            g.acceptInvite(p.getUniqueId());
+//            p.removeMetadata("guildInvite", Tazpvp.getInstance());
+//        } else {
+//            p.sendMessage("You were not invited to a guild.");
+//        }
+//    }
 }

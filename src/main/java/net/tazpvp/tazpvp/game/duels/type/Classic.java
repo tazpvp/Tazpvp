@@ -34,9 +34,9 @@ package net.tazpvp.tazpvp.game.duels.type;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.game.duels.Duel;
-import net.tazpvp.tazpvp.utils.enums.CC;
-import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
-import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
+import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.helpers.PlayerHelper;
+import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -126,8 +126,8 @@ public class Classic extends Duel {
 
     private void initPlayer(final Player p) {
         ArmorManager.storeAndClearInventory(p);
-        PlayerFunctions.resetHealth(p);
-        PlayerFunctions.feedPlr(p);
+        PlayerHelper.resetHealth(p);
+        PlayerHelper.feedPlr(p);
         p.sendMessage(CC.BOLD + "" + CC.GOLD + "The duel will begin in 5 seconds.");
         p.setGameMode(GameMode.SURVIVAL);
         Tazpvp.getObservers().forEach(observer -> observer.duel(p));

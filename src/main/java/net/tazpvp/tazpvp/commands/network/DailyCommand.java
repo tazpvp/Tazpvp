@@ -2,11 +2,11 @@ package net.tazpvp.tazpvp.commands.network;
 
 import lombok.NonNull;
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.DataTypes;
-import net.tazpvp.tazpvp.data.PersistentData;
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
+import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.game.crates.KeyFactory;
-import net.tazpvp.tazpvp.utils.enums.CC;
-import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
+import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -21,8 +21,11 @@ public class DailyCommand extends NRCommand {
     @Override
     public boolean execute(@NonNull CommandSender sender, @NonNull String[] args) {
         if (sender instanceof Player p) {
+            PlayerStatService playerStatService = Tazpvp.getInstance().getPlayerStatService();
+            PlayerStatEntity playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
+
             long currentTime = System.currentTimeMillis();
-            long lastClaimTime = (long) PersistentData.getFloat(p, DataTypes.DAILYCRATEUNIX);
+            long lastClaimTime = playerStatEntity.getLastClaim();
 
             if (p.isOp()) {
                 p.getInventory().addItem(KeyFactory.getFactory().createCommonKey());
@@ -30,10 +33,12 @@ public class DailyCommand extends NRCommand {
                 p.getInventory().addItem(KeyFactory.getFactory().createMythicKey());
             } else if (Tazpvp.getCrateManager().canClaimDaily(p)) {
                 p.getInventory().addItem(KeyFactory.getFactory().createCommonKey());
-                p.sendMessage(CC.GREEN + "You claimed your daily " + ChatFunctions.gradient("#03fc39", "Common Key", true));
+                p.sendMessage(CC.GREEN + "You claimed your daily " + ChatHelper.gradient("#03fc39", "Common Key", true));
                 p.playSound(p.getLocation(), Sound.ITEM_BOTTLE_FILL_DRAGONBREATH, 1F, 1F);
 
-                PersistentData.set(p, DataTypes.DAILYCRATEUNIX, currentTime);
+                playerStatEntity.setLastClaim(currentTime);
+                playerStatService.save(playerStatEntity);
+
             } else {
                 long timeDifference = (24 * 60 * 60 * 1000) - (currentTime - lastClaimTime);
 
