@@ -28,34 +28,23 @@ public enum StatEnum {
     private static final PlayerStatService playerStatService = Tazpvp.getInstance().getPlayerStatService();
 
     <T extends Number> StatEnum(BiConsumer<PlayerStatEntity, T> setter, Function<PlayerStatEntity, T> getter, Class<T> type, ScoreboardEnum scoreboardEnum) {
-        this.scoreboardEnum = scoreboardEnum;
         this.set = (entity, value) -> setter.accept(entity, type.cast(value));
         this.get = getter::apply;
         this.type = type;
+        this.scoreboardEnum = scoreboardEnum;
     }
 
     <T extends Number> StatEnum(BiConsumer<PlayerStatEntity, T> setter, Function<PlayerStatEntity, T> getter, Class<T> type) {
-        this.scoreboardEnum = null;
-        this.set = (entity, value) -> setter.accept(entity, type.cast(value));
-        this.get = getter::apply;
-        this.type = type;
+        this(setter, getter, type, null);
     }
 
     public void add(UUID id, Number value) {
         PlayerStatEntity playerStatEntity = playerStatService.getOrDefault(id);
         Number currentValue = get.apply(playerStatEntity);
         if (type == Integer.class) {
-            if (scoreboardEnum != null) {
-                playerStatService.set(id, currentValue.intValue() + value.intValue(), set, scoreboardEnum);
-            } else {
-                playerStatService.set(id, currentValue.intValue() + value.intValue(), set);
-            }
+            set(id, currentValue.intValue() + value.intValue());
         } else {
-            if (scoreboardEnum != null) {
-                playerStatService.set(id, currentValue.longValue() + value.longValue(), set, scoreboardEnum);
-            } else {
-                playerStatService.set(id, currentValue.longValue() + value.longValue(), set);
-            }
+            set(id, currentValue.longValue() + value.longValue());
         }
     }
 
@@ -63,17 +52,9 @@ public enum StatEnum {
         PlayerStatEntity playerStatEntity = playerStatService.getOrDefault(id);
         Number currentValue = get.apply(playerStatEntity);
         if (type == Integer.class) {
-            if (scoreboardEnum != null) {
-                playerStatService.set(id, currentValue.intValue() - value.intValue(), set, scoreboardEnum);
-            } else {
-                playerStatService.set(id, currentValue.intValue() - value.intValue(), set);
-            }
+            set(id, currentValue.intValue() - value.intValue());
         } else {
-            if (scoreboardEnum != null) {
-                playerStatService.set(id, currentValue.longValue() - value.longValue(), set, scoreboardEnum);
-            } else {
-                playerStatService.set(id, currentValue.longValue() - value.longValue(), set);
-            }
+            set(id, currentValue.longValue() - value.longValue());
         }
     }
 

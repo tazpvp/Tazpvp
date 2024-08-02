@@ -187,7 +187,7 @@ public class ChatHelper {
     private static String scoreboard(Player p, String rank) {
         PlayerStatEntity statEntity = statService.getOrDefault(p.getUniqueId());
 
-        ScoreboardHelper.updateSuffix(p, ScoreboardEnum.RANK, "(" + statEntity.getMMR() + ")" +  rank);
+        ScoreboardHelper.updateSuffix(p, ScoreboardEnum.RANK,  rank + CC.DARK_GRAY + "(" + statEntity.getMMR() + ")");
         return rank;
     }
 }
