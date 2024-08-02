@@ -5,6 +5,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -59,11 +60,16 @@ public enum StatEnum {
     }
 
     public void set(UUID id, Number value) {
-        if (scoreboardEnum != null) {
-            playerStatService.set(id, value, set, scoreboardEnum);
-        } else {
-            playerStatService.set(id, value, set);
-        }
+        CompletableFuture.runAsync(() -> {
+            if (scoreboardEnum != null) {
+                playerStatService.set(id, value, set, scoreboardEnum);
+            } else {
+                playerStatService.set(id, value, set);
+            }
+        }).exceptionally(throwable -> {
+            throwable.printStackTrace();
+            return null;
+        });
     }
 
     public Number get(UUID id) {

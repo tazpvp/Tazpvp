@@ -145,9 +145,9 @@ public class DeathObject {
 
             if (world != null) {
                 if (killerWrapper.getTalentEntity().isNecromancer()) {
-                    world.dropItemNaturally(location.add(0, 2, 0), ItemEnum.getRandomDrop().getItem(2));
+                    world.dropItemNaturally(location.add(0, 2, 0), ItemEnum.getRandomDrop().getItem(1));
                 }
-                world.dropItemNaturally(location.add(0, 1, 0), ItemEnum.getRandomDrop().getItem(2));
+                world.dropItemNaturally(location.add(0, 1, 0), ItemEnum.getRandomDrop().getItem(1));
             }
         }
     }
