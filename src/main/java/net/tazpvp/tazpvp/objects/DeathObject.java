@@ -12,12 +12,14 @@ import net.tazpvp.tazpvp.data.services.GuildService;
 import net.tazpvp.tazpvp.data.services.KitService;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.enums.ItemEnum;
+import net.tazpvp.tazpvp.enums.ScoreboardEnum;
 import net.tazpvp.tazpvp.game.booster.ActiveBoosterManager;
 import net.tazpvp.tazpvp.game.booster.BoosterBonus;
 import net.tazpvp.tazpvp.game.booster.BoosterTypes;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.helpers.CombatTagHelper;
 import net.tazpvp.tazpvp.helpers.PlayerHelper;
+import net.tazpvp.tazpvp.helpers.ScoreboardHelper;
 import net.tazpvp.tazpvp.helpers.SerializableInventory;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.*;
@@ -261,6 +263,7 @@ public class DeathObject {
 
                     playerStatService.save(aStatEntity);
                     PlayerHelper.levelUp(uuid);
+
                 }
             }
         }

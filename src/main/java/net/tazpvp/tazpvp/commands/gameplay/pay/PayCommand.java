@@ -5,6 +5,9 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.enums.StatEnum;
+import net.tazpvp.tazpvp.enums.ScoreboardEnum;
+import net.tazpvp.tazpvp.helpers.ScoreboardHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -54,16 +57,12 @@ public class PayCommand extends NRCommand {
         }
 
         PlayerStatEntity senderStatEntity = playerStatService.getOrDefault(p.getUniqueId());
-        PlayerStatEntity targetStatEntity = playerStatService.getOrDefault(target.getUniqueId());
 
         if (senderStatEntity.getCoins() >= amount) {
-            senderStatEntity.setCoins(senderStatEntity.getCoins() - amount);
-            targetStatEntity.setCoins(targetStatEntity.getCoins() + amount);
+            StatEnum.COINS.remove(p.getUniqueId(), amount);
+            StatEnum.COINS.add(target.getUniqueId(), amount);
             p.sendMessage(CC.GREEN + "You have paid " + target.getName() + " " + amount + " coins.");
             target.sendMessage(CC.GREEN + p.getName() + " has paid you " + amount + " coins.");
-
-            playerStatService.save(senderStatEntity);
-            playerStatService.save(targetStatEntity);
         } else {
             p.sendMessage(CC.RED + "You do not have enough coins.");
             return true;

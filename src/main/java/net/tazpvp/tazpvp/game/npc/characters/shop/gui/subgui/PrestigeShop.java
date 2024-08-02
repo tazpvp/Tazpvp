@@ -7,8 +7,10 @@ import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.data.services.TalentService;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.enums.ItemEnum;
+import net.tazpvp.tazpvp.enums.ScoreboardEnum;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
 import net.tazpvp.tazpvp.helpers.PlayerHelper;
+import net.tazpvp.tazpvp.helpers.ScoreboardHelper;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -71,7 +73,9 @@ public class PrestigeShop extends GUI {
             playerStatEntity.setLevel(0);
             playerStatEntity.setXp(0);
 
+            ScoreboardHelper.updateSuffix(p, ScoreboardEnum.LEVEL, playerStatEntity.getLevel() + "");
             playerStatService.save(playerStatEntity);
+
 
             p.getEnderChest().clear();
             p.getInventory().clear();

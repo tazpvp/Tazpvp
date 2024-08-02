@@ -37,6 +37,7 @@ import net.tazpvp.tazpvp.data.LooseData;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.enums.ItemEnum;
+import net.tazpvp.tazpvp.enums.ScoreboardEnum;
 import net.tazpvp.tazpvp.game.booster.ActiveBoosterManager;
 import net.tazpvp.tazpvp.game.booster.BoosterBonus;
 import net.tazpvp.tazpvp.game.booster.BoosterTypes;
@@ -147,6 +148,7 @@ public class PlayerHelper {
             playerStatEntity.setXp(num);
             playerStatEntity.setLevel(playerStatEntity.getLevel() + 1);
             playerStatEntity.setCoins(playerStatEntity.getCoins() + coins);
+            ScoreboardHelper.updateSuffix(p, ScoreboardEnum.LEVEL, playerStatEntity.getLevel() + "");
             playerStatService.save(playerStatEntity);
 
             p.setLevel(playerStatEntity.getLevel());

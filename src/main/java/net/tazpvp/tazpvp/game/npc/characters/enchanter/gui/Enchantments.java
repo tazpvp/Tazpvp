@@ -4,7 +4,9 @@ import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.enums.EnchantEnum;
 import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.enums.ScoreboardEnum;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
+import net.tazpvp.tazpvp.helpers.ScoreboardHelper;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
@@ -93,6 +95,7 @@ public class Enchantments extends GUI {
         p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, 1, 1);
         p.sendMessage("You enchanted your pickaxe with " + enchantEnum.getName());
 
+        ScoreboardHelper.updateSuffix(p, ScoreboardEnum.COINS, playerStatEntity.getCoins() + "");
         playerStatService.save(playerStatEntity);
     }
 
@@ -120,6 +123,7 @@ public class Enchantments extends GUI {
         String keyName = Enchantment.EFFICIENCY.getKey().getKey();
         p.sendMessage("You enchanted your pickaxe with " + keyName.substring(0, 1).toUpperCase() + keyName.substring(1));
 
+        ScoreboardHelper.updateSuffix(p, ScoreboardEnum.COINS, playerStatEntity.getCoins() + "");
         playerStatService.save(playerStatEntity);
     }
 

@@ -36,6 +36,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.LooseData;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.enums.ScoreboardEnum;
 import net.tazpvp.tazpvp.enums.Theme;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -46,10 +47,6 @@ public class ScoreboardHelper {
     private static Scoreboard board = null;
     private static Objective objective = null;
 
-    /**
-     * Initialize all the scoreboard values for a player.
-     * @param p The player in question.
-     */
 
     @SuppressWarnings("all")
     public static void initScoreboard(Player p) {
@@ -69,19 +66,13 @@ public class ScoreboardHelper {
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         objective.getScore("                         ").setScore(8);
-        newLine(p, "rank", scoreTitle("✦ ʀᴀɴᴋ"), CC.AQUA,
-                ChatHelper.getRankingPrefix(p)+ "").setScore(7);
-        newLine(p, "level", scoreTitle("✳ ʟᴇᴠᴇʟ"), CC.AQUA,
-                playerStatEntity.getLevel() + "").setScore(6);
-        newLine(p, "coins", scoreTitle("❂ ᴄᴏɪɴꜱ"), CC.GOLD,
-                playerStatEntity.getCoins() + "").setScore(5);
+        createLine(ScoreboardEnum.RANK, ChatHelper.getRankingPrefix(p)+ "").setScore(7);
+        createLine(ScoreboardEnum.LEVEL, playerStatEntity.getLevel() + "").setScore(6);
+        createLine(ScoreboardEnum.COINS, playerStatEntity.getCoins() + "").setScore(5);
         objective.getScore(" ").setScore(4);
-        newLine(p, "kills", scoreTitle("⚔ ᴋɪʟʟꜱ"), CC.YELLOW,
-                playerStatEntity.getKills() + "").setScore(3);
-        newLine(p, "deaths", scoreTitle("☠ ᴅᴇᴀᴛʜꜱ"), CC.DARK_PURPLE,
-                playerStatEntity.getDeaths() + "").setScore(2);
-        newLine(p, "kdr", scoreTitle("✚ ᴋᴅʀ"), CC.GRAY, LooseData.kdrFormula(
-                playerStatEntity.getKills(), playerStatEntity.getDeaths()) + "").setScore(1);
+        createLine(ScoreboardEnum.KILLS, playerStatEntity.getKills() + "").setScore(3);
+        createLine(ScoreboardEnum.DEATHS, playerStatEntity.getDeaths() + "").setScore(2);
+        createLine(ScoreboardEnum.KDR, LooseData.kdrFormula(playerStatEntity.getKills(), playerStatEntity.getDeaths()) + "").setScore(1);
         objective.getScore("   ").setScore(0);
 
         p.setScoreboard(board);
@@ -91,14 +82,21 @@ public class ScoreboardHelper {
         return Theme.SERVER.gradient(text, false);
     }
 
-    private static Score newLine(Player p, String name, String prefix, CC chatColor, String suffix) {
-        String ID = chatColor.toString();
-        Team team = board.registerNewTeam(name);
+    private static Score createLine(ScoreboardEnum scoreboardEnum, String suffix) {
+        String ID = scoreboardEnum.getId();
+        Team team = board.registerNewTeam(scoreboardEnum.getName());
 
         team.addEntry(ID);
-        team.setPrefix(prefix + CC.GRAY + " ");
+        team.setPrefix(scoreTitle(scoreboardEnum.getPrefix()) + CC.GRAY + " ");
         team.setSuffix(suffix);
 
         return objective.getScore(ID);
+    }
+
+    public static void updateSuffix(Player p, ScoreboardEnum scoreboardEnum, String suffix) {
+        Team team = p.getScoreboard().getTeam(scoreboardEnum.getName());
+        if (team != null) {
+            team.setSuffix(suffix);
+        }
     }
 }
