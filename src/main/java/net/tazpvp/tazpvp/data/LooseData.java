@@ -3,6 +3,7 @@ package net.tazpvp.tazpvp.data;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
+import net.tazpvp.tazpvp.enums.StatEnum;
 
 import java.text.DecimalFormat;
 import java.util.UUID;
@@ -10,15 +11,12 @@ import java.util.WeakHashMap;
 
 public final class LooseData {
 
-    private static final PlayerStatService playerStatService = Tazpvp.getInstance().getPlayerStatService();
-
     private static final WeakHashMap<UUID, Integer> ks = new WeakHashMap<>();
     private static final WeakHashMap<UUID, Integer> chatCount = new WeakHashMap<>();
     private static final WeakHashMap<UUID, Integer> mineCount = new WeakHashMap<>();
 
     public static int getExpLeft(UUID id) {
-        PlayerStatEntity pStatEntity = playerStatService.getOrDefault(id);
-        return Math.round((float) (pStatEntity.getLevel() * 1.94) + 40);
+        return Math.round((float) (StatEnum.LEVEL.getInt(id) * 1.94) + 40);
     }
 
     public static int getKs(UUID uuid) {

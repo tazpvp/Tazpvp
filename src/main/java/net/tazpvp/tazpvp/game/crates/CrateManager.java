@@ -38,6 +38,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.enums.ItemEnum;
+import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -80,11 +81,9 @@ public class CrateManager {
     }
 
     public boolean canClaimDaily(OfflinePlayer p) {
-        PlayerStatService playerStatService = Tazpvp.getInstance().getPlayerStatService();
-        PlayerStatEntity playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
 
         long timeNow = System.currentTimeMillis();
-        long timeSinceLastDaily = playerStatEntity.getLastClaim();
+        long timeSinceLastDaily = StatEnum.LAST_CLAIM.getLong(p.getUniqueId());
 
         return timeNow - timeSinceLastDaily > 24 * 60 * 60 * 1000;
     }

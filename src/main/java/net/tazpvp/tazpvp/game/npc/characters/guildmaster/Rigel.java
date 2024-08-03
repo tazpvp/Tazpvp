@@ -52,9 +52,8 @@ import java.util.List;
 public class Rigel extends NPC {
 
     private final GuildService guildService;
-    private final PlayerStatService playerStatService;
 
-    public Rigel(GuildService guildService, PlayerStatService playerStatService) {
+    public Rigel(GuildService guildService) {
         super(ChatHelper.gradient("#068fff", "Lorenzo", true), new Location(Bukkit.getWorld("arena"), 5, 99, 10, 135, 0),
                 Villager.Profession.FLETCHER,
                 Villager.Type.TAIGA,
@@ -78,11 +77,10 @@ public class Rigel extends NPC {
                         )
                 ));
         this.guildService = guildService;
-        this.playerStatService = playerStatService;
     }
 
     @Override
     public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
-        new GuildMenu(p, guildService, playerStatService);
+        new GuildMenu(p, guildService);
     }
 }

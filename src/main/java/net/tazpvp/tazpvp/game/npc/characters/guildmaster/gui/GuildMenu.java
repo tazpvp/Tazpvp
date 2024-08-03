@@ -38,6 +38,7 @@ import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.GuildService;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.enums.StatEnum;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -53,16 +54,12 @@ public class GuildMenu extends GUI {
 
     private final GuildEntity guildEntity;
     private final GuildService guildService;
-    private final PlayerStatService playerStatService;
-    private final PlayerStatEntity playerStatEntity;
     private static final int ROWS = 3;
 
-    public GuildMenu(Player p, GuildService guildService, PlayerStatService playerStatService) {
+    public GuildMenu(Player p, GuildService guildService) {
         super("Guild Browser", ROWS);
         this.guildService = guildService;
         this.guildEntity = guildService.getGuildByPlayer(p.getUniqueId());
-        this.playerStatService = playerStatService;
-        this.playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
         addItems(p);
         open(p);
     }
@@ -91,7 +88,7 @@ public class GuildMenu extends GUI {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        new GuildEdit(p, guildService, playerStatService);
+                        new GuildEdit(p, guildService);
                     }
                 }.runTaskLater(Tazpvp.getInstance(), 2L);
             });
@@ -102,7 +99,7 @@ public class GuildMenu extends GUI {
                     .glow(true)
             .build(), (_) -> {
                 p.closeInventory();
-                if (playerStatEntity.getCoins() >= 6000) {
+                if (StatEnum.COINS.getInt(p.getUniqueId()) >= 6000) {
                     nameGuild(p);
                 } else {
                     p.sendMessage("You don't have enough money");
@@ -137,7 +134,7 @@ public class GuildMenu extends GUI {
                 if (text.startsWith(">")) {
                     text = text.replaceFirst(">", "").replaceAll(" ", "");
                 }
-                playerStatEntity.setCoins(playerStatEntity.getCoins() - 6000);
+                StatEnum.COINS.remove(p.getUniqueId(), 6000);
                 p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
 
                 createGuild(text, p.getUniqueId());

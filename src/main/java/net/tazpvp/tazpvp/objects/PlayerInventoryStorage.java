@@ -8,6 +8,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -54,14 +55,13 @@ public class PlayerInventoryStorage {
     }
 
     public static void restoreStorage(Player p) {
-        PlayerStatEntity playerStatEntity = Tazpvp.getInstance().getPlayerStatService().getOrDefault(p.getUniqueId());
         PlayerInventoryStorage playerInventoryStorage = getStorage(p);
 
         p.getInventory().clear();
         p.getInventory().setContents(playerInventoryStorage.getItems());
         p.getInventory().setArmorContents(playerInventoryStorage.getArmors());
 
-        playerStatEntity.setDeaths(playerStatEntity.getDeaths() - 1);
+        StatEnum.DEATHS.remove(p.getUniqueId(), 1);
 
         playerInventoryStorageWeakHashMap.remove(p.getUniqueId());
 

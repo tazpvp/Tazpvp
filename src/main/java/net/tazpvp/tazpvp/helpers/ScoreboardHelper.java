@@ -37,10 +37,13 @@ import net.tazpvp.tazpvp.data.LooseData;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.enums.ScoreboardEnum;
+import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.enums.Theme;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
+
+import java.util.UUID;
 
 public class ScoreboardHelper {
 
@@ -51,6 +54,7 @@ public class ScoreboardHelper {
     @SuppressWarnings("all")
     public static void initScoreboard(Player p) {
         board = Bukkit.getScoreboardManager().getNewScoreboard();
+        UUID id = p.getUniqueId();
 
         if (board.getObjective("health") == null) {
             Objective healthObjective = board.registerNewObjective("health", Criteria.HEALTH, CC.RED + "❤", RenderType.INTEGER);
@@ -67,12 +71,12 @@ public class ScoreboardHelper {
 
         objective.getScore("                         ").setScore(8);
         createLine(ScoreboardEnum.RANK, ChatHelper.getRankingPrefix(p)+ "").setScore(7);
-        createLine(ScoreboardEnum.LEVEL, playerStatEntity.getLevel() + "").setScore(6);
-        createLine(ScoreboardEnum.COINS, playerStatEntity.getCoins() + "").setScore(5);
+        createLine(ScoreboardEnum.LEVEL, StatEnum.LEVEL.getInt(id) + "").setScore(6);
+        createLine(ScoreboardEnum.COINS, StatEnum.COINS.getInt(id) + "").setScore(5);
         objective.getScore(" ").setScore(4);
-        createLine(ScoreboardEnum.KILLS, playerStatEntity.getKills() + "").setScore(3);
-        createLine(ScoreboardEnum.DEATHS, playerStatEntity.getDeaths() + "").setScore(2);
-        createLine(ScoreboardEnum.KDR, LooseData.kdrFormula(playerStatEntity.getKills(), playerStatEntity.getDeaths()) + "").setScore(1);
+        createLine(ScoreboardEnum.KILLS, StatEnum.KILLS.getInt(id) + "").setScore(3);
+        createLine(ScoreboardEnum.DEATHS, StatEnum.DEATHS.getInt(id) + "").setScore(2);
+        createLine(ScoreboardEnum.KDR, LooseData.kdrFormula(StatEnum.KILLS.getInt(id), StatEnum.DEATHS.getInt(id)) + "").setScore(1);
         objective.getScore("   ").setScore(0);
 
         p.setScoreboard(board);
