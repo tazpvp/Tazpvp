@@ -37,6 +37,7 @@ import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.enums.TalentEnum;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Material;
@@ -47,6 +48,7 @@ import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
+import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -54,19 +56,16 @@ public class TalentShop extends GUI {
 
     private int slotNum;
     private int count;
-    private final PlayerStatEntity playerStatEntity;
-    private final PlayerStatService playerStatService;
-    Player p;
-
+    private final Player p;
+    private final UUID id;
     String prefix = CC.DARK_AQUA + "[Lorenzo] " + CC.AQUA;
     PlayerWrapper pw;
 
-    public TalentShop(Player p, PlayerStatService playerStatService) {
+    public TalentShop(Player p) {
         super("Talents", 4);
         this.p = p;
+        this.id = p.getUniqueId();
         pw = PlayerWrapper.getPlayer(p);
-        this.playerStatService = playerStatService;
-        playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
         addItems();
         open(p);
     }
@@ -106,17 +105,15 @@ public class TalentShop extends GUI {
                 .build(), (_) -> {
 
             if (!active) {
-                if (playerStatEntity.getCoins() >= talent.getCost()) {
+                if (StatEnum.COINS.getInt(id) >= talent.getCost()) {
 
                     talentEntityConsumer.accept(talentEntity);
                     pw.setTalentEntity(talentEntity);
 
-                    playerStatEntity.setCoins(playerStatEntity.getCoins() - talent.getCost());
+                    StatEnum.COINS.remove(id, talent.getCost());
                     p.closeInventory();
                     p.sendTitle(CC.AQUA + "" + CC.BOLD + "New Talent",  CC.DARK_AQUA + talent.getName(), 10, 20, 10);
                     p.playSound(p.getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN, 1, 1);
-
-                    playerStatService.save(playerStatEntity);
 
                     Tazpvp.getObservers().forEach(observer -> observer.talent(p));
                 } else {

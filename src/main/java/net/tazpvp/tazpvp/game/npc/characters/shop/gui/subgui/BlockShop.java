@@ -7,6 +7,7 @@ import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.data.services.UserRankService;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.enums.ItemEnum;
+import net.tazpvp.tazpvp.enums.StatEnum;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -16,16 +17,15 @@ import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import java.util.List;
+import java.util.UUID;
 
 public class BlockShop extends GUI {
 
     private int slotNum;
     private int count;
     private final Player p;
+    private final UUID id;
     private final String prefix = CC.RED + "[Maxim] " + CC.WHITE;
-    private final PlayerStatEntity playerStatEntity;
-    private final PlayerStatService playerStatService;
-
     private final List<Material> wool = List.of(
             Material.ORANGE_WOOL,
             Material.PURPLE_WOOL,
@@ -46,11 +46,10 @@ public class BlockShop extends GUI {
             Material.SPRUCE_PLANKS
     );
 
-    public BlockShop(Player p, PlayerStatService playerStatService) {
+    public BlockShop(Player p) {
         super("Block Shop", 4);
         this.p = p;
-        this.playerStatService = playerStatService;
-        this.playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
+        this.id = p.getUniqueId();
         addItems();
         open(p);
     }
@@ -85,27 +84,23 @@ public class BlockShop extends GUI {
     }
 
     private void checkMoney(Material mat, int cost, boolean premium) {
-        if (playerStatEntity != null) {
-            if (premium) {
-                UserRankService userRankService = Tazpvp.getInstance().getUserRankService();
-                UserRankEntity userRankEntity = userRankService.getUserRankEntity(p.getUniqueId());
-                List<String> userPermissions = userRankService.getPermissions(userRankEntity);
+        if (premium) {
+            UserRankService userRankService = Tazpvp.getInstance().getUserRankService();
+            UserRankEntity userRankEntity = userRankService.getUserRankEntity(p.getUniqueId());
+            List<String> userPermissions = userRankService.getPermissions(userRankEntity);
 
-                if (!userPermissions.contains("tazpvp.premium")) {
-                    p.sendMessage(CC.RED + "You require the premium pass to use this feature.");
-                    return;
-                }
+            if (!userPermissions.contains("tazpvp.premium")) {
+                p.sendMessage(CC.RED + "You require the premium pass to use this feature.");
+                return;
             }
-            if (playerStatEntity.getCoins() >= cost) {
-                playerStatEntity.setCoins(playerStatEntity.getCoins() - cost);
-                p.getInventory().addItem(ItemEnum.BLOCKS.getItem(mat, 64));
-                p.sendMessage(prefix + "You purchased: " + ItemEnum.BLOCKS.getName());
-                p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
-
-                playerStatService.save(playerStatEntity);
-            } else {
-                p.sendMessage(prefix + "You don't have enough money");
-            }
+        }
+        if (StatEnum.COINS.getInt(id) >= cost) {
+            StatEnum.COINS.add(id, cost);
+            p.getInventory().addItem(ItemEnum.BLOCKS.getItem(mat, 64));
+            p.sendMessage(prefix + "You purchased: " + ItemEnum.BLOCKS.getName());
+            p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
+        } else {
+            p.sendMessage(prefix + "You don't have enough money");
         }
     }
 

@@ -72,8 +72,12 @@ public enum StatEnum {
         });
     }
 
-    public Number get(UUID id) {
+    public int getInt(UUID id) {
         PlayerStatEntity playerStatEntity = playerStatService.getOrDefault(id);
-        return get.apply(playerStatEntity);
+        return get.apply(playerStatEntity).intValue();
+    }
+    public long getLong(UUID id) {
+        PlayerStatEntity playerStatEntity = playerStatService.getOrDefault(id);
+        return get.apply(playerStatEntity).longValue();
     }
 }

@@ -38,6 +38,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
 import net.tazpvp.tazpvp.helpers.PlayerHelper;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
@@ -99,11 +100,8 @@ public abstract class Duel {
         setLoser(loserID);
         setWinner(getOtherDueler(loserID));
 
-        final Player winner = Bukkit.getPlayer(getWinner());
-        final Player loser = Bukkit.getPlayer(loserID);
-
-        final PlayerStatEntity winnerStatEntity = playerStatService.getOrDefault(getWinner());
-        final PlayerStatEntity loserStatEntity = playerStatService.getOrDefault(loserID);
+        final Player pWinner = Bukkit.getPlayer(winner);
+        final Player pLoser = Bukkit.getPlayer(loser);
 
         ChatHelper.announce(
                 CC.AQUA + Bukkit.getOfflinePlayer(getWinner()).getName() +
@@ -112,16 +110,14 @@ public abstract class Duel {
                 Sound.BLOCK_BELL_RESONATE
         );
 
-        if (winner != null) {
-            winnerStatEntity.setDuelMMR(winnerStatEntity.getDuelMMR() + 15);
-            playerStatService.save(winnerStatEntity);
-            winner.sendTitle(CC.GOLD + "" + CC.BOLD + "YOU WIN", "", 20, 20, 20);
+        if (pWinner != null) {
+            StatEnum.DUEL_MMR.add(winner, 15);
+            pWinner.sendTitle(CC.GOLD + "" + CC.BOLD + "YOU WIN", "", 20, 20, 20);
         }
 
-        if (loser != null) {
-            loserStatEntity.setDuelMMR(loserStatEntity.getDuelMMR() - 9);
-            playerStatService.save(loserStatEntity);
-            loser.setGameMode(GameMode.SPECTATOR);
+        if (pLoser != null) {
+            StatEnum.DUEL_MMR.remove(loser, 9);
+            pLoser.setGameMode(GameMode.SPECTATOR);
         }
 
         clearSpectators();
@@ -145,7 +141,7 @@ public abstract class Duel {
             }
         }.runTaskLater(Tazpvp.getInstance(), 20*5);
 
-        Tazpvp.getObservers().forEach(observer -> observer.duel_end(winner, loser));
+        Tazpvp.getObservers().forEach(observer -> observer.duel_end(pWinner, pLoser));
     }
 
     public void abort() {

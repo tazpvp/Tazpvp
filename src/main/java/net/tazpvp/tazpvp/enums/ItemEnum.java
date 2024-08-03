@@ -178,7 +178,7 @@ public enum ItemEnum {
     public static List<ItemEnum> getAllDrops() {
         List<ItemEnum> drops = new ArrayList<>();
         for (ItemEnum item : ItemEnum.values()) {
-            if (item.tier > 0) {
+            if (item.getTier() > 0) {
                 drops.add(item);
             }
         }

@@ -36,13 +36,10 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.LooseData;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
-import net.tazpvp.tazpvp.enums.ItemEnum;
-import net.tazpvp.tazpvp.enums.ScoreboardEnum;
+import net.tazpvp.tazpvp.enums.*;
 import net.tazpvp.tazpvp.game.booster.ActiveBoosterManager;
 import net.tazpvp.tazpvp.game.booster.BoosterBonus;
 import net.tazpvp.tazpvp.game.booster.BoosterTypes;
-import net.tazpvp.tazpvp.enums.StaticItems;
-import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -57,8 +54,6 @@ import java.util.List;
 import java.util.UUID;
 
 public class PlayerHelper {
-
-    private static final PlayerStatService playerStatService = Tazpvp.getInstance().getPlayerStatService();
 
     private static Double getMaxHealth(Player p) {
         return p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
@@ -108,7 +103,6 @@ public class PlayerHelper {
     }
 
     public static void kitPlayer(Player p) {
-        PlayerStatEntity pStatEntity = playerStatService.getOrDefault(p.getUniqueId());
         Inventory inv = p.getInventory();
         int thirtyMinutesInMs = 30 * 60 * 1000;
 
@@ -121,7 +115,7 @@ public class PlayerHelper {
             inv.addItem(kitItem);
         }
 
-        if (pStatEntity.getPlaytime() <= thirtyMinutesInMs) {
+        if (StatEnum.PLAYTIME.getLong(p.getUniqueId()) <= thirtyMinutesInMs) {
             p.getInventory().addItem(ItemEnum.GOLDEN_APPLE.getItem(2));
         }
 
@@ -136,8 +130,7 @@ public class PlayerHelper {
 
     public static void levelUp(UUID ID) {
         Player p = Bukkit.getPlayer(ID);
-        PlayerStatEntity playerStatEntity = playerStatService.getOrDefault(ID);
-        float value = playerStatEntity.getXp();
+        float value = StatEnum.XP.getInt(ID);
         if (p == null) return;
         if (value >= LooseData.getExpLeft(ID)) {
             final BoosterBonus coinsBonus = ActiveBoosterManager.getInstance()
@@ -145,15 +138,16 @@ public class PlayerHelper {
             final int coins = (int) coinsBonus.result();
 
             int num = (int) value - LooseData.getExpLeft(ID);
-            playerStatEntity.setXp(num);
-            playerStatEntity.setLevel(playerStatEntity.getLevel() + 1);
-            playerStatEntity.setCoins(playerStatEntity.getCoins() + coins);
-            ScoreboardHelper.updateSuffix(p, ScoreboardEnum.LEVEL, playerStatEntity.getLevel() + "");
-            playerStatService.save(playerStatEntity);
 
-            p.setLevel(playerStatEntity.getLevel());
+            StatEnum.XP.set(ID, num);
+            StatEnum.LEVEL.add(ID, 1);
+            StatEnum.COINS.add(ID, coins);
+
+            int playerLevel = StatEnum.LEVEL.getInt(ID);
+
+            p.setLevel(playerLevel);
             p.setExp((float) num / LooseData.getExpLeft(ID));
-            ChatHelper.announce(p, CC.AQUA + "" + CC.BOLD + "  LEVEL UP " + CC.DARK_AQUA + "Combat Lvl. " + CC.AQUA + playerStatEntity.getLevel(), Sound.ENTITY_PLAYER_LEVELUP);
+            ChatHelper.announce(p, CC.AQUA + "" + CC.BOLD + "  LEVEL UP " + CC.DARK_AQUA + "Combat Lvl. " + CC.AQUA + playerLevel, Sound.ENTITY_PLAYER_LEVELUP);
             p.sendMessage(CC.DARK_GRAY + "  ▶ " + CC.GOLD + coins + " Coins " + coinsBonus.prettyPercentMultiplier());
             p.sendMessage(CC.DARK_GRAY + "  ▶ " + CC.DARK_AQUA + "1 Shard");
             p.sendMessage("");
