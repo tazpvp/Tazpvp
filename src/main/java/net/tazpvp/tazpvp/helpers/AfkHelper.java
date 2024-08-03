@@ -3,6 +3,7 @@ package net.tazpvp.tazpvp.helpers;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
+import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.game.crates.KeyFactory;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
@@ -52,10 +53,7 @@ public class AfkHelper {
                                     CC.GRAY + "+ $100 Coins\n"
                             );
 
-                            PlayerStatService playerStatService = Tazpvp.getInstance().getPlayerStatService();
-                            PlayerStatEntity playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
-                            playerStatEntity.setCoins(playerStatEntity.getCoins() + 100);
-                            playerStatService.save(playerStatEntity);
+                            StatEnum.COINS.add(p.getUniqueId(), 100);
                             p.playSound(p.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
                         }
                     }

@@ -13,6 +13,7 @@ import net.tazpvp.tazpvp.data.services.KitService;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.enums.ItemEnum;
 import net.tazpvp.tazpvp.enums.ScoreboardEnum;
+import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.game.booster.ActiveBoosterManager;
 import net.tazpvp.tazpvp.game.booster.BoosterBonus;
 import net.tazpvp.tazpvp.game.booster.BoosterTypes;
@@ -43,9 +44,6 @@ public class DeathObject {
     private Player pKiller;
     private final Location location;
     private final Random r = new Random();
-    private final PlayerStatEntity killerStatEntity;
-    private final PlayerStatEntity victimStatEntity;
-    private final PlayerStatService playerStatService;
     private final GuildEntity victimGuild;
     private final GuildEntity killerGuild;
     private final GuildService guildService;
@@ -53,11 +51,9 @@ public class DeathObject {
     private final PlayerWrapper victimWrapper;
 
     public DeathObject(UUID victim, @Nullable UUID killer) {
-        this.playerStatService = Tazpvp.getInstance().getPlayerStatService();
         this.guildService = Tazpvp.getInstance().getGuildService();
         this.victim = victim;
         this.pVictim = Bukkit.getPlayer(victim);
-        this.victimStatEntity = playerStatService.getOrDefault(victim);
         if (pVictim != null) {
             this.location = pVictim.getLocation();
         } else {
@@ -69,16 +65,13 @@ public class DeathObject {
                 CombatObject.tags.get(victim).getAttackers().clear();
                 this.killer = currentKiller;
                 this.killerWrapper = PlayerWrapper.getPlayer(currentKiller);
-                this.killerStatEntity = playerStatService.getOrDefault(currentKiller);
                 this.killerGuild = Tazpvp.getInstance().getGuildService().getGuildByPlayer(currentKiller);
             } else {
                 this.killer = null;
                 this.killerWrapper = null;
-                this.killerStatEntity = null;
                 this.killerGuild = null;
             }
         } else {
-            this.killerStatEntity = playerStatService.getOrDefault(killer);
             this.killerGuild = Tazpvp.getInstance().getGuildService().getGuildByPlayer(killer);
             this.killer = killer;
             this.pKiller = Bukkit.getPlayer(killer);
@@ -256,14 +249,12 @@ public class DeathObject {
                                     CC.DARK_AQUA + "Exp: " + CC.AQUA + finalXp +
                                     CC.GOLD + " Coins: " + CC.YELLOW + finalCoins
                     );
-                    PlayerStatEntity aStatEntity = playerStatService.getOrDefault(uuid);
-                    aStatEntity.setCoins(aStatEntity.getCoins() + finalCoins);
-                    aStatEntity.setXp(aStatEntity.getXp() + finalXp);
-                    aStatEntity.setMMR(aStatEntity.getMMR() + 5);
 
-                    playerStatService.save(aStatEntity);
+                    StatEnum.COINS.add(uuid, finalCoins);
+                    StatEnum.XP.add(uuid, finalXp);
+                    StatEnum.MMR.add(uuid, 5);
+
                     PlayerHelper.levelUp(uuid);
-
                 }
             }
         }
@@ -285,21 +276,19 @@ public class DeathObject {
                     .calculateBonus(XP, List.of(BoosterTypes.XP, BoosterTypes.MEGA));
             final BoosterBonus COIN_NETWORK_BUFF = ActiveBoosterManager.getInstance()
                     .calculateBonus(COINS, List.of(BoosterTypes.COINS, BoosterTypes.MEGA));
-            int XP_OTHER_BUFF = otherBuffs(killerStatEntity, XP);
-            int COIN_OTHER_BUFF =  otherBuffs(killerStatEntity, COINS);
+            int XP_OTHER_BUFF = otherBuffs(killer, XP);
+            int COIN_OTHER_BUFF =  otherBuffs(killer, COINS);
 
             final int bountyReward = LooseData.getKs(victim) * 10;
 
             int finalXp = (int) XP_NETWORK_BUFF.result() + XP_OTHER_BUFF;
             int finalCoins = (int) COIN_NETWORK_BUFF.result() + COIN_OTHER_BUFF + bountyReward;
 
-            killerStatEntity.setKills(killerStatEntity.getKills() + 1);
+            StatEnum.KILLS.add(killer, 1);
             LooseData.addKs(killer);
-
-            killerStatEntity.setCoins(killerStatEntity.getCoins() + finalCoins);
-            killerStatEntity.setXp(killerStatEntity.getXp() + finalXp);
-            killerStatEntity.setMMR(killerStatEntity.getMMR() + 15);
-            playerStatService.save(killerStatEntity);
+            StatEnum.COINS.add(killer, finalCoins);
+            StatEnum.XP.add(killer, finalXp);
+            StatEnum.MMR.add(killer, 15);
 
             if ((LooseData.getKs(killer) % 5) == 0) {
                 Bukkit.broadcastMessage(
@@ -332,25 +321,23 @@ public class DeathObject {
             victimGuild.setDeaths(victimGuild.getDeaths() + 1);
         }
 
-        victimStatEntity.setDeaths(victimStatEntity.getDeaths() + 1);
-        if (victimStatEntity.getMMR() >= 10) {
-            victimStatEntity.setDeaths(victimStatEntity.getMMR() - 10);
+        StatEnum.DEATHS.add(victim, 1);
+        if (StatEnum.MMR.getInt(victim) >= 10) {
+            StatEnum.MMR.remove(victim, 10);
         } else {
-            victimStatEntity.setDeaths(0);
+            StatEnum.MMR.set(victim, 0);
         }
         LooseData.resetKs(victim);
 
         Tazpvp.getInstance().getPlayerNameTagService().setTagRank(pVictim);
-
-        playerStatService.save(victimStatEntity);
         guildService.saveGuild(victimGuild);
     }
 
-    private int otherBuffs(PlayerStatEntity playerStatEntity, int stat) {
+    private int otherBuffs(UUID id, int stat) {
         int finalStat = 0;
 
-        if (playerStatEntity.getPrestige() > 0) {
-            finalStat = (playerStatEntity.getPrestige() * stat);
+        if (StatEnum.PRESTIGE.getInt(id) > 0) {
+            finalStat = (StatEnum.PRESTIGE.getInt(id) * stat);
         }
 
         return finalStat;

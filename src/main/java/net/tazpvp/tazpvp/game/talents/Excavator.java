@@ -36,6 +36,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
+import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.helpers.BlockHelper;
 import net.tazpvp.tazpvp.objects.OreObject;
 import net.tazpvp.tazpvp.utils.observer.Observable;
@@ -55,11 +56,7 @@ public class Excavator extends Observable {
             if (p.getGameMode() == GameMode.SURVIVAL) {
                 for (OreObject ore : BlockHelper.ores) {
                     if (ore.getMat() == material) {
-                        PlayerStatService playerStatService = Tazpvp.getInstance().getPlayerStatService();
-                        PlayerStatEntity playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
-                        playerStatEntity.setXp(playerStatEntity.getXp() + 1);
-                        playerStatService.save(playerStatEntity);
-
+                        StatEnum.XP.add(p.getUniqueId(), 1);
                     }
                 }
             }

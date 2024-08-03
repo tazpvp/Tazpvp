@@ -38,6 +38,7 @@ import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.implementations.UserRankServiceImpl;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.data.services.UserRankService;
+import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.helpers.PlaytimeHelper;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.enums.Theme;
@@ -51,14 +52,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import world.ntdi.nrcore.NRCore;
 
+import java.util.UUID;
+
 public class JoinListener implements Listener {
 
-    PlayerStatService playerStatService = Tazpvp.getInstance().getPlayerStatService();
 
     @EventHandler
     private void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
-        PlayerStatEntity playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
+        UUID id = p.getUniqueId();
 
         PlayerWrapper.addPlayer(p);
         ScoreboardHelper.initScoreboard(p);
@@ -72,19 +74,19 @@ public class JoinListener implements Listener {
             p.teleport(NRCore.config.spawn);
         }
 
-        CombatObject.tags.put(p.getUniqueId(), new CombatObject(p.getUniqueId()));
+        CombatObject.tags.put(id, new CombatObject(id));
 
-        p.setLevel(playerStatEntity.getLevel());
-        if (playerStatEntity.getXp() >= LooseData.getExpLeft(p.getUniqueId())) {
-            float num = playerStatEntity.getXp() - LooseData.getExpLeft(p.getUniqueId());
-            PlayerHelper.levelUp(p.getUniqueId());
-        } else if (playerStatEntity.getXp() < 0) {
-            playerStatEntity.setXp(0);
+        int playerLevel = StatEnum.LEVEL.getInt(id);
+        int playerXp = StatEnum.XP.getInt(id);
+
+        p.setLevel(playerLevel);
+        if (playerXp >= LooseData.getExpLeft(id)) {
+            PlayerHelper.levelUp(id);
+        } else if (StatEnum.XP.getInt(id) < 0) {
+            StatEnum.XP.set(id, 0);
         } else {
-            p.setExp((float) playerStatEntity.getXp() / LooseData.getExpLeft(p.getUniqueId()));
+            p.setExp((float) playerXp / LooseData.getExpLeft(p.getUniqueId()));
         }
-
-        playerStatService.save(playerStatEntity);
 
         for (Player vp : Bukkit.getOnlinePlayers()) {
             PlayerWrapper vpw = PlayerWrapper.getPlayer(vp);
