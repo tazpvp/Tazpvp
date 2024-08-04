@@ -97,4 +97,15 @@ public class PlayerNameTagServiceImpl implements PlayerNameTagService {
             textDisplay.setViewRange(visible ? 100 : 0);
         }
     }
+
+    @Override
+    public void teleportPlayer(Player player, Location location) {
+        TextDisplay textDisplay = uuidItemDisplayMap.get(player.getUniqueId());
+        if (textDisplay != null) {
+            player.removePassenger(textDisplay);
+            textDisplay.teleport(location);
+            player.teleport(location);
+            player.addPassenger(textDisplay);
+        }
+    }
 }
