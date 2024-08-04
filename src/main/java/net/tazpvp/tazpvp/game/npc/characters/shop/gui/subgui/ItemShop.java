@@ -36,6 +36,7 @@ import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.enums.ItemEnum;
+import net.tazpvp.tazpvp.enums.StatEnum;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
@@ -47,23 +48,20 @@ import world.ntdi.nrcore.utils.item.builders.EnchantmentBookBuilder;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import javax.annotation.Nullable;
+import java.util.UUID;
 
 public class ItemShop extends GUI {
 
     private int slotNum;
     private int count;
     private final Player p;
+    private final UUID id;
     private final String prefix = CC.RED + "[Maxim] " + CC.WHITE;
-    private final PlayerStatEntity playerStatEntity;
-    private final PlayerStatService playerStatService;
 
-
-
-    public ItemShop(Player p, PlayerStatService playerStatService) {
+    public ItemShop(Player p) {
         super("Maxim", 6);
         this.p = p;
-        this.playerStatService = playerStatService;
-        this.playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
+        this.id = p.getUniqueId();
         addItems();
         open(p);
     }
@@ -79,7 +77,7 @@ public class ItemShop extends GUI {
                 .lore(CC.GRAY + "Special items you can",CC.GRAY + "buy after you rebirth.")
                 .glow(true)
                 .build(), (e) -> {
-            new PrestigeShop(p, playerStatService);
+            new PrestigeShop(p);
         }), 40);
 
         addBuyButton(1, 10, true, ItemEnum.AZURE_VAPOR);
@@ -115,26 +113,23 @@ public class ItemShop extends GUI {
 
     private void addMenuButton(ItemEnum customItem) {
         ItemStack item = customItem.getItem(1);
-        addButton(Button.create(item, (_) -> new BlockShop(p, playerStatService)), slotNum);
+        addButton(Button.create(item, (_) -> new BlockShop(p)), slotNum);
         calcSlot();
     }
 
     private void checkMoney(int cost, int amount, ItemEnum item, @Nullable Enchantment enchantment) {
-        if (playerStatEntity != null) {
-            if (playerStatEntity.getCoins() >= cost) {
-                playerStatEntity.setCoins(playerStatEntity.getCoins() - cost);
-                if (enchantment == null) {
-                    p.getInventory().addItem(item.getItem(amount));
-                } else {
-                    p.getInventory().addItem(new EnchantmentBookBuilder().enchantment(enchantment, 1).build());
-                }
-                p.sendMessage(prefix + "You purchased: " + item.getName());
-                p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
-
-                playerStatService.save(playerStatEntity);
+        if (StatEnum.COINS.getInt(id) >= cost) {
+            StatEnum.COINS.remove(id, cost);
+            if (enchantment == null) {
+                p.getInventory().addItem(item.getItem(amount));
             } else {
-                p.sendMessage(prefix + "You don't have enough money");
+                p.getInventory().addItem(new EnchantmentBookBuilder().enchantment(enchantment, 1).build());
             }
+            p.sendMessage(prefix + "You purchased: " + item.getName());
+            p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
+
+        } else {
+            p.sendMessage(prefix + "You don't have enough money");
         }
     }
 

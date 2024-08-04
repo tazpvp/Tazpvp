@@ -7,7 +7,7 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.game.events.Event;
-import net.tazpvp.tazpvp.game.events.EventUtils;
+import net.tazpvp.tazpvp.game.events.EventHelper;
 import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -40,7 +40,7 @@ public class EventCommand extends NRCommand {
             }
             if (Event.eventTypes.contains(args[1])) {
                 if (Event.currentEvent == null) {
-                    Event.currentEvent = EventUtils.create(args[1]);
+                    Event.currentEvent = EventHelper.create(args[1]);
                     Event.currentEvent.addParticipant(p.getUniqueId());
 
                     Bukkit.broadcastMessage("The " + args[1] + " event has begun.");
@@ -68,23 +68,24 @@ public class EventCommand extends NRCommand {
                 p.sendMessage(CC.RED + "There is no active event. Create one with /event create");
             }
         } else if (args[0].equalsIgnoreCase("join")) {
-            if (Event.currentEvent != null) {
-                if (Event.currentEvent.getParticipantList().contains(p.getUniqueId())) {
-                    p.sendMessage(CC.RED + "You already joined the event.");
-                    return true;
-                }
-                if (!Event.currentEvent.getAliveList().isEmpty()) {
-                    p.sendMessage(CC.RED + "The event has already begun, you can no longer join.");
-                    return true;
-                }
-                Event.currentEvent.getParticipantList().add(p.getUniqueId());
-                p.sendMessage("You joined the event: " + Event.currentEvent.getNAME());
 
-                for (UUID plr : Event.currentEvent.getParticipantList()) {
-                    Bukkit.getPlayer(plr).sendMessage(p.getName() + " has joined the event. " + "(" + Event.currentEvent.getParticipantList().size() + ")");
-                }
-                Tazpvp.getObservers().forEach(observer -> observer.event(p));
-            }
+//            if (Event.currentEvent != null) {
+//                if (Event.currentEvent.getParticipantList().contains(p.getUniqueId())) {
+//                    p.sendMessage(CC.RED + "You already joined the event.");
+//                    return true;
+//                }
+//                if (!Event.currentEvent.getAliveList().isEmpty()) {
+//                    p.sendMessage(CC.RED + "The event has already begun, you can no longer join.");
+//                    return true;
+//                }
+//                Event.currentEvent.getParticipantList().add(p.getUniqueId());
+//                p.sendMessage("You joined the event: " + Event.currentEvent.getNAME());
+//
+//                for (UUID plr : Event.currentEvent.getParticipantList()) {
+//                    Bukkit.getPlayer(plr).sendMessage(p.getName() + " has joined the event. " + "(" + Event.currentEvent.getParticipantList().size() + ")");
+//                }
+//                Tazpvp.getObservers().forEach(observer -> observer.event(p));
+//            }
         } else {
             String[] commands = {
                     "Event Commands:\n",
@@ -95,7 +96,6 @@ public class EventCommand extends NRCommand {
             };
             p.sendMessage(commands);
         }
-
         return true;
     }
 

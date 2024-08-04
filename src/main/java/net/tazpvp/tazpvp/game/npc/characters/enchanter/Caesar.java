@@ -51,9 +51,8 @@ import java.util.List;
 
 public class Caesar extends NPC {
 
-    PlayerStatService playerStatService;
 
-    public Caesar(PlayerStatService playerStatService) {
+    public Caesar() {
         super(ChatHelper.gradient("#fcfc00", "Caesar", true), new Location(
                 Bukkit.getWorld("arena"), -3, 90, 132, -155.5F, 0),
                 Villager.Profession.WEAPONSMITH,
@@ -90,14 +89,13 @@ public class Caesar extends NPC {
                                 "PVP is overrated, just mine! Mining calms the soul and also rewards you with that sweet cash."
                         )
                 ));
-        this.playerStatService = playerStatService;
     }
 
     @Override
     public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
 
         if (BlockHelper.getPickaxe(p) != null) {
-            new Upgrade(p, playerStatService);
+            new Upgrade(p);
         } else {
             p.sendMessage(CC.YELLOW + "[" + "Caesar" + "] " + CC.GOLD + "Give me your pickaxe and I can upgrade it.");
         }

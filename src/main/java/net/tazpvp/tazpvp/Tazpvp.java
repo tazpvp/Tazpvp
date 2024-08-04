@@ -47,7 +47,7 @@ import net.tazpvp.tazpvp.commands.admin.npc.NpcCommand;
 import net.tazpvp.tazpvp.commands.admin.stats.StatCommand;
 import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
 import net.tazpvp.tazpvp.commands.admin.teleportWorld.TeleportWorldCommand;
-import net.tazpvp.tazpvp.commands.gameplay.PayCommand.PayCommand;
+import net.tazpvp.tazpvp.commands.gameplay.pay.PayCommand;
 import net.tazpvp.tazpvp.commands.gameplay.duel.DuelCommand;
 import net.tazpvp.tazpvp.commands.gameplay.event.EventCommand;
 import net.tazpvp.tazpvp.commands.gameplay.leaderboard.BaltopCommand;
@@ -346,10 +346,10 @@ public final class Tazpvp extends JavaPlugin {
     }
 
     private void spawnNpcs() {
-        npcs.add(new Maxim(playerStatService));
+        npcs.add(new Maxim());
         npcs.add(new Lorenzo());
-        npcs.add(new Caesar(playerStatService));
-        npcs.add(new Rigel(guildService, playerStatService));
+        npcs.add(new Caesar());
+        npcs.add(new Rigel(guildService));
 
         new BukkitRunnable() {
             @Override

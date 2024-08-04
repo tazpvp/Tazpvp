@@ -39,6 +39,7 @@ import net.tazpvp.tazpvp.data.LooseData;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.implementations.PunishmentServiceImpl;
 import net.tazpvp.tazpvp.data.services.PunishmentService;
+import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.utils.Profanity;
 import net.tazpvp.tazpvp.utils.TimeUtil;
 import net.tazpvp.tazpvp.enums.CC;
@@ -75,7 +76,6 @@ public class ChatListener implements Listener {
         Player p = e.getPlayer();
         UUID uuid = p.getUniqueId();
         PlayerWrapper pw = PlayerWrapper.getPlayer(p);
-        PlayerStatEntity playerStatEntity = Tazpvp.getInstance().getPlayerStatService().getOrDefault(uuid);
 
         String[] messageWords = e.getMessage().split(" ");
         List<String> messageWordsList = new ArrayList<>(Arrays.asList(messageWords));
@@ -140,7 +140,7 @@ public class ChatListener implements Listener {
                     .replace("&GOLD", CC.YELLOW.toString())
                     .replace("&M", CC.WHITE.toString())
                     .replace("{RANK}", ChatHelper.getRankingPrefix(p) + "")
-                    .replace("{LEVEL}", playerStatEntity.getLevel() + "")
+                    .replace("{LEVEL}", StatEnum.LEVEL.getInt(uuid) + "")
                     .replace("{SUFFIX}", pw.getGuildTag().toUpperCase());
         } else {
             format = format
@@ -148,7 +148,7 @@ public class ChatListener implements Listener {
                     .replace("&GOLD", CC.YELLOW.toString())
                     .replace("&M", CC.WHITE.toString())
                     .replace("{RANK}", ChatHelper.getRankingPrefix(p) + "")
-                    .replace("{LEVEL}", playerStatEntity.getLevel() + "")
+                    .replace("{LEVEL}", StatEnum.LEVEL.getInt(uuid) + "")
                     .replace("{PREFIX}", CC.trans(pw.getRankPrefix()))
                     .replace("{SUFFIX}", pw.getGuildTag().toUpperCase());
         }

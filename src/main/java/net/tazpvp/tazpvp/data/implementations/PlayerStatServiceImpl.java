@@ -4,16 +4,17 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import lombok.AllArgsConstructor;
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.database.PostgresqlDatabase;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
-import net.tazpvp.tazpvp.game.booster.ActiveBoosterManager;
-import net.tazpvp.tazpvp.game.booster.BoosterBonus;
-import net.tazpvp.tazpvp.game.booster.BoosterTypes;
+import net.tazpvp.tazpvp.enums.ScoreboardEnum;
+import net.tazpvp.tazpvp.helpers.ScoreboardHelper;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.BiConsumer;
 
 @AllArgsConstructor
 public class PlayerStatServiceImpl implements PlayerStatService {
@@ -75,5 +76,21 @@ public class PlayerStatServiceImpl implements PlayerStatService {
         }
     }
 
+    @Override
+    public void set(UUID id, Number value, BiConsumer<PlayerStatEntity, Number> consumer) {
+        PlayerStatEntity playerStatEntity = this.getOrDefault(id);
+        consumer.accept(playerStatEntity, value);
+        save(playerStatEntity);
+    }
 
+    @Override
+    public void set(UUID id, Number value, BiConsumer<PlayerStatEntity, Number> consumer, ScoreboardEnum scoreboardEnum) {
+        PlayerStatEntity playerStatEntity = this.getOrDefault(id);
+        consumer.accept(playerStatEntity, value);
+        Player p = Bukkit.getPlayer(id);
+        if (p != null) {
+            ScoreboardHelper.updateSuffix(p, scoreboardEnum, String.valueOf(value));
+        }
+        save(playerStatEntity);
+    }
 }

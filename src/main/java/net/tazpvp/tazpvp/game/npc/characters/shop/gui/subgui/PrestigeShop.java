@@ -7,8 +7,11 @@ import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.data.services.TalentService;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.enums.ItemEnum;
+import net.tazpvp.tazpvp.enums.ScoreboardEnum;
+import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
 import net.tazpvp.tazpvp.helpers.PlayerHelper;
+import net.tazpvp.tazpvp.helpers.ScoreboardHelper;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -18,19 +21,19 @@ import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
+import java.util.UUID;
+
 public class PrestigeShop extends GUI {
     private int slotNum;
     private int num;
     private Player p;
+    private final UUID id;
     private final String prefix = CC.RED + "[Maxim] " + CC.WHITE;
-    private final PlayerStatEntity playerStatEntity;
-    private final PlayerStatService playerStatService;
 
-    public PrestigeShop(Player p, PlayerStatService playerStatService) {
+    public PrestigeShop(Player p) {
         super("Maxim", 5);
         this.p = p;
-        this.playerStatService = playerStatService;
-        this.playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
+        this.id = p.getUniqueId();
         addItems();
         open(p);
     }
@@ -53,12 +56,12 @@ public class PrestigeShop extends GUI {
                 )
                 .glow(true)
                 .build(), (e) -> {
-            if (playerStatEntity.getLevel() < 100) {
+            if (StatEnum.LEVEL.getInt(id) < 100) {
                 p.sendMessage(prefix + "You are not a high enough level.");
                 return;
             }
 
-            playerStatEntity.setPrestige(playerStatEntity.getPrestige() + 1);
+            StatEnum.PRESTIGE.add(id, 1);
 
             PlayerWrapper pw = PlayerWrapper.getPlayer(p);
 
@@ -67,11 +70,9 @@ public class PrestigeShop extends GUI {
             talentService.removeTalentEntity(talentEntity);
             pw.setTalentEntity(talentService.getOrDefault(p.getUniqueId()));
 
-            playerStatEntity.setCoins(0);
-            playerStatEntity.setLevel(0);
-            playerStatEntity.setXp(0);
-
-            playerStatService.save(playerStatEntity);
+            StatEnum.COINS.set(id, 0);
+            StatEnum.LEVEL.set(id, 0);
+            StatEnum.XP.set(id, 0);
 
             p.getEnderChest().clear();
             p.getInventory().clear();
@@ -97,17 +98,13 @@ public class PrestigeShop extends GUI {
     }
 
     private void checkMoney(int cost, ItemEnum item) {
-        if (playerStatEntity != null) {
-            if (playerStatEntity.getCoins() >= cost) {
-                playerStatEntity.setCoins(playerStatEntity.getCoins() - cost);
-                p.getInventory().addItem(item.getItem(1));
-                p.sendMessage(prefix + "You purchased: " + item.getName());
-                p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
-
-                playerStatService.save(playerStatEntity);
-            } else {
-                p.sendMessage(prefix + "You don't have enough money");
-            }
+        if (StatEnum.COINS.getInt(id) >= cost) {
+            StatEnum.COINS.remove(id, cost);
+            p.getInventory().addItem(item.getItem(1));
+            p.sendMessage(prefix + "You purchased: " + item.getName());
+            p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
+        } else {
+            p.sendMessage(prefix + "You don't have enough money");
         }
     }
 

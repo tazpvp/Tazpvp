@@ -14,6 +14,7 @@ import net.tazpvp.tazpvp.data.services.TalentService;
 import net.tazpvp.tazpvp.data.services.UserAchievementService;
 import net.tazpvp.tazpvp.data.services.UserRankService;
 import net.tazpvp.tazpvp.game.duels.Duel;
+import net.tazpvp.tazpvp.game.events.TeamObject;
 import net.tazpvp.tazpvp.game.npc.characters.NPC;
 import net.tazpvp.tazpvp.utils.PlayerNameTag;
 import net.tazpvp.tazpvp.enums.CC;
@@ -21,6 +22,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
+import org.bukkit.scoreboard.Team;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -32,56 +34,36 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Wrapper for the player object which contains valuable methods exclusive to tazpvp
  */
+@Getter
 public class PlayerWrapper {
-    @Getter
     private final UUID uuid;
     private final UserRankService userRankService;
     private final GuildService guildService;
-    @Getter @Setter
-    private boolean launching;
-    @Getter @Setter
-    private boolean respawning;
-    @Getter @Setter
-    private boolean canRestore;
-    @Getter @Setter
-    private Duel duel;
-    @Getter
     private final List<ReportDebounce> reportDebouncesList;
-    @Getter
     private final List<ReportLogger> reportLoggerList;
     private PermissionAttachment permissionAttachment;
-    @Getter @Setter
-    private NPC receivedDialogue;
-    @Getter @Setter
-    private boolean npcDialogue;
-    @Getter @Setter
-    private boolean isAfk;
-    @Getter @Setter
-    private int coffinCount;
-    @Getter @Setter
-    private int killCount;
-    @Getter @Setter
-    private long timeOfLaunch;
-    @Getter @Setter
-    private long timeSinceAfk;
-    @Getter @Setter
-    private List<Material> blocksPlaced;
-    @Getter @Setter
-    private String lastMessageSent;
-    @Getter @Setter
-    private Duel spectating;
-    @Getter
     private UserRankEntity userRankEntity; // After you set a value here make sure to call refresh()
-    @Getter
     private UserAchievementEntity userAchievementEntity;
-    @Getter
     private TalentEntity talentEntity;
-    @Getter @Setter
-    private boolean vanished;
-    @Getter @Setter
-    private boolean staffChatActive;
-    @Getter
     private final ConcurrentHashMap<UUID, Duel> duelRequests;
+
+    @Setter private boolean launching;
+    @Setter private boolean respawning;
+    @Setter private boolean canRestore;
+    @Setter private Duel duel;
+    @Setter private NPC receivedDialogue;
+    @Setter private boolean npcDialogue;
+    @Setter private boolean isAfk;
+    @Setter private int killCount;
+    @Setter private long timeOfLaunch;
+    @Setter private long timeSinceAfk;
+    @Setter private List<Material> blocksPlaced;
+    @Setter private String lastMessageSent;
+    @Setter private Duel spectating;
+    @Setter private boolean vanished;
+    @Setter private boolean staffChatActive;
+    @Setter private TeamObject eventTeam;
+
 
     public PlayerWrapper(UUID uuid) {
         this.uuid = uuid;
@@ -93,7 +75,6 @@ public class PlayerWrapper {
         this.reportLoggerList = new ArrayList<>();
         this.receivedDialogue = null;
         this.npcDialogue = false;
-        this.coffinCount = 0;
         this.killCount = 0;
         this.timeOfLaunch = 0;
         this.blocksPlaced = new ArrayList<>();

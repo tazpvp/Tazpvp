@@ -37,6 +37,8 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.enums.ScoreboardEnum;
+import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -44,12 +46,11 @@ import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChatHelper {
-
-    private static PlayerStatService statService = Tazpvp.getInstance().getPlayerStatService();
 
     public static void announce(String msg, Sound sound) {
         for (Player p : Bukkit.getOnlinePlayers()) {
@@ -166,20 +167,25 @@ public class ChatHelper {
     }
 
     public static int getRanking(Player p) {
-        PlayerStatEntity statEntity = statService.getOrDefault(p.getUniqueId());
-
-        if (statEntity.getMMR() > 2000) return 5;
-        else if (statEntity.getMMR() > 1000) return 4;
-        else if (statEntity.getMMR() > 500) return 3;
-        else if (statEntity.getMMR() > 100) return 2;
+        int mmr = StatEnum.MMR.getInt(p.getUniqueId());
+        if (mmr > 2000) return 5;
+        else if (mmr > 1000) return 4;
+        else if (mmr > 500) return 3;
+        else if (mmr > 100) return 2;
         else return 1;
     }
 
     public static String getRankingPrefix(Player p) {
-        if (getRanking(p) == 5) return "✪✪✪✪✪";
-        else if (getRanking(p) == 4) return "✪✪✪✪";
-        else if (getRanking(p) == 3) return "✪✪✪";
-        else if (getRanking(p) == 2) return "✪✪";
-        else return "✪";
+        int ranking = getRanking(p);
+        if (ranking == 5) return scoreboard(p, "✪✪✪✪✪");
+        else if (ranking == 4) return scoreboard(p, "✪✪✪✪");
+        else if (ranking == 3) return scoreboard(p, "✪✪✪");
+        else if (ranking == 2) return scoreboard(p, "✪✪");
+        else return scoreboard(p, "✪");
+    }
+
+    private static String scoreboard(Player p, String rank) {
+        ScoreboardHelper.updateSuffix(p, ScoreboardEnum.RANK,  rank + CC.DARK_GRAY + " " + StatEnum.MMR.getInt(p.getUniqueId()));
+        return rank;
     }
 }

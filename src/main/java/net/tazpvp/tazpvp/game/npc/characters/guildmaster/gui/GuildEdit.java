@@ -37,6 +37,7 @@ import net.tazpvp.tazpvp.data.entity.GuildEntity;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.GuildService;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
+import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.utils.Profanity;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
@@ -60,15 +61,11 @@ public class GuildEdit extends GUI {
 
     private final GuildService guildService;
     private final GuildEntity playerGuildEntity;
-    private final PlayerStatService playerStatService;
-    private final PlayerStatEntity playerStatEntity;
 
-    public GuildEdit(Player p, GuildService guildService, PlayerStatService playerStatService) {
+    public GuildEdit(Player p, GuildService guildService) {
         super("Guild Edit", 3);
         this.guildService = guildService;
         this.playerGuildEntity = guildService.getGuildByPlayer(p.getUniqueId());
-        this.playerStatService = playerStatService;
-        this.playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
         addItems(p);
         open(p);
     }
@@ -93,7 +90,7 @@ public class GuildEdit extends GUI {
                 .lore(CC.YELLOW + "Costs " + CC.GOLD + "6,000 " + CC.YELLOW + "coins.")
                 .build(), _ ->
         {
-            if (playerStatEntity.getCoins() > 6000) {
+            if (StatEnum.COINS.getInt(p.getUniqueId()) > 6000) {
                 setDescription(p, playerGuildEntity);
             } else {
                 p.sendMessage(NO_RANK);
@@ -118,7 +115,7 @@ public class GuildEdit extends GUI {
             playerGuildEntity.setPrivate(!playerGuildEntity.isPrivate());
             p.closeInventory();
             p.sendMessage(CC.RED + "Showing guild in browser is now: " + CC.GOLD + (playerGuildEntity.isPrivate() ? "Enabled" : "Disabled"));
-            new GuildEdit(p, guildService, playerStatService);
+            new GuildEdit(p, guildService);
         });
 
         addButton(Button.create(ItemBuilder.of(Material.WRITABLE_BOOK, 1)
@@ -189,7 +186,7 @@ public class GuildEdit extends GUI {
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            new GuildEdit(p, Tazpvp.getInstance().getGuildService(), Tazpvp.getInstance().getPlayerStatService());
+                            new GuildEdit(p, Tazpvp.getInstance().getGuildService());
                         }
                     }.runTaskLater(Tazpvp.getInstance(), 1);
                 });
@@ -222,7 +219,7 @@ public class GuildEdit extends GUI {
                     if (Profanity.sayNoNo(p, text)) return List.of(AnvilGUI.ResponseAction.close());
                     player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
 
-                    playerStatEntity.setCoins(playerStatEntity.getCoins() - 6000);
+                    StatEnum.COINS.remove(p.getUniqueId(), 6000);
                     g.setDescription(text);
                     guildService.saveGuild(g);
 

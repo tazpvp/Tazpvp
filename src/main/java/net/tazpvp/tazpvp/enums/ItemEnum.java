@@ -14,19 +14,19 @@ import java.util.Random;
 
 @Getter
 public enum ItemEnum {
-    PREMIUM_PASS(Material.NETHER_STAR, "Premium Pass", "24 hours of the Premium rank.", 3),
-    BOUNTY_HUNTER(Material.COMPASS, "Bounty Hunter", "Find the player with the highest bounty.", 3),
+    PREMIUM_PASS(Material.NETHER_STAR, "Premium Pass", "24 hours of the Premium rank."),
+    BOUNTY_HUNTER(Material.COMPASS, "Bounty Hunter", "Find the player with the highest bounty."),
     AZURE_VAPOR(Material.BLUE_ORCHID, "Azure Vapor", "Extinguish flames.", 2),
     INKER(Material.INK_SAC, "Inker", "Blind the enemies you slap.", 2),
     STICKY_WEB(Material.COBWEB, "Sticky Web", "Slow down your enemies.", 2),
     PUSH_BOMB(Material.TNT, "Push Bomb", "Push everyone away from you.", 2),
-    BLOCKS(Material.OAK_PLANKS, "Placeable Blocks", "Is this fortnite?", 2),
+    BLOCKS(Material.OAK_PLANKS, "Placeable Blocks", "Is this fortnite?"),
 
     GOLDEN_APPLE(Material.GOLDEN_APPLE, "Golden Apple", "Gain super powers?", 3),
-    LIGHTER(Material.FLINT_AND_STEEL, "Lighter", "Set things afire.", 2),
+    LIGHTER(Material.FLINT_AND_STEEL, "Lighter", "Set things afire."),
     EXP_BOTTLE(Material.EXPERIENCE_BOTTLE, "Exp Bottle", "Mend your armor.", 1),
-    HATCHET(Material.GOLDEN_AXE, "Hatchet", "Break wooden blocks.", 1),
-    SHEAR(Material.SHEARS, "Shear", "Break wool blocks.", 1),
+    HATCHET(Material.GOLDEN_AXE, "Hatchet", "Break wooden blocks."),
+    SHEAR(Material.SHEARS, "Shear", "Break wool blocks."),
     ARROW(Material.ARROW, "Arrow", "Projectiles.", 1),
     GOLD_CARROT(Material.GOLDEN_CARROT, "Gold Carrot", "Good nutrition.", 2),
     SPECTRAL_ARROW(Material.SPECTRAL_ARROW, "Spectral Arrow", "Highlight targets.", 1),
@@ -63,35 +63,28 @@ public enum ItemEnum {
     final String name;
     final String lore;
     final int tier;
-    final boolean drop;
 
     private static final Random random = new Random();
 
-    ItemEnum(Material material, String name, String lore, int tier) {
-        this.enchant = null;
-        this.material = material;
-        this.name = name;
-        this.lore = lore;
-        this.tier= tier;
-        this.drop = true;
-    }
-
-    ItemEnum(Enchantment enchant, String name, String lore, int tier) {
+    ItemEnum(Enchantment enchant, Material material, String name, String lore, int tier) {
         this.enchant = enchant;
-        this.material = Material.ENCHANTED_BOOK;
+        this.material = material;
         this.name = name;
         this.lore = lore;
         this.tier= tier;
-        this.drop = true;
     }
 
+    ItemEnum(Material material, String name, String lore, int tier) {
+        this(null, material, name, lore, tier);
+    }
+    ItemEnum(Enchantment enchant, String name, String lore, int tier) {
+        this(enchant, Material.ENCHANTED_BOOK, name, lore, tier);
+    }
+    ItemEnum(Material material, String name, String lore) {
+        this(null, material, name, lore, 0);
+    }
     ItemEnum(Material material, String name) {
-        this.enchant = null;
-        this.material = material;
-        this.name = name;
-        this.lore = "";
-        this.tier= 1;
-        this.drop = false;
+        this(null, material, name, "", 0);
     }
 
     public ItemStack getItem(int amt) {
@@ -185,7 +178,7 @@ public enum ItemEnum {
     public static List<ItemEnum> getAllDrops() {
         List<ItemEnum> drops = new ArrayList<>();
         for (ItemEnum item : ItemEnum.values()) {
-            if (item.drop) {
+            if (item.getTier() > 0) {
                 drops.add(item);
             }
         }
@@ -195,7 +188,7 @@ public enum ItemEnum {
     public static List<ItemEnum> getAllDrops(int selectedTier) {
         List<ItemEnum> drops = new ArrayList<>();
         for (ItemEnum item : ItemEnum.values()) {
-            if (item.drop) {
+            if (item.tier > 0) {
                 if (item.getTier() == selectedTier) {
                     drops.add(item);
                 }

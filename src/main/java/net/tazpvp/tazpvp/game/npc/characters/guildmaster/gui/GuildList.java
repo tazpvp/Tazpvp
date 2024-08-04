@@ -35,9 +35,7 @@ public class GuildList extends GUI {
     }
 
     private void fillBorder() {
-        Button borderItem = Button.create(ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE).build(), (e) -> {
-
-        });
+        Button borderItem = Button.createBasic(ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE).build());
 
         for (int i = 0; i < 9; i++) {
             addButton(borderItem, i);

@@ -4,7 +4,10 @@ import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.enums.EnchantEnum;
 import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.enums.ScoreboardEnum;
+import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
+import net.tazpvp.tazpvp.helpers.ScoreboardHelper;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
@@ -18,20 +21,20 @@ import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 public class Enchantments extends GUI {
 
     private final ItemStack pickaxe;
     private final Player p;
-    private final PlayerStatService playerStatService;
-    private final PlayerStatEntity playerStatEntity;
 
-    public Enchantments(Player p, ItemStack pickaxe, PlayerStatService playerStatService) {
+    private final UUID id;
+
+    public Enchantments(Player p, ItemStack pickaxe) {
         super("Pickaxe Enchantments", 3);
-        this.playerStatService = playerStatService;
-        this.playerStatEntity = playerStatService.getOrDefault(p.getUniqueId());
         this.pickaxe = pickaxe;
         this.p = p;
+        this.id = p.getUniqueId();
         addItems();
         open(p);
     }
@@ -66,7 +69,7 @@ public class Enchantments extends GUI {
         int cost = enchantEnum.getCost();
         ItemMeta itemMeta = pickaxe.getItemMeta();
 
-        if (playerStatEntity.getCoins() < cost) {
+        if (StatEnum.COINS.getInt(id) < cost) {
             p.sendMessage(CC.RED + "You do not have enough money for this upgrade.");
             p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
             return;
@@ -88,17 +91,15 @@ public class Enchantments extends GUI {
         }
 
         pickaxe.addUnsafeEnchantment(enchant, levelToAdd);
-        playerStatEntity.setCoins(playerStatEntity.getCoins() - cost);
+        StatEnum.COINS.remove(id, cost);
         updateLore(pickaxe, enchantEnum.getName(), levelToAdd);
         p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, 1, 1);
         p.sendMessage("You enchanted your pickaxe with " + enchantEnum.getName());
-
-        playerStatService.save(playerStatEntity);
     }
 
     private void applyEfficiency() {
 
-        if (playerStatEntity.getCoins() < 200) {
+        if (StatEnum.COINS.getInt(id) < 200) {
             p.sendMessage(CC.RED + "You do not have enough money for this upgrade.");
             p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
             return;
@@ -115,12 +116,10 @@ public class Enchantments extends GUI {
             levelToAdd = currentEnchantLevel + 1;
         }
         pickaxe.addEnchantment(Enchantment.EFFICIENCY, levelToAdd);
-        playerStatEntity.setCoins(playerStatEntity.getCoins() - 200);
+        StatEnum.COINS.remove(id, 200);
         p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, 1, 1);
         String keyName = Enchantment.EFFICIENCY.getKey().getKey();
         p.sendMessage("You enchanted your pickaxe with " + keyName.substring(0, 1).toUpperCase() + keyName.substring(1));
-
-        playerStatService.save(playerStatEntity);
     }
 
     private void updateLore(ItemStack itemStack, String enchantPrefix, int level) {
