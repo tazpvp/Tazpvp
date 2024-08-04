@@ -1,6 +1,8 @@
 package net.tazpvp.tazpvp.objects;
 
 import lombok.Getter;
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.helpers.PlayerHelper;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -38,7 +40,7 @@ public class SpectateObject {
     public void faceLocation(Player p) {
         Vector direction = getA().clone().subtract(p.getEyeLocation()).toVector();
         Location loc = p.getLocation().setDirection(direction);
-        p.teleport(loc);
+        PlayerHelper.teleport(p, loc);
     }
 
     private Location calculateResult() {

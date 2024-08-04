@@ -40,7 +40,9 @@ import net.tazpvp.tazpvp.enums.*;
 import net.tazpvp.tazpvp.game.booster.ActiveBoosterManager;
 import net.tazpvp.tazpvp.game.booster.BoosterBonus;
 import net.tazpvp.tazpvp.game.booster.BoosterTypes;
+import net.tazpvp.tazpvp.services.PlayerNameTagService;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
@@ -55,9 +57,11 @@ import java.util.UUID;
 
 public class PlayerHelper {
 
+    private static PlayerNameTagService playerNameTagService = Tazpvp.getInstance().getPlayerNameTagService();
     private static Double getMaxHealth(Player p) {
         return p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
     }
+
 
     public static void healPlr(Player p) {
         PlayerStatEntity playerStatEntity = Tazpvp.getInstance().getPlayerStatService().getOrDefault(p.getUniqueId());
@@ -164,5 +168,9 @@ public class PlayerHelper {
         } else {
             p.setHealth(p.getHealth() + amount);
         }
+    }
+
+    public static void teleport(Player p, Location loc) {
+        playerNameTagService.teleportPlayer(p, loc);
     }
 }
