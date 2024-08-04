@@ -7,7 +7,7 @@ import net.tazpvp.tazpvp.data.implementations.GameRankServiceImpl;
 import net.tazpvp.tazpvp.data.implementations.PermissionServiceImpl;
 import net.tazpvp.tazpvp.data.services.GameRankService;
 import net.tazpvp.tazpvp.data.services.PermissionService;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import world.ntdi.nrcore.utils.command.simple.Label;

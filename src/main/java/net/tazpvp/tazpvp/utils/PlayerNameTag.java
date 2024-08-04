@@ -1,7 +1,7 @@
 package net.tazpvp.tazpvp.utils;
 
-import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
-import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
+import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -69,7 +69,7 @@ public class PlayerNameTag {
         team.setPrefix(prefix + prefixSeparator);
         team.setSuffix(suffixSeparator + suffix);
 
-        final String gradient = ChatFunctions.gradient("#c16bff", "l", true);
+        final String gradient = ChatHelper.gradient("#c16bff", "l", true);
         final boolean isBold = gradient.toCharArray()[gradient.toCharArray().length-2] == 'b';
 
         team.addPlayer(p2);

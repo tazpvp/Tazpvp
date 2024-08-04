@@ -1,9 +1,10 @@
 package net.tazpvp.tazpvp.commands.gameplay.pay;
 
 import lombok.NonNull;
-import net.tazpvp.tazpvp.data.DataTypes;
-import net.tazpvp.tazpvp.data.PersistentData;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.data.services.PlayerStatService;
+import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.enums.StatEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -12,12 +13,14 @@ import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
 import java.util.List;
+import java.util.UUID;
 
 public class PayCommand extends NRCommand {
 
     public PayCommand() {
         super(new Label("pay", null));
     }
+    private final PlayerStatService playerStatService = Tazpvp.getInstance().getPlayerStatService();
 
     @Override
     public boolean execute(@NonNull CommandSender sender, @NonNull String[] args) {
@@ -51,9 +54,12 @@ public class PayCommand extends NRCommand {
             return true;
         }
 
-        if (PersistentData.getInt(p, DataTypes.COINS) >= amount) {
-            PersistentData.remove(p, DataTypes.COINS, amount);
-            PersistentData.add(target, DataTypes.COINS, amount);
+        UUID senderID = p.getUniqueId();
+        UUID targetID = target.getUniqueId();
+
+        if (StatEnum.COINS.getInt(senderID) >= amount) {
+            StatEnum.COINS.remove(senderID, amount);
+            StatEnum.COINS.add(targetID, amount);
             p.sendMessage(CC.GREEN + "You have paid " + target.getName() + " " + amount + " coins.");
             target.sendMessage(CC.GREEN + p.getName() + " has paid you " + amount + " coins.");
         } else {

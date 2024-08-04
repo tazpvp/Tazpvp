@@ -1,5 +1,6 @@
 package net.tazpvp.tazpvp.services;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 public interface PlayerNameTagService {
@@ -11,4 +12,8 @@ public interface PlayerNameTagService {
 
     void recalibratePlayer(Player player);
     void setTagRank(Player player);
+
+    void setNameTagVisibility(Player player, boolean visible);
+
+    void teleportPlayer(Player player, Location location);
 }

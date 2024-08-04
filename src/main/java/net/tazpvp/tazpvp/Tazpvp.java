@@ -34,6 +34,8 @@
 package net.tazpvp.tazpvp;
 
 import lombok.Getter;
+import lombok.NonNull;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.tazpvp.tazpvp.commands.admin.BroadcastCommand;
 import net.tazpvp.tazpvp.commands.admin.KeyallCommand;
 import net.tazpvp.tazpvp.commands.admin.ResetStatsCommand;
@@ -68,26 +70,27 @@ import net.tazpvp.tazpvp.data.implementations.*;
 import net.tazpvp.tazpvp.data.services.GuildMemberService;
 import net.tazpvp.tazpvp.data.services.GuildService;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
+import net.tazpvp.tazpvp.data.services.UserRankService;
 import net.tazpvp.tazpvp.game.bosses.BossManager;
 import net.tazpvp.tazpvp.game.bosses.zorg.Zorg;
 import net.tazpvp.tazpvp.game.crates.CrateManager;
 import net.tazpvp.tazpvp.game.events.Event;
 import net.tazpvp.tazpvp.game.items.UsableItem;
-import net.tazpvp.tazpvp.game.items.enchants.EnchantUtil;
+import net.tazpvp.tazpvp.helpers.EnchantHelper;
 import net.tazpvp.tazpvp.listeners.*;
-import net.tazpvp.tazpvp.npc.characters.*;
-import net.tazpvp.tazpvp.npc.characters.enchanter.Caesar;
-import net.tazpvp.tazpvp.npc.characters.achievements.Lorenzo;
-import net.tazpvp.tazpvp.npc.characters.guildmaster.Rigel;
-import net.tazpvp.tazpvp.npc.characters.shop.Maxim;
-import net.tazpvp.tazpvp.player.achievements.achievement.*;
-import net.tazpvp.tazpvp.player.talents.talent.*;
+import net.tazpvp.tazpvp.game.npc.characters.*;
+import net.tazpvp.tazpvp.game.npc.characters.enchanter.Caesar;
+import net.tazpvp.tazpvp.game.npc.characters.achievements.Lorenzo;
+import net.tazpvp.tazpvp.game.npc.characters.guildmaster.Rigel;
+import net.tazpvp.tazpvp.game.npc.characters.shop.Maxim;
+import net.tazpvp.tazpvp.game.achievements.*;
+import net.tazpvp.tazpvp.game.talents.*;
+import net.tazpvp.tazpvp.services.PlayerNameTagServiceImpl;
 import net.tazpvp.tazpvp.utils.ConfigUtil;
 import net.tazpvp.tazpvp.services.PlayerNameTagService;
 import net.tazpvp.tazpvp.utils.discord.bot.BotThread;
-import net.tazpvp.tazpvp.utils.functions.AfkFunctions;
-import net.tazpvp.tazpvp.utils.functions.CombatTagFunctions;
-import net.tazpvp.tazpvp.utils.holograms.HologramUtil;
+import net.tazpvp.tazpvp.helpers.AfkHelper;
+import net.tazpvp.tazpvp.helpers.CombatTagHelper;
 import net.tazpvp.tazpvp.utils.leaderboard.spawnable.SpawnableLeaderboardManager;
 import net.tazpvp.tazpvp.utils.observer.Observer;
 import net.tazpvp.tazpvp.utils.passive.Alerts;
@@ -95,6 +98,7 @@ import net.tazpvp.tazpvp.utils.passive.Generator;
 import net.tazpvp.tazpvp.utils.passive.Holograms;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.utils.command.CommandCL;
@@ -105,33 +109,29 @@ import world.ntdi.postglam.connection.Database;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 /*
     A plugin for tazpvp beacuse we love tazpvp! <3 I love tazpvp <3 <3 <3 Rownxo smells like tazpvp stinky tazpvp
  */
 public final class Tazpvp extends JavaPlugin {
     @Getter
-    private static List<Observer> observers = new ArrayList<>();
+    private static final List<Observer> observers = new ArrayList<>();
     @Getter
-    private List<NPC> npcs = new ArrayList<>();
-
+    private final List<NPC> npcs = new ArrayList<>();
+    @Getter
     public static String prefix = "tazpvp.";
-
     @Getter
     private static ConfigUtil parkourUtil;
-
     @Getter
     public static Cuboid spawnRegion;
     @Getter
     public static Cuboid afkRegion;
-
     @Getter
     private static Database database;
     @Getter
     private static PostgresqlDatabase postgresqlDatabase;
-
-    private static final Logger log = Logger.getLogger("Minecraft");
+    @Getter
+    private BukkitAudiences adventure;
     @Getter
     private static CrateManager crateManager;
     @Getter
@@ -140,18 +140,16 @@ public final class Tazpvp extends JavaPlugin {
     private static HologramUtil hologramUtil;
     @Getter
     private static BotThread botThread;
-
     @Getter
     private PlayerStatService playerStatService;
     @Getter
     private GuildService guildService;
     @Getter
     private GuildMemberService guildMemberService;
-
+    @Getter
+    private UserRankService userRankService;
     @Getter
     private PlayerNameTagService playerNameTagService;
-
-
 
     @Override
     public void onEnable() {
@@ -169,18 +167,21 @@ public final class Tazpvp extends JavaPlugin {
             throw new RuntimeException(e);
         }
 
+        adventure = BukkitAudiences.create(this);
+
         registerEvents();
         registerCommands();
         playerStatService = new PlayerStatServiceImpl();
+        playerNameTagService = new PlayerNameTagServiceImpl(this);
         Generator.generate();
         Holograms.holograms();
         Alerts.alert();
         Event.eventTypes.add("FFA");
         registerObservable();
-        EnchantUtil.register();
+        EnchantHelper.register();
         spawnNpcs();
-        CombatTagFunctions.initCombatTag();
-        AfkFunctions.setup();
+        CombatTagHelper.initCombatTag();
+        AfkHelper.setup();
         UsableItem.registerCustomItems();
 
         parkourUtil = new ConfigUtil("parkour.yml", this);
@@ -217,15 +218,17 @@ public final class Tazpvp extends JavaPlugin {
         new ExpirationRankServiceImpl().createTableIfNotExists(postgresqlDatabase, ExpirationRankEntity.class);
         new GameRankServiceImpl().createTableIfNotExists(postgresqlDatabase, GameRankEntity.class);
         new PermissionServiceImpl().createTableIfNotExists(postgresqlDatabase, PermissionEntity.class);
-        new UserRankServiceImpl().createTableIfNotExists(postgresqlDatabase, UserRankEntity.class);
 
         this.guildMemberService = new GuildMemberServiceImpl();
         this.guildService = new GuildServiceImpl(guildMemberService);
         this.playerStatService = new PlayerStatServiceImpl();
+        this.userRankService = new UserRankServiceImpl();
+        this.playerNameTagService = new PlayerNameTagServiceImpl(this);
 
         guildMemberService.createTableIfNotExists(postgresqlDatabase, GuildMemberEntity.class);
         guildService.createTableIfNotExists(postgresqlDatabase, GuildEntity.class);
         playerStatService.createTableIfNotExists(postgresqlDatabase, PlayerStatEntity.class);
+        userRankService.createTableIfNotExists(postgresqlDatabase, UserRankEntity.class);
     }
 
     public static void registerObserver(Observer observer) {
@@ -234,6 +237,9 @@ public final class Tazpvp extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            playerNameTagService.recalibratePlayer(player);
+        }
 
         despawnNpcs();
         BossManager.despawnBoss();
@@ -262,7 +268,6 @@ public final class Tazpvp extends JavaPlugin {
         new Harvester();
         new Speedrunner();
 //        new Error();
-
         new Revenge();
         new Moist();
         new Agile();
@@ -325,24 +330,24 @@ public final class Tazpvp extends JavaPlugin {
     }
 
     public void registerEvents() {
-        getServer().getPluginManager().registerEvents(new Damage(), this);
-        getServer().getPluginManager().registerEvents(new Join(), this);
-        getServer().getPluginManager().registerEvents(new Leave(), this);
-        getServer().getPluginManager().registerEvents(new InventoryClick(), this);
-        getServer().getPluginManager().registerEvents(new Break(), this);
-        getServer().getPluginManager().registerEvents(new Move(), this);
-        getServer().getPluginManager().registerEvents(new Place(), this);
-        getServer().getPluginManager().registerEvents(new Chat(), this);
-        getServer().getPluginManager().registerEvents(new Exp(), this);
-        getServer().getPluginManager().registerEvents(new Interact(), this);
-        getServer().getPluginManager().registerEvents(new Shoot(), this);
-        getServer().getPluginManager().registerEvents(new ProjectileLaunch(this), this);
+        getServer().getPluginManager().registerEvents(new DamageListener(), this);
+        getServer().getPluginManager().registerEvents(new JoinListener(), this);
+        getServer().getPluginManager().registerEvents(new LeaveListener(), this);
+        getServer().getPluginManager().registerEvents(new InventoryListener(), this);
+        getServer().getPluginManager().registerEvents(new BreakListener(), this);
+        getServer().getPluginManager().registerEvents(new MoveListener(), this);
+        getServer().getPluginManager().registerEvents(new PlaceListener(), this);
+        getServer().getPluginManager().registerEvents(new ChatListener(), this);
+        getServer().getPluginManager().registerEvents(new ExpListener(), this);
+        getServer().getPluginManager().registerEvents(new InteractListener(), this);
+        getServer().getPluginManager().registerEvents(new ShootListener(), this);
+        getServer().getPluginManager().registerEvents(new ProjectileListener(this), this);
         getServer().getPluginManager().registerEvents(new DeathListener(), this);
-        getServer().getPluginManager().registerEvents(new CommandSend(), this);
-        getServer().getPluginManager().registerEvents(new Craft(), this);
-        getServer().getPluginManager().registerEvents(new Explode(), this);
-        getServer().getPluginManager().registerEvents(new EntitySpawn(), this);
-        getServer().getPluginManager().registerEvents(new Burn(), this);
+        getServer().getPluginManager().registerEvents(new CommandListener(), this);
+        getServer().getPluginManager().registerEvents(new CraftListener(), this);
+        getServer().getPluginManager().registerEvents(new ExplodeListener(), this);
+        getServer().getPluginManager().registerEvents(new EntitySpawnListener(), this);
+        getServer().getPluginManager().registerEvents(new BurnListener(), this);
     }
 
     private void spawnNpcs() {
@@ -365,5 +370,12 @@ public final class Tazpvp extends JavaPlugin {
     private void despawnNpcs() {
         npcs.forEach(NPC::remove);
         npcs.clear();
+    }
+
+    public @NonNull BukkitAudiences adventure() {
+        if(adventure == null) {
+            throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
+        }
+        return adventure;
     }
 }

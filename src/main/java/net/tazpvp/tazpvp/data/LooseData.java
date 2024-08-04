@@ -1,17 +1,22 @@
 package net.tazpvp.tazpvp.data;
 
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
+import net.tazpvp.tazpvp.data.services.PlayerStatService;
+import net.tazpvp.tazpvp.enums.StatEnum;
+
+import java.text.DecimalFormat;
 import java.util.UUID;
 import java.util.WeakHashMap;
 
 public final class LooseData {
-    private static final WeakHashMap<UUID, Integer> ks = new WeakHashMap<>();
 
+    private static final WeakHashMap<UUID, Integer> ks = new WeakHashMap<>();
     private static final WeakHashMap<UUID, Integer> chatCount = new WeakHashMap<>();
     private static final WeakHashMap<UUID, Integer> mineCount = new WeakHashMap<>();
 
-    public static int getExpLeft(UUID uuid) {
-        float level = PersistentData.getInt(uuid, DataTypes.LEVEL);
-        return Math.round((float) (level * 1.94) + 40);
+    public static int getExpLeft(UUID id) {
+        return Math.round((float) (StatEnum.LEVEL.getInt(id) * 1.94) + 40);
     }
 
     public static int getKs(UUID uuid) {
@@ -49,10 +54,24 @@ public final class LooseData {
         return 0;
     }
 
-    public static void resetKs(UUID uuid) {
-        PersistentData.topKs(uuid);
-        ks.put(uuid, 0);
+    public static void resetKs(UUID id) {
+//        PersistentData.topKs(id); IDK WHAT THIS IS
+        ks.put(id, 0);
     }
 
+    //FROM PERSISTENT DATA
+//    public static void topKs(UUID uuid) {
+//        if (getInt(uuid, DataTypes.TOPKILLSTREAK) < LooseData.getKs(uuid)) {
+//            set(uuid, DataTypes.TOPKILLSTREAK, LooseData.getKs(uuid));
+//        }
+//    }
+
+    public static float kdrFormula(final float kills, final float deaths) {
+        if (kills != 0 && deaths != 0) {
+            DecimalFormat df = new DecimalFormat("0.00");
+            return Float.parseFloat(df.format(kills / deaths));
+        }
+        return 0F;
+    }
 }
 

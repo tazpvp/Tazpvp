@@ -35,7 +35,7 @@ package net.tazpvp.tazpvp.game.events;
 import lombok.Getter;
 import lombok.Setter;
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -52,13 +52,13 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
+@Deprecated
 public abstract class Event implements Listener {
 
     public static List<String> eventTypes = new ArrayList<>();
     @Getter
     @Setter
     public static Event currentEvent;
-
     @Getter
     private List<UUID> participantList = new ArrayList<>();
     @Getter

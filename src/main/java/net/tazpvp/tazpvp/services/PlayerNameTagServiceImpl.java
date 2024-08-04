@@ -1,6 +1,6 @@
 package net.tazpvp.tazpvp.services;
 
-import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.entity.Display;
@@ -86,7 +86,26 @@ public class PlayerNameTagServiceImpl implements PlayerNameTagService {
         TextDisplay textDisplay = uuidItemDisplayMap.get(player.getUniqueId());
 
         if (textDisplay != null) {
-            textDisplay.setText(ChatFunctions.getRanking(player));
+            textDisplay.setText(ChatHelper.getRankingPrefix(player));
+        }
+    }
+
+    @Override
+    public void setNameTagVisibility(Player player, boolean visible) {
+        TextDisplay textDisplay = uuidItemDisplayMap.get(player.getUniqueId());
+        if (textDisplay != null) {
+            textDisplay.setViewRange(visible ? 100 : 0);
+        }
+    }
+
+    @Override
+    public void teleportPlayer(Player player, Location location) {
+        TextDisplay textDisplay = uuidItemDisplayMap.get(player.getUniqueId());
+        if (textDisplay != null) {
+            player.removePassenger(textDisplay);
+            textDisplay.teleport(location);
+            player.teleport(location);
+            player.addPassenger(textDisplay);
         }
     }
 }

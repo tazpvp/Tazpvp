@@ -1,6 +1,6 @@
 package net.tazpvp.tazpvp.game.duels.divisions;
 
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 
 public enum Divisions {
     BRONZE_I(CC.DARK_RED + "Bronze I", 1),

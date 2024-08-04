@@ -35,7 +35,6 @@ package net.tazpvp.tazpvp.commands.gameplay.guild.sub;
 
 import lombok.NonNull;
 import net.tazpvp.tazpvp.commands.gameplay.guild.handler.GuildAbstractArgumentCommand;
-import net.tazpvp.tazpvp.game.guilds.Guild;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
 
@@ -45,19 +44,19 @@ public class GuildDemoteCommand extends GuildAbstractArgumentCommand {
     }
 
     @Override
-    public boolean executeFunction(@NonNull Player p, @NonNull Guild g, @NonNull Player target) {
-        if (!g.getGuildMembers().contains(target.getUniqueId())) {
-            p.sendMessage("This user is not in your guild");
-            return true;
-        }
-
-        if (!g.getGuildGenerals().contains(target.getUniqueId())) {
-            p.sendMessage("This user is already a member.");
-            return true;
-        }
-
-        g.demoteMember(target.getUniqueId());
-        p.sendMessage("You demoted: " + target.getName());
+    public boolean executeFunction(@NonNull Player p, @NonNull Player target) {
+//        if (!g.getGuildMembers().contains(target.getUniqueId())) {
+//            p.sendMessage("This user is not in your guild");
+//            return true;
+//        }
+//
+//        if (!g.getGuildGenerals().contains(target.getUniqueId())) {
+//            p.sendMessage("This user is already a member.");
+//            return true;
+//        }
+//
+//        g.demoteMember(target.getUniqueId());
+//        p.sendMessage("You demoted: " + target.getName());
 
         return true;
     }

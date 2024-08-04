@@ -35,12 +35,13 @@ package net.tazpvp.tazpvp.game.duels;
 import lombok.Getter;
 import lombok.Setter;
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.DataTypes;
-import net.tazpvp.tazpvp.data.PersistentData;
-import net.tazpvp.tazpvp.utils.enums.CC;
-import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
-import net.tazpvp.tazpvp.utils.functions.PlayerFunctions;
-import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
+import net.tazpvp.tazpvp.data.services.PlayerStatService;
+import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.enums.StatEnum;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
+import net.tazpvp.tazpvp.helpers.PlayerHelper;
+import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -77,6 +78,8 @@ public abstract class Duel {
     @Getter @Setter
     private boolean starting;
 
+    private final PlayerStatService playerStatService = Tazpvp.getInstance().getPlayerStatService();
+
     public Duel(@Nonnull final UUID P1, @Nonnull final UUID P2, @Nonnull final String NAME) {
         this.P1 = P1;
         this.P2 = P2;
@@ -97,23 +100,24 @@ public abstract class Duel {
         setLoser(loserID);
         setWinner(getOtherDueler(loserID));
 
-        final Player winner = Bukkit.getPlayer(getWinner());
-        final Player loser = Bukkit.getPlayer(loserID);
+        final Player pWinner = Bukkit.getPlayer(winner);
+        final Player pLoser = Bukkit.getPlayer(loser);
 
-        ChatFunctions.announce(
+        ChatHelper.announce(
                 CC.AQUA + Bukkit.getOfflinePlayer(getWinner()).getName() +
                         CC.DARK_AQUA + " won a duel against " +
                         CC.AQUA + Bukkit.getOfflinePlayer(loserID).getName(),
                 Sound.BLOCK_BELL_RESONATE
         );
 
-        if (winner != null) {
-            PersistentData.add(winner.getUniqueId(), DataTypes.DUELWINS, 1);
-            winner.sendTitle(CC.GOLD + "" + CC.BOLD + "YOU WIN", "", 20, 20, 20);
+        if (pWinner != null) {
+            StatEnum.DUEL_MMR.add(winner, 15);
+            pWinner.sendTitle(CC.GOLD + "" + CC.BOLD + "YOU WIN", "", 20, 20, 20);
         }
 
-        if (loser != null) {
-            loser.setGameMode(GameMode.SPECTATOR);
+        if (pLoser != null) {
+            StatEnum.DUEL_MMR.remove(loser, 9);
+            pLoser.setGameMode(GameMode.SPECTATOR);
         }
 
         clearSpectators();
@@ -129,7 +133,7 @@ public abstract class Duel {
                     p.setGameMode(GameMode.SURVIVAL);
                     p.teleport(NRCore.config.spawn);
                     PlayerWrapper.getPlayer(p).setDuel(null);
-                    PlayerFunctions.resetHealth(p);
+                    PlayerHelper.resetHealth(p);
                 });
 
                 new WorldUtil().deleteWorld(getWorldName());
@@ -137,7 +141,7 @@ public abstract class Duel {
             }
         }.runTaskLater(Tazpvp.getInstance(), 20*5);
 
-        Tazpvp.getObservers().forEach(observer -> observer.duel_end(winner, loser));
+        Tazpvp.getObservers().forEach(observer -> observer.duel_end(pWinner, pLoser));
     }
 
     public void abort() {

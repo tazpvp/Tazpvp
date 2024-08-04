@@ -3,7 +3,7 @@ package net.tazpvp.tazpvp.commands.gameplay.leaderboard;
 import lombok.NonNull;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.utils.leaderboard.LeaderboardEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -13,8 +13,6 @@ import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 public class BaltopCommand extends NRCommand{
     public BaltopCommand() {

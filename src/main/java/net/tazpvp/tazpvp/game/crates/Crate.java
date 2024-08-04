@@ -34,8 +34,9 @@
 package net.tazpvp.tazpvp.game.crates;
 
 import lombok.Getter;
+import net.tazpvp.tazpvp.enums.ItemEnum;
 import net.tazpvp.tazpvp.game.crates.gui.Preview;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -47,6 +48,7 @@ import org.bukkit.inventory.ItemStack;
 import world.ntdi.nrcore.utils.holograms.Hologram;
 import world.ntdi.postglam.data.Tuple;
 
+import java.util.List;
 import java.util.Random;
 
 public class Crate {
@@ -59,16 +61,16 @@ public class Crate {
     @Getter
     private final String type;
     @Getter
-    private final ItemStack[] crateDrops;
+    private final List<ItemEnum> crateDrops;
 
-    public Crate(Location location, String hologramText, String type, ItemStack... crateDrops) {
+    public Crate(Location location, String hologramText, String type) {
         this.location = location;
         Location hologramLocation = new Location(location.getWorld(), location.getX() + 0.5, location.getY(), location.getZ() + 0.5);
         this.hologram = new Hologram(hologramText, hologramLocation, false);
         this.type = type;
         this.block = getLocation().getBlock().getType();
+        this.crateDrops = getRewards();
         getLocation().getBlock().setType(Material.BEACON);
-        this.crateDrops = crateDrops;
     }
 
     public void acceptClick(PlayerInteractEvent e) {
@@ -78,9 +80,9 @@ public class Crate {
                 getLocation().getWorld().spawnParticle(Particle.EXPLOSION, getLocation(), 1);
                 removeOne(p);
                 p.playSound(p.getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN, 1F, 1F);
-                Tuple<String, ItemStack> randomShopItem = randomShopItem();
-                p.sendTitle(CC.GREEN + "" + CC.BOLD + "REWARD", CC.GREEN + "You won: " + CC.WHITE + randomShopItem.getA(), 5, 10, 5);
-                p.getInventory().addItem(randomShopItem.getB());
+                ItemEnum randomShopItem = getRandomReward();
+                p.sendTitle(CC.GREEN + "" + CC.BOLD + "REWARD", CC.GREEN + "You won: " + CC.WHITE + randomShopItem.getName(), 5, 10, 5);
+                p.getInventory().addItem(randomShopItem.getItem(1));
             } else { // YEET the player backwards
                 p.setVelocity(p.getLocation().getDirection().multiply(-1));
                 p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1F, 1F);
@@ -90,7 +92,9 @@ public class Crate {
     }
 
     public void openPreview(PlayerInteractEvent e) {
-        new Preview(e.getPlayer(), this);
+        if (isCrate(e)) {
+            new Preview(e.getPlayer(), crateDrops);
+        }
     }
 
     private boolean isCrate(PlayerInteractEvent e) {
@@ -121,11 +125,23 @@ public class Crate {
         }
     }
 
-    private Tuple<String, ItemStack> randomShopItem() {
-        Random r = new Random();
-        ItemStack itemStack = crateDrops[r.nextInt(crateDrops.length)];
-        ItemStack i = itemStack.clone();
-        String name = i.getType().name().replaceAll("_", "");
-        return new Tuple<>(name, i);
+    private ItemEnum getRandomReward() {
+        if (type.equalsIgnoreCase("mythic")) {
+            return ItemEnum.getRandomDrop(3);
+        } else if (type.equalsIgnoreCase("rare")) {
+            return ItemEnum.getRandomDrop(2);
+        } else {
+            return ItemEnum.getRandomDrop(1);
+        }
+    }
+
+    private List<ItemEnum> getRewards() {
+        if (type.equalsIgnoreCase("mythic")) {
+            return ItemEnum.getAllDrops(3);
+        } else if (type.equalsIgnoreCase("rare")) {
+            return ItemEnum.getAllDrops(2);
+        } else {
+            return ItemEnum.getAllDrops(1);
+        }
     }
 }

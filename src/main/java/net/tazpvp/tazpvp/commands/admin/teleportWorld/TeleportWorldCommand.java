@@ -1,7 +1,7 @@
 package net.tazpvp.tazpvp.commands.admin.teleportWorld;
 
 import lombok.NonNull;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;

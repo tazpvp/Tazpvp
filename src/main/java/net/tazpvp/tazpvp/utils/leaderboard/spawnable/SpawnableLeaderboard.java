@@ -35,11 +35,10 @@ package net.tazpvp.tazpvp.utils.leaderboard.spawnable;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.DataTypes;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
-import net.tazpvp.tazpvp.utils.enums.CC;
-import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
+import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
 import net.tazpvp.tazpvp.utils.leaderboard.LeaderboardEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -47,10 +46,6 @@ import world.ntdi.nrcore.utils.holograms.Hologram;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import java.util.function.Function;
-import java.util.function.IntConsumer;
 
 public class SpawnableLeaderboard {
     @Getter
@@ -70,7 +65,7 @@ public class SpawnableLeaderboard {
         this.playerStatService = Tazpvp.getInstance().getPlayerStatService();
 
         this.hologram = new Hologram(getLocation(), false,
-                CC.GRAY + "-< " + ChatFunctions.hexColor("#8aff70", getTitle(), false) + CC.GRAY + " >-",
+                CC.GRAY + "-< " + ChatHelper.hexColor("#8aff70", getTitle(), false) + CC.GRAY + " >-",
                 formatLine(1),
                 formatLine(2),
                 formatLine(3),
@@ -93,7 +88,7 @@ public class SpawnableLeaderboard {
     }
 
     private String formatLine(int number, String text) {
-        return ChatFunctions.hexColor("#29e226", number + ". " + text, false);
+        return ChatHelper.hexColor("#29e226", number + ". " + text, false);
     }
 
     public void update() {
@@ -103,7 +98,7 @@ public class SpawnableLeaderboard {
 
         List<String> lines = new ArrayList<>();
 
-        lines.add(CC.GRAY + "-< " + ChatFunctions.hexColor("#8aff70", getTitle(), false) + CC.GRAY + " >-");
+        lines.add(CC.GRAY + "-< " + ChatHelper.hexColor("#8aff70", getTitle(), false) + CC.GRAY + " >-");
 
         for (PlayerStatEntity playerStatEntity : playerStatEntities) {
             lines.add(formatLine(

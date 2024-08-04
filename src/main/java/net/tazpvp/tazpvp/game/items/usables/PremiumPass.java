@@ -1,7 +1,7 @@
 package net.tazpvp.tazpvp.game.items.usables;
 
 import net.tazpvp.tazpvp.game.items.UsableItem;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
