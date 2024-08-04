@@ -43,6 +43,7 @@ public class Gamble extends Observable {
 
     @Override
     public void death(Player victim, Player killer) {
+        if (killer == null) return;
         final PlayerWrapper pw = PlayerWrapper.getPlayer(killer);
         final UserAchievementEntity userAchievementEntity = pw.getUserAchievementEntity();
         final AchievementEntity achievementEntity = userAchievementEntity.getGambleAchievementEntity();

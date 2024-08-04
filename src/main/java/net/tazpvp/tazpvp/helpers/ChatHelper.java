@@ -171,7 +171,7 @@ public class ChatHelper {
         if (mmr > 2000) return 5;
         else if (mmr > 1000) return 4;
         else if (mmr > 500) return 3;
-        else if (mmr > 100) return 2;
+        else if (mmr > 300) return 2;
         else return 1;
     }
 

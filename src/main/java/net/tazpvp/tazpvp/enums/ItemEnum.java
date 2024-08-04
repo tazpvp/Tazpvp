@@ -90,14 +90,14 @@ public enum ItemEnum {
     public ItemStack getItem(int amt) {
         return ItemBuilder.of(material, amt)
                 .name(ChatHelper.gradient("#db3bff", name,true))
-                .lore(lore)
+                .lore(CC.GRAY + lore)
                 .build();
     }
 
     public ItemStack getItem(Material mat, int amt) {
         return ItemBuilder.of(mat, amt)
                 .name(ChatHelper.gradient("#db3bff", name,true))
-                .lore(lore)
+                .lore(CC.GRAY + lore)
                 .build();
     }
 

@@ -22,6 +22,8 @@ import net.tazpvp.tazpvp.helpers.CombatTagHelper;
 import net.tazpvp.tazpvp.helpers.PlayerHelper;
 import net.tazpvp.tazpvp.helpers.ScoreboardHelper;
 import net.tazpvp.tazpvp.helpers.SerializableInventory;
+import net.tazpvp.tazpvp.services.PlayerNameTagService;
+import net.tazpvp.tazpvp.utils.PlayerNameTag;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -183,6 +185,7 @@ public class DeathObject {
     public void respawn() {
         SpectateObject spectateObject;
         Location camLoc = location;
+        PlayerNameTagService playerNameTagService = Tazpvp.getInstance().getPlayerNameTagService();
 
         if (killer == null) {
             if (CombatTagHelper.getLastAttacker(victim) != null) {
@@ -199,7 +202,7 @@ public class DeathObject {
         }
 
         spectateObject = new SpectateObject(camLoc);
-        pVictim.teleport(spectateObject.getResult());
+        playerNameTagService.teleportPlayer(pVictim, spectateObject.getResult());
         spectateObject.faceLocation(pVictim);
         pVictim.setGameMode(GameMode.SPECTATOR);
         pVictim.playSound(pVictim.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1, 1);
@@ -208,7 +211,7 @@ public class DeathObject {
         new BukkitRunnable() {
             public void run() {
                 pVictim.setGameMode(GameMode.SURVIVAL);
-                pVictim.teleport(NRCore.config.spawn);
+                playerNameTagService.teleportPlayer(pVictim, NRCore.config.spawn);
                 victimWrapper.setRespawning(false);
             }
         }.runTaskLater(Tazpvp.getInstance(), 20 * 3);
@@ -289,6 +292,11 @@ public class DeathObject {
             StatEnum.COINS.add(killer, finalCoins);
             StatEnum.XP.add(killer, finalXp);
             StatEnum.MMR.add(killer, 15);
+
+            int kills = StatEnum.KILLS.getInt(killer);
+            int deaths = StatEnum.DEATHS.getInt(killer);
+
+            ScoreboardHelper.updateSuffix(pKiller, ScoreboardEnum.KDR, LooseData.kdrFormula(kills, deaths) + "");
 
             if ((LooseData.getKs(killer) % 5) == 0) {
                 Bukkit.broadcastMessage(

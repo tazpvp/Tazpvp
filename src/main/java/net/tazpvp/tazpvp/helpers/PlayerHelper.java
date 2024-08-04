@@ -130,7 +130,7 @@ public class PlayerHelper {
 
     public static void levelUp(UUID ID) {
         Player p = Bukkit.getPlayer(ID);
-        float value = StatEnum.XP.getInt(ID);
+        float value = StatEnum.XP.getInt(ID) - LooseData.getExpLeft(p.getUniqueId());
         if (p == null) return;
         if (value >= LooseData.getExpLeft(ID)) {
             final BoosterBonus coinsBonus = ActiveBoosterManager.getInstance()
