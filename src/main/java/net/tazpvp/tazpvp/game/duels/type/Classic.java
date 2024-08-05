@@ -45,20 +45,15 @@ public class Classic extends Duel {
 
     public Classic(UUID P1, UUID P2) {
         super(P1, P2, "classic");
-        super.setWorldName("duel_" + UUID.randomUUID());
     }
 
     @Override
-    public void addItems(UUID duelerUUID) {
-        Player p = Bukkit.getPlayer(duelerUUID);
-        if (p == null) return;
-
-        PlayerInventory inv = p.getInventory();
-
+    public void addItems(PlayerInventory inv) {
         inv.setHelmet(new ItemStack(Material.DIAMOND_HELMET));
         inv.setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
         inv.setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
         inv.setBoots(new ItemStack(Material.DIAMOND_BOOTS));
+
         inv.setItemInOffHand(new ItemStack(Material.SHIELD));
 
         inv.addItem(new ItemStack(Material.DIAMOND_SWORD));

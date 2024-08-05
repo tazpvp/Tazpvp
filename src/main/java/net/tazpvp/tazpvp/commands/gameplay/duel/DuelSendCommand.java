@@ -53,6 +53,11 @@ public class DuelSendCommand extends NRCommand {
             return true;
         }
 
+        if (Duel.getDuel() != null) {
+            p.sendMessage(Duel.prefix + "The duel arena is currently occupied.");
+            return true;
+        }
+
         final Player target = Bukkit.getPlayer(args[0]);
 
         if (target == null) {

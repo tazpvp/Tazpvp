@@ -2,6 +2,7 @@ package net.tazpvp.tazpvp.commands.gameplay.duel;
 
 import lombok.NonNull;
 import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.game.duels.Duel;
 import net.tazpvp.tazpvp.helpers.CombatTagHelper;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
@@ -62,21 +63,26 @@ public class DuelAcceptCommand extends NRCommand {
 
         for (UUID id : pw.getDuelRequests().keySet()) {
             if (id.equals(senderID)) {
-                Duel duel = pw.getDuelRequests().get(id);
-                if (duel == null) {
-                    pw.getDuelRequests().remove(id);
+                if (Duel.getDuel() == null) {
+                    Duel duel = pw.getDuelRequests().get(id);
+                    if (duel == null) {
+                        pw.getDuelRequests().remove(id);
+                        return true;
+                    }
+
+                    senderPlayer.sendMessage(Duel.prefix + p.getName() + " has accepted your duel request. You will teleport to the duel arena shortly.");
+                    p.sendMessage(Duel.prefix + "You have accepted " + senderPlayer.getName() + "'s duel request. You will teleport to the duel arena shortly.");
+
+                    pw.getDuelRequests().clear();
+                    PlayerWrapper senderWrapper = PlayerWrapper.getPlayer(senderID);
+                    senderWrapper.getDuelRequests().clear();
+
+                    Duel.setDuel(duel);
+                    duel.initialize();
+                } else {
+                    p.sendMessage(CC.RED + "The duel arena is currently occupied.");
                     return true;
                 }
-
-                senderPlayer.sendMessage(Duel.prefix + p.getName() + " has accepted your duel request. You will teleport to the duel arena shortly.");
-                p.sendMessage(Duel.prefix + "You have accepted " + senderPlayer.getName() + "'s duel request. You will teleport to the duel arena shortly.");
-
-                pw.getDuelRequests().clear();
-                PlayerWrapper senderWrapper = PlayerWrapper.getPlayer(senderID);
-                senderWrapper.getDuelRequests().clear();
-
-                Duel.duelsList.add(duel);
-                duel.initialize();
             }
         }
 

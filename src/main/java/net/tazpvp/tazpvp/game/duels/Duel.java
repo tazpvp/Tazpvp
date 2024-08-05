@@ -42,84 +42,75 @@ import net.tazpvp.tazpvp.helpers.PlayerHelper;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.NRCore;
 import world.ntdi.nrcore.utils.ArmorManager;
-import world.ntdi.nrcore.utils.world.WorldUtil;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class Duel {
 
     public static final String prefix = CC.AQUA + "Duel | " + CC.DARK_AQUA;
+    @Getter @Setter
+    public static Duel duel = null;
 
     @Getter
     private final UUID P1;
     @Getter
     private final UUID P2;
     @Getter
-    private final String NAME;
+    private final String name;
     @Getter
-    private final List<UUID> DUELERS;
+    private final List<UUID> duelers;
     @Getter
-    private final List<UUID> SPECTATORS;
+    private final List<Location> locations;
     @Getter @Setter
     private UUID winner;
     @Getter @Setter
     private UUID loser;
-    @Getter @Setter
-    private String worldName;
     @Getter @Setter
     private boolean starting;
 
     public Duel(@Nonnull final UUID P1, @Nonnull final UUID P2, @Nonnull final String NAME) {
         this.P1 = P1;
         this.P2 = P2;
-        this.NAME = NAME;
-
-        this.DUELERS = new ArrayList<>();
-        this.DUELERS.add(P1);
-        this.DUELERS.add(P2);
-
-        this.SPECTATORS = new ArrayList<>();
+        this.name = NAME;
+        this.duelers = new ArrayList<>();
+        this.locations = new ArrayList<>();
     }
 
     public void initialize() {
-        getDUELERS().forEach(uuid -> {
-            PlayerWrapper pw = PlayerWrapper.getPlayer(uuid);
-            if (pw.getDuel() != null) return;
-            pw.setDuel(this);
-        });
-        new WorldUtil().cloneWorld("duelMap1", worldName);
+        if (duel == null) {
+            duel = this;
 
-        new BukkitRunnable() {
-            public void run() {
-                begin();
-            }
-        }.runTaskLater(Tazpvp.getInstance(), 20*2L);
+            populateLists();
+            new BukkitRunnable() {
+                public void run() {
+                    begin();
+                }
+            }.runTaskLater(Tazpvp.getInstance(), 20*2L);
+        }
     }
 
     public void begin() {
-        World world = Bukkit.getWorld(worldName);
-
-        List<UUID> duelers = DUELERS;
-
         Player p1 = Bukkit.getPlayer(duelers.get(0));
         Player p2 = Bukkit.getPlayer(duelers.get(1));
 
         if (p1 == null || p2 == null) return;
 
-        initPlayer(p1);
-        initPlayer(p2);
-
-        PlayerHelper.teleport(p1, new Location(world, 0.5, 10, 14.5, 180, 0));
-        PlayerHelper.teleport(p2, new Location(world, 0.5, 10, -13.5, 0, 0));
-
-        duelers.forEach(this::addItems);
+        int i = 0;
+        for (UUID id : this.duelers) {
+            Player p = Bukkit.getPlayer(id);
+            if (p == null) continue;
+            initPlayer(p);
+            PlayerHelper.teleport(p1, locations.get(i));
+            addItems(p.getInventory());
+            i++;
+        }
 
         setStarting(true);
 
@@ -162,12 +153,10 @@ public abstract class Duel {
             pLoser.setGameMode(GameMode.SPECTATOR);
         }
 
-        final Duel duel = this;
-
         new BukkitRunnable() {
             public void run() {
 
-                DUELERS.forEach(id -> {
+                duelers.forEach(id -> {
                     Player p = Bukkit.getPlayer(id);
                     if (p == null) return;
                     ArmorManager.setPlayerContents(p, true);
@@ -177,8 +166,7 @@ public abstract class Duel {
                     PlayerHelper.resetHealth(p);
                 });
 
-                new WorldUtil().deleteWorld(getWorldName());
-                duelsList.remove(duel);
+                duel = null;
             }
         }.runTaskLater(Tazpvp.getInstance(), 20*5);
 
@@ -186,26 +174,20 @@ public abstract class Duel {
     }
 
     public void abort() {
-        DUELERS.forEach(p -> {
-            Player plr = Bukkit.getPlayer(p);
-            if (plr != null) {
-                PlayerHelper.teleport(plr, NRCore.config.spawn);
-                ArmorManager.setPlayerContents(plr, true);
-            }
-        });
-
-        new WorldUtil().deleteWorld(getWorldName());
-        duelsList.remove(this);
+        for (UUID id : duelers) {
+            Player plr = Bukkit.getPlayer(id);
+            if (plr == null) continue;
+            PlayerHelper.teleport(plr, NRCore.config.spawn);
+            ArmorManager.setPlayerContents(plr, true);
+        }
+        duel = null;
     }
 
-    public abstract void addItems(UUID id);
+    public abstract void addItems(PlayerInventory inventory);
 
     public UUID getOtherDueler(final UUID id) {
         return (P1.equals(id) ? P2 : P1);
     }
-
-    public final static ConcurrentHashMap<UUID, Duel> duels = new ConcurrentHashMap<>();
-    public final static List<Duel> duelsList = new ArrayList<>();
 
     private void initPlayer(final Player p) {
         ArmorManager.storeAndClearInventory(p);
@@ -214,5 +196,15 @@ public abstract class Duel {
         p.sendMessage(CC.BOLD + "" + CC.GOLD + "The duel will begin in 5 seconds.");
         p.setGameMode(GameMode.SURVIVAL);
         Tazpvp.getObservers().forEach(observer -> observer.duel(p));
+    }
+
+    private void populateLists() {
+        World world = Bukkit.getWorld("arena");
+
+        duelers.add(P1);
+        duelers.add(P2);
+
+        locations.add(new Location(world, 0.5, 10, 14.5, 180, 0));
+        locations.add(new Location(world, 0.5, 10, -13.5, 0, 0));
     }
 }

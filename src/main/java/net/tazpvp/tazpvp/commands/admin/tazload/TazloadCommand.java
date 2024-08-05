@@ -19,7 +19,8 @@ public class TazloadCommand extends NRCommand {
 
             tazloading = true;
             Bukkit.broadcastMessage("Server reloading");
-            for (Duel duel : Duel.duelsList) {
+            Duel duel = Duel.getDuel();
+            if (duel != null) {
                 duel.abort();
             }
             return true;
