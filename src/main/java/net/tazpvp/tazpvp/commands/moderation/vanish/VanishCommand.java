@@ -5,6 +5,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.helpers.CombatTagHelper;
+import net.tazpvp.tazpvp.helpers.PlayerHelper;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -56,7 +57,7 @@ public class VanishCommand extends NRCommand {
             p.sendMessage(CC.LIGHT_PURPLE + "You are no longer in vanish.");
             p.setFlying(false);
             p.setAllowFlight(false);
-            p.teleport(NRCore.config.spawn);
+            PlayerHelper.teleport(p, NRCore.config.spawn);
             for (Player op : Bukkit.getOnlinePlayers()) {
                 op.showPlayer(Tazpvp.getInstance(), p);
             }
@@ -65,7 +66,7 @@ public class VanishCommand extends NRCommand {
             p.setAllowFlight(true);
             p.setFlying(true);
             p.sendMessage(CC.LIGHT_PURPLE + "You are now in vanish.");
-            p.teleport(NRCore.config.spawn);
+            PlayerHelper.teleport(p, NRCore.config.spawn);
             for (Player op : Bukkit.getOnlinePlayers()) {
                 if (!op.hasPermission(getLabel().getPermission())) {
                     op.hidePlayer(Tazpvp.getInstance(), p);

@@ -71,7 +71,7 @@ public class JoinListener implements Listener {
         BanHelper.checkBan(p);
 
         if (!p.getWorld().getName().equalsIgnoreCase("arena")) {
-            p.teleport(NRCore.config.spawn);
+            PlayerHelper.teleport(p, NRCore.config.spawn);
         }
 
         CombatObject.tags.put(id, new CombatObject(id));

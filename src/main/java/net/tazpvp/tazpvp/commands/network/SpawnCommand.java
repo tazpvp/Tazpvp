@@ -5,6 +5,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.game.duels.Duel;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.helpers.CombatTagHelper;
+import net.tazpvp.tazpvp.helpers.PlayerHelper;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -42,7 +43,7 @@ public class SpawnCommand extends NRCommand {
         }
 
         if (p.hasPermission("tazpvp.spawn")) {
-            p.teleport(NRCore.config.spawn);
+            PlayerHelper.teleport(p, NRCore.config.spawn);
         } else {
             p.sendMessage(CC.DARK_AQUA + "Teleportation to spawn will start in 5 seconds. Please do not move.");
             p.setMetadata("spawnTeleport", new FixedMetadataValue(Tazpvp.getInstance(), true));
@@ -51,7 +52,7 @@ public class SpawnCommand extends NRCommand {
                 public void run() {
                     if (p.hasMetadata("spawnTeleport")) {
                         p.removeMetadata("spawnTeleport", Tazpvp.getInstance());
-                        p.teleport(NRCore.config.spawn);
+                        PlayerHelper.teleport(p, NRCore.config.spawn);
                     } else {
                         cancel();
                     }

@@ -34,6 +34,7 @@ package net.tazpvp.tazpvp.game.events.types;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.game.events.Event;
+import net.tazpvp.tazpvp.helpers.PlayerHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import world.ntdi.nrcore.utils.world.WorldUtil;
@@ -55,7 +56,7 @@ public class FFA extends Event {
         Bukkit.getServer().getScheduler().runTaskLater(Tazpvp.getInstance(), ()-> {
             Location loc = new Location(Bukkit.getWorld(getUuid().toString()+"-ffa"), 8, -60, 8);
             for (UUID uuid : Event.currentEvent.getParticipantList()) {
-                Bukkit.getPlayer(uuid).teleport(loc);
+                PlayerHelper.teleport(Bukkit.getPlayer(uuid), loc);
             }
         }, 5*20);
     }

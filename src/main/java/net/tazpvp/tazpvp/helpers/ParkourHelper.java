@@ -41,7 +41,7 @@ public class ParkourHelper {
     public static void getCheckpoint(Player p)  {
         for (int i = 1; i < Tazpvp.getParkourUtil().getConfigurationSection("checkpoints").getValues(false).size(); i++) {
             if (p.getLocation().getX() <= Tazpvp.getParkourUtil().getInt("checkpoints." + i + ".check")) {
-                p.teleport(teleportCheckpoint(i, p));
+                PlayerHelper.teleport(p, teleportCheckpoint(i, p));
                 return;
             }
         }

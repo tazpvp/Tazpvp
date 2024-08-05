@@ -87,8 +87,8 @@ public class Classic extends Duel {
         initPlayer(p1);
         initPlayer(p2);
 
-        p1.teleport(new Location(world, 0.5, 10, 14.5, 180, 0));
-        p2.teleport(new Location(world, 0.5, 10, -13.5, 0, 0));
+        PlayerHelper.teleport(p1, new Location(world, 0.5, 10, 14.5, 180, 0));
+        PlayerHelper.teleport(p2, new Location(world, 0.5, 10, -13.5, 0, 0));
 
         duelers.forEach(this::addItems);
 

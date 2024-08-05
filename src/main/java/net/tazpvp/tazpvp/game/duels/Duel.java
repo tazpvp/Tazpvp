@@ -131,7 +131,7 @@ public abstract class Duel {
                     if (p == null) return;
                     ArmorManager.setPlayerContents(p, true);
                     p.setGameMode(GameMode.SURVIVAL);
-                    p.teleport(NRCore.config.spawn);
+                    PlayerHelper.teleport(p, NRCore.config.spawn);
                     PlayerWrapper.getPlayer(p).setDuel(null);
                     PlayerHelper.resetHealth(p);
                 });
@@ -148,7 +148,7 @@ public abstract class Duel {
         DUELERS.forEach(p -> {
             Player plr = Bukkit.getPlayer(p);
             if (plr != null) {
-                plr.teleport(NRCore.config.spawn);
+                PlayerHelper.teleport(plr, NRCore.config.spawn);
                 ArmorManager.setPlayerContents(plr, true);
             }
         });
@@ -169,7 +169,7 @@ public abstract class Duel {
         this.SPECTATORS.add(uuid);
 
         player.setGameMode(GameMode.SPECTATOR);
-        player.teleport(new Location(Bukkit.getWorld(getWorldName()), 0.5, 6, 0.5));
+        PlayerHelper.teleport(player, new Location(Bukkit.getWorld(getWorldName()), 0.5, 6, 0.5));
 
         for (UUID uuid1 : getDUELERS()) {
             final Player dueler = Bukkit.getPlayer(uuid1);
@@ -192,7 +192,7 @@ public abstract class Duel {
         final UUID uuid = player.getUniqueId();
         this.SPECTATORS.remove(uuid);
 
-        player.teleport(NRCore.config.spawn);
+        PlayerHelper.teleport(player, NRCore.config.spawn);
         player.setGameMode(GameMode.SURVIVAL);
 
         final PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(player);
