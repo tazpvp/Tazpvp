@@ -43,7 +43,6 @@ public class PlayerNameTagServiceImpl implements PlayerNameTagService {
         if (textDisplay != null) {
             return textDisplay.getText();
         }
-
         return null;
     }
 
@@ -86,7 +85,7 @@ public class PlayerNameTagServiceImpl implements PlayerNameTagService {
         TextDisplay textDisplay = uuidItemDisplayMap.get(player.getUniqueId());
 
         if (textDisplay != null) {
-            textDisplay.setText(ChatHelper.getRankingPrefix(player));
+            textDisplay.setText(ChatHelper.getRankingPrefix(player) + "/n");
         }
     }
 
