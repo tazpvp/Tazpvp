@@ -47,9 +47,7 @@ public class DuelSendCommand extends NRCommand {
             p.sendMessage( Duel.prefix + "You cannot use this command while in combat.");
             return true;
         }
-        if (PlayerWrapper.getPlayer(p).getSpectating() != null) {
-            return true;
-        }
+
         if (TazloadCommand.tazloading) {
             p.sendMessage(Duel.prefix + "This feature is disabled while the server is reloading.");
             return true;

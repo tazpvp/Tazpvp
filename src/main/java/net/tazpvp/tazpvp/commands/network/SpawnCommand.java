@@ -37,11 +37,6 @@ public class SpawnCommand extends NRCommand {
             return true;
         }
 
-        if (PlayerWrapper.getPlayer(p).getSpectating() != null) {
-            final Duel duel = PlayerWrapper.getPlayer(p).getSpectating();
-            duel.removeSpectator(p);
-        }
-
         if (p.hasPermission("tazpvp.spawn")) {
             PlayerHelper.teleport(p, NRCore.config.spawn);
         } else {

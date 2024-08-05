@@ -58,7 +58,6 @@ public class PlayerWrapper {
     @Setter private long timeSinceAfk;
     @Setter private List<Material> blocksPlaced;
     @Setter private String lastMessageSent;
-    @Setter private Duel spectating;
     @Setter private boolean vanished;
     @Setter private boolean staffChatActive;
     @Setter private TeamObject eventTeam;
@@ -78,7 +77,6 @@ public class PlayerWrapper {
         this.timeOfLaunch = 0;
         this.blocksPlaced = new ArrayList<>();
         this.lastMessageSent = "";
-        this.spectating = null;
         this.staffChatActive = false;
 
         this.userRankService = new UserRankServiceImpl();

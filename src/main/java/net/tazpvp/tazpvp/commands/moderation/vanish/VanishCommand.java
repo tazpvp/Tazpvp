@@ -36,11 +36,6 @@ public class VanishCommand extends NRCommand {
             return true;
         }
 
-        if (PlayerWrapper.getPlayer(p).getSpectating() != null) {
-            p.sendMessage(CC.RED + "You cannot use this command while spectating.");
-            return true;
-        }
-
         if (CombatTagHelper.isInCombat(p.getUniqueId())) {
             p.sendMessage( CC.RED + "You cannot use this command while in combat.");
             return true;

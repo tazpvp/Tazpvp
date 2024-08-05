@@ -81,11 +81,6 @@ public class LeaveListener implements Listener {
 
         final PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(p);
 
-        if (playerWrapper.getSpectating() != null) {
-            final Duel duel = playerWrapper.getSpectating();
-            duel.removeSpectator(p);
-        }
-
         if (playerWrapper.getDuel() != null) {
             playerWrapper.getDuel().end(id);
         }

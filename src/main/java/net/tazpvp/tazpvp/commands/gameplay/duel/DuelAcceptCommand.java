@@ -33,11 +33,6 @@ public class DuelAcceptCommand extends NRCommand {
             return true;
         }
 
-        if (pw.getSpectating() != null) {
-            p.sendMessage(Duel.prefix + "You cannot use this command while spectating.");
-            return true;
-        }
-
         if (CombatTagHelper.isInCombat(p.getUniqueId())) {
             p.sendMessage( Duel.prefix + "You cannot use this command while in combat.");
             return true;
