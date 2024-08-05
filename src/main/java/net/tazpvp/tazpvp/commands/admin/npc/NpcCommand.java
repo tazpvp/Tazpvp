@@ -33,8 +33,8 @@
 package net.tazpvp.tazpvp.commands.admin.npc;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.game.npc.characters.enchanter.Caesar;
 import net.tazpvp.tazpvp.game.npc.characters.achievements.Lorenzo;
+import net.tazpvp.tazpvp.game.npc.characters.enchanter.Caesar;
 import net.tazpvp.tazpvp.game.npc.characters.guildmaster.Rigel;
 import net.tazpvp.tazpvp.game.npc.characters.shop.Maxim;
 import org.bukkit.command.CommandSender;

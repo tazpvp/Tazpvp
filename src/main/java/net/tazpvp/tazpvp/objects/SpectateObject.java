@@ -1,7 +1,6 @@
 package net.tazpvp.tazpvp.objects;
 
 import lombok.Getter;
-import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.helpers.PlayerHelper;
 import org.bukkit.Location;
 import org.bukkit.Material;

@@ -1,8 +1,6 @@
 package net.tazpvp.tazpvp.game.npc.characters.enchanter.gui;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
-import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.helpers.BlockHelper;

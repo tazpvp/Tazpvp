@@ -34,9 +34,7 @@ package net.tazpvp.tazpvp.game.npc.characters.guildmaster.gui;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.GuildEntity;
-import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.GuildService;
-import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.enums.StatEnum;
 import net.wesjd.anvilgui.AnvilGUI;
@@ -48,7 +46,9 @@ import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 public class GuildMenu extends GUI {
 

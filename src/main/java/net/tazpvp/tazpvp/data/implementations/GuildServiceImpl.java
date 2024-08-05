@@ -3,21 +3,17 @@ package net.tazpvp.tazpvp.data.implementations;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.dao.ForeignCollection;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.entity.GameRankEntity;
 import net.tazpvp.tazpvp.data.entity.GuildEntity;
 import net.tazpvp.tazpvp.data.entity.GuildMemberEntity;
 import net.tazpvp.tazpvp.data.services.GuildMemberService;
 import net.tazpvp.tazpvp.data.services.GuildService;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 

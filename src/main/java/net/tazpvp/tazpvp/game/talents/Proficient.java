@@ -32,10 +32,7 @@
 
 package net.tazpvp.tazpvp.game.talents;
 
-import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.entity.TalentEntity;
-import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;

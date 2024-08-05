@@ -4,12 +4,9 @@ import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import world.ntdi.nrcore.utils.command.simple.Completer;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class StatCommand extends NRCommand {

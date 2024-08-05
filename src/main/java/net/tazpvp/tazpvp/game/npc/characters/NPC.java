@@ -34,9 +34,9 @@ package net.tazpvp.tazpvp.game.npc.characters;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.game.npc.dialogue.Dialogues;
 import net.tazpvp.tazpvp.utils.PDCUtil;
-import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;

@@ -1,8 +1,8 @@
 package net.tazpvp.tazpvp.game.bosses.zorg.attacks;
 
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.game.bosses.CustomBoss;
 import net.tazpvp.tazpvp.game.bosses.attacks.Attack;
-import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;

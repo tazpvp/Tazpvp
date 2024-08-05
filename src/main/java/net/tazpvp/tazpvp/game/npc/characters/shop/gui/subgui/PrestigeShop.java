@@ -1,17 +1,13 @@
 package net.tazpvp.tazpvp.game.npc.characters.shop.gui.subgui;
 
-import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.data.implementations.TalentServiceImpl;
-import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.data.services.TalentService;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.enums.ItemEnum;
-import net.tazpvp.tazpvp.enums.ScoreboardEnum;
 import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
 import net.tazpvp.tazpvp.helpers.PlayerHelper;
-import net.tazpvp.tazpvp.helpers.ScoreboardHelper;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Material;
 import org.bukkit.Sound;

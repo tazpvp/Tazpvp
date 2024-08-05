@@ -34,9 +34,9 @@
 package net.tazpvp.tazpvp.game.crates;
 
 import lombok.Getter;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.enums.ItemEnum;
 import net.tazpvp.tazpvp.game.crates.gui.Preview;
-import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -46,10 +46,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import world.ntdi.nrcore.utils.holograms.Hologram;
-import world.ntdi.postglam.data.Tuple;
 
 import java.util.List;
-import java.util.Random;
 
 public class Crate {
     @Getter

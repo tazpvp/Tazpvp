@@ -1,12 +1,9 @@
 package net.tazpvp.tazpvp.commands.gameplay.event.gui;
 
-import net.tazpvp.tazpvp.data.entity.GuildEntity;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.game.events.EventObject;
-import net.tazpvp.tazpvp.game.events.TeamObject;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;

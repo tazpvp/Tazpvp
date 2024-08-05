@@ -1,8 +1,5 @@
 package net.tazpvp.tazpvp.data;
 
-import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
-import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.enums.StatEnum;
 
 import java.text.DecimalFormat;

@@ -33,9 +33,7 @@
 package net.tazpvp.tazpvp.game.npc.characters.shop.gui.subgui;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.entity.TalentEntity;
-import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.enums.TalentEnum;

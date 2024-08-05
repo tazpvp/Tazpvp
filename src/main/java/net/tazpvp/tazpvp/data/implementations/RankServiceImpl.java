@@ -3,7 +3,6 @@ package net.tazpvp.tazpvp.data.implementations;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.Rank;
 import net.tazpvp.tazpvp.data.entity.RankEntity;
 import net.tazpvp.tazpvp.data.services.RankService;
 

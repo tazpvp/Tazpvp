@@ -32,11 +32,10 @@
 
 package net.tazpvp.tazpvp.game.npc.characters.enchanter;
 
-import net.tazpvp.tazpvp.data.services.PlayerStatService;
+import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.game.npc.characters.NPC;
 import net.tazpvp.tazpvp.game.npc.characters.enchanter.gui.Upgrade;
 import net.tazpvp.tazpvp.game.npc.dialogue.Dialogues;
-import net.tazpvp.tazpvp.game.npc.characters.NPC;
-import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.helpers.BlockHelper;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
 import org.bukkit.Bukkit;

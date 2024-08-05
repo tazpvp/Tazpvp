@@ -6,7 +6,6 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scoreboard.Team;
 
 import java.util.ArrayList;
 import java.util.List;

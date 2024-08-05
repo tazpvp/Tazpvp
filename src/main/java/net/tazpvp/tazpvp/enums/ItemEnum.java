@@ -8,7 +8,6 @@ import org.bukkit.inventory.ItemStack;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 

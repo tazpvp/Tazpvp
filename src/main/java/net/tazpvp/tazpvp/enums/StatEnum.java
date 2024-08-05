@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
+
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;

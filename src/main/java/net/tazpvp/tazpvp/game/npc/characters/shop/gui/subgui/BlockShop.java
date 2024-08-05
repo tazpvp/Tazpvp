@@ -1,9 +1,7 @@
 package net.tazpvp.tazpvp.game.npc.characters.shop.gui.subgui;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.entity.UserRankEntity;
-import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.data.services.UserRankService;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.enums.ItemEnum;

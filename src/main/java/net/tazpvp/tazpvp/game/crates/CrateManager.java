@@ -34,21 +34,11 @@
 package net.tazpvp.tazpvp.game.crates;
 
 import lombok.Getter;
-import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
-import net.tazpvp.tazpvp.data.services.PlayerStatService;
-import net.tazpvp.tazpvp.enums.ItemEnum;
 import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Item;
-import org.bukkit.inventory.ItemStack;
-import world.ntdi.nrcore.utils.item.builders.EnchantmentBookBuilder;
-import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import java.util.ArrayList;
 import java.util.List;

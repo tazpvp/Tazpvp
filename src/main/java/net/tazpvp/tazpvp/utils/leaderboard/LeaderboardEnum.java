@@ -3,7 +3,6 @@ package net.tazpvp.tazpvp.utils.leaderboard;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
-import org.checkerframework.common.value.qual.ArrayLen;
 
 import java.util.function.Function;
 

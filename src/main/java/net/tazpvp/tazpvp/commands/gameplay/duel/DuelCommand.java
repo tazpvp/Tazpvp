@@ -21,6 +21,5 @@ public class DuelCommand extends NRCommand {
 
         addSubcommand(new DuelSendCommand());
         addSubcommand(new DuelAcceptCommand());
-        addSubcommand(new DuelSpectateCommand());
     }
 }

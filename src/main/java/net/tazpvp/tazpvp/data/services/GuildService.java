@@ -4,11 +4,7 @@ import com.j256.ormlite.dao.Dao;
 import net.tazpvp.tazpvp.data.DataService;
 import net.tazpvp.tazpvp.data.entity.GuildEntity;
 import net.tazpvp.tazpvp.data.entity.GuildMemberEntity;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 
-import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 

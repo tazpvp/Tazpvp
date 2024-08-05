@@ -1,8 +1,6 @@
 package net.tazpvp.tazpvp.game.achievements;
 
-import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.AchievementEntity;
-import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
 import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.helpers.ChatHelper;

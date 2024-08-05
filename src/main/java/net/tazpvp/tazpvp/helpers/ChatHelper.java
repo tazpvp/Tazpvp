@@ -33,9 +33,6 @@
 package net.tazpvp.tazpvp.helpers;
 
 import net.md_5.bungee.api.ChatColor;
-import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
-import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.enums.ScoreboardEnum;
 import net.tazpvp.tazpvp.enums.StatEnum;
@@ -46,7 +43,6 @@ import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
-import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

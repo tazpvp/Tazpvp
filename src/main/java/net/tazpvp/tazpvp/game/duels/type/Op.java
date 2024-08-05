@@ -1,5 +1,6 @@
 package net.tazpvp.tazpvp.game.duels.type;
 
+import net.tazpvp.tazpvp.game.duels.Duel;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -8,9 +9,10 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
-public class Op extends Classic {
+public class Op extends Duel {
     public Op(final UUID P1, final UUID P2) {
-        super(P1, P2);
+        super(P1, P2, "op");
+        super.setWorldName("duel_" + UUID.randomUUID());
     }
 
     @Override

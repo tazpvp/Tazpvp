@@ -13,16 +13,15 @@ import net.tazpvp.tazpvp.data.services.GuildService;
 import net.tazpvp.tazpvp.data.services.TalentService;
 import net.tazpvp.tazpvp.data.services.UserAchievementService;
 import net.tazpvp.tazpvp.data.services.UserRankService;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.game.duels.Duel;
 import net.tazpvp.tazpvp.game.events.TeamObject;
 import net.tazpvp.tazpvp.game.npc.characters.NPC;
 import net.tazpvp.tazpvp.utils.PlayerNameTag;
-import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
-import org.bukkit.scoreboard.Team;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;

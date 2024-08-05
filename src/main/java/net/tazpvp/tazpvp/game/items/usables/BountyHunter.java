@@ -1,8 +1,8 @@
 package net.tazpvp.tazpvp.game.items.usables;
 
 import net.tazpvp.tazpvp.data.LooseData;
-import net.tazpvp.tazpvp.game.items.UsableItem;
 import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.game.items.UsableItem;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

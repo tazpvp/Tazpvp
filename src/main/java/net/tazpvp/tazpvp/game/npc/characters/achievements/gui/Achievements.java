@@ -34,9 +34,9 @@ package net.tazpvp.tazpvp.game.npc.characters.achievements.gui;
 
 import net.tazpvp.tazpvp.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
-import net.tazpvp.tazpvp.game.crates.KeyFactory;
-import net.tazpvp.tazpvp.enums.StaticItems;
 import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.enums.StaticItems;
+import net.tazpvp.tazpvp.game.crates.KeyFactory;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Material;
 import org.bukkit.Sound;

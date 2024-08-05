@@ -1,7 +1,7 @@
 package net.tazpvp.tazpvp.helpers;
 
-import net.tazpvp.tazpvp.wrappers.EnchantWrapper;
 import net.tazpvp.tazpvp.enums.EnchantEnum;
+import net.tazpvp.tazpvp.wrappers.EnchantWrapper;
 import org.bukkit.enchantments.Enchantment;
 
 import java.lang.reflect.Field;

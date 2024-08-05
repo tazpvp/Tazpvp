@@ -5,7 +5,6 @@ import net.tazpvp.tazpvp.data.DataService;
 import net.tazpvp.tazpvp.data.entity.GuildEntity;
 import net.tazpvp.tazpvp.data.entity.GuildMemberEntity;
 
-import java.sql.SQLException;
 import java.util.UUID;
 
 public interface GuildMemberService extends DataService {

@@ -34,12 +34,10 @@ package net.tazpvp.tazpvp.game.npc.characters.guildmaster.gui;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.GuildEntity;
-import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.services.GuildService;
-import net.tazpvp.tazpvp.data.services.PlayerStatService;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.utils.Profanity;
-import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.ChatColor;

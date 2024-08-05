@@ -1,11 +1,9 @@
 package net.tazpvp.tazpvp.helpers;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
-import net.tazpvp.tazpvp.data.services.PlayerStatService;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.game.crates.KeyFactory;
-import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
