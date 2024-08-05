@@ -4,8 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.helpers.PlayerHelper;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import world.ntdi.nrcore.NRCore;
+import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,18 +53,13 @@ public class EventObject {
 
     private void addParticipant(TeamObject team) {
         if (team.getMembers().size() != teamSizeCap) {
-            for (Player p : team.getMembers()) {
-                if (p.isOnline()) {
-                    p.sendMessage(CC.RED + "You cannot join this event. You are only allowed " + teamSizeCap + " total team members for this event.");
-                }
-            }
+            team.sendAll(CC.RED + "You cannot join this event. You are only allowed " + teamSizeCap + " total team members for this event.");
         } else {
             participantList.add(team);
-            for (Player p : team.getMembers()) {
-                if (p.isOnline()) {
-                    p.sendMessage(CC.GREEN +  "You have entered the event.");
-                    //teleport team to event
-                }
+            List<Player> members = team.getOnlineMembers();
+            team.sendAll(CC.GREEN +  "You have entered the event.");
+            for (Player p : members) {
+                PlayerHelper.teleport(p, NRCore.config.spawn);
             }
         }
         participantList.add(team);
