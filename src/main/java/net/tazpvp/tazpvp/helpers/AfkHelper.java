@@ -14,7 +14,7 @@ import java.util.Random;
 
 public class AfkHelper {
 
-    public static void setup() {
+    public static void initialize() {
         final Random random = new Random();
         new BukkitRunnable() {
             @Override

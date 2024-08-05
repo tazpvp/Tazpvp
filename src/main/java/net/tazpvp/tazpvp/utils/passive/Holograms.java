@@ -24,7 +24,7 @@ public class Holograms {
             ChatHelper.gradient("#8fff17", "AFK PIT", true),
             ChatHelper.gradient("#8fff17", "1x Key Rewards", true),
     };
-    public static void holograms() {
+    public static void initialize() {
         holograms.add(
                 new Hologram(new Location(Bukkit.getWorld("arena"), 0.5, 99, 26.5), false, welcome)
         );

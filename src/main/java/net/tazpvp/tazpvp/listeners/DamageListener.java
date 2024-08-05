@@ -65,7 +65,7 @@ public class DamageListener implements Listener {
             return;
         }
 
-        final PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(victim);
+        final PlayerWrapper victimWrapper = PlayerWrapper.getPlayer(victim);
 
         if (Tazpvp.spawnRegion.contains(victim.getLocation())) {
             event.setCancelled(true);
@@ -75,27 +75,27 @@ public class DamageListener implements Listener {
         double finalDamage = event.getFinalDamage();
         boolean isFallingDamage = (event.getCause() == EntityDamageEvent.DamageCause.FALL);
 
-        if (!playerWrapper.isLaunching() && compare(event, isFallingDamage)) {
+        if (!victimWrapper.isLaunching() && compare(event, isFallingDamage)) {
             return;
         }
 
-        if (playerWrapper.isVanished()) {
+        if (victimWrapper.isVanished()) {
             event.setCancelled(true);
             return;
         }
 
-        UUID victimID = victim.getUniqueId();
-
-        if (Event.currentEvent != null && Event.currentEvent.getParticipantList().contains(victimID)) {
-            if ((victim.getHealth() - finalDamage) <= 0) {
-                event.setCancelled(true);
-                victim.setGameMode(GameMode.SPECTATOR);
-                victim.sendTitle(CC.RED + "" + CC.BOLD + "YOU DIED", CC.RED + "" + CC.BOLD + "DISQUALIFIED", 1, 1, 1);
-                Event.currentEvent.removeAliveList(victimID);
-                Event.currentEvent.checkIfGameOver();
-                return;
-            }
-        }
+//        UUID victimID = victim.getUniqueId();
+//
+//        if (Event.currentEvent != null && Event.currentEvent.getParticipantList().contains(victimID)) {
+//            if ((victim.getHealth() - finalDamage) <= 0) {
+//                event.setCancelled(true);
+//                victim.setGameMode(GameMode.SPECTATOR);
+//                victim.sendTitle(CC.RED + "" + CC.BOLD + "YOU DIED", CC.RED + "" + CC.BOLD + "DISQUALIFIED", 1, 1, 1);
+//                Event.currentEvent.removeAliveList(victimID);
+//                Event.currentEvent.checkIfGameOver();
+//                return;
+//            }
+//        }
 
         if (event.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION || event.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION) {
             event.setCancelled(true);
@@ -119,17 +119,21 @@ public class DamageListener implements Listener {
     private void handleEntityDamageByEntity(Player victim, EntityDamageByEntityEvent event, double finalDamage) {
         if (event.getDamager() instanceof Player killer) {
             final PlayerWrapper killerWrapper = PlayerWrapper.getPlayer(killer);
+
             if (killerWrapper.isVanished()) {
                 event.setCancelled(true);
                 return;
             }
+
             checkDeath(victim.getUniqueId(), killer.getUniqueId(), event, finalDamage);
             ItemStack weapon = killer.getInventory().getItemInMainHand();
+
             if (UsableItem.getCustomItem(weapon) != null) {
                 UsableItem item = UsableItem.getCustomItem(weapon);
                 if (item == null) return;
                 item.onLeftClick(killer, weapon, victim);
             }
+
         } else if (event.getDamager() instanceof Arrow arrow) {
             if (arrow.getShooter() instanceof Player pShooter) {
                 checkDeath(victim.getUniqueId(), pShooter.getUniqueId(), event, finalDamage);
@@ -164,7 +168,6 @@ public class DamageListener implements Listener {
         }
 
         CombatTagHelper.putInCombat(victim, killer);
-
 
         if ((pVictim.getHealth() - finalDamage) <= 0) {
             event.setCancelled(true);

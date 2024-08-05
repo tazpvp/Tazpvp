@@ -43,9 +43,9 @@ import java.util.LinkedList;
 public class Alerts {
 
     private static int num = 0;
-    private static String prefix = "&8(&c!&8) &7";
+    private static final String prefix = "&8(&c!&8) &7";
 
-    private static LinkedList<String> texts = new LinkedList<>(Arrays.asList(
+    private static final LinkedList<String> texts = new LinkedList<>(Arrays.asList(
             "Join our fun community: &3/discord",
             "Check out what you can do with premium! &3/premium",
             "Looking to apply for staff? &3/apply",
@@ -55,11 +55,11 @@ public class Alerts {
             "Died to a cheater? type &3/discord &7and ask for an inventory restore."
     ));
 
-    public static void alert() {
+    public static void initialize() {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (Bukkit.getOnlinePlayers().size() > 0) {
+                if (!Bukkit.getOnlinePlayers().isEmpty()) {
                     Bukkit.broadcastMessage(ChatUtils.chat(prefix + texts.get(num)));
                     num++;
                     if (num  >= texts.size()) num = 0;

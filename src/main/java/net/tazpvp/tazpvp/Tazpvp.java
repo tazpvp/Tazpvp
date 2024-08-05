@@ -74,7 +74,6 @@ import net.tazpvp.tazpvp.game.achievements.*;
 import net.tazpvp.tazpvp.game.bosses.BossManager;
 import net.tazpvp.tazpvp.game.bosses.zorg.Zorg;
 import net.tazpvp.tazpvp.game.crates.CrateManager;
-import net.tazpvp.tazpvp.game.events.Event;
 import net.tazpvp.tazpvp.game.items.UsableItem;
 import net.tazpvp.tazpvp.game.npc.characters.NPC;
 import net.tazpvp.tazpvp.game.npc.characters.achievements.Lorenzo;
@@ -170,15 +169,14 @@ public final class Tazpvp extends JavaPlugin {
         registerCommands();
         playerStatService = new PlayerStatServiceImpl();
         playerNameTagService = new PlayerNameTagServiceImpl(this);
-        Generator.generate();
-        Holograms.holograms();
-        Alerts.alert();
-        Event.eventTypes.add("FFA");
+        Generator.initialize();
+        Holograms.initialize();
+        Alerts.initialize();
         registerObservable();
         EnchantHelper.register();
         spawnNpcs();
         CombatTagHelper.initCombatTag();
-        AfkHelper.setup();
+        AfkHelper.initialize();
         UsableItem.registerCustomItems();
 
         parkourUtil = new ConfigUtil("parkour.yml", this);
@@ -187,16 +185,15 @@ public final class Tazpvp extends JavaPlugin {
                 new Location(Bukkit.getWorld("arena"), 25, 137, -31),
                 new Location(Bukkit.getWorld("arena"), -24, 93, 25)
         );
+
         afkRegion = new Cuboid(
                 new Location(Bukkit.getWorld("arena"), 16, 98, 9),
                 new Location(Bukkit.getWorld("arena"), 11, 95, 4)
         );
 
         crateManager = new CrateManager();
-
         botThread = new BotThread(getConfig().getString("bot-token"));
         botThread.start();
-
         spawnableLeaderboardManager = new SpawnableLeaderboardManager(this);
     }
 

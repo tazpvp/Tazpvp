@@ -52,7 +52,7 @@ public class Generator {
             new Location(Bukkit.getWorld("arena"), -24.5, 91, 76.5)
     );
 
-    public static void generate() {
+    public static void initialize() {
         new BukkitRunnable() {
             @Override
             public void run() {
