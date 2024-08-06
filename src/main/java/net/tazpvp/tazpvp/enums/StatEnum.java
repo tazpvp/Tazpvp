@@ -61,16 +61,11 @@ public enum StatEnum {
     }
 
     public void set(UUID id, Number value) {
-        CompletableFuture.runAsync(() -> {
-            if (scoreboardEnum != null) {
-                playerStatService.set(id, value, set, scoreboardEnum);
-            } else {
-                playerStatService.set(id, value, set);
-            }
-        }).exceptionally(throwable -> {
-            throwable.printStackTrace();
-            return null;
-        });
+        if (scoreboardEnum != null) {
+            playerStatService.set(id, value, set, scoreboardEnum);
+        } else {
+            playerStatService.set(id, value, set);
+        }
     }
 
     public int getInt(UUID id) {
