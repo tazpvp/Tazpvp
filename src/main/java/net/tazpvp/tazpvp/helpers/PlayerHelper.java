@@ -47,6 +47,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -58,9 +59,14 @@ import java.util.UUID;
 
 public class PlayerHelper {
 
-    private static PlayerNameTagService playerNameTagService = Tazpvp.getInstance().getPlayerNameTagService();
+    private static final PlayerNameTagService playerNameTagService = Tazpvp.getInstance().getPlayerNameTagService();
     private static Double getMaxHealth(Player p) {
-        return p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
+        AttributeInstance max = p.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        if (max == null) {
+            return 20.0;
+        } else {
+            return max.getBaseValue();
+        }
     }
 
 
@@ -135,7 +141,7 @@ public class PlayerHelper {
 
     public static void levelUp(UUID ID) {
         Player p = Bukkit.getPlayer(ID);
-        float value = StatEnum.XP.getInt(ID) - LooseData.getExpLeft(p.getUniqueId());
+        float value = StatEnum.XP.getInt(ID) - LooseData.getExpLeft(ID);
         if (p == null) return;
         if (value >= LooseData.getExpLeft(ID)) {
             final BoosterBonus coinsBonus = ActiveBoosterManager.getInstance()

@@ -46,12 +46,12 @@ public enum ItemEnum {
     EFFICIENCY(Enchantment.EFFICIENCY, "Efficiency", "Break blocks faster.", 2),
     DEPTH_STRIDER(Enchantment.DEPTH_STRIDER, "Depth Strider", "Walk faster in water.", 1),
 
-    KIT_HELMET(Material.DIAMOND_HELMET, "Helmet"),
-    KIT_CHESTPLATE(Material.DIAMOND_CHESTPLATE, "Chestplate"),
-    KIT_LEGGINGS(Material.DIAMOND_LEGGINGS, "Leggings"),
-    KIT_BOOTS(Material.DIAMOND_BOOTS, "Boots"),
+    KIT_HELMET(Material.NETHERITE_HELMET, "Helmet"),
+    KIT_CHESTPLATE(Material.NETHERITE_CHESTPLATE, "Chestplate"),
+    KIT_LEGGINGS(Material.NETHERITE_LEGGINGS, "Leggings"),
+    KIT_BOOTS(Material.NETHERITE_BOOTS, "Boots"),
 
-    KIT_SWORD(Material.DIAMOND_SWORD, "Sword"),
+    KIT_SWORD(Material.NETHERITE_SWORD, "Sword"),
     KIT_BOW(Material.BOW, "Bow"),
     KIT_PICKAXE(Material.STONE_PICKAXE, "Pickaxe"),
     KIT_CROSSBOW(Material.CROSSBOW, "Crossbow");

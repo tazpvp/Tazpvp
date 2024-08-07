@@ -132,22 +132,25 @@ public class ChatListener implements Listener {
 
         String format = "&GOLD{RANK} &GRAY[{LEVEL}&GRAY] {PREFIX} %s{SUFFIX} &GRAY&M%s";
 
+        String rank = ChatHelper.hexColor("#FFBE28", ChatHelper.getRankingPrefix(p), false);
+        String level = StatEnum.LEVEL.getInt(uuid) + "";
+
         if (pw.getRankPrefix() == null) {
             String tempFormat = "&GOLD{RANK} &GRAY{RANK} [{LEVEL}&GRAY] %s{SUFFIX} &GRAY&M%s";
             format = tempFormat
                     .replace("&GRAY", CC.GRAY.toString())
                     .replace("&GOLD", CC.YELLOW.toString())
                     .replace("&M", CC.WHITE.toString())
-                    .replace("{RANK}", ChatHelper.getRankingPrefix(p) + "")
-                    .replace("{LEVEL}", StatEnum.LEVEL.getInt(uuid) + "")
+                    .replace("{RANK}", rank)
+                    .replace("{LEVEL}", level)
                     .replace("{SUFFIX}", pw.getGuildTag().toUpperCase());
         } else {
             format = format
                     .replace("&GRAY", CC.GRAY.toString())
                     .replace("&GOLD", CC.YELLOW.toString())
                     .replace("&M", CC.WHITE.toString())
-                    .replace("{RANK}", ChatHelper.getRankingPrefix(p) + "")
-                    .replace("{LEVEL}", StatEnum.LEVEL.getInt(uuid) + "")
+                    .replace("{RANK}", rank)
+                    .replace("{LEVEL}", level)
                     .replace("{PREFIX}", CC.trans(pw.getRankPrefix()))
                     .replace("{SUFFIX}", pw.getGuildTag().toUpperCase());
         }
