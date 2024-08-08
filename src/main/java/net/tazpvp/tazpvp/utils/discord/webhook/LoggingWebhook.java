@@ -5,10 +5,9 @@ import net.tazpvp.tazpvp.Tazpvp;
 
 import java.awt.*;
 
+@Getter
 public class LoggingWebhook {
-    @Getter
     private DiscordWebhook discordWebhook;
-    @Getter
     private DiscordWebhook.EmbedObject embedObject;
 
     public LoggingWebhook(String title) {

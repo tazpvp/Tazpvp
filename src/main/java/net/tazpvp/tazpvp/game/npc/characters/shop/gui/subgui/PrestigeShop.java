@@ -87,9 +87,7 @@ public class PrestigeShop extends GUI {
 
     private void addBuyButton(int cost, boolean glow, ItemEnum customItem) {
         ItemStack item = customItem.getShopItem(cost, 1, glow);
-        addButton(Button.create(item, (e) -> {
-            checkMoney(cost, customItem);
-        }), slotNum);
+        addButton(Button.create(item, (_) -> checkMoney(cost, customItem)), slotNum);
         calcSlot();
     }
 

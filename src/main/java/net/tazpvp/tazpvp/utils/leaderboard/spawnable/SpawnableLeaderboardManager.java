@@ -42,11 +42,10 @@ import org.bukkit.Location;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class SpawnableLeaderboardManager {
-    @Getter
     private final List<SpawnableLeaderboard> spawnableLeaderboards;
 
-    @Getter
     private int taskId;
 
     public SpawnableLeaderboardManager(Tazpvp tazpvp) {

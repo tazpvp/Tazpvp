@@ -49,16 +49,12 @@ import world.ntdi.nrcore.utils.holograms.Hologram;
 
 import java.util.List;
 
+@Getter
 public class Crate {
-    @Getter
     private final Location location;
-    @Getter
     private final Hologram hologram;
-    @Getter
     private final Material block;
-    @Getter
     private final String type;
-    @Getter
     private final List<ItemEnum> crateDrops;
 
     public Crate(Location location, String hologramText, String type) {

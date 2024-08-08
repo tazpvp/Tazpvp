@@ -32,17 +32,7 @@
 
 package net.tazpvp.tazpvp.objects;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.bukkit.Material;
 
-@AllArgsConstructor
-@Data
-public class OreObject {
-    private final int time;
-    private final int cost;
-    private final int level;
-    private final Material mat;
-    private final Material smelted;
-    private final String pickaxe;
+public record OreObject(int time, int cost, int level, Material mat, Material smelted, String pickaxe) {
 }

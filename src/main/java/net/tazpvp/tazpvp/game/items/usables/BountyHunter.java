@@ -19,7 +19,7 @@ public class BountyHunter extends UsableItem {
 
     @Override
     public void onRightClick(Player p, ItemStack item) {
-        WeakHashMap<UUID, Integer> bounties = new WeakHashMap<UUID, Integer>();
+        WeakHashMap<UUID, Integer> bounties = new WeakHashMap<>();
         for (Player target : Bukkit.getOnlinePlayers()) {
             if (LooseData.getKs(target.getUniqueId()) > 0) {
                 bounties.put(target.getUniqueId(), LooseData.getKs(target.getUniqueId()));

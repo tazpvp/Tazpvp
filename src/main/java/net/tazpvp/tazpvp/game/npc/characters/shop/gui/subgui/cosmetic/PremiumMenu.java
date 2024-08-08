@@ -157,17 +157,17 @@ public class PremiumMenu extends GUI {
                         return AnvilGUI.Response.close();
                     }
 
-                    if (Profanity.sayNoNo(p, text)) return Arrays.asList(AnvilGUI.ResponseAction.close());
+                    if (Profanity.sayNoNo(p, text)) return List.of(AnvilGUI.ResponseAction.close());
 
                     player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
                     PlayerWrapper.getPlayer(p).setCustomPrefix(text);
                     p.sendMessage(CC.GREEN + "Set custom prefix to: " + CC.YELLOW + text);
 
-                    return Arrays.asList(AnvilGUI.ResponseAction.close());
+                    return List.of(AnvilGUI.ResponseAction.close());
                 })
-                .onClose(stateSnapshot -> {
-                    stateSnapshot.getPlayer().playSound(stateSnapshot.getPlayer().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
-                })
+                .onClose(stateSnapshot -> stateSnapshot
+                        .getPlayer()
+                        .playSound(stateSnapshot.getPlayer().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1))
                 .text(">")
                 .itemLeft(ItemBuilder.of(Material.NAME_TAG).name(ChatColor.GREEN + "Custom Prefix < 7").build())
                 .title(ChatColor.YELLOW + "Custom Prefix < 7:")

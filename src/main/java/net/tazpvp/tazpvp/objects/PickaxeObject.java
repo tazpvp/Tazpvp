@@ -32,16 +32,10 @@
 
 package net.tazpvp.tazpvp.objects;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 @Getter
-@AllArgsConstructor
-public class PickaxeObject {
-    private final ItemStack item;
-    private final int cost;
-    private final int level;
-    private final Material upgrade;
+public record PickaxeObject(ItemStack item, int cost, int level, Material upgrade) {
 }

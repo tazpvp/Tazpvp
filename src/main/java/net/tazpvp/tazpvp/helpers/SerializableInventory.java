@@ -43,13 +43,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SerializableInventory implements Serializable {
-    @Getter
-    private final ItemStack[] hotbar;
-
-    public SerializableInventory(ItemStack[] hotbar) {
-        this.hotbar = hotbar;
-    }
+@Getter
+public record SerializableInventory(ItemStack[] hotbar) implements Serializable {
 
     public void addItems(PlayerInventory inventory, ItemStack... itemStacks) {
         List<ItemStack> toAdd = new ArrayList<>(List.of(itemStacks));

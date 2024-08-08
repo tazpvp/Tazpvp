@@ -8,8 +8,7 @@ import org.bukkit.event.entity.EntitySpawnEvent;
 public class EntitySpawnListener implements Listener {
     @EventHandler
     public void onTNTSpawn(EntitySpawnEvent e) {
-        if (e.getEntity() instanceof TNTPrimed) {
-            TNTPrimed tnt = (TNTPrimed) e.getEntity();
+        if (e.getEntity() instanceof TNTPrimed tnt) {
             tnt.setFuseTicks(30);
         }
     }

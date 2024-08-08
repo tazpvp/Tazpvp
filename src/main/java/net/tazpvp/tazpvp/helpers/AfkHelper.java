@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import world.ntdi.nrcore.utils.region.Cuboid;
 
 import java.util.Random;
 
@@ -63,8 +64,10 @@ public class AfkHelper {
 
     public static void setAfk(Player p) {
         PlayerWrapper pw = PlayerWrapper.getPlayer(p);
+        Cuboid afkRegion = RegionEnum.afkRegion;
+        if (afkRegion == null) return;
         if (pw == null) return;
-        if (RegionEnum.afkRegion.contains(p.getLocation())) {
+        if (afkRegion.contains(p.getLocation())) {
             if (!pw.isAfk()) {
                 pw.setAfk(true);
                 pw.setTimeSinceAfk(System.currentTimeMillis());

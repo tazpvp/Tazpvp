@@ -36,7 +36,11 @@ public class DuelSendCommand extends NRCommand {
             return true;
         }
         if (args.length < 2) {
-            sendIncorrectUsage(sender, "Usage: /duel send <player> <type>\n" + "Types: \n" + "- Classic" + "\n- Op");
+            sendIncorrectUsage(sender, """
+                    Usage: /duel send <player> <type>
+                    Types:\s
+                    - Classic
+                    - Op""");
             return true;
         }
         if (PlayerWrapper.getPlayer(p).getDuel() != null) {

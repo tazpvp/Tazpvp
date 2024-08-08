@@ -113,7 +113,7 @@ public abstract class Event implements Listener {
 
     public void checkIfGameOver() {
         if (getAliveList().size() <= 1) {
-            final Player winner = Bukkit.getPlayer(getAliveList().get(0));
+            final Player winner = Bukkit.getPlayer(getAliveList().getFirst());
 
             if (winner != null && getAliveList().contains(winner.getUniqueId())) {
                 endGame(winner);

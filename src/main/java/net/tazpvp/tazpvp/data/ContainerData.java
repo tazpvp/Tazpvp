@@ -38,8 +38,8 @@ import javax.annotation.Nonnull;
 import java.io.Serializable;
 import java.util.Map;
 
+@Getter
 public abstract class ContainerData implements Serializable {
-    @Getter
     private final Map<String, Boolean> data;
 
     public ContainerData(Map<String, Boolean> data) {

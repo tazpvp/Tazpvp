@@ -52,7 +52,7 @@ public class Excavator extends Observable {
         if (talentEntity.isExcavator()) {
             if (p.getGameMode() == GameMode.SURVIVAL) {
                 for (OreObject ore : BlockHelper.ores) {
-                    if (ore.getMat() == material) {
+                    if (ore.mat() == material) {
                         StatEnum.XP.add(p.getUniqueId(), 1);
                     }
                 }

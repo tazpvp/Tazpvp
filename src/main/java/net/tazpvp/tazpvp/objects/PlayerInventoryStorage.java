@@ -85,7 +85,7 @@ public class PlayerInventoryStorage {
         p.sendMessage(CC.AQUA + "-----------------------------------");
         TextComponent component = new TextComponent(String.format(CC.RED + "\tUh Oh! Looks like someone who recently got banned previously killed you! Click HERE to restore your items."));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(CC.GOLD + "Restore your items.")}));
-        component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, String.format("/restore self")));
+        component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/restore self"));
         p.spigot().sendMessage(component);
         p.sendMessage(CC.AQUA + "-----------------------------------");
     }

@@ -33,21 +33,13 @@
 
 package net.tazpvp.tazpvp.game.npc.dialogue;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.bukkit.Bukkit;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-@AllArgsConstructor
-@Data
-public class Dialogues {
-    private final String name;
-    private final List<String> dialoguesSad;
-    private final List<String> dialoguesNormal;
-    private final List<String> dialoguesHappy;
-
+public record Dialogues(String name, List<String> dialoguesSad, List<String> dialoguesNormal,
+                        List<String> dialoguesHappy) {
     public String getRandomDialogue() {
         final int playerCount = Bukkit.getOnlinePlayers().size();
         if (playerCount < 5) {

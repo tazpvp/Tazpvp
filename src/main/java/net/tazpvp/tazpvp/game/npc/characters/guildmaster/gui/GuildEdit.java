@@ -223,9 +223,9 @@ public class GuildEdit extends GUI {
 
                     return List.of(AnvilGUI.ResponseAction.close());
                 })
-                .onClose(stateSnapshot -> {
-                    stateSnapshot.getPlayer().playSound(stateSnapshot.getPlayer().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
-                })
+                .onClose(stateSnapshot -> stateSnapshot
+                        .getPlayer()
+                        .playSound(stateSnapshot.getPlayer().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1))
                 .text(">")
                 .itemLeft(ItemBuilder.of(Material.NAME_TAG).name(ChatColor.GREEN + "Guild Description").build())
                 .title(ChatColor.YELLOW + "Guild Description:")
@@ -262,9 +262,9 @@ public class GuildEdit extends GUI {
                 return List.of(AnvilGUI.ResponseAction.close());
             })
 
-            .onClose(stateSnapshot -> {
-                stateSnapshot.getPlayer().playSound(stateSnapshot.getPlayer().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
-            })
+            .onClose(stateSnapshot -> stateSnapshot
+                    .getPlayer()
+                    .playSound(stateSnapshot.getPlayer().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1))
             .text(">")
             .itemLeft(ItemBuilder.of(Material.NAME_TAG).name(ChatColor.GREEN + "Guild Tag < 8").build())
             .title(ChatColor.YELLOW + "Guild Tag < 8:")

@@ -66,9 +66,9 @@ public class BlockHelper {
     ));
 
     public static void respawnOre(Player p, Block block, OreObject ore) {
-        int time = ore.getTime();
-        Material givenItem = ore.getMat();
-        Material smelted = ore.getSmelted();
+        int time = ore.time();
+        Material givenItem = ore.mat();
+        Material smelted = ore.smelted();
         int amount = 1;
         new BukkitRunnable() {
             @Override
@@ -80,26 +80,30 @@ public class BlockHelper {
         new BukkitRunnable() {
             @Override
             public void run() {
-                block.setType(ore.getMat());
+                block.setType(ore.mat());
             }
         }.runTaskLater(Tazpvp.getInstance(), time);
 
         if (getPickaxe(p) != null) {
             final ItemStack pickaxe = getPickaxe(p);
-            final ItemMeta storageMeta = pickaxe.getItemMeta();
-            if (storageMeta.hasEnchant(EnchantEnum.DOUBLE_ORES.getEnchant()))
-                amount = 2;
-            if (storageMeta.hasEnchant(EnchantEnum.AUTO_SMELT.getEnchant()))
-                givenItem = smelted;
+            if (pickaxe != null) {
+                final ItemMeta storageMeta = pickaxe.getItemMeta();
+                if (storageMeta != null) {
+                    if (storageMeta.hasEnchant(EnchantEnum.DOUBLE_ORES.getEnchant()))
+                        amount = 2;
+                    if (storageMeta.hasEnchant(EnchantEnum.AUTO_SMELT.getEnchant()))
+                        givenItem = smelted;
+                }
+            }
         }
         giveOre(p, givenItem, amount);
     }
 
     public static ItemStack getPickaxe(Player p) {
         for (PickaxeObject pick : pickaxes) {
-            if (p.getInventory().getItemInMainHand().getType().equals(pick.getItem().getType())) {
+            if (p.getInventory().getItemInMainHand().getType().equals(pick.item().getType())) {
                 return p.getInventory().getItemInMainHand();
-            } else if (p.getInventory().getItemInOffHand().getType().equals(pick.getItem().getType())) {
+            } else if (p.getInventory().getItemInOffHand().getType().equals(pick.item().getType())) {
                 return p.getInventory().getItemInOffHand();
             }
         }
@@ -108,9 +112,9 @@ public class BlockHelper {
 
     public static ItemStack getOreInHand(Player p) {
         for (OreObject ore : ores) {
-            if (p.getInventory().getItemInMainHand().getType().equals(ore.getMat())) {
+            if (p.getInventory().getItemInMainHand().getType().equals(ore.mat())) {
                 return p.getInventory().getItemInMainHand();
-            } else if (p.getInventory().getItemInOffHand().getType().equals(ore.getMat())) {
+            } else if (p.getInventory().getItemInOffHand().getType().equals(ore.mat())) {
                 return p.getInventory().getItemInOffHand();
             }
         }
@@ -124,7 +128,7 @@ public class BlockHelper {
 
     public static OreObject getOreFrom(Material mat) {
         for (OreObject ore : ores) {
-            if (mat.equals(ore.getMat()) || mat.equals(ore.getSmelted())) {
+            if (mat.equals(ore.mat()) || mat.equals(ore.smelted())) {
                 return ore;
             }
         }
@@ -133,7 +137,7 @@ public class BlockHelper {
 
     public static boolean isSmelted(Material mat) {
         for (OreObject ore : ores) {
-            if (mat.equals(ore.getSmelted())) {
+            if (mat.equals(ore.smelted())) {
                 return true;
             }
         }

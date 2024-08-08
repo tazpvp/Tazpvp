@@ -74,9 +74,7 @@ public class ItemShop extends GUI {
                 .name(CC.AQUA + "" + CC.BOLD + "Rebirth Shop")
                 .lore(CC.GRAY + "Special items you can",CC.GRAY + "buy after you rebirth.")
                 .glow(true)
-                .build(), (e) -> {
-            new PrestigeShop(p);
-        }), 40);
+                .build(), (_) -> new PrestigeShop(p)), 40);
 
         addBuyButton(1, 10, true, ItemEnum.AZURE_VAPOR);
         addBuyButton(3, 40, true, ItemEnum.INKER);

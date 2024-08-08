@@ -36,6 +36,7 @@ import lombok.Getter;
 
 import javax.annotation.Nonnull;
 
+@Getter
 @Deprecated
 public enum DataTypes {
     COINS("coins", 2, true),
@@ -54,11 +55,8 @@ public enum DataTypes {
     ACHIEVEMENTS("achievements", 15, false),
     LOADOUT("loadout", 16, false);
 
-    @Getter
     private final String columnName;
-    @Getter
     private final int columnIndex;
-    @Getter
     private final boolean quantitative;
 
     DataTypes(@Nonnull final String columnName, final int columnIndex, final boolean quantitative) {

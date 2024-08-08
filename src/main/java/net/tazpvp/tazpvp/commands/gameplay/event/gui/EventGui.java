@@ -54,7 +54,7 @@ public class EventGui extends GUI {
                 item = ItemBuilder.of(Material.CAKE).name("EVENT").lore(eventObject.getStatus(), CC.GREEN + "Click to join.").glow(true).build();
             }
             int slot = (i - startIndex) % ITEMS_PER_PAGE + 10;
-            if (slot % 9 >= 8) slot += 2;
+            if (slot % 9 == 8) slot += 2;
             addButton(Button.createBasic(item), slot);
         }
     }

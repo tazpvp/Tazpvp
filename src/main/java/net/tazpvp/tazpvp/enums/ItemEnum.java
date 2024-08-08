@@ -159,18 +159,12 @@ public enum ItemEnum {
     }
 
     public static ItemEnum getRandomDrop() {
-        List<ItemEnum> drops = new ArrayList<>();
-        for (ItemEnum item : getAllDrops()) {
-            drops.add(item);
-        }
+        List<ItemEnum> drops = new ArrayList<>(getAllDrops());
         return (drops.get(random.nextInt(drops.size())));
     }
 
     public static ItemEnum getRandomDrop(int selectedTier) {
-        List<ItemEnum> drops = new ArrayList<>();
-        for (ItemEnum item : getAllDrops(selectedTier)) {
-            drops.add(item);
-        }
+        List<ItemEnum> drops = new ArrayList<>(getAllDrops(selectedTier));
         return (drops.get(random.nextInt(drops.size())));
     }
 

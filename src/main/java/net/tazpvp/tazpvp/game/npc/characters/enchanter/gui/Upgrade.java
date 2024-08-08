@@ -35,7 +35,7 @@ public class Upgrade extends GUI {
         int balance = StatEnum.COINS.getInt(id);
 
         PickaxeObject currentPickaxe = BlockHelper.pickaxes.stream()
-                .filter(pickaxe -> pickaxe.getItem().getType() == tool.getType())
+                .filter(pickaxe -> pickaxe.item().getType() == tool.getType())
                 .findFirst()
                 .orElse(null);
 
@@ -43,7 +43,7 @@ public class Upgrade extends GUI {
             return;
         }
 
-        int cost = currentPickaxe.getCost();
+        int cost = currentPickaxe.cost();
 
         ItemBuilder upgradeButtonBuilder = ItemBuilder.of(tool.getType(), 1)
                 .name(CC.YELLOW + "" + CC.BOLD + "Upgrade Pickaxe")
@@ -66,7 +66,7 @@ public class Upgrade extends GUI {
                 return;
             }
 
-            tool.setType(currentPickaxe.getUpgrade());
+            tool.setType(currentPickaxe.upgrade());
             StatEnum.COINS.remove(id, cost);
 
             sendNPCMessage(p, "Thanks, here is your new pickaxe.");
@@ -95,7 +95,7 @@ public class Upgrade extends GUI {
                     OreObject ore = BlockHelper.getOreFrom(i.getType());
                     int amount = i.getAmount();
                     if (ore != null) {
-                        reward += (BlockHelper.isSmelted(i.getType())) ? ((ore.getCost() * 2) * amount) : (ore.getCost() * amount);
+                        reward += (BlockHelper.isSmelted(i.getType())) ? ((ore.cost() * 2) * amount) : (ore.cost() * amount);
 
                         i.setAmount(0);
                     }

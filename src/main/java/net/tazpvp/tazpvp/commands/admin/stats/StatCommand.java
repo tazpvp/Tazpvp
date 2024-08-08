@@ -1,7 +1,6 @@
 package net.tazpvp.tazpvp.commands.admin.stats;
 
 import lombok.NonNull;
-import net.tazpvp.tazpvp.enums.ItemEnum;
 import net.tazpvp.tazpvp.enums.StatEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;

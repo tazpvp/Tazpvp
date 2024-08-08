@@ -17,7 +17,7 @@ public class AdCommand extends NRCommand {
                 return true;
             }
 
-            TextComponent copy = new TextComponent("\n" + CC.YELLOW + " Click " + CC.GOLD + "" + CC.BOLD + "Here" + CC.YELLOW + " to copy the advertisement for this server.\n");
+            TextComponent copy = new TextComponent("\n" + CC.YELLOW + " Click " + CC.GOLD + CC.BOLD + "Here" + CC.YELLOW + " to copy the advertisement for this server.\n");
             copy.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, ad));
             p.spigot().sendMessage(copy);
             return true;

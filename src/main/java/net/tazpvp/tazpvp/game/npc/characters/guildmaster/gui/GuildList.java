@@ -55,7 +55,7 @@ public class GuildList extends GUI {
             GuildEntity guild = guilds.get(i);
             ItemStack guildItem = createGuildItem(guild);
             int slot = (i - startIndex) % GUILDS_PER_PAGE + 10;
-            if (slot % 9 >= 8) slot += 2;
+            if (slot % 9 == 8) slot += 2;
             addButton(Button.createBasic(guildItem), slot);
         }
     }

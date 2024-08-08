@@ -71,9 +71,11 @@ public class BanCommand extends NRCommand {
 
         if (target.isOnline()) {
             Player target2 = target.getPlayer();
-            if (target2.hasPermission("tazpvp.ban")) {
-                sender.sendMessage(CC.RED + "You cannot ban this person.");
-                return true;
+            if (target2 != null) {
+                if (target2.hasPermission("tazpvp.ban")) {
+                    sender.sendMessage(CC.RED + "You cannot ban this person.");
+                    return true;
+                }
             }
         }
 
