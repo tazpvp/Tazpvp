@@ -129,18 +129,15 @@ public class DeathObject {
             if (victimGuild == killerGuild) return;
         }
 
-        int chance = r.nextInt(10);
+        World world = location.getWorld();
 
-        if (chance <= 4) {
-            World world = location.getWorld();
-
-            if (world != null) {
-                if (killerWrapper.getTalentEntity().isNecromancer()) {
-                    world.dropItemNaturally(location.add(0, 2, 0), ItemEnum.getRandomDrop().getItem(1));
-                }
-                world.dropItemNaturally(location.add(0, 1, 0), ItemEnum.getRandomDrop().getItem(1));
+        if (world != null) {
+            if (killerWrapper.getTalentEntity().isNecromancer()) {
+                world.dropItemNaturally(location.add(0, 2, 0), ItemEnum.getRandomDrop().getItem(1));
             }
+            world.dropItemNaturally(location.add(0, 1, 0), ItemEnum.getRandomDrop().getItem(1));
         }
+        pKiller.getInventory().addItem(ItemEnum.GOLDEN_APPLE.getItem(1));
     }
 
     public void dropHead() {
