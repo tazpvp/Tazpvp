@@ -62,7 +62,7 @@ public class SpawnableLeaderboardManager {
     private void createScheduler(Tazpvp tazpvp) {
         this.taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(tazpvp, () -> {
             if (spawnableLeaderboards.isEmpty()) return;
-            if (Bukkit.getOnlinePlayers().size() < 1) return;
+            if (Bukkit.getOnlinePlayers().isEmpty()) return;
 
             for (SpawnableLeaderboard spawnableLeaderboard : getSpawnableLeaderboards()) {
                 spawnableLeaderboard.update();

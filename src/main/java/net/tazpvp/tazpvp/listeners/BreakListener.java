@@ -45,6 +45,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class BreakListener implements Listener {
 
@@ -58,15 +59,18 @@ public class BreakListener implements Listener {
             for (OreObject ore : BlockHelper.ores) {
                 if (blockMaterial.equals(ore.mat())) {
                     e.setCancelled(true);
-                    Material tool = BlockHelper.getPickaxe(p).getType();
-                    for (PickaxeObject pickaxe : BlockHelper.pickaxes) {
-                        if (tool.equals(pickaxe.item().getType())) {
-                            if (pickaxe.level() >= ore.level()) {
-                                BlockHelper.respawnOre(p, eventBlock, ore);
-                                LooseData.setMineCount(p.getUniqueId(), LooseData.getChatCount(p.getUniqueId()) + 1);
-                            } else {
-                                p.sendMessage("You require at least a " + ore.pickaxe() + " pickaxe to mine this ore.");
-                                p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+                    ItemStack toolItem = BlockHelper.getPickaxe(p);
+                    if (toolItem != null) {
+                        Material tool = toolItem.getType();
+                        for (PickaxeObject pickaxe : BlockHelper.pickaxes) {
+                            if (tool.equals(pickaxe.item().getType())) {
+                                if (pickaxe.level() >= ore.level()) {
+                                    BlockHelper.respawnOre(p, eventBlock, ore);
+                                    LooseData.setMineCount(p.getUniqueId(), LooseData.getChatCount(p.getUniqueId()) + 1);
+                                } else {
+                                    p.sendMessage("You require at least a " + ore.pickaxe() + " pickaxe to mine this ore.");
+                                    p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+                                }
                             }
                         }
                     }

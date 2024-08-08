@@ -64,7 +64,7 @@ public class Generator {
                             i.setVelocity(new Vector(0, 0, 0));
                         }
                     }
-                    ChatHelper.announce(ChatColor.LIGHT_PURPLE + " The generators have spawned items.", Sound.BLOCK_NOTE_BLOCK_BELL);;
+                    ChatHelper.announce(ChatColor.LIGHT_PURPLE + " The generators have spawned items.", Sound.BLOCK_NOTE_BLOCK_BELL);
                 }
             }
         }.runTaskTimer(Tazpvp.getInstance(), 20, 20*60*4);

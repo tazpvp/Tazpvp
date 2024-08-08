@@ -7,8 +7,8 @@ import java.awt.*;
 
 @Getter
 public class LoggingWebhook {
-    private DiscordWebhook discordWebhook;
-    private DiscordWebhook.EmbedObject embedObject;
+    private final DiscordWebhook discordWebhook;
+    private final DiscordWebhook.EmbedObject embedObject;
 
     public LoggingWebhook(String title) {
         discordWebhook = new DiscordWebhook(Tazpvp.getInstance().getConfig().getString("report-webhook"));

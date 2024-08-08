@@ -21,7 +21,7 @@ public class Profanity {
             StringBuilder sb = new StringBuilder();
             censorResult.getB().forEach(s -> sb.append(s).append(", "));
 
-            p.sendMessage(CC.RED + "I'm sorry, but we do not allow the use of the word(s): " + sb.toString() + "in this server.");
+            p.sendMessage(CC.RED + "I'm sorry, but we do not allow the use of the word(s): " + sb + "in this server.");
             return true;
         }
         return false;

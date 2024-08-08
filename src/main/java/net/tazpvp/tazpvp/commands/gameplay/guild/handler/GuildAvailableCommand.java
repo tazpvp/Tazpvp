@@ -61,5 +61,5 @@ public class GuildAvailableCommand extends NRCommand {
         return true;
     }
 
-    public boolean executeFunction(@NonNull Player p) {return true;};
+    public boolean executeFunction(@NonNull Player p) {return true;}
 }
