@@ -61,7 +61,7 @@ import java.util.regex.Pattern;
 
 public class ChatListener implements Listener {
 
-    List<String> swearWords = List.of(
+    private final List<String> swearWords = List.of(
             "fuck", "shit", "damn", "ass", "bitch", "bastard", "bollocks", "cunt", "cock",
             "dick", "piss", "arsehole", "wanker", "slut", "whore", "twat", "nigger",
             "faggot", "dyke", "kike", "spic", "chink", "retard", "moron", "idiot", "stupid",

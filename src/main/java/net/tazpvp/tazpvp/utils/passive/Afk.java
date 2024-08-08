@@ -12,8 +12,8 @@ import java.util.List;
 
 public class Afk {
 
-    public static HashMap<Player, Location> playerLocations = new HashMap<>();
-    public static List<Player> afkPlayers = new ArrayList<>();
+    public final static HashMap<Player, Location> playerLocations = new HashMap<>();
+    public final static List<Player> afkPlayers = new ArrayList<>();
 
     public static void initialize() {
         new BukkitRunnable() {

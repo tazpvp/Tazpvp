@@ -49,7 +49,7 @@ import java.util.function.BiConsumer;
 
 public class Achievements extends GUI {
 
-    String prefix = CC.DARK_AQUA + "[Lorenzo] " + CC.AQUA;
+    private final String prefix = CC.DARK_AQUA + "[Lorenzo] " + CC.AQUA;
 
     public Achievements(Player p) {
         super("Achievements", 5);

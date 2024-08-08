@@ -40,7 +40,7 @@ import java.util.Map;
 
 public abstract class ContainerData implements Serializable {
     @Getter
-    private Map<String, Boolean> data;
+    private final Map<String, Boolean> data;
 
     public ContainerData(Map<String, Boolean> data) {
         this.data = data;

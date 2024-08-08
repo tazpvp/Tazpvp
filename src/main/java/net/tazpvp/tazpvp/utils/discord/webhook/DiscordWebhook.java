@@ -191,7 +191,7 @@ public class DiscordWebhook {
         private Thumbnail thumbnail;
         private Image image;
         private Author author;
-        private List<Field> fields = new ArrayList<>();
+        private final List<Field> fields = new ArrayList<>();
 
         public String getTitle() {
             return title;
@@ -275,8 +275,8 @@ public class DiscordWebhook {
         }
 
         private class Footer {
-            private String text;
-            private String iconUrl;
+            private final String text;
+            private final String iconUrl;
 
             private Footer(String text, String iconUrl) {
                 this.text = text;

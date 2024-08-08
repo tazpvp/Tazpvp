@@ -56,8 +56,8 @@ public class TalentShop extends GUI {
     private int count;
     private final Player p;
     private final UUID id;
-    String prefix = CC.DARK_AQUA + "[Lorenzo] " + CC.AQUA;
-    PlayerWrapper pw;
+    private final String prefix = CC.DARK_AQUA + "[Lorenzo] " + CC.AQUA;
+    private final PlayerWrapper pw;
 
     public TalentShop(Player p) {
         super("Talents", 4);

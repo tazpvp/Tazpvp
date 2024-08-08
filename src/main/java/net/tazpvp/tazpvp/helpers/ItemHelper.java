@@ -73,9 +73,7 @@ public class ItemHelper {
         if (name.endsWith("BOW")) return true;
         if (name.endsWith("SWORD")) return true;
         if (name.endsWith("HELMET") || name.endsWith("CHESTPLATE") || name.endsWith("LEGGINGS") || name.endsWith("BOOTS"))  return true;
-        if (name.endsWith("PICKAXE")) return true;
-
-        return false;
+        return name.endsWith("PICKAXE");
     }
 
     private static boolean acceptableEnchant(ItemStack i, Enchantment e) {

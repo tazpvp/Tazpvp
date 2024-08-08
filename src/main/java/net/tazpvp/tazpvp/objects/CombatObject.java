@@ -22,7 +22,7 @@ public class CombatObject {
     private float countdown;
     @Getter
     private final BossBar bar;
-    public static WeakHashMap<UUID, CombatObject> tags = new WeakHashMap<>();
+    public final static WeakHashMap<UUID, CombatObject> tags = new WeakHashMap<>();
 
     public CombatObject(UUID id) {
         this.attackers = new LinkedList<>();

@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 public class Artisan extends Observable {
-    private List<Material> woods = List.of(
+    private final List<Material> woods = List.of(
             Material.OAK_PLANKS,
             Material.SPRUCE_PLANKS,
             Material.BIRCH_PLANKS,

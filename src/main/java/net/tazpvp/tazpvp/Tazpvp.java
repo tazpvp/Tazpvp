@@ -118,7 +118,7 @@ public final class Tazpvp extends JavaPlugin {
     @Getter
     private final List<NPC> npcs = new ArrayList<>();
     @Getter
-    public static String prefix = "tazpvp.";
+    public final static String prefix = "tazpvp.";
     @Getter
     private static ConfigUtil parkourUtil;
     @Getter

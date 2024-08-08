@@ -18,7 +18,7 @@ import java.util.Random;
 
 public class SummonUndeadAttack implements Attack {
     private final Random random = new Random();
-    public static List<Zombie> undeadList = new ArrayList<>();
+    public final static List<Zombie> undeadList = new ArrayList<>();
     private final int MAX_DISTANCE = 4;
     @Override
     public void attack(final CustomBoss boss) {

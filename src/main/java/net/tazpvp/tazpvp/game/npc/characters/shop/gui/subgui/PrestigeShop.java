@@ -22,7 +22,7 @@ import java.util.UUID;
 public class PrestigeShop extends GUI {
     private int slotNum;
     private int num;
-    private Player p;
+    private final Player p;
     private final UUID id;
     private final String prefix = CC.RED + "[Maxim] " + CC.WHITE;
 

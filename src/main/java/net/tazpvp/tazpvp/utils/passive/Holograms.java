@@ -14,13 +14,13 @@ import java.util.List;
 
 public class Holograms {
 
-    public static List<Hologram> holograms = new ArrayList<>();
+    public final static List<Hologram> holograms = new ArrayList<>();
 
-    private static String[] welcome = {
+    private final static String[] welcome = {
             CC.WHITE + "Welcome to " +  Theme.SERVER.gradient("Tazpvp", true),
             "Type " + CC.AQUA + "/help", CC.WHITE + "for a guide!"
     };
-    private static String[] afkPit = {
+    private final static String[] afkPit = {
             ChatHelper.gradient("#8fff17", "AFK PIT", true),
             ChatHelper.gradient("#8fff17", "1x Key Rewards", true),
     };

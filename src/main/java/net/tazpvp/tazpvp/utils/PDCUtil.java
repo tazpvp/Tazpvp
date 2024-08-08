@@ -10,7 +10,7 @@ import world.ntdi.postglam.data.Tuple;
 
 public class PDCUtil {
     @Getter
-    private static NamespacedKey npcKey = new NamespacedKey(Tazpvp.getInstance(), "npc-key");
+    private final static NamespacedKey npcKey = new NamespacedKey(Tazpvp.getInstance(), "npc-key");
 
     public static void setPDC(Entity e, NamespacedKey key, String value) {
         e.getPersistentDataContainer().set(key, PersistentDataType.STRING, value);

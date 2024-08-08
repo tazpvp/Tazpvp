@@ -120,16 +120,8 @@ public class ChatHelper {
     public static String hexColor(String hexCode, String text, boolean bold) {
         hexCode = hexCode.replace("#", "");
         ChatColor color = ChatColor.of("#" + hexCode);
-        ChatColor finalColor = bold ? color.BOLD : color;
-        String formattedText = finalColor + text + ChatColor.RESET;
-        return formattedText;
-    }
-
-    public static org.bukkit.ChatColor hexChatColor(String hexCode, boolean bold) {
-        hexCode = hexCode.replace("#", "");
-        org.bukkit.ChatColor color = org.bukkit.ChatColor.valueOf("#" + hexCode);
-        org.bukkit.ChatColor finalColor = bold ? color.BOLD : color;
-        return finalColor;
+        ChatColor finalColor = bold ? ChatColor.BOLD : color;
+        return finalColor + text + ChatColor.RESET;
     }
 
     public static String intToRoman(int num) {
@@ -147,12 +139,12 @@ public class ChatHelper {
 
     public static boolean hasPremium(Player p, @Nullable String prefix) {
         PlayerWrapper pw = PlayerWrapper.getPlayer(p);
-        if (pw.getRank().getHierarchy() >= 1) {
-            p.sendMessage(Objects.requireNonNullElse(prefix, CC.RED) + "You require a premium subscription for this feature.");
-            p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
-            return false;
+        if (pw.getRank().getHierarchy() < 1) {
+            return true;
         }
-        return true;
+        p.sendMessage(Objects.requireNonNullElse(prefix, CC.RED) + "You require a premium subscription for this feature.");
+        p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+        return false;
     }
 
     public static void achievement(Player p, String name) {

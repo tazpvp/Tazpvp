@@ -38,7 +38,7 @@ import java.util.*;
 public class SortingHelper {
     public static Map<UUID, Integer> sortByValueDesc(Map<UUID, Integer> map) {
         List<Map.Entry<UUID, Integer>> list = new LinkedList(map.entrySet());
-        Collections.sort(list, (o1, o2) -> o2.getValue().compareTo(o1.getValue()));
+        list.sort((o1, o2) -> o2.getValue().compareTo(o1.getValue()));
 
         Map<UUID, Integer> result = new LinkedHashMap<>();
         for (Map.Entry<UUID, Integer> entry : list) {
