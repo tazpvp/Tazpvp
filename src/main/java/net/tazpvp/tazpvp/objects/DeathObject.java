@@ -41,10 +41,10 @@ public class DeathObject {
     private final Player pVictim;
     private Player pKiller;
     private final Location location;
-    private final Random r = new Random();
+
+    private final GuildService guildService;
     private final GuildEntity victimGuild;
     private final GuildEntity killerGuild;
-    private final GuildService guildService;
     private final PlayerWrapper killerWrapper;
     private final PlayerWrapper victimWrapper;
 
@@ -132,6 +132,8 @@ public class DeathObject {
     }
 
     public void dropHead() {
+        final Random r = new Random();
+
         if (pVictim.getName().startsWith(".")) {
             return;
         }
@@ -218,28 +220,24 @@ public class DeathObject {
         updateKillerStats();
 
         CombatObject tag = CombatObject.tags.get(victim);
-        if (tag.getAttackers().isEmpty()) return;
+        tag.getAttackers().remove(killer);
 
         for (UUID uuid : tag.getAttackers()) {
-            if (uuid != killer) {
-                Player assister = Bukkit.getPlayer(uuid);
-                if (assister == null) continue;
+            Player assistant = Bukkit.getPlayer(uuid);
+            if (assistant == null) continue;
 
-                int finalXp = 5;
-                int finalCoins = 5;
+            int finalXp = 5;
+            int finalCoins = 5;
 
-                assister.sendMessage(
-                    CC.DARK_GRAY + "Assist kill:" + CC.GRAY + " (" + pVictim.getName() + ") " +
-                    CC.DARK_AQUA + "Exp: " + CC.AQUA + finalXp +
-                    CC.GOLD + " Coins: " + CC.YELLOW + finalCoins
-                );
+            assistant.sendMessage(
+                    CC.DARK_GRAY + "Assist kill:" + CC.GRAY + pVictim.getName() +
+                            CC.DARK_AQUA + "Exp: " + CC.AQUA + finalXp + CC.GOLD + " Coins: " + CC.YELLOW + finalCoins
+            );
 
-                StatEnum.COINS.add(uuid, finalCoins);
-                StatEnum.XP.add(uuid, finalXp);
-                StatEnum.MMR.add(uuid, 5);
-
-                PlayerHelper.levelUp(uuid);
-            }
+            StatEnum.COINS.add(uuid, finalCoins);
+            StatEnum.XP.add(uuid, finalXp);
+            StatEnum.MMR.add(uuid, 5);
+            PlayerHelper.levelUp(uuid);
         }
         CombatObject.tags.get(victim).endCombat(null, false);
     }
