@@ -17,8 +17,8 @@ public enum RegionEnum {
     private final int y2;
     private final int z2;
 
-    public static Cuboid spawnRegion = SPAWN.getRegion();
-    public static Cuboid afkRegion = AFK.getRegion();
+    public static final Cuboid spawnRegion = SPAWN.getRegion();
+    public static final Cuboid afkRegion = AFK.getRegion();
 
     RegionEnum(int x1, int y1, int z1, int x2, int y2, int z2) {
         this.x1 = x1;
