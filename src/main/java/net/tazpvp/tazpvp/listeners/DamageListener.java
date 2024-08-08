@@ -38,6 +38,7 @@ import net.tazpvp.tazpvp.enums.RegionEnum;
 import net.tazpvp.tazpvp.game.events.Event;
 import net.tazpvp.tazpvp.game.items.UsableItem;
 import net.tazpvp.tazpvp.helpers.CombatTagHelper;
+import net.tazpvp.tazpvp.objects.CombatObject;
 import net.tazpvp.tazpvp.objects.DeathObject;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Bukkit;
@@ -84,19 +85,6 @@ public class DamageListener implements Listener {
             event.setCancelled(true);
             return;
         }
-
-//        UUID victimID = victim.getUniqueId();
-//
-//        if (Event.currentEvent != null && Event.currentEvent.getParticipantList().contains(victimID)) {
-//            if ((victim.getHealth() - finalDamage) <= 0) {
-//                event.setCancelled(true);
-//                victim.setGameMode(GameMode.SPECTATOR);
-//                victim.sendTitle(CC.RED + "" + CC.BOLD + "YOU DIED", CC.RED + "" + CC.BOLD + "DISQUALIFIED", 1, 1, 1);
-//                Event.currentEvent.removeAliveList(victimID);
-//                Event.currentEvent.checkIfGameOver();
-//                return;
-//            }
-//        }
 
         if (event.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION || event.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION) {
             event.setCancelled(true);
@@ -145,12 +133,20 @@ public class DamageListener implements Listener {
     }
 
     private void handleNonEntityDamage(Player victim, EntityDamageEvent event, double finalDamage) {
+        final UUID id = victim.getUniqueId();
+
         if ((victim.getHealth() - finalDamage) <= 0) {
             event.setCancelled(true);
-            new DeathObject(victim.getUniqueId(), null);
+
+            final UUID lastAttacker = CombatTagHelper.getLastAttacker(victim.getUniqueId());
+            if (lastAttacker != null) {
+                new DeathObject(id, lastAttacker);
+            } else {
+                new DeathObject(id, null);
+            }
         } else {
             if (PlayerWrapper.getPlayer(victim).getDuel() == null) {
-                CombatTagHelper.putInCombat(victim.getUniqueId(), null);
+                CombatTagHelper.putInCombat(id, null);
             }
         }
     }

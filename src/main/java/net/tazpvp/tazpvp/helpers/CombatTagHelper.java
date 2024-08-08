@@ -43,14 +43,8 @@ public class CombatTagHelper {
 
     public static void putInCombat(@Nullable UUID victim, @Nullable UUID attacker) {
         if (victim != attacker) {
-            if (victim == null) {
-                getTag(attacker).setTimer(null);
-            } else if (attacker == null) {
-                getTag(victim).setTimer(null);
-            } else {
-                getTag(victim).setTimer(attacker);
-                getTag(attacker).setTimer(victim);
-            }
+            getTag(victim).setTimer(attacker);
+            getTag(attacker).setTimer(victim);
         }
     }
 

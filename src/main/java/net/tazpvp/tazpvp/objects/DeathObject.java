@@ -57,21 +57,12 @@ public class DeathObject {
         } else {
             this.location = null;
         }
+        this.killer = killer;
         if (killer == null) {
-            final UUID lastAttacker = CombatTagHelper.getLastAttacker(victim);
-            if (lastAttacker != null) {
-                this.killer = lastAttacker;
-                this.killerWrapper = PlayerWrapper.getPlayer(lastAttacker);
-                this.killerGuild = Tazpvp.getInstance().getGuildService().getGuildByPlayer(lastAttacker);
-                CombatObject.tags.get(victim).getAttackers().clear();
-            } else {
-                this.killer = null;
-                this.killerWrapper = null;
-                this.killerGuild = null;
-            }
+            this.killerWrapper = null;
+            this.killerGuild = null;
         } else {
             this.killerGuild = Tazpvp.getInstance().getGuildService().getGuildByPlayer(killer);
-            this.killer = killer;
             this.pKiller = Bukkit.getPlayer(killer);
             this.killerWrapper = PlayerWrapper.getPlayer(killer);
             Tazpvp.getObservers().forEach(observer -> observer.death(pVictim, pKiller));
@@ -95,6 +86,7 @@ public class DeathObject {
                 dropItems();
                 dropHead();
                 PlayerInventoryStorage.updateStorage(victim, killer);
+                CombatObject.tags.get(killer).endCombat(victim, false);
                 Tazpvp.getObservers().forEach(observer -> observer.death(pVictim, pKiller));
             }
         }
@@ -119,7 +111,6 @@ public class DeathObject {
 
         PlayerHelper.resetHealth(pVictim);
         PlayerHelper.feedPlr(pVictim);
-        CombatObject.tags.get(pVictim.getUniqueId()).endCombat(null, false);
     }
 
     public void dropItems() {
@@ -179,17 +170,7 @@ public class DeathObject {
         SpectateObject spectateObject;
         Location camLoc = location;
 
-        if (killer == null) {
-            if (CombatTagHelper.getLastAttacker(victim) != null) {
-                UUID assistKillerId = CombatTagHelper.getLastAttacker(victim);
-                if (assistKillerId != null) {
-                    Player assistKiller = Bukkit.getPlayer(assistKillerId);
-                    if (assistKiller != null) {
-                        camLoc = assistKiller.getLocation();
-                    }
-                }
-            }
-        } else {
+        if (killer != null) {
             camLoc = pKiller.getLocation();
         }
 
@@ -229,36 +210,38 @@ public class DeathObject {
     }
 
     public void updateStats() {
-        CombatObject tag = CombatObject.tags.get(victim);
-        if (!tag.getAttackers().isEmpty()) {
-            for (UUID uuid : tag.getAttackers()) {
-                if (uuid != killer && uuid != null) {
-                    Player assister = Bukkit.getPlayer(uuid);
-                    if (assister == null) continue;
-
-                    int finalXp = 5;
-                    int finalCoins = 5;
-
-                    assister.sendMessage(
-                        CC.DARK_GRAY + "Assist kill:" + CC.GRAY + " (" + pVictim.getName() + ") " +
-                        CC.DARK_AQUA + "Exp: " + CC.AQUA + finalXp +
-                        CC.GOLD + " Coins: " + CC.YELLOW + finalCoins
-                    );
-
-                    StatEnum.COINS.add(uuid, finalCoins);
-                    StatEnum.XP.add(uuid, finalXp);
-                    StatEnum.MMR.add(uuid, 5);
-
-                    PlayerHelper.levelUp(uuid);
-                }
-            }
-        }
-
         updateVictimStats();
+
         if (victimGuild != null && killerGuild != null) {
             if (victimGuild == killerGuild) return;
         }
         updateKillerStats();
+
+        CombatObject tag = CombatObject.tags.get(victim);
+        if (tag.getAttackers().isEmpty()) return;
+
+        for (UUID uuid : tag.getAttackers()) {
+            if (uuid != killer) {
+                Player assister = Bukkit.getPlayer(uuid);
+                if (assister == null) continue;
+
+                int finalXp = 5;
+                int finalCoins = 5;
+
+                assister.sendMessage(
+                    CC.DARK_GRAY + "Assist kill:" + CC.GRAY + " (" + pVictim.getName() + ") " +
+                    CC.DARK_AQUA + "Exp: " + CC.AQUA + finalXp +
+                    CC.GOLD + " Coins: " + CC.YELLOW + finalCoins
+                );
+
+                StatEnum.COINS.add(uuid, finalCoins);
+                StatEnum.XP.add(uuid, finalXp);
+                StatEnum.MMR.add(uuid, 5);
+
+                PlayerHelper.levelUp(uuid);
+            }
+        }
+        CombatObject.tags.get(victim).endCombat(null, false);
     }
 
     private void updateKillerStats() {
