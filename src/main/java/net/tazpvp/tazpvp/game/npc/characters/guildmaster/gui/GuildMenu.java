@@ -48,7 +48,6 @@ import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 public class GuildMenu extends GUI {
 
@@ -137,7 +136,7 @@ public class GuildMenu extends GUI {
                 StatEnum.COINS.remove(p.getUniqueId(), 6000);
                 p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
 
-                createGuild(text, p.getUniqueId());
+                guildService.createGuild(text, p.getUniqueId());
                 p.sendMessage("You created a guild! " + guildEntity.getName());
 
                 guildService.saveGuild(guildEntity);
@@ -149,9 +148,5 @@ public class GuildMenu extends GUI {
             .plugin(Tazpvp.getInstance())
             .open(p);
 
-    }
-
-    private void createGuild(String name, UUID id) {
-        guildService.createGuild(name, id);
     }
 }

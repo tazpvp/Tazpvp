@@ -8,7 +8,6 @@ import net.tazpvp.tazpvp.helpers.PlayerHelper;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.NRCore;
-import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
 import java.util.ArrayList;
 import java.util.List;

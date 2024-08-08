@@ -34,7 +34,7 @@ public class GuildServiceImpl implements GuildService {
     }
 
     @Override
-    public GuildEntity createGuild(String name, UUID owner) {
+    public void createGuild(String name, UUID owner) {
         final GuildEntity guildEntity = new GuildEntity();
 
         guildEntity.setName(name);
@@ -42,7 +42,6 @@ public class GuildServiceImpl implements GuildService {
 
         saveGuild(guildEntity);
 
-        return guildEntity;
     }
 
     @Override

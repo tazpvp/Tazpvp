@@ -3,7 +3,6 @@ package net.tazpvp.tazpvp.commands.network;
 import lombok.NonNull;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.game.duels.Duel;
 import net.tazpvp.tazpvp.helpers.CombatTagHelper;
 import net.tazpvp.tazpvp.helpers.PlayerHelper;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;

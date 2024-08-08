@@ -32,17 +32,12 @@
 
 package net.tazpvp.tazpvp.listeners;
 
-import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.enums.RegionEnum;
-import net.tazpvp.tazpvp.game.events.Event;
 import net.tazpvp.tazpvp.game.items.UsableItem;
 import net.tazpvp.tazpvp.helpers.CombatTagHelper;
-import net.tazpvp.tazpvp.objects.CombatObject;
 import net.tazpvp.tazpvp.objects.DeathObject;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;

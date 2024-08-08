@@ -1,7 +1,6 @@
 package net.tazpvp.tazpvp.game.events;
 
 import lombok.Getter;
-import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
