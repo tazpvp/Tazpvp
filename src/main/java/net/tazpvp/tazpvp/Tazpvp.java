@@ -42,6 +42,7 @@ import net.tazpvp.tazpvp.commands.admin.ResetStatsCommand;
 import net.tazpvp.tazpvp.commands.admin.booster.BoosterCommand;
 import net.tazpvp.tazpvp.commands.admin.edit.EditCommand;
 import net.tazpvp.tazpvp.commands.admin.hide.HideCommand;
+import net.tazpvp.tazpvp.commands.admin.holograms.HologramCommand;
 import net.tazpvp.tazpvp.commands.admin.kit.KitCommand;
 import net.tazpvp.tazpvp.commands.admin.npc.NpcCommand;
 import net.tazpvp.tazpvp.commands.admin.stats.StatCommand;
@@ -135,6 +136,8 @@ public final class Tazpvp extends JavaPlugin {
     @Getter
     private static SpawnableLeaderboardManager spawnableLeaderboardManager;
     @Getter
+    private static HologramUtil hologramUtil;
+    @Getter
     private static BotThread botThread;
     @Getter
     private PlayerStatService playerStatService;
@@ -195,6 +198,7 @@ public final class Tazpvp extends JavaPlugin {
         botThread = new BotThread(getConfig().getString("bot-token"));
         botThread.start();
         spawnableLeaderboardManager = new SpawnableLeaderboardManager(this);
+        hologramUtil = new HologramUtil();
     }
 
     private void connectDatabase(String host, int port, String user, String password) throws SQLException {
@@ -311,7 +315,8 @@ public final class Tazpvp extends JavaPlugin {
                 new StaffChatCommand(),
                 new BaltopCommand(),
                 new StaffChatCommand(),
-                new PayCommand()
+                new PayCommand(),
+                new HologramCommand()
         );
     }
 
