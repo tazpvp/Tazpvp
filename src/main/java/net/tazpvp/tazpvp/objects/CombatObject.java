@@ -15,22 +15,28 @@ import java.util.WeakHashMap;
 
 public class CombatObject {
 
-    private UUID id;
+    private final Player p;
     @Getter
-    private LinkedList<UUID> attackers;
+    private final LinkedList<UUID> attackers;
     @Getter
     private float countdown;
     @Getter
-    private BossBar bar;
+    private final BossBar bar;
     public static WeakHashMap<UUID, CombatObject> tags = new WeakHashMap<>();
 
     public CombatObject(UUID id) {
-        this.id = id;
         this.attackers = new LinkedList<>();
         this.countdown = 0;
-        bar = Bukkit.createBossBar("Combat Tag: 15s", BarColor.RED, BarStyle.SOLID);
+        this.bar = Bukkit.createBossBar("Combat Tag: 15s", BarColor.RED, BarStyle.SOLID);
+        this.p = Bukkit.getPlayer(id);
+        initialize();
+    }
+
+    private void initialize() {
         bar.setProgress(1);
-        bar.addPlayer(Bukkit.getPlayer(id));
+        if (p != null) {
+            bar.addPlayer(p);
+        }
         bar.setVisible(false);
     }
 
@@ -41,7 +47,6 @@ public class CombatObject {
 
     public void countDown() {
         if (countdown > 0) {
-            Player p = Bukkit.getPlayer(id);
             --countdown;
             updateBar();
             if (countdown <= 0) {
@@ -50,32 +55,29 @@ public class CombatObject {
         }
     }
 
-    public void setTimer(@Nullable UUID player) {
-        if (player != null) {
-            if (!attackers.contains(player)) {
-                attackers.add(player);
-                Bukkit.getPlayer(id).sendMessage(CC.RED + "You are now in combat with " + CC.BOLD + Bukkit.getPlayer(player).getName());
-            } else {
-                attackers.remove(player);
-                attackers.add(player);
+    public void setTimer(@Nullable UUID opponent) {
+        boolean inCombat = false;
+
+        if (opponent != null && !attackers.contains(opponent)) {
+            attackers.add(opponent);
+            Player pOpponent = Bukkit.getPlayer(opponent);
+            if (pOpponent != null) {
+                p.sendMessage(CC.RED + "You are now in combat with " + CC.BOLD + pOpponent.getName());
+                inCombat = true;
             }
         }
         if (countdown <= 0) {
-            if (player == null) {
-                Bukkit.getPlayer(id).sendMessage(CC.RED + "You are now in combat.");
+            if (!inCombat) {
+                p.sendMessage(CC.RED + "You are now in combat.");
             }
-            countdown = 15;
-            updateBar();
             bar.setVisible(true);
-        } else {
-            countdown = 15;
-            updateBar();
         }
+        countdown = 15;
+        updateBar();
     }
 
     public void endCombat(@Nullable UUID attacker, boolean msg) {
         if (attacker == null) {
-            Player p = Bukkit.getPlayer(id);
             countdown = 0;
             bar.setVisible(false);
             attackers.clear();

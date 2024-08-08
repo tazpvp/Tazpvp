@@ -58,12 +58,12 @@ public class DeathObject {
             this.location = null;
         }
         if (killer == null) {
-            final UUID currentKiller = CombatTagHelper.getLastAttacker(victim);
-            if (currentKiller != null) {
+            final UUID lastAttacker = CombatTagHelper.getLastAttacker(victim);
+            if (lastAttacker != null) {
+                this.killer = lastAttacker;
+                this.killerWrapper = PlayerWrapper.getPlayer(lastAttacker);
+                this.killerGuild = Tazpvp.getInstance().getGuildService().getGuildByPlayer(lastAttacker);
                 CombatObject.tags.get(victim).getAttackers().clear();
-                this.killer = currentKiller;
-                this.killerWrapper = PlayerWrapper.getPlayer(currentKiller);
-                this.killerGuild = Tazpvp.getInstance().getGuildService().getGuildByPlayer(currentKiller);
             } else {
                 this.killer = null;
                 this.killerWrapper = null;
