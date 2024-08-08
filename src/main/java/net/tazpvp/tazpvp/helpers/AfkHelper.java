@@ -2,6 +2,7 @@ package net.tazpvp.tazpvp.helpers;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.enums.RegionEnum;
 import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.game.crates.KeyFactory;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
@@ -63,7 +64,7 @@ public class AfkHelper {
     public static void setAfk(Player p) {
         PlayerWrapper pw = PlayerWrapper.getPlayer(p);
         if (pw == null) return;
-        if (Tazpvp.afkRegion.contains(p.getLocation())) {
+        if (RegionEnum.afkRegion.contains(p.getLocation())) {
             if (!pw.isAfk()) {
                 pw.setAfk(true);
                 pw.setTimeSinceAfk(System.currentTimeMillis());

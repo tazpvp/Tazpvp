@@ -123,10 +123,6 @@ public final class Tazpvp extends JavaPlugin {
     @Getter
     private static ConfigUtil parkourUtil;
     @Getter
-    public static Cuboid spawnRegion;
-    @Getter
-    public static Cuboid afkRegion;
-    @Getter
     private static Database database;
     @Getter
     private static PostgresqlDatabase postgresqlDatabase;
@@ -184,17 +180,6 @@ public final class Tazpvp extends JavaPlugin {
         UsableItem.registerCustomItems();
 
         parkourUtil = new ConfigUtil("parkour.yml", this);
-
-        spawnRegion = new Cuboid(
-                new Location(Bukkit.getWorld("arena"), 25, 137, -31),
-                new Location(Bukkit.getWorld("arena"), -24, 93, 25)
-        );
-
-        afkRegion = new Cuboid(
-                new Location(Bukkit.getWorld("arena"), 16, 98, 9),
-                new Location(Bukkit.getWorld("arena"), 11, 95, 4)
-        );
-
         crateManager = new CrateManager();
         botThread = new BotThread(getConfig().getString("bot-token"));
         botThread.start();

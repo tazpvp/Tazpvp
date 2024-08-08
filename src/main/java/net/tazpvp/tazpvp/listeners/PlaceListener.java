@@ -3,6 +3,7 @@ package net.tazpvp.tazpvp.listeners;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.implementations.UserRankServiceImpl;
 import net.tazpvp.tazpvp.data.services.UserRankService;
+import net.tazpvp.tazpvp.enums.RegionEnum;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -38,7 +39,7 @@ public class PlaceListener implements Listener {
             BlockData previousBlockBlockData = previousBlock.getBlockData();
             b.setMetadata("PlayerPlaced", new FixedMetadataValue(Tazpvp.getInstance(), true));
 
-            if (Tazpvp.spawnRegion.contains(p.getLocation())) {
+            if (RegionEnum.spawnRegion.contains(p.getLocation())) {
                 e.setCancelled(true);
                 return;
             }

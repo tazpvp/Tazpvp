@@ -34,6 +34,7 @@ package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.enums.RegionEnum;
 import net.tazpvp.tazpvp.game.events.Event;
 import net.tazpvp.tazpvp.game.items.UsableItem;
 import net.tazpvp.tazpvp.helpers.CombatTagHelper;
@@ -67,7 +68,7 @@ public class DamageListener implements Listener {
 
         final PlayerWrapper victimWrapper = PlayerWrapper.getPlayer(victim);
 
-        if (Tazpvp.spawnRegion.contains(victim.getLocation())) {
+        if (RegionEnum.spawnRegion.contains(victim.getLocation())) {
             event.setCancelled(true);
             return;
         }
