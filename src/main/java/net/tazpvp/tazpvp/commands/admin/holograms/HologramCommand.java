@@ -1,6 +1,6 @@
 package net.tazpvp.tazpvp.commands.admin.holograms;
 
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.utils.holograms.Hologram;
 import net.tazpvp.tazpvp.utils.holograms.HologramUtil;
 import org.bukkit.command.CommandSender;

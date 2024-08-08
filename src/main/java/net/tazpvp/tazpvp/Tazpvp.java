@@ -90,6 +90,7 @@ import net.tazpvp.tazpvp.services.PlayerNameTagService;
 import net.tazpvp.tazpvp.services.PlayerNameTagServiceImpl;
 import net.tazpvp.tazpvp.utils.ConfigUtil;
 import net.tazpvp.tazpvp.utils.discord.bot.BotThread;
+import net.tazpvp.tazpvp.utils.holograms.HologramUtil;
 import net.tazpvp.tazpvp.utils.leaderboard.spawnable.SpawnableLeaderboardManager;
 import net.tazpvp.tazpvp.utils.observer.Observer;
 import net.tazpvp.tazpvp.utils.passive.Alerts;
