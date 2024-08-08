@@ -173,15 +173,19 @@ public class ChatHelper {
 
     public static String getRankingPrefix(Player p) {
         int ranking = getRanking(p);
-        if (ranking == 5) return scoreboard(p, "✪✪✪✪✪");
-        else if (ranking == 4) return scoreboard(p, "✪✪✪✪");
-        else if (ranking == 3) return scoreboard(p, "✪✪✪");
-        else if (ranking == 2) return scoreboard(p, "✪✪");
-        else return scoreboard(p, "✪");
+        String rankText;
+
+        if (ranking == 5) rankText = "✪✪✪✪✪";
+        else if (ranking == 4) rankText = "✪✪✪✪";
+        else if (ranking == 3) rankText = "✪✪✪";
+        else if (ranking == 2) rankText = "✪✪";
+        else rankText = "✪";
+
+        scoreboard(p, rankText);
+        return ChatHelper.hexColor("#FFBE28", rankText, false);
     }
 
-    private static String scoreboard(Player p, String rank) {
+    private static void scoreboard(Player p, String rank) {
         ScoreboardHelper.updateSuffix(p, ScoreboardEnum.RANK,  rank + CC.DARK_GRAY + " " + StatEnum.MMR.getInt(p.getUniqueId()));
-        return rank;
     }
 }

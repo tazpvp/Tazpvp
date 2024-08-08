@@ -132,7 +132,7 @@ public class ChatListener implements Listener {
 
         String format = "&GOLD{RANK} &GRAY[{LEVEL}&GRAY] {PREFIX} %s{SUFFIX} &GRAY&M%s";
 
-        String rank = ChatHelper.hexColor("#FFBE28", ChatHelper.getRankingPrefix(p), false);
+        String rank = ChatHelper.getRankingPrefix(p);
         String level = StatEnum.LEVEL.getInt(uuid) + "";
 
         if (pw.getRankPrefix() == null) {

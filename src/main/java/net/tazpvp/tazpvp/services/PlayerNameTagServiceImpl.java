@@ -85,7 +85,7 @@ public class PlayerNameTagServiceImpl implements PlayerNameTagService {
         TextDisplay textDisplay = uuidItemDisplayMap.get(player.getUniqueId());
 
         if (textDisplay != null) {
-            textDisplay.setText(ChatHelper.getRankingPrefix(player) + "/n");
+            textDisplay.setText(ChatHelper.getRankingPrefix(player) + "\n");
         }
     }
 
