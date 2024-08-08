@@ -3,6 +3,7 @@ package net.tazpvp.tazpvp.game.items;
 import lombok.Getter;
 import lombok.Setter;
 import net.tazpvp.tazpvp.game.items.usables.AzureVapor;
+import net.tazpvp.tazpvp.game.items.usables.BountyHunter;
 import net.tazpvp.tazpvp.game.items.usables.Inker;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -35,6 +36,7 @@ public abstract class UsableItem {
     public static void registerCustomItems() {
         customItemList.add(new AzureVapor());
         customItemList.add(new Inker());
+        customItemList.add(new BountyHunter());
     }
 
     public static UsableItem getCustomItem(ItemStack item) {

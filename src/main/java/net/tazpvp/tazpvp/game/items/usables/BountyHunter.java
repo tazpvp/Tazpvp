@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.*;
 
 public class BountyHunter extends UsableItem {
+
     public BountyHunter() {
         super("Bounty Hunter", new String[]{"Right click to detect bounties."}, Material.COMPASS);
     }
@@ -21,7 +22,6 @@ public class BountyHunter extends UsableItem {
     public void onRightClick(Player p, ItemStack item) {
         WeakHashMap<UUID, Integer> bounties = new WeakHashMap<UUID, Integer>();
         for (Player target : Bukkit.getOnlinePlayers()) {
-            PlayerWrapper targetWrapper = PlayerWrapper.getPlayer(target);
             if (LooseData.getKs(target.getUniqueId()) > 0) {
                 bounties.put(target.getUniqueId(), LooseData.getKs(target.getUniqueId()));
             }
@@ -32,7 +32,7 @@ public class BountyHunter extends UsableItem {
 
         if (!entries.isEmpty()) {
 
-            Map.Entry<UUID, Integer> entityWithHighestKs = entries.get(0);
+            Map.Entry<UUID, Integer> entityWithHighestKs = entries.getFirst();
             Player playerHighestKs = Bukkit.getPlayer(entityWithHighestKs.getKey());
             if (playerHighestKs == null) return;
 

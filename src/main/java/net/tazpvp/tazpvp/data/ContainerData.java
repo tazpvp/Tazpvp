@@ -46,12 +46,6 @@ public abstract class ContainerData implements Serializable {
         this.data = data;
     }
 
-    /**
-     * Set the value of an achievement
-     * @param achievement The Achievement's String (should prolly be an enum but wtv)
-     * @param value The new value for that Achievement, true or false
-     * @return Returns if the achievement actually existed in the map
-     */
     public boolean set(@Nonnull final String achievement, final boolean value) {
         if (getData().containsKey(achievement)) {
             data.put(achievement, value);

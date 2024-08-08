@@ -19,5 +19,4 @@ public interface DataService {
             throw new RuntimeException(e);
         }
     }
-
 }

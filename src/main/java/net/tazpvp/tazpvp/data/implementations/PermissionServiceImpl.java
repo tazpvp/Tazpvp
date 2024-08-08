@@ -31,10 +31,8 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public PermissionEntity findByPermission(GameRankEntity gameRankEntity, String name) {
         QueryBuilder<PermissionEntity, Integer> queryBuilder = getUserDao().queryBuilder();
-
         try {
             queryBuilder.where().eq("permission", name).and().eq("game_rank", gameRankEntity);
-
             return queryBuilder.queryForFirst();
         } catch (SQLException e) {
             throw new RuntimeException(e);
