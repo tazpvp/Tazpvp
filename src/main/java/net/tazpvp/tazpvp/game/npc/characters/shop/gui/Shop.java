@@ -25,22 +25,22 @@ public class Shop extends GUI {
     private void addItems(Player p) {
         fill(0, 3*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
-        addButton(Button.create(ItemBuilder.of(Material.LECTERN, 1).name(CC.GREEN + "" + CC.BOLD + "Item Shop").lore(CC.GRAY + "Buy upgrades and battle gear").build(), (e) -> {
-            new ItemShop(p);
-        }), 10);
-
-        addButton(Button.create(ItemBuilder.of(Material.LECTERN, 1).name(CC.GREEN + "" + CC.BOLD + "Talents").lore(CC.GRAY + "PvP and PvE perks" + CC.GRAY + "for the arena").build(), (e) -> {
-            new TalentShop(p);
-        }), 12);
-
-        addButton(Button.create(ItemBuilder.of(Material.FIRE_CHARGE, 1).name(CC.GREEN + "" + CC.BOLD + "Premium").lore(CC.GRAY + "All of the premium", CC.GRAY + "and cosmetic features").build(), (e) -> {
-            new PremiumMenu(p);
-        }), 16);
-
-        addButton(Button.create(ItemBuilder.of(Material.FIRE_CHARGE, 1).name(CC.GREEN + "" + CC.BOLD + "Trade In").lore(CC.GRAY + "Trade all of your player", CC.GRAY + "heads for coins.").build(), (e) -> {
-            sellHead(p);
-        }), 30);
-
+        addButton(Button.create(ItemBuilder.of(Material.LECTERN, 1)
+                .name(CC.GREEN + "" + CC.BOLD + "Item Shop")
+                .lore(CC.GRAY + "Buy upgrades and battle gear")
+                .build(), (_) -> new ItemShop(p)), 11);
+        addButton(Button.create(ItemBuilder.of(Material.LECTERN, 1)
+                .name(CC.GREEN + "" + CC.BOLD + "Talents")
+                .lore(CC.GRAY + "PvP and PvE perks" + CC.GRAY + "for the arena")
+                .build(), (_) -> new TalentShop(p)), 13);
+        addButton(Button.create(ItemBuilder.of(Material.FIRE_CHARGE, 1)
+                .name(CC.GREEN + "" + CC.BOLD + "Premium")
+                .lore(CC.GRAY + "All of the premium", CC.GRAY + "and cosmetic features")
+                .build(), (_) -> new PremiumMenu(p)), 15);
+        addButton(Button.create(ItemBuilder.of(Material.FIRE_CHARGE, 1)
+                .name(CC.GREEN + "" + CC.BOLD + "Trade In")
+                .lore(CC.GRAY + "Trade all of your player", CC.GRAY + "heads for coins.")
+                .build(), (_) -> sellHead(p)), 30);
         update();
     }
 
