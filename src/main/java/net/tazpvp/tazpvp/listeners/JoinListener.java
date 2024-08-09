@@ -77,13 +77,8 @@ public class JoinListener implements Listener {
         int playerXp = StatEnum.XP.getInt(id);
 
         p.setLevel(playerLevel);
-        if (playerXp >= LooseData.getExpLeft(id)) {
-            PlayerHelper.levelUp(id);
-        } else if (StatEnum.XP.getInt(id) < 0) {
-            StatEnum.XP.set(id, 0);
-        } else {
-            p.setExp((float) playerXp / LooseData.getExpLeft(p.getUniqueId()));
-        }
+        PlayerHelper.updateLevel(id);
+
 
         for (Player vp : Bukkit.getOnlinePlayers()) {
             PlayerWrapper vpw = PlayerWrapper.getPlayer(vp);

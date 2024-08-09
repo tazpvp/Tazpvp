@@ -56,8 +56,11 @@ public class CombatTagHelper {
     }
 
     public static UUID getLastAttacker(UUID ID) {
-        if (getTag(ID).getAttackers().isEmpty()) return null;
-        return getTag(ID).getAttackers().peekLast();
+        if (getTag(ID).getAttackers().isEmpty()) {
+            return null;
+        } else {
+            return getTag(ID).getAttackers().peekLast();
+        }
     }
 
     public static void initCombatTag() {

@@ -73,7 +73,6 @@ public class DeathObject {
     }
 
     private void initialize() {
-
         if (victimWrapper.getDuel() != null) {
             victimWrapper.getDuel().end(victim);
             return;
@@ -92,7 +91,6 @@ public class DeathObject {
 
         deathMessage();
         respawn();
-        updateStats();
         pVictim.getInventory().clear();
 
         final KitService kitService = new KitServiceImpl();
@@ -110,6 +108,7 @@ public class DeathObject {
 
         PlayerHelper.resetHealth(pVictim);
         PlayerHelper.feedPlr(pVictim);
+        updateStats();
     }
 
     public void dropItems() {
@@ -229,14 +228,14 @@ public class DeathObject {
             int finalCoins = 5;
 
             assistant.sendMessage(
-                    CC.DARK_GRAY + "Assist kill:" + CC.GRAY + pVictim.getName() +
+                    CC.DARK_GRAY + "Assist kill:" + CC.GRAY + " " + pVictim.getName() + " " +
                             CC.DARK_AQUA + "Exp: " + CC.AQUA + finalXp + CC.GOLD + " Coins: " + CC.YELLOW + finalCoins
             );
 
             StatEnum.COINS.add(uuid, finalCoins);
             StatEnum.XP.add(uuid, finalXp);
             StatEnum.MMR.add(uuid, 5);
-            PlayerHelper.levelUp(uuid);
+            PlayerHelper.updateLevel(uuid);
         }
         CombatObject.tags.get(victim).endCombat(null, false);
     }
@@ -292,7 +291,7 @@ public class DeathObject {
             }
 
             Tazpvp.getInstance().getPlayerNameTagService().setTagRank(pKiller);
-            PlayerHelper.levelUp(killer);
+            PlayerHelper.updateLevel(killer);
         }
     }
 

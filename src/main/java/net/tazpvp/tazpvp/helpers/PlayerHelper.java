@@ -139,16 +139,17 @@ public class PlayerHelper {
         p.getInventory().setBoots(ItemEnum.KIT_BOOTS.getKitArmor());
     }
 
-    public static void levelUp(UUID ID) {
+    public static void updateLevel(UUID ID) {
         Player p = Bukkit.getPlayer(ID);
-        float value = StatEnum.XP.getInt(ID) - LooseData.getExpLeft(ID);
         if (p == null) return;
-        if (value >= LooseData.getExpLeft(ID)) {
+        float playerXp = StatEnum.XP.getInt(ID);
+
+        if (playerXp >= LooseData.getExpLeft(ID)) {
             final BoosterBonus coinsBonus = ActiveBoosterManager.getInstance()
                     .calculateBonus(100, List.of(BoosterTypes.COINS, BoosterTypes.MEGA));
             final int coins = (int) coinsBonus.result();
 
-            int num = (int) value - LooseData.getExpLeft(ID);
+            int num = (int) playerXp - LooseData.getExpLeft(ID);
 
             StatEnum.XP.set(ID, num);
             StatEnum.LEVEL.add(ID, 1);
@@ -162,9 +163,10 @@ public class PlayerHelper {
             p.sendMessage(CC.DARK_GRAY + "  ▶ " + CC.GOLD + coins + " Coins " + coinsBonus.prettyPercentMultiplier());
             p.sendMessage(CC.DARK_GRAY + "  ▶ " + CC.DARK_AQUA + "1 Shard");
             p.sendMessage("");
-
+        } else if (playerXp <= 0) {
+            StatEnum.XP.set(ID, 0);
         } else {
-            p.setExp(value / LooseData.getExpLeft(ID));
+            p.setExp(playerXp / LooseData.getExpLeft(ID));
         }
     }
 

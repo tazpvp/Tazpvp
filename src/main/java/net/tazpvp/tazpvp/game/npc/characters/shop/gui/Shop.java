@@ -15,32 +15,37 @@ import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 public class Shop extends GUI {
 
+    final static int ROWS = 5;
 
     public Shop(Player p) {
-        super("Shop", 5);
+        super("Shop", ROWS);
         addItems(p);
         open(p);
     }
 
     private void addItems(Player p) {
-        fill(0, 3*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
+        fill(0, ROWS*9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE, 1).name(" ").build());
 
-        addButton(Button.create(ItemBuilder.of(Material.LECTERN, 1)
+        addButton(Button.create(ItemBuilder.of(Material.ENDER_EYE, 1)
                 .name(CC.GREEN + "" + CC.BOLD + "Item Shop")
                 .lore(CC.GRAY + "Buy upgrades and battle gear")
+                .glow(true)
                 .build(), (_) -> new ItemShop(p)), 11);
         addButton(Button.create(ItemBuilder.of(Material.LECTERN, 1)
                 .name(CC.GREEN + "" + CC.BOLD + "Talents")
                 .lore(CC.GRAY + "PvP and PvE perks" + CC.GRAY + "for the arena")
+                .glow(true)
                 .build(), (_) -> new TalentShop(p)), 13);
-        addButton(Button.create(ItemBuilder.of(Material.FIRE_CHARGE, 1)
+        addButton(Button.create(ItemBuilder.of(Material.CAKE, 1)
                 .name(CC.GREEN + "" + CC.BOLD + "Premium")
                 .lore(CC.GRAY + "All of the premium", CC.GRAY + "and cosmetic features")
+                .glow(true)
                 .build(), (_) -> new PremiumMenu(p)), 15);
-        addButton(Button.create(ItemBuilder.of(Material.FIRE_CHARGE, 1)
+        addButton(Button.create(ItemBuilder.of(Material.BELL, 1)
                 .name(CC.GREEN + "" + CC.BOLD + "Trade In")
                 .lore(CC.GRAY + "Trade all of your player", CC.GRAY + "heads for coins.")
-                .build(), (_) -> sellHead(p)), 30);
+                .glow(true)
+                .build(), (_) -> sellHead(p)), 31);
         update();
     }
 

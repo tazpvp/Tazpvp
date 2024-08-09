@@ -36,6 +36,5 @@ import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-@Getter
 public record PickaxeObject(ItemStack item, int cost, int level, Material upgrade) {
 }

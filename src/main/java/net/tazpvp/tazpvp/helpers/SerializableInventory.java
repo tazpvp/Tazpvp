@@ -43,7 +43,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
 public record SerializableInventory(ItemStack[] hotbar) implements Serializable {
 
     public void addItems(PlayerInventory inventory, ItemStack... itemStacks) {
