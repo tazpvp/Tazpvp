@@ -11,9 +11,9 @@ import java.util.UUID;
 public interface GuildService extends DataService {
     Dao<GuildEntity, Integer> getUserDao();
 
-    void createGuild(String name, UUID owner);
+    GuildEntity createGuild(String name, UUID owner);
     void saveGuild(GuildEntity guild);
-    void addMember(GuildEntity guild, GuildMemberEntity member);
+    void addMember(GuildEntity guild, UUID player, boolean officer);
     GuildEntity getGuildByPlayer(UUID player);
     GuildEntity getGuild(int id);
     void deleteGuild(GuildEntity guild);

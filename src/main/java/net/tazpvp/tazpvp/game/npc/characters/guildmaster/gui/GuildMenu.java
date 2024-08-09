@@ -51,14 +51,12 @@ import java.util.List;
 
 public class GuildMenu extends GUI {
 
-    private final GuildEntity guildEntity;
     private final GuildService guildService;
     private static final int ROWS = 3;
 
     public GuildMenu(Player p, GuildService guildService) {
         super("Guild Browser", ROWS);
         this.guildService = guildService;
-        this.guildEntity = guildService.getGuildByPlayer(p.getUniqueId());
         addItems(p);
         open(p);
     }
@@ -67,9 +65,9 @@ public class GuildMenu extends GUI {
         clear();
         fill(0, ROWS * 9, ItemBuilder.of(Material.BLACK_STAINED_GLASS_PANE).name(" ").build());
 
+        GuildEntity guildEntity = guildService.getGuildByPlayer(p.getUniqueId());
         Button playerGuild;
-
-        if (guildService.getGuildByPlayer(p.getUniqueId()) != null) {
+        if (guildEntity != null) {
             String[] lore = {
                     " ",
                     CC.DARK_GREEN + "Kills: " + CC.GREEN + guildEntity.getKills(),
@@ -136,7 +134,7 @@ public class GuildMenu extends GUI {
                 StatEnum.COINS.remove(p.getUniqueId(), 6000);
                 p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
 
-                guildService.createGuild(text, p.getUniqueId());
+                GuildEntity guildEntity = guildService.createGuild(text, p.getUniqueId());
                 p.sendMessage("You created a guild! " + guildEntity.getName());
 
                 guildService.saveGuild(guildEntity);

@@ -133,7 +133,7 @@ public class DamageListener implements Listener {
         if ((victim.getHealth() - finalDamage) <= 0) {
             event.setCancelled(true);
 
-            final UUID lastAttacker = CombatTagHelper.getLastAttacker(victim.getUniqueId());
+            final UUID lastAttacker = CombatTagHelper.getLastAttacker(id);
             if (lastAttacker != null) {
                 new DeathObject(id, lastAttacker);
             } else {

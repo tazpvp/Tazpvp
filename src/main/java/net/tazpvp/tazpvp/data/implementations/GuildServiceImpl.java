@@ -34,14 +34,15 @@ public class GuildServiceImpl implements GuildService {
     }
 
     @Override
-    public void createGuild(String name, UUID owner) {
+    public GuildEntity createGuild(String name, UUID owner) {
         final GuildEntity guildEntity = new GuildEntity();
 
         guildEntity.setName(name);
         guildEntity.setOwner(owner);
 
         saveGuild(guildEntity);
-
+        addMember(guildEntity, owner, true);
+        return guildEntity;
     }
 
     @Override
@@ -54,8 +55,20 @@ public class GuildServiceImpl implements GuildService {
     }
 
     @Override
-    public void addMember(GuildEntity guild, GuildMemberEntity member) {
-        guild.getMembers().add(member);
+    public void addMember(GuildEntity guild, UUID player, boolean officer) {
+        GuildMemberEntity guildMemberEntity = guildMemberService.getGuildMemberByUUID(player);
+
+        if (guildMemberEntity != null) {
+            guildMemberEntity.setGuildEntity(guild);
+        } else {
+            guildMemberEntity = new GuildMemberEntity();
+            guildMemberEntity.setGuildEntity(guild);
+            guildMemberEntity.setPUUID(player);
+            guildMemberEntity.setOfficer(officer);
+        }
+
+        guildMemberService.saveGuildMemberEntity(guildMemberEntity);
+        guild.getMembers().add(guildMemberEntity);
         saveGuild(guild);
     }
 

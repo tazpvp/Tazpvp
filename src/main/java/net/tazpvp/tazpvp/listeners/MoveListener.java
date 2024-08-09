@@ -7,6 +7,7 @@ import net.tazpvp.tazpvp.data.services.PunishmentService;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.game.npc.characters.NPC;
 import net.tazpvp.tazpvp.helpers.AfkHelper;
+import net.tazpvp.tazpvp.helpers.CombatTagHelper;
 import net.tazpvp.tazpvp.helpers.ParkourHelper;
 import net.tazpvp.tazpvp.objects.DeathObject;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
@@ -19,6 +20,8 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import world.ntdi.nrcore.NRCore;
+
+import java.util.UUID;
 
 public class MoveListener implements Listener {
     @EventHandler
@@ -69,11 +72,11 @@ public class MoveListener implements Listener {
 
             if (p.getGameMode() == GameMode.SURVIVAL) {
                 if (p.getLocation().getY() < 78 && p.getLocation().getZ() < 133) {
-                    new DeathObject(p.getUniqueId(), null);
+                    handleDeath(p.getUniqueId());
                     return;
                 }
                 if (p.getLocation().getY() < 64) {
-                    new DeathObject(p.getUniqueId(), null);
+                    handleDeath(p.getUniqueId());
                     return;
                 }
             }
@@ -118,6 +121,15 @@ public class MoveListener implements Listener {
                 p.setVelocity(new Vector(0, 1.2, 3));
             }
             Tazpvp.getObservers().forEach(o -> o.launch(p));
+        }
+    }
+
+    private void handleDeath(UUID id) {
+        final UUID lastAttacker = CombatTagHelper.getLastAttacker(id);
+        if (lastAttacker != null) {
+            new DeathObject(id, lastAttacker);
+        } else {
+            new DeathObject(id, null);
         }
     }
 }
