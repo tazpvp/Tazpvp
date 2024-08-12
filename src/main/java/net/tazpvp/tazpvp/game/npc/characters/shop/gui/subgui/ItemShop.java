@@ -37,15 +37,18 @@ import net.tazpvp.tazpvp.enums.ItemEnum;
 import net.tazpvp.tazpvp.enums.StatEnum;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.item.builders.EnchantmentBookBuilder;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import javax.annotation.Nullable;
+import java.util.Map;
 import java.util.UUID;
 
 public class ItemShop extends GUI {
@@ -117,9 +120,10 @@ public class ItemShop extends GUI {
         if (StatEnum.COINS.getInt(id) >= cost) {
             StatEnum.COINS.remove(id, cost);
             if (enchantment == null) {
-                p.getInventory().addItem(item.getItem(amount));
+                dropItem(p, item.getItem(amount));
             } else {
-                p.getInventory().addItem(new EnchantmentBookBuilder().enchantment(enchantment, 1).build());
+                p.getInventory().addItem();
+                dropItem(p, new EnchantmentBookBuilder().enchantment(enchantment, 1).build());
             }
             p.sendMessage(prefix + "You purchased: " + item.getName());
             p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1, 1);
@@ -136,5 +140,16 @@ public class ItemShop extends GUI {
         }
         slotNum ++;
         count++;
+    }
+
+    private void dropItem(Player p, ItemStack item) {
+        PlayerInventory inventory = p.getInventory();
+        Map<Integer, ItemStack> remainingItems = inventory.addItem(item);
+        if (!remainingItems.isEmpty()) {
+            World world = p.getWorld();
+            for (ItemStack leftover : remainingItems.values()) {
+                world.dropItemNaturally(p.getLocation(), leftover);
+            }
+        }
     }
 }
