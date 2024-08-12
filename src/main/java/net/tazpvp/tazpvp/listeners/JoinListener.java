@@ -43,6 +43,7 @@ import net.tazpvp.tazpvp.helpers.*;
 import net.tazpvp.tazpvp.objects.CombatObject;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -67,18 +68,12 @@ public class JoinListener implements Listener {
         Tazpvp.getInstance().getPlayerNameTagService().initializePlayer(p);
         BanHelper.checkBan(p);
 
-        if (!p.getWorld().getName().equalsIgnoreCase("arena")) {
-            PlayerHelper.teleport(p, NRCore.config.spawn);
-        }
-
         CombatObject.tags.put(id, new CombatObject(id));
 
         int playerLevel = StatEnum.LEVEL.getInt(id);
-        int playerXp = StatEnum.XP.getInt(id);
 
         p.setLevel(playerLevel);
         PlayerHelper.updateLevel(id);
-
 
         for (Player vp : Bukkit.getOnlinePlayers()) {
             PlayerWrapper vpw = PlayerWrapper.getPlayer(vp);
@@ -122,7 +117,16 @@ public class JoinListener implements Listener {
         final String message = plus + " " + name;
         e.setJoinMessage(message);
 
+        if (!p.getWorld().getName().equalsIgnoreCase("arena")) {
+            PlayerHelper.teleport(p, NRCore.config.spawn);
+        }
+        if (p.getGameMode() == GameMode.SPECTATOR) {
+            PlayerHelper.teleport(p, NRCore.config.spawn);
+            p.setGameMode(GameMode.SURVIVAL);
+        }
+
         AfkHelper.setAfk(p);
+
         Tazpvp.getBotThread().connectionChat(p.getName(), true);
     }
 }
