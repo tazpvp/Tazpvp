@@ -62,13 +62,17 @@ public class CombatObject {
             attackers.add(opponent);
             Player pOpponent = Bukkit.getPlayer(opponent);
             if (pOpponent != null) {
-                p.sendMessage(CC.RED + "You are now in combat with " + CC.BOLD + pOpponent.getName());
+                if (p != null) {
+                    p.sendMessage(CC.RED + "You are now in combat with " + CC.BOLD + pOpponent.getName());
+                }
                 inCombat = true;
             }
         }
         if (countdown <= 0) {
             if (!inCombat) {
-                p.sendMessage(CC.RED + "You are now in combat.");
+                if (p != null) {
+                    p.sendMessage(CC.RED + "You are now in combat.");
+                }
             }
             bar.setVisible(true);
         }
@@ -82,7 +86,9 @@ public class CombatObject {
             bar.setVisible(false);
             attackers.clear();
             if (msg) {
-                p.sendMessage(CC.GREEN +"You are no longer in combat.");
+                if (p != null) {
+                    p.sendMessage(CC.GREEN +"You are no longer in combat.");
+                }
             }
         } else {
             attackers.remove(attacker);

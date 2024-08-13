@@ -116,7 +116,7 @@ public class ChatListener implements Listener {
             }
         }
 
-        if (pw.getRank().getName().equals("default") && pw.getLastMessageSent().equalsIgnoreCase(e.getMessage())) {
+        if (pw.getRank().getName().equals("default") && pw.getLastMessageSent().equalsIgnoreCase(e.getMessage()) && !p.isOp()) {
             e.setCancelled(true);
             p.sendMessage(CC.RED + "Please do not spam our chats.");
             return;
@@ -158,7 +158,7 @@ public class ChatListener implements Listener {
         for (Player recipient : Bukkit.getOnlinePlayers()) {
             if (customMessage.contains(recipient.getName())) {
                 recipient.playSound(recipient.getLocation(), Sound.BLOCK_BELL_USE, 1, 1);
-                customMessage = customMessage.replace(recipient.getName(), CC.YELLOW + recipient.getName());
+                customMessage = customMessage.replace(recipient.getName(), CC.YELLOW + recipient.getName() + CC.WHITE);
             }
         }
 
