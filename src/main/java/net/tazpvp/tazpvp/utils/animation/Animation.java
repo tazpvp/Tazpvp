@@ -9,6 +9,7 @@ import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class Animation {
     private final List<Frame> frames = new ArrayList<>();
@@ -56,7 +57,7 @@ public class Animation {
         result.set(angle, start.x + t * (end.x - start.x), start.y + t * (end.y - start.y), start.z + t * (end.z - start.z));
     }
 
-    public void playAnimation(BlockDisplay blockDisplay, long duration) {
+    public void playAnimation(BlockDisplay blockDisplay, long duration, Consumer<BlockDisplay> afterFinish) {
         long startTime = System.currentTimeMillis();
 
         new BukkitRunnable() {
@@ -66,6 +67,7 @@ public class Animation {
                 if (progress >= 1.0f) {
                     blockDisplay.setTransformation(frames.get(frames.size() - 1).toTransformation());
                     cancel();
+                    afterFinish.accept(blockDisplay);
                     return;
                 }
 

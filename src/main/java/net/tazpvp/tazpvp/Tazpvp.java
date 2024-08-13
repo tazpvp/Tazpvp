@@ -39,6 +39,7 @@ import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.tazpvp.tazpvp.commands.admin.BroadcastCommand;
 import net.tazpvp.tazpvp.commands.admin.KeyallCommand;
 import net.tazpvp.tazpvp.commands.admin.ResetStatsCommand;
+import net.tazpvp.tazpvp.commands.admin.animation.ChestAnimationCommand;
 import net.tazpvp.tazpvp.commands.admin.booster.BoosterCommand;
 import net.tazpvp.tazpvp.commands.admin.edit.EditCommand;
 import net.tazpvp.tazpvp.commands.admin.hide.HideCommand;
@@ -301,7 +302,8 @@ public final class Tazpvp extends JavaPlugin {
                 new BaltopCommand(),
                 new StaffChatCommand(),
                 new PayCommand(),
-                new HologramCommand()
+                new HologramCommand(),
+                new ChestAnimationCommand()
         );
     }
 
