@@ -35,6 +35,7 @@ package net.tazpvp.tazpvp.commands.gameplay.guild.sub;
 
 import lombok.NonNull;
 import net.tazpvp.tazpvp.commands.gameplay.guild.handler.GuildAbstractArgumentCommand;
+import net.tazpvp.tazpvp.data.entity.GuildEntity;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
 
@@ -44,7 +45,7 @@ public class GuildKickCommand extends GuildAbstractArgumentCommand {
     }
 
     @Override
-    public boolean executeFunction(@NonNull Player p, @NonNull Player target) {
+    public boolean executeFunction(@NonNull Player p, GuildEntity guildEntity, @NonNull Player target) {
 //        if (!g.hasElevatedPerms(p.getUniqueId())) {
 //            p.sendMessage(GuildCommand.getNoPerms());
 //            return true;

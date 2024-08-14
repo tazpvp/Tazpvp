@@ -34,29 +34,42 @@
 package net.tazpvp.tazpvp.commands.gameplay.guild.sub;
 
 import lombok.NonNull;
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.commands.gameplay.guild.handler.GuildAbstractArgumentCommand;
+import net.tazpvp.tazpvp.data.entity.GuildEntity;
+import net.tazpvp.tazpvp.data.entity.GuildMemberEntity;
+import net.tazpvp.tazpvp.data.services.GuildMemberService;
+import net.tazpvp.tazpvp.data.services.GuildService;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
 
 public class GuildDemoteCommand extends GuildAbstractArgumentCommand {
+    private static final GuildService guildService = Tazpvp.getInstance().getGuildService();
+    private static final GuildMemberService guildMemberService = Tazpvp.getInstance().getGuildMemberService();
+
     public GuildDemoteCommand() {
         super(new Label("demote", null));
     }
 
     @Override
-    public boolean executeFunction(@NonNull Player p, @NonNull Player target) {
-//        if (!g.getGuildMembers().contains(target.getUniqueId())) {
-//            p.sendMessage("This user is not in your guild");
-//            return true;
-//        }
-//
-//        if (!g.getGuildGenerals().contains(target.getUniqueId())) {
-//            p.sendMessage("This user is already a member.");
-//            return true;
-//        }
-//
-//        g.demoteMember(target.getUniqueId());
-//        p.sendMessage("You demoted: " + target.getName());
+    public boolean executeFunction(@NonNull Player p, GuildEntity guildEntity, @NonNull Player target) {
+        if (!guildService.isInGuild(target.getUniqueId(), guildEntity)) {
+            p.sendMessage("This user is not in your guild");
+            return true;
+        }
+
+        if (!guildService.isOfficer(target.getUniqueId(), guildEntity)) {
+            p.sendMessage("This user is already the lowest rank.");
+            return true;
+        }
+
+        GuildMemberEntity targetGuildMemberEntity = guildService.getMemberEntity(guildEntity, target.getUniqueId());
+        if (targetGuildMemberEntity != null) {
+            targetGuildMemberEntity.setOfficer(false);
+            guildMemberService.saveGuildMemberEntity(targetGuildMemberEntity);
+        }
+
+        p.sendMessage("You demoted: " + target.getName());
 
         return true;
     }

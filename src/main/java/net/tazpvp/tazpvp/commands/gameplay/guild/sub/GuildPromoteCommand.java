@@ -34,33 +34,47 @@
 package net.tazpvp.tazpvp.commands.gameplay.guild.sub;
 
 import lombok.NonNull;
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.commands.gameplay.guild.GuildCommand;
 import net.tazpvp.tazpvp.commands.gameplay.guild.handler.GuildAbstractArgumentCommand;
+import net.tazpvp.tazpvp.data.entity.GuildEntity;
+import net.tazpvp.tazpvp.data.entity.GuildMemberEntity;
+import net.tazpvp.tazpvp.data.services.GuildMemberService;
+import net.tazpvp.tazpvp.data.services.GuildService;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
 
 public class GuildPromoteCommand extends GuildAbstractArgumentCommand {
+    private static final GuildService guildService = Tazpvp.getInstance().getGuildService();
+    private static final GuildMemberService guildMemberService = Tazpvp.getInstance().getGuildMemberService();
+
     public GuildPromoteCommand() {
         super(new Label("promote", null));
     }
 
     @Override
-    public boolean executeFunction(@NonNull Player p, @NonNull Player target) {
-//        if (g.getGuildLeader() != p.getUniqueId()) {
-//            p.sendMessage(GuildCommand.getNoPerms());
-//            return true;
-//        }
-//
-//        if (!g.getGuildMembers().contains(target.getUniqueId())) {
-//            p.sendMessage("This user is not in your guild.");
-//            return true;
-//        }
-//
-//        if (g.getGuildGenerals().contains(target.getUniqueId())) {
-//            p.sendMessage("This user is already a general.");
-//            return true;
-//        }
-//
-//        g.promoteMember(target.getUniqueId());
+    public boolean executeFunction(@NonNull Player p, GuildEntity guildEntity, @NonNull Player target) {
+
+        if (guildEntity.getOwner() != p.getUniqueId()) {
+            p.sendMessage(GuildCommand.getNoPerms());
+            return true;
+        }
+
+        if (!guildService.isInGuild(target.getUniqueId(), guildEntity)) {
+            p.sendMessage("This user is not in your guild.");
+            return true;
+        }
+
+        if (guildService.isOfficer(target.getUniqueId(), guildEntity)) {
+            p.sendMessage("This user is already the highest rank.");
+            return true;
+        }
+
+        GuildMemberEntity targetGuildMemberEntity = guildService.getMemberEntity(guildEntity, target.getUniqueId());
+        if (targetGuildMemberEntity != null) {
+            targetGuildMemberEntity.setOfficer(true);
+            guildMemberService.saveGuildMemberEntity(targetGuildMemberEntity);
+        }
 
         return true;
     }
