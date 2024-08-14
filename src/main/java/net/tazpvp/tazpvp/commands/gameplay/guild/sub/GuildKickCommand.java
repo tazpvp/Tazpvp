@@ -34,30 +34,43 @@
 package net.tazpvp.tazpvp.commands.gameplay.guild.sub;
 
 import lombok.NonNull;
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.commands.gameplay.guild.GuildCommand;
 import net.tazpvp.tazpvp.commands.gameplay.guild.handler.GuildAbstractArgumentCommand;
 import net.tazpvp.tazpvp.data.entity.GuildEntity;
+import net.tazpvp.tazpvp.data.services.GuildService;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
 
 public class GuildKickCommand extends GuildAbstractArgumentCommand {
+
+    private static final GuildService guildService = Tazpvp.getInstance().getGuildService();
     public GuildKickCommand() {
         super(new Label("kick", null));
     }
 
     @Override
     public boolean executeFunction(@NonNull Player p, GuildEntity guildEntity, @NonNull Player target) {
-//        if (!g.hasElevatedPerms(p.getUniqueId())) {
-//            p.sendMessage(GuildCommand.getNoPerms());
-//            return true;
-//        }
-//
-//        if (!g.getGuildMembers().contains(target.getUniqueId())) {
-//            p.sendMessage("This user is not in your guild");
-//            return true;
-//        }
-//
-//        g.removeMember(target.getUniqueId());
-//        p.sendMessage("Kicked the user: " + target.getName());
+        if (!guildService.isInGuild(target.getUniqueId(), guildEntity)) {
+            p.sendMessage("This user is not in your guild");
+            return true;
+        }
+
+        if (guildService.isOfficer(target.getUniqueId(), guildEntity)) {
+            if (guildEntity.getOwner() != p.getUniqueId()) {
+                p.sendMessage(GuildCommand.getNoPerms());
+                return true;
+            }
+        }
+
+        if (!guildService.isOfficer(p.getUniqueId(), guildEntity)) {
+            p.sendMessage(GuildCommand.getNoPerms());
+            return true;
+        }
+
+        guildService.removeMember(guildEntity, target.getUniqueId());
+
+        p.sendMessage("Kicked the user: " + target.getName());
 
         return true;
     }

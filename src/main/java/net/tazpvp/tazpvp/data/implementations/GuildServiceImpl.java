@@ -73,6 +73,18 @@ public class GuildServiceImpl implements GuildService {
     }
 
     @Override
+    public void removeMember(GuildEntity guild, UUID player) {
+        GuildMemberEntity guildMemberEntity = guildMemberService.getGuildMemberByUUID(player);
+
+        if (guildMemberEntity != null) {
+            guildMemberEntity.setGuildEntity(null);
+            guildMemberService.saveGuildMemberEntity(guildMemberEntity);
+            guild.getMembers().remove(guildMemberEntity);
+            saveGuild(guild);
+        }
+    }
+
+    @Override
     public GuildEntity getGuildByPlayer(UUID player) {
         GuildMemberEntity member = guildMemberService.getGuildMemberByUUID(player);
 

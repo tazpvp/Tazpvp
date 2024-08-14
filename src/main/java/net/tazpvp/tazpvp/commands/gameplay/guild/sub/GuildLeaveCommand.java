@@ -34,24 +34,28 @@
 package net.tazpvp.tazpvp.commands.gameplay.guild.sub;
 
 import lombok.NonNull;
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.commands.gameplay.guild.handler.GuildAvailableCommand;
 import net.tazpvp.tazpvp.data.entity.GuildEntity;
+import net.tazpvp.tazpvp.data.services.GuildService;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
 
 public class GuildLeaveCommand extends GuildAvailableCommand {
+    private static final GuildService guildService = Tazpvp.getInstance().getGuildService();
     public GuildLeaveCommand() {
         super(new Label("leave", null));
     }
 
     @Override
     public boolean executeFunction(@NonNull Player p, GuildEntity guildEntity) {
-//        if (g.getGuildLeader().equals(p.getUniqueId())) {
-//            p.sendMessage("You cannot leave your guild. Try /g disband");
-//            return true;
-//        }
-//
-//        g.removeMember(p.getUniqueId());
+        if (guildEntity.getOwner() == p.getUniqueId()) {
+            p.sendMessage("You cannot leave your guild. Try /g disband");
+            return true;
+        }
+
+        guildService.removeMember(guildEntity, p.getUniqueId());
+
         return true;
     }
 }

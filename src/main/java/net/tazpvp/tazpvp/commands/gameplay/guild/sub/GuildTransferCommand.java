@@ -34,32 +34,39 @@
 package net.tazpvp.tazpvp.commands.gameplay.guild.sub;
 
 import lombok.NonNull;
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.commands.gameplay.guild.GuildCommand;
 import net.tazpvp.tazpvp.commands.gameplay.guild.handler.GuildAbstractArgumentCommand;
 import net.tazpvp.tazpvp.data.entity.GuildEntity;
+import net.tazpvp.tazpvp.data.services.GuildService;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
 
 public class GuildTransferCommand extends GuildAbstractArgumentCommand {
+
+    private static final GuildService guildService = Tazpvp.getInstance().getGuildService();
+
     public GuildTransferCommand() {
         super(new Label("transfer", null));
     }
 
     @Override
     public boolean executeFunction(@NonNull Player p, GuildEntity guildEntity, @NonNull Player target) {
-//        if (g.getGuildLeader() != p.getUniqueId()) {
-//            p.sendMessage(GuildCommand.getNoPerms());
-//            return true;
-//        }
-//
-//        if (!g.getGuildMembers().contains(target.getUniqueId())) {
-//            p.sendMessage(target.getName() + " must be a member of your guild in order to transfer it to them!");
-//            return false;
-//        }
-//
-//        g.transferOwnership(target.getUniqueId());
-//
-//        target.sendMessage("You are now the leader of " + g.getName());
-//        p.sendMessage("Transferred " + g.getName() + " to " + target.getName() + ", you are now a general.");
+        if (guildEntity.getOwner() != p.getUniqueId()) {
+            p.sendMessage(GuildCommand.getNoPerms());
+            return true;
+        }
+
+        if (!guildService.isInGuild(target.getUniqueId(), guildEntity)) {
+            p.sendMessage(target.getName() + " must be a member of your guild in order to transfer it to them!");
+            return false;
+        }
+
+        guildEntity.setOwner(target.getUniqueId());
+        guildService.saveGuild(guildEntity);
+
+        target.sendMessage("You are now the leader of " + guildEntity.getName());
+        p.sendMessage("Transferred " + guildEntity.getName() + " to " + target.getName() + ", you are now a general.");
 
         return true;
     }

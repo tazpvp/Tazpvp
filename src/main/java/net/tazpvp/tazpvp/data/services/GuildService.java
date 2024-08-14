@@ -14,6 +14,7 @@ public interface GuildService extends DataService {
     GuildEntity createGuild(String name, UUID owner);
     void saveGuild(GuildEntity guild);
     void addMember(GuildEntity guild, UUID player, boolean officer);
+    void removeMember(GuildEntity guild, UUID player);
     GuildEntity getGuildByPlayer(UUID player);
     GuildEntity getGuild(int guildID);
     void deleteGuild(GuildEntity guild);
