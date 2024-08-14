@@ -50,10 +50,10 @@ public class ChestAnimationCommand extends NRCommand {
         ));
 
         animation.addFrame(new Frame(
-                new Vector3f(0.0f, 0.0f, 0.0f),
-                new AxisAngle4f(0, 0, 1, 0),
-                new Vector3f(1.0f, 1.0f, 1.0f),
-                new AxisAngle4f(0, 0, 1, 0)
+                new Vector3f(5f, 2f, -3f),
+                new AxisAngle4f((float) Math.toRadians(12), 1, 1, 0),
+                new Vector3f(5f, 1.0f, 5f),
+                new AxisAngle4f(0, 0, 1, 1)
         ));
 
         animation.playAnimation(blockDisplay, 5000, b -> {
