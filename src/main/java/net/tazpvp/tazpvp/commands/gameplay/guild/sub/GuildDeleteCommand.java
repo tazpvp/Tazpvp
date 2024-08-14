@@ -34,56 +34,64 @@
 package net.tazpvp.tazpvp.commands.gameplay.guild.sub;
 
 import lombok.NonNull;
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.data.entity.GuildEntity;
+import net.tazpvp.tazpvp.data.services.GuildService;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GuildDeleteCommand extends NRCommand {
+
+    private static final GuildService guildService = Tazpvp.getInstance().getGuildService();
+
     public GuildDeleteCommand() {
         super(new Label("delete", "is.op"));
     }
 
     @Override
     public boolean execute(@NonNull CommandSender sender, @NonNull String[] args) {
-//        if (!(sender instanceof Player p)) {
-//            sendIncorrectUsage(sender);
-//            return false;
-//        }
-//
-//        if (!sender.hasPermission(getLabel().getPermission())) {
-//            sendNoPermission(sender);
-//            return false;
-//        }
-//
-//        if (args.length < 1) {
-//            sendIncorrectUsage(sender, "Missing guild name");
-//            return false;
-//        }
-//
-//        final String guildName = args[0];
-//
-//        for (Guild g : GuildData.getAllGuilds()) {
-//            if (g.getName().equals(guildName)) {
-//                g.deleteGuild();
-//                p.sendMessage("You've deleted the guild: " + guildName);
-//            }
-//        }
+        if (!(sender instanceof Player p)) {
+            sendIncorrectUsage(sender);
+            return false;
+        }
+
+        if (!sender.hasPermission(getLabel().getPermission())) {
+            sendNoPermission(sender);
+            return false;
+        }
+
+        if (args.length < 1) {
+            sendIncorrectUsage(sender, "Missing guild name");
+            return false;
+        }
+
+        final String guildName = args[0];
+
+        for (GuildEntity guild : guildService.getAllGuilds()) {
+            if (guild.getName().equals(guildName)) {
+                guildService.deleteGuild(guild);
+                p.sendMessage("You've deleted the guild: " + guildName);
+            }
+        }
 
         return true;
     }
 
     @Override
     public List<String> complete(CommandSender sender, String[] args) {
-//        if (args.length >= 1) {
-//            List<String> guildNames = new ArrayList<>();
-//            GuildData.getAllGuilds().forEach(guild -> {
-//                guildNames.add(guild.getName());
-//            });
-//
-//            return guildNames;
-//        }
+        if (args.length >= 1) {
+            List<String> guildNames = new ArrayList<>();
+            guildService.getAllGuilds().forEach(guild -> {
+                guildNames.add(guild.getName());
+            });
+
+            return guildNames;
+        }
         return List.of("");
     }
 }

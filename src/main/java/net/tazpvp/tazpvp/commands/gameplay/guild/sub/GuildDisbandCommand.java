@@ -34,25 +34,31 @@
 package net.tazpvp.tazpvp.commands.gameplay.guild.sub;
 
 import lombok.NonNull;
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.commands.gameplay.guild.handler.GuildAvailableCommand;
 import net.tazpvp.tazpvp.data.entity.GuildEntity;
+import net.tazpvp.tazpvp.data.services.GuildService;
+import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
 
 public class GuildDisbandCommand extends GuildAvailableCommand {
+
+    private static final GuildService guildService = Tazpvp.getInstance().getGuildService();
+
     public GuildDisbandCommand() {
         super(new Label("disband", null));
     }
 
     @Override
     public boolean executeFunction(@NonNull Player p, GuildEntity guildEntity) {
-//        if (g.getGuildLeader() != p.getUniqueId()) {
-//            p.sendMessage(CC.RED + "You don't own this guild.");
-//            return false;
-//        }
-//
-//        g.deleteGuild();
-//        p.sendMessage("You disbanded your guild");
+        if (guildEntity.getOwner() != p.getUniqueId()) {
+            p.sendMessage(CC.RED + "You don't own this guild.");
+            return false;
+        }
+
+        guildService.deleteGuild(guildEntity);
+        p.sendMessage("You disbanded your guild");
 
         return true;
     }
