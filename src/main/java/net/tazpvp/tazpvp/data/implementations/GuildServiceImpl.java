@@ -83,9 +83,9 @@ public class GuildServiceImpl implements GuildService {
     }
 
     @Override
-    public GuildEntity getGuild(int id) {
+    public GuildEntity getGuild(int guildID) {
         try {
-            return getUserDao().queryForId(id);
+            return getUserDao().queryForId(guildID);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -99,8 +99,6 @@ public class GuildServiceImpl implements GuildService {
             throw new RuntimeException(e);
         }
     }
-
-
 
     @Override
     public void messageAll(GuildEntity guild, String msg) {
@@ -187,5 +185,31 @@ public class GuildServiceImpl implements GuildService {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public boolean isInGuild(UUID player, GuildEntity guildEntity) {
+        return getMemberEntity(guildEntity, player) != null;
+    }
+
+    @Override
+    public boolean inSameGuild(UUID player, UUID player2) {
+        final GuildEntity guildEntity = getGuildByPlayer(player);
+        if (guildEntity == null) return false;
+        return getMemberEntity(guildEntity, player2) != null;
+    }
+
+    @Override
+    public boolean isInAGuild(UUID player) {
+        return getGuildByPlayer(player) != null;
+    }
+
+    @Override
+    public boolean isOfficer(UUID player, GuildEntity guildEntity) {
+        GuildMemberEntity guildMemberEntity = getMemberEntity(guildEntity, player);
+        if (guildMemberEntity != null) {
+            return guildMemberEntity.isOfficer();
+        }
+        return false;
     }
 }

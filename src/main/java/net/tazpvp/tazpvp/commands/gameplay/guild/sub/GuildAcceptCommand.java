@@ -34,34 +34,43 @@
 package net.tazpvp.tazpvp.commands.gameplay.guild.sub;
 
 import lombok.NonNull;
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.data.entity.GuildEntity;
+import net.tazpvp.tazpvp.data.services.GuildService;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
+import java.util.UUID;
+
 public class GuildAcceptCommand extends NRCommand {
+
+    private static final GuildService guildService = Tazpvp.getInstance().getGuildService();
+
     public GuildAcceptCommand() {
         super(new Label("accept", null));
     }
 
     @Override
     public boolean execute(@NonNull CommandSender sender, @NonNull String[] args) {
-//        if (!(sender instanceof Player p)) {
-//            sendIncorrectUsage(sender);
-//            return false;
-//        }
-//        acceptInvite(p);
+        if (!(sender instanceof Player p)) {
+            sendIncorrectUsage(sender);
+            return false;
+        }
+        acceptInvite(p);
         return true;
     }
 
-//    private static void acceptInvite(Player p) {
-//        if (p.hasMetadata("guildInvited")) {
-//            UUID guildID = UUID.fromString(p.getMetadata("guildInvited").get(0).asString());
-//            Guild g = GuildData.getGuild(guildID);
-//
-//            g.acceptInvite(p.getUniqueId());
-//            p.removeMetadata("guildInvite", Tazpvp.getInstance());
-//        } else {
-//            p.sendMessage("You were not invited to a guild.");
-//        }
-//    }
+    private static void acceptInvite(Player p) {
+        if (p.hasMetadata("guildInvited")) {
+            int guildID = Integer.parseInt(p.getMetadata("guildInvited").getFirst().asString());
+            GuildEntity guildEntity = guildService.getGuild(guildID);
+
+            guildService.addMember(guildEntity, p.getUniqueId(), false);
+            p.removeMetadata("guildInvite", Tazpvp.getInstance());
+        } else {
+            p.sendMessage("You were not invited to a guild.");
+        }
+    }
 }

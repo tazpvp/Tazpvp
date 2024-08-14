@@ -15,7 +15,7 @@ public interface GuildService extends DataService {
     void saveGuild(GuildEntity guild);
     void addMember(GuildEntity guild, UUID player, boolean officer);
     GuildEntity getGuildByPlayer(UUID player);
-    GuildEntity getGuild(int id);
+    GuildEntity getGuild(int guildID);
     void deleteGuild(GuildEntity guild);
     void messageAll(GuildEntity guild, String msg);
     List<UUID> getAllOnlineMembers(GuildEntity guild);
@@ -25,4 +25,8 @@ public interface GuildService extends DataService {
     GuildMemberEntity getMemberEntity(GuildEntity guild, UUID uuid);
     List<GuildEntity> getAllGuilds();
     List<GuildEntity> getAllGuildsSorted();
+    boolean isInGuild(UUID player, GuildEntity guildEntity);
+    boolean inSameGuild(UUID player, UUID player2);
+    boolean isInAGuild(UUID player);
+    boolean isOfficer(UUID player, GuildEntity guildEntity);
 }

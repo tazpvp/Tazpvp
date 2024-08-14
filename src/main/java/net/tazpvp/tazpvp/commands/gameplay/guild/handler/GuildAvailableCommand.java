@@ -34,32 +34,38 @@
 package net.tazpvp.tazpvp.commands.gameplay.guild.handler;
 
 import lombok.NonNull;
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.data.entity.GuildEntity;
+import net.tazpvp.tazpvp.data.services.GuildService;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
 public class GuildAvailableCommand extends NRCommand {
+
+    private final GuildService guildService = Tazpvp.getInstance().getGuildService();
+
     public GuildAvailableCommand(@NonNull Label label) {
         super(label);
     }
 
     @Override
     public boolean execute(@NonNull CommandSender sender, @NonNull String[] args) {
-//        if (!(sender instanceof Player p)) {
-//            sendIncorrectUsage(sender);
-//            return false;
-//        }
-//
-//        if (!GuildUtils.isInGuild(p)) {
-//            sendIncorrectUsage(p, "You're not in a guild");
-//            return false;
-//        }
-//
-//        Guild g = GuildUtils.getGuildPlayerIn(p);
-//        return executeFunction(p, g);
-        return true;
+        if (!(sender instanceof Player p)) {
+            sendIncorrectUsage(sender);
+            return false;
+        }
+
+        final GuildEntity guildEntity = guildService.getGuildByPlayer(p.getUniqueId());
+
+        if (guildEntity == null) {
+            sendIncorrectUsage(p, "You're not in a guild");
+            return false;
+        }
+
+        return executeFunction(p, guildEntity);
     }
 
-    public boolean executeFunction(@NonNull Player p) {return true;}
+    public boolean executeFunction(@NonNull Player p, GuildEntity guildEntity) {return true;}
 }

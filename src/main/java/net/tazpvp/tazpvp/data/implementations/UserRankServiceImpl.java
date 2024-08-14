@@ -199,4 +199,13 @@ public class UserRankServiceImpl implements UserRankService {
 
         saveUserRankEntity(userRankEntity1);
     }
+
+    @Override
+    public boolean isPremium(UUID uuid) {
+        UserRankEntity userRankEntity = getUserRankEntity(uuid);
+        if (userRankEntity != null) {
+            return getHighestRank(userRankEntity).getHierarchy() < 1;
+        }
+        return false;
+    }
 }

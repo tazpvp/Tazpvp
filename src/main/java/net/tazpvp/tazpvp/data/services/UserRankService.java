@@ -23,4 +23,5 @@ public interface UserRankService extends DataService {
     boolean hasRank(UserRankEntity userRankEntity, String rankName);
     void removeAllExpiredRanks(UserRankEntity userRankEntity);
     void resetAllRanks(UserRankEntity userRankEntity);
+    boolean isPremium(UUID uuid);
 }
