@@ -53,7 +53,7 @@ public class GuildInviteCommand extends GuildAbstractArgumentCommand {
         return true;
     }
 
-    private static void invite(Player p, Player target) {
+//    private static void invite(Player p, Player target) {
 //        if (target == null) return;
 //
 //        if (g.hasElevatedPerms(p.getUniqueId())) {
@@ -84,7 +84,7 @@ public class GuildInviteCommand extends GuildAbstractArgumentCommand {
 //        } else {
 //            p.sendMessage("You do not have permission to invite");
 //        }
-    }
+//    }
 
     @Override
     public List<String> complete(CommandSender sender, String[] args) {
