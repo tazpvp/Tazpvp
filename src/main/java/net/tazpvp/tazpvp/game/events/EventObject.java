@@ -5,6 +5,8 @@ import lombok.Setter;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.helpers.PlayerHelper;
+import net.tazpvp.tazpvp.objects.PartyObject;
+import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.NRCore;
@@ -17,7 +19,7 @@ public class EventObject {
 
     public final static List<EventObject> activeEvents = new ArrayList<>();
 
-    private final List<TeamObject> participantList;
+    private final List<PartyObject> participantList;
     private final int teamSizeCap;
     @Setter
     private String status;
@@ -37,7 +39,7 @@ public class EventObject {
         new BukkitRunnable() {
             @Override
             public void run() {
-                //start event
+                begin();
             }
         }.runTaskLater(Tazpvp.getInstance(), 20L * 60 * timeUntilBegin);
 
@@ -50,9 +52,13 @@ public class EventObject {
         }.runTaskTimer(Tazpvp.getInstance(), 20*30, 20*60);
     }
 
-    private void addParticipant(TeamObject team) {
+    private void begin() {
+        PartyObject.inviteList.clear();
+    }
+
+    private void addParticipant(PartyObject team) {
         if (team.getMembers().size() != teamSizeCap) {
-            team.sendAll(CC.RED + "You cannot join this event. You are only allowed " + teamSizeCap + " total team members for this event.");
+            team.sendAll(CC.RED + "You cannot join this event. You are only allowed " + teamSizeCap + " total party members for this event.");
         } else {
             participantList.add(team);
             List<Player> members = team.getOnlineMembers();
@@ -62,5 +68,15 @@ public class EventObject {
             }
         }
         participantList.add(team);
+    }
+
+    public void end() {
+        for (PartyObject team : participantList) {
+            for (Player p : team.getOnlineMembers()) {
+                PlayerWrapper pw = PlayerWrapper.getPlayer(p);
+                pw.setParty(null);
+
+            }
+        }
     }
 }

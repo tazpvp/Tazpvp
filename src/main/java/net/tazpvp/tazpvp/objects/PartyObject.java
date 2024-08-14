@@ -1,6 +1,7 @@
-package net.tazpvp.tazpvp.game.events;
+package net.tazpvp.tazpvp.objects;
 
 import lombok.Getter;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -9,30 +10,34 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.WeakHashMap;
 
 @Getter
-public class TeamObject {
+public class PartyObject {
+
+    public static final WeakHashMap<UUID, PartyObject> inviteList = new WeakHashMap<>();
 
     private final UUID leader;
     private final List<UUID> members;
 
-    public TeamObject(UUID leader) {
+    public PartyObject(UUID leader) {
         this.leader = leader;
         members = new ArrayList<>();
         members.add(leader);
         PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(leader);
-        playerWrapper.setEventTeam(this);
+        playerWrapper.setParty(this);
     }
 
-    private void addMember(Player p) {
+    public void addMember(Player p) {
         members.add(p.getUniqueId());
         PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(p);
-        playerWrapper.setEventTeam(this);
-        p.sendMessage("You have joined " + getMember(leader).getName() + "'s event team.");
+        playerWrapper.setParty(this);
+        send(p, "You have joined " + getMember(leader).getName() + "'s party.");
     }
 
-    private void invitePlayer(Player target) {
-        target.sendMessage(getMember(leader).getName() + " has invited you to their event team.");
+    public void invitePlayer(Player target) {
+        send(target, getMember(leader).getName() + " has invited you to their party.");
+        inviteList.put(target.getUniqueId(), this);
     }
 
     public void sendAll(String message) {
@@ -74,5 +79,9 @@ public class TeamObject {
 
     private void disband() {
         members.clear();
+    }
+
+    public static void send(Player p, String msg) {
+        p.sendMessage(CC.BLUE + "Party ❯ " + msg);
     }
 }

@@ -49,7 +49,7 @@ public class GuildCommand extends NRCommand {
     Holy FUCK, the amount of classes, and abstraction that was used to make this easier to maintain, i think i might kms - @n-tdi
      */
     public GuildCommand() {
-        super(new Label("guild", null, "g", "gild"));
+        super(new Label("guild", null, "g"));
 
         addSubcommand(new GuildHelpCommand());
         addSubcommand(new GuildInviteCommand());

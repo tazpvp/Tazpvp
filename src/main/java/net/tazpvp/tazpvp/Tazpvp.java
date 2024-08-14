@@ -54,6 +54,7 @@ import net.tazpvp.tazpvp.commands.gameplay.event.EventCommand;
 import net.tazpvp.tazpvp.commands.gameplay.leaderboard.BaltopCommand;
 import net.tazpvp.tazpvp.commands.gameplay.leaderboard.LeaderboardCommand;
 import net.tazpvp.tazpvp.commands.gameplay.loadout.LoadoutCommand;
+import net.tazpvp.tazpvp.commands.gameplay.party.PartyCommand;
 import net.tazpvp.tazpvp.commands.gameplay.pay.PayCommand;
 import net.tazpvp.tazpvp.commands.gameplay.report.ReportCommand;
 import net.tazpvp.tazpvp.commands.moderation.ReportViewCommand;
@@ -303,7 +304,8 @@ public final class Tazpvp extends JavaPlugin {
                 new StaffChatCommand(),
                 new PayCommand(),
                 new HologramCommand(),
-                new ChestAnimationCommand()
+                new ChestAnimationCommand(),
+                new PartyCommand()
         );
     }
 

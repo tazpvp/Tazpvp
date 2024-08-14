@@ -15,7 +15,7 @@ import net.tazpvp.tazpvp.data.services.UserAchievementService;
 import net.tazpvp.tazpvp.data.services.UserRankService;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.game.duels.Duel;
-import net.tazpvp.tazpvp.game.events.TeamObject;
+import net.tazpvp.tazpvp.objects.PartyObject;
 import net.tazpvp.tazpvp.game.npc.characters.NPC;
 import net.tazpvp.tazpvp.utils.PlayerNameTag;
 import org.bukkit.Bukkit;
@@ -60,7 +60,7 @@ public class PlayerWrapper {
     @Setter private String lastMessageSent;
     @Setter private boolean vanished;
     @Setter private boolean staffChatActive;
-    @Setter private TeamObject eventTeam;
+    @Setter private PartyObject party;
 
 
     public PlayerWrapper(UUID uuid) {
