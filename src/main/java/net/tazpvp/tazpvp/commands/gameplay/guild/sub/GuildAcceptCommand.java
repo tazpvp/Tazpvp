@@ -37,6 +37,8 @@ import lombok.NonNull;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.GuildEntity;
 import net.tazpvp.tazpvp.data.services.GuildService;
+import net.tazpvp.tazpvp.enums.CC;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
@@ -68,6 +70,7 @@ public class GuildAcceptCommand extends NRCommand {
             GuildEntity guildEntity = guildService.getGuild(guildID);
 
             guildService.addMember(guildEntity, p.getUniqueId(), false);
+            guildService.messageAll(guildEntity,  CC.GOLD + p.getName() + CC.YELLOW + " has joined the guild.");
             p.removeMetadata("guildInvite", Tazpvp.getInstance());
         } else {
             p.sendMessage("You were not invited to a guild.");
