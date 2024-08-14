@@ -22,13 +22,31 @@ public class PartyCommand extends NRCommand {
         if (!(sender instanceof Player p)) return true;
 
         PlayerWrapper pw = PlayerWrapper.getPlayer(p);
+        PartyObject party = null;
+        if (pw.getParty() != null) {
+            party = pw.getParty();
+        }
 
         if (args.length == 1) {
             Player target = getPlayer(args[0]);
             if (target != null) {
-                if (pw.getParty() != null) {
-                    PartyObject party = pw.getParty();
-                    party.invitePlayer(target);
+                if (party == null) {
+                    party = new PartyObject(p.getUniqueId());
+                    pw.setParty(party);
+                }
+                party.invitePlayer(target);
+            } else if (args[0].equalsIgnoreCase("create")) {
+                if (party == null) {
+                    pw.setParty(new PartyObject(p.getUniqueId()));
+                    PartyObject.send(p, "Created a new party.");
+                } else {
+                    PartyObject.send(p, "You are already in a party. Type /p disband to start a new one.");
+                }
+            } else if (args[0].equalsIgnoreCase("disband")) {
+                if (party != null) {
+                    party.disband();
+                } else {
+                    PartyObject.send(p, "You are not in a party.");
                 }
             }
         } else if (args.length == 2) {
@@ -41,9 +59,9 @@ public class PartyCommand extends NRCommand {
             Player requester = getPlayer(args[2]);
             if (args[1].equalsIgnoreCase("join") && requester != null) {
                 if (PartyObject.inviteList.containsKey(p.getUniqueId())) {
-                    PartyObject party = PartyObject.inviteList.get(p.getUniqueId());
-                    if (party.getLeader().equals(requester.getUniqueId())) {
-                        party.addMember(p);
+                    PartyObject requesterParty = PartyObject.inviteList.get(p.getUniqueId());
+                    if (requesterParty.getLeader().equals(requester.getUniqueId())) {
+                        requesterParty.addMember(p);
                         PartyObject.inviteList.remove(p.getUniqueId());
                     }
                 }

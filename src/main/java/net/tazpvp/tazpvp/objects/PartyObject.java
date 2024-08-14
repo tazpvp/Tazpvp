@@ -1,6 +1,7 @@
 package net.tazpvp.tazpvp.objects;
 
 import lombok.Getter;
+import lombok.Setter;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Bukkit;
@@ -77,7 +78,11 @@ public class PartyObject {
         return Bukkit.getPlayer(id);
     }
 
-    private void disband() {
+    public void disband() {
+        for (Player p : getOnlineMembers()) {
+            PlayerWrapper pw = PlayerWrapper.getPlayer(p);
+            pw.setParty(null);
+        }
         members.clear();
     }
 
