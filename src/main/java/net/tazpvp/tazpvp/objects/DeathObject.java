@@ -100,6 +100,7 @@ public class DeathObject {
         if (kitSerial == null || kitSerial.isEmpty()) {
             PlayerHelper.kitPlayer(pVictim);
         } else {
+            // TODO: Change to new builder, wtv this is
             SerializableInventory serializableInventory = SerializableInventory.convertFromString(kitSerial);
             serializableInventory.addItems(pVictim.getInventory(), PlayerHelper.getKitItems(pVictim));
 
