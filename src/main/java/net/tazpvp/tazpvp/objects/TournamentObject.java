@@ -79,7 +79,6 @@ public abstract class TournamentObject {
             for (Player p : team.getOnlineMembers()) {
                 PlayerWrapper pw = PlayerWrapper.getPlayer(p);
                 pw.setParty(null);
-
             }
         }
     }
