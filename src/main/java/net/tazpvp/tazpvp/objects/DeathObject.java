@@ -39,45 +39,39 @@ public class DeathObject {
     private final UUID killer;
     private final Player pVictim;
     private Player pKiller;
-    private final Location location;
+    private Location location;
 
     private final GuildService guildService;
-    private final GuildEntity victimGuild;
-    private final GuildEntity killerGuild;
-    private final PlayerWrapper killerWrapper;
-    private final PlayerWrapper victimWrapper;
+    private GuildEntity victimGuild;
+    private GuildEntity killerGuild;
+    private PlayerWrapper killerWrapper;
+    private PlayerWrapper victimWrapper;
 
     public DeathObject(UUID victim, @Nullable UUID killer) {
         this.guildService = Tazpvp.getInstance().getGuildService();
         this.victim = victim;
         this.pVictim = Bukkit.getPlayer(victim);
-        if (pVictim != null) {
-            this.location = pVictim.getLocation();
-        } else {
-            this.location = null;
-        }
         this.killer = killer;
-        if (killer == null) {
-            this.killerWrapper = null;
-            this.killerGuild = null;
-        } else {
-            this.killerGuild = Tazpvp.getInstance().getGuildService().getGuildByPlayer(killer);
-            this.pKiller = Bukkit.getPlayer(killer);
-            this.killerWrapper = PlayerWrapper.getPlayer(killer);
-        }
-        this.victimWrapper = PlayerWrapper.getPlayer(victim);
-        this.victimGuild = Tazpvp.getInstance().getGuildService().getGuildByPlayer(victim);
-
         initialize();
     }
 
     private void initialize() {
-        if (victimWrapper.getDuel() != null) {
-            victimWrapper.getDuel().end(victim);
-            return;
+        if (pVictim != null) {
+            location = pVictim.getLocation();
+            victimWrapper = PlayerWrapper.getPlayer(victim);
+            victimGuild = Tazpvp.getInstance().getGuildService().getGuildByPlayer(victim);
+
+            if (victimWrapper.getDuel() != null) {
+                victimWrapper.getDuel().end(victim);
+                return;
+            }
         }
 
         if (killer != null) {
+            killerGuild = Tazpvp.getInstance().getGuildService().getGuildByPlayer(killer);
+            pKiller = Bukkit.getPlayer(killer);
+            killerWrapper = PlayerWrapper.getPlayer(killer);
+
             if (!killer.equals(victim)) {
                 playEffects();
                 dropItems();
@@ -90,24 +84,27 @@ public class DeathObject {
 
         deathMessage();
         respawn();
-        pVictim.getInventory().clear();
+        if (pVictim != null) {
+            pVictim.getInventory().clear();
 
-        final KitService kitService = new KitServiceImpl();
-        final KitEntity kitEntity = kitService.getOrDefault(pVictim.getUniqueId());
+            final KitService kitService = new KitServiceImpl();
+            final KitEntity kitEntity = kitService.getOrDefault(pVictim.getUniqueId());
 
-        final String kitSerial = kitEntity.getSerial();
-        if (kitSerial == null || kitSerial.isEmpty()) {
-            PlayerHelper.kitPlayer(pVictim);
-        } else {
-            // TODO: Change to new builder, wtv this is
-            SerializableInventory serializableInventory = SerializableInventory.convertFromString(kitSerial);
-            serializableInventory.addItems(pVictim.getInventory(), PlayerHelper.getKitItems(pVictim));
+            final String kitSerial = kitEntity.getSerial();
+            if (kitSerial == null || kitSerial.isEmpty()) {
+                PlayerHelper.kitPlayer(pVictim);
+            } else {
+                // TODO: Change to new builder, wtv this is
+                SerializableInventory serializableInventory = SerializableInventory.convertFromString(kitSerial);
+                serializableInventory.addItems(pVictim.getInventory(), PlayerHelper.getKitItems(pVictim));
 
-            PlayerHelper.armorPlayer(pVictim);
-        }
+                    PlayerHelper.armorPlayer(pVictim);
+                }
 
-        PlayerHelper.resetHealth(pVictim);
-        PlayerHelper.feedPlr(pVictim);
+                PlayerHelper.resetHealth(pVictim);
+                PlayerHelper.feedPlr(pVictim);
+            }
+
         updateStats();
     }
 
@@ -130,6 +127,7 @@ public class DeathObject {
     }
 
     public void dropHead() {
+        if (pVictim == null) return;
         final Random r = new Random();
 
         if (pVictim.getName().startsWith(".")) {
@@ -152,7 +150,6 @@ public class DeathObject {
     }
 
     public void playEffects() {
-
         if (victimWrapper.getRank().getHierarchy() >= 1) {
             final String particle = victimWrapper.getUserRankEntity().getDeathParticle();
 
@@ -174,6 +171,8 @@ public class DeathObject {
             camLoc = pKiller.getLocation();
         }
 
+        if (pVictim == null) return;
+
         spectateObject = new SpectateObject(camLoc);
         PlayerHelper.teleport(pVictim, spectateObject.getResult());
         spectateObject.faceLocation(pVictim);
@@ -191,6 +190,7 @@ public class DeathObject {
     }
 
     public void deathMessage() {
+        if (pVictim == null) return;
         final String prefix = CC.GRAY + "[" + CC.DARK_RED + "☠" + CC.GRAY + "] " + CC.DARK_GRAY;
 
         for (Player op : Bukkit.getOnlinePlayers()) {
@@ -227,10 +227,12 @@ public class DeathObject {
             int finalXp = 5;
             int finalCoins = 5;
 
-            assistant.sendMessage(
-                    CC.DARK_GRAY + "Assist kill:" + CC.GRAY + " " + pVictim.getName() + " " +
-                            CC.DARK_AQUA + "Exp: " + CC.AQUA + finalXp + CC.GOLD + " Coins: " + CC.YELLOW + finalCoins
-            );
+            if (pVictim != null) {
+                assistant.sendMessage(
+                        CC.DARK_GRAY + "Assist kill:" + CC.GRAY + " " + pVictim.getName() + " " +
+                                CC.DARK_AQUA + "Exp: " + CC.AQUA + finalXp + CC.GOLD + " Coins: " + CC.YELLOW + finalCoins
+                );
+            }
 
             StatEnum.COINS.add(uuid, finalCoins);
             StatEnum.XP.add(uuid, finalXp);
@@ -287,7 +289,9 @@ public class DeathObject {
                     CC.GOLD + CC.BOLD + " Coins: " + CC.YELLOW + CC.BOLD + COINS + " " + CC.GOLD + COIN_NETWORK_BUFF.prettyPercentMultiplier()
             ));
             if (bountyReward > 0) {
-                pKiller.sendMessage(CC.YELLOW + "You collected " + pVictim.getName() + "'s " + CC.GOLD + "$" + bountyReward + CC.YELLOW + " bounty.");
+                if (pVictim != null) {
+                    pKiller.sendMessage(CC.YELLOW + "You collected " + pVictim.getName() + "'s " + CC.GOLD + "$" + bountyReward + CC.YELLOW + " bounty.");
+                }
             }
 
             Tazpvp.getInstance().getPlayerNameTagService().setTagRank(pKiller);
@@ -308,7 +312,9 @@ public class DeathObject {
         }
         LooseData.resetKs(victim);
 
-        Tazpvp.getInstance().getPlayerNameTagService().setTagRank(pVictim);
+        if (pVictim != null) {
+            Tazpvp.getInstance().getPlayerNameTagService().setTagRank(pVictim);
+        }
         guildService.saveGuild(victimGuild);
     }
 
