@@ -50,7 +50,7 @@ import net.tazpvp.tazpvp.commands.admin.stats.StatCommand;
 import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
 import net.tazpvp.tazpvp.commands.admin.teleportWorld.TeleportWorldCommand;
 import net.tazpvp.tazpvp.commands.game.duel.DuelCommand;
-import net.tazpvp.tazpvp.commands.game.event.EventCommand;
+import net.tazpvp.tazpvp.commands.game.tournament.TournamentCommand;
 import net.tazpvp.tazpvp.commands.game.guild.GuildCommand;
 import net.tazpvp.tazpvp.commands.game.leaderboard.BaltopCommand;
 import net.tazpvp.tazpvp.commands.game.leaderboard.LeaderboardCommand;
@@ -286,7 +286,7 @@ public final class Tazpvp extends JavaPlugin {
                 new TeleportWorldCommand(),
                 new EditCommand(),
                 new PlaytimeCommand(),
-                new EventCommand(),
+                new TournamentCommand(),
                 new UnmuteCommand(),
                 new BoosterCommand(),
                 new StoreCommand(),
