@@ -31,7 +31,7 @@ public class SonicBoomAttack implements Attack {
         if (result != null && result.getHitEntity() != null) {
             final Player target = (Player) result.getHitEntity();
 
-            if (target.getGameMode() == GameMode.SURVIVAL) {
+            if (target.getGameMode().equals(GameMode.SURVIVAL)) {
                 for (int i = 0; i < 30; i++) {
                     Location loc = origin.clone().add(direction.clone().multiply(i));
 

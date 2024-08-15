@@ -75,6 +75,7 @@ import net.tazpvp.tazpvp.data.services.GuildService;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.data.services.UserRankService;
 import net.tazpvp.tazpvp.game.achievements.*;
+import net.tazpvp.tazpvp.game.achievements.Error;
 import net.tazpvp.tazpvp.game.bosses.BossManager;
 import net.tazpvp.tazpvp.game.bosses.zorg.Zorg;
 import net.tazpvp.tazpvp.game.crates.CrateManager;
@@ -120,8 +121,6 @@ public final class Tazpvp extends JavaPlugin {
     private static final List<Observer> observers = new ArrayList<>();
     @Getter
     private final List<NPC> npcs = new ArrayList<>();
-    @Getter
-    public final static String prefix = "tazpvp.";
     @Getter
     private static ConfigUtil parkourUtil;
     @Getter
@@ -250,9 +249,8 @@ public final class Tazpvp extends JavaPlugin {
         new Zorgin();
         new Harvester();
         new Artisan();
-        new Harvester();
         new Speedrunner();
-//        new Error();
+        new Error();
         new Revenge();
         new Moist();
         new Agile();
@@ -277,9 +275,7 @@ public final class Tazpvp extends JavaPlugin {
                 new StatCommand(),
                 new DailyCommand(),
                 new DuelCommand(),
-                new ReportCommand(),
                 new TazloadCommand(),
-                new ReportCommand(),
                 new GuildCommand(),
                 new ReportViewCommand(),
                 new ReportCommand(),
@@ -303,7 +299,6 @@ public final class Tazpvp extends JavaPlugin {
                 new BroadcastCommand(),
                 new StaffChatCommand(),
                 new BaltopCommand(),
-                new StaffChatCommand(),
                 new PayCommand(),
                 new HologramCommand(),
                 new ChestAnimationCommand(),
