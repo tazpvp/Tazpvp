@@ -30,22 +30,31 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.listeners;
+package net.tazpvp.tazpvp.game.events;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import org.bukkit.GameMode;
+import net.tazpvp.tazpvp.helpers.PlayerHelper;
+import net.tazpvp.tazpvp.objects.TournamentObject;
+import net.tazpvp.tazpvp.objects.PartyObject;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.ProjectileLaunchEvent;
 
-public class ShootListener implements Listener {
-    @EventHandler
-    private void onShoot(ProjectileLaunchEvent e) {
-        if (e.getEntity().getShooter() instanceof Player shooter) {
-            if (shooter.getGameMode() != GameMode.CREATIVE) {
-                Tazpvp.getObservers().forEach(observer -> observer.shoot(shooter));
+public class Parkour extends TournamentObject {
+
+    public Parkour() {
+        super(3);
+    }
+
+    @Override
+    public void handleTeleports() {
+        for (PartyObject team : super.getParticipantList()) {
+            for (Player p : team.getOnlineMembers()) {
+                PlayerHelper.teleport(p, Tazpvp.getParkourUtil().getLocation("spawn"));
             }
         }
+    }
+
+    @Override
+    public void kitPlayers() {
+
     }
 }

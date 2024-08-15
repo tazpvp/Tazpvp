@@ -77,8 +77,6 @@ public class GuildServiceImpl implements GuildService {
         GuildMemberEntity guildMemberEntity = guildMemberService.getGuildMemberByUUID(player);
 
         if (guildMemberEntity != null) {
-            guildMemberEntity.setGuildEntity(null);
-            guildMemberService.saveGuildMemberEntity(guildMemberEntity);
             guild.getMembers().remove(guildMemberEntity);
             guildMemberService.deleteMember(guildMemberEntity);
             saveGuild(guild);
@@ -106,6 +104,12 @@ public class GuildServiceImpl implements GuildService {
 
     @Override
     public void deleteGuild(GuildEntity guild) {
+        for (UUID uuid : getAllMembers(guild)) {
+            GuildMemberEntity guildMemberEntity = guildMemberService.getGuildMemberByUUID(uuid);
+            if (guildMemberEntity != null) {
+                guildMemberService.deleteMember(guildMemberEntity);
+            }
+        }
         try {
             getUserDao().delete(guild);
         } catch (SQLException e) {

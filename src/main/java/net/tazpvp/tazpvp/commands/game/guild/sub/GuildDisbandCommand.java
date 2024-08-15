@@ -28,24 +28,38 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
  */
 
-package net.tazpvp.tazpvp.listeners;
+package net.tazpvp.tazpvp.commands.game.guild.sub;
 
+import lombok.NonNull;
 import net.tazpvp.tazpvp.Tazpvp;
-import org.bukkit.GameMode;
+import net.tazpvp.tazpvp.commands.game.guild.handler.GuildAvailableCommand;
+import net.tazpvp.tazpvp.data.entity.GuildEntity;
+import net.tazpvp.tazpvp.data.services.GuildService;
+import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.ProjectileLaunchEvent;
+import world.ntdi.nrcore.utils.command.simple.Label;
 
-public class ShootListener implements Listener {
-    @EventHandler
-    private void onShoot(ProjectileLaunchEvent e) {
-        if (e.getEntity().getShooter() instanceof Player shooter) {
-            if (shooter.getGameMode() != GameMode.CREATIVE) {
-                Tazpvp.getObservers().forEach(observer -> observer.shoot(shooter));
-            }
+public class GuildDisbandCommand extends GuildAvailableCommand {
+
+    private static final GuildService guildService = Tazpvp.getInstance().getGuildService();
+
+    public GuildDisbandCommand() {
+        super(new Label("disband", null));
+    }
+
+    @Override
+    public boolean executeFunction(@NonNull Player p, GuildEntity guildEntity) {
+        if (!guildEntity.getOwner().equals(p.getUniqueId())) {
+            p.sendMessage(CC.RED + "You don't own this guild.");
+            return false;
         }
+
+        guildService.deleteGuild(guildEntity);
+        p.sendMessage("You disbanded your guild");
+
+        return true;
     }
 }

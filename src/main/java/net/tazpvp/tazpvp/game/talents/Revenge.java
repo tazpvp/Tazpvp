@@ -10,12 +10,12 @@ public class Revenge extends Observable {
     public void death(Player victim, Player killer) {
         final PlayerWrapper killerWrapper = PlayerWrapper.getPlayer(killer);
         final TalentEntity killerTalentEntity = killerWrapper.getTalentEntity();
-        final PlayerWrapper victimWrapper = PlayerWrapper.getPlayer(killer);
+        final PlayerWrapper victimWrapper = PlayerWrapper.getPlayer(victim);
         final TalentEntity victimTalentEntity = victimWrapper.getTalentEntity();
 
         if (victim != killer) {
-            if (killerTalentEntity.isRevenge()) {
-                if (!victimTalentEntity.isMoist()) {
+            if (victimTalentEntity.isRevenge()) {
+                if (!killerTalentEntity.isMoist()) {
                     killer.setFireTicks(20 * 3);
                 }
             }

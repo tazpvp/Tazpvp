@@ -3,8 +3,8 @@ package net.tazpvp.tazpvp.wrappers;
 import lombok.Getter;
 import lombok.Setter;
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.commands.gameplay.report.utils.ReportDebounce;
-import net.tazpvp.tazpvp.commands.gameplay.report.utils.ReportLogger;
+import net.tazpvp.tazpvp.commands.game.report.utils.ReportDebounce;
+import net.tazpvp.tazpvp.commands.game.report.utils.ReportLogger;
 import net.tazpvp.tazpvp.data.entity.*;
 import net.tazpvp.tazpvp.data.implementations.TalentServiceImpl;
 import net.tazpvp.tazpvp.data.implementations.UserAchievementServiceImpl;
@@ -14,7 +14,7 @@ import net.tazpvp.tazpvp.data.services.TalentService;
 import net.tazpvp.tazpvp.data.services.UserAchievementService;
 import net.tazpvp.tazpvp.data.services.UserRankService;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.game.duels.Duel;
+import net.tazpvp.tazpvp.objects.DuelObject;
 import net.tazpvp.tazpvp.objects.PartyObject;
 import net.tazpvp.tazpvp.game.npc.characters.NPC;
 import net.tazpvp.tazpvp.utils.PlayerNameTag;
@@ -44,12 +44,12 @@ public class PlayerWrapper {
     private UserRankEntity userRankEntity; // After you set a value here make sure to call refresh()
     private UserAchievementEntity userAchievementEntity;
     private TalentEntity talentEntity;
-    private final ConcurrentHashMap<UUID, Duel> duelRequests;
+    private final ConcurrentHashMap<UUID, DuelObject> duelRequests;
 
     @Setter private boolean launching;
     @Setter private boolean respawning;
     @Setter private boolean canRestore;
-    @Setter private Duel duel;
+    @Setter private DuelObject duel;
     @Setter private NPC receivedDialogue;
     @Setter private boolean npcDialogue;
     @Setter private boolean isAfk;

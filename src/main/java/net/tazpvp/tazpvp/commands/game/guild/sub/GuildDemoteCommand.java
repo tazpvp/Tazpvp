@@ -28,24 +28,49 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
  */
 
-package net.tazpvp.tazpvp.listeners;
+package net.tazpvp.tazpvp.commands.game.guild.sub;
 
+import lombok.NonNull;
 import net.tazpvp.tazpvp.Tazpvp;
-import org.bukkit.GameMode;
+import net.tazpvp.tazpvp.commands.game.guild.handler.GuildAbstractArgumentCommand;
+import net.tazpvp.tazpvp.data.entity.GuildEntity;
+import net.tazpvp.tazpvp.data.entity.GuildMemberEntity;
+import net.tazpvp.tazpvp.data.services.GuildMemberService;
+import net.tazpvp.tazpvp.data.services.GuildService;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.ProjectileLaunchEvent;
+import world.ntdi.nrcore.utils.command.simple.Label;
 
-public class ShootListener implements Listener {
-    @EventHandler
-    private void onShoot(ProjectileLaunchEvent e) {
-        if (e.getEntity().getShooter() instanceof Player shooter) {
-            if (shooter.getGameMode() != GameMode.CREATIVE) {
-                Tazpvp.getObservers().forEach(observer -> observer.shoot(shooter));
-            }
+public class GuildDemoteCommand extends GuildAbstractArgumentCommand {
+    private static final GuildService guildService = Tazpvp.getInstance().getGuildService();
+    private static final GuildMemberService guildMemberService = Tazpvp.getInstance().getGuildMemberService();
+
+    public GuildDemoteCommand() {
+        super(new Label("demote", null));
+    }
+
+    @Override
+    public boolean executeFunction(@NonNull Player p, GuildEntity guildEntity, @NonNull Player target) {
+        if (!guildService.isInGuild(target.getUniqueId(), guildEntity)) {
+            p.sendMessage("This user is not in your guild");
+            return true;
         }
+
+        if (!guildService.isOfficer(target.getUniqueId(), guildEntity)) {
+            p.sendMessage("This user is already the lowest rank.");
+            return true;
+        }
+
+        GuildMemberEntity targetGuildMemberEntity = guildService.getMemberEntity(guildEntity, target.getUniqueId());
+        if (targetGuildMemberEntity != null) {
+            targetGuildMemberEntity.setOfficer(false);
+            guildMemberService.saveGuildMemberEntity(targetGuildMemberEntity);
+        }
+
+        p.sendMessage("You demoted: " + target.getName());
+
+        return true;
     }
 }

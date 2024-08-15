@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  *
- * Copyright (c) 2023, n-tdi
+ * Copyright (c) 2022, n-tdi
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,22 +30,32 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.listeners;
+package net.tazpvp.tazpvp.game.duels;
 
-import net.tazpvp.tazpvp.Tazpvp;
-import org.bukkit.GameMode;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.ProjectileLaunchEvent;
+import net.tazpvp.tazpvp.objects.DuelObject;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
-public class ShootListener implements Listener {
-    @EventHandler
-    private void onShoot(ProjectileLaunchEvent e) {
-        if (e.getEntity().getShooter() instanceof Player shooter) {
-            if (shooter.getGameMode() != GameMode.CREATIVE) {
-                Tazpvp.getObservers().forEach(observer -> observer.shoot(shooter));
-            }
-        }
+import java.util.UUID;
+
+public class Classic extends DuelObject {
+
+    public Classic(UUID P1, UUID P2) {
+        super(P1, P2, "classic");
+    }
+
+    @Override
+    public void addItems(PlayerInventory inv) {
+        inv.setHelmet(new ItemStack(Material.DIAMOND_HELMET));
+        inv.setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
+        inv.setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
+        inv.setBoots(new ItemStack(Material.DIAMOND_BOOTS));
+
+        inv.setItemInOffHand(new ItemStack(Material.SHIELD));
+
+        inv.addItem(new ItemStack(Material.DIAMOND_SWORD));
+        inv.addItem(new ItemStack(Material.DIAMOND_AXE));
+        inv.addItem(new ItemStack(Material.GOLDEN_APPLE, 6));
     }
 }

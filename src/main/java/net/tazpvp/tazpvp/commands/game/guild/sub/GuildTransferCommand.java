@@ -28,24 +28,46 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
  */
 
-package net.tazpvp.tazpvp.listeners;
+package net.tazpvp.tazpvp.commands.game.guild.sub;
 
+import lombok.NonNull;
 import net.tazpvp.tazpvp.Tazpvp;
-import org.bukkit.GameMode;
+import net.tazpvp.tazpvp.commands.game.guild.GuildCommand;
+import net.tazpvp.tazpvp.commands.game.guild.handler.GuildAbstractArgumentCommand;
+import net.tazpvp.tazpvp.data.entity.GuildEntity;
+import net.tazpvp.tazpvp.data.services.GuildService;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.ProjectileLaunchEvent;
+import world.ntdi.nrcore.utils.command.simple.Label;
 
-public class ShootListener implements Listener {
-    @EventHandler
-    private void onShoot(ProjectileLaunchEvent e) {
-        if (e.getEntity().getShooter() instanceof Player shooter) {
-            if (shooter.getGameMode() != GameMode.CREATIVE) {
-                Tazpvp.getObservers().forEach(observer -> observer.shoot(shooter));
-            }
+public class GuildTransferCommand extends GuildAbstractArgumentCommand {
+
+    private static final GuildService guildService = Tazpvp.getInstance().getGuildService();
+
+    public GuildTransferCommand() {
+        super(new Label("transfer", null));
+    }
+
+    @Override
+    public boolean executeFunction(@NonNull Player p, GuildEntity guildEntity, @NonNull Player target) {
+        if (!guildEntity.getOwner().equals(p.getUniqueId())) {
+            p.sendMessage(GuildCommand.getNoPerms());
+            return true;
         }
+
+        if (!guildService.isInGuild(target.getUniqueId(), guildEntity)) {
+            p.sendMessage(target.getName() + " must be a member of your guild in order to transfer it to them!");
+            return false;
+        }
+
+        guildEntity.setOwner(target.getUniqueId());
+        guildService.saveGuild(guildEntity);
+
+        target.sendMessage("You are now the leader of " + guildEntity.getName());
+        p.sendMessage("Transferred " + guildEntity.getName() + " to " + target.getName() + ", you are now a general.");
+
+        return true;
     }
 }

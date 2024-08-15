@@ -28,24 +28,38 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
  */
 
-package net.tazpvp.tazpvp.listeners;
+package net.tazpvp.tazpvp.commands.game.guild;
 
-import net.tazpvp.tazpvp.Tazpvp;
-import org.bukkit.GameMode;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.ProjectileLaunchEvent;
+import lombok.Getter;
+import net.tazpvp.tazpvp.commands.game.guild.sub.*;
+import world.ntdi.nrcore.utils.command.simple.Label;
+import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
-public class ShootListener implements Listener {
-    @EventHandler
-    private void onShoot(ProjectileLaunchEvent e) {
-        if (e.getEntity().getShooter() instanceof Player shooter) {
-            if (shooter.getGameMode() != GameMode.CREATIVE) {
-                Tazpvp.getObservers().forEach(observer -> observer.shoot(shooter));
-            }
-        }
+
+public class GuildCommand extends NRCommand {
+    @Getter
+    private static final String notInGuild = "You are not in a guild";
+    @Getter
+    private static final String noPerms = "You do not have permission to do this.";
+
+    /*
+    Holy FUCK, the amount of classes, and abstraction that was used to make this easier to maintain, i think i might kms - @n-tdi
+     */
+    public GuildCommand() {
+        super(new Label("guild", null, "g"));
+
+        addSubcommand(new GuildHelpCommand());
+        addSubcommand(new GuildInviteCommand());
+        addSubcommand(new GuildAcceptCommand());
+        addSubcommand(new GuildLeaveCommand());
+        addSubcommand(new GuildDisbandCommand());
+        addSubcommand(new GuildDeleteCommand());
+        addSubcommand(new GuildKickCommand());
+        addSubcommand(new GuildPromoteCommand());
+        addSubcommand(new GuildDemoteCommand());
+        addSubcommand(new GuildTransferCommand());
     }
 }

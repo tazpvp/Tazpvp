@@ -141,7 +141,7 @@ public class DamageListener implements Listener {
             }
         } else {
             if (PlayerWrapper.getPlayer(victim).getDuel() == null) {
-                CombatTagHelper.putInCombat(id, null);
+                CombatTagHelper.putInCombat(id);
             }
         }
     }

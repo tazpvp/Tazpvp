@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  *
- * Copyright (c) 2023, n-tdi
+ * Copyright (c) 2022, n-tdi
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,22 +30,19 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.listeners;
+package net.tazpvp.tazpvp.helpers;
 
-import net.tazpvp.tazpvp.Tazpvp;
-import org.bukkit.GameMode;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.ProjectileLaunchEvent;
+import net.tazpvp.tazpvp.game.events.FFA;
+import net.tazpvp.tazpvp.game.events.Parkour;
+import net.tazpvp.tazpvp.objects.TournamentObject;
 
-public class ShootListener implements Listener {
-    @EventHandler
-    private void onShoot(ProjectileLaunchEvent e) {
-        if (e.getEntity().getShooter() instanceof Player shooter) {
-            if (shooter.getGameMode() != GameMode.CREATIVE) {
-                Tazpvp.getObservers().forEach(observer -> observer.shoot(shooter));
-            }
-        }
+public final class EventHelper {
+
+    public static TournamentObject create(String name) {
+        return switch (name.toLowerCase()){
+            case "ffa" -> new FFA();
+            case "parkour" -> new Parkour();
+            default -> null;
+        };
     }
 }

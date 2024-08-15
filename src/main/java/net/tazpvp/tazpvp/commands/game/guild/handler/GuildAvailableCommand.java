@@ -28,24 +28,44 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
  */
 
-package net.tazpvp.tazpvp.listeners;
+package net.tazpvp.tazpvp.commands.game.guild.handler;
 
+import lombok.NonNull;
 import net.tazpvp.tazpvp.Tazpvp;
-import org.bukkit.GameMode;
+import net.tazpvp.tazpvp.data.entity.GuildEntity;
+import net.tazpvp.tazpvp.data.services.GuildService;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.ProjectileLaunchEvent;
+import world.ntdi.nrcore.utils.command.simple.Label;
+import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
-public class ShootListener implements Listener {
-    @EventHandler
-    private void onShoot(ProjectileLaunchEvent e) {
-        if (e.getEntity().getShooter() instanceof Player shooter) {
-            if (shooter.getGameMode() != GameMode.CREATIVE) {
-                Tazpvp.getObservers().forEach(observer -> observer.shoot(shooter));
-            }
-        }
+public class GuildAvailableCommand extends NRCommand {
+
+    private final GuildService guildService = Tazpvp.getInstance().getGuildService();
+
+    public GuildAvailableCommand(@NonNull Label label) {
+        super(label);
     }
+
+    @Override
+    public boolean execute(@NonNull CommandSender sender, @NonNull String[] args) {
+        if (!(sender instanceof Player p)) {
+            sendIncorrectUsage(sender);
+            return false;
+        }
+
+        final GuildEntity guildEntity = guildService.getGuildByPlayer(p.getUniqueId());
+
+        if (guildEntity == null) {
+            sendIncorrectUsage(p, "You're not in a guild");
+            return false;
+        }
+
+        return executeFunction(p, guildEntity);
+    }
+
+    public boolean executeFunction(@NonNull Player p, GuildEntity guildEntity) {return true;}
 }

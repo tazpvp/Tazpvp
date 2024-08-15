@@ -41,11 +41,15 @@ import java.util.UUID;
 
 public class CombatTagHelper {
 
-    public static void putInCombat(@Nullable UUID victim, @Nullable UUID attacker) {
+    public static void putInCombat(UUID victim, UUID attacker) {
         if (victim != attacker) {
             getTag(victim).setTimer(attacker);
             getTag(attacker).setTimer(victim);
         }
+    }
+
+    public static void putInCombat(UUID victim) {
+        getTag(victim).setTimer(null);
     }
 
     public static CombatObject getTag(UUID ID) {

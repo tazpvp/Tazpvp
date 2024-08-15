@@ -28,24 +28,32 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
  */
 
-package net.tazpvp.tazpvp.listeners;
+package net.tazpvp.tazpvp.commands.game.guild.sub;
 
-import net.tazpvp.tazpvp.Tazpvp;
-import org.bukkit.GameMode;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.ProjectileLaunchEvent;
+import lombok.NonNull;
+import org.bukkit.command.CommandSender;
+import world.ntdi.nrcore.utils.command.simple.Label;
+import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
-public class ShootListener implements Listener {
-    @EventHandler
-    private void onShoot(ProjectileLaunchEvent e) {
-        if (e.getEntity().getShooter() instanceof Player shooter) {
-            if (shooter.getGameMode() != GameMode.CREATIVE) {
-                Tazpvp.getObservers().forEach(observer -> observer.shoot(shooter));
-            }
-        }
+public class GuildHelpCommand extends NRCommand {
+
+    public GuildHelpCommand() {
+        super(new Label("help", null));
+    }
+
+    @Override
+    public boolean execute(@NonNull CommandSender sender, @NonNull String[] args) {
+        String[] help = {
+                "",
+                "",
+                "",
+                "",
+                ""
+        };
+        sender.sendMessage(help);
+        return true;
     }
 }

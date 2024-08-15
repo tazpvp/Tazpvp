@@ -28,24 +28,54 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
  */
 
-package net.tazpvp.tazpvp.listeners;
+package net.tazpvp.tazpvp.commands.game.guild.sub;
 
+import lombok.NonNull;
 import net.tazpvp.tazpvp.Tazpvp;
-import org.bukkit.GameMode;
+import net.tazpvp.tazpvp.data.entity.GuildEntity;
+import net.tazpvp.tazpvp.data.services.GuildService;
+import net.tazpvp.tazpvp.enums.CC;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.ProjectileLaunchEvent;
+import world.ntdi.nrcore.utils.command.simple.Label;
+import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
-public class ShootListener implements Listener {
-    @EventHandler
-    private void onShoot(ProjectileLaunchEvent e) {
-        if (e.getEntity().getShooter() instanceof Player shooter) {
-            if (shooter.getGameMode() != GameMode.CREATIVE) {
-                Tazpvp.getObservers().forEach(observer -> observer.shoot(shooter));
+public class GuildAcceptCommand extends NRCommand {
+
+    private static final GuildService guildService = Tazpvp.getInstance().getGuildService();
+
+    public GuildAcceptCommand() {
+        super(new Label("accept", null));
+    }
+
+    @Override
+    public boolean execute(@NonNull CommandSender sender, @NonNull String[] args) {
+        if (!(sender instanceof Player p)) {
+            sendIncorrectUsage(sender);
+            return false;
+        }
+        acceptInvite(p);
+        return true;
+    }
+
+    private static void acceptInvite(Player p) {
+        if (p.hasMetadata("guildInvited")) {
+            int guildID = Integer.parseInt(p.getMetadata("guildInvited").getFirst().asString());
+            GuildEntity guildEntity = guildService.getGuild(guildID);
+
+            if (!guildService.isInGuild(p.getUniqueId(), guildEntity)) {
+                guildService.addMember(guildEntity, p.getUniqueId(), false);
+                guildService.messageAll(guildEntity,  CC.GOLD + p.getName() + CC.YELLOW + " has joined the guild.");
+                p.removeMetadata("guildInvite", Tazpvp.getInstance());
+            } else {
+                p.sendMessage(CC.RED +"You are already in this guild.");
             }
+
+        } else {
+            p.sendMessage("You were not invited to a guild.");
         }
     }
 }

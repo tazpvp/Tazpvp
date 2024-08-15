@@ -55,7 +55,7 @@ public class BreakListener implements Listener {
         Block eventBlock = e.getBlock();
         Material blockMaterial = eventBlock.getType();
 
-        if (!p.getGameMode().equals(GameMode.CREATIVE)) {
+        if (p.getGameMode() != GameMode.CREATIVE) {
             for (OreObject ore : BlockHelper.ores) {
                 if (blockMaterial.equals(ore.mat())) {
                     e.setCancelled(true);

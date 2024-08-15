@@ -49,6 +49,15 @@ import net.tazpvp.tazpvp.commands.admin.npc.NpcCommand;
 import net.tazpvp.tazpvp.commands.admin.stats.StatCommand;
 import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
 import net.tazpvp.tazpvp.commands.admin.teleportWorld.TeleportWorldCommand;
+import net.tazpvp.tazpvp.commands.game.duel.DuelCommand;
+import net.tazpvp.tazpvp.commands.game.event.EventCommand;
+import net.tazpvp.tazpvp.commands.game.guild.GuildCommand;
+import net.tazpvp.tazpvp.commands.game.leaderboard.BaltopCommand;
+import net.tazpvp.tazpvp.commands.game.leaderboard.LeaderboardCommand;
+import net.tazpvp.tazpvp.commands.game.loadout.LoadoutCommand;
+import net.tazpvp.tazpvp.commands.game.party.PartyCommand;
+import net.tazpvp.tazpvp.commands.game.pay.PayCommand;
+import net.tazpvp.tazpvp.commands.game.report.ReportCommand;
 import net.tazpvp.tazpvp.commands.gameplay.duel.DuelCommand;
 import net.tazpvp.tazpvp.commands.gameplay.event.EventCommand;
 import net.tazpvp.tazpvp.commands.gameplay.leaderboard.BaltopCommand;
@@ -73,6 +82,7 @@ import net.tazpvp.tazpvp.data.services.GuildService;
 import net.tazpvp.tazpvp.data.services.PlayerStatService;
 import net.tazpvp.tazpvp.data.services.UserRankService;
 import net.tazpvp.tazpvp.game.achievements.*;
+import net.tazpvp.tazpvp.game.achievements.Error;
 import net.tazpvp.tazpvp.game.bosses.BossManager;
 import net.tazpvp.tazpvp.game.bosses.zorg.Zorg;
 import net.tazpvp.tazpvp.game.crates.CrateManager;
@@ -118,8 +128,6 @@ public final class Tazpvp extends JavaPlugin {
     private static final List<Observer> observers = new ArrayList<>();
     @Getter
     private final List<NPC> npcs = new ArrayList<>();
-    @Getter
-    public final static String prefix = "tazpvp.";
     @Getter
     private static ConfigUtil parkourUtil;
     @Getter
@@ -248,9 +256,8 @@ public final class Tazpvp extends JavaPlugin {
         new Zorgin();
         new Harvester();
         new Artisan();
-        new Harvester();
         new Speedrunner();
-//        new Error();
+        new Error();
         new Revenge();
         new Moist();
         new Agile();
@@ -261,6 +268,7 @@ public final class Tazpvp extends JavaPlugin {
         new Hunter();
         new Resilient();
         new Proficient();
+        new Medic();
     }
     public void registerCommands() {
         register(
@@ -274,10 +282,8 @@ public final class Tazpvp extends JavaPlugin {
                 new StatCommand(),
                 new DailyCommand(),
                 new DuelCommand(),
-                new ReportCommand(),
                 new TazloadCommand(),
-                new ReportCommand(),
-//                new GuildCommand(),
+                new GuildCommand(),
                 new ReportViewCommand(),
                 new ReportCommand(),
                 new HelpCommand(),
@@ -299,7 +305,6 @@ public final class Tazpvp extends JavaPlugin {
                 new BroadcastCommand(),
                 new StaffChatCommand(),
                 new BaltopCommand(),
-                new StaffChatCommand(),
                 new PayCommand(),
                 new HologramCommand(),
                 new ChestAnimationCommand(),
