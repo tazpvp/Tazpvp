@@ -180,7 +180,7 @@ public final class Tazpvp extends JavaPlugin {
         UsableItem.registerCustomItems();
 
         parkourUtil = new ConfigUtil("parkour.yml", this);
-        crateManager = new CrateManager();
+//        crateManager = new CrateManager();
         botThread = new BotThread(getConfig().getString("bot-token"));
         botThread.start();
         spawnableLeaderboardManager = new SpawnableLeaderboardManager(this);
