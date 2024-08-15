@@ -47,87 +47,88 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.NRCore;
 
 import java.util.UUID;
 
 public class JoinListener implements Listener {
-
-
     @EventHandler
     private void onJoin(PlayerJoinEvent e) {
-        Player p = e.getPlayer();
-        UUID id = p.getUniqueId();
+        final Player p = e.getPlayer();
+        final UUID id = p.getUniqueId();
 
-        PlayerWrapper.addPlayer(p);
-        ScoreboardHelper.initScoreboard(p);
-        PlaytimeHelper.playerJoined(p);
-        PlayerHelper.resetHealth(p);
-        PlayerHelper.feedPlr(p);
-        Tazpvp.getInstance().getPlayerNameTagService().initializePlayer(p);
-        BanHelper.checkBan(p);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                PlayerWrapper.addPlayer(id);
+                ScoreboardHelper.initScoreboard(p);
+                PlaytimeHelper.playerJoined(p);
+                PlayerHelper.resetHealth(p);
+                PlayerHelper.feedPlr(p);
+                Tazpvp.getInstance().getPlayerNameTagService().initializePlayer(p);
+                BanHelper.checkBan(p);
+                CombatObject.tags.put(id, new CombatObject(id));
 
-        CombatObject.tags.put(id, new CombatObject(id));
+                int playerLevel = StatEnum.LEVEL.getInt(id);
+                p.setLevel(playerLevel);
+                PlayerHelper.updateLevel(id);
 
-        int playerLevel = StatEnum.LEVEL.getInt(id);
+                p.setGlowing(true);
 
-        p.setLevel(playerLevel);
-        PlayerHelper.updateLevel(id);
-
-        p.setGlowing(true);
-
-        for (Player vp : Bukkit.getOnlinePlayers()) {
-            PlayerWrapper vpw = PlayerWrapper.getPlayer(vp);
-            if (vpw.isVanished()) {
-                for (Player op : Bukkit.getOnlinePlayers()) {
-                    if (!op.hasPermission("tazpvp.vanish")) {
-                        op.hidePlayer(Tazpvp.getInstance(), vp);
-                    } else {
-                        op.showPlayer(Tazpvp.getInstance(), vp);
+                for (Player vp : Bukkit.getOnlinePlayers()) {
+                    PlayerWrapper vpw = PlayerWrapper.getPlayer(vp);
+                    if (vpw.isVanished()) {
+                        for (Player op : Bukkit.getOnlinePlayers()) {
+                            if (!op.hasPermission("tazpvp.vanish")) {
+                                op.hidePlayer(Tazpvp.getInstance(), vp);
+                            } else {
+                                op.showPlayer(Tazpvp.getInstance(), vp);
+                            }
+                        }
                     }
                 }
+
+                PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(p);
+
+                final UserRankService userRankService = new UserRankServiceImpl();
+                userRankService.removeAllExpiredRanks(playerWrapper.getUserRankEntity());
+
+                playerWrapper.refreshRankEntity();
+
+                p.setPlayerListHeaderFooter(
+                        CC.DARK_AQUA + "                                      " + "\n                 " +
+                                Theme.SERVER.gradient("TAZPVP.NET", true) + "               " + "\n",
+
+                        "\n" +
+                                Theme.DISCORD.gradient("✉ ᴊᴏɪɴ ᴜꜱ /ᴅɪꜱᴄᴏʀᴅ", false) + "\n" +
+                                Theme.STORE.gradient("✘ ꜱᴜʙꜱᴄʀɪʙᴇ /ꜱᴛᴏʀᴇ", false) + "\n");
+
+
+                final String name = p.getName();
+                final String plus;
+
+                if (!p.hasPlayedBefore()) {
+                    PlayerHelper.kitPlayer(p);
+                    plus = CC.YELLOW + "[" + CC.GOLD + "+" + CC.YELLOW + "]";
+                } else {
+                    plus = CC.GREEN + "[" + CC.GOLD + "+" + CC.GREEN + "]";
+                }
+
+                final String message = plus + " " + name;
+                e.setJoinMessage(message);
+
+                if (!p.getWorld().getName().equalsIgnoreCase("arena")) {
+                    PlayerHelper.teleport(p, NRCore.config.spawn);
+                }
+                if (p.getGameMode() == GameMode.SPECTATOR) {
+                    PlayerHelper.teleport(p, NRCore.config.spawn);
+                    p.setGameMode(GameMode.SURVIVAL);
+                }
+
+                AfkHelper.setAfk(p);
+                Tazpvp.getBotThread().connectionChat(p.getName(), true);
             }
-        }
-
-        PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(p);
-
-        final UserRankService userRankService = new UserRankServiceImpl();
-        userRankService.removeAllExpiredRanks(playerWrapper.getUserRankEntity());
-
-        playerWrapper.refreshRankEntity();
-
-        p.setPlayerListHeaderFooter(
-                CC.DARK_AQUA + "                                      " + "\n                 " +
-                        Theme.SERVER.gradient("TAZPVP.NET", true) + "               " + "\n",
-
-                "\n" +
-                        Theme.DISCORD.gradient("✉ ᴊᴏɪɴ ᴜꜱ /ᴅɪꜱᴄᴏʀᴅ", false) + "\n" +
-                        Theme.STORE.gradient("✘ ꜱᴜʙꜱᴄʀɪʙᴇ /ꜱᴛᴏʀᴇ", false) + "\n");
-
-
-        final String name = p.getName();
-        final String plus;
-
-        if (!p.hasPlayedBefore()) {
-            PlayerHelper.kitPlayer(p);
-            plus = CC.YELLOW + "[" + CC.GOLD + "+" + CC.YELLOW + "]";
-        } else {
-            plus = CC.GREEN + "[" + CC.GOLD + "+" + CC.GREEN + "]";
-        }
-
-        final String message = plus + " " + name;
-        e.setJoinMessage(message);
-
-        if (!p.getWorld().getName().equalsIgnoreCase("arena")) {
-            PlayerHelper.teleport(p, NRCore.config.spawn);
-        }
-        if (p.getGameMode() == GameMode.SPECTATOR) {
-            PlayerHelper.teleport(p, NRCore.config.spawn);
-            p.setGameMode(GameMode.SURVIVAL);
-        }
-
-        AfkHelper.setAfk(p);
-
-        Tazpvp.getBotThread().connectionChat(p.getName(), true);
+        }.runTaskLater(Tazpvp.getInstance(), 20);
     }
 }
