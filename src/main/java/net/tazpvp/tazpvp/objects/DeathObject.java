@@ -96,7 +96,6 @@ public class DeathObject {
             if (kitSerial == null || kitSerial.isEmpty()) {
                 PlayerHelper.kitPlayer(pVictim);
             } else {
-                // TODO: Change to new builder, wtv this is
                 KitMakerService kitMakerService = new KitMakerServiceImpl();
 
                 ItemStack[] contents = kitMakerService.deserializeInventory(kitSerial);
