@@ -21,6 +21,8 @@ public class Medic extends Observable {
 
         if (killerTalentEntity.isMedic()) {
             if (killerGuild == null) return;
+            final GuildEntity victimGuild = guildService.getGuildByPlayer(victim.getUniqueId());
+            if (victimGuild.equals(killerGuild)) return;
             for (Player p : Bukkit.getOnlinePlayers()) {
                 if (killer.getLocation().distance(p.getLocation()) <= 5) {
                     if (p != killer) {

@@ -18,7 +18,7 @@ public enum TalentEnum {
     BLESSED(Material.GOLDEN_APPLE, "Blessed", "A chance of getting a golden apple from a kill.", 20000),
     GLIDE(Material.ELYTRA, "Glide", "The launch pad pushes you further.", 6000),
     PROFICIENT(Material.EXPERIENCE_BOTTLE, "Proficient", "Gain experience from duels.", 9000),
-    MEDIC(Material.POTION, "Medic", "Heal nearby guild mates on kill.", 10);
+    MEDIC(Material.POTION, "Medic", "Heal nearby guild mates on kill.", 100000);
 
     final Material mat;
     final String name;
