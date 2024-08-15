@@ -19,6 +19,8 @@ import net.tazpvp.tazpvp.game.booster.BoosterTypes;
 import net.tazpvp.tazpvp.helpers.PlayerHelper;
 import net.tazpvp.tazpvp.helpers.ScoreboardHelper;
 import net.tazpvp.tazpvp.helpers.SerializableInventory;
+import net.tazpvp.tazpvp.services.KitMakerService;
+import net.tazpvp.tazpvp.services.KitMakerServiceImpl;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -95,11 +97,13 @@ public class DeathObject {
                 PlayerHelper.kitPlayer(pVictim);
             } else {
                 // TODO: Change to new builder, wtv this is
-                SerializableInventory serializableInventory = SerializableInventory.convertFromString(kitSerial);
-                serializableInventory.addItems(pVictim.getInventory(), PlayerHelper.getKitItems(pVictim));
+                KitMakerService kitMakerService = new KitMakerServiceImpl();
 
-                    PlayerHelper.armorPlayer(pVictim);
-                }
+                ItemStack[] contents = kitMakerService.deserializeInventory(kitSerial);
+
+                pVictim.getInventory().setContents(contents);
+                PlayerHelper.armorPlayer(pVictim);
+            }
 
                 PlayerHelper.resetHealth(pVictim);
                 PlayerHelper.feedPlr(pVictim);
