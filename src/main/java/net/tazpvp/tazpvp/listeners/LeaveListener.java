@@ -34,7 +34,6 @@ package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
-import net.tazpvp.tazpvp.game.events.Event;
 import net.tazpvp.tazpvp.helpers.CombatTagHelper;
 import net.tazpvp.tazpvp.helpers.PlaytimeHelper;
 import net.tazpvp.tazpvp.objects.DeathObject;
@@ -57,7 +56,7 @@ public class LeaveListener implements Listener {
         UUID id = p.getUniqueId();
 
         if (TournamentObject.activeTournament != null) {
-            TournamentObject.activeTournament.removeParticipant();
+//            TournamentObject.activeTournament.removeParticipant();
         }
 
         PlaytimeHelper.playerLeft(p);
