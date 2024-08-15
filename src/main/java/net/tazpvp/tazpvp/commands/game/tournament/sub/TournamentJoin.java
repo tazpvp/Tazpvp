@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.commands.game.event.sub;
+package net.tazpvp.tazpvp.commands.game.tournament.sub;
 
 import lombok.NonNull;
 import net.tazpvp.tazpvp.objects.PartyObject;
@@ -10,9 +10,9 @@ import org.jetbrains.annotations.NotNull;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
-public class EventJoin extends NRCommand {
+public class TournamentJoin extends NRCommand {
 
-    public EventJoin() {
+    public TournamentJoin() {
         super(new Label("join", null));
     }
 

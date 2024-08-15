@@ -51,23 +51,20 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class ChatListener implements Listener {
 
     private final List<String> swearWords = List.of(
-            "fuck", "shit", "damn", "ass", "bitch", "bastard", "bollocks", "cunt", "cock",
-            "dick", "piss", "arsehole", "wanker", "slut", "whore", "twat", "nigger",
-            "faggot", "dyke", "kike", "spic", "chink", "retard", "moron", "idiot", "stupid",
-            "gook", "slope", "coon", "raghead", "sand nigger", "wetback", "beaner", "jap",
-            "squaw", "injun", "half-breed", "mulatto", "mudblood", "yellow", "cracker",
-            "honky", "whitey", "redneck", "hillbilly", "nigga"
+            "fuck", "shit", "ass", "bitch", "bastard", "cunt", "cock",
+            "dick", "arsehole", "wanker", "slut", "whore", "twat", "nigger",
+            "faggot", "fag", "chink", "retard", "moron",
+            "gook", "coon", "raghead", "sand nigger", "beaner", "cracker", "nigga"
     );
 
     @EventHandler
@@ -79,56 +76,71 @@ public class ChatListener implements Listener {
         String[] messageWords = e.getMessage().split(" ");
         List<String> messageWordsList = new ArrayList<>(Arrays.asList(messageWords));
 
-        for (String word : swearWords)  {
-            if (messageWordsList.contains(word.toLowerCase())) {
-                e.setCancelled(true);
-                p.sendMessage(CC.RED + "Please refrain from breaking the chat rules.");
-                return;
-            }
-        }
 
         final PunishmentService punishmentService = new PunishmentServiceImpl();
         TextComponent component = new TextComponent(CC.GRAY + "Join the discord to appeal [Click here]");
         component.setClickEvent(new net.md_5.bungee.api.chat.ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/56rdkbSqa8"));
 
-        if (punishmentService.getPunishment(uuid) == PunishmentService.PunishmentType.MUTED) {
-
-            final long timestamp = punishmentService.getTimeRemaining(uuid);
-            final String howLongAgo = TimeUtil.howLongAgo(timestamp);
-
-            if (timestamp < 0L) {
-                PunishmentHelper.unmute(uuid);
-            } else {
-                p.sendMessage(CC.RED + "You are currently muted for " + howLongAgo);
-                p.spigot().sendMessage(component);
-                e.setCancelled(true);
-
-                return;
-            }
-        }
-
-        if (punishmentService.getPunishment(uuid) == PunishmentService.PunishmentType.BANNED) {
-            if (punishmentService.getTimeRemaining(p.getUniqueId()) > 0) {
-                p.sendMessage(CC.RED + "You cannot chat while banned.");
-                p.spigot().sendMessage(component);
-                e.setCancelled(true);
-                return;
-            }
-        }
-
-        if (pw.getRank().getName().equals("default") && pw.getLastMessageSent().equalsIgnoreCase(e.getMessage()) && !p.isOp()) {
-            e.setCancelled(true);
-            p.sendMessage(CC.RED + "Please do not spam our chats.");
-            return;
-        }
-
         String customMessage = e.getMessage();
-        if (Profanity.sayNoNo(p, customMessage)) {
-            e.setCancelled(true);
-            return;
+
+        if (!p.isOp()) {
+            for (String word : swearWords)  {
+                if (messageWordsList.contains(word.toLowerCase())) {
+                    e.setCancelled(true);
+                    p.sendMessage(CC.RED + "Who do you think you are using that word bud.");
+                    return;
+                }
+            }
+
+            if (punishmentService.getPunishment(uuid) == PunishmentService.PunishmentType.MUTED) {
+
+                final long timestamp = punishmentService.getTimeRemaining(uuid);
+                final String howLongAgo = TimeUtil.howLongAgo(timestamp);
+
+                if (timestamp < 0L) {
+                    PunishmentHelper.unmute(uuid);
+                } else {
+                    p.sendMessage(CC.RED + "You are currently muted for " + howLongAgo);
+                    p.spigot().sendMessage(component);
+                    e.setCancelled(true);
+
+                    return;
+                }
+            }
+
+            if (punishmentService.getPunishment(uuid) == PunishmentService.PunishmentType.BANNED) {
+                if (punishmentService.getTimeRemaining(p.getUniqueId()) > 0) {
+                    p.sendMessage(CC.RED + "You cannot chat while banned.");
+                    p.spigot().sendMessage(component);
+                    e.setCancelled(true);
+                    return;
+                }
+            }
+
+            if (pw.getRank().getName().equals("default") && e.getMessage().contains(pw.getLastMessageSent())) {
+                e.setCancelled(true);
+                for (int i = 0; i < 5 ; i++) {
+                    p.sendMessage(CC.RED + "DON'T SPAM!!!!!!!!!!");
+                }
+                return;
+            }
+
+            if (Profanity.sayNoNo(p, customMessage)) {
+                e.setCancelled(true);
+                return;
+            }
         }
 
         pw.setLastMessageSent(customMessage);
+        final String checkMessage = customMessage;
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (pw.getLastMessageSent().equalsIgnoreCase(checkMessage)){
+                    pw.setLastMessageSent(null);
+                }
+            }
+        }.runTaskLater(Tazpvp.getInstance(), 20*5);
 
         String format = "&GOLD{RANK} &GRAY[{LEVEL}&GRAY] {PREFIX} %s{SUFFIX} &GRAY&M%s";
 

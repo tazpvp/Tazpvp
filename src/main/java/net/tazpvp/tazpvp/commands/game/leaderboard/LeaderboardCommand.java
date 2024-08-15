@@ -37,7 +37,10 @@ public class LeaderboardCommand extends NRCommand {
                     p.sendMessage( CC.DARK_AQUA + "" + CC.BOLD + "COINS Leaderboard");
 
                     for (PlayerStatEntity playerStatEntity : playerStatEntities) {
-                        p.sendMessage(count + ". " + CC.GRAY + Bukkit.getOfflinePlayer(playerStatEntity.getUuid()).getName() + " " + CC.GOLD + leaderboardEnum.getStatEntityIntegerFunction().apply(playerStatEntity));
+                        p.sendMessage(count + ". " + CC.GRAY + Bukkit.getOfflinePlayer(playerStatEntity.getUuid())
+                                .getName() + " " + CC.GOLD + leaderboardEnum.getStatEntityIntegerFunction()
+                                .apply(playerStatEntity)
+                        );
                         count++;
                     }
                     return true;

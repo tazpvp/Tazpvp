@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.commands.game.event.gui;
+package net.tazpvp.tazpvp.commands.game.tournament.gui;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

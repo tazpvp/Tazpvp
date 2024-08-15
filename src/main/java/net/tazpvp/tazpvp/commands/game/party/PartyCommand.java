@@ -30,6 +30,10 @@ public class PartyCommand extends NRCommand {
         if (args.length == 1) {
             Player target = getPlayer(args[0]);
             if (target != null) {
+                if (target.getUniqueId().equals(p.getUniqueId())) {
+                    PartyObject.send(p, "LOL you're lonely, you can't invite yourself.");
+                    return true;
+                }
                 if (party == null) {
                     party = new PartyObject(p.getUniqueId());
                     pw.setParty(party);
@@ -57,22 +61,27 @@ public class PartyCommand extends NRCommand {
             }
         } else if (args.length == 3) {
             Player target = getPlayer(args[2]);
-            PlayerWrapper targetWrapper = PlayerWrapper.getPlayer(target);
-            if (args[1].equalsIgnoreCase("invite") && target != null) {
-                if (targetWrapper.getParty() != null) {
-                    PartyObject.send(p, "This user is already in a party.");
-                } else {
-                    party.invitePlayer(target);
-                }
-            } else if (args[1].equalsIgnoreCase("join") && target != null) {
-                if (PartyObject.inviteList.containsKey(p.getUniqueId())) {
-                    PartyObject requesterParty = PartyObject.inviteList.get(p.getUniqueId());
-                    if (requesterParty.getLeader().equals(target.getUniqueId())) {
-                        requesterParty.addMember(p);
-                        PartyObject.inviteList.remove(p.getUniqueId());
+            if (target != null) {
+                PlayerWrapper targetWrapper = PlayerWrapper.getPlayer(target);
+                if (args[1].equalsIgnoreCase("invite")) {
+                    if (targetWrapper.getParty() != null) {
+                        PartyObject.send(p, "This user is already in a party.");
+                    } else {
+                        if (party != null) {
+                            party.invitePlayer(target);
+                        }
+                    }
+                } else if (args[1].equalsIgnoreCase("join")) {
+                    if (PartyObject.inviteList.containsKey(p.getUniqueId())) {
+                        PartyObject requesterParty = PartyObject.inviteList.get(p.getUniqueId());
+                        if (requesterParty.getLeader().equals(target.getUniqueId())) {
+                            requesterParty.addMember(p);
+                            PartyObject.inviteList.remove(p.getUniqueId());
+                        }
                     }
                 }
             }
+
         }
         return super.execute(sender, args);
     }
