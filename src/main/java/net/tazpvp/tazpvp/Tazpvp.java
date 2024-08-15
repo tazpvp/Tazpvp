@@ -263,6 +263,7 @@ public final class Tazpvp extends JavaPlugin {
         new Hunter();
         new Resilient();
         new Proficient();
+        new Medic();
     }
     public void registerCommands() {
         register(

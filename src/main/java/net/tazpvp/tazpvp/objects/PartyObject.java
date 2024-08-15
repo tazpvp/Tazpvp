@@ -37,7 +37,7 @@ public class PartyObject {
     }
 
     public void invitePlayer(Player target) {
-        send(target, getMember(leader).getName() + " has invited you to their party.");
+        send(target, getMember(leader).getName() + " has invited you to their party. Type /party join <user> to accept.");
         inviteList.put(target.getUniqueId(), this);
     }
 

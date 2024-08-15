@@ -56,11 +56,18 @@ public class PartyCommand extends NRCommand {
                 PartyObject.send(p, "Toggled party chat.");
             }
         } else if (args.length == 3) {
-            Player requester = getPlayer(args[2]);
-            if (args[1].equalsIgnoreCase("join") && requester != null) {
+            Player target = getPlayer(args[2]);
+            PlayerWrapper targetWrapper = PlayerWrapper.getPlayer(target);
+            if (args[1].equalsIgnoreCase("invite") && target != null) {
+                if (targetWrapper.getParty() != null) {
+                    PartyObject.send(p, "This user is already in a party.");
+                } else {
+                    party.invitePlayer(target);
+                }
+            } else if (args[1].equalsIgnoreCase("join") && target != null) {
                 if (PartyObject.inviteList.containsKey(p.getUniqueId())) {
                     PartyObject requesterParty = PartyObject.inviteList.get(p.getUniqueId());
-                    if (requesterParty.getLeader().equals(requester.getUniqueId())) {
+                    if (requesterParty.getLeader().equals(target.getUniqueId())) {
                         requesterParty.addMember(p);
                         PartyObject.inviteList.remove(p.getUniqueId());
                     }

@@ -104,6 +104,12 @@ public class GuildServiceImpl implements GuildService {
 
     @Override
     public void deleteGuild(GuildEntity guild) {
+        for (UUID uuid : getAllMembers(guild)) {
+            GuildMemberEntity guildMemberEntity = guildMemberService.getGuildMemberByUUID(uuid);
+            if (guildMemberEntity != null) {
+                guildMemberService.deleteMember(guildMemberEntity);
+            }
+        }
         try {
             getUserDao().delete(guild);
         } catch (SQLException e) {
