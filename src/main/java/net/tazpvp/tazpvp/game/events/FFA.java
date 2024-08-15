@@ -32,7 +32,7 @@
 
 package net.tazpvp.tazpvp.game.events;
 
-import net.tazpvp.tazpvp.objects.TournamentObject;
+import net.tazpvp.tazpvp.game.tournaments.old.TournamentObject;
 
 public class FFA extends TournamentObject {
 

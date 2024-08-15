@@ -2,7 +2,7 @@ package net.tazpvp.tazpvp.commands.game.tournament.sub;
 
 import lombok.NonNull;
 import net.tazpvp.tazpvp.objects.PartyObject;
-import net.tazpvp.tazpvp.objects.TournamentObject;
+import net.tazpvp.tazpvp.game.tournaments.old.TournamentObject;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

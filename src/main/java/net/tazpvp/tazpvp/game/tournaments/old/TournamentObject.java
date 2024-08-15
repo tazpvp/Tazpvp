@@ -1,10 +1,11 @@
-package net.tazpvp.tazpvp.objects;
+package net.tazpvp.tazpvp.game.tournaments.old;
 
 import lombok.Getter;
 import lombok.Setter;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.helpers.PlayerHelper;
+import net.tazpvp.tazpvp.objects.PartyObject;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;

@@ -7,7 +7,7 @@ import net.tazpvp.tazpvp.helpers.CombatTagHelper;
 import net.tazpvp.tazpvp.helpers.DuelHelper;
 import net.tazpvp.tazpvp.objects.DuelObject;
 import net.tazpvp.tazpvp.objects.PartyObject;
-import net.tazpvp.tazpvp.objects.TournamentObject;
+import net.tazpvp.tazpvp.game.tournaments.old.TournamentObject;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;

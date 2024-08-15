@@ -30,11 +30,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.helpers;
+package net.tazpvp.tazpvp.game.tournaments.old;
 
 import net.tazpvp.tazpvp.game.events.FFA;
 import net.tazpvp.tazpvp.game.events.Parkour;
-import net.tazpvp.tazpvp.objects.TournamentObject;
 
 public final class EventHelper {
 

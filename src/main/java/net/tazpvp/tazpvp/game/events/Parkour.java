@@ -34,7 +34,7 @@ package net.tazpvp.tazpvp.game.events;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.helpers.PlayerHelper;
-import net.tazpvp.tazpvp.objects.TournamentObject;
+import net.tazpvp.tazpvp.game.tournaments.old.TournamentObject;
 import net.tazpvp.tazpvp.objects.PartyObject;
 import org.bukkit.entity.Player;
 
