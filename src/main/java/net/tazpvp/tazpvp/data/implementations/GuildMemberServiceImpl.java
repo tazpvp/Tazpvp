@@ -90,4 +90,13 @@ public class GuildMemberServiceImpl implements GuildMemberService {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void deleteMember(GuildMemberEntity guildMemberEntity) {
+        try {
+            getUserDao().delete(guildMemberEntity);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

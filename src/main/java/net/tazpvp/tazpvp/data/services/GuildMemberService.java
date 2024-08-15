@@ -22,4 +22,6 @@ public interface GuildMemberService extends DataService {
 
     void demoteMember(UUID id);
 
+    void deleteMember(GuildMemberEntity guildMemberEntity);
+
 }

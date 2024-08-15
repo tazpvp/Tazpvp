@@ -80,6 +80,7 @@ public class GuildServiceImpl implements GuildService {
             guildMemberEntity.setGuildEntity(null);
             guildMemberService.saveGuildMemberEntity(guildMemberEntity);
             guild.getMembers().remove(guildMemberEntity);
+            guildMemberService.deleteMember(guildMemberEntity);
             saveGuild(guild);
         }
     }
