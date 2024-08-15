@@ -90,20 +90,21 @@ public class DeathObject {
             final KitService kitService = new KitServiceImpl();
             final KitEntity kitEntity = kitService.getOrDefault(pVictim.getUniqueId());
 
-        final String kitSerial = kitEntity.getSerial();
-        if (kitSerial == null || kitSerial.isEmpty()) {
-            PlayerHelper.kitPlayer(pVictim);
-        } else {
-            // TODO: Change to new builder, wtv this is
-            SerializableInventory serializableInventory = SerializableInventory.convertFromString(kitSerial);
-            serializableInventory.addItems(pVictim.getInventory(), PlayerHelper.getKitItems(pVictim));
+            final String kitSerial = kitEntity.getSerial();
+            if (kitSerial == null || kitSerial.isEmpty()) {
+                PlayerHelper.kitPlayer(pVictim);
+            } else {
+                // TODO: Change to new builder, wtv this is
+                SerializableInventory serializableInventory = SerializableInventory.convertFromString(kitSerial);
+                serializableInventory.addItems(pVictim.getInventory(), PlayerHelper.getKitItems(pVictim));
 
-                PlayerHelper.armorPlayer(pVictim);
+                    PlayerHelper.armorPlayer(pVictim);
+                }
+
+                PlayerHelper.resetHealth(pVictim);
+                PlayerHelper.feedPlr(pVictim);
             }
 
-            PlayerHelper.resetHealth(pVictim);
-            PlayerHelper.feedPlr(pVictim);
-        }
         updateStats();
     }
 
