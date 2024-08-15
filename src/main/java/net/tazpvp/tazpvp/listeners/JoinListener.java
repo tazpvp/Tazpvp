@@ -33,7 +33,6 @@
 package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.data.LooseData;
 import net.tazpvp.tazpvp.data.implementations.UserRankServiceImpl;
 import net.tazpvp.tazpvp.data.services.UserRankService;
 import net.tazpvp.tazpvp.enums.CC;
@@ -74,6 +73,8 @@ public class JoinListener implements Listener {
 
         p.setLevel(playerLevel);
         PlayerHelper.updateLevel(id);
+
+        p.setGlowing(true);
 
         for (Player vp : Bukkit.getOnlinePlayers()) {
             PlayerWrapper vpw = PlayerWrapper.getPlayer(vp);
