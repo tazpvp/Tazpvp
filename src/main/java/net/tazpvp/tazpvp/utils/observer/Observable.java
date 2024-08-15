@@ -36,6 +36,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityCombustEvent;
 
 public class Observable implements Observer {
     /**
@@ -66,7 +67,7 @@ public class Observable implements Observer {
     @Override
     public void chat(Player p, String chat) {}
     @Override
-    public void burn(Player p) {}
+    public void burn(Player p, EntityCombustEvent event) {}
     @Override
     public void place(Player p, Block b) {}
     @Override
@@ -75,4 +76,6 @@ public class Observable implements Observer {
     public void kill_zorg(Player shooter) {}
     @Override
     public void open_coffin(Player p) {}
+    @Override
+    public void duel_end(Player winner, Player loser) {}
 }

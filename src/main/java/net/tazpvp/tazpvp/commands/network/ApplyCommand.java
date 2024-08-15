@@ -4,7 +4,7 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
@@ -25,6 +25,9 @@ public class ApplyCommand extends NRCommand {
             component.setClickEvent(new net.md_5.bungee.api.chat.ClickEvent(ClickEvent.Action.OPEN_URL, discordLink));
 
             p.spigot().sendMessage(component);
+            p.sendMessage("");
+            p.sendMessage(CC.GRAY + "If the link doesn't work, visit the " + CC.WHITE +"discord.tazpvp.net" + CC.GRAY + " website.");
+
 
             return true;
         });

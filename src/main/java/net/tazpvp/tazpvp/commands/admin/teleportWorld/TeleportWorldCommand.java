@@ -1,7 +1,8 @@
 package net.tazpvp.tazpvp.commands.admin.teleportWorld;
 
 import lombok.NonNull;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.helpers.PlayerHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -38,7 +39,7 @@ public class TeleportWorldCommand extends NRCommand {
 
         final World world = Bukkit.getWorld(args[0]);
         if (world != null) {
-            p.teleport(new Location(world, 0, 100, 0));
+            PlayerHelper.teleport(p, new Location(world, 0, 100, 0));
             return true;
         } else {
             p.sendMessage(CC.RED + "That is not a valid world.");

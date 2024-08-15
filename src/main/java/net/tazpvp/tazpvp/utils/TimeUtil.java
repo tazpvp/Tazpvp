@@ -71,10 +71,10 @@ public final class TimeUtil {
         return sb.toString();
     }
 
+    @Getter
     public enum TimeType {
         DAY("Day"), HOUR("Hour"), MINUTE("Minute"), SECOND("Second");
 
-        @Getter
         private final String prettyForm;
 
         TimeType(String prettyForm) {

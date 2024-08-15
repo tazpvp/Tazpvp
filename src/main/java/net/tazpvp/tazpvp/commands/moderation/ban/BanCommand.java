@@ -32,10 +32,16 @@
 
 package net.tazpvp.tazpvp.commands.moderation.ban;
 
-import net.tazpvp.tazpvp.utils.functions.PunishmentFunctions;
+import lombok.NonNull;
+import net.tazpvp.tazpvp.data.implementations.PunishmentServiceImpl;
+import net.tazpvp.tazpvp.data.services.PunishmentService;
+import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.helpers.PunishmentHelper;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 import world.ntdi.nrcore.utils.ChatUtils;
 import world.ntdi.nrcore.utils.command.simple.Completer;
 import world.ntdi.nrcore.utils.command.simple.Label;
@@ -47,19 +53,50 @@ public class BanCommand extends NRCommand {
 
     public BanCommand() {
         super(new Label("ban", "tazpvp.ban"));
+    }
 
-        setNativeExecutor((sender, args) -> {
-            if (args.length <= 1) {
-                sendIncorrectUsage(sender, "/ban <user> <time (m, h, d)> <reason>");
+    @Override
+    public boolean execute(@NonNull CommandSender sender, @NotNull @NonNull String[] args) {
+        if (args.length <= 1) {
+            sendIncorrectUsage(sender, "/ban <user> <time> <reason>");
+            return true;
+        }
+
+        if (!sender.hasPermission(getLabel().getPermission())) {
+            sendNoPermission(sender);
+            return true;
+        }
+
+        OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
+
+        if (target.isOnline()) {
+            Player target2 = target.getPlayer();
+            if (target2 != null) {
+                if (target2.hasPermission("tazpvp.ban")) {
+                    sender.sendMessage(CC.RED + "You cannot ban this person.");
+                    return true;
+                }
+            }
+        }
+
+        final PunishmentService punishmentService = new PunishmentServiceImpl();
+        final PunishmentService.PunishmentType punishmentType = punishmentService.getPunishment(target.getUniqueId());
+
+        if (punishmentType == PunishmentService.PunishmentType.BANNED) {
+            if (punishmentService.getTimeRemaining(target.getUniqueId()) > 0) {
+                sender.sendMessage(CC.RED + "This player is already banned.");
                 return true;
             }
+        }
 
-            Player target = Bukkit.getPlayer(args[0]);
 
-            PunishmentFunctions.ban(target, args[1], ChatUtils.builder(args, 2));
+        if (args.length < 3) {
+            PunishmentHelper.ban(target, args[1], sender);
+        } else {
+            PunishmentHelper.ban(target, args[1], sender, ChatUtils.builder(args, 2));
+        }
 
-            return true;
-        });
+        return true;
     }
 
     @Override
@@ -67,8 +104,8 @@ public class BanCommand extends NRCommand {
         if (args.length == 1) {
             return Completer.onlinePlayers(args[0]);
         } else if (args.length == 2) {
-            return List.of("30m", "12h", "128d", "permanent");
+            return List.of("30m", "12h", "128d");
         }
-        return List.of("");
+        return List.of("<reason>");
     }
 }

@@ -35,35 +35,25 @@ package net.tazpvp.tazpvp.utils.observer;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityCombustEvent;
 
 public interface Observer {
 
     void death(Player victim, Player killer);
-    void mine(Player p, Material material); // TODO: Add events to implement to
-
+    void mine(Player p, Material material);
     void launch(Player p);
-
-    void talent(Player p); // TODO: Add event to implement to
-
-    void gui(Player p, String name); // TODO: Add event to implement to
-
+    void talent(Player p);
+    void gui(Player p, String name);
     void rebirth(Player p); // TODO: Add event to implement to
-
-    void duel(Player p); // TODO: Add event to implement to
-
+    void duel(Player p);
     void event(Player p);
-
-    void enchant(Player p); // TODO: Add event to implement to
-
+    void enchant(Player p);
     void chat(Player p, String chat);
-
-    void burn(Player p);
-
+    void burn(Player p, EntityCombustEvent event);
     void place(Player p, Block b);
-
     void shoot(Player shooter);
-
-    void kill_zorg(Player p); // TODO: Add event to implement to
-
+    void kill_zorg(Player p);
     void open_coffin(Player p);
+    void duel_end(Player winner, Player loser);
+
 }

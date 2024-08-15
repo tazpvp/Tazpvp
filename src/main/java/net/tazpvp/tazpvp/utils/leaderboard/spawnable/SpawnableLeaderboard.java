@@ -34,36 +34,38 @@
 package net.tazpvp.tazpvp.utils.leaderboard.spawnable;
 
 import lombok.Getter;
-import net.tazpvp.tazpvp.utils.data.DataTypes;
-import net.tazpvp.tazpvp.utils.enums.CC;
-import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
-import net.tazpvp.tazpvp.utils.leaderboard.Leaderboard;
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
+import net.tazpvp.tazpvp.data.services.PlayerStatService;
+import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
+import net.tazpvp.tazpvp.utils.leaderboard.LeaderboardEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import world.ntdi.nrcore.utils.holograms.Hologram;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 public class SpawnableLeaderboard {
     @Getter
-    private final DataTypes dataTypes;
+    private final LeaderboardEnum leaderboardEnum;
     @Getter
     private final Hologram hologram;
     @Getter
     private final Location location;
     @Getter
     private final String title;
+    private final PlayerStatService playerStatService;
 
-    public SpawnableLeaderboard(DataTypes dataTypes, String title, Location location) {
-        this.dataTypes = dataTypes;
+    public SpawnableLeaderboard(LeaderboardEnum leaderboardEnum, String title, Location location) {
+        this.leaderboardEnum = leaderboardEnum;
         this.location = location;
         this.title = title;
+        this.playerStatService = Tazpvp.getInstance().getPlayerStatService();
 
         this.hologram = new Hologram(getLocation(), false,
-                CC.GRAY + "-< " + ChatFunctions.hexColor("#8aff70", getTitle(), false) + CC.GRAY + " >-",
+                CC.GRAY + "-< " + ChatHelper.hexColor("#8aff70", getTitle(), false) + CC.GRAY + " >-",
                 formatLine(1),
                 formatLine(2),
                 formatLine(3),
@@ -86,22 +88,24 @@ public class SpawnableLeaderboard {
     }
 
     private String formatLine(int number, String text) {
-        return ChatFunctions.hexColor("#29e226", number + ". " + text, false);
+        return ChatHelper.hexColor("#29e226", number + ". " + text, false);
     }
 
     public void update() {
-        Leaderboard leaderboard = new Leaderboard(dataTypes);
+        List<PlayerStatEntity> playerStatEntities = playerStatService.getTop10Most(leaderboardEnum.getColumnName());
 
         int count = 1;
 
-        Map<UUID, Integer> sortedMap = leaderboard.getSortedPlacement();
-
         List<String> lines = new ArrayList<>();
 
-        lines.add(CC.GRAY + "-< " + ChatFunctions.hexColor("#8aff70", getTitle(), false) + CC.GRAY + " >-");
+        lines.add(CC.GRAY + "-< " + ChatHelper.hexColor("#8aff70", getTitle(), false) + CC.GRAY + " >-");
 
-        for (Map.Entry<UUID, Integer> entry : sortedMap.entrySet()) {
-            lines.add(formatLine(count, Bukkit.getOfflinePlayer(entry.getKey()).getName(), entry.getValue()));
+        for (PlayerStatEntity playerStatEntity : playerStatEntities) {
+            lines.add(formatLine(
+                    count,
+                    Bukkit.getOfflinePlayer(playerStatEntity.getUuid()).getName(),
+                    leaderboardEnum.getStatEntityIntegerFunction().apply(playerStatEntity))
+            );
             count++;
         }
 

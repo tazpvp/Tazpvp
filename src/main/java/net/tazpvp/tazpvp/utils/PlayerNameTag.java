@@ -1,10 +1,12 @@
 package net.tazpvp.tazpvp.utils;
 
-import net.tazpvp.tazpvp.utils.functions.ChatFunctions;
-import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
+import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
+import org.jetbrains.annotations.NotNull;
 import world.ntdi.nrcore.utils.ChatUtils;
 
 public class PlayerNameTag {
@@ -25,8 +27,14 @@ public class PlayerNameTag {
 
     private void updateScoreboard(Player p1, Player p2) {
         PlayerWrapper otherWrapper = PlayerWrapper.getPlayer(p2);
+        if (otherWrapper == null) {
+            Bukkit.getLogger().severe("GYATT! NTDI BIG ERROR! Player 1 " + p1.getName() + " Player 2 " + p2.getName());
+            return;
+        }
 
-        String teamName = "" + otherWrapper.getRank().getRank() + p2.getUniqueId();
+        otherWrapper.refreshRankEntity();
+
+        String teamName = "" + otherWrapper.getRank().getWeight() + p2.getUniqueId();
         Team team = p1.getScoreboard().getTeam(teamName);
         if (team != null) {
             team.unregister();
@@ -36,18 +44,51 @@ public class PlayerNameTag {
 
         team.setDisplayName(p2.getName());
 
-        final String prefix = ChatUtils.chat(otherWrapper.getRankPrefix());
-        final String prefixSeparator = prefix.isBlank() ? "" : " ";
+
+        String prefix;
+        String prefixSeparator;
+
+        if (otherWrapper.getRankPrefix() == null) {
+            prefix = "";
+            prefixSeparator = "";
+        } else {
+            prefix = ChatUtils.chat(otherWrapper.getRankPrefix());
+            prefixSeparator = " ";
+        }
+
+        if (otherWrapper.getRank().getName().equals("premium")) {
+            team.setColor(ChatColor.GREEN);
+        } else if (otherWrapper.getRank().getName().equals("default")) {
+            team.setColor(ChatColor.GRAY);
+        }
+
+
         final String suffix = otherWrapper.getGuildTag();
         final String suffixSeparator = suffix.isBlank() ? "" : " ";
 
         team.setPrefix(prefix + prefixSeparator);
         team.setSuffix(suffixSeparator + suffix);
-//        team.setColor(otherWrapper.getRank().getColor());
 
-        final String gradient = ChatFunctions.gradient("#c16bff", "l", true);
+        final String gradient = ChatHelper.gradient("#c16bff", "l", true);
         final boolean isBold = gradient.toCharArray()[gradient.toCharArray().length-2] == 'b';
 
         team.addPlayer(p2);
+    }
+
+    public ChatColor getLastColors(@NotNull String input) {
+
+        int length = input.length();
+
+        // Search backwards from the end as it is faster
+        for (int index = length - 1; index > -1; index--) {
+            char section = input.charAt(index);
+            if (section == ChatColor.COLOR_CHAR && index < length - 1) {
+                char c = input.charAt(index + 1);
+
+                return ChatColor.getByChar(c);
+            }
+        }
+
+        return null;
     }
 }

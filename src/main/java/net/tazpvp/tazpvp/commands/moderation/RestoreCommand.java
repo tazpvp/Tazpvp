@@ -5,16 +5,18 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.objects.PlayerInventoryStorage;
 import net.tazpvp.tazpvp.utils.TimeUtil;
-import net.tazpvp.tazpvp.utils.enums.CC;
-import net.tazpvp.tazpvp.utils.player.PlayerInventoryStorage;
-import net.tazpvp.tazpvp.utils.player.PlayerWrapper;
+import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import world.ntdi.nrcore.utils.command.simple.Completer;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
+import java.util.List;
 import java.util.UUID;
 
 public class RestoreCommand extends NRCommand {
@@ -68,5 +70,13 @@ public class RestoreCommand extends NRCommand {
             }
         }
         return true;
+    }
+
+    @Override
+    public List<String> complete(CommandSender sender, String[] args) {
+        if (args.length == 1) {
+            return Completer.onlinePlayers(args[0]);
+        }
+        return List.of();
     }
 }

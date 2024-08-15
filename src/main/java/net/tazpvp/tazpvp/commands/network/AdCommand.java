@@ -2,13 +2,13 @@ package net.tazpvp.tazpvp.commands.network;
 
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.tazpvp.tazpvp.utils.enums.CC;
+import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
 import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
 public class AdCommand extends NRCommand {
-    final String ad = "/ad Tazpvp &bDUELS &f/ &3PVP &f/ &bFFA &f/ &bEVENTS";
+    final String ad = "/ad Tazpvp DUELS / PVP / FFA / EVENTS";
     public AdCommand() {
         super(new Label("advertise", null, "ad"));
         setNativeExecutor((sender, args) -> {
@@ -17,7 +17,7 @@ public class AdCommand extends NRCommand {
                 return true;
             }
 
-            TextComponent copy = new TextComponent("\n" + CC.YELLOW + " Click " + CC.GOLD + "" + CC.BOLD + "Here" + CC.YELLOW + " to copy the advertisement for this server.\n");
+            TextComponent copy = new TextComponent("\n" + CC.YELLOW + " Click " + CC.GOLD + CC.BOLD + "Here" + CC.YELLOW + " to copy the advertisement for this server.\n");
             copy.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, ad));
             p.spigot().sendMessage(copy);
             return true;

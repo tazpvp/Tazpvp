@@ -1,8 +1,8 @@
 package net.tazpvp.tazpvp.commands.admin.booster;
 
 import lombok.NonNull;
-import net.tazpvp.tazpvp.booster.ActiveBoosterManager;
-import net.tazpvp.tazpvp.booster.BoosterTypes;
+import net.tazpvp.tazpvp.game.booster.ActiveBoosterManager;
+import net.tazpvp.tazpvp.game.booster.BoosterTypes;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import world.ntdi.nrcore.utils.command.simple.Label;

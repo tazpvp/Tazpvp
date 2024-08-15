@@ -33,9 +33,11 @@
 package net.tazpvp.tazpvp.utils.passive;
 
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import world.ntdi.nrcore.utils.ChatUtils;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -43,27 +45,30 @@ import java.util.LinkedList;
 public class Alerts {
 
     private static int num = 0;
-    private static String prefix = "&8(&c!&8) &7";
+    private static final String prefix = CC.DARK_GREEN + "(" + CC.GREEN + CC.BOLD + "TIP" + CC.DARK_GREEN + ") " + CC.GREEN;
 
-    private static LinkedList<String> texts = new LinkedList<>(Arrays.asList(
-            "Join our fun community: &3/discord",
-            "Check out what you can do with premium! &3/premium",
-            "Looking to apply for staff? &3/apply",
-            "Want to support us? Get our advertisement: &3/ad",
-            "Think someone is hacking? Report them: &3/report",
-            "You can hop in the AFK pit at spawn to claim rewards.",
-            "Died to a cheater? Restore your inventory: &3/restore "
+    private static final LinkedList<String> texts = new LinkedList<>(Arrays.asList(
+            "Chat with like-minded sigmas: " + CC.DARK_GREEN + "/discord" ,
+            "Premium pass is pretty cool ngl " + CC.DARK_GREEN + "/premium",
+            "Wanna apply for staff? " + CC.DARK_GREEN + "/apply",
+            "I heard that if you advertise, you're cool " + CC.DARK_GREEN + "/ad",
+            "Found a stinky hacker? " + CC.DARK_GREEN + "/report",
+            "Is someone being annoying? use " + CC.DARK_GREEN + "/votemute",
+            "Sit in the AFK pit to claim rewards over night.",
+            "If you died to a cheater you can join our discord and get a restore.",
+            "Party up with your friends to chat or join events: " + CC.DARK_GREEN + "/party"
     ));
 
-    public static void alert() {
+    public static void initialize() {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (Bukkit.getOnlinePlayers().size() > 0) {
-                    Bukkit.broadcastMessage(ChatUtils.chat(prefix + texts.get(num)));
-                    num++;
-                    if (num  >= texts.size()) num = 0;
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    p.sendMessage(prefix + texts.get(num));
+                    p.playSound(p.getLocation(), Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1, 1);
                 }
+                num++;
+                if (num  >= texts.size()) num = 0;
             }
         }.runTaskTimer(Tazpvp.getInstance(), 20, 20*60*4);
     }
