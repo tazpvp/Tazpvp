@@ -1,11 +1,10 @@
-package net.tazpvp.tazpvp.game.events;
+package net.tazpvp.tazpvp.objects;
 
 import lombok.Getter;
 import lombok.Setter;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.helpers.PlayerHelper;
-import net.tazpvp.tazpvp.objects.PartyObject;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -15,9 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class EventObject {
+public abstract class TournamentObject {
 
-    public final static List<EventObject> activeEvents = new ArrayList<>();
+    public static TournamentObject activeTournament;
 
     private final List<PartyObject> participantList;
     private final int teamSizeCap;
@@ -26,12 +25,15 @@ public class EventObject {
     @Setter
     private int timeUntilBegin;
 
-    public EventObject(int teamSizeCap) {
+    public TournamentObject(int teamSizeCap) {
+        activeTournament = this;
+
         this.teamSizeCap = teamSizeCap;
         this.status = "Initializing...";
         participantList = new ArrayList<>();
-        activeEvents.add(this);
         timeUntilBegin = 10;
+
+        initialize();
     }
 
     private void initialize() {
@@ -54,9 +56,11 @@ public class EventObject {
 
     private void begin() {
         PartyObject.inviteList.clear();
+        kitPlayers();
+        handleTeleports();
     }
 
-    private void addParticipant(PartyObject team) {
+    public void addParticipant(PartyObject team) {
         if (team.getMembers().size() != teamSizeCap) {
             team.sendAll(CC.RED + "You cannot join this event. You are only allowed " + teamSizeCap + " total party members for this event.");
         } else {
@@ -78,5 +82,12 @@ public class EventObject {
 
             }
         }
+    }
+
+    public abstract void handleTeleports();
+    public abstract void kitPlayers();
+
+    public static void send(Player p, String msg) {
+        p.sendMessage(CC.DARK_PURPLE + "Tournament ❯ " + CC.LIGHT_PURPLE + msg);
     }
 }

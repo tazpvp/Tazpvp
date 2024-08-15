@@ -1,13 +1,13 @@
-package net.tazpvp.tazpvp.game.duels.type;
+package net.tazpvp.tazpvp.game.duels;
 
-import net.tazpvp.tazpvp.game.duels.Duel;
+import net.tazpvp.tazpvp.objects.DuelObject;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import java.util.UUID;
 
-public class Op extends Duel {
+public class Op extends DuelObject {
     public Op(final UUID P1, final UUID P2) {
         super(P1, P2, "op");
     }

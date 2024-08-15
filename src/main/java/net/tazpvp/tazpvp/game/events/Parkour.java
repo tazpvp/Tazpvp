@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  *
- * Copyright (c) 2022, n-tdi
+ * Copyright (c) 2023, n-tdi
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,32 +30,31 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.game.duels.type;
+package net.tazpvp.tazpvp.game.events;
 
-import net.tazpvp.tazpvp.game.duels.Duel;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.helpers.PlayerHelper;
+import net.tazpvp.tazpvp.objects.TournamentObject;
+import net.tazpvp.tazpvp.objects.PartyObject;
+import org.bukkit.entity.Player;
 
-import java.util.UUID;
+public class Parkour extends TournamentObject {
 
-public class Classic extends Duel {
-
-    public Classic(UUID P1, UUID P2) {
-        super(P1, P2, "classic");
+    public Parkour() {
+        super(3);
     }
 
     @Override
-    public void addItems(PlayerInventory inv) {
-        inv.setHelmet(new ItemStack(Material.DIAMOND_HELMET));
-        inv.setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
-        inv.setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
-        inv.setBoots(new ItemStack(Material.DIAMOND_BOOTS));
+    public void handleTeleports() {
+        for (PartyObject team : super.getParticipantList()) {
+            for (Player p : team.getOnlineMembers()) {
+                PlayerHelper.teleport(p, Tazpvp.getParkourUtil().getLocation("spawn"));
+            }
+        }
+    }
 
-        inv.setItemInOffHand(new ItemStack(Material.SHIELD));
+    @Override
+    public void kitPlayers() {
 
-        inv.addItem(new ItemStack(Material.DIAMOND_SWORD));
-        inv.addItem(new ItemStack(Material.DIAMOND_AXE));
-        inv.addItem(new ItemStack(Material.GOLDEN_APPLE, 6));
     }
 }

@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.game.duels;
+package net.tazpvp.tazpvp.objects;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -38,6 +38,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
+import net.tazpvp.tazpvp.helpers.DuelHelper;
 import net.tazpvp.tazpvp.helpers.PlayerHelper;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.*;
@@ -46,17 +47,18 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.NRCore;
 import world.ntdi.nrcore.utils.ArmorManager;
+import world.ntdi.nrcore.utils.world.WorldUtil;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public abstract class Duel {
+public abstract class DuelObject {
 
     public static final String prefix = CC.AQUA + "Duel | " + CC.DARK_AQUA;
     @Getter @Setter
-    public static Duel duel = null;
+    public static List<DuelObject> activeDuels = new ArrayList<>();
 
     @Getter
     private final UUID P1;
@@ -68,32 +70,43 @@ public abstract class Duel {
     private final List<UUID> duelers;
     @Getter
     private final List<Location> locations;
+    @Getter
+    private final List<UUID> spectators;
     @Getter @Setter
     private UUID winner;
     @Getter @Setter
     private UUID loser;
     @Getter @Setter
+    private String worldName;
+    @Getter @Setter
     private boolean starting;
 
-    public Duel(@Nonnull final UUID P1, @Nonnull final UUID P2, @Nonnull final String NAME) {
+    public DuelObject(@Nonnull final UUID P1, @Nonnull final UUID P2, @Nonnull final String NAME) {
         this.P1 = P1;
         this.P2 = P2;
         this.name = NAME;
         this.duelers = new ArrayList<>();
         this.locations = new ArrayList<>();
+        this.spectators = new ArrayList<>();
+        this.worldName = "duel_" + UUID.randomUUID();
     }
 
     public void initialize() {
-        if (duel == null) {
-            duel = this;
+        activeDuels.add(this);
+        new WorldUtil().cloneWorld("duelMap1", worldName);
 
-            populateLists();
-            new BukkitRunnable() {
-                public void run() {
-                    begin();
-                }
-            }.runTaskLater(Tazpvp.getInstance(), 20*2L);
+        for (UUID id : getDuelers()) {
+            PlayerWrapper pw = PlayerWrapper.getPlayer(id);
+            if (pw.getDuel() != null) return;
+            pw.setDuel(this);
         }
+
+        populateLists();
+        new BukkitRunnable() {
+            public void run() {
+                begin();
+            }
+        }.runTaskLater(Tazpvp.getInstance(), 20*2L);
     }
 
     public void begin() {
@@ -117,13 +130,7 @@ public abstract class Duel {
         new BukkitRunnable() {
             @Override
             public void run() {
-                duelers.forEach(id -> {
-                    Player p = Bukkit.getPlayer(id);
-                    if (p != null) {
-                        p.sendTitle(CC.GOLD + "" + CC.BOLD + "BEGIN", "", 5, 10, 5);
-                        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1,1);
-                    }
-                });
+                DuelHelper.sendTitleAll(duelers, CC.AQUA.toString() + CC.BOLD + "BEGIN", "");
                 setStarting(false);
             }
         }.runTaskLater(Tazpvp.getInstance(), 20*5);
@@ -153,8 +160,11 @@ public abstract class Duel {
             pLoser.setGameMode(GameMode.SPECTATOR);
         }
 
+        final DuelObject currentDuel = this;
         new BukkitRunnable() {
             public void run() {
+
+                clearSpectators();
 
                 duelers.forEach(id -> {
                     Player p = Bukkit.getPlayer(id);
@@ -166,7 +176,8 @@ public abstract class Duel {
                     PlayerHelper.resetHealth(p);
                 });
 
-                duel = null;
+                new WorldUtil().deleteWorld(getWorldName());
+                activeDuels.remove(currentDuel);
             }
         }.runTaskLater(Tazpvp.getInstance(), 20*5);
 
@@ -180,7 +191,10 @@ public abstract class Duel {
             PlayerHelper.teleport(plr, NRCore.config.spawn);
             ArmorManager.setPlayerContents(plr, true);
         }
-        duel = null;
+
+        clearSpectators();
+        new WorldUtil().deleteWorld(getWorldName());
+        activeDuels.remove(this);
     }
 
     public abstract void addItems(PlayerInventory inventory);
@@ -193,18 +207,40 @@ public abstract class Duel {
         ArmorManager.storeAndClearInventory(p);
         PlayerHelper.resetHealth(p);
         PlayerHelper.feedPlr(p);
-        p.sendMessage(CC.BOLD + "" + CC.GOLD + "The duel will begin in 5 seconds.");
+        DuelHelper.send(p, "The duel will begin in 5 seconds.");
         p.setGameMode(GameMode.SURVIVAL);
         Tazpvp.getObservers().forEach(observer -> observer.duel(p));
     }
 
     private void populateLists() {
-        World world = Bukkit.getWorld("arena");
+        World world = Bukkit.getWorld(worldName);
 
         duelers.add(P1);
         duelers.add(P2);
 
         locations.add(new Location(world, 0.5, 10, 14.5, 180, 0));
         locations.add(new Location(world, 0.5, 10, -13.5, 0, 0));
+    }
+
+    public void addSpectator(final Player player) {
+        final UUID uuid = player.getUniqueId();
+        spectators.add(uuid);
+
+        player.setGameMode(GameMode.SPECTATOR);
+        player.teleport(new Location(Bukkit.getWorld(getWorldName()), 0.5, 6, 0.5));
+
+        DuelHelper.sendAll(duelers, player.getName() + " is now spectating.");
+    }
+
+    private void clearSpectators() {
+        spectators.forEach(id -> {
+            spectators.remove(id);
+
+            Player p = Bukkit.getPlayer(id);
+            if (p != null) {
+                p.teleport(NRCore.config.spawn);
+                p.setGameMode(GameMode.SURVIVAL);
+            }
+        });
     }
 }

@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  *
- * Copyright (c) 2023, n-tdi
+ * Copyright (c) 2022, n-tdi
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,25 +30,19 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.game.events.types;
+package net.tazpvp.tazpvp.helpers;
 
-import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.game.events.Event;
-import net.tazpvp.tazpvp.helpers.PlayerHelper;
-import org.bukkit.Bukkit;
+import net.tazpvp.tazpvp.game.events.FFA;
+import net.tazpvp.tazpvp.game.events.Parkour;
+import net.tazpvp.tazpvp.objects.TournamentObject;
 
-import java.util.UUID;
+public final class EventHelper {
 
-public class Parkour extends Event {
-
-    public Parkour() {
-        super("Parkour");
-    }
-
-    @Override
-    public void begin() {
-        for (UUID uuid : Event.currentEvent.getParticipantList()) {
-            PlayerHelper.teleport(Bukkit.getPlayer(uuid), Tazpvp.getParkourUtil().getLocation("spawn"));
-        }
+    public static TournamentObject create(String name) {
+        return switch (name.toLowerCase()){
+            case "ffa" -> new FFA();
+            case "parkour" -> new Parkour();
+            default -> null;
+        };
     }
 }

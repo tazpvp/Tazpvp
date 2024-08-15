@@ -87,6 +87,6 @@ public class PartyObject {
     }
 
     public static void send(Player p, String msg) {
-        p.sendMessage(CC.BLUE + "Party ❯ " + msg);
+        p.sendMessage(CC.BLUE + "Party ❯ " + CC.WHITE + msg);
     }
 }

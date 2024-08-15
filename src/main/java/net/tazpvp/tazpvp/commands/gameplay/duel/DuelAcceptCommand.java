@@ -3,7 +3,7 @@ package net.tazpvp.tazpvp.commands.gameplay.duel;
 import lombok.NonNull;
 import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.game.duels.Duel;
+import net.tazpvp.tazpvp.objects.DuelObject;
 import net.tazpvp.tazpvp.helpers.CombatTagHelper;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Bukkit;
@@ -30,59 +30,54 @@ public class DuelAcceptCommand extends NRCommand {
         PlayerWrapper pw = PlayerWrapper.getPlayer(p);
 
         if (pw.getDuel() != null) {
-            p.sendMessage(Duel.prefix + "You cannot use this command while dueling.");
+            p.sendMessage(DuelObject.prefix + "You cannot use this command while dueling.");
             return true;
         }
 
         if (CombatTagHelper.isInCombat(p.getUniqueId())) {
-            p.sendMessage( Duel.prefix + "You cannot use this command while in combat.");
+            p.sendMessage( DuelObject.prefix + "You cannot use this command while in combat.");
             return true;
         }
 
         if (TazloadCommand.tazloading) {
-            p.sendMessage(Duel.prefix + "This feature is disabled while the server is reloading.");
+            p.sendMessage(DuelObject.prefix + "This feature is disabled while the server is reloading.");
             return true;
         }
 
         if (args.length < 1) {
-            p.sendMessage(Duel.prefix + "Incorrect Usage: /duel accept <player>");
+            p.sendMessage(DuelObject.prefix + "Incorrect Usage: /duel accept <player>");
             return true;
         }
 
         if (pw.getDuelRequests().isEmpty()) {
-            p.sendMessage(Duel.prefix + "No one sent you a duel request.");
+            p.sendMessage(DuelObject.prefix + "No one sent you a duel request.");
             return true;
         }
 
         Player senderPlayer = Bukkit.getPlayer(args[0]);
         if (senderPlayer == null) {
-            p.sendMessage(Duel.prefix + "Invalid Player.");
+            p.sendMessage(DuelObject.prefix + "Invalid Player.");
             return true;
         }
         UUID senderID = senderPlayer.getUniqueId();
 
         for (UUID id : pw.getDuelRequests().keySet()) {
             if (id.equals(senderID)) {
-                if (Duel.getDuel() == null) {
-                    Duel duel = pw.getDuelRequests().get(id);
-                    if (duel == null) {
-                        pw.getDuelRequests().remove(id);
-                        return true;
-                    }
-
-                    senderPlayer.sendMessage(Duel.prefix + p.getName() + " has accepted your duel request. You will teleport to the duel arena shortly.");
-                    p.sendMessage(Duel.prefix + "You have accepted " + senderPlayer.getName() + "'s duel request. You will teleport to the duel arena shortly.");
-
-                    pw.getDuelRequests().clear();
-                    PlayerWrapper senderWrapper = PlayerWrapper.getPlayer(senderID);
-                    senderWrapper.getDuelRequests().clear();
-
-                    Duel.setDuel(duel);
-                    duel.initialize();
-                } else {
-                    p.sendMessage(CC.RED + "The duel arena is currently occupied.");
+                DuelObject duel = pw.getDuelRequests().get(id);
+                if (duel == null) {
+                    pw.getDuelRequests().remove(id);
                     return true;
                 }
+
+                senderPlayer.sendMessage(DuelObject.prefix + p.getName() + " has accepted your duel request. You will teleport to the duel arena shortly.");
+                p.sendMessage(DuelObject.prefix + "You have accepted " + senderPlayer.getName() + "'s duel request. You will teleport to the duel arena shortly.");
+
+                pw.getDuelRequests().clear();
+                PlayerWrapper senderWrapper = PlayerWrapper.getPlayer(senderID);
+                senderWrapper.getDuelRequests().clear();
+
+                DuelObject.activeDuels.add(duel);
+                duel.initialize();
             }
         }
 

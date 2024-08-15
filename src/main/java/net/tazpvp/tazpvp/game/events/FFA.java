@@ -32,16 +32,21 @@
 
 package net.tazpvp.tazpvp.game.events;
 
-import net.tazpvp.tazpvp.game.events.types.FFA;
-import net.tazpvp.tazpvp.game.events.types.Parkour;
+import net.tazpvp.tazpvp.objects.TournamentObject;
 
-public final class EventHelper {
+public class FFA extends TournamentObject {
 
-    public static Event create(String name) {
-        return switch (name.toLowerCase()){
-            case "ffa" -> new FFA();
-            case "parkour" -> new Parkour();
-            default -> null;
-        };
+    public FFA() {
+        super(1);
+    }
+
+    @Override
+    public void handleTeleports() {
+
+    }
+
+    @Override
+    public void kitPlayers() {
+
     }
 }

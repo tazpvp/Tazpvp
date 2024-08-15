@@ -30,34 +30,32 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.game.events.types;
+package net.tazpvp.tazpvp.game.duels;
 
-import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.game.events.Event;
-import net.tazpvp.tazpvp.helpers.PlayerHelper;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import world.ntdi.nrcore.utils.world.WorldUtil;
+import net.tazpvp.tazpvp.objects.DuelObject;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 import java.util.UUID;
 
-public class FFA extends Event {
+public class Classic extends DuelObject {
 
-    public FFA() {
-        super("FFA");
+    public Classic(UUID P1, UUID P2) {
+        super(P1, P2, "classic");
     }
 
     @Override
-    public void begin() {
-        new WorldUtil().cloneWorld("ffa-base", getUuid().toString() + "-ffa");
-        for(UUID uuid : Event.currentEvent.getParticipantList()) {
-            Bukkit.getPlayer(uuid).sendMessage("You will be teleported in 5 seconds!");
-        }
-        Bukkit.getServer().getScheduler().runTaskLater(Tazpvp.getInstance(), ()-> {
-            Location loc = new Location(Bukkit.getWorld(getUuid().toString()+"-ffa"), 8, -60, 8);
-            for (UUID uuid : Event.currentEvent.getParticipantList()) {
-                PlayerHelper.teleport(Bukkit.getPlayer(uuid), loc);
-            }
-        }, 5*20);
+    public void addItems(PlayerInventory inv) {
+        inv.setHelmet(new ItemStack(Material.DIAMOND_HELMET));
+        inv.setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
+        inv.setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
+        inv.setBoots(new ItemStack(Material.DIAMOND_BOOTS));
+
+        inv.setItemInOffHand(new ItemStack(Material.SHIELD));
+
+        inv.addItem(new ItemStack(Material.DIAMOND_SWORD));
+        inv.addItem(new ItemStack(Material.DIAMOND_AXE));
+        inv.addItem(new ItemStack(Material.GOLDEN_APPLE, 6));
     }
 }
