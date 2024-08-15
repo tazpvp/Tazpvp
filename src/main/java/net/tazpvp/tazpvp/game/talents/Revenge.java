@@ -14,8 +14,8 @@ public class Revenge extends Observable {
         final TalentEntity victimTalentEntity = victimWrapper.getTalentEntity();
 
         if (victim != killer) {
-            if (killerTalentEntity.isRevenge()) {
-                if (!victimTalentEntity.isMoist()) {
+            if (victimTalentEntity.isRevenge()) {
+                if (!killerTalentEntity.isMoist()) {
                     killer.setFireTicks(20 * 3);
                 }
             }
