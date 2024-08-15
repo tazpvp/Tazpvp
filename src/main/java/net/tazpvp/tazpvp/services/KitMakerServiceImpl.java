@@ -2,8 +2,6 @@ package net.tazpvp.tazpvp.services;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
@@ -18,11 +16,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-public class KitServiceImpl implements KitService {
+public class KitMakerServiceImpl implements KitMakerService {
     private final List<ItemStack> validItems;
 
     @SuppressWarnings("all")
-    public KitServiceImpl() {
+    public KitMakerServiceImpl() {
         this.validItems = List.of(
                 ItemBuilder.of(Material.GLOWSTONE).amount(64).build(),
                 ItemBuilder.of(Material.ENDER_PEARL).amount(16).build(),
