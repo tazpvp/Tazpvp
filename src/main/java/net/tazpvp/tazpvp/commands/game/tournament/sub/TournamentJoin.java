@@ -27,7 +27,7 @@ public class TournamentJoin extends NRCommand {
             PlayerWrapper pw = PlayerWrapper.getPlayer(p);
             if (sizeCap > 1) {
                 if (pw.getParty() != null) {
-                    tournament.addParticipant(pw.getParty());
+                    tournament.addParty(pw.getParty());
                 } else {
                     p.sendMessage("You require a team of " + sizeCap + " to join this event.");
                 }
@@ -35,7 +35,7 @@ public class TournamentJoin extends NRCommand {
                 if (pw.getParty() == null) {
                     pw.setParty(new PartyObject(p.getUniqueId()));
                 }
-                tournament.addParticipant(pw.getParty());
+                tournament.addParty(pw.getParty());
             }
         }
 

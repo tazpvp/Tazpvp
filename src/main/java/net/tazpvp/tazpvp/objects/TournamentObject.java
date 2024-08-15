@@ -60,7 +60,7 @@ public abstract class TournamentObject {
         handleTeleports();
     }
 
-    public void addParticipant(PartyObject team) {
+    public void addParty(PartyObject team) {
         if (team.getMembers().size() != teamSizeCap) {
             team.sendAll(CC.RED + "You cannot join this event. You are only allowed " + teamSizeCap + " total party members for this event.");
         } else {

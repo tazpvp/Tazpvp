@@ -99,23 +99,20 @@ public class JoinListener implements Listener {
                 p.setPlayerListHeaderFooter(
                         CC.DARK_AQUA + "                                      " + "\n                 " +
                                 Theme.SERVER.gradient("TAZPVP.NET", true) + "               " + "\n",
-
                         "\n" +
                                 Theme.DISCORD.gradient("✉ ᴊᴏɪɴ ᴜꜱ /ᴅɪꜱᴄᴏʀᴅ", false) + "\n" +
                                 Theme.STORE.gradient("✘ ꜱᴜʙꜱᴄʀɪʙᴇ /ꜱᴛᴏʀᴇ", false) + "\n");
 
-
                 final String name = p.getName();
-                final String plus;
-
+                final CC color;
                 if (!p.hasPlayedBefore()) {
                     PlayerHelper.kitPlayer(p);
-                    plus = CC.YELLOW + "[" + CC.GOLD + "+" + CC.YELLOW + "]";
+                    color = CC.YELLOW;
                 } else {
-                    plus = CC.GREEN + "[" + CC.GOLD + "+" + CC.GREEN + "]";
+                    color = CC.GREEN;
                 }
 
-                final String message = plus + " " + name;
+                final String message = color + "[" + CC.GOLD + "+" + color + "]" + " " + name;
                 e.setJoinMessage(message);
 
                 if (!p.getWorld().getName().equalsIgnoreCase("arena")) {

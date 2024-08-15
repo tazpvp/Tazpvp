@@ -38,6 +38,7 @@ import net.tazpvp.tazpvp.game.events.Event;
 import net.tazpvp.tazpvp.helpers.CombatTagHelper;
 import net.tazpvp.tazpvp.helpers.PlaytimeHelper;
 import net.tazpvp.tazpvp.objects.DeathObject;
+import net.tazpvp.tazpvp.objects.TournamentObject;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -55,8 +56,8 @@ public class LeaveListener implements Listener {
         Player p = e.getPlayer();
         UUID id = p.getUniqueId();
 
-        if (Event.currentEvent != null) {
-            Event.currentEvent.removeParticipant(p.getUniqueId());
+        if (TournamentObject.activeTournament != null) {
+            TournamentObject.activeTournament.removeParticipant();
         }
 
         PlaytimeHelper.playerLeft(p);

@@ -129,7 +129,6 @@ public class PlayerHelper {
         if (StatEnum.PLAYTIME.getLong(p.getUniqueId()) <= thirtyMinutesInMs) {
             p.getInventory().addItem(ItemEnum.GOLDEN_APPLE.getItem(2));
         }
-
     }
 
     public static void armorPlayer(Player p) {
