@@ -64,7 +64,6 @@ public class DeathObject {
             this.killerGuild = Tazpvp.getInstance().getGuildService().getGuildByPlayer(killer);
             this.pKiller = Bukkit.getPlayer(killer);
             this.killerWrapper = PlayerWrapper.getPlayer(killer);
-            Tazpvp.getObservers().forEach(observer -> observer.death(pVictim, pKiller));
         }
         this.victimWrapper = PlayerWrapper.getPlayer(victim);
         this.victimGuild = Tazpvp.getInstance().getGuildService().getGuildByPlayer(victim);

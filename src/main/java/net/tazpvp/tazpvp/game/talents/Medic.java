@@ -22,9 +22,9 @@ public class Medic extends Observable {
         if (killerTalentEntity.isMedic()) {
             if (killerGuild == null) return;
             for (Player p : Bukkit.getOnlinePlayers()) {
-                final GuildEntity pGuild = guildService.getGuildByPlayer(p.getUniqueId());
-                if (p.getLocation().distance(p.getLocation()) <= 5) {
+                if (killer.getLocation().distance(p.getLocation()) <= 5) {
                     if (p != killer) {
+                        final GuildEntity pGuild = guildService.getGuildByPlayer(p.getUniqueId());
                         if (pGuild.equals(killerGuild)) {
                             PlayerHelper.addHealth(p, 2);
                             p.sendMessage(CC.DARK_GREEN + "Your guild mate healed you.");
