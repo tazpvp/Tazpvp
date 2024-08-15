@@ -31,7 +31,9 @@ public class KitMakerServiceImpl implements KitMakerService {
                 ItemBuilder.of(Material.END_CRYSTAL).amount(64).build(),
                 ItemBuilder.of(Material.RESPAWN_ANCHOR).amount(64).build(),
                 PotionBuilder.of(PotionBuilder.PotionType.SPLASH).setPotionData(new PotionData(PotionType.SWIFTNESS)).amount(1).build(),
-                PotionBuilder.of(PotionBuilder.PotionType.SPLASH).setPotionData(new PotionData(PotionType.REGENERATION)).amount(1).build()
+                PotionBuilder.of(PotionBuilder.PotionType.SPLASH).setPotionData(new PotionData(PotionType.REGENERATION)).amount(1).build(),
+                ItemBuilder.of(Material.TIPPED_ARROW).amount(64).build(),
+                ItemBuilder.of(Material.CROSSBOW).amount(1).build()
         );
     }
 

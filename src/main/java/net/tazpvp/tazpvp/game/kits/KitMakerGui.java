@@ -8,6 +8,8 @@ import org.bukkit.inventory.ItemStack;
 import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 
+import java.util.List;
+
 public class KitMakerGui {
     private GUI gui;
     private final KitMakerService kitMakerService;
@@ -18,7 +20,7 @@ public class KitMakerGui {
         this.kitMakerService = kitMakerService;
         this.player = player;
         this.kitService = kitService;
-        this.gui = new GUI("Kit Maker", 6);
+        this.gui = new GUI("Kit Maker", (int) Math.ceil(kitMakerService.getValidItems().size() / 9.0));
         addItems();
         gui.open(player);
         gui.setOnDestroy(() -> {
@@ -34,6 +36,11 @@ public class KitMakerGui {
     private void addItems() {
         gui.fill(0, 6*9, GUI.FILLER);
 
+        List<ItemStack> items = kitMakerService.getValidItems();
+
+        for (int i = 0; i < items.size(); i++) {
+            gui.addButton(createButton(items.get(i)), i);
+        }
     }
 
     private Button createButton(ItemStack itemStack) {
