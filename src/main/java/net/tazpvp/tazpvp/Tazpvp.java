@@ -308,7 +308,8 @@ public final class Tazpvp extends JavaPlugin {
                 new PayCommand(),
                 new HologramCommand(),
                 new ChestAnimationCommand(),
-                new PartyCommand()
+                new PartyCommand(),
+                new KitCommand()
         );
     }
 
