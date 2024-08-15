@@ -63,7 +63,7 @@ public class MoveListener implements Listener {
             AfkHelper.setAfk(p);
 
             if (p.getLocation().distance(launchpadRaidus) < 5) {
-                if (p.getGameMode().equals(GameMode.SURVIVAL)){
+                if (p.getGameMode() == GameMode.SURVIVAL){
                     Launchpad(p);
                     pw.setTimeOfLaunch(System.currentTimeMillis());
                 }

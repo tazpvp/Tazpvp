@@ -43,7 +43,7 @@ public class ShootListener implements Listener {
     @EventHandler
     private void onShoot(ProjectileLaunchEvent e) {
         if (e.getEntity().getShooter() instanceof Player shooter) {
-            if (!shooter.getGameMode().equals(GameMode.CREATIVE)) {
+            if (shooter.getGameMode() != GameMode.CREATIVE) {
                 Tazpvp.getObservers().forEach(observer -> observer.shoot(shooter));
             }
         }
