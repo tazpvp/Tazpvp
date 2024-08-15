@@ -52,7 +52,7 @@ public class GuildTransferCommand extends GuildAbstractArgumentCommand {
 
     @Override
     public boolean executeFunction(@NonNull Player p, GuildEntity guildEntity, @NonNull Player target) {
-        if (guildEntity.getOwner() != p.getUniqueId()) {
+        if (!guildEntity.getOwner().equals(p.getUniqueId())) {
             p.sendMessage(GuildCommand.getNoPerms());
             return true;
         }

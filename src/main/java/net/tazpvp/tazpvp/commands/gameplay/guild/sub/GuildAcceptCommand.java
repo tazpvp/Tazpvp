@@ -69,9 +69,14 @@ public class GuildAcceptCommand extends NRCommand {
             int guildID = Integer.parseInt(p.getMetadata("guildInvited").getFirst().asString());
             GuildEntity guildEntity = guildService.getGuild(guildID);
 
-            guildService.addMember(guildEntity, p.getUniqueId(), false);
-            guildService.messageAll(guildEntity,  CC.GOLD + p.getName() + CC.YELLOW + " has joined the guild.");
-            p.removeMetadata("guildInvite", Tazpvp.getInstance());
+            if (!guildService.isInGuild(p.getUniqueId(), guildEntity)) {
+                guildService.addMember(guildEntity, p.getUniqueId(), false);
+                guildService.messageAll(guildEntity,  CC.GOLD + p.getName() + CC.YELLOW + " has joined the guild.");
+                p.removeMetadata("guildInvite", Tazpvp.getInstance());
+            } else {
+                p.sendMessage(CC.RED +"You are already in this guild.");
+            }
+
         } else {
             p.sendMessage("You were not invited to a guild.");
         }

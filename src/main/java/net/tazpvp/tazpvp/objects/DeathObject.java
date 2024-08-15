@@ -213,7 +213,7 @@ public class DeathObject {
         updateVictimStats();
 
         if (victimGuild != null && killerGuild != null) {
-            if (victimGuild == killerGuild) return;
+            if (victimGuild.equals(killerGuild)) return;
         }
         updateKillerStats();
 

@@ -6,6 +6,7 @@ import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 import lombok.*;
 
+import java.beans.Transient;
 import java.util.UUID;
 
 @Getter
@@ -44,4 +45,14 @@ public class GuildEntity {
 
     @DatabaseField(defaultValue = "0", canBeNull = false)
     private int deaths;
+
+    @Override
+    @Transient
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj instanceof GuildEntity guildEntity) {
+            return guildEntity.getId() == id;
+        }
+        return false;
+    }
 }

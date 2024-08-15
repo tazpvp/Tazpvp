@@ -52,7 +52,7 @@ public class GuildDisbandCommand extends GuildAvailableCommand {
 
     @Override
     public boolean executeFunction(@NonNull Player p, GuildEntity guildEntity) {
-        if (guildEntity.getOwner() != p.getUniqueId()) {
+        if (!guildEntity.getOwner().equals(p.getUniqueId())) {
             p.sendMessage(CC.RED + "You don't own this guild.");
             return false;
         }

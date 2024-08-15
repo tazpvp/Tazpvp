@@ -57,7 +57,7 @@ public class GuildKickCommand extends GuildAbstractArgumentCommand {
         }
 
         if (guildService.isOfficer(target.getUniqueId(), guildEntity)) {
-            if (guildEntity.getOwner() != p.getUniqueId()) {
+            if (!guildEntity.getOwner().equals(p.getUniqueId())) {
                 p.sendMessage(GuildCommand.getNoPerms());
                 return true;
             }

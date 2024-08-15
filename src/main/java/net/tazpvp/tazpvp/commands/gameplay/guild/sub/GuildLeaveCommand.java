@@ -38,6 +38,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.commands.gameplay.guild.handler.GuildAvailableCommand;
 import net.tazpvp.tazpvp.data.entity.GuildEntity;
 import net.tazpvp.tazpvp.data.services.GuildService;
+import net.tazpvp.tazpvp.enums.CC;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
 
@@ -49,12 +50,13 @@ public class GuildLeaveCommand extends GuildAvailableCommand {
 
     @Override
     public boolean executeFunction(@NonNull Player p, GuildEntity guildEntity) {
-        if (guildEntity.getOwner() == p.getUniqueId()) {
+        if (guildEntity.getOwner().equals(p.getUniqueId())) {
             p.sendMessage("You cannot leave your guild. Try /g disband");
             return true;
         }
 
         guildService.removeMember(guildEntity, p.getUniqueId());
+        p.sendMessage(CC.GREEN + "You've left your guild.");
 
         return true;
     }

@@ -91,7 +91,7 @@ public class GuildInviteCommand extends GuildAbstractArgumentCommand {
                 p.sendMessage(target.getName() + " is already in a guild.");
                 return;
             } else if (GuildHelper.inviteList.containsKey(target.getUniqueId())) {
-                if (GuildHelper.inviteList.get(target.getUniqueId()) == guildEntity) {
+                if (GuildHelper.inviteList.get(target.getUniqueId()).equals(guildEntity)) {
                     p.sendMessage(target.getName() + " has already been invited to your guild.");
                     return;
                 }
