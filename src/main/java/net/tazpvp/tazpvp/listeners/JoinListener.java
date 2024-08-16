@@ -40,6 +40,7 @@ import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.enums.Theme;
 import net.tazpvp.tazpvp.helpers.*;
 import net.tazpvp.tazpvp.objects.CombatObject;
+import net.tazpvp.tazpvp.services.PlayerNameTagService;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -53,6 +54,7 @@ import world.ntdi.nrcore.NRCore;
 import java.util.UUID;
 
 public class JoinListener implements Listener {
+    private final static PlayerNameTagService playerNameTagService = Tazpvp.getInstance().getPlayerNameTagService();
     @EventHandler
     private void onJoin(PlayerJoinEvent e) {
         final Player p = e.getPlayer();
@@ -63,7 +65,8 @@ public class JoinListener implements Listener {
         PlaytimeHelper.playerJoined(p);
         PlayerHelper.resetHealth(p);
         PlayerHelper.feedPlr(p);
-        Tazpvp.getInstance().getPlayerNameTagService().initializePlayer(p);
+        playerNameTagService.initializePlayer(p);
+        playerNameTagService.refreshTag(p);
         BanHelper.checkBan(p);
         CombatObject.tags.put(id, new CombatObject(id));
 

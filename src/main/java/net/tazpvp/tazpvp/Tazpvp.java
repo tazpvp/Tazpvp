@@ -227,6 +227,7 @@ public final class Tazpvp extends JavaPlugin {
         despawnNpcs();
         BossManager.despawnBoss();
         Holograms.removeHolograms();
+        playerNameTagService.destroyAllNametags();
 
         postgresqlDatabase.close();
     }

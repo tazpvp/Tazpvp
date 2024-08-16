@@ -54,11 +54,6 @@ public class LeaveListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     private void onLeave(PlayerQuitEvent e) {
         Player p = e.getPlayer();
-        UUID id = p.getUniqueId();
-
-        if (TournamentObject.activeTournament != null) {
-//            TournamentObject.activeTournament.removeParticipant();
-        }
 
         PlaytimeHelper.playerLeft(p);
 

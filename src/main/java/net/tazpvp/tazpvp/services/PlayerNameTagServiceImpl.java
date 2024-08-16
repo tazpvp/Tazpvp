@@ -3,6 +3,7 @@ package net.tazpvp.tazpvp.services;
 import net.tazpvp.tazpvp.data.LooseData;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
+import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.entity.Display;
@@ -89,14 +90,13 @@ public class PlayerNameTagServiceImpl implements PlayerNameTagService {
         if (textDisplay != null) {
             String bounty;
             if (LooseData.getBounty(player.getUniqueId()) > 0) {
-                bounty = CC.GOLD + " $" + LooseData.getBounty(player.getUniqueId());
+                bounty = CC.GREEN + " $" + LooseData.getBounty(player.getUniqueId());
             } else {
                 bounty = "";
             }
             textDisplay.setText(
-                    ChatHelper.getRankingPrefix(player) + "\n" +
-                    player.getName() + bounty + "\n");
-            textDisplay.setDefaultBackground(true);
+                    player.getName() + "\n" +
+                    ChatHelper.getRankingPrefix(player) + bounty + "\n");
         }
     }
 
@@ -119,5 +119,13 @@ public class PlayerNameTagServiceImpl implements PlayerNameTagService {
         }
     }
 
-
+    @Override
+    public void destroyAllNametags() {
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            TextDisplay textDisplay = uuidItemDisplayMap.get(p.getUniqueId());
+            if (textDisplay != null) {
+                textDisplay.remove();
+            }
+        }
+    }
 }
