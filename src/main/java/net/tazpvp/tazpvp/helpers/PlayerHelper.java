@@ -108,6 +108,7 @@ public class PlayerHelper {
                 ItemEnum.KIT_BOW.getKitTool(p.getName(), Enchantment.INFINITY),
                 ItemEnum.KIT_PICKAXE.getKitTool(p.getName()),
                 ItemEnum.KIT_CROSSBOW.getKitTool(p.getName()),
+                ItemEnum.STEAK.getItem(64),
                 ItemEnum.BLOCKS.getItem(64),
                 ItemEnum.ARROW.getItem(15),
         };
