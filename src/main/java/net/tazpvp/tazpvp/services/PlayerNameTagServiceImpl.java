@@ -1,5 +1,7 @@
 package net.tazpvp.tazpvp.services;
 
+import net.tazpvp.tazpvp.data.LooseData;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
 import org.bukkit.Color;
 import org.bukkit.Location;
@@ -81,11 +83,20 @@ public class PlayerNameTagServiceImpl implements PlayerNameTagService {
     }
 
     @Override
-    public void setTagRank(Player player) {
+    public void refreshTag(Player player) {
         TextDisplay textDisplay = uuidItemDisplayMap.get(player.getUniqueId());
 
         if (textDisplay != null) {
-            textDisplay.setText(ChatHelper.getRankingPrefix(player) + "\n");
+            String bounty;
+            if (LooseData.getBounty(player.getUniqueId()) > 0) {
+                bounty = CC.GOLD + " $" + LooseData.getBounty(player.getUniqueId());
+            } else {
+                bounty = "";
+            }
+            textDisplay.setText(
+                    ChatHelper.getRankingPrefix(player) + "\n" +
+                    player.getName() + bounty + "\n");
+            textDisplay.setDefaultBackground(true);
         }
     }
 
@@ -107,4 +118,6 @@ public class PlayerNameTagServiceImpl implements PlayerNameTagService {
             player.addPassenger(textDisplay);
         }
     }
+
+
 }

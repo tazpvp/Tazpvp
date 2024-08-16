@@ -24,10 +24,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import java.util.WeakHashMap;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -44,7 +41,7 @@ public class PlayerWrapper {
     private UserRankEntity userRankEntity; // After you set a value here make sure to call refresh()
     private UserAchievementEntity userAchievementEntity;
     private TalentEntity talentEntity;
-    private final ConcurrentHashMap<UUID, DuelObject> duelRequests;
+    private final HashMap<UUID, String> duelRequests;
 
     @Setter private boolean launching;
     @Setter private boolean respawning;
@@ -76,7 +73,7 @@ public class PlayerWrapper {
         this.killCount = 0;
         this.timeOfLaunch = 0;
         this.blocksPlaced = new ArrayList<>();
-        this.lastMessageSent = "";
+        this.lastMessageSent = null;
         this.staffChatActive = false;
 
         this.userRankService = new UserRankServiceImpl();
@@ -88,7 +85,7 @@ public class PlayerWrapper {
         final TalentService talentService = new TalentServiceImpl();
         this.talentEntity = talentService.getOrDefault(getUuid());
         this.guildService = Tazpvp.getInstance().getGuildService();
-        this.duelRequests = new ConcurrentHashMap<>();
+        this.duelRequests = new HashMap<>();
 
         refreshPermissions();
     }

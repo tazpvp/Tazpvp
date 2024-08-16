@@ -62,9 +62,11 @@ public class ChatListener implements Listener {
 
     private final List<String> swearWords = List.of(
             "fuck", "shit", "ass", "bitch", "bastard", "cunt", "cock",
-            "dick", "arsehole", "wanker", "slut", "whore", "twat", "nigger",
-            "faggot", "fag", "chink", "retard", "moron",
-            "gook", "coon", "raghead", "sand nigger", "beaner", "cracker", "nigga"
+            "dick", "arsehole", "wanker", "slut", "whore", "twat",
+            "pussy", "prick", "douche", "scumbag", "motherfucker",
+            "dildo", "ballsack", "jackass", "dipshit", "shithead",
+            "asshole", "bitchass", "dickhead", "fucktard", "asswipe",
+            "bitchface", "cumdumpster", "cockwaffle"
     );
 
     @EventHandler
@@ -117,12 +119,14 @@ public class ChatListener implements Listener {
                 }
             }
 
-            if (pw.getRank().getName().equals("default") && e.getMessage().contains(pw.getLastMessageSent())) {
-                e.setCancelled(true);
-                for (int i = 0; i < 5 ; i++) {
-                    p.sendMessage(CC.RED + "DON'T SPAM!!!!!!!!!!");
+            if (pw.getLastMessageSent() != null) {
+                if (pw.getRank().getName().equals("default") && e.getMessage().contains(pw.getLastMessageSent())) {
+                    e.setCancelled(true);
+                    for (int i = 0; i < 5 ; i++) {
+                        p.sendMessage(CC.RED + "DON'T SPAM!!!!!!!!!!");
+                    }
+                    return;
                 }
-                return;
             }
 
             if (Profanity.sayNoNo(p, customMessage)) {

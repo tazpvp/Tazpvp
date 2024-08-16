@@ -19,9 +19,9 @@ import world.ntdi.nrcore.utils.command.simple.NRCommand;
 
 import java.util.List;
 
-public class DuelSpectateCommand extends NRCommand {
+public class SpectateCommand extends NRCommand {
 
-    public DuelSpectateCommand() {
+    public SpectateCommand() {
         super(new Label("spectate", null));
     }
 

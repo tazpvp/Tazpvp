@@ -95,13 +95,13 @@ public abstract class DuelObject {
         activeDuels.add(this);
         new WorldUtil().cloneWorld("duelMap1", worldName);
 
+        populateLists();
+
         for (UUID id : getDuelers()) {
             PlayerWrapper pw = PlayerWrapper.getPlayer(id);
-            if (pw.getDuel() != null) return;
             pw.setDuel(this);
         }
 
-        populateLists();
         new BukkitRunnable() {
             public void run() {
                 begin();
@@ -115,15 +115,16 @@ public abstract class DuelObject {
 
         if (p1 == null || p2 == null) return;
 
-        int i = 0;
-        for (UUID id : this.duelers) {
+        for (UUID id : duelers) {
             Player p = Bukkit.getPlayer(id);
-            if (p == null) continue;
-            initPlayer(p);
-            PlayerHelper.teleport(p1, locations.get(i));
-            addItems(p.getInventory());
-            i++;
+            if (p != null) {
+                initPlayer(p);
+                addItems(p.getInventory());
+            }
         }
+
+        PlayerHelper.teleport(p1, locations.get(0));
+        PlayerHelper.teleport(p2, locations.get(1));
 
         setStarting(true);
 
@@ -137,6 +138,7 @@ public abstract class DuelObject {
     }
 
     public void end(final UUID loserID) {
+        Bukkit.getLogger().info("duel ended");
         setLoser(loserID);
         setWinner(getOtherDueler(loserID));
 
