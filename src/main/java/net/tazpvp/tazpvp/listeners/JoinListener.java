@@ -54,7 +54,6 @@ import world.ntdi.nrcore.NRCore;
 import java.util.UUID;
 
 public class JoinListener implements Listener {
-    private final static PlayerNameTagService playerNameTagService = Tazpvp.getInstance().getPlayerNameTagService();
     @EventHandler
     private void onJoin(PlayerJoinEvent e) {
         final Player p = e.getPlayer();
@@ -65,8 +64,8 @@ public class JoinListener implements Listener {
         PlaytimeHelper.playerJoined(p);
         PlayerHelper.resetHealth(p);
         PlayerHelper.feedPlr(p);
-        playerNameTagService.initializePlayer(p);
-        playerNameTagService.refreshTag(p);
+        Tazpvp.getInstance().getPlayerNameTagService().initializePlayer(p);
+//        Tazpvp.getInstance().getPlayerNameTagService().refreshTag(p);
         BanHelper.checkBan(p);
         CombatObject.tags.put(id, new CombatObject(id));
 

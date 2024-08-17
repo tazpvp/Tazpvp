@@ -14,7 +14,7 @@ public enum StatEnum {
     COINS(PlayerStatEntity::setCoins, PlayerStatEntity::getCoins, Integer.class, ScoreboardEnum.COINS),
     XP(PlayerStatEntity::setXp, PlayerStatEntity::getXp, Integer.class),
     LEVEL(PlayerStatEntity::setLevel, PlayerStatEntity::getLevel, Integer.class, ScoreboardEnum.LEVEL),
-    MMR(PlayerStatEntity::setMMR, PlayerStatEntity::getMMR, Integer.class),
+    MMR(PlayerStatEntity::setMMR, PlayerStatEntity::getMMR, Integer.class, ScoreboardEnum.RANK),
     DUEL_MMR(PlayerStatEntity::setDuelMMR, PlayerStatEntity::getDuelMMR, Integer.class),
     KILLS(PlayerStatEntity::setKills, PlayerStatEntity::getKills, Integer.class, ScoreboardEnum.KILLS),
     DEATHS(PlayerStatEntity::setDeaths, PlayerStatEntity::getDeaths, Integer.class, ScoreboardEnum.DEATHS),

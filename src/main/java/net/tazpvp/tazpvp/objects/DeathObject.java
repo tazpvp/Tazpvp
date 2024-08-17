@@ -49,11 +49,9 @@ public class DeathObject {
     private PlayerWrapper killerWrapper;
     private PlayerWrapper victimWrapper;
 
-    private final PlayerNameTagService playerNameTagService;
 
     public DeathObject(UUID victim, @Nullable UUID killer) {
         this.guildService = Tazpvp.getInstance().getGuildService();
-        this.playerNameTagService = Tazpvp.getInstance().getPlayerNameTagService();
         this.victim = victim;
         this.pVictim = Bukkit.getPlayer(victim);
         this.killer = killer;
@@ -188,13 +186,13 @@ public class DeathObject {
         pVictim.playSound(pVictim.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1, 1);
         pVictim.sendTitle(CC.RED + "" + CC.BOLD + "YOU DIED", CC.GOLD + "Respawning...", 5, 50, 5);
         victimWrapper.setRespawning(true);
-        playerNameTagService.setNameTagVisibility(pVictim, false);
+        Tazpvp.getInstance().getPlayerNameTagService().setNameTagVisibility(pVictim, false);
         new BukkitRunnable() {
             public void run() {
                 pVictim.setGameMode(GameMode.SURVIVAL);
                 PlayerHelper.teleport(pVictim, NRCore.config.spawn);
                 victimWrapper.setRespawning(false);
-                playerNameTagService.setNameTagVisibility(pVictim, true);
+                Tazpvp.getInstance().getPlayerNameTagService().setNameTagVisibility(pVictim, true);
             }
         }.runTaskLater(Tazpvp.getInstance(), 20 * 3);
     }
@@ -323,7 +321,7 @@ public class DeathObject {
         LooseData.resetKs(victim);
 
         if (pVictim != null) {
-            playerNameTagService.refreshTag(pVictim);
+            Tazpvp.getInstance().getPlayerNameTagService().refreshTag(pVictim);
         }
         guildService.saveGuild(victimGuild);
     }
