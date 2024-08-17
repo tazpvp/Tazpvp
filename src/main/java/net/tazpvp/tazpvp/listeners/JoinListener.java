@@ -65,7 +65,7 @@ public class JoinListener implements Listener {
         PlayerHelper.resetHealth(p);
         PlayerHelper.feedPlr(p);
         Tazpvp.getInstance().getPlayerNameTagService().initializePlayer(p);
-//        Tazpvp.getInstance().getPlayerNameTagService().refreshTag(p);
+        Tazpvp.getInstance().getPlayerNameTagService().refreshTag(p);
         BanHelper.checkBan(p);
         CombatObject.tags.put(id, new CombatObject(id));
 

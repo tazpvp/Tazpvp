@@ -70,7 +70,7 @@ public class ScoreboardHelper {
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         objective.getScore("                         ").setScore(8);
-        createLine(ScoreboardEnum.RANK, ChatHelper.getRankingPrefix(p)+ "").setScore(7);
+        createLine(ScoreboardEnum.RANK, ChatHelper.getRankingPrefix(p) + "").setScore(7);
         createLine(ScoreboardEnum.LEVEL, StatEnum.LEVEL.getInt(id) + "").setScore(6);
         createLine(ScoreboardEnum.COINS, StatEnum.COINS.getInt(id) + "").setScore(5);
         objective.getScore(" ").setScore(4);

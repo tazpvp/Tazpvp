@@ -86,6 +86,7 @@ import net.tazpvp.tazpvp.game.npc.characters.guildmaster.Rigel;
 import net.tazpvp.tazpvp.game.npc.characters.shop.Maxim;
 import net.tazpvp.tazpvp.game.talents.*;
 import net.tazpvp.tazpvp.helpers.AfkHelper;
+import net.tazpvp.tazpvp.helpers.BlockHelper;
 import net.tazpvp.tazpvp.helpers.CombatTagHelper;
 import net.tazpvp.tazpvp.helpers.EnchantHelper;
 import net.tazpvp.tazpvp.listeners.*;
@@ -224,12 +225,13 @@ public final class Tazpvp extends JavaPlugin {
             playerNameTagService.recalibratePlayer(player);
         }
 
+        postgresqlDatabase.close();
+
         despawnNpcs();
         BossManager.despawnBoss();
         Holograms.removeHolograms();
         playerNameTagService.destroyAllNametags();
-
-        postgresqlDatabase.close();
+        BlockHelper.deleteAllPlayerBlocks();
     }
 
     public static Tazpvp getInstance() {

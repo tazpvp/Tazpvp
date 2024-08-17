@@ -5,6 +5,7 @@ import net.tazpvp.tazpvp.enums.Theme;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import world.ntdi.nrcore.utils.holograms.Hologram;
@@ -33,8 +34,8 @@ public class Holograms {
         );
     }
 
-    public static <World> void removeHolograms() {
-        org.bukkit.World world = Bukkit.getWorld("arena");
+    public static void removeHolograms() {
+        World world = Bukkit.getWorld("arena");
         if (world == null) return;
         for (Entity entity : world.getEntities()) {
             if (entity.getType() == EntityType.ARMOR_STAND) {
