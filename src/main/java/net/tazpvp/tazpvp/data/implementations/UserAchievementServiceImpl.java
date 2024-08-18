@@ -80,6 +80,8 @@ public class UserAchievementServiceImpl implements UserAchievementService {
             blankUserAchievementEntity.setZorgin(achievementService.createDefault(blankUserAchievementEntity));
             blankUserAchievementEntity.setSpeedrunner(achievementService.createDefault(blankUserAchievementEntity));
 
+            saveUserAchievementEntity(blankUserAchievementEntity);
+
             return blankUserAchievementEntity;
         }
 
