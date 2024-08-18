@@ -64,7 +64,7 @@ public class Achievements extends GUI {
     public Achievements(Player p) {
         super("Achievements", 5);
         this.p = p;
-        this.userAchievementEntity = userAchievementService.getUserAchievementEntity(p.getUniqueId());
+        this.userAchievementEntity = userAchievementService.getOrDefault(p.getUniqueId());
         addItems();
         open(p);
     }
