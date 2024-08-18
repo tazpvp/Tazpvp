@@ -74,10 +74,7 @@ public class UserAchievementServiceImpl implements UserAchievementService {
 
     @Override
     public UserAchievementEntity getOrDefault(final UUID uuid) {
-        Bukkit.getLogger().info("UUID: " + uuid);
-        Bukkit.getLogger().info("If Exists: " + userAchievementEntityExists(uuid));
         final UserAchievementEntity userAchievementEntity = getUserAchievementEntity(uuid);
-
 
         if (userAchievementEntity == null) {
             final UserAchievementEntity blankUserAchievementEntity = new UserAchievementEntity();
