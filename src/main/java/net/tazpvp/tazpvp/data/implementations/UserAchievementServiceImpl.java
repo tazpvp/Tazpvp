@@ -67,7 +67,7 @@ public class UserAchievementServiceImpl implements UserAchievementService {
     @Override
     public boolean userAchievementEntityExists(final UUID uuid) {
         try {
-            getUserDao().idExists(uuid);
+            getUserDao().queryBuilder().where().idEq(uuid).queryForFirst();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
