@@ -27,28 +27,9 @@ public class UserAchievementServiceImpl implements UserAchievementService {
     }
 
     @Override
-    public void saveUserAchievementEntity(final UserAchievementEntity achievementEntity) {
-        AchievementService achievementService = new AchievementServiceImpl();
+    public void saveUserAchievementEntity(final UserAchievementEntity userAchievementEntity) {
         try {
-            achievementService.saveAchievementEntity(achievementEntity.getAdept());
-            achievementService.saveAchievementEntity(achievementEntity.getAgile());
-            achievementService.saveAchievementEntity(achievementEntity.getBowling());
-            achievementService.saveAchievementEntity(achievementEntity.getCraftsman());
-            achievementService.saveAchievementEntity(achievementEntity.getArtisan());
-            achievementService.saveAchievementEntity(achievementEntity.getError());
-            achievementService.saveAchievementEntity(achievementEntity.getGladiator());
-            achievementService.saveAchievementEntity(achievementEntity.getCharm());
-            achievementService.saveAchievementEntity(achievementEntity.getGamble());
-            achievementService.saveAchievementEntity(achievementEntity.getHarvester());
-            achievementService.saveAchievementEntity(achievementEntity.getGrinder());
-            achievementService.saveAchievementEntity(achievementEntity.getMerchant());
-            achievementService.saveAchievementEntity(achievementEntity.getLegend());
-            achievementService.saveAchievementEntity(achievementEntity.getRehab());
-            achievementService.saveAchievementEntity(achievementEntity.getSpeedrunner());
-            achievementService.saveAchievementEntity(achievementEntity.getSuperior());
-            achievementService.saveAchievementEntity(achievementEntity.getSkilled());
-            achievementService.saveAchievementEntity(achievementEntity.getZorgin());
-            getUserDao().createOrUpdate(achievementEntity);
+            getUserDao().createOrUpdate(userAchievementEntity);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

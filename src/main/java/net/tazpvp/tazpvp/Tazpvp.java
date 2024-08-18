@@ -146,6 +146,8 @@ public final class Tazpvp extends JavaPlugin {
     private PlayerNameTagService playerNameTagService;
     @Getter
     private UserAchievementService userAchievementService;
+    @Getter
+    private AchievementService achievementService;
 
     @Override
     public void onEnable() {
@@ -195,8 +197,6 @@ public final class Tazpvp extends JavaPlugin {
         new RankServiceImpl().createTableIfNotExists(postgresqlDatabase, RankEntity.class);
         new PunishmentServiceImpl().createTableIfNotExists(postgresqlDatabase, PunishmentEntity.class);
         new KitServiceImpl().createTableIfNotExists(postgresqlDatabase, KitEntity.class);
-        new UserAchievementServiceImpl().createTableIfNotExists(postgresqlDatabase, UserAchievementEntity.class);
-        new AchievementServiceImpl().createTableIfNotExists(postgresqlDatabase, AchievementEntity.class);
         new TalentServiceImpl().createTableIfNotExists(postgresqlDatabase, TalentEntity.class);
         new ExpirationRankServiceImpl().createTableIfNotExists(postgresqlDatabase, ExpirationRankEntity.class);
         new GameRankServiceImpl().createTableIfNotExists(postgresqlDatabase, GameRankEntity.class);
@@ -208,12 +208,14 @@ public final class Tazpvp extends JavaPlugin {
         this.userRankService = new UserRankServiceImpl();
         this.playerNameTagService = new PlayerNameTagServiceImpl(this);
         this.userAchievementService = new UserAchievementServiceImpl();
+        this.achievementService = new AchievementServiceImpl();
 
         guildMemberService.createTableIfNotExists(postgresqlDatabase, GuildMemberEntity.class);
         guildService.createTableIfNotExists(postgresqlDatabase, GuildEntity.class);
         playerStatService.createTableIfNotExists(postgresqlDatabase, PlayerStatEntity.class);
         userRankService.createTableIfNotExists(postgresqlDatabase, UserRankEntity.class);
         userAchievementService.createTableIfNotExists(postgresqlDatabase, UserRankEntity.class);
+        achievementService.createTableIfNotExists(postgresqlDatabase, UserRankEntity.class);
     }
 
     public static void registerObserver(Observer observer) {
