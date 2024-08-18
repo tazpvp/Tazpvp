@@ -45,11 +45,11 @@ public class Charm extends Observable {
     private final UserAchievementService userAchievementService = Tazpvp.getInstance().getUserAchievementService();
     @Override
     public void chat(Player p, String chat) {
-        final UserAchievementEntity userAchievementEntity =  userAchievementService.getUserAchievementEntity(p.getUniqueId());
+        final UserAchievementEntity userAchievementEntity =  userAchievementService.getOrDefault(p.getUniqueId());
         final AchievementEntity achievementEntity = userAchievementEntity.getCharm();
 
         if (!achievementEntity.isCompleted()) {
-            if (LooseData.getChatCount(p.getUniqueId()) >= 100) {
+            if (LooseData.getChatCount(p.getUniqueId()) >= 10) {
                 achievementEntity.setCompleted(true);
                 userAchievementEntity.setCharm(achievementEntity);
                 userAchievementService.saveUserAchievementEntity(userAchievementEntity);

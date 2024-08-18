@@ -28,7 +28,7 @@ public class Artisan extends Observable {
     @Override
     public void place(Player p, Block b) {
         final PlayerWrapper pw = PlayerWrapper.getPlayer(p);
-        final UserAchievementEntity userAchievementEntity = userAchievementService.getUserAchievementEntity(p.getUniqueId());
+        final UserAchievementEntity userAchievementEntity = userAchievementService.getOrDefault(p.getUniqueId());
         final AchievementEntity achievementEntity = userAchievementEntity.getArtisan();
 
         if (!achievementEntity.isCompleted()) {

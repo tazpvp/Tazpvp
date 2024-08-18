@@ -12,7 +12,7 @@ public class Zorgin extends Observable {
     private final UserAchievementService userAchievementService = Tazpvp.getInstance().getUserAchievementService();
     @Override
     public void kill_zorg(Player p) {
-        final UserAchievementEntity userAchievementEntity =  userAchievementService.getUserAchievementEntity(p.getUniqueId());
+        final UserAchievementEntity userAchievementEntity =  userAchievementService.getOrDefault(p.getUniqueId());
         final AchievementEntity achievementEntity = userAchievementEntity.getZorgin();
 
         if (!achievementEntity.isCompleted()) {

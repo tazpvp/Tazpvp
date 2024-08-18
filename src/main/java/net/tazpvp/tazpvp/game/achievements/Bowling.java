@@ -49,7 +49,7 @@ public class Bowling extends Observable {
             return;
         }
 
-        final UserAchievementEntity userAchievementEntity = userAchievementService.getUserAchievementEntity(killer.getUniqueId());
+        final UserAchievementEntity userAchievementEntity = userAchievementService.getOrDefault(killer.getUniqueId());
         final AchievementEntity achievementEntity = userAchievementEntity.getBowling();
 
         if (!achievementEntity.isCompleted()) {

@@ -77,7 +77,7 @@ public class Achievements extends GUI {
 
         setButton("Adept", "Learn every talent.", UserAchievementEntity::getAdept, UserAchievementEntity::setAdept,  StaticItems.MYTHIC_KEY.getName(), "mythic");
         setButton("Bowling", "Get a kill streak of 50.", UserAchievementEntity::getBowling, UserAchievementEntity::setBowling, StaticItems.RARE_KEY.getName(), "rare");
-        setButton("Charm", "Chat 100 times before leaving.", UserAchievementEntity::getCharm, UserAchievementEntity::setCharm, StaticItems.MYTHIC_KEY.getName(), "mythic");
+        setButton("Charm", "Chat 50 times before leaving.", UserAchievementEntity::getCharm, UserAchievementEntity::setCharm, StaticItems.MYTHIC_KEY.getName(), "mythic");
         setButton("Craftsman", "Combine your sword with an enchantment.", UserAchievementEntity::getCraftsman, UserAchievementEntity::setCraftsman, StaticItems.RARE_KEY.getName(), "rare");
         setButton("Gamble", "Kill a player while at low health.", UserAchievementEntity::getGamble, UserAchievementEntity::setGamble, StaticItems.MYTHIC_KEY.getName(), "mythic");
         setButton("Gladiator", "Win 35 duels.", UserAchievementEntity::getGladiator, UserAchievementEntity::setGladiator, StaticItems.MYTHIC_KEY.getName(), "mythic");

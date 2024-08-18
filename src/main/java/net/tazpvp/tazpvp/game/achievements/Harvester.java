@@ -11,7 +11,7 @@ public class Harvester extends Observable {
     private final UserAchievementService userAchievementService = Tazpvp.getInstance().getUserAchievementService();
     @Override
     public void open_coffin(Player p) {
-        final UserAchievementEntity userAchievementEntity =  userAchievementService.getUserAchievementEntity(p.getUniqueId());
+        final UserAchievementEntity userAchievementEntity =  userAchievementService.getOrDefault(p.getUniqueId());
         final AchievementEntity achievementEntity = userAchievementEntity.getHarvester();
 
         if (!achievementEntity.isCompleted()) {
