@@ -57,21 +57,19 @@ public class UserAchievementServiceImpl implements UserAchievementService {
     @Override
     public UserAchievementEntity getUserAchievementEntity(final UUID uuid) {
         try {
-            getUserDao().queryForId(uuid);
+            return getUserDao().queryForId(uuid);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
 
     @Override
     public boolean userAchievementEntityExists(final UUID uuid) {
         try {
-            getUserDao().queryBuilder().where().idEq(uuid).queryForFirst();
+            return getUserDao().idExists(uuid);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return false;
     }
 
     @Override
