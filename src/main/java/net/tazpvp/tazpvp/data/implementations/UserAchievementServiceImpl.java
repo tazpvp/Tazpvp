@@ -24,6 +24,7 @@ public class UserAchievementServiceImpl implements UserAchievementService {
     public void saveUserAchievementEntity(final UserAchievementEntity achievementEntity) {
         AchievementService achievementService = new AchievementServiceImpl();
         try {
+            achievementService.saveAchievementEntity(achievementEntity.getAdeptAchievementEntity());
             achievementService.saveAchievementEntity(achievementEntity.getAgileAchievementEntity());
             achievementService.saveAchievementEntity(achievementEntity.getBowlingAchievementEntity());
             achievementService.saveAchievementEntity(achievementEntity.getCraftsmanAchievementEntity());
