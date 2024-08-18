@@ -6,15 +6,21 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
 import net.tazpvp.tazpvp.data.services.AchievementService;
 import net.tazpvp.tazpvp.data.services.UserAchievementService;
+import org.bukkit.Bukkit;
 
 import java.sql.SQLException;
 import java.util.UUID;
 
 public class UserAchievementServiceImpl implements UserAchievementService {
+    private Dao<UserAchievementEntity, UUID> userDao;
     @Override
     public Dao<UserAchievementEntity, UUID> getUserDao() {
+        if (userDao != null) {
+            return userDao;
+        }
         try {
-            return DaoManager.createDao(Tazpvp.getPostgresqlDatabase().getConnectionSource(), UserAchievementEntity.class);
+            userDao = DaoManager.createDao(Tazpvp.getPostgresqlDatabase().getConnectionSource(), UserAchievementEntity.class);
+            return userDao;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -70,7 +76,10 @@ public class UserAchievementServiceImpl implements UserAchievementService {
 
     @Override
     public UserAchievementEntity getOrDefault(final UUID uuid) {
+        Bukkit.getLogger().info("UUID: " + uuid);
+        Bukkit.getLogger().info("If Exists: " + userAchievementEntityExists(uuid));
         final UserAchievementEntity userAchievementEntity = getUserAchievementEntity(uuid);
+
 
         if (userAchievementEntity == null) {
             final UserAchievementEntity blankUserAchievementEntity = new UserAchievementEntity();
