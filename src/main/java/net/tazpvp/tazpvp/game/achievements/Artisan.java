@@ -1,7 +1,9 @@
 package net.tazpvp.tazpvp.game.achievements;
 
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
+import net.tazpvp.tazpvp.data.services.UserAchievementService;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
@@ -12,6 +14,7 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 public class Artisan extends Observable {
+    private final UserAchievementService userAchievementService = Tazpvp.getInstance().getUserAchievementService();
     private final List<Material> woods = List.of(
             Material.OAK_PLANKS,
             Material.SPRUCE_PLANKS,
@@ -25,8 +28,8 @@ public class Artisan extends Observable {
     @Override
     public void place(Player p, Block b) {
         final PlayerWrapper pw = PlayerWrapper.getPlayer(p);
-        final UserAchievementEntity userAchievementEntity = pw.getUserAchievementEntity();
-        final AchievementEntity achievementEntity = userAchievementEntity.getArtisanAchievementEntity();
+        final UserAchievementEntity userAchievementEntity = userAchievementService.getUserAchievementEntity(p.getUniqueId());
+        final AchievementEntity achievementEntity = userAchievementEntity.getArtisan();
 
         if (!achievementEntity.isCompleted()) {
             for (Material wood : woods) {
@@ -36,8 +39,8 @@ public class Artisan extends Observable {
             }
 
             achievementEntity.setCompleted(true);
-            userAchievementEntity.setArtisanAchievementEntity(achievementEntity);
-            pw.setUserAchievementEntity(userAchievementEntity);
+            userAchievementEntity.setArtisan(achievementEntity);
+            userAchievementService.saveUserAchievementEntity(userAchievementEntity);
             ChatHelper.achievement(p, "Artisan");
         }
     }

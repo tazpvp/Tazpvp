@@ -32,30 +32,31 @@
 
 package net.tazpvp.tazpvp.game.achievements;
 
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.LooseData;
 import net.tazpvp.tazpvp.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
+import net.tazpvp.tazpvp.data.services.UserAchievementService;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
 import net.tazpvp.tazpvp.utils.observer.Observable;
-import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.entity.Player;
 
 public class Bowling extends Observable {
+    private final UserAchievementService userAchievementService = Tazpvp.getInstance().getUserAchievementService();
     @Override
     public void death(Player victim, Player killer) {
         if (victim == null || killer == null) {
             return;
         }
 
-        final PlayerWrapper pw = PlayerWrapper.getPlayer(killer);
-        final UserAchievementEntity userAchievementEntity = pw.getUserAchievementEntity();
-        final AchievementEntity achievementEntity = userAchievementEntity.getBowlingAchievementEntity();
+        final UserAchievementEntity userAchievementEntity = userAchievementService.getUserAchievementEntity(killer.getUniqueId());
+        final AchievementEntity achievementEntity = userAchievementEntity.getBowling();
 
         if (!achievementEntity.isCompleted()) {
             if (LooseData.getKs(killer.getUniqueId()) >= 50) {
                 achievementEntity.setCompleted(true);
-                userAchievementEntity.setBowlingAchievementEntity(achievementEntity);
-                pw.setUserAchievementEntity(userAchievementEntity);
+                userAchievementEntity.setBowling(achievementEntity);
+                userAchievementService.saveUserAchievementEntity(userAchievementEntity);
                 ChatHelper.achievement(killer, "Bowling");
             }
         }

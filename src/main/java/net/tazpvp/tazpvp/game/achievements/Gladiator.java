@@ -32,26 +32,27 @@
 
 package net.tazpvp.tazpvp.game.achievements;
 
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
+import net.tazpvp.tazpvp.data.services.UserAchievementService;
 import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
 import net.tazpvp.tazpvp.utils.observer.Observable;
-import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.entity.Player;
 
 public class Gladiator extends Observable {
+    private final UserAchievementService userAchievementService = Tazpvp.getInstance().getUserAchievementService();
     @Override
     public void duel(Player p) {
-        final PlayerWrapper pw = PlayerWrapper.getPlayer(p);
-        final UserAchievementEntity userAchievementEntity = pw.getUserAchievementEntity();
-        final AchievementEntity achievementEntity = userAchievementEntity.getGladiatorAchievementEntity();
+        final UserAchievementEntity userAchievementEntity =  userAchievementService.getUserAchievementEntity(p.getUniqueId());
+        final AchievementEntity achievementEntity = userAchievementEntity.getGladiator();
 
         if (!achievementEntity.isCompleted()) {
             if (StatEnum.DUEL_MMR.getInt(p.getUniqueId()) >= 350) {
                 achievementEntity.setCompleted(true);
-                userAchievementEntity.setGladiatorAchievementEntity(achievementEntity);
-                pw.setUserAchievementEntity(userAchievementEntity);
+                userAchievementEntity.setGladiator(achievementEntity);
+                userAchievementService.saveUserAchievementEntity(userAchievementEntity);
                 ChatHelper.achievement(p, "Gladiator");
             }
         }

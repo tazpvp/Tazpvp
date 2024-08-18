@@ -140,8 +140,10 @@ public class ChatListener implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (pw.getLastMessageSent().equalsIgnoreCase(checkMessage)){
-                    pw.setLastMessageSent(null);
+                if (pw.getLastMessageSent() != null) {
+                    if (pw.getLastMessageSent().equalsIgnoreCase(checkMessage)){
+                        pw.setLastMessageSent(null);
+                    }
                 }
             }
         }.runTaskLater(Tazpvp.getInstance(), 20*5);

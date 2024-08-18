@@ -69,10 +69,7 @@ import net.tazpvp.tazpvp.commands.network.*;
 import net.tazpvp.tazpvp.data.database.PostgresqlDatabase;
 import net.tazpvp.tazpvp.data.entity.*;
 import net.tazpvp.tazpvp.data.implementations.*;
-import net.tazpvp.tazpvp.data.services.GuildMemberService;
-import net.tazpvp.tazpvp.data.services.GuildService;
-import net.tazpvp.tazpvp.data.services.PlayerStatService;
-import net.tazpvp.tazpvp.data.services.UserRankService;
+import net.tazpvp.tazpvp.data.services.*;
 import net.tazpvp.tazpvp.game.achievements.*;
 import net.tazpvp.tazpvp.game.achievements.Error;
 import net.tazpvp.tazpvp.game.bosses.BossManager;
@@ -147,6 +144,8 @@ public final class Tazpvp extends JavaPlugin {
     private UserRankService userRankService;
     @Getter
     private PlayerNameTagService playerNameTagService;
+    @Getter
+    private UserAchievementService userAchievementService;
 
     @Override
     public void onEnable() {
@@ -208,11 +207,13 @@ public final class Tazpvp extends JavaPlugin {
         this.playerStatService = new PlayerStatServiceImpl();
         this.userRankService = new UserRankServiceImpl();
         this.playerNameTagService = new PlayerNameTagServiceImpl(this);
+        this.userAchievementService = new UserAchievementServiceImpl();
 
         guildMemberService.createTableIfNotExists(postgresqlDatabase, GuildMemberEntity.class);
         guildService.createTableIfNotExists(postgresqlDatabase, GuildEntity.class);
         playerStatService.createTableIfNotExists(postgresqlDatabase, PlayerStatEntity.class);
         userRankService.createTableIfNotExists(postgresqlDatabase, UserRankEntity.class);
+        userAchievementService.createTableIfNotExists(postgresqlDatabase, UserRankEntity.class);
     }
 
     public static void registerObserver(Observer observer) {

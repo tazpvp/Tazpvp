@@ -79,9 +79,6 @@ public class PlayerWrapper {
         this.userRankService = new UserRankServiceImpl();
         this.userRankEntity = userRankService.getOrDefault(getUuid());
 
-        final UserAchievementService userAchievementService = new UserAchievementServiceImpl();
-        this.userAchievementEntity = userAchievementService.getOrDefault(getUuid());
-
         final TalentService talentService = new TalentServiceImpl();
         this.talentEntity = talentService.getOrDefault(getUuid());
         this.guildService = Tazpvp.getInstance().getGuildService();
@@ -199,13 +196,6 @@ public class PlayerWrapper {
 
     public void refreshRankEntity() {
         this.userRankEntity = this.userRankService.getUserRankEntity(getUuid());
-    }
-
-    public void setUserAchievementEntity(final UserAchievementEntity achievementEntity) {
-        final UserAchievementService userAchievementService = new UserAchievementServiceImpl();
-        userAchievementService.saveUserAchievementEntity(achievementEntity);
-
-        this.userAchievementEntity = achievementEntity;
     }
 
     public void setTalentEntity(final TalentEntity talentEntity) {

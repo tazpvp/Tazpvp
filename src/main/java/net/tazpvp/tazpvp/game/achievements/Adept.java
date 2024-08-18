@@ -32,21 +32,23 @@
 
 package net.tazpvp.tazpvp.game.achievements;
 
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
+import net.tazpvp.tazpvp.data.services.UserAchievementService;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
 import net.tazpvp.tazpvp.utils.observer.Observable;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.entity.Player;
 
 public class Adept extends Observable {
-
+    private final UserAchievementService userAchievementService = Tazpvp.getInstance().getUserAchievementService();
     @Override
     public void talent(Player p) {
         final PlayerWrapper pw = PlayerWrapper.getPlayer(p);
-        final UserAchievementEntity userAchievementEntity = pw.getUserAchievementEntity();
-        final AchievementEntity achievementEntity = userAchievementEntity.getAdeptAchievementEntity();
+        final UserAchievementEntity userAchievementEntity = userAchievementService.getUserAchievementEntity(p.getUniqueId());
+        final AchievementEntity achievementEntity = userAchievementEntity.getAdept();
 
         if (!achievementEntity.isCompleted()) {
             TalentEntity talentEntity = pw.getTalentEntity();
@@ -66,8 +68,8 @@ public class Adept extends Observable {
             if (!talentEntity.isRevenge()) return;
 
             achievementEntity.setCompleted(true);
-            userAchievementEntity.setAdeptAchievementEntity(achievementEntity);
-            pw.setUserAchievementEntity(userAchievementEntity);
+            userAchievementEntity.setAdept(achievementEntity);
+            userAchievementService.saveUserAchievementEntity(userAchievementEntity);
 
             ChatHelper.achievement(p, "Adept");
         }

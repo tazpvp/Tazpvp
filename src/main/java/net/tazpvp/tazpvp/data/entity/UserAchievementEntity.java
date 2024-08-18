@@ -17,58 +17,58 @@ public class UserAchievementEntity {
     private UUID uuid;
 
     @DatabaseField(foreign = true, columnName = "adept")
-    private AchievementEntity adeptAchievementEntity;
+    private AchievementEntity adept;
 
     @DatabaseField(foreign = true, columnName = "agile")
-    private AchievementEntity agileAchievementEntity;
+    private AchievementEntity agile;
 
     @DatabaseField(foreign = true, columnName = "merchant")
-    private AchievementEntity merchantAchievementEntity;
+    private AchievementEntity merchant;
 
     @DatabaseField(foreign = true, columnName = "bowling")
-    private AchievementEntity bowlingAchievementEntity;
+    private AchievementEntity bowling;
 
     @DatabaseField(foreign = true, columnName = "legend")
-    private AchievementEntity legendAchievementEntity;
+    private AchievementEntity legend;
 
     @DatabaseField(foreign = true, columnName = "gamble")
-    private AchievementEntity gambleAchievementEntity;
+    private AchievementEntity gamble;
 
     @DatabaseField(foreign = true, columnName = "superior")
-    private AchievementEntity superiorAchievementEntity;
+    private AchievementEntity superior;
 
     @DatabaseField(foreign = true, columnName = "craftsman")
-    private AchievementEntity craftsmanAchievementEntity;
+    private AchievementEntity craftsman;
 
     @DatabaseField(foreign = true, columnName = "charm")
-    private AchievementEntity charmAchievementEntity;
+    private AchievementEntity charm;
 
     @DatabaseField(foreign = true, columnName = "rehab")
-    private AchievementEntity rehabAchievementEntity;
+    private AchievementEntity rehab;
 
     @DatabaseField(foreign = true, columnName = "zorgin")
-    private AchievementEntity zorginAchievementEntity;
+    private AchievementEntity zorgin;
 
     @DatabaseField(foreign = true, columnName = "grinder")
-    private AchievementEntity grinderAchievementEntity;
+    private AchievementEntity grinder;
 
     @DatabaseField(foreign = true, columnName = "gladiator")
-    private AchievementEntity gladiatorAchievementEntity;
+    private AchievementEntity gladiator;
 
     @DatabaseField(foreign = true, columnName = "harvester")
-    private AchievementEntity harvesterAchievementEntity;
+    private AchievementEntity harvester;
 
     @DatabaseField(foreign = true, columnName = "speedrunner")
-    private AchievementEntity speedrunnerAchievementEntity;
+    private AchievementEntity speedrunner;
 
     @DatabaseField(foreign = true, columnName = "artisan")
-    private AchievementEntity artisanAchievementEntity;
+    private AchievementEntity artisan;
 
     @DatabaseField(foreign = true, columnName = "error")
-    private AchievementEntity errorAchievementEntity;
+    private AchievementEntity error;
 
     @DatabaseField(foreign = true, columnName = "skilled")
-    private AchievementEntity skilledAchievementEntity;
+    private AchievementEntity skilled;
 
 
 }
