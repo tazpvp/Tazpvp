@@ -14,7 +14,7 @@ public class Speedrunner extends Observable {
     @Override
     public void death(Player victim, Player killer) {
         final PlayerWrapper pw = PlayerWrapper.getPlayer(killer);
-        final UserAchievementEntity userAchievementEntity =  userAchievementService.getUserAchievementEntity(killer.getUniqueId());
+        final UserAchievementEntity userAchievementEntity =  userAchievementService.getOrDefault(killer.getUniqueId());
         final AchievementEntity achievementEntity = userAchievementEntity.getSpeedrunner();
 
         if (!achievementEntity.isCompleted()) {

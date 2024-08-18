@@ -45,7 +45,7 @@ public class Gamble extends Observable {
     @Override
     public void death(Player victim, Player killer) {
         if (killer == null) return;
-        final UserAchievementEntity userAchievementEntity =  userAchievementService.getUserAchievementEntity(killer.getUniqueId());
+        final UserAchievementEntity userAchievementEntity =  userAchievementService.getOrDefault(killer.getUniqueId());
         final AchievementEntity achievementEntity = userAchievementEntity.getGamble();
 
         if (!achievementEntity.isCompleted()) {

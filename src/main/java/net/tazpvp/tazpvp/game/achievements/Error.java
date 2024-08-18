@@ -13,7 +13,7 @@ public class Error extends Observable {
     private final UserAchievementService userAchievementService = Tazpvp.getInstance().getUserAchievementService();
     @Override
     public void death(Player victim, Player killer) {
-        final UserAchievementEntity userAchievementEntity =  userAchievementService.getUserAchievementEntity(killer.getUniqueId());
+        final UserAchievementEntity userAchievementEntity =  userAchievementService.getOrDefault(killer.getUniqueId());
         final AchievementEntity achievementEntity = userAchievementEntity.getError();
 
         if (!achievementEntity.isCompleted()) {
