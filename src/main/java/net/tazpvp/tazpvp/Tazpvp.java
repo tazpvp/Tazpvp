@@ -78,7 +78,6 @@ import net.tazpvp.tazpvp.game.crates.CrateManager;
 import net.tazpvp.tazpvp.game.items.UsableItem;
 import net.tazpvp.tazpvp.game.npcs.NPC;
 import net.tazpvp.tazpvp.game.npcs.achievements.Achievements;
-import net.tazpvp.tazpvp.game.npcs.enchant.Enchant;
 import net.tazpvp.tazpvp.game.npcs.guilds.Guilds;
 import net.tazpvp.tazpvp.game.npcs.shop.Shop;
 import net.tazpvp.tazpvp.game.talents.*;
@@ -342,7 +341,6 @@ public final class Tazpvp extends JavaPlugin {
     private void spawnNpcs() {
         npcs.add(new Shop());
         npcs.add(new Achievements());
-        npcs.add(new Enchant());
         npcs.add(new Guilds(guildService));
 
         new BukkitRunnable() {
