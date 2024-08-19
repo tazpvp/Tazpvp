@@ -14,11 +14,9 @@ public class Tournament {
     private final List<PartyObject> participants = new ArrayList<>();
     private final List<Player> spectators = new ArrayList<>();
     private Bracket currentBracket;
-    private int BRACKET_NUM;
 
     public Tournament(UUID host) {
         this.host = host;
-        this.BRACKET_NUM = 0;
         initialize();
     }
 
@@ -49,7 +47,6 @@ public class Tournament {
     }
 
     public void nextMatch() {
-        BRACKET_NUM++;
         currentBracket.currentMatch.begin();
     }
 
@@ -75,6 +72,6 @@ public class Tournament {
             bracketParticipants.remove(contestants.get(1));
             matches.add(new Match(contestants));
         }
-        brackets = new Bracket(matches);
+        currentBracket = new Bracket(matches);
     }
 }
