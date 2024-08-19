@@ -25,7 +25,8 @@ public class KitMakerGui {
         gui.open(player);
         gui.setOnDestroy(() -> {
             ItemStack[] contents = player.getInventory().getContents();
-            String serializedInventory = kitMakerService.serializeInventory(contents);
+            ItemStack[] sanitizedContents = kitMakerService.sanitize(contents);
+            String serializedInventory = kitMakerService.serializeInventory(sanitizedContents);
             KitEntity kitEntity = kitService.getOrDefault(player.getUniqueId());
             kitEntity.setSerial(serializedInventory);
             kitService.saveKitEntity(kitEntity);
