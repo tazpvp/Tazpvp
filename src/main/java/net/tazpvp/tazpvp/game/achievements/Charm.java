@@ -55,9 +55,6 @@ public class Charm extends Observable {
                 achievementEntity.setCompleted(true);
                 achievementService.saveAchievementEntity(achievementEntity);
 
-                userAchievementEntity.setCharm(achievementEntity);
-                userAchievementService.saveUserAchievementEntity(userAchievementEntity);
-
                 ChatHelper.achievement(p, "Charm");
             }
         }

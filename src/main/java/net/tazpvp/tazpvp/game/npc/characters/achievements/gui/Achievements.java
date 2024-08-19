@@ -130,7 +130,8 @@ public class Achievements extends GUI {
 
                 achievementEntity.setCollected(true);
                 setter.accept(userAchievementEntity, achievementEntity);
-                userAchievementService.saveUserAchievementEntity(userAchievementEntity);
+//                userAchievementService.saveUserAchievementEntity(userAchievementEntity);
+                Tazpvp.getInstance().getAchievementService().saveAchievementEntity(achievementEntity);
 
                 p.getInventory().addItem(KeyFactory.getFactory().createKey(keyType, keyName));
                 p.closeInventory();
