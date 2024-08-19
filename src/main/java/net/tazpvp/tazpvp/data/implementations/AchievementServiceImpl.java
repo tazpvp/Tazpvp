@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public class AchievementServiceImpl implements AchievementService {
     @Override
-    public Dao<AchievementEntity, UUID> getUserDao() {
+    public Dao<AchievementEntity, Integer> getUserDao() {
         try {
             return DaoManager.createDao(Tazpvp.getPostgresqlDatabase().getConnectionSource(), AchievementEntity.class);
         } catch (SQLException e) {
@@ -30,9 +30,28 @@ public class AchievementServiceImpl implements AchievementService {
     }
 
     @Override
-    public AchievementEntity createDefault(UserAchievementEntity userAchievementEntity) {
-        final AchievementEntity achievementEntity = new AchievementEntity();
-        achievementEntity.setUserAchievementEntity(userAchievementEntity);
+    public AchievementEntity getAchievementEntity(int id) {
+        try {
+            AchievementEntity achievementEntity = getUserDao().queryForId(id);
+            if (achievementEntity == null) {
+                achievementEntity = new AchievementEntity();
+                achievementEntity.setId(id);
+                achievementEntity.setCompleted(false);
+                achievementEntity.setCollected(false);
+            }
+
+            return achievementEntity;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public AchievementEntity createBasic() {
+        AchievementEntity achievementEntity = new AchievementEntity();
+
+        saveAchievementEntity(achievementEntity);
+
         return achievementEntity;
     }
 }

@@ -15,9 +15,6 @@ public class AchievementEntity {
     @DatabaseField(generatedId = true)
     private int id;
 
-    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "user_achievements_fk")
-    private UserAchievementEntity userAchievementEntity;
-
     @DatabaseField(defaultValue = "false", canBeNull = false)
     private boolean completed;
     @DatabaseField(defaultValue = "false", canBeNull = false)

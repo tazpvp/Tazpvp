@@ -61,31 +61,25 @@ public class UserAchievementServiceImpl implements UserAchievementService {
             final UserAchievementEntity blankUserAchievementEntity = new UserAchievementEntity();
             blankUserAchievementEntity.setUuid(uuid);
 
-            try {
-                getUserDao().createOrUpdate(blankUserAchievementEntity);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-
             AchievementService achievementService = new AchievementServiceImpl();
-            blankUserAchievementEntity.setAdept(achievementService.createDefault(blankUserAchievementEntity));
-            blankUserAchievementEntity.setAgile(achievementService.createDefault(blankUserAchievementEntity));
-            blankUserAchievementEntity.setBowling(achievementService.createDefault(blankUserAchievementEntity));
-            blankUserAchievementEntity.setArtisan(achievementService.createDefault(blankUserAchievementEntity));
-            blankUserAchievementEntity.setCharm(achievementService.createDefault(blankUserAchievementEntity));
-            blankUserAchievementEntity.setCraftsman(achievementService.createDefault(blankUserAchievementEntity));
-            blankUserAchievementEntity.setError(achievementService.createDefault(blankUserAchievementEntity));
-            blankUserAchievementEntity.setSuperior(achievementService.createDefault(blankUserAchievementEntity));
-            blankUserAchievementEntity.setGamble(achievementService.createDefault(blankUserAchievementEntity));
-            blankUserAchievementEntity.setGrinder(achievementService.createDefault(blankUserAchievementEntity));
-            blankUserAchievementEntity.setGladiator(achievementService.createDefault(blankUserAchievementEntity));
-            blankUserAchievementEntity.setHarvester(achievementService.createDefault(blankUserAchievementEntity));
-            blankUserAchievementEntity.setLegend(achievementService.createDefault(blankUserAchievementEntity));
-            blankUserAchievementEntity.setMerchant(achievementService.createDefault(blankUserAchievementEntity));
-            blankUserAchievementEntity.setRehab(achievementService.createDefault(blankUserAchievementEntity));
-            blankUserAchievementEntity.setSkilled(achievementService.createDefault(blankUserAchievementEntity));
-            blankUserAchievementEntity.setZorgin(achievementService.createDefault(blankUserAchievementEntity));
-            blankUserAchievementEntity.setSpeedrunner(achievementService.createDefault(blankUserAchievementEntity));
+            blankUserAchievementEntity.setAdept(achievementService.createBasic());
+            blankUserAchievementEntity.setAgile(achievementService.createBasic());
+            blankUserAchievementEntity.setBowling(achievementService.createBasic());
+            blankUserAchievementEntity.setArtisan(achievementService.createBasic());
+            blankUserAchievementEntity.setCharm(achievementService.createBasic());
+            blankUserAchievementEntity.setCraftsman(achievementService.createBasic());
+            blankUserAchievementEntity.setError(achievementService.createBasic());
+            blankUserAchievementEntity.setSuperior(achievementService.createBasic());
+            blankUserAchievementEntity.setGamble(achievementService.createBasic());
+            blankUserAchievementEntity.setGrinder(achievementService.createBasic());
+            blankUserAchievementEntity.setGladiator(achievementService.createBasic());
+            blankUserAchievementEntity.setHarvester(achievementService.createBasic());
+            blankUserAchievementEntity.setLegend(achievementService.createBasic());
+            blankUserAchievementEntity.setMerchant(achievementService.createBasic());
+            blankUserAchievementEntity.setRehab(achievementService.createBasic());
+            blankUserAchievementEntity.setSkilled(achievementService.createBasic());
+            blankUserAchievementEntity.setZorgin(achievementService.createBasic());
+            blankUserAchievementEntity.setSpeedrunner(achievementService.createBasic());
 
             saveUserAchievementEntity(blankUserAchievementEntity);
 

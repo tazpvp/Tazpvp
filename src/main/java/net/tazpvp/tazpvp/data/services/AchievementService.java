@@ -8,8 +8,8 @@ import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
 import java.util.UUID;
 
 public interface AchievementService extends DataService {
-    Dao<AchievementEntity, UUID> getUserDao();
+    Dao<AchievementEntity, Integer> getUserDao();
     void saveAchievementEntity(AchievementEntity AchievementEntity);
-    AchievementEntity createDefault(UserAchievementEntity userAchievementEntity);
-
+    AchievementEntity getAchievementEntity(final int id);
+    AchievementEntity createBasic();
 }
