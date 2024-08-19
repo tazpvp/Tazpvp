@@ -39,7 +39,6 @@ import net.tazpvp.tazpvp.data.services.UserAchievementService;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.enums.StaticItems;
 import net.tazpvp.tazpvp.game.crates.KeyFactory;
-import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -120,7 +119,6 @@ public class AchievementViewer extends GUI {
                                             " ",
                                             complete
                                     ).build(), (e) -> {
-                PlayerWrapper pw = PlayerWrapper.getPlayer(p);
 
                 p.sendMessage("You collected your reward!");
                 p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
