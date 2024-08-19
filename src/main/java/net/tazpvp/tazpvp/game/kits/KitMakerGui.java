@@ -34,7 +34,7 @@ public class KitMakerGui {
     }
 
     private void addItems() {
-        gui.fill(0, 6*9 - 1, GUI.FILLER);
+        gui.fill(0, (int) Math.ceil(kitMakerService.getValidItems().size() / 9.0), GUI.FILLER);
 
         List<ItemStack> items = kitMakerService.getValidItems();
 
