@@ -30,13 +30,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.game.npc.characters.guildmaster;
+package net.tazpvp.tazpvp.game.npcs.shop;
 
-import net.tazpvp.tazpvp.data.services.GuildService;
-import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.game.npc.characters.NPC;
-import net.tazpvp.tazpvp.game.npc.characters.guildmaster.gui.GuildMenu;
-import net.tazpvp.tazpvp.game.npc.dialogue.Dialogues;
+import net.tazpvp.tazpvp.game.npcs.NPC;
+import net.tazpvp.tazpvp.game.npcs.shop.gui.ShopMenu;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -46,40 +43,20 @@ import org.bukkit.entity.Villager;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 
 import javax.annotation.Nonnull;
-import java.util.List;
 
-public class Rigel extends NPC {
+public class Shop extends NPC {
 
-    private final GuildService guildService;
 
-    public Rigel(GuildService guildService) {
-        super(ChatHelper.gradient("#068fff", "Lorenzo", true), new Location(Bukkit.getWorld("arena"), 5, 99, 10, 135, 0),
-                Villager.Profession.FLETCHER,
-                Villager.Type.TAIGA,
-                Sound.ITEM_GOAT_HORN_SOUND_0,
-                new Dialogues(
-                        CC.DARK_AQUA + "[Lorenzo] " + CC.AQUA,
-                        List.of(
-                                "Guilds are cool, if you have friends..",
-                                "What do you want?"
-                        ),
-                        List.of(
-                                "Need something?",
-                                "Guilds are the best way to stand out!",
-                                "Create a guild and dominate the leaderboard."
-                        ),
-                        List.of(
-                                "Got a Guild? Check it out here!",
-                                "Guilds make you way cooler! Make sure to bring friends.",
-                                "Check out Maxim for some temporary upgrade that will scare your foes!",
-                                "Challenge the leaderboard, create a guild for unique competition!"
-                        )
-                ));
-        this.guildService = guildService;
+    public Shop() {
+        super(ChatHelper.gradient("#fc6400", "Shop", true),
+                new Location(Bukkit.getWorld("arena"), -11.5, 99, 20.5, -135, 0),
+                Villager.Profession.FARMER,
+                Villager.Type.SAVANNA,
+                Sound.ITEM_GOAT_HORN_SOUND_0);
     }
 
     @Override
     public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
-        new GuildMenu(p, guildService);
+        new ShopMenu(p);
     }
 }

@@ -30,12 +30,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.game.npc.characters;
+package net.tazpvp.tazpvp.game.npcs;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.game.npc.dialogue.Dialogues;
 import net.tazpvp.tazpvp.utils.PDCUtil;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -62,17 +61,15 @@ public abstract class NPC implements Listener {
     private final Sound SOUND;
     private final Villager V;
     private final UUID ID;
-    private final Dialogues dialogues;
 
 
-    public NPC(@Nonnull final String NAME, @Nonnull final Location SPAWN, @Nonnull final Villager.Profession PROFESSION, @Nonnull final Villager.Type TYPE, @Nonnull final Sound SOUND, @Nonnull final Dialogues dialogues) {
+    public NPC(@Nonnull final String NAME, @Nonnull final Location SPAWN, @Nonnull final Villager.Profession PROFESSION, @Nonnull final Villager.Type TYPE, @Nonnull final Sound SOUND) {
         this.NAME = NAME;
         this.SPAWN = SPAWN;
         this.PROFESSION = PROFESSION;
         this.TYPE = TYPE;
         this.SOUND = SOUND;
         this.ID = UUID.randomUUID();
-        this.dialogues = dialogues;
         this.V = (Villager) SPAWN.getWorld().spawnEntity(SPAWN, EntityType.VILLAGER);
 
         V.setCustomName(CC.trans(NAME));

@@ -1,10 +1,10 @@
-package net.tazpvp.tazpvp.game.npc.characters.shop.gui;
+package net.tazpvp.tazpvp.game.npcs.shop.gui;
 
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.enums.StatEnum;
-import net.tazpvp.tazpvp.game.npc.characters.shop.gui.subgui.ItemShop;
-import net.tazpvp.tazpvp.game.npc.characters.shop.gui.subgui.TalentShop;
-import net.tazpvp.tazpvp.game.npc.characters.shop.gui.subgui.cosmetic.PremiumMenu;
+import net.tazpvp.tazpvp.game.npcs.shop.gui.subgui.ItemShop;
+import net.tazpvp.tazpvp.game.npcs.shop.gui.subgui.TalentShop;
+import net.tazpvp.tazpvp.game.npcs.shop.gui.subgui.cosmetic.PremiumMenu;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -13,11 +13,11 @@ import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
-public class Shop extends GUI {
+public class ShopMenu extends GUI {
 
     final static int ROWS = 5;
 
-    public Shop(Player p) {
+    public ShopMenu(Player p) {
         super("Shop", ROWS);
         addItems(p);
         open(p);

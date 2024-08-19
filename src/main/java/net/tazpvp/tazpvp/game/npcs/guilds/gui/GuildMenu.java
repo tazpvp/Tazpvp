@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.game.npc.characters.guildmaster.gui;
+package net.tazpvp.tazpvp.game.npcs.guilds.gui;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.GuildEntity;
@@ -55,7 +55,7 @@ public class GuildMenu extends GUI {
     private static final int ROWS = 3;
 
     public GuildMenu(Player p, GuildService guildService) {
-        super("Guild Browser", ROWS);
+        super("Guild Menu", ROWS);
         this.guildService = guildService;
         addItems(p);
         open(p);

@@ -76,11 +76,11 @@ import net.tazpvp.tazpvp.game.bosses.BossManager;
 import net.tazpvp.tazpvp.game.bosses.zorg.Zorg;
 import net.tazpvp.tazpvp.game.crates.CrateManager;
 import net.tazpvp.tazpvp.game.items.UsableItem;
-import net.tazpvp.tazpvp.game.npc.characters.NPC;
-import net.tazpvp.tazpvp.game.npc.characters.achievements.Lorenzo;
-import net.tazpvp.tazpvp.game.npc.characters.enchanter.Caesar;
-import net.tazpvp.tazpvp.game.npc.characters.guildmaster.Rigel;
-import net.tazpvp.tazpvp.game.npc.characters.shop.Maxim;
+import net.tazpvp.tazpvp.game.npcs.NPC;
+import net.tazpvp.tazpvp.game.npcs.achievements.Achievements;
+import net.tazpvp.tazpvp.game.npcs.enchant.Enchant;
+import net.tazpvp.tazpvp.game.npcs.guilds.Guilds;
+import net.tazpvp.tazpvp.game.npcs.shop.Shop;
 import net.tazpvp.tazpvp.game.talents.*;
 import net.tazpvp.tazpvp.helpers.AfkHelper;
 import net.tazpvp.tazpvp.helpers.BlockHelper;
@@ -340,10 +340,10 @@ public final class Tazpvp extends JavaPlugin {
     }
 
     private void spawnNpcs() {
-        npcs.add(new Maxim());
-        npcs.add(new Lorenzo());
-        npcs.add(new Caesar());
-        npcs.add(new Rigel(guildService));
+        npcs.add(new Shop());
+        npcs.add(new Achievements());
+        npcs.add(new Enchant());
+        npcs.add(new Guilds(guildService));
 
         new BukkitRunnable() {
             @Override

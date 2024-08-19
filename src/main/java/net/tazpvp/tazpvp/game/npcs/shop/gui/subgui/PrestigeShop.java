@@ -1,4 +1,4 @@
-package net.tazpvp.tazpvp.game.npc.characters.shop.gui.subgui;
+package net.tazpvp.tazpvp.game.npcs.shop.gui.subgui;
 
 import net.tazpvp.tazpvp.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.data.implementations.TalentServiceImpl;

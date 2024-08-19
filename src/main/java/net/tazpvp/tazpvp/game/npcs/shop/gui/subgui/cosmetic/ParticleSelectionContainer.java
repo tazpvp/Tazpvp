@@ -31,32 +31,11 @@
  *
  */
 
-package net.tazpvp.tazpvp.game.npc.dialogue;
+package net.tazpvp.tazpvp.game.npcs.shop.gui.subgui.cosmetic;
 
-import org.bukkit.Bukkit;
 
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
+import org.bukkit.Material;
+import org.bukkit.Particle;
 
-public record Dialogues(String name, List<String> dialoguesSad, List<String> dialoguesNormal,
-                        List<String> dialoguesHappy) {
-    public String getRandomDialogue() {
-        final int playerCount = Bukkit.getOnlinePlayers().size();
-        if (playerCount < 5) {
-            return formatDialogue(dialogueFromList(dialoguesSad));
-        } else if (playerCount < 25) {
-            return formatDialogue(dialogueFromList(dialoguesNormal));
-        } else {
-            return formatDialogue(dialogueFromList(dialoguesSad));
-        }
-    }
-
-    private String formatDialogue(String dialogue) {
-        return name + dialogue;
-    }
-
-    private String dialogueFromList(List<String> dialogues) {
-        final int randomElementIndex = ThreadLocalRandom.current().nextInt(dialoguesSad.size()) % dialoguesSad.size();
-        return dialogues.get(randomElementIndex);
-    }
+public record ParticleSelectionContainer(Material material, Particle particle, String name, String lore) {
 }

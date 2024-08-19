@@ -30,11 +30,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.game.npc.characters.achievements.gui;
+package net.tazpvp.tazpvp.game.npcs.achievements.gui;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.AchievementEntity;
-import net.tazpvp.tazpvp.data.entity.PlayerStatEntity;
 import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
 import net.tazpvp.tazpvp.data.services.UserAchievementService;
 import net.tazpvp.tazpvp.enums.CC;
@@ -49,19 +48,17 @@ import world.ntdi.nrcore.utils.gui.GUI;
 import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class Achievements extends GUI {
+public class AchievementViewer extends GUI {
 
     private final UserAchievementService userAchievementService = Tazpvp.getInstance().getUserAchievementService();
     private int slotNum;
     private int count;
-    private final String prefix = CC.DARK_AQUA + "[Lorenzo] " + CC.AQUA;
     private final Player p;
     private final UserAchievementEntity userAchievementEntity;
 
-    public Achievements(Player p) {
+    public AchievementViewer(Player p) {
         super("Achievements", 5);
         this.p = p;
         this.userAchievementEntity = userAchievementService.getOrDefault(p.getUniqueId());
@@ -125,7 +122,7 @@ public class Achievements extends GUI {
                                     ).build(), (e) -> {
                 PlayerWrapper pw = PlayerWrapper.getPlayer(p);
 
-                p.sendMessage(prefix + "You collected your reward!");
+                p.sendMessage("You collected your reward!");
                 p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
 
                 achievementEntity.setCollected(true);
@@ -135,7 +132,7 @@ public class Achievements extends GUI {
 
                 p.getInventory().addItem(KeyFactory.getFactory().createKey(keyType, keyName));
                 p.closeInventory();
-                new Achievements(p);
+                new AchievementViewer(p);
             }), slotNum);
             calcSlot();
         } else {

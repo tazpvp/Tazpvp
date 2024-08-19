@@ -28,14 +28,38 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
  */
 
-package net.tazpvp.tazpvp.game.npc.characters.shop.gui.subgui.cosmetic;
+package net.tazpvp.tazpvp.game.npcs.guilds;
 
+import net.tazpvp.tazpvp.data.services.GuildService;
+import net.tazpvp.tazpvp.game.npcs.NPC;
+import net.tazpvp.tazpvp.game.npcs.guilds.gui.GuildMenu;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 
-import org.bukkit.Material;
-import org.bukkit.Particle;
+import javax.annotation.Nonnull;
 
-public record ParticleSelectionContainer(Material material, Particle particle, String name, String lore) {
+public class Guilds extends NPC {
+
+    private final GuildService guildService;
+
+    public Guilds(GuildService guildService) {
+        super(ChatHelper.gradient("#fcfc00", "Guilds", true),
+                new Location(Bukkit.getWorld("arena"), 5, 99, 10, 135, 0),
+                Villager.Profession.FLETCHER,
+                Villager.Type.TAIGA,
+                Sound.ITEM_GOAT_HORN_SOUND_0);
+        this.guildService = guildService;
+    }
+
+    @Override
+    public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
+        new GuildMenu(p, guildService);
+    }
 }

@@ -33,10 +33,10 @@
 package net.tazpvp.tazpvp.commands.admin.npc;
 
 import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.game.npc.characters.achievements.Lorenzo;
-import net.tazpvp.tazpvp.game.npc.characters.enchanter.Caesar;
-import net.tazpvp.tazpvp.game.npc.characters.guildmaster.Rigel;
-import net.tazpvp.tazpvp.game.npc.characters.shop.Maxim;
+import net.tazpvp.tazpvp.game.npcs.achievements.Achievements;
+import net.tazpvp.tazpvp.game.npcs.enchant.Enchant;
+import net.tazpvp.tazpvp.game.npcs.guilds.Guilds;
+import net.tazpvp.tazpvp.game.npcs.shop.Shop;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import world.ntdi.nrcore.utils.command.simple.Label;
@@ -61,13 +61,13 @@ public class NpcCommand extends NRCommand {
             }
 
             if (args[0].equalsIgnoreCase("maxim")) {
-                new Maxim();
+                new Shop();
             } else if (args[0].equalsIgnoreCase("lorenzo")) {
-                new Lorenzo();
+                new Achievements();
             } else if (args[0].equalsIgnoreCase("caesar")) {
-                new Caesar();
+                new Enchant();
             } else if (args[0].equalsIgnoreCase("rigel")) {
-                new Rigel(tazpvp.getGuildService());
+                new Guilds(tazpvp.getGuildService());
             }
 
             return true;

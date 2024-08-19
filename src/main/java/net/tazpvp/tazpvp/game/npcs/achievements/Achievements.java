@@ -30,12 +30,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.game.npc.characters.achievements;
+package net.tazpvp.tazpvp.game.npcs.achievements;
 
-import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.game.npc.characters.NPC;
-import net.tazpvp.tazpvp.game.npc.characters.achievements.gui.Achievements;
-import net.tazpvp.tazpvp.game.npc.dialogue.Dialogues;
+import net.tazpvp.tazpvp.game.npcs.NPC;
+import net.tazpvp.tazpvp.game.npcs.achievements.gui.AchievementViewer;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -45,31 +43,18 @@ import org.bukkit.entity.Villager;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 
 import javax.annotation.Nonnull;
-import java.util.List;
 
-public class Lorenzo extends NPC {
+public class Achievements extends NPC {
 
-    public Lorenzo() {
-        super(ChatHelper.gradient("#068fff", "Lorenzo", true), new Location(Bukkit.getWorld("arena"), 12.5, 99, 20.5, 135, 0),
+    public Achievements() {
+        super(ChatHelper.gradient("#068fff", "Achievements", true), new Location(Bukkit.getWorld("arena"), 12.5, 99, 20.5, 135, 0),
                 Villager.Profession.FLETCHER,
                 Villager.Type.TAIGA,
-                Sound.ITEM_GOAT_HORN_SOUND_0,
-                new Dialogues(
-                        CC.DARK_AQUA + "[Lorenzo] " + CC.AQUA,
-                        List.of(
-                                ""
-                        ),
-                        List.of(
-                                ""
-                        ),
-                        List.of(
-                                ""
-                        )
-                ));
+                Sound.ITEM_GOAT_HORN_SOUND_0);
     }
 
     @Override
     public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
-        new Achievements(p);
+        new AchievementViewer(p);
     }
 }

@@ -5,7 +5,6 @@ import net.tazpvp.tazpvp.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.data.implementations.PunishmentServiceImpl;
 import net.tazpvp.tazpvp.data.services.PunishmentService;
 import net.tazpvp.tazpvp.enums.CC;
-import net.tazpvp.tazpvp.game.npc.characters.NPC;
 import net.tazpvp.tazpvp.helpers.AfkHelper;
 import net.tazpvp.tazpvp.helpers.CombatTagHelper;
 import net.tazpvp.tazpvp.helpers.ParkourHelper;
@@ -81,19 +80,19 @@ public class MoveListener implements Listener {
                 }
             }
 
-            pw.setReceivedDialogue(null);
-            for (NPC npc : Tazpvp.getInstance().getNpcs()) {
-                if (npc.withinRange(playerLocation)) {
-                    pw.setReceivedDialogue(npc);
-                    break;
-                }
-            }
-            if (pw.getReceivedDialogue() != null && !pw.isNpcDialogue()) {
-                p.sendMessage(pw.getReceivedDialogue().getDialogues().getRandomDialogue());
-                pw.setNpcDialogue(true);
-            } else if (pw.getReceivedDialogue() == null) {
-                pw.setNpcDialogue(false);
-            }
+//            pw.setReceivedDialogue(null);
+//            for (NPC npc : Tazpvp.getInstance().getNpcs()) {
+//                if (npc.withinRange(playerLocation)) {
+//                    pw.setReceivedDialogue(npc);
+//                    break;
+//                }
+//            }
+//            if (pw.getReceivedDialogue() != null && !pw.isNpcDialogue()) {
+//                p.sendMessage(pw.getReceivedDialogue().getDialogues().getRandomDialogue());
+//                pw.setNpcDialogue(true);
+//            } else if (pw.getReceivedDialogue() == null) {
+//                pw.setNpcDialogue(false);
+//            }
 
             if (p.hasMetadata("spawnTeleport")) {
                 p.sendMessage(CC.RED + "Teleportation cancelled. You moved.");
