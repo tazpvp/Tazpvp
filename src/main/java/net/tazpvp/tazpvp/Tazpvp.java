@@ -207,15 +207,15 @@ public final class Tazpvp extends JavaPlugin {
         this.playerStatService = new PlayerStatServiceImpl();
         this.userRankService = new UserRankServiceImpl();
         this.playerNameTagService = new PlayerNameTagServiceImpl(this);
-        this.userAchievementService = new UserAchievementServiceImpl();
         this.achievementService = new AchievementServiceImpl();
+        this.userAchievementService = new UserAchievementServiceImpl();
 
         guildMemberService.createTableIfNotExists(postgresqlDatabase, GuildMemberEntity.class);
         guildService.createTableIfNotExists(postgresqlDatabase, GuildEntity.class);
         playerStatService.createTableIfNotExists(postgresqlDatabase, PlayerStatEntity.class);
         userRankService.createTableIfNotExists(postgresqlDatabase, UserRankEntity.class);
-        userAchievementService.createTableIfNotExists(postgresqlDatabase, UserRankEntity.class);
         achievementService.createTableIfNotExists(postgresqlDatabase, UserRankEntity.class);
+        userAchievementService.createTableIfNotExists(postgresqlDatabase, UserRankEntity.class);
     }
 
     public static void registerObserver(Observer observer) {
