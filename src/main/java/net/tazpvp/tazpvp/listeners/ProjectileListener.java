@@ -33,6 +33,7 @@
 
 package net.tazpvp.tazpvp.listeners;
 
+import net.tazpvp.tazpvp.enums.RegionEnum;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -86,6 +87,10 @@ public class ProjectileListener implements Listener {
     public void onProjectileLand(final ProjectileHitEvent e) {
         if (e.getEntityType() == EntityType.ARROW) {
             arrowsToFollow.remove(e.getEntity());
+        }
+        if (RegionEnum.spawnRegion.contains(e.getEntity().getLocation())) {
+            e.setCancelled(true);
+            e.getEntity().remove();
         }
     }
 }
