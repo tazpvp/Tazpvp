@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  *
- * Copyright (c) 2022, n-tdi
+ * Copyright (c) 2023, n-tdi
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,55 +30,31 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.tazpvp.tazpvp.commands.admin.npc;
+package net.tazpvp.tazpvp.game.npcs.achievements;
 
-import net.tazpvp.tazpvp.Tazpvp;
-import net.tazpvp.tazpvp.game.npcs.achievements.Achievements;
-import net.tazpvp.tazpvp.game.npcs.enchant.Enchant;
-import net.tazpvp.tazpvp.game.npcs.guilds.Guilds;
-import net.tazpvp.tazpvp.game.npcs.shop.Shop;
-import org.bukkit.command.CommandSender;
+import net.tazpvp.tazpvp.game.npcs.NPC;
+import net.tazpvp.tazpvp.game.npcs.achievements.gui.AchievementViewer;
+import net.tazpvp.tazpvp.helpers.ChatHelper;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import world.ntdi.nrcore.utils.command.simple.Label;
-import world.ntdi.nrcore.utils.command.simple.NRCommand;
+import org.bukkit.entity.Villager;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 
-import java.util.List;
+import javax.annotation.Nonnull;
 
-public class NpcCommand extends NRCommand {
+public class Achievements extends NPC {
 
-    public NpcCommand(Tazpvp tazpvp) {
-        super(new Label("npc", "tazpvp.npc"));
-        setNativeExecutor((sender, args) -> {
-
-            if (!(sender instanceof Player)) {
-                sendNoPermission(sender);
-                return true;
-            }
-
-            if (!sender.hasPermission(getLabel().getPermission())) {
-                sendNoPermission(sender);
-                return true;
-            }
-
-            if (args[0].equalsIgnoreCase("maxim")) {
-                new Shop();
-            } else if (args[0].equalsIgnoreCase("lorenzo")) {
-                new Achievements();
-            } else if (args[0].equalsIgnoreCase("caesar")) {
-                new Enchant();
-            } else if (args[0].equalsIgnoreCase("rigel")) {
-                new Guilds(tazpvp.getGuildService());
-            }
-
-            return true;
-        });
+    public Achievements() {
+        super(ChatHelper.gradient("#068fff", "Lorenzo", true), new Location(Bukkit.getWorld("arena"), 12.5, 99, 20.5, 135, 0),
+                Villager.Profession.FLETCHER,
+                Villager.Type.TAIGA,
+                Sound.ITEM_GOAT_HORN_SOUND_0);
     }
 
     @Override
-    public List<String> complete(CommandSender sender, String[] args) {
-        if (args.length == 1) {
-            return List.of("maxim", "lorenzo", "caesar", "rigel");
-        }
-        return List.of();
+    public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
+        new AchievementViewer(p);
     }
 }

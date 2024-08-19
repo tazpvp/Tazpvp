@@ -7,16 +7,14 @@ import net.tazpvp.tazpvp.commands.game.report.utils.ReportDebounce;
 import net.tazpvp.tazpvp.commands.game.report.utils.ReportLogger;
 import net.tazpvp.tazpvp.data.entity.*;
 import net.tazpvp.tazpvp.data.implementations.TalentServiceImpl;
-import net.tazpvp.tazpvp.data.implementations.UserAchievementServiceImpl;
 import net.tazpvp.tazpvp.data.implementations.UserRankServiceImpl;
 import net.tazpvp.tazpvp.data.services.GuildService;
 import net.tazpvp.tazpvp.data.services.TalentService;
-import net.tazpvp.tazpvp.data.services.UserAchievementService;
 import net.tazpvp.tazpvp.data.services.UserRankService;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.objects.DuelObject;
 import net.tazpvp.tazpvp.objects.PartyObject;
-import net.tazpvp.tazpvp.game.npc.characters.NPC;
+import net.tazpvp.tazpvp.game.npcs.NPC;
 import net.tazpvp.tazpvp.utils.PlayerNameTag;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -25,7 +23,6 @@ import org.bukkit.permissions.PermissionAttachment;
 
 import javax.annotation.Nullable;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Wrapper for the player object which contains valuable methods exclusive to tazpvp
