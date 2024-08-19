@@ -8,4 +8,6 @@ public interface KitMakerService {
     String serializeInventory(ItemStack[] inventory);
     ItemStack[] deserializeInventory(String data);
     List<ItemStack> getValidItems();
+
+    ItemStack[] sanitize(ItemStack[] inventory);
 }

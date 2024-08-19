@@ -34,7 +34,6 @@ package net.tazpvp.tazpvp.commands.admin.npc;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.game.npcs.achievements.Achievements;
-import net.tazpvp.tazpvp.game.npcs.enchant.Enchant;
 import net.tazpvp.tazpvp.game.npcs.guilds.Guilds;
 import net.tazpvp.tazpvp.game.npcs.shop.Shop;
 import org.bukkit.command.CommandSender;
@@ -65,7 +64,6 @@ public class NpcCommand extends NRCommand {
             } else if (args[0].equalsIgnoreCase("lorenzo")) {
                 new Achievements();
             } else if (args[0].equalsIgnoreCase("caesar")) {
-                new Enchant();
             } else if (args[0].equalsIgnoreCase("rigel")) {
                 new Guilds(tazpvp.getGuildService());
             }

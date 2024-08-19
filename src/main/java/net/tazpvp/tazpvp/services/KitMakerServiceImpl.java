@@ -14,6 +14,7 @@ import world.ntdi.nrcore.utils.item.builders.PotionBuilder;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 public class KitMakerServiceImpl implements KitMakerService {
@@ -82,5 +83,15 @@ public class KitMakerServiceImpl implements KitMakerService {
     @Override
     public List<ItemStack> getValidItems() {
         return validItems;
+    }
+
+    @Override
+    public ItemStack[] sanitize(ItemStack[] inventory) {
+        Arrays.stream(inventory).forEach(item -> {
+            if (!validItems.contains(item)) {
+                item.setType(Material.AIR);
+            }
+        });
+        return inventory;
     }
 }
