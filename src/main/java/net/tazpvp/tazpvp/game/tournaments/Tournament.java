@@ -13,17 +13,24 @@ public class Tournament {
     private final UUID host;
     private final List<PartyObject> participants = new ArrayList<>();
     private final List<Player> spectators = new ArrayList<>();
-    private final List<Match> bracket = new ArrayList<>();
-    private final int MATCH_NUMBER;
+    private Bracket currentBracket;
+    private int BRACKET_NUM;
 
     public Tournament(UUID host) {
         this.host = host;
-        this.MATCH_NUMBER = 0;
+        this.BRACKET_NUM = 0;
         initialize();
     }
 
     public void initialize() {
+        generateBracket();
 
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                intermission();
+            }
+        }.runTaskLater(Tazpvp.getInstance(), 20*60);
     }
 
     public void intermission() {
@@ -38,17 +45,36 @@ public class Tournament {
     }
 
     public void endCurrentMatch() {
-        bracket.get(MATCH_NUMBER).end("Match ended");
+        currentBracket.currentMatch.end("Match ended");
     }
 
     public void nextMatch() {
-        bracket.get(MATCH_NUMBER).begin();
+        BRACKET_NUM++;
+        currentBracket.currentMatch.begin();
     }
 
-    public void createBracket() {
+    public void generateBracket() {
         int teamCount = participants.size();
+        List<PartyObject> bracketParticipants = participants;
+        List<Match> matches = new ArrayList<>();
         if (teamCount % 2 != 0) {
-        }
-    }
+            List<PartyObject> contestants = List.of(
+                    bracketParticipants.getFirst(),
+                    bracketParticipants.get(1)
+            );
 
+            bracketParticipants.remove(contestants.getFirst());
+            matches.add(new Match(contestants));
+        }
+        for (int i = 0 ; i < bracketParticipants.size() ; i++) {
+            List<PartyObject> contestants = List.of(
+                bracketParticipants.get(i),
+                bracketParticipants.get(i+1)
+            );
+            bracketParticipants.remove(contestants.getFirst());
+            bracketParticipants.remove(contestants.get(1));
+            matches.add(new Match(contestants));
+        }
+        brackets = new Bracket(matches);
+    }
 }
