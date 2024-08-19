@@ -41,6 +41,8 @@ import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.game.booster.ActiveBoosterManager;
 import net.tazpvp.tazpvp.game.booster.BoosterBonus;
 import net.tazpvp.tazpvp.game.booster.BoosterTypes;
+import net.tazpvp.tazpvp.services.KitMakerService;
+import net.tazpvp.tazpvp.services.KitMakerServiceImpl;
 import net.tazpvp.tazpvp.services.PlayerNameTagService;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -60,6 +62,7 @@ import java.util.UUID;
 public class PlayerHelper {
 
     private static final PlayerNameTagService playerNameTagService = Tazpvp.getInstance().getPlayerNameTagService();
+    private static final KitMakerService kitMakerService = new KitMakerServiceImpl();
     private static Double getMaxHealth(Player p) {
         AttributeInstance max = p.getAttribute(Attribute.GENERIC_MAX_HEALTH);
         if (max == null) {
@@ -120,16 +123,7 @@ public class PlayerHelper {
 
         armorPlayer(p);
 
-        for (ItemStack kitItem : getKitItems(p)) {
-            if (kitItem.getType() == Material.ARROW) {
-                inv.setItem(8, kitItem);
-            }
-            inv.addItem(kitItem);
-        }
-
-        if (StatEnum.PLAYTIME.getLong(p.getUniqueId()) <= thirtyMinutesInMs) {
-            p.getInventory().addItem(ItemEnum.GOLDEN_APPLE.getItem(2));
-        }
+        inv.setContents(kitMakerService.getValidItems().toArray(new ItemStack[0]));
     }
 
     public static void armorPlayer(Player p) {

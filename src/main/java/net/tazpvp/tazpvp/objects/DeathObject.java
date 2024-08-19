@@ -102,11 +102,11 @@ public class DeathObject {
                 ItemStack[] contents = kitMakerService.deserializeInventory(kitSerial);
 
                 pVictim.getInventory().setContents(contents);
-                PlayerHelper.armorPlayer(pVictim);
             }
+            PlayerHelper.armorPlayer(pVictim);
 
-                PlayerHelper.resetHealth(pVictim);
-                PlayerHelper.feedPlr(pVictim);
+            PlayerHelper.resetHealth(pVictim);
+            PlayerHelper.feedPlr(pVictim);
             }
 
         updateStats();
