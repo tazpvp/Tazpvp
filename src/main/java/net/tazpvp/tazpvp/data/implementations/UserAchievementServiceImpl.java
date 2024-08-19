@@ -79,6 +79,13 @@ public class UserAchievementServiceImpl implements UserAchievementService {
         if (userAchievementEntity == null) {
             final UserAchievementEntity blankUserAchievementEntity = new UserAchievementEntity();
             blankUserAchievementEntity.setUuid(uuid);
+
+            try {
+                getUserDao().createOrUpdate(blankUserAchievementEntity);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
             AchievementService achievementService = new AchievementServiceImpl();
             blankUserAchievementEntity.setAdept(achievementService.createDefault(blankUserAchievementEntity));
             blankUserAchievementEntity.setAgile(achievementService.createDefault(blankUserAchievementEntity));
