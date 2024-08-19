@@ -36,6 +36,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.LooseData;
 import net.tazpvp.tazpvp.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
+import net.tazpvp.tazpvp.data.services.AchievementService;
 import net.tazpvp.tazpvp.data.services.UserAchievementService;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
 import net.tazpvp.tazpvp.utils.observer.Observable;
@@ -43,16 +44,20 @@ import org.bukkit.entity.Player;
 
 public class Charm extends Observable {
     private final UserAchievementService userAchievementService = Tazpvp.getInstance().getUserAchievementService();
+    private final AchievementService achievementService = Tazpvp.getInstance().getAchievementService();
     @Override
     public void chat(Player p, String chat) {
-        final UserAchievementEntity userAchievementEntity =  userAchievementService.getOrDefault(p.getUniqueId());
+        final UserAchievementEntity userAchievementEntity = userAchievementService.getOrDefault(p.getUniqueId());
         final AchievementEntity achievementEntity = userAchievementEntity.getCharm();
 
         if (!achievementEntity.isCompleted()) {
             if (LooseData.getChatCount(p.getUniqueId()) >= 10) {
                 achievementEntity.setCompleted(true);
+                achievementService.saveAchievementEntity(achievementEntity);
+
                 userAchievementEntity.setCharm(achievementEntity);
                 userAchievementService.saveUserAchievementEntity(userAchievementEntity);
+
                 ChatHelper.achievement(p, "Charm");
             }
         }
