@@ -57,6 +57,8 @@ import net.tazpvp.tazpvp.commands.game.leaderboard.LeaderboardCommand;
 import net.tazpvp.tazpvp.commands.game.party.PartyCommand;
 import net.tazpvp.tazpvp.commands.game.pay.PayCommand;
 import net.tazpvp.tazpvp.commands.game.report.ReportCommand;
+import net.tazpvp.tazpvp.commands.game.votemute.VoteMuteCommand;
+import net.tazpvp.tazpvp.commands.game.votemute.VoteMuteYesCommand;
 import net.tazpvp.tazpvp.commands.moderation.ReportViewCommand;
 import net.tazpvp.tazpvp.commands.moderation.RestoreCommand;
 import net.tazpvp.tazpvp.commands.moderation.StaffChatCommand;
@@ -305,7 +307,8 @@ public final class Tazpvp extends JavaPlugin {
                 new HologramCommand(),
                 new ChestAnimationCommand(),
                 new PartyCommand(),
-                new net.tazpvp.tazpvp.commands.game.kit.KitCommand()
+                new KitCommand(),
+                new VoteMuteCommand()
         );
     }
 
