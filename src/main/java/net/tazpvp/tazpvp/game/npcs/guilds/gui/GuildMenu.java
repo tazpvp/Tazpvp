@@ -55,7 +55,7 @@ public class GuildMenu extends GUI {
     private static final int ROWS = 3;
 
     public GuildMenu(Player p, GuildService guildService) {
-        super("Guild Browser", ROWS);
+        super("Guild Menu", ROWS);
         this.guildService = guildService;
         addItems(p);
         open(p);

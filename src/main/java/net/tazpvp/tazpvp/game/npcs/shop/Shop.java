@@ -48,7 +48,7 @@ public class Shop extends NPC {
 
 
     public Shop() {
-        super(ChatHelper.gradient("#fc6400", "Maxim", true),
+        super(ChatHelper.gradient("#fc6400", "Shop", true),
                 new Location(Bukkit.getWorld("arena"), -11.5, 99, 20.5, -135, 0),
                 Villager.Profession.FARMER,
                 Villager.Type.SAVANNA,

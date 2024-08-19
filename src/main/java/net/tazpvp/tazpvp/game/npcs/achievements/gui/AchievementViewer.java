@@ -55,7 +55,6 @@ public class AchievementViewer extends GUI {
     private final UserAchievementService userAchievementService = Tazpvp.getInstance().getUserAchievementService();
     private int slotNum;
     private int count;
-    private final String prefix = CC.DARK_AQUA + "[Lorenzo] " + CC.AQUA;
     private final Player p;
     private final UserAchievementEntity userAchievementEntity;
 
@@ -123,7 +122,7 @@ public class AchievementViewer extends GUI {
                                     ).build(), (e) -> {
                 PlayerWrapper pw = PlayerWrapper.getPlayer(p);
 
-                p.sendMessage(prefix + "You collected your reward!");
+                p.sendMessage("You collected your reward!");
                 p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
 
                 achievementEntity.setCollected(true);

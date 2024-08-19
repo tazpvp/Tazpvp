@@ -50,7 +50,7 @@ public class Guilds extends NPC {
     private final GuildService guildService;
 
     public Guilds(GuildService guildService) {
-        super(ChatHelper.gradient("#068fff", "Lorenzo", true),
+        super(ChatHelper.gradient("#fcfc00", "Guilds", true),
                 new Location(Bukkit.getWorld("arena"), 5, 99, 10, 135, 0),
                 Villager.Profession.FLETCHER,
                 Villager.Type.TAIGA,
