@@ -250,7 +250,6 @@ public final class Tazpvp extends JavaPlugin {
         new Legend();
         new Merchant();
         new Superior();
-        new Zorgin();
         new Harvester();
         new Artisan();
         new Speedrunner();

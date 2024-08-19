@@ -36,6 +36,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
+import net.tazpvp.tazpvp.data.services.AchievementService;
 import net.tazpvp.tazpvp.data.services.UserAchievementService;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
 import net.tazpvp.tazpvp.utils.observer.Observable;
@@ -44,6 +45,7 @@ import org.bukkit.entity.Player;
 
 public class Adept extends Observable {
     private final UserAchievementService userAchievementService = Tazpvp.getInstance().getUserAchievementService();
+    private final AchievementService achievementService = Tazpvp.getInstance().getAchievementService();
     @Override
     public void talent(Player p) {
         final PlayerWrapper pw = PlayerWrapper.getPlayer(p);
@@ -68,8 +70,7 @@ public class Adept extends Observable {
             if (!talentEntity.isRevenge()) return;
 
             achievementEntity.setCompleted(true);
-            userAchievementEntity.setAdept(achievementEntity);
-            userAchievementService.saveUserAchievementEntity(userAchievementEntity);
+            achievementService.saveAchievementEntity(achievementEntity);
 
             ChatHelper.achievement(p, "Adept");
         }

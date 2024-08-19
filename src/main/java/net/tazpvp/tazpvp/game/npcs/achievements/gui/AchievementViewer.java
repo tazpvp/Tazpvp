@@ -81,12 +81,8 @@ public class AchievementViewer extends GUI {
 
         setButton("Merchant", "Trade with Caesar at the mines.", UserAchievementEntity::getMerchant, UserAchievementEntity::setMerchant, StaticItems.RARE_KEY.getName(), "rare");
         setButton("Superior", "Win an event.", UserAchievementEntity::getSuperior, UserAchievementEntity::setSuperior, StaticItems.MYTHIC_KEY.getName(), "mythic");
-        setButton("Zorgin", "Kill Zorg in the mines.", UserAchievementEntity::getZorgin, UserAchievementEntity::setZorgin, StaticItems.RARE_KEY.getName(), "rare");
-        setButton("Grinder", "Mine 100 ores.", UserAchievementEntity::getGrinder, UserAchievementEntity::setGrinder, StaticItems.RARE_KEY.getName(), "rare");
         setButton("Artisan", "Place every type of wood plank.", UserAchievementEntity::getArtisan, UserAchievementEntity::setArtisan, StaticItems.RARE_KEY.getName(), "rare");
-        setButton("Harvester", "Collect a player coffin.", UserAchievementEntity::getHarvester, UserAchievementEntity::setHarvester, StaticItems.RARE_KEY.getName(), "rare");
         setButton("Speedrunner", "Get a kill within 30 seconds of launch.", UserAchievementEntity::getSpeedrunner, UserAchievementEntity::setSpeedrunner, StaticItems.RARE_KEY.getName(), "rare");
-
         setButton("Error", "Die 500 times.", UserAchievementEntity::getError, UserAchievementEntity::setError, StaticItems.MYTHIC_KEY.getName(), "mythic");
         setButton("Skilled", "Get level 100 without talents.", UserAchievementEntity::getSkilled, UserAchievementEntity::setSkilled, StaticItems.MYTHIC_KEY.getName(), "mythic");
         update();
