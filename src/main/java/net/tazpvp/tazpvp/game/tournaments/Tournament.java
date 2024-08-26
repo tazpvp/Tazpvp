@@ -1,6 +1,9 @@
 package net.tazpvp.tazpvp.game.tournaments;
 
+import lombok.Getter;
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.helpers.CombatTagHelper;
+import net.tazpvp.tazpvp.objects.DeathObject;
 import net.tazpvp.tazpvp.objects.PartyObject;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -9,10 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Getter
 public class Tournament {
     private final UUID host;
-    private final List<PartyObject> participants = new ArrayList<>();
-    private final List<Player> spectators = new ArrayList<>();
+    public final List<PartyObject> participants = new ArrayList<>();
+    public final List<Player> spectators = new ArrayList<>();
     private Bracket currentBracket;
 
     public Tournament(UUID host) {
@@ -22,6 +26,7 @@ public class Tournament {
 
     public void initialize() {
         generateBracket();
+        preparePlayers();
 
         new BukkitRunnable() {
             @Override
@@ -73,5 +78,18 @@ public class Tournament {
             matches.add(new Match(contestants));
         }
         currentBracket = new Bracket(matches);
+    }
+
+    public void preparePlayers() {
+        for (PartyObject party : participants) {
+            for (Player op : party.getOnlineMembers()) {
+                final UUID lastAttacker = CombatTagHelper.getLastAttacker(op.getUniqueId());
+                if (lastAttacker != null) {
+                    new DeathObject(op.getUniqueId(), lastAttacker);
+                } else {
+                    new DeathObject(op.getUniqueId(), null);
+                }
+            }
+        }
     }
 }

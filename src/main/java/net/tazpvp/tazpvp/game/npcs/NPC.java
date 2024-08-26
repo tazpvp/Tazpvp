@@ -62,7 +62,6 @@ public abstract class NPC implements Listener {
     private final Villager V;
     private final UUID ID;
 
-
     public NPC(@Nonnull final String NAME, @Nonnull final Location SPAWN, @Nonnull final Villager.Profession PROFESSION, @Nonnull final Villager.Type TYPE, @Nonnull final Sound SOUND) {
         this.NAME = NAME;
         this.SPAWN = SPAWN;
@@ -86,6 +85,10 @@ public abstract class NPC implements Listener {
 
     public void remove() {
         V.remove();
+    }
+
+    public void refreshName(String name) {
+        V.setCustomName(CC.trans(name));
     }
 
     public abstract void interact(@Nonnull final PlayerInteractAtEntityEvent e, @Nonnull final Player p);

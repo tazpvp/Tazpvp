@@ -11,6 +11,4 @@ public class TournamentCommand extends NRCommand {
 
         addSubcommand(new TournamentJoin());
     }
-
-
 }
