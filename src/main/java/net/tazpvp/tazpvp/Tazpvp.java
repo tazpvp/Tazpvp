@@ -307,7 +307,7 @@ public final class Tazpvp extends JavaPlugin {
                 new HologramCommand(),
                 new ChestAnimationCommand(),
                 new PartyCommand(),
-                new KitCommand(),
+                new net.tazpvp.tazpvp.commands.game.kit.KitCommand(),
                 new VoteMuteCommand()
         );
     }
