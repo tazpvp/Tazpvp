@@ -39,6 +39,7 @@ import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.enums.ScoreboardEnum;
 import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.enums.Theme;
+import net.tazpvp.tazpvp.game.tournaments.TournamentHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
@@ -69,6 +70,9 @@ public class ScoreboardHelper {
         objective = board.registerNewObjective("statboard", "dummy",  Theme.SERVER.gradient("TAZPVP.NET", true));
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
+        if (TournamentHelper.isInTournament(p)) {
+            objective.getScore("Tournament").setScore(9);
+        }
         objective.getScore("                         ").setScore(8);
         createLine(ScoreboardEnum.RANK, ChatHelper.getRankingPrefix(p) + "").setScore(7);
         createLine(ScoreboardEnum.LEVEL, StatEnum.LEVEL.getInt(id) + "").setScore(6);

@@ -4,6 +4,7 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.data.entity.TalentEntity;
 import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
+import net.tazpvp.tazpvp.data.services.AchievementService;
 import net.tazpvp.tazpvp.data.services.UserAchievementService;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
 import net.tazpvp.tazpvp.utils.observer.Observable;
@@ -12,6 +13,7 @@ import org.bukkit.entity.Player;
 
 public class Skilled extends Observable {
     private final UserAchievementService userAchievementService = Tazpvp.getInstance().getUserAchievementService();
+    private final AchievementService achievementService = Tazpvp.getInstance().getAchievementService();
     @Override
     public void death(Player victim, Player killer) {
         final PlayerWrapper pw = PlayerWrapper.getPlayer(killer);
@@ -36,8 +38,7 @@ public class Skilled extends Observable {
             if (talentEntity.isRevenge()) return;
 
             achievementEntity.setCompleted(true);
-            userAchievementEntity.setSkilled(achievementEntity);
-            userAchievementService.saveUserAchievementEntity(userAchievementEntity);
+            achievementService.saveAchievementEntity(achievementEntity);
             ChatHelper.achievement(killer, "Skilled");
         }
     }

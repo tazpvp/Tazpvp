@@ -38,7 +38,6 @@ public class TournamentJoin extends NRCommand {
                 tournament.addParty(pw.getParty());
             }
         }
-
         return super.execute(sender, args);
     }
 }

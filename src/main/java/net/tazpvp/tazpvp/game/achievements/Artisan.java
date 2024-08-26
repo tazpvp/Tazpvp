@@ -3,6 +3,7 @@ package net.tazpvp.tazpvp.game.achievements;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
+import net.tazpvp.tazpvp.data.services.AchievementService;
 import net.tazpvp.tazpvp.data.services.UserAchievementService;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
 import net.tazpvp.tazpvp.utils.observer.Observable;
@@ -15,6 +16,7 @@ import java.util.List;
 
 public class Artisan extends Observable {
     private final UserAchievementService userAchievementService = Tazpvp.getInstance().getUserAchievementService();
+    private final AchievementService achievementService = Tazpvp.getInstance().getAchievementService();
     private final List<Material> woods = List.of(
             Material.OAK_PLANKS,
             Material.SPRUCE_PLANKS,
@@ -39,8 +41,7 @@ public class Artisan extends Observable {
             }
 
             achievementEntity.setCompleted(true);
-            userAchievementEntity.setArtisan(achievementEntity);
-            userAchievementService.saveUserAchievementEntity(userAchievementEntity);
+            achievementService.saveAchievementEntity(achievementEntity);
             ChatHelper.achievement(p, "Artisan");
         }
     }
