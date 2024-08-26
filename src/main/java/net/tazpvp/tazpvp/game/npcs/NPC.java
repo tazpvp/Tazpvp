@@ -87,9 +87,7 @@ public abstract class NPC implements Listener {
         V.remove();
     }
 
-    public void refreshName(String name) {
-        V.setCustomName(CC.trans(name));
-    }
+    public abstract void refreshName(String name);
 
     public abstract void interact(@Nonnull final PlayerInteractAtEntityEvent e, @Nonnull final Player p);
 

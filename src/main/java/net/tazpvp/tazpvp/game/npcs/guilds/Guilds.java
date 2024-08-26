@@ -59,6 +59,11 @@ public class Guilds extends NPC {
     }
 
     @Override
+    public void refreshName(String name) {
+
+    }
+
+    @Override
     public void interact(@Nonnull PlayerInteractAtEntityEvent e, @Nonnull Player p) {
         new GuildMenu(p, guildService);
     }

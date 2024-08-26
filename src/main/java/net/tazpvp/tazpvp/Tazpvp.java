@@ -50,15 +50,14 @@ import net.tazpvp.tazpvp.commands.admin.stats.StatCommand;
 import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
 import net.tazpvp.tazpvp.commands.admin.teleportWorld.TeleportWorldCommand;
 import net.tazpvp.tazpvp.commands.game.duel.DuelCommand;
-import net.tazpvp.tazpvp.commands.game.tournament.TournamentCommand;
 import net.tazpvp.tazpvp.commands.game.guild.GuildCommand;
 import net.tazpvp.tazpvp.commands.game.leaderboard.BaltopCommand;
 import net.tazpvp.tazpvp.commands.game.leaderboard.LeaderboardCommand;
 import net.tazpvp.tazpvp.commands.game.party.PartyCommand;
 import net.tazpvp.tazpvp.commands.game.pay.PayCommand;
 import net.tazpvp.tazpvp.commands.game.report.ReportCommand;
+import net.tazpvp.tazpvp.commands.game.tournament.TournamentCommand;
 import net.tazpvp.tazpvp.commands.game.votemute.VoteMuteCommand;
-import net.tazpvp.tazpvp.commands.game.votemute.VoteMuteYesCommand;
 import net.tazpvp.tazpvp.commands.moderation.ReportViewCommand;
 import net.tazpvp.tazpvp.commands.moderation.RestoreCommand;
 import net.tazpvp.tazpvp.commands.moderation.StaffChatCommand;
@@ -72,8 +71,8 @@ import net.tazpvp.tazpvp.data.database.PostgresqlDatabase;
 import net.tazpvp.tazpvp.data.entity.*;
 import net.tazpvp.tazpvp.data.implementations.*;
 import net.tazpvp.tazpvp.data.services.*;
-import net.tazpvp.tazpvp.game.achievements.*;
 import net.tazpvp.tazpvp.game.achievements.Error;
+import net.tazpvp.tazpvp.game.achievements.*;
 import net.tazpvp.tazpvp.game.bosses.BossManager;
 import net.tazpvp.tazpvp.game.bosses.zorg.Zorg;
 import net.tazpvp.tazpvp.game.crates.CrateManager;
@@ -82,6 +81,7 @@ import net.tazpvp.tazpvp.game.npcs.NPC;
 import net.tazpvp.tazpvp.game.npcs.achievements.Achievements;
 import net.tazpvp.tazpvp.game.npcs.guilds.Guilds;
 import net.tazpvp.tazpvp.game.npcs.shop.Shop;
+import net.tazpvp.tazpvp.game.npcs.tournaments.Tournaments;
 import net.tazpvp.tazpvp.game.talents.*;
 import net.tazpvp.tazpvp.helpers.AfkHelper;
 import net.tazpvp.tazpvp.helpers.BlockHelper;
@@ -344,6 +344,7 @@ public final class Tazpvp extends JavaPlugin {
         npcs.add(new Shop());
         npcs.add(new Achievements());
         npcs.add(new Guilds(guildService));
+        npcs.add(new Tournaments());
 
         new BukkitRunnable() {
             @Override

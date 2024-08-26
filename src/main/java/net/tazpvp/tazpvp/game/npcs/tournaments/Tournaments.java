@@ -13,8 +13,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class Tournaments extends NPC {
 
+    private static final String NpcName = ChatHelper.gradient("#fc6400", "TOURNAMENT", true);
+
     public Tournaments() {
-        super(ChatHelper.gradient("#fc6400", "TOURNAMENT", true),
+        super(NpcName,
                 new Location(Bukkit.getWorld("arena"), -5, 95, 5, -135, 0),
                 Villager.Profession.FARMER,
                 Villager.Type.SAVANNA,
@@ -24,5 +26,12 @@ public class Tournaments extends NPC {
     @Override
     public void interact(@NotNull PlayerInteractAtEntityEvent e, @NotNull Player p) {
         new Browser();
+    }
+
+    @Override
+    public void refreshName(String name) {
+        super.getV().setCustomName(
+                NpcName + "\n" + name
+        );
     }
 }
