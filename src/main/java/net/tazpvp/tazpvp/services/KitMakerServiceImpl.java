@@ -29,6 +29,16 @@ public class KitMakerServiceImpl implements KitMakerService {
         tippedArrowPotionMeta.setBasePotionType(PotionType.SLOW_FALLING);
         tippedArrow.setItemMeta(tippedArrowPotionMeta);
 
+        ItemStack swiftnessPotion = ItemBuilder.of(Material.SPLASH_POTION).amount(1).build();
+        PotionMeta swiftnessPotionMeta = (PotionMeta) swiftnessPotion.getItemMeta();
+        swiftnessPotionMeta.setBasePotionType(PotionType.LONG_SWIFTNESS);
+        swiftnessPotion.setItemMeta(swiftnessPotionMeta);
+
+        ItemStack regenerationPotion = ItemBuilder.of(Material.SPLASH_POTION).amount(1).build();
+        PotionMeta regenerationPotionMeta = (PotionMeta) regenerationPotion.getItemMeta();
+        regenerationPotionMeta.setBasePotionType(PotionType.LONG_REGENERATION);
+        regenerationPotion.setItemMeta(regenerationPotionMeta);
+
         this.validItems = List.of(
                 ItemBuilder.of(Material.GLOWSTONE).amount(64).build(),
                 ItemBuilder.of(Material.ENDER_PEARL).amount(16).build(),
@@ -38,8 +48,8 @@ public class KitMakerServiceImpl implements KitMakerService {
                 ItemBuilder.of(Material.OBSIDIAN).amount(64).build(),
                 ItemBuilder.of(Material.END_CRYSTAL).amount(64).build(),
                 ItemBuilder.of(Material.RESPAWN_ANCHOR).amount(64).build(),
-                PotionBuilder.of(PotionBuilder.PotionType.SPLASH).setPotionData(new PotionData(PotionType.LONG_SWIFTNESS)).amount(1).build(),
-                PotionBuilder.of(PotionBuilder.PotionType.SPLASH).setPotionData(new PotionData(PotionType.LONG_REGENERATION)).amount(1).build(),
+                swiftnessPotion,
+                regenerationPotion,
                 ItemBuilder.of(Material.CROSSBOW)
                         .enchantment(Enchantment.UNBREAKING, 3)
                         .enchantment(Enchantment.QUICK_CHARGE, 3)
