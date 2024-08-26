@@ -2,7 +2,9 @@ package net.tazpvp.tazpvp.services;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 import org.bukkit.util.io.BukkitObjectInputStream;
@@ -22,6 +24,11 @@ public class KitMakerServiceImpl implements KitMakerService {
 
     @SuppressWarnings("all")
     public KitMakerServiceImpl() {
+        ItemStack tippedArrow = ItemBuilder.of(Material.TIPPED_ARROW).amount(64).build();
+        PotionMeta tippedArrowPotionMeta = (PotionMeta) tippedArrow.getItemMeta();
+        tippedArrowPotionMeta.setBasePotionType(PotionType.SLOW_FALLING);
+        tippedArrow.setItemMeta(tippedArrowPotionMeta);
+
         this.validItems = List.of(
                 ItemBuilder.of(Material.GLOWSTONE).amount(64).build(),
                 ItemBuilder.of(Material.ENDER_PEARL).amount(16).build(),
@@ -31,11 +38,27 @@ public class KitMakerServiceImpl implements KitMakerService {
                 ItemBuilder.of(Material.OBSIDIAN).amount(64).build(),
                 ItemBuilder.of(Material.END_CRYSTAL).amount(64).build(),
                 ItemBuilder.of(Material.RESPAWN_ANCHOR).amount(64).build(),
-                PotionBuilder.of(PotionBuilder.PotionType.SPLASH).setPotionData(new PotionData(PotionType.SWIFTNESS)).amount(1).build(),
-                PotionBuilder.of(PotionBuilder.PotionType.SPLASH).setPotionData(new PotionData(PotionType.REGENERATION)).amount(1).build(),
-                ItemBuilder.of(Material.TIPPED_ARROW).amount(64).build(),
-                ItemBuilder.of(Material.CROSSBOW).amount(1).build(),
-                ItemBuilder.of(Material.NETHERITE_SWORD).amount(1).build()
+                PotionBuilder.of(PotionBuilder.PotionType.SPLASH).setPotionData(new PotionData(PotionType.LONG_SWIFTNESS)).amount(1).build(),
+                PotionBuilder.of(PotionBuilder.PotionType.SPLASH).setPotionData(new PotionData(PotionType.LONG_REGENERATION)).amount(1).build(),
+                ItemBuilder.of(Material.CROSSBOW)
+                        .enchantment(Enchantment.UNBREAKING, 3)
+                        .enchantment(Enchantment.QUICK_CHARGE, 3)
+                        .enchantment(Enchantment.MULTISHOT, 1)
+                        .enchantment(Enchantment.MENDING, 1)
+                        .amount(1).build(),
+                tippedArrow,
+                ItemBuilder.of(Material.NETHERITE_SWORD)
+                        .enchantment(Enchantment.SHARPNESS, 5)
+                        .enchantment(Enchantment.UNBREAKING, 3)
+                        .enchantment(Enchantment.KNOCKBACK, 1)
+                        .enchantment(Enchantment.SWEEPING_EDGE, 3)
+                        .enchantment(Enchantment.MENDING, 1)
+                        .amount(1).build(),
+                ItemBuilder.of(Material.NETHERITE_PICKAXE)
+                        .enchantment(Enchantment.EFFICIENCY, 5)
+                        .enchantment(Enchantment.UNBREAKING, 3)
+                        .enchantment(Enchantment.MENDING, 1)
+                        .amount(1).build()
         );
     }
 
