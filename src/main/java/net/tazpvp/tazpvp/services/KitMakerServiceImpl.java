@@ -5,7 +5,6 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
@@ -26,7 +25,7 @@ public class KitMakerServiceImpl implements KitMakerService {
     public KitMakerServiceImpl() {
         ItemStack tippedArrow = ItemBuilder.of(Material.TIPPED_ARROW).amount(64).build();
         PotionMeta tippedArrowPotionMeta = (PotionMeta) tippedArrow.getItemMeta();
-        tippedArrowPotionMeta.setBasePotionType(PotionType.SLOW_FALLING);
+        tippedArrowPotionMeta.setBasePotionType(PotionType.LONG_SLOW_FALLING);
         tippedArrow.setItemMeta(tippedArrowPotionMeta);
 
         ItemStack swiftnessPotion = ItemBuilder.of(Material.SPLASH_POTION).amount(1).build();
