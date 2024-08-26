@@ -3,6 +3,7 @@ package net.tazpvp.tazpvp.services;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionType;
@@ -120,11 +121,8 @@ public class KitMakerServiceImpl implements KitMakerService {
 
     @Override
     public ItemStack[] sanitize(ItemStack[] inventory) {
-        Arrays.stream(inventory).forEach(item -> {
-            if (!validItems.contains(item)) {
-                item.setType(Material.AIR);
-            }
-        });
-        return inventory;
+        return (ItemStack[]) Arrays.asList(inventory).stream()
+                .filter(item -> item == null || !validItems.contains(item))
+                .toArray();
     }
 }
