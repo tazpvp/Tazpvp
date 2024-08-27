@@ -141,6 +141,9 @@ public enum ItemEnum {
         return ItemBuilder.of(material)
                 .name(ChatHelper.gradient("#04f000", name,true))
                 .enchantment(Enchantment.MENDING, 1)
+                .enchantment(Enchantment.PROTECTION, 4)
+                .enchantment(Enchantment.UNBREAKING, 3)
+                .enchantment(Enchantment.THORNS, 3)
                 .build();
     }
 

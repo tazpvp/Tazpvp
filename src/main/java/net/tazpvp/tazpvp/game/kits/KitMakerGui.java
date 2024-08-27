@@ -3,6 +3,7 @@ package net.tazpvp.tazpvp.game.kits;
 import net.tazpvp.tazpvp.data.entity.KitEntity;
 import net.tazpvp.tazpvp.data.services.KitService;
 import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.helpers.PlayerHelper;
 import net.tazpvp.tazpvp.services.KitMakerService;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -53,6 +54,7 @@ public class KitMakerGui {
                 .lore(CC.GRAY + "Shift+Click to clear inventory.").build(), ((inventoryClickEvent, button) -> {
                     if (inventoryClickEvent.isShiftClick()) {
                         inventoryClickEvent.getWhoClicked().getInventory().clear();
+                        PlayerHelper.armorPlayer((Player) inventoryClickEvent.getWhoClicked());
                     } else {
                         inventoryClickEvent.getWhoClicked().setItemOnCursor(new ItemStack(Material.AIR));
                     }
