@@ -121,8 +121,15 @@ public class KitMakerServiceImpl implements KitMakerService {
 
     @Override
     public ItemStack[] sanitize(ItemStack[] inventory) {
-        return (ItemStack[]) Arrays.asList(inventory).stream()
-                .filter(item -> item == null || !validItems.contains(item))
-                .toArray();
+        ItemStack[] sanitized = Arrays.copyOf(inventory, inventory.length);
+
+        for (int i = 0; i < sanitized.length; i++) {
+            if (sanitized[i] == null) continue;
+            if (!validItems.contains(sanitized[i])) {
+                sanitized[i] = new ItemStack(Material.AIR);
+            }
+        }
+
+        return sanitized;
     }
 }

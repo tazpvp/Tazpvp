@@ -70,9 +70,9 @@ public class ScoreboardHelper {
         objective = board.registerNewObjective("statboard", "dummy",  Theme.SERVER.gradient("TAZPVP.NET", true));
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-        if (TournamentHelper.isInTournament(p)) {
-            objective.getScore("Tournament").setScore(9);
-        }
+//        if (TournamentHelper.isInTournament(p)) {
+//            objective.getScore("Tournament").setScore(9);
+//        }
         objective.getScore("                         ").setScore(8);
         createLine(ScoreboardEnum.RANK, ChatHelper.getRankingPrefix(p) + "").setScore(7);
         createLine(ScoreboardEnum.LEVEL, StatEnum.LEVEL.getInt(id) + "").setScore(6);

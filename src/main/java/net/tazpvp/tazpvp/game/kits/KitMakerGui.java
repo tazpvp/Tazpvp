@@ -24,7 +24,7 @@ public class KitMakerGui {
         this.kitMakerService = kitMakerService;
         this.player = player;
         this.kitService = kitService;
-        this.size = (int) Math.ceil(kitMakerService.getValidItems().size() + 1 / 9.0);
+        this.size = (int) Math.ceil((kitMakerService.getValidItems().size() + 1) / 9.0);
         this.gui = new GUI("Kit Maker", size);
         addItems();
         gui.open(player);
@@ -40,7 +40,7 @@ public class KitMakerGui {
     }
 
     private void addItems() {
-        gui.fill(0, size, ItemBuilder.of(Material.GRAY_STAINED_GLASS_PANE).name(" ").build());
+        gui.fill(0, size * 9, ItemBuilder.of(Material.GRAY_STAINED_GLASS_PANE).name(" ").build());
 
         List<ItemStack> items = kitMakerService.getValidItems();
 
@@ -56,7 +56,8 @@ public class KitMakerGui {
                     } else {
                         inventoryClickEvent.getWhoClicked().setItemOnCursor(new ItemStack(Material.AIR));
                     }
-        })), size - 1);
+        })), size * 9 - 1);
+        gui.update();
     }
 
     private Button createButton(ItemStack itemStack) {
