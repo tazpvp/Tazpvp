@@ -38,7 +38,6 @@ import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.helpers.CombatTagHelper;
 import net.tazpvp.tazpvp.helpers.PlaytimeHelper;
 import net.tazpvp.tazpvp.objects.DeathObject;
-import net.tazpvp.tazpvp.game.tournaments.old.TournamentObject;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

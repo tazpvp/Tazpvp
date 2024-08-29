@@ -2,6 +2,7 @@ package net.tazpvp.tazpvp.game.tournaments;
 
 import lombok.Getter;
 import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.helpers.CombatTagHelper;
 import net.tazpvp.tazpvp.helpers.PlayerHelper;
 import net.tazpvp.tazpvp.objects.DeathObject;
@@ -10,6 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import world.ntdi.nrcore.NRCore;
 import world.ntdi.nrcore.utils.world.WorldUtil;
 
 import java.util.ArrayList;
@@ -23,11 +25,15 @@ public class Tournament {
     public final List<Player> spectators;
     private Bracket currentBracket;
     public final Location lobby;
+    public String state;
+    public final int teamSizeCap;
+    public static final String prefix = CC.DARK_PURPLE + "Tournament ❯ " + CC.LIGHT_PURPLE;
 
     public static final World world = new WorldUtil()
             .cloneWorld("tournamentMap", "tournament_" + UUID.randomUUID());
 
-    public Tournament(UUID host) {
+    public Tournament(UUID host, int teamSizeCap) {
+        this.teamSizeCap = teamSizeCap;
         this.participants = new ArrayList<>();
         this.spectators = new ArrayList<>();
         this.host = host;
@@ -87,6 +93,20 @@ public class Tournament {
             matches.add(new Match(contestants));
         }
         currentBracket = new Bracket(matches);
+    }
+
+    public void addParty(PartyObject partyObject) {
+        if (partyObject.getMembers().size() > teamSizeCap) {
+            partyObject.sendAll(prefix + "The part must have a maximum of " + teamSizeCap + " members to join this tournament.");
+        } else {
+            participants.add(partyObject);
+            List<Player> members = partyObject.getOnlineMembers();
+            partyObject.sendAll(prefix +  "You have entered the event.");
+            for (Player p : members) {
+                PlayerHelper.teleport(p, NRCore.config.spawn);
+            }
+        }
+        participants.add(partyObject);
     }
 
     public void preparePlayers() {

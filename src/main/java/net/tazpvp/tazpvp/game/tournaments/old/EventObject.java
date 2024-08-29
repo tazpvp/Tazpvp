@@ -15,9 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public abstract class TournamentObject {
+public abstract class EventObject {
 
-    public static TournamentObject activeTournament;
+    public static EventObject activeTournament;
 
     private final List<PartyObject> participantList;
     private final int teamSizeCap;
@@ -26,7 +26,7 @@ public abstract class TournamentObject {
     @Setter
     private int timeUntilBegin;
 
-    public TournamentObject(int teamSizeCap) {
+    public EventObject(int teamSizeCap) {
         activeTournament = this;
 
         this.teamSizeCap = teamSizeCap;

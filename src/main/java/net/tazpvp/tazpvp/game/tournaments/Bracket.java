@@ -23,7 +23,7 @@ public class Bracket {
 
     public void endMatches() {
         for (Match match : matches) {
-            match.end("Match ended");
+            match.end(Tournament.prefix + "Match ended");
         }
     }
 

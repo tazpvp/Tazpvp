@@ -1,7 +1,8 @@
 package net.tazpvp.tazpvp.game.npcs.tournaments;
 
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.game.npcs.NPC;
-import net.tazpvp.tazpvp.game.npcs.tournaments.gui.Browser;
+import net.tazpvp.tazpvp.game.npcs.tournaments.gui.TournamentMenu;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -25,13 +26,13 @@ public class Tournaments extends NPC {
 
     @Override
     public void interact(@NotNull PlayerInteractAtEntityEvent e, @NotNull Player p) {
-        new Browser();
+        new TournamentMenu(p);
     }
 
     @Override
     public void refreshName(String name) {
         super.getV().setCustomName(
-                NpcName + "\n" + name
+                NpcName + "\n" + name + "\n" + CC.YELLOW  + "[Right Click]"
         );
     }
 }

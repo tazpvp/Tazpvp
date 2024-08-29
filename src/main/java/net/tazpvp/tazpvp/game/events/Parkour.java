@@ -34,11 +34,11 @@ package net.tazpvp.tazpvp.game.events;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.helpers.PlayerHelper;
-import net.tazpvp.tazpvp.game.tournaments.old.TournamentObject;
+import net.tazpvp.tazpvp.game.tournaments.old.EventObject;
 import net.tazpvp.tazpvp.objects.PartyObject;
 import org.bukkit.entity.Player;
 
-public class Parkour extends TournamentObject {
+public class Parkour extends EventObject {
 
     public Parkour() {
         super(3);

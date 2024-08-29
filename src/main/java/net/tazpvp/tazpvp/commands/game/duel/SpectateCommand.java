@@ -7,7 +7,7 @@ import net.tazpvp.tazpvp.helpers.CombatTagHelper;
 import net.tazpvp.tazpvp.helpers.DuelHelper;
 import net.tazpvp.tazpvp.objects.DuelObject;
 import net.tazpvp.tazpvp.objects.PartyObject;
-import net.tazpvp.tazpvp.game.tournaments.old.TournamentObject;
+import net.tazpvp.tazpvp.game.tournaments.old.EventObject;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -48,8 +48,8 @@ public class SpectateCommand extends NRCommand {
             return true;
         }
 
-        if (TournamentObject.activeTournament != null) {
-            for (PartyObject team : TournamentObject.activeTournament.getParticipantList()) {
+        if (EventObject.activeTournament != null) {
+            for (PartyObject team : EventObject.activeTournament.getParticipantList()) {
                 if (team.getOnlineMembers().contains(p)) {
                     DuelHelper.send(p, "You cannot duelwhile in an event.");
                     return true;

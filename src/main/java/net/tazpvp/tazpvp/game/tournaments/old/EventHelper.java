@@ -37,7 +37,7 @@ import net.tazpvp.tazpvp.game.events.Parkour;
 
 public final class EventHelper {
 
-    public static TournamentObject create(String name) {
+    public static EventObject create(String name) {
         return switch (name.toLowerCase()){
             case "ffa" -> new FFA();
             case "parkour" -> new Parkour();

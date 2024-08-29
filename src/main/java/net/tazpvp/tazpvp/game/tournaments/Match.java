@@ -35,7 +35,7 @@ public class Match {
     private void checkValidTeams() {
         for (PartyObject partyObject : teams) {
             if (partyObject == null) {
-                end("One of the teams is absent.");
+                end(Tournament.prefix + "One of the teams is absent.");
             }
         }
     }
