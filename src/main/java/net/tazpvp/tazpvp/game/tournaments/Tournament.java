@@ -5,8 +5,10 @@ import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.helpers.CombatTagHelper;
 import net.tazpvp.tazpvp.objects.DeathObject;
 import net.tazpvp.tazpvp.objects.PartyObject;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import world.ntdi.nrcore.utils.world.WorldUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,7 @@ public class Tournament {
     public final List<PartyObject> participants = new ArrayList<>();
     public final List<Player> spectators = new ArrayList<>();
     private Bracket currentBracket;
+    public static final World world = new WorldUtil().cloneWorld("tournamentMap", "tournament_" + UUID.randomUUID());
 
     public Tournament(UUID host) {
         this.host = host;
@@ -37,22 +40,14 @@ public class Tournament {
     }
 
     public void intermission() {
-        endCurrentMatch();
+        currentBracket.endCurrentMatch();
         new BukkitRunnable() {
 
             @Override
             public void run() {
-                nextMatch();
+                currentBracket.nextMatch();
             }
         }.runTaskLater(Tazpvp.getInstance(), 20*5);
-    }
-
-    public void endCurrentMatch() {
-        currentBracket.currentMatch.end("Match ended");
-    }
-
-    public void nextMatch() {
-        currentBracket.currentMatch.begin();
     }
 
     public void generateBracket() {
@@ -64,7 +59,6 @@ public class Tournament {
                     bracketParticipants.getFirst(),
                     bracketParticipants.get(1)
             );
-
             bracketParticipants.remove(contestants.getFirst());
             matches.add(new Match(contestants));
         }

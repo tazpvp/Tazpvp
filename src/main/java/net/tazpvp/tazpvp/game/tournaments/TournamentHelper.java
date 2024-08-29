@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 public class TournamentHelper {
     public static Tournament currentTournament;
 
+
     public static boolean isInTournament(Player p) {
         for (PartyObject party : currentTournament.getParticipants()) {
             for (OfflinePlayer op : party.getMembers()) {
