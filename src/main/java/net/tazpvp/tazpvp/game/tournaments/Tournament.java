@@ -20,17 +20,17 @@ import java.util.UUID;
 
 @Getter
 public class Tournament {
-    private final UUID host;
+    public final UUID host;
     public final List<PartyObject> participants;
     public final List<Player> spectators;
-    private Bracket currentBracket;
     public final Location lobby;
-    public String state;
     public final int teamSizeCap;
-    public static final String prefix = CC.DARK_PURPLE + "Tournament ❯ " + CC.LIGHT_PURPLE;
 
-    public static final World world = new WorldUtil()
-            .cloneWorld("tournamentMap", "tournament_" + UUID.randomUUID());
+    public Bracket currentBracket;
+    public String state;
+
+    public static final String prefix = CC.DARK_PURPLE + "Tournament ❯ " + CC.LIGHT_PURPLE;
+    public static final World world = new WorldUtil().cloneWorld("tournamentMap", "tournament_" + UUID.randomUUID());
 
     public Tournament(UUID host, int teamSizeCap) {
         this.teamSizeCap = teamSizeCap;
@@ -55,7 +55,6 @@ public class Tournament {
 
     public void intermission() {
         currentBracket.endMatches();
-
         new BukkitRunnable() {
             @Override
             public void run() {
