@@ -3,15 +3,17 @@ package net.tazpvp.tazpvp.game.tournaments;
 import net.tazpvp.tazpvp.objects.PartyObject;
 import org.bukkit.Location;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Match {
 
-    private List<PartyObject> teams;
-    public List<Location> locations;
+    private final List<PartyObject> teams;
+    public final List<Location> locations;
 
     public Match(List<PartyObject> participants) {
         this.teams = participants;
+        this.locations = new ArrayList<>();
     }
 
     public void begin() {
@@ -25,7 +27,9 @@ public class Match {
     }
 
     public void end(String msg) {
-
+        for (PartyObject partyObject : teams) {
+            partyObject.sendAll(msg);
+        }
     }
 
     private void checkValidTeams() {

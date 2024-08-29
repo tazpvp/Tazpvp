@@ -3,8 +3,10 @@ package net.tazpvp.tazpvp.game.tournaments;
 import lombok.Getter;
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.helpers.CombatTagHelper;
+import net.tazpvp.tazpvp.helpers.PlayerHelper;
 import net.tazpvp.tazpvp.objects.DeathObject;
 import net.tazpvp.tazpvp.objects.PartyObject;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -17,13 +19,19 @@ import java.util.UUID;
 @Getter
 public class Tournament {
     private final UUID host;
-    public final List<PartyObject> participants = new ArrayList<>();
-    public final List<Player> spectators = new ArrayList<>();
+    public final List<PartyObject> participants;
+    public final List<Player> spectators;
     private Bracket currentBracket;
-    public static final World world = new WorldUtil().cloneWorld("tournamentMap", "tournament_" + UUID.randomUUID());
+    public final Location lobby;
+
+    public static final World world = new WorldUtil()
+            .cloneWorld("tournamentMap", "tournament_" + UUID.randomUUID());
 
     public Tournament(UUID host) {
+        this.participants = new ArrayList<>();
+        this.spectators = new ArrayList<>();
         this.host = host;
+        this.lobby = new Location(world, 0, 100, 0);
         initialize();
     }
 
@@ -36,18 +44,25 @@ public class Tournament {
             public void run() {
                 intermission();
             }
-        }.runTaskLater(Tazpvp.getInstance(), 20*60);
+        }.runTaskLater(Tazpvp.getInstance(), 20*5);
     }
 
     public void intermission() {
-        currentBracket.endCurrentMatch();
-        new BukkitRunnable() {
+        currentBracket.endMatches();
 
+        new BukkitRunnable() {
             @Override
             public void run() {
-                currentBracket.nextMatch();
+                teleportAll(lobby);
             }
         }.runTaskLater(Tazpvp.getInstance(), 20*5);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                currentBracket.beginMatches();
+            }
+        }.runTaskLater(Tazpvp.getInstance(), 20*20);
     }
 
     public void generateBracket() {
@@ -85,5 +100,22 @@ public class Tournament {
                 }
             }
         }
+    }
+
+    public void teleportParticipants(Location location) {
+        for (PartyObject partyObject : participants) {
+            partyObject.teleportAll(location);
+        }
+    }
+
+    public void teleportSpectators(Location location) {
+        for (Player p : spectators) {
+            PlayerHelper.teleport(p, location);
+        }
+    }
+
+    public void teleportAll(Location location) {
+        teleportSpectators(location);
+        teleportParticipants(location);
     }
 }

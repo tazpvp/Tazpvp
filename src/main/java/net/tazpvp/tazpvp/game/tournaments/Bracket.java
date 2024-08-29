@@ -15,15 +15,15 @@ public class Bracket {
         initLocations();
     }
 
-    public void endCurrentMatch() {
+    public void beginMatches() {
         for (Match match : matches) {
-            match.end("Match ended");
+            match.begin();
         }
     }
 
-    public void nextMatch() {
+    public void endMatches() {
         for (Match match : matches) {
-            match.begin();
+            match.end("Match ended");
         }
     }
 
