@@ -16,11 +16,12 @@ import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.game.booster.ActiveBoosterManager;
 import net.tazpvp.tazpvp.game.booster.BoosterBonus;
 import net.tazpvp.tazpvp.game.booster.BoosterTypes;
+import net.tazpvp.tazpvp.game.tournaments.Tournament;
+import net.tazpvp.tazpvp.game.tournaments.TournamentHelper;
 import net.tazpvp.tazpvp.helpers.PlayerHelper;
 import net.tazpvp.tazpvp.helpers.ScoreboardHelper;
 import net.tazpvp.tazpvp.services.KitMakerService;
 import net.tazpvp.tazpvp.services.KitMakerServiceImpl;
-import net.tazpvp.tazpvp.services.PlayerNameTagService;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -334,5 +335,17 @@ public class DeathObject {
         }
 
         return finalStat;
+    }
+
+    private void checkTournament(Player p) {
+        Tournament tournament = TournamentHelper.currentTournament;
+        if (tournament != null) {
+            if (tournament.stage != 2) return;
+            for (PartyObject partyObject : tournament.getParticipants()) {
+                if (partyObject.getMembers().contains(p)) {
+
+                }
+            }
+        }
     }
 }

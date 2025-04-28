@@ -2,6 +2,7 @@ package net.tazpvp.tazpvp.game.tournaments;
 
 import net.tazpvp.tazpvp.objects.PartyObject;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,9 +11,13 @@ public class Match {
 
     private final List<PartyObject> teams;
     public final List<Location> locations;
+    public final Tournament tournament;
+    public final List<Player> alive = new ArrayList<>();
+    public final List<Player> dead = new ArrayList<>();
 
-    public Match(List<PartyObject> participants) {
+    public Match(List<PartyObject> participants, Tournament tournament) {
         this.teams = participants;
+        this.tournament = tournament;
         this.locations = new ArrayList<>();
     }
 

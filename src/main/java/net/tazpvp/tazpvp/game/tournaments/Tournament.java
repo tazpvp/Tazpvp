@@ -28,6 +28,7 @@ public class Tournament {
 
     public Bracket currentBracket;
     public String state;
+    public int stage;
 
     public static final String prefix = CC.DARK_PURPLE + "Tournament ❯ " + CC.LIGHT_PURPLE;
     public static final World world = new WorldUtil().cloneWorld("tournamentMap", "tournament_" + UUID.randomUUID());
@@ -42,9 +43,8 @@ public class Tournament {
     }
 
     public void initialize() {
-        generateBracket();
-        preparePlayers();
-
+        state = "Initializing...";
+        stage = 1;
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -54,6 +54,8 @@ public class Tournament {
     }
 
     public void intermission() {
+        state = "Waiting for players to join...";
+        stage = 2;
         currentBracket.endMatches();
         new BukkitRunnable() {
             @Override
@@ -65,7 +67,10 @@ public class Tournament {
         new BukkitRunnable() {
             @Override
             public void run() {
+                generateBracket();
+                preparePlayers();
                 currentBracket.beginMatches();
+                state = "In progress.";
             }
         }.runTaskLater(Tazpvp.getInstance(), 20*20);
     }
@@ -80,7 +85,7 @@ public class Tournament {
                     bracketParticipants.get(1)
             );
             bracketParticipants.remove(contestants.getFirst());
-            matches.add(new Match(contestants));
+            matches.add(new Match(contestants, this));
         }
         for (int i = 0 ; i < bracketParticipants.size() ; i++) {
             List<PartyObject> contestants = List.of(
@@ -89,9 +94,9 @@ public class Tournament {
             );
             bracketParticipants.remove(contestants.getFirst());
             bracketParticipants.remove(contestants.get(1));
-            matches.add(new Match(contestants));
+            matches.add(new Match(contestants, this));
         }
-        currentBracket = new Bracket(matches);
+        currentBracket = new Bracket(matches, this);
     }
 
     public void addParty(PartyObject partyObject) {
@@ -136,5 +141,9 @@ public class Tournament {
     public void teleportAll(Location location) {
         teleportSpectators(location);
         teleportParticipants(location);
+    }
+
+    public void endTournamnent() {
+        stage = 3;
     }
 }

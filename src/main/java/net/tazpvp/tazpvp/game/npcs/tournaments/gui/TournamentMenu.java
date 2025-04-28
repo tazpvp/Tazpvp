@@ -36,6 +36,10 @@ public class TournamentMenu extends GUI {
         {
             Tournament tournament = TournamentHelper.currentTournament;
             if (tournament != null) {
+                if (tournament.stage != 1) {
+                    p.sendMessage(Tournament.prefix + "This tournament is already in progress.");
+                    return;
+                }
                 int sizeCap = tournament.getTeamSizeCap();
                 PlayerWrapper pw = PlayerWrapper.getPlayer(p);
                 if (pw.getParty() != null) {

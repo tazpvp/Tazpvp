@@ -9,9 +9,11 @@ public class Bracket {
 
     public final List<Match> matches;
     public final HashMap<Integer, List<Location>> spawnLocations = new HashMap<>();
+    public final Tournament tournament;
 
-    public Bracket(List<Match> matches) {
+    public Bracket(List<Match> matches, Tournament tournament) {
         this.matches = matches;
+        this.tournament = tournament;
         initLocations();
     }
 
