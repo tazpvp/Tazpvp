@@ -87,7 +87,6 @@ public class TalentShop extends GUI {
         setButton(TalentEnum.BLESSED, TalentEntity::isBlessed, (t -> t.setBlessed(true)));
         setButton(TalentEnum.GLIDE, TalentEntity::isGlide, (t -> t.setGlide(true)));
         setButton(TalentEnum.PROFICIENT, TalentEntity::isProficient, (t -> t.setProficient(true)));
-        setButton(TalentEnum.MEDIC, TalentEntity::isMedic, (t -> t.setMedic(true)));
     }
 
     private void setButton(TalentEnum talent, Predicate<TalentEntity> hasTalentPredicate, Consumer<TalentEntity> talentEntityConsumer) {

@@ -28,8 +28,6 @@ public class TalentEntity {
     @DatabaseField(defaultValue = "false")
     private boolean glide;
     @DatabaseField(defaultValue = "false")
-    private boolean medic;
-    @DatabaseField(defaultValue = "false")
     private boolean excavator;
     @DatabaseField(defaultValue = "false")
     private boolean hunter;
