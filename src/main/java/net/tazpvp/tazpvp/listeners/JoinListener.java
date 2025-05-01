@@ -40,7 +40,6 @@ import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.enums.Theme;
 import net.tazpvp.tazpvp.helpers.*;
 import net.tazpvp.tazpvp.objects.CombatObject;
-import net.tazpvp.tazpvp.services.PlayerNameTagService;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -48,7 +47,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 import world.ntdi.nrcore.NRCore;
 
 import java.util.UUID;
@@ -105,7 +103,6 @@ public class JoinListener implements Listener {
         final String name = p.getName();
         final CC color;
         if (!p.hasPlayedBefore()) {
-            PlayerHelper.kitPlayer(p);
             color = CC.YELLOW;
         } else {
             color = CC.GREEN;

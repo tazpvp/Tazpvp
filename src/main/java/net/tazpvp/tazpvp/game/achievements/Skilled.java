@@ -30,7 +30,6 @@ public class Skilled extends Observable {
             if (talentEntity.isExcavator()) return;
             if (talentEntity.isBlessed()) return;
             if (talentEntity.isMoist()) return;
-            if (talentEntity.isMedic()) return;
             if (talentEntity.isProficient()) return;
             if (talentEntity.isNecromancer()) return;
             if (talentEntity.isResilient()) return;

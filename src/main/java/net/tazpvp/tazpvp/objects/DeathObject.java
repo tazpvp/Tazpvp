@@ -79,7 +79,6 @@ public class DeathObject {
             if (!killer.equals(victim)) {
                 playEffects();
                 dropItems();
-                dropHead();
                 PlayerInventoryStorage.updateStorage(victim, killer);
                 CombatObject.tags.get(killer).endCombat(victim, false);
                 Tazpvp.getObservers().forEach(observer -> observer.death(pVictim, pKiller));
