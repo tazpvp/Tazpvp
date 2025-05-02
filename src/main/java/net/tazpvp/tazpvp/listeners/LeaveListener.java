@@ -65,7 +65,7 @@ public class LeaveListener implements Listener {
     public void onLeaveNormal(PlayerQuitEvent e) {
         Player p = e.getPlayer();
         UUID id = p.getUniqueId();
-        e.setQuitMessage(CC.DARK_GRAY + "- " + p.getName());
+        e.setQuitMessage(CC.DGRAY + "- " + p.getName());
 
         if (CombatTagHelper.isInCombat(id)) {
             if (TazloadCommand.tazloading) return;

@@ -47,7 +47,7 @@ public class PrestigeShop extends GUI {
                         CC.GRAY + "- 25% more coins.",
                         CC.GRAY + "- Access to rebirth features.",
                         "",
-                        CC.DARK_PURPLE + "Requirement: " + CC.LIGHT_PURPLE + "100 Levels",
+                        CC.DPURPLE + "Requirement: " + CC.LPURPLE + "100 Levels",
                         CC.YELLOW + "(Click to Rebirth)"
                 )
                 .glow(true)
@@ -75,7 +75,7 @@ public class PrestigeShop extends GUI {
             PlayerHelper.kitPlayer(p);
 
             p.closeInventory();
-            p.sendTitle(CC.LIGHT_PURPLE + "" + CC.BOLD + "REBIRTH", CC.DARK_PURPLE + "You are reborn anew", 20, 40, 20);
+            p.sendTitle(CC.LPURPLE + "" + CC.BOLD + "REBIRTH", CC.DPURPLE + "You are reborn anew", 20, 40, 20);
             p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, 1, 1);
         }), 13);
 

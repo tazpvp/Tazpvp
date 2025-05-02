@@ -56,7 +56,7 @@ public class TalentShop extends GUI {
     private int count;
     private final Player p;
     private final UUID id;
-    private final String prefix = CC.DARK_AQUA + "[Lorenzo] " + CC.AQUA;
+    private final String prefix = CC.DAQUA + "[Lorenzo] " + CC.AQUA;
     private final PlayerWrapper pw;
 
     public TalentShop(Player p) {
@@ -97,7 +97,7 @@ public class TalentShop extends GUI {
 
         addButton(Button.create(ItemBuilder.of(talent.getMat(), 1)
                 .name(CC.AQUA +  "" + CC.BOLD + talent.getName())
-                .lore(CC.DARK_AQUA + talent.getLore(), " ",CC.GRAY + "Cost: " + talent.getCost() + " Coins", " ", complete)
+                .lore(CC.DAQUA + talent.getLore(), " ",CC.GRAY + "Cost: " + talent.getCost() + " Coins", " ", complete)
                 .flag(ItemFlag.HIDE_ATTRIBUTES)
                 .build(), (_) -> {
 
@@ -109,7 +109,7 @@ public class TalentShop extends GUI {
 
                     StatEnum.COINS.remove(id, talent.getCost());
                     p.closeInventory();
-                    p.sendTitle(CC.AQUA + "" + CC.BOLD + "New Talent",  CC.DARK_AQUA + talent.getName(), 10, 20, 10);
+                    p.sendTitle(CC.AQUA + "" + CC.BOLD + "New Talent",  CC.DAQUA + talent.getName(), 10, 20, 10);
                     p.playSound(p.getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN, 1, 1);
 
                     Tazpvp.getObservers().forEach(observer -> observer.talent(p));

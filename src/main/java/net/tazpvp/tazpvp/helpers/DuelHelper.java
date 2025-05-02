@@ -1,6 +1,5 @@
 package net.tazpvp.tazpvp.helpers;
 
-import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.objects.DuelObject;
 import org.bukkit.Bukkit;
@@ -24,7 +23,7 @@ public class DuelHelper {
     }
 
     public static void send(Player p, String msg) {
-        p.sendMessage(CC.DARK_AQUA + "Duel ❯ " + CC.AQUA + msg);
+        p.sendMessage(CC.DAQUA + "Duel ❯ " + CC.AQUA + msg);
         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1,1);
     }
 

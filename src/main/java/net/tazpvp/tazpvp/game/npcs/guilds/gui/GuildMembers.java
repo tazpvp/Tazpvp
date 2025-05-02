@@ -111,7 +111,7 @@ public class GuildMembers extends GUI {
         if (members.isEmpty()) {
             addButton(
                 Button.createBasic(ItemBuilder.of(Material.OAK_SIGN)
-                        .name(CC.DARK_GREEN + "Guild Empty")
+                        .name(CC.DGREEN + "Guild Empty")
                         .lore(CC.GRAY + "Invite players with" + CC.GREEN + " /guild invite")
                         .build()),
                 22);

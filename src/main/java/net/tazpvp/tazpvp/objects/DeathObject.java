@@ -199,18 +199,18 @@ public class DeathObject {
 
     public void deathMessage() {
         if (pVictim == null) return;
-        final String prefix = CC.GRAY + "[" + CC.DARK_RED + "☠" + CC.GRAY + "] " + CC.DARK_GRAY;
+        final String prefix = CC.GRAY + "[" + CC.DRED + "☠" + CC.GRAY + "] " + CC.DGRAY;
 
         for (Player op : Bukkit.getOnlinePlayers()) {
             if (victim == killer || killer == null) {
                 final String who = (op == pVictim) ? "You" : CC.GRAY + pVictim.getName();
-                String msg = prefix + who + CC.DARK_GRAY + " died.";
+                String msg = prefix + who + CC.DGRAY + " died.";
 
                 op.sendMessage(msg);
             } else {
                 final String who = (op == pKiller) ? "You" : CC.GRAY + pKiller.getName();
                 final String died = (op == pVictim) ? "you" : CC.GRAY + pVictim.getName();
-                String msg = prefix + who + CC.DARK_GRAY + " killed " + died;
+                String msg = prefix + who + CC.DGRAY + " killed " + died;
 
                 op.sendMessage(msg);
             }
@@ -237,8 +237,8 @@ public class DeathObject {
 
             if (pVictim != null) {
                 assistant.sendMessage(
-                        CC.DARK_GRAY + "Assist kill:" + CC.GRAY + " " + pVictim.getName() + " " +
-                                CC.DARK_AQUA + "Exp: " + CC.AQUA + finalXp + CC.GOLD + " Coins: " + CC.YELLOW + finalCoins
+                        CC.DGRAY + "Assist kill:" + CC.GRAY + " " + pVictim.getName() + " " +
+                                CC.DAQUA + "Exp: " + CC.AQUA + finalXp + CC.GOLD + " Coins: " + CC.YELLOW + finalCoins
                 );
             }
 
@@ -293,7 +293,7 @@ public class DeathObject {
             }
 
             pKiller.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
-                    CC.DARK_AQUA.toString() + CC.BOLD + "Exp: " + CC.AQUA + CC.BOLD + XP + " " + CC.DARK_AQUA + XP_NETWORK_BUFF.prettyPercentMultiplier() +
+                    CC.DAQUA.toString() + CC.BOLD + "Exp: " + CC.AQUA + CC.BOLD + XP + " " + CC.DAQUA + XP_NETWORK_BUFF.prettyPercentMultiplier() +
                     CC.GOLD + CC.BOLD + " Coins: " + CC.YELLOW + CC.BOLD + COINS + " " + CC.GOLD + COIN_NETWORK_BUFF.prettyPercentMultiplier()
             ));
             if (bountyReward > 0) {

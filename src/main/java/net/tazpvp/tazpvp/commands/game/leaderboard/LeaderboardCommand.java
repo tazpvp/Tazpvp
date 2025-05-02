@@ -34,7 +34,7 @@ public class LeaderboardCommand extends NRCommand {
                     List<PlayerStatEntity> playerStatEntities = Tazpvp.getInstance().getPlayerStatService()
                             .getTop10Most(leaderboardEnum.getColumnName());
 
-                    p.sendMessage( CC.DARK_AQUA + "" + CC.BOLD + "COINS Leaderboard");
+                    p.sendMessage( CC.DAQUA + "" + CC.BOLD + "COINS Leaderboard");
 
                     for (PlayerStatEntity playerStatEntity : playerStatEntities) {
                         p.sendMessage(count + ". " + CC.GRAY + Bukkit.getOfflinePlayer(playerStatEntity.getUuid())

@@ -45,18 +45,18 @@ import java.util.LinkedList;
 public class Alerts {
 
     private static int num = 0;
-    private static final String prefix = CC.DARK_GREEN + "(" + CC.GREEN + CC.BOLD + "TIP" + CC.DARK_GREEN + ") " + CC.GREEN;
+    private static final String prefix = CC.DGREEN + "(" + CC.GREEN + CC.BOLD + "TIP" + CC.DGREEN + ") " + CC.GREEN;
 
     private static final LinkedList<String> texts = new LinkedList<>(Arrays.asList(
-            "Chat with like-minded sigmas: " + CC.DARK_GREEN + "/discord" ,
-            "Premium pass is pretty cool ngl " + CC.DARK_GREEN + "/premium",
-            "Wanna apply for staff? " + CC.DARK_GREEN + "/apply",
-            "I heard that if you advertise, you're cool " + CC.DARK_GREEN + "/ad",
-            "Found a stinky hacker? " + CC.DARK_GREEN + "/report",
-            "Is someone being annoying? use " + CC.DARK_GREEN + "/votemute",
+            "Chat with like-minded sigmas: " + CC.DGREEN + "/discord" ,
+            "Premium pass is pretty cool ngl " + CC.DGREEN + "/premium",
+            "Wanna apply for staff? " + CC.DGREEN + "/apply",
+            "I heard that if you advertise, you're cool " + CC.DGREEN + "/ad",
+            "Found a stinky hacker? " + CC.DGREEN + "/report",
+            "Is someone being annoying? use " + CC.DGREEN + "/votemute",
             "Sit in the AFK pit to claim rewards over night.",
             "If you died to a cheater you can join our discord and get a restore.",
-            "Party up with your friends to chat or join events: " + CC.DARK_GREEN + "/party"
+            "Party up with your friends to chat or join events: " + CC.DGREEN + "/party"
     ));
 
     public static void initialize() {

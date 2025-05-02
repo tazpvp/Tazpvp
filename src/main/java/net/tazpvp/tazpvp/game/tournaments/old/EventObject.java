@@ -88,6 +88,6 @@ public abstract class EventObject {
     public abstract void kitPlayers();
 
     public static void send(Player p, String msg) {
-        p.sendMessage(CC.DARK_PURPLE + "Tournament ❯ " + CC.LIGHT_PURPLE + msg);
+        p.sendMessage(CC.DPURPLE + "Tournament ❯ " + CC.LPURPLE + msg);
     }
 }

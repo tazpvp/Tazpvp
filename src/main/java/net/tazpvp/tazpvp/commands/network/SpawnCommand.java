@@ -39,7 +39,7 @@ public class SpawnCommand extends NRCommand {
         if (p.hasPermission("tazpvp.spawn")) {
             PlayerHelper.teleport(p, NRCore.config.spawn);
         } else {
-            p.sendMessage(CC.DARK_AQUA + "Teleportation to spawn will start in 5 seconds. Please do not move.");
+            p.sendMessage(CC.DAQUA + "Teleportation to spawn will start in 5 seconds. Please do not move.");
             p.setMetadata("spawnTeleport", new FixedMetadataValue(Tazpvp.getInstance(), true));
             new BukkitRunnable() {
                 @Override

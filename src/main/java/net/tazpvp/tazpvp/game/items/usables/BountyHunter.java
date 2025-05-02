@@ -35,7 +35,7 @@ public class BountyHunter extends UsableItem {
             Player playerHighestKs = Bukkit.getPlayer(entityWithHighestKs.getKey());
             if (playerHighestKs == null) return;
 
-            p.sendMessage(CC.LIGHT_PURPLE + "" + CC.BOLD + "The player with the highest bounty is " + CC.YELLOW + CC.BOLD + playerHighestKs.getName());
+            p.sendMessage(CC.LPURPLE + "" + CC.BOLD + "The player with the highest bounty is " + CC.YELLOW + CC.BOLD + playerHighestKs.getName());
         }
     }
 

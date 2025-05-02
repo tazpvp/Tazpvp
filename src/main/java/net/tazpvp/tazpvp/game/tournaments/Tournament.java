@@ -30,7 +30,7 @@ public class Tournament {
     public String state;
     public int stage;
 
-    public static final String prefix = CC.DARK_PURPLE + "Tournament ❯ " + CC.LIGHT_PURPLE;
+    public static final String prefix = CC.DPURPLE + "Tournament ❯ " + CC.LPURPLE;
     public static final World world = new WorldUtil().cloneWorld("tournamentMap", "tournament_" + UUID.randomUUID());
 
     public Tournament(UUID host, int teamSizeCap) {

@@ -150,7 +150,7 @@ public class DuelCommand extends NRCommand {
                 .append("\n[Click to Accept]").color(ChatColor.AQUA).create();
 
         baseComponents[4].setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/duel " + sender.getName()));
-        baseComponents[4].setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(CC.DARK_AQUA + "Accept the duel?")));
+        baseComponents[4].setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(CC.DAQUA + "Accept the duel?")));
 
         target.sendMessage("");
         target.spigot().sendMessage(baseComponents);

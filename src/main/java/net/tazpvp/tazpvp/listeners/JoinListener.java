@@ -94,7 +94,7 @@ public class JoinListener implements Listener {
         playerWrapper.refreshRankEntity();
 
         p.setPlayerListHeaderFooter(
-                CC.DARK_AQUA + "                                      " + "\n                 " +
+                CC.DAQUA + "                                      " + "\n                 " +
                         Theme.SERVER.gradient("TAZPVP.NET", true) + "               " + "\n",
                 "\n" +
                         Theme.DISCORD.gradient("✉ ᴊᴏɪɴ ᴜꜱ /ᴅɪꜱᴄᴏʀᴅ", false) + "\n" +

@@ -55,7 +55,7 @@ import java.util.List;
 public class GuildEdit extends GUI {
 
     private final String NO_RANK = CC.RED + "You do not have premium, visit the store to purchase it.";
-    private final String REQ_RANK = CC.DARK_PURPLE + "Requires rank to edit.";
+    private final String REQ_RANK = CC.DPURPLE + "Requires rank to edit.";
 
     private final GuildService guildService;
     private final GuildEntity playerGuildEntity;
@@ -117,7 +117,7 @@ public class GuildEdit extends GUI {
         });
 
         addButton(Button.create(ItemBuilder.of(Material.WRITABLE_BOOK, 1)
-                .name(CC.GREEN + "Members").lore(" ", CC.DARK_GREEN + "View guild members.").build(), (_) -> new GuildMembers(p, guildService)), 15);
+                .name(CC.GREEN + "Members").lore(" ", CC.DGREEN + "View guild members.").build(), (_) -> new GuildMembers(p, guildService)), 15);
         addButton(guildIcon, 10);
         addButton(guildDescription, 12);
         addButton(guildTag, 14);

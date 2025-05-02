@@ -49,7 +49,7 @@ public class VanishCommand extends NRCommand {
         PlayerWrapper pw = PlayerWrapper.getPlayer(p);
         if (pw.isVanished()) {
             pw.setVanished(false);
-            p.sendMessage(CC.LIGHT_PURPLE + "You are no longer in vanish.");
+            p.sendMessage(CC.LPURPLE + "You are no longer in vanish.");
             p.setFlying(false);
             p.setAllowFlight(false);
             PlayerHelper.teleport(p, NRCore.config.spawn);
@@ -60,7 +60,7 @@ public class VanishCommand extends NRCommand {
             pw.setVanished(true);
             p.setAllowFlight(true);
             p.setFlying(true);
-            p.sendMessage(CC.LIGHT_PURPLE + "You are now in vanish.");
+            p.sendMessage(CC.LPURPLE + "You are now in vanish.");
             PlayerHelper.teleport(p, NRCore.config.spawn);
             for (Player op : Bukkit.getOnlinePlayers()) {
                 if (!op.hasPermission(getLabel().getPermission())) {

@@ -46,7 +46,6 @@ import net.tazpvp.tazpvp.services.KitMakerServiceImpl;
 import net.tazpvp.tazpvp.services.PlayerNameTagService;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -153,9 +152,9 @@ public class PlayerHelper {
 
             p.setLevel(playerLevel);
             p.setExp((float) num / LooseData.getExpLeft(ID));
-            ChatHelper.announce(p, CC.AQUA + "" + CC.BOLD + "  LEVEL UP " + CC.DARK_AQUA + "Combat Lvl. " + CC.AQUA + playerLevel, Sound.ENTITY_PLAYER_LEVELUP);
-            p.sendMessage(CC.DARK_GRAY + "  ▶ " + CC.GOLD + coins + " Coins " + coinsBonus.prettyPercentMultiplier());
-            p.sendMessage(CC.DARK_GRAY + "  ▶ " + CC.DARK_AQUA + "1 Shard");
+            ChatHelper.announce(p, CC.AQUA + "" + CC.BOLD + "  LEVEL UP " + CC.DAQUA + "Combat Lvl. " + CC.AQUA + playerLevel, Sound.ENTITY_PLAYER_LEVELUP);
+            p.sendMessage(CC.DGRAY + "  ▶ " + CC.GOLD + coins + " Coins " + coinsBonus.prettyPercentMultiplier());
+            p.sendMessage(CC.DGRAY + "  ▶ " + CC.DAQUA + "1 Shard");
             p.sendMessage("");
         } else if (playerXp <= 0) {
             StatEnum.XP.set(ID, 0);

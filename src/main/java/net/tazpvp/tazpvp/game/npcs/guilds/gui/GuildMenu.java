@@ -70,9 +70,9 @@ public class GuildMenu extends GUI {
         if (guildEntity != null) {
             String[] lore = {
                     " ",
-                    CC.DARK_GREEN + "Kills: " + CC.GREEN + guildEntity.getKills(),
-                    CC.DARK_GREEN + "Deaths: " + CC.GREEN + guildEntity.getDeaths(),
-                    CC.DARK_GREEN + "KDR: " + CC.GREEN + (guildEntity.getKills() / guildEntity.getDeaths()),
+                    CC.DGREEN + "Kills: " + CC.GREEN + guildEntity.getKills(),
+                    CC.DGREEN + "Deaths: " + CC.GREEN + guildEntity.getDeaths(),
+                    CC.DGREEN + "KDR: " + CC.GREEN + (guildEntity.getKills() / guildEntity.getDeaths()),
                     " ",
                     CC.GOLD + "Click to edit guild."
             };
@@ -92,7 +92,7 @@ public class GuildMenu extends GUI {
         } else {
             playerGuild = Button.create(ItemBuilder.of(Material.MINECART)
                     .name(CC.GREEN + "" + CC.BOLD + "Create Guild")
-                    .lore(CC.DARK_GREEN + "Click to buy a guild.", " ", CC.GRAY + "Cost: $6,000")
+                    .lore(CC.DGREEN + "Click to buy a guild.", " ", CC.GRAY + "Cost: $6,000")
                     .glow(true)
             .build(), (_) -> {
                 p.closeInventory();
@@ -106,7 +106,7 @@ public class GuildMenu extends GUI {
 
         Button guildList = Button.create(ItemBuilder.of(Material.LECTERN)
                 .name(CC.GREEN + "" + CC.BOLD + "View Guilds")
-                .lore(CC.DARK_GREEN + "A list of all the top guilds.")
+                .lore(CC.DGREEN + "A list of all the top guilds.")
                 .glow(true)
                 .build(), (_) -> {
             p.closeInventory();

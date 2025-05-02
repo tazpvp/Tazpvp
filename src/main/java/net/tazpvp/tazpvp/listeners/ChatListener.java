@@ -193,7 +193,7 @@ public class ChatListener implements Listener {
                 if (player.hasPermission("tazpvp.staffchat")) {
                     String prefix = pw.getRankPrefix();
                     String color = CC.getLastColors(prefix);
-                    player.sendMessage(CC.LIGHT_PURPLE.toString() + CC.BOLD + "[Staff] " + color + prefix + " " + p.getName() + CC.WHITE + " " + e.getMessage());
+                    player.sendMessage(CC.LPURPLE.toString() + CC.BOLD + "[Staff] " + color + prefix + " " + p.getName() + CC.WHITE + " " + e.getMessage());
                 }
             }
         } else {

@@ -149,7 +149,7 @@ public class ChatHelper {
 
     public static void achievement(Player p, String name) {
         p.sendMessage("");
-        p.sendMessage(CC.DARK_AQUA + "" + CC.BOLD + "Achievement Unlocked: " + CC.RED + CC.BOLD + name);
+        p.sendMessage(CC.DAQUA + "" + CC.BOLD + "Achievement Unlocked: " + CC.RED + CC.BOLD + name);
         p.sendMessage("");
         p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
     }
@@ -178,6 +178,6 @@ public class ChatHelper {
     }
 
     private static void scoreboard(Player p, String rank) {
-        ScoreboardHelper.updateSuffix(p, ScoreboardEnum.RANK,  rank + CC.DARK_GRAY + " " + StatEnum.MMR.getInt(p.getUniqueId()));
+        ScoreboardHelper.updateSuffix(p, ScoreboardEnum.RANK,  rank + CC.DGRAY + " " + StatEnum.MMR.getInt(p.getUniqueId()));
     }
 }

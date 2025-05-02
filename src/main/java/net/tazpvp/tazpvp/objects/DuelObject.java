@@ -56,7 +56,7 @@ import java.util.UUID;
 
 public abstract class DuelObject {
 
-    public static final String prefix = CC.AQUA + "Duel | " + CC.DARK_AQUA;
+    public static final String prefix = CC.AQUA + "Duel | " + CC.DAQUA;
     @Getter @Setter
     public static List<DuelObject> activeDuels = new ArrayList<>();
 
@@ -147,7 +147,7 @@ public abstract class DuelObject {
 
         ChatHelper.announce(
                 CC.AQUA + Bukkit.getOfflinePlayer(getWinner()).getName() +
-                        CC.DARK_AQUA + " won a duel against " +
+                        CC.DAQUA + " won a duel against " +
                         CC.AQUA + Bukkit.getOfflinePlayer(loserID).getName(),
                 Sound.BLOCK_BELL_RESONATE
         );

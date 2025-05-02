@@ -65,7 +65,7 @@ public class RestoreCommand extends NRCommand {
                 if (sender.hasPermission(getLabel().getPermission())) {
                     UUID uuid = UUID.fromString(args[1]);
                     PlayerInventoryStorage.restoreStorage(uuid);
-                    sender.sendMessage(String.format(CC.DARK_AQUA + "Success"));
+                    sender.sendMessage(String.format(CC.DAQUA + "Success"));
                 }
             }
         }
