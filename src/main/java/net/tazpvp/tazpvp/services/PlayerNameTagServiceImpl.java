@@ -1,6 +1,9 @@
 package net.tazpvp.tazpvp.services;
 
+import net.tazpvp.tazpvp.data.LooseData;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
+import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.entity.Display;
@@ -81,11 +84,19 @@ public class PlayerNameTagServiceImpl implements PlayerNameTagService {
     }
 
     @Override
-    public void setTagRank(Player player) {
+    public void refreshTag(Player player) {
         TextDisplay textDisplay = uuidItemDisplayMap.get(player.getUniqueId());
 
         if (textDisplay != null) {
-            textDisplay.setText(ChatHelper.getRankingPrefix(player) + "\n");
+            String bounty;
+            if (LooseData.getBounty(player.getUniqueId()) > 0) {
+                bounty = CC.GREEN + " $" + LooseData.getBounty(player.getUniqueId());
+            } else {
+                bounty = "";
+            }
+            textDisplay.setText(
+                    player.getName() + "\n" +
+                    ChatHelper.getRankingPrefix(player) + bounty + "\n");
         }
     }
 
@@ -105,6 +116,16 @@ public class PlayerNameTagServiceImpl implements PlayerNameTagService {
             textDisplay.teleport(location);
             player.teleport(location);
             player.addPassenger(textDisplay);
+        }
+    }
+
+    @Override
+    public void destroyAllNametags() {
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            TextDisplay textDisplay = uuidItemDisplayMap.get(p.getUniqueId());
+            if (textDisplay != null) {
+                textDisplay.remove();
+            }
         }
     }
 }

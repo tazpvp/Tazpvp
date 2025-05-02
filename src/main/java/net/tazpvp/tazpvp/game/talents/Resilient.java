@@ -51,7 +51,5 @@ public class Resilient extends Observable {
                 killer.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 20 * 5, 0));
             }
         }
-
-
     }
 }

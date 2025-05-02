@@ -22,6 +22,7 @@ public enum ItemEnum {
     BLOCKS(Material.OAK_PLANKS, "Placeable Blocks", "Is this fortnite?"),
 
     GOLDEN_APPLE(Material.GOLDEN_APPLE, "Golden Apple", "Gain super powers?", 3),
+    STEAK(Material.COOKED_BEEF, "Beef", "Yum.", 1),
     LIGHTER(Material.FLINT_AND_STEEL, "Lighter", "Set things afire."),
     EXP_BOTTLE(Material.EXPERIENCE_BOTTLE, "Exp Bottle", "Mend your armor.", 1),
     HATCHET(Material.GOLDEN_AXE, "Hatchet", "Break wooden blocks."),
@@ -140,19 +141,22 @@ public enum ItemEnum {
         return ItemBuilder.of(material)
                 .name(ChatHelper.gradient("#04f000", name,true))
                 .enchantment(Enchantment.MENDING, 1)
+                .enchantment(Enchantment.PROTECTION, 4)
+                .enchantment(Enchantment.UNBREAKING, 3)
+                .enchantment(Enchantment.THORNS, 3)
                 .build();
     }
 
     public ItemStack getKitTool(String pName) {
         return ItemBuilder.of(material)
-                .name(ChatHelper.gradient("#04f000", pName + " " + name,true))
+                .name(ChatHelper.gradient("#04f000", name,true))
                 .enchantment(Enchantment.MENDING, 1)
                 .build();
     }
 
     public ItemStack getKitTool(String pName, Enchantment otherEnchant) {
         return ItemBuilder.of(material)
-                .name(ChatHelper.gradient("#04f000", pName + " " + name,true))
+                .name(ChatHelper.gradient("#04f000", name,true))
                 .enchantment(Enchantment.MENDING, 1)
                 .enchantment(otherEnchant, 1)
                 .build();

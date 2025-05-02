@@ -32,24 +32,26 @@
 
 package net.tazpvp.tazpvp.game.achievements;
 
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
+import net.tazpvp.tazpvp.data.services.AchievementService;
+import net.tazpvp.tazpvp.data.services.UserAchievementService;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
 import net.tazpvp.tazpvp.utils.observer.Observable;
-import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.entity.Player;
 
 public class Legend extends Observable {
+    private final UserAchievementService userAchievementService = Tazpvp.getInstance().getUserAchievementService();
+    private final AchievementService achievementService = Tazpvp.getInstance().getAchievementService();
     @Override
     public void rebirth(Player p) {
-        final PlayerWrapper pw = PlayerWrapper.getPlayer(p);
-        final UserAchievementEntity userAchievementEntity = pw.getUserAchievementEntity();
-        final AchievementEntity achievementEntity = userAchievementEntity.getLegendAchievementEntity();
+        final UserAchievementEntity userAchievementEntity =  userAchievementService.getOrDefault(p.getUniqueId());
+        final AchievementEntity achievementEntity = userAchievementEntity.getLegend();
 
         if (!achievementEntity.isCompleted()) {
             achievementEntity.setCompleted(true);
-            userAchievementEntity.setLegendAchievementEntity(achievementEntity);
-            pw.setUserAchievementEntity(userAchievementEntity);
+            achievementService.saveAchievementEntity(achievementEntity);
             ChatHelper.achievement(p, "Legend");
         }
     }

@@ -40,6 +40,7 @@ import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.enums.Theme;
 import net.tazpvp.tazpvp.helpers.*;
 import net.tazpvp.tazpvp.objects.CombatObject;
+import net.tazpvp.tazpvp.services.PlayerNameTagService;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -58,77 +59,70 @@ public class JoinListener implements Listener {
         final Player p = e.getPlayer();
         final UUID id = p.getUniqueId();
 
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                PlayerWrapper.addPlayer(id);
-                ScoreboardHelper.initScoreboard(p);
-                PlaytimeHelper.playerJoined(p);
-                PlayerHelper.resetHealth(p);
-                PlayerHelper.feedPlr(p);
-                Tazpvp.getInstance().getPlayerNameTagService().initializePlayer(p);
-                BanHelper.checkBan(p);
-                CombatObject.tags.put(id, new CombatObject(id));
+        PlayerWrapper.addPlayer(id);
+        ScoreboardHelper.initScoreboard(p);
+        PlaytimeHelper.playerJoined(p);
+        PlayerHelper.resetHealth(p);
+        PlayerHelper.feedPlr(p);
+        Tazpvp.getInstance().getPlayerNameTagService().initializePlayer(p);
+        Tazpvp.getInstance().getPlayerNameTagService().refreshTag(p);
+        BanHelper.checkBan(p);
+        CombatObject.tags.put(id, new CombatObject(id));
 
-                int playerLevel = StatEnum.LEVEL.getInt(id);
-                p.setLevel(playerLevel);
-                PlayerHelper.updateLevel(id);
+        int playerLevel = StatEnum.LEVEL.getInt(id);
+        p.setLevel(playerLevel);
+        PlayerHelper.updateLevel(id);
 
-                p.setGlowing(true);
+        p.setGlowing(true);
 
-                for (Player vp : Bukkit.getOnlinePlayers()) {
-                    PlayerWrapper vpw = PlayerWrapper.getPlayer(vp);
-                    if (vpw.isVanished()) {
-                        for (Player op : Bukkit.getOnlinePlayers()) {
-                            if (!op.hasPermission("tazpvp.vanish")) {
-                                op.hidePlayer(Tazpvp.getInstance(), vp);
-                            } else {
-                                op.showPlayer(Tazpvp.getInstance(), vp);
-                            }
-                        }
+        for (Player vp : Bukkit.getOnlinePlayers()) {
+            PlayerWrapper vpw = PlayerWrapper.getPlayer(vp);
+            if (vpw.isVanished()) {
+                for (Player op : Bukkit.getOnlinePlayers()) {
+                    if (!op.hasPermission("tazpvp.vanish")) {
+                        op.hidePlayer(Tazpvp.getInstance(), vp);
+                    } else {
+                        op.showPlayer(Tazpvp.getInstance(), vp);
                     }
                 }
-
-                PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(p);
-
-                final UserRankService userRankService = new UserRankServiceImpl();
-                userRankService.removeAllExpiredRanks(playerWrapper.getUserRankEntity());
-
-                playerWrapper.refreshRankEntity();
-
-                p.setPlayerListHeaderFooter(
-                        CC.DARK_AQUA + "                                      " + "\n                 " +
-                                Theme.SERVER.gradient("TAZPVP.NET", true) + "               " + "\n",
-
-                        "\n" +
-                                Theme.DISCORD.gradient("✉ ᴊᴏɪɴ ᴜꜱ /ᴅɪꜱᴄᴏʀᴅ", false) + "\n" +
-                                Theme.STORE.gradient("✘ ꜱᴜʙꜱᴄʀɪʙᴇ /ꜱᴛᴏʀᴇ", false) + "\n");
-
-
-                final String name = p.getName();
-                final String plus;
-
-                if (!p.hasPlayedBefore()) {
-                    PlayerHelper.kitPlayer(p);
-                    plus = CC.YELLOW + "[" + CC.GOLD + "+" + CC.YELLOW + "]";
-                } else {
-                    plus = CC.GREEN + "[" + CC.GOLD + "+" + CC.GREEN + "]";
-                }
-
-                final String message = plus + " " + name;
-                e.setJoinMessage(message);
-
-                if (!p.getWorld().getName().equalsIgnoreCase("arena")) {
-                    PlayerHelper.teleport(p, NRCore.config.spawn);
-                }
-                if (p.getGameMode() == GameMode.SPECTATOR) {
-                    PlayerHelper.teleport(p, NRCore.config.spawn);
-                    p.setGameMode(GameMode.SURVIVAL);
-                }
-
-                AfkHelper.setAfk(p);
-                Tazpvp.getBotThread().connectionChat(p.getName(), true);
             }
-        }.runTaskLater(Tazpvp.getInstance(), 20);
+        }
+
+        PlayerWrapper playerWrapper = PlayerWrapper.getPlayer(p);
+
+        final UserRankService userRankService = new UserRankServiceImpl();
+        userRankService.removeAllExpiredRanks(playerWrapper.getUserRankEntity());
+
+        playerWrapper.refreshRankEntity();
+
+        p.setPlayerListHeaderFooter(
+                CC.DARK_AQUA + "                                      " + "\n                 " +
+                        Theme.SERVER.gradient("TAZPVP.NET", true) + "               " + "\n",
+                "\n" +
+                        Theme.DISCORD.gradient("✉ ᴊᴏɪɴ ᴜꜱ /ᴅɪꜱᴄᴏʀᴅ", false) + "\n" +
+                        Theme.STORE.gradient("✘ ꜱᴜʙꜱᴄʀɪʙᴇ /ꜱᴛᴏʀᴇ", false) + "\n");
+
+        final String name = p.getName();
+        final CC color;
+        if (!p.hasPlayedBefore()) {
+            PlayerHelper.kitPlayer(p);
+            color = CC.YELLOW;
+        } else {
+            color = CC.GREEN;
+        }
+
+        final String message = color + "[" + CC.GOLD + "+" + color + "]" + " " + name;
+        e.setJoinMessage(message);
+
+        if (!p.getWorld().getName().equalsIgnoreCase("arena")) {
+            PlayerHelper.teleport(p, NRCore.config.spawn);
+        }
+        if (p.getGameMode() == GameMode.SPECTATOR) {
+            PlayerHelper.teleport(p, NRCore.config.spawn);
+            p.setGameMode(GameMode.SURVIVAL);
+        }
+
+        AfkHelper.setAfk(p);
+        Tazpvp.getBotThread().connectionChat(p.getName(), true);
     }
 }

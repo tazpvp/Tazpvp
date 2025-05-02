@@ -7,16 +7,14 @@ import net.tazpvp.tazpvp.commands.game.report.utils.ReportDebounce;
 import net.tazpvp.tazpvp.commands.game.report.utils.ReportLogger;
 import net.tazpvp.tazpvp.data.entity.*;
 import net.tazpvp.tazpvp.data.implementations.TalentServiceImpl;
-import net.tazpvp.tazpvp.data.implementations.UserAchievementServiceImpl;
 import net.tazpvp.tazpvp.data.implementations.UserRankServiceImpl;
 import net.tazpvp.tazpvp.data.services.GuildService;
 import net.tazpvp.tazpvp.data.services.TalentService;
-import net.tazpvp.tazpvp.data.services.UserAchievementService;
 import net.tazpvp.tazpvp.data.services.UserRankService;
 import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.objects.DuelObject;
 import net.tazpvp.tazpvp.objects.PartyObject;
-import net.tazpvp.tazpvp.game.npc.characters.NPC;
+import net.tazpvp.tazpvp.game.npcs.NPC;
 import net.tazpvp.tazpvp.utils.PlayerNameTag;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -24,11 +22,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import java.util.WeakHashMap;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.*;
 
 /**
  * Wrapper for the player object which contains valuable methods exclusive to tazpvp
@@ -44,7 +38,7 @@ public class PlayerWrapper {
     private UserRankEntity userRankEntity; // After you set a value here make sure to call refresh()
     private UserAchievementEntity userAchievementEntity;
     private TalentEntity talentEntity;
-    private final ConcurrentHashMap<UUID, DuelObject> duelRequests;
+    private final HashMap<UUID, String> duelRequests;
 
     @Setter private boolean launching;
     @Setter private boolean respawning;
@@ -76,19 +70,16 @@ public class PlayerWrapper {
         this.killCount = 0;
         this.timeOfLaunch = 0;
         this.blocksPlaced = new ArrayList<>();
-        this.lastMessageSent = "";
+        this.lastMessageSent = null;
         this.staffChatActive = false;
 
         this.userRankService = new UserRankServiceImpl();
         this.userRankEntity = userRankService.getOrDefault(getUuid());
 
-        final UserAchievementService userAchievementService = new UserAchievementServiceImpl();
-        this.userAchievementEntity = userAchievementService.getOrDefault(getUuid());
-
         final TalentService talentService = new TalentServiceImpl();
         this.talentEntity = talentService.getOrDefault(getUuid());
         this.guildService = Tazpvp.getInstance().getGuildService();
-        this.duelRequests = new ConcurrentHashMap<>();
+        this.duelRequests = new HashMap<>();
 
         refreshPermissions();
     }
@@ -202,13 +193,6 @@ public class PlayerWrapper {
 
     public void refreshRankEntity() {
         this.userRankEntity = this.userRankService.getUserRankEntity(getUuid());
-    }
-
-    public void setUserAchievementEntity(final UserAchievementEntity achievementEntity) {
-        final UserAchievementService userAchievementService = new UserAchievementServiceImpl();
-        userAchievementService.saveUserAchievementEntity(achievementEntity);
-
-        this.userAchievementEntity = achievementEntity;
     }
 
     public void setTalentEntity(final TalentEntity talentEntity) {

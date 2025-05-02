@@ -4,6 +4,7 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import net.tazpvp.tazpvp.data.database.PostgresqlDatabase;
+import org.bukkit.Bukkit;
 
 import java.sql.SQLException;
 
@@ -13,6 +14,7 @@ public interface DataService {
 
         try {
             if (!DaoManager.createDao(connectionSource, clazz).isTableExists()) {
+                Bukkit.getLogger().info("Creating table for " + clazz.getSimpleName());
                 TableUtils.createTableIfNotExists(connectionSource, clazz);
             }
         } catch (SQLException e) {

@@ -174,7 +174,7 @@ public class ChatHelper {
         else rankText = "✪";
 
         scoreboard(p, rankText);
-        return ChatHelper.hexColor("#FFBE28", rankText, false);
+        return ChatHelper.hexColor("#fc9917", rankText, false);
     }
 
     private static void scoreboard(Player p, String rank) {

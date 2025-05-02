@@ -16,9 +16,10 @@ import net.tazpvp.tazpvp.enums.StatEnum;
 import net.tazpvp.tazpvp.game.booster.ActiveBoosterManager;
 import net.tazpvp.tazpvp.game.booster.BoosterBonus;
 import net.tazpvp.tazpvp.game.booster.BoosterTypes;
+import net.tazpvp.tazpvp.game.tournaments.Tournament;
+import net.tazpvp.tazpvp.game.tournaments.TournamentHelper;
 import net.tazpvp.tazpvp.helpers.PlayerHelper;
 import net.tazpvp.tazpvp.helpers.ScoreboardHelper;
-import net.tazpvp.tazpvp.helpers.SerializableInventory;
 import net.tazpvp.tazpvp.services.KitMakerService;
 import net.tazpvp.tazpvp.services.KitMakerServiceImpl;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
@@ -48,6 +49,7 @@ public class DeathObject {
     private GuildEntity killerGuild;
     private PlayerWrapper killerWrapper;
     private PlayerWrapper victimWrapper;
+
 
     public DeathObject(UUID victim, @Nullable UUID killer) {
         this.guildService = Tazpvp.getInstance().getGuildService();
@@ -101,11 +103,11 @@ public class DeathObject {
                 ItemStack[] contents = kitMakerService.deserializeInventory(kitSerial);
 
                 pVictim.getInventory().setContents(contents);
-                PlayerHelper.armorPlayer(pVictim);
             }
+            PlayerHelper.armorPlayer(pVictim);
 
-                PlayerHelper.resetHealth(pVictim);
-                PlayerHelper.feedPlr(pVictim);
+            PlayerHelper.resetHealth(pVictim);
+            PlayerHelper.feedPlr(pVictim);
             }
 
         updateStats();
@@ -117,6 +119,8 @@ public class DeathObject {
         if (victimGuild != null && killerGuild != null) {
             if (victimGuild == killerGuild) return;
         }
+
+        if (pKiller == null) return;
 
         World world = location.getWorld();
 
@@ -183,11 +187,13 @@ public class DeathObject {
         pVictim.playSound(pVictim.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1, 1);
         pVictim.sendTitle(CC.RED + "" + CC.BOLD + "YOU DIED", CC.GOLD + "Respawning...", 5, 50, 5);
         victimWrapper.setRespawning(true);
+        Tazpvp.getInstance().getPlayerNameTagService().setNameTagVisibility(pVictim, false);
         new BukkitRunnable() {
             public void run() {
                 pVictim.setGameMode(GameMode.SURVIVAL);
                 PlayerHelper.teleport(pVictim, NRCore.config.spawn);
                 victimWrapper.setRespawning(false);
+                Tazpvp.getInstance().getPlayerNameTagService().setNameTagVisibility(pVictim, true);
             }
         }.runTaskLater(Tazpvp.getInstance(), 20 * 3);
     }
@@ -258,7 +264,7 @@ public class DeathObject {
             int XP_OTHER_BUFF = otherBuffs(killer, XP);
             int COIN_OTHER_BUFF =  otherBuffs(killer, COINS);
 
-            final int bountyReward = LooseData.getKs(victim) * 10;
+            final int bountyReward = LooseData.getBounty(victim);
 
             int finalXp = (int) XP_NETWORK_BUFF.result() + XP_OTHER_BUFF;
             int finalCoins = (int) COIN_NETWORK_BUFF.result() + COIN_OTHER_BUFF + bountyReward;
@@ -297,7 +303,7 @@ public class DeathObject {
                 }
             }
 
-            Tazpvp.getInstance().getPlayerNameTagService().setTagRank(pKiller);
+            Tazpvp.getInstance().getPlayerNameTagService().refreshTag(pKiller);
             PlayerHelper.updateLevel(killer);
         }
     }
@@ -316,7 +322,7 @@ public class DeathObject {
         LooseData.resetKs(victim);
 
         if (pVictim != null) {
-            Tazpvp.getInstance().getPlayerNameTagService().setTagRank(pVictim);
+            Tazpvp.getInstance().getPlayerNameTagService().refreshTag(pVictim);
         }
         guildService.saveGuild(victimGuild);
     }
@@ -329,5 +335,17 @@ public class DeathObject {
         }
 
         return finalStat;
+    }
+
+    private void checkTournament(Player p) {
+        Tournament tournament = TournamentHelper.currentTournament;
+        if (tournament != null) {
+            if (tournament.stage != 2) return;
+            for (PartyObject partyObject : tournament.getParticipants()) {
+                if (partyObject.getMembers().contains(p)) {
+
+                }
+            }
+        }
     }
 }

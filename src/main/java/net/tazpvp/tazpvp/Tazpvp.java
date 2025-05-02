@@ -50,13 +50,14 @@ import net.tazpvp.tazpvp.commands.admin.stats.StatCommand;
 import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
 import net.tazpvp.tazpvp.commands.admin.teleportWorld.TeleportWorldCommand;
 import net.tazpvp.tazpvp.commands.game.duel.DuelCommand;
-import net.tazpvp.tazpvp.commands.game.tournament.TournamentCommand;
 import net.tazpvp.tazpvp.commands.game.guild.GuildCommand;
 import net.tazpvp.tazpvp.commands.game.leaderboard.BaltopCommand;
 import net.tazpvp.tazpvp.commands.game.leaderboard.LeaderboardCommand;
 import net.tazpvp.tazpvp.commands.game.party.PartyCommand;
 import net.tazpvp.tazpvp.commands.game.pay.PayCommand;
 import net.tazpvp.tazpvp.commands.game.report.ReportCommand;
+import net.tazpvp.tazpvp.commands.game.tournament.TournamentCommand;
+import net.tazpvp.tazpvp.commands.game.votemute.VoteMuteCommand;
 import net.tazpvp.tazpvp.commands.moderation.ReportViewCommand;
 import net.tazpvp.tazpvp.commands.moderation.RestoreCommand;
 import net.tazpvp.tazpvp.commands.moderation.StaffChatCommand;
@@ -69,23 +70,21 @@ import net.tazpvp.tazpvp.commands.network.*;
 import net.tazpvp.tazpvp.data.database.PostgresqlDatabase;
 import net.tazpvp.tazpvp.data.entity.*;
 import net.tazpvp.tazpvp.data.implementations.*;
-import net.tazpvp.tazpvp.data.services.GuildMemberService;
-import net.tazpvp.tazpvp.data.services.GuildService;
-import net.tazpvp.tazpvp.data.services.PlayerStatService;
-import net.tazpvp.tazpvp.data.services.UserRankService;
-import net.tazpvp.tazpvp.game.achievements.*;
+import net.tazpvp.tazpvp.data.services.*;
 import net.tazpvp.tazpvp.game.achievements.Error;
+import net.tazpvp.tazpvp.game.achievements.*;
 import net.tazpvp.tazpvp.game.bosses.BossManager;
 import net.tazpvp.tazpvp.game.bosses.zorg.Zorg;
 import net.tazpvp.tazpvp.game.crates.CrateManager;
 import net.tazpvp.tazpvp.game.items.UsableItem;
-import net.tazpvp.tazpvp.game.npc.characters.NPC;
-import net.tazpvp.tazpvp.game.npc.characters.achievements.Lorenzo;
-import net.tazpvp.tazpvp.game.npc.characters.enchanter.Caesar;
-import net.tazpvp.tazpvp.game.npc.characters.guildmaster.Rigel;
-import net.tazpvp.tazpvp.game.npc.characters.shop.Maxim;
+import net.tazpvp.tazpvp.game.npcs.NPC;
+import net.tazpvp.tazpvp.game.npcs.achievements.Achievements;
+import net.tazpvp.tazpvp.game.npcs.guilds.Guilds;
+import net.tazpvp.tazpvp.game.npcs.shop.Shop;
+import net.tazpvp.tazpvp.game.npcs.tournaments.Tournaments;
 import net.tazpvp.tazpvp.game.talents.*;
 import net.tazpvp.tazpvp.helpers.AfkHelper;
+import net.tazpvp.tazpvp.helpers.BlockHelper;
 import net.tazpvp.tazpvp.helpers.CombatTagHelper;
 import net.tazpvp.tazpvp.helpers.EnchantHelper;
 import net.tazpvp.tazpvp.listeners.*;
@@ -146,6 +145,10 @@ public final class Tazpvp extends JavaPlugin {
     private UserRankService userRankService;
     @Getter
     private PlayerNameTagService playerNameTagService;
+    @Getter
+    private UserAchievementService userAchievementService;
+    @Getter
+    private AchievementService achievementService;
 
     @Override
     public void onEnable() {
@@ -180,7 +183,7 @@ public final class Tazpvp extends JavaPlugin {
         UsableItem.registerCustomItems();
 
         parkourUtil = new ConfigUtil("parkour.yml", this);
-//        crateManager = new CrateManager();
+        crateManager = new CrateManager();
         botThread = new BotThread(getConfig().getString("bot-token"));
         botThread.start();
         spawnableLeaderboardManager = new SpawnableLeaderboardManager(this);
@@ -195,8 +198,6 @@ public final class Tazpvp extends JavaPlugin {
         new RankServiceImpl().createTableIfNotExists(postgresqlDatabase, RankEntity.class);
         new PunishmentServiceImpl().createTableIfNotExists(postgresqlDatabase, PunishmentEntity.class);
         new KitServiceImpl().createTableIfNotExists(postgresqlDatabase, KitEntity.class);
-        new UserAchievementServiceImpl().createTableIfNotExists(postgresqlDatabase, UserAchievementEntity.class);
-        new AchievementServiceImpl().createTableIfNotExists(postgresqlDatabase, AchievementEntity.class);
         new TalentServiceImpl().createTableIfNotExists(postgresqlDatabase, TalentEntity.class);
         new ExpirationRankServiceImpl().createTableIfNotExists(postgresqlDatabase, ExpirationRankEntity.class);
         new GameRankServiceImpl().createTableIfNotExists(postgresqlDatabase, GameRankEntity.class);
@@ -207,11 +208,15 @@ public final class Tazpvp extends JavaPlugin {
         this.playerStatService = new PlayerStatServiceImpl();
         this.userRankService = new UserRankServiceImpl();
         this.playerNameTagService = new PlayerNameTagServiceImpl(this);
+        this.achievementService = new AchievementServiceImpl();
+        this.userAchievementService = new UserAchievementServiceImpl();
 
         guildMemberService.createTableIfNotExists(postgresqlDatabase, GuildMemberEntity.class);
         guildService.createTableIfNotExists(postgresqlDatabase, GuildEntity.class);
         playerStatService.createTableIfNotExists(postgresqlDatabase, PlayerStatEntity.class);
         userRankService.createTableIfNotExists(postgresqlDatabase, UserRankEntity.class);
+        achievementService.createTableIfNotExists(postgresqlDatabase, UserRankEntity.class);
+        userAchievementService.createTableIfNotExists(postgresqlDatabase, UserRankEntity.class);
     }
 
     public static void registerObserver(Observer observer) {
@@ -224,11 +229,13 @@ public final class Tazpvp extends JavaPlugin {
             playerNameTagService.recalibratePlayer(player);
         }
 
+        postgresqlDatabase.close();
+
         despawnNpcs();
         BossManager.despawnBoss();
         Holograms.removeHolograms();
-
-        postgresqlDatabase.close();
+        playerNameTagService.destroyAllNametags();
+        BlockHelper.deleteAllPlayerBlocks();
     }
 
     public static Tazpvp getInstance() {
@@ -245,7 +252,6 @@ public final class Tazpvp extends JavaPlugin {
         new Legend();
         new Merchant();
         new Superior();
-        new Zorgin();
         new Harvester();
         new Artisan();
         new Speedrunner();
@@ -260,7 +266,6 @@ public final class Tazpvp extends JavaPlugin {
         new Hunter();
         new Resilient();
         new Proficient();
-        new Medic();
     }
     public void registerCommands() {
         register(
@@ -301,7 +306,8 @@ public final class Tazpvp extends JavaPlugin {
                 new HologramCommand(),
                 new ChestAnimationCommand(),
                 new PartyCommand(),
-                new KitCommand()
+                new net.tazpvp.tazpvp.commands.game.kit.KitCommand(),
+                new VoteMuteCommand()
         );
     }
 
@@ -330,13 +336,14 @@ public final class Tazpvp extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ExplodeListener(), this);
         getServer().getPluginManager().registerEvents(new EntitySpawnListener(), this);
         getServer().getPluginManager().registerEvents(new BurnListener(), this);
+        getServer().getPluginManager().registerEvents(new FoodListener(), this);
     }
 
     private void spawnNpcs() {
-        npcs.add(new Maxim());
-        npcs.add(new Lorenzo());
-        npcs.add(new Caesar());
-        npcs.add(new Rigel(guildService));
+        npcs.add(new Shop());
+        npcs.add(new Achievements());
+        npcs.add(new Guilds(guildService));
+        npcs.add(new Tournaments());
 
         new BukkitRunnable() {
             @Override

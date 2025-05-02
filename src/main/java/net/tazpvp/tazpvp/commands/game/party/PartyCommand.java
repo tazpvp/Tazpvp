@@ -31,7 +31,7 @@ public class PartyCommand extends NRCommand {
             Player target = getPlayer(args[0]);
             if (target != null) {
                 if (target.getUniqueId().equals(p.getUniqueId())) {
-                    PartyObject.send(p, "LOL you're lonely, you can't invite yourself.");
+                    PartyObject.send(p, "LOL you're lonely. jk, but you can't invite yourself.");
                     return true;
                 }
                 if (party == null) {

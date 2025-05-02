@@ -16,59 +16,59 @@ public class UserAchievementEntity {
     @DatabaseField(id = true)
     private UUID uuid;
 
-    @DatabaseField(foreign = true, columnName = "adept")
-    private AchievementEntity adeptAchievementEntity;
+    @DatabaseField(foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true, columnName = "adept")
+    private AchievementEntity adept;
 
-    @DatabaseField(foreign = true, columnName = "agile")
-    private AchievementEntity agileAchievementEntity;
+    @DatabaseField(foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true, columnName = "agile")
+    private AchievementEntity agile;
 
-    @DatabaseField(foreign = true, columnName = "merchant")
-    private AchievementEntity merchantAchievementEntity;
+    @DatabaseField(foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true, columnName = "merchant")
+    private AchievementEntity merchant;
 
-    @DatabaseField(foreign = true, columnName = "bowling")
-    private AchievementEntity bowlingAchievementEntity;
+    @DatabaseField(foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true, columnName = "bowling")
+    private AchievementEntity bowling;
 
-    @DatabaseField(foreign = true, columnName = "legend")
-    private AchievementEntity legendAchievementEntity;
+    @DatabaseField(foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true, columnName = "legend")
+    private AchievementEntity legend;
 
-    @DatabaseField(foreign = true, columnName = "gamble")
-    private AchievementEntity gambleAchievementEntity;
+    @DatabaseField(foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true, columnName = "gamble")
+    private AchievementEntity gamble;
 
-    @DatabaseField(foreign = true, columnName = "superior")
-    private AchievementEntity superiorAchievementEntity;
+    @DatabaseField(foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true, columnName = "superior")
+    private AchievementEntity superior;
 
-    @DatabaseField(foreign = true, columnName = "craftsman")
-    private AchievementEntity craftsmanAchievementEntity;
+    @DatabaseField(foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true, columnName = "craftsman")
+    private AchievementEntity craftsman;
 
-    @DatabaseField(foreign = true, columnName = "charm")
-    private AchievementEntity charmAchievementEntity;
+    @DatabaseField(foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true, columnName = "charm")
+    private AchievementEntity charm;
 
-    @DatabaseField(foreign = true, columnName = "rehab")
-    private AchievementEntity rehabAchievementEntity;
+    @DatabaseField(foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true, columnName = "rehab")
+    private AchievementEntity rehab;
 
-    @DatabaseField(foreign = true, columnName = "zorgin")
-    private AchievementEntity zorginAchievementEntity;
+    @DatabaseField(foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true, columnName = "zorgin")
+    private AchievementEntity zorgin;
 
-    @DatabaseField(foreign = true, columnName = "grinder")
-    private AchievementEntity grinderAchievementEntity;
+    @DatabaseField(foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true, columnName = "grinder")
+    private AchievementEntity grinder;
 
-    @DatabaseField(foreign = true, columnName = "gladiator")
-    private AchievementEntity gladiatorAchievementEntity;
+    @DatabaseField(foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true, columnName = "gladiator")
+    private AchievementEntity gladiator;
 
-    @DatabaseField(foreign = true, columnName = "harvester")
-    private AchievementEntity harvesterAchievementEntity;
+    @DatabaseField(foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true, columnName = "harvester")
+    private AchievementEntity harvester;
 
-    @DatabaseField(foreign = true, columnName = "speedrunner")
-    private AchievementEntity speedrunnerAchievementEntity;
+    @DatabaseField(foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true, columnName = "speedrunner")
+    private AchievementEntity speedrunner;
 
-    @DatabaseField(foreign = true, columnName = "artisan")
-    private AchievementEntity artisanAchievementEntity;
+    @DatabaseField(foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true, columnName = "artisan")
+    private AchievementEntity artisan;
 
-    @DatabaseField(foreign = true, columnName = "error")
-    private AchievementEntity errorAchievementEntity;
+    @DatabaseField(foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true, columnName = "error")
+    private AchievementEntity error;
 
-    @DatabaseField(foreign = true, columnName = "skilled")
-    private AchievementEntity skilledAchievementEntity;
+    @DatabaseField(foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true, columnName = "skilled")
+    private AchievementEntity skilled;
 
 
 }

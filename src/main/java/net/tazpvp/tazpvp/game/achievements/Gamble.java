@@ -32,27 +32,28 @@
 
 package net.tazpvp.tazpvp.game.achievements;
 
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
+import net.tazpvp.tazpvp.data.services.AchievementService;
+import net.tazpvp.tazpvp.data.services.UserAchievementService;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
 import net.tazpvp.tazpvp.utils.observer.Observable;
-import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.entity.Player;
 
 public class Gamble extends Observable {
-
+    private final UserAchievementService userAchievementService = Tazpvp.getInstance().getUserAchievementService();
+    private final AchievementService achievementService = Tazpvp.getInstance().getAchievementService();
     @Override
     public void death(Player victim, Player killer) {
         if (killer == null) return;
-        final PlayerWrapper pw = PlayerWrapper.getPlayer(killer);
-        final UserAchievementEntity userAchievementEntity = pw.getUserAchievementEntity();
-        final AchievementEntity achievementEntity = userAchievementEntity.getGambleAchievementEntity();
+        final UserAchievementEntity userAchievementEntity =  userAchievementService.getOrDefault(killer.getUniqueId());
+        final AchievementEntity achievementEntity = userAchievementEntity.getGamble();
 
         if (!achievementEntity.isCompleted()) {
             if (killer.getHealth() <= 1) {
                 achievementEntity.setCompleted(true);
-                userAchievementEntity.setGambleAchievementEntity(achievementEntity);
-                pw.setUserAchievementEntity(userAchievementEntity);
+                achievementService.saveAchievementEntity(achievementEntity);
                 ChatHelper.achievement(killer, "Gamble");
             }
         }

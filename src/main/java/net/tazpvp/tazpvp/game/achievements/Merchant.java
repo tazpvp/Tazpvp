@@ -1,24 +1,26 @@
 package net.tazpvp.tazpvp.game.achievements;
 
+import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.data.entity.AchievementEntity;
 import net.tazpvp.tazpvp.data.entity.UserAchievementEntity;
+import net.tazpvp.tazpvp.data.services.AchievementService;
+import net.tazpvp.tazpvp.data.services.UserAchievementService;
 import net.tazpvp.tazpvp.helpers.ChatHelper;
 import net.tazpvp.tazpvp.utils.observer.Observable;
-import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.entity.Player;
 
 public class Merchant extends Observable {
+    private final UserAchievementService userAchievementService = Tazpvp.getInstance().getUserAchievementService();
+    private final AchievementService achievementService = Tazpvp.getInstance().getAchievementService();
     @Override
     public void gui(Player p, String name) {
-        final PlayerWrapper pw = PlayerWrapper.getPlayer(p);
-        final UserAchievementEntity userAchievementEntity = pw.getUserAchievementEntity();
-        final AchievementEntity achievementEntity = userAchievementEntity.getMerchantAchievementEntity();
+        final UserAchievementEntity userAchievementEntity =  userAchievementService.getOrDefault(p.getUniqueId());
+        final AchievementEntity achievementEntity = userAchievementEntity.getMerchant();
 
         if (!achievementEntity.isCompleted()) {
             if (name.equalsIgnoreCase("caesar")) {
                 achievementEntity.setCompleted(true);
-                userAchievementEntity.setMerchantAchievementEntity(achievementEntity);
-                pw.setUserAchievementEntity(userAchievementEntity);
+                achievementService.saveAchievementEntity(achievementEntity);
                 ChatHelper.achievement(p, "Merchant");
             }
         }

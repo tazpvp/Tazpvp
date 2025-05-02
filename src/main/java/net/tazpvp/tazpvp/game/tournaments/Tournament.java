@@ -1,0 +1,149 @@
+package net.tazpvp.tazpvp.game.tournaments;
+
+import lombok.Getter;
+import net.tazpvp.tazpvp.Tazpvp;
+import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.helpers.CombatTagHelper;
+import net.tazpvp.tazpvp.helpers.PlayerHelper;
+import net.tazpvp.tazpvp.objects.DeathObject;
+import net.tazpvp.tazpvp.objects.PartyObject;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+import world.ntdi.nrcore.NRCore;
+import world.ntdi.nrcore.utils.world.WorldUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+@Getter
+public class Tournament {
+    public final UUID host;
+    public final List<PartyObject> participants;
+    public final List<Player> spectators;
+    public final Location lobby;
+    public final int teamSizeCap;
+
+    public Bracket currentBracket;
+    public String state;
+    public int stage;
+
+    public static final String prefix = CC.DARK_PURPLE + "Tournament ❯ " + CC.LIGHT_PURPLE;
+    public static final World world = new WorldUtil().cloneWorld("tournamentMap", "tournament_" + UUID.randomUUID());
+
+    public Tournament(UUID host, int teamSizeCap) {
+        this.teamSizeCap = teamSizeCap;
+        this.participants = new ArrayList<>();
+        this.spectators = new ArrayList<>();
+        this.host = host;
+        this.lobby = new Location(world, 0, 100, 0);
+        initialize();
+    }
+
+    public void initialize() {
+        state = "Initializing...";
+        stage = 1;
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                intermission();
+            }
+        }.runTaskLater(Tazpvp.getInstance(), 20*5);
+    }
+
+    public void intermission() {
+        state = "Waiting for players to join...";
+        stage = 2;
+        currentBracket.endMatches();
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                teleportAll(lobby);
+            }
+        }.runTaskLater(Tazpvp.getInstance(), 20*5);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                generateBracket();
+                preparePlayers();
+                currentBracket.beginMatches();
+                state = "In progress.";
+            }
+        }.runTaskLater(Tazpvp.getInstance(), 20*20);
+    }
+
+    public void generateBracket() {
+        int teamCount = participants.size();
+        List<PartyObject> bracketParticipants = participants;
+        List<Match> matches = new ArrayList<>();
+        if (teamCount % 2 != 0) {
+            List<PartyObject> contestants = List.of(
+                    bracketParticipants.getFirst(),
+                    bracketParticipants.get(1)
+            );
+            bracketParticipants.remove(contestants.getFirst());
+            matches.add(new Match(contestants, this));
+        }
+        for (int i = 0 ; i < bracketParticipants.size() ; i++) {
+            List<PartyObject> contestants = List.of(
+                bracketParticipants.get(i),
+                bracketParticipants.get(i+1)
+            );
+            bracketParticipants.remove(contestants.getFirst());
+            bracketParticipants.remove(contestants.get(1));
+            matches.add(new Match(contestants, this));
+        }
+        currentBracket = new Bracket(matches, this);
+    }
+
+    public void addParty(PartyObject partyObject) {
+        if (partyObject.getMembers().size() > teamSizeCap) {
+            partyObject.sendAll(prefix + "The part must have a maximum of " + teamSizeCap + " members to join this tournament.");
+        } else {
+            participants.add(partyObject);
+            List<Player> members = partyObject.getOnlineMembers();
+            partyObject.sendAll(prefix +  "You have entered the event.");
+            for (Player p : members) {
+                PlayerHelper.teleport(p, NRCore.config.spawn);
+            }
+        }
+        participants.add(partyObject);
+    }
+
+    public void preparePlayers() {
+        for (PartyObject party : participants) {
+            for (Player op : party.getOnlineMembers()) {
+                final UUID lastAttacker = CombatTagHelper.getLastAttacker(op.getUniqueId());
+                if (lastAttacker != null) {
+                    new DeathObject(op.getUniqueId(), lastAttacker);
+                } else {
+                    new DeathObject(op.getUniqueId(), null);
+                }
+            }
+        }
+    }
+
+    public void teleportParticipants(Location location) {
+        for (PartyObject partyObject : participants) {
+            partyObject.teleportAll(location);
+        }
+    }
+
+    public void teleportSpectators(Location location) {
+        for (Player p : spectators) {
+            PlayerHelper.teleport(p, location);
+        }
+    }
+
+    public void teleportAll(Location location) {
+        teleportSpectators(location);
+        teleportParticipants(location);
+    }
+
+    public void endTournamnent() {
+        stage = 3;
+    }
+}

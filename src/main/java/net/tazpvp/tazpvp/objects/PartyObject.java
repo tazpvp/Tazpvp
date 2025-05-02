@@ -1,10 +1,11 @@
 package net.tazpvp.tazpvp.objects;
 
 import lombok.Getter;
-import lombok.Setter;
 import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.helpers.PlayerHelper;
 import net.tazpvp.tazpvp.wrappers.PlayerWrapper;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
@@ -84,6 +85,12 @@ public class PartyObject {
             pw.setParty(null);
         }
         members.clear();
+    }
+
+    public void teleportAll(Location location) {
+        for (Player partyMember : getOnlineMembers()) {
+            PlayerHelper.teleport(partyMember, location);
+        }
     }
 
     public static void send(Player p, String msg) {

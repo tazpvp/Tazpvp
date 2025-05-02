@@ -21,6 +21,10 @@ public final class LooseData {
         return 0;
     }
 
+    public static int getBounty(UUID uuid) {
+        return getKs(uuid) * 10;
+    }
+
     public static void addKs(UUID uuid) {
         if (ks.containsKey(uuid)) {
             ks.put(uuid, getKs(uuid) + 1);

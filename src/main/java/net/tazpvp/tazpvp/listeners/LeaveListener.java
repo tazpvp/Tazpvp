@@ -34,7 +34,7 @@ package net.tazpvp.tazpvp.listeners;
 
 import net.tazpvp.tazpvp.Tazpvp;
 import net.tazpvp.tazpvp.commands.admin.tazload.TazloadCommand;
-import net.tazpvp.tazpvp.game.events.Event;
+import net.tazpvp.tazpvp.enums.CC;
 import net.tazpvp.tazpvp.helpers.CombatTagHelper;
 import net.tazpvp.tazpvp.helpers.PlaytimeHelper;
 import net.tazpvp.tazpvp.objects.DeathObject;
@@ -53,11 +53,6 @@ public class LeaveListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     private void onLeave(PlayerQuitEvent e) {
         Player p = e.getPlayer();
-        UUID id = p.getUniqueId();
-
-        if (Event.currentEvent != null) {
-            Event.currentEvent.removeParticipant(p.getUniqueId());
-        }
 
         PlaytimeHelper.playerLeft(p);
 
@@ -70,7 +65,7 @@ public class LeaveListener implements Listener {
     public void onLeaveNormal(PlayerQuitEvent e) {
         Player p = e.getPlayer();
         UUID id = p.getUniqueId();
-        e.setQuitMessage(null);
+        e.setQuitMessage(CC.DARK_GRAY + "- " + p.getName());
 
         if (CombatTagHelper.isInCombat(id)) {
             if (TazloadCommand.tazloading) return;

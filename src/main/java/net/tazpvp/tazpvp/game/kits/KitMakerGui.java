@@ -2,11 +2,15 @@ package net.tazpvp.tazpvp.game.kits;
 
 import net.tazpvp.tazpvp.data.entity.KitEntity;
 import net.tazpvp.tazpvp.data.services.KitService;
+import net.tazpvp.tazpvp.enums.CC;
+import net.tazpvp.tazpvp.helpers.PlayerHelper;
 import net.tazpvp.tazpvp.services.KitMakerService;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import world.ntdi.nrcore.utils.gui.Button;
 import world.ntdi.nrcore.utils.gui.GUI;
+import world.ntdi.nrcore.utils.item.builders.ItemBuilder;
 
 import java.util.List;
 
@@ -15,17 +19,20 @@ public class KitMakerGui {
     private final KitMakerService kitMakerService;
     private final KitService kitService;
     private final Player player;
+    private final int size;
 
     public KitMakerGui(KitMakerService kitMakerService, KitService kitService, Player player) {
         this.kitMakerService = kitMakerService;
         this.player = player;
         this.kitService = kitService;
-        this.gui = new GUI("Kit Maker", (int) Math.ceil(kitMakerService.getValidItems().size() / 9.0));
+        this.size = (int) Math.ceil((kitMakerService.getValidItems().size() + 1) / 9.0);
+        this.gui = new GUI("Kit Maker", size);
         addItems();
         gui.open(player);
         gui.setOnDestroy(() -> {
             ItemStack[] contents = player.getInventory().getContents();
-            String serializedInventory = kitMakerService.serializeInventory(contents);
+            ItemStack[] sanitizedContents = kitMakerService.sanitize(contents);
+            String serializedInventory = kitMakerService.serializeInventory(sanitizedContents);
             KitEntity kitEntity = kitService.getOrDefault(player.getUniqueId());
             kitEntity.setSerial(serializedInventory);
             kitService.saveKitEntity(kitEntity);
@@ -34,13 +41,25 @@ public class KitMakerGui {
     }
 
     private void addItems() {
-        gui.fill(0, 6*9, GUI.FILLER);
+        gui.fill(0, size * 9, ItemBuilder.of(Material.GRAY_STAINED_GLASS_PANE).name(" ").build());
 
         List<ItemStack> items = kitMakerService.getValidItems();
 
         for (int i = 0; i < items.size(); i++) {
             gui.addButton(createButton(items.get(i)), i);
         }
+
+        gui.addButton(Button.create(ItemBuilder.of(Material.BARRIER)
+                .name(CC.RED.toString() + CC.BOLD + "Clear Cursor")
+                .lore(CC.GRAY + "Shift+Click to clear inventory.").build(), ((inventoryClickEvent, button) -> {
+                    if (inventoryClickEvent.isShiftClick()) {
+                        inventoryClickEvent.getWhoClicked().getInventory().clear();
+                        PlayerHelper.armorPlayer((Player) inventoryClickEvent.getWhoClicked());
+                    } else {
+                        inventoryClickEvent.getWhoClicked().setItemOnCursor(new ItemStack(Material.AIR));
+                    }
+        })), size * 9 - 1);
+        gui.update();
     }
 
     private Button createButton(ItemStack itemStack) {

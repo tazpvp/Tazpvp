@@ -50,6 +50,8 @@ import java.util.List;
 
 public class BlockHelper {
 
+    public static final List<Block> playerPlaced = new ArrayList<>();
+
     public static final List<OreObject> ores = new ArrayList<>(Arrays.asList(
             new OreObject(20*9, 2, 1, Material.COAL_ORE, Material.COAL, "stone"),
             new OreObject(20*13, 3, 2, Material.GOLD_ORE, Material.RAW_GOLD, "iron"),
@@ -142,5 +144,11 @@ public class BlockHelper {
             }
         }
         return false;
+    }
+
+    public static void deleteAllPlayerBlocks() {
+        for (Block b : playerPlaced) {
+            b.setType(Material.AIR);
+        }
     }
 }
