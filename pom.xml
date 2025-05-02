@@ -6,7 +6,7 @@
 
     <groupId>net.tazpvp</groupId>
     <artifactId>Tazpvp</artifactId>
-    <version>1</version>
+    <version>1.0.0-EVO</version>
     <packaging>jar</packaging>
 
     <name>Tazpvp</name>
@@ -19,7 +19,7 @@
     <url>tazpvp.net</url>
 
     <build>
-        <finalName>Tazpvp</finalName>
+        <finalName>${name}-${version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
