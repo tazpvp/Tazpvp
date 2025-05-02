@@ -1,2 +1,2 @@
 # Tazpvp
-Tazpvp 5. Coming Soon.
+Tazpvp 5
